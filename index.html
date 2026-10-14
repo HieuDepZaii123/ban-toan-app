@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#e7e0d2" />
+    <meta name="description" content="Bàn làm việc toán THPT: kéo tham số, nhìn đồ thị đổi, rồi luyện có lời giải." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <title>Bàn Toán</title>
+    <script>
+      try {
+        var saved = JSON.parse(localStorage.getItem("ban-toan") || "null");
+        var theme = saved && saved.theme;
+        if (theme !== "paper" && theme !== "night") {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "paper";
+        }
+        document.documentElement.dataset.theme = theme;
+        if (saved && saved.lang === "en") document.documentElement.lang = "en";
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
