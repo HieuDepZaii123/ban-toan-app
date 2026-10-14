@@ -64,6 +64,7 @@ import {
   cosDeg,
   treeHeight,
 } from "../src/lib/math.ts";
+import { sceneFromHour } from "../src/home/day.ts";
 import { fold } from "../src/lib/text.ts";
 import type { Question } from "../src/content/types.ts";
 
@@ -348,6 +349,12 @@ const seqHome = topicSummary("sequence", undefined, "vi");
 assert(seqHome.includes("39") && seqHome.includes("210"), `sequence summary ${seqHome}`);
 const surveyHome = topicSummary("survey", undefined, "vi");
 assert(surveyHome.includes("−2") || surveyHome.includes("-2"), `survey summary ${surveyHome}`);
+
+assert(sceneFromHour(5) === "morning" && sceneFromHour(10) === "morning", "morning band");
+assert(sceneFromHour(11) === "noon" && sceneFromHour(13) === "noon", "noon band");
+assert(sceneFromHour(14) === "afternoon" && sceneFromHour(17) === "afternoon", "afternoon band");
+assert(sceneFromHour(18) === "evening" && sceneFromHour(4) === "evening" && sceneFromHour(0) === "evening", "night band");
+assert(sceneFromHour(24) === "evening" && sceneFromHour(-1) === "evening", "hour wraps");
 
 if (fails.length) {
   console.error(fails.join("\n"));

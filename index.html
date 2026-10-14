@@ -17,6 +17,10 @@
         }
         document.documentElement.dataset.theme = theme;
         if (saved && saved.lang === "en") document.documentElement.lang = "en";
+        if (location.pathname === "/" || location.pathname === "") {
+          var room = JSON.parse(localStorage.getItem("ban-toan-room") || "null");
+          if (!room || room.lamp !== false) document.documentElement.dataset.lamp = "on";
+        }
       } catch (e) {}
     </script>
   </head>

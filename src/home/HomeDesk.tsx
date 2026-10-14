@@ -5,6 +5,7 @@ import { A } from "../lib/route.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
 import { Prefs, useLang } from "../ui/Prefs.tsx";
+import { Room } from "./Room.tsx";
 import { Spark } from "./Spark.tsx";
 
 export function HomeDesk() {
@@ -58,6 +59,7 @@ export function HomeDesk() {
         <Prefs />
       </header>
       <main id="content">
+        <Room />
         <p className="kicker">{t(lang, "Lớp 10 – 12", "Grades 10–12")}</p>
         <h1>{t(lang, "Bàn làm việc cho toán THPT.", "A workbench for high-school maths.")}</h1>
         <p className="lead">
