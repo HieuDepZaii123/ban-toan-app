@@ -20,6 +20,39 @@ export const trigRange: Range = {
   tilt: [5, 75, 1],
 };
 
+export const limitInit = { scene: 0, h: 1, assigned: 5, left: -1, right: 1, at: 0, probe: -1.5, time: 0 };
+export const limitRange: Range = {
+  scene: [0, 2, 1],
+  h: [-2, 2, 0.05],
+  assigned: [-1, 5, 0.5],
+  left: [-2, 3, 0.5],
+  right: [-2, 3, 0.5],
+  at: [-2, 3, 0.5],
+  probe: [-2.5, 2.5, 0.05],
+  time: [0, 20, 0.1],
+};
+
+export const integralInit = { scene: 0, upper: 2, strips: 8, gap: 1, span: 2 };
+export const integralRange: Range = {
+  scene: [0, 2, 1],
+  upper: [0.2, 2, 0.1],
+  strips: [1, 24, 1],
+  gap: [0.2, 1, 0.05],
+  span: [0.2, 2, 0.05],
+};
+
+export const chanceInit = { scene: 0, face: 6, prev: 1, sens: 99, fpr: 5, n: 3, k: 2, p: 0.5 };
+export const chanceRange: Range = {
+  scene: [0, 2, 1],
+  face: [1, 6, 1],
+  prev: [1, 20, 1],
+  sens: [50, 100, 1],
+  fpr: [1, 30, 1],
+  n: [1, 8, 1],
+  k: [0, 8, 1],
+  p: [0.1, 0.9, 0.1],
+};
+
 export const derivInit = { scene: 0, h: 1, v0: 20, time: 2, brake: 0 };
 export const derivRange: Range = {
   scene: [0, 2, 1],

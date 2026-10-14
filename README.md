@@ -2,7 +2,7 @@
 
 Bàn làm việc cho toán THPT. Học sinh kéo tham số, nhìn đồ thị đổi, rồi làm câu có gợi ý và lời giải. Không phải trò chơi.
 
-Ba tờ đã mở: **Hàm số bậc hai**, **Lượng giác**, **Đạo hàm**. Mười một tờ kia có chỗ trên bàn (ý chính và bẫy hay gặp) nhưng hình kéo và đề vẫn đang soạn.
+Sáu tờ đã mở: **Hàm số bậc hai**, **Lượng giác**, **Giới hạn**, **Đạo hàm**, **Tích phân**, **Xác suất**. Tám tờ kia có chỗ trên bàn (ý chính và bẫy hay gặp) nhưng hình kéo và đề vẫn đang soạn.
 
 Giao diện tiếng Việt, có thể chuyển EN. Giấy / đêm. Tiến độ, ghi chú và tham số nằm trong `localStorage` trên máy (khóa `ban-toan`).
 

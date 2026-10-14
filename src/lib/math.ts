@@ -180,3 +180,117 @@ export function cubic(x: number): number {
 export function cubicSlope(x: number): number {
   return 3 * x * x - 3;
 }
+
+/** (x² − 1)/(x − 1) = x + 1 for x ≠ 1. The limit at 1 is 2. */
+export function holeY(x: number): number {
+  return x + 1;
+}
+
+export function jumpStudy(left: number, right: number, at: number): {
+  exists: boolean;
+  limit: number | null;
+  continuous: boolean;
+} {
+  const exists = Math.abs(left - right) < 1e-9;
+  return { exists, limit: exists ? left : null, continuous: exists && Math.abs(left - at) < 1e-9 };
+}
+
+/** Tea cooling toward room temperature 25°C. T(0) = 85. The limit is 25, not T(0). */
+export function coolingTemp(t: number): number {
+  return 25 + 60 * Math.exp(-t / 4);
+}
+
+/** Arch y = 2x − x². Integral from 0 to b is b² − b³/3. At b = 2 this is 4/3. */
+export function archY(x: number): number {
+  return 2 * x - x * x;
+}
+
+export function archIntegral(b: number): number {
+  return b * b - (b * b * b) / 3;
+}
+
+/** One midpoint rectangle on [0, 2] has height y(1) = 1 and area 2, not 4/3. */
+export function archRiemann(n: number, b: number): number {
+  const strips = Math.max(1, Math.round(n));
+  const width = b / strips;
+  let sum = 0;
+  for (let i = 0; i < strips; i += 1) sum += archY((i + 0.5) * width) * width;
+  return sum;
+}
+
+/** Area between y = x and y = x² from 0 to b, with x on top for b in [0, 1]. At b = 1 this is 1/6. */
+export function betweenIntegral(b: number): number {
+  return (b * b) / 2 - (b * b * b) / 3;
+}
+
+/**
+ * ∫_0^b (2x − x²)² dx = 4b³/3 − b⁴ + b⁵/5.
+ * At b = 2 this is 16/15, so the volume of revolution is 16π/15.
+ */
+export function archVolumeCoeff(b: number): number {
+  return (4 * b * b * b) / 3 - b ** 4 + (b ** 5) / 5;
+}
+
+/** Cone, or a full conical glass: V = (1/3) π r² h. Radius 3 and height 6 give 18π. */
+export function coneVolume(radius: number, height: number): number {
+  return (Math.PI * radius * radius * height) / 3;
+}
+
+/** Pairs of dice with at least one face equal to `face`. For any face: 11 pairs, one of them a double. */
+export function diceCondition(face: number): { remain: number; both: number } {
+  const f = Math.round(face);
+  let remain = 0;
+  let both = 0;
+  for (let a = 1; a <= 6; a += 1) {
+    for (let b = 1; b <= 6; b += 1) {
+      if (a !== f && b !== f) continue;
+      remain += 1;
+      if (a === f && b === f) both += 1;
+    }
+  }
+  return { remain, both };
+}
+
+/** BB, BG, GB remain after “at least one boy”. Both boys is 1 of those 3, not 1/2. */
+export function boysBothGivenOne(): { remain: number; both: number } {
+  return { remain: 3, both: 1 };
+}
+
+export const BAYES_POP = 10000;
+
+/**
+ * Counts for a test on a town of `pop` people.
+ * Default 1% prevalence, 99% sensitivity, 5% false positives:
+ * 99 true positives, 495 false positives, posterior 99/594 = 1/6.
+ */
+export function bayes(
+  prevalencePct: number,
+  sensitivityPct: number,
+  falsePositivePct: number,
+  pop = BAYES_POP,
+): { sick: number; well: number; tp: number; fp: number; positive: number; posterior: number } {
+  const sick = (pop * prevalencePct) / 100;
+  const well = pop - sick;
+  const tp = (sick * sensitivityPct) / 100;
+  const fp = (well * falsePositivePct) / 100;
+  const positive = tp + fp;
+  return { sick, well, tp, fp, positive, posterior: positive === 0 ? 0 : tp / positive };
+}
+
+export function comb(n: number, k: number): number {
+  if (k < 0 || k > n) return 0;
+  let c = 1;
+  for (let i = 0; i < k; i += 1) c = (c * (n - i)) / (i + 1);
+  return Math.round(c);
+}
+
+export function binom(n: number, k: number, p: number): number {
+  const nn = Math.round(n);
+  const kk = Math.round(k);
+  if (kk < 0 || kk > nn) return 0;
+  return comb(nn, kk) * p ** kk * (1 - p) ** (nn - kk);
+}
+
+export function binomAtLeastOne(n: number, p: number): number {
+  return 1 - (1 - p) ** Math.round(n);
+}

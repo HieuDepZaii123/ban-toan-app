@@ -12,12 +12,18 @@ import { Practice } from "./Practice.tsx";
 
 const QuadraticLab = lazy(() => import("../labs/QuadraticLab.tsx").then((mod) => ({ default: mod.QuadraticLab })));
 const TrigLab = lazy(() => import("../labs/TrigLab.tsx").then((mod) => ({ default: mod.TrigLab })));
+const LimitLab = lazy(() => import("../labs/LimitLab.tsx").then((mod) => ({ default: mod.LimitLab })));
 const DerivativeLab = lazy(() => import("../labs/DerivativeLab.tsx").then((mod) => ({ default: mod.DerivativeLab })));
+const IntegralLab = lazy(() => import("../labs/IntegralLab.tsx").then((mod) => ({ default: mod.IntegralLab })));
+const ProbabilityLab = lazy(() => import("../labs/ProbabilityLab.tsx").then((mod) => ({ default: mod.ProbabilityLab })));
 
 const labs = {
   quadratic: QuadraticLab,
   trig: TrigLab,
+  limit: LimitLab,
   derivative: DerivativeLab,
+  integral: IntegralLab,
+  probability: ProbabilityLab,
 } as const;
 
 export function TopicDesk({ id }: { id: string }) {
@@ -117,7 +123,7 @@ export function TopicDesk({ id }: { id: string }) {
           ) : (
             <div className="stub-stage" role="note">
               <b>{t(lang, "Đề đang soạn", "Questions still being written")}</b>
-              <p>{t(lang, "Ba tờ đã có câu: hàm bậc hai, lượng giác, đạo hàm.", "Three sheets already have questions: quadratics, trigonometry, and the derivative.")}</p>
+              <p>{t(lang, "Sáu tờ đã có câu: hàm bậc hai, lượng giác, giới hạn, đạo hàm, tích phân, xác suất.", "Six sheets already have questions: quadratics, trigonometry, limits, the derivative, integrals, and probability.")}</p>
             </div>
           )
         ) : null}

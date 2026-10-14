@@ -5,18 +5,35 @@
 import katex from "katex";
 import { QUESTION_TOTAL, topics } from "../src/content/catalog.ts";
 import { derivativeQuestions } from "../src/content/derivative.ts";
+import { integralQuestions } from "../src/content/integral.ts";
+import { limitQuestions } from "../src/content/limit.ts";
+import { probabilityQuestions } from "../src/content/probability.ts";
 import { quadraticQuestions } from "../src/content/quadratic.ts";
 import { topicSummary } from "../src/content/summary.ts";
 import { trigQuestions } from "../src/content/trig.ts";
 import { quadText, vertexText } from "../src/lib/format.ts";
 import {
   apex,
+  archIntegral,
+  archRiemann,
+  archVolumeCoeff,
+  bayes,
+  betweenIntegral,
+  binom,
+  binomAtLeastOne,
+  boysBothGivenOne,
   brakeMotion,
   brakeTimeFromDistance,
+  comb,
+  coneVolume,
+  coolingTemp,
   cost,
   cubic,
   cubicSlope,
+  diceCondition,
   fence,
+  holeY,
+  jumpStudy,
   projectile,
   quadStudy,
   rootsText,
@@ -91,16 +108,37 @@ const expected: Record<string, string> = {
   "deriv-cubic": String.raw`$x = -1$ và $x = 1$`,
   "deriv-interval": String.raw`$3$ tại $x = 3$`,
   "deriv-brake": String.raw`$50\text{ m}$`,
+  "lim-hole": String.raw`$2$`,
+  "lim-assign": String.raw`$2$`,
+  "lim-jump": "Không tồn tại",
+  "lim-cont": "Có, vì giới hạn bằng giá trị tại 1",
+  "lim-tea": String.raw`$25^\circ\text{C}$`,
+  "lim-sinc": String.raw`$1$`,
+  "int-area": String.raw`$\dfrac{4}{3}$`,
+  "int-sign": String.raw`$-\dfrac{4}{3}$`,
+  "int-gap": String.raw`$\dfrac{1}{6}$`,
+  "int-volume": String.raw`$\dfrac{16\pi}{15}$`,
+  "int-riemann": String.raw`$2$`,
+  "int-cone": String.raw`$18\pi\text{ cm}^3$`,
+  "prob-dice": String.raw`$\dfrac{1}{11}$`,
+  "prob-count": String.raw`$11$`,
+  "prob-boys": String.raw`$\dfrac{1}{3}$`,
+  "prob-bayes": String.raw`$\dfrac{1}{6}$`,
+  "prob-binom": String.raw`$\dfrac{3}{8}$`,
+  "prob-least": String.raw`$\dfrac{7}{8}$`,
 };
 
 assert(topics.length === 14, `topic count ${topics.length}`);
-assert(topics.filter((topic) => topic.status === "ready").length === 3, "ready count");
-assert(QUESTION_TOTAL === 19, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
+assert(topics.filter((topic) => topic.status === "ready").length === 6, "ready count");
+assert(QUESTION_TOTAL === 37, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
 
 const banks = [
   ["quadratic", quadraticQuestions],
   ["trig", trigQuestions],
+  ["limit", limitQuestions],
   ["derivative", derivativeQuestions],
+  ["integral", integralQuestions],
+  ["probability", probabilityQuestions],
 ] as const;
 
 let counted = 0;
@@ -114,7 +152,7 @@ for (const [id, list] of banks) {
     if (correct) checkQuestion(question, correct);
   }
 }
-assert(counted === 19, `bank size ${counted}`);
+assert(counted === 37, `bank size ${counted}`);
 
 const study = quadStudy(1, -2, -3);
 near(study.delta, 16, "delta");
@@ -179,6 +217,52 @@ assert(when?.choices[when.answer]?.includes("2"), "apex time is 2");
 
 const home = topicSummary("quadratic", undefined, "vi");
 assert(home.includes("−4") || home.includes("-4"), `summary ${home}`);
+
+near(holeY(1), 2, "hole limit");
+near(holeY(0.5), 1.5, "hole nearby");
+const jumped = jumpStudy(-1, 1, 0);
+assert(!jumped.exists && !jumped.continuous, "jump has no limit");
+const joined = jumpStudy(2, 2, 2);
+assert(joined.exists && joined.continuous && joined.limit === 2, "matched jump is continuous");
+near(coolingTemp(0), 85, "tea start");
+near(coolingTemp(4), 25 + 60 / Math.E, "tea at 4");
+assert(coolingTemp(80) < 25.1 && coolingTemp(80) > 25, "tea approaches 25");
+near(Math.sin(1e-6) / 1e-6, 1, "sinc", 1e-8);
+
+near(archIntegral(2), 4 / 3, "arch area");
+near(archRiemann(1, 2), 2, "one strip");
+near(archRiemann(24, 2), 4 / 3, "many strips", 0.01);
+near(betweenIntegral(1), 1 / 6, "between curves");
+near(archVolumeCoeff(2), 16 / 15, "volume coeff");
+near(coneVolume(3, 6) / Math.PI, 18, "cone");
+near(archIntegral(2) + archIntegral(-0) , 4 / 3, "signed companion");
+near(-(archIntegral(2)), -4 / 3, "signed integral");
+
+const dice = diceCondition(6);
+assert(dice.remain === 11 && dice.both === 1, `dice ${dice.remain}`);
+assert(diceCondition(1).remain === 11, "any face leaves 11");
+const boys = boysBothGivenOne();
+assert(boys.remain === 3 && boys.both === 1, "boys 1/3");
+const test = bayes(1, 99, 5);
+near(test.tp, 99, "true positives");
+near(test.fp, 495, "false positives");
+near(test.posterior, 1 / 6, "bayes posterior");
+assert(comb(3, 2) === 3, "comb");
+near(binom(3, 2, 0.5), 3 / 8, "binom");
+near(binomAtLeastOne(3, 0.5), 7 / 8, "at least one");
+near(binom(3, 2, 0.5) - 1 / 8, 2 / 8, "one sequence is not the event");
+
+const limitSummary = topicSummary("limit", undefined, "vi");
+assert(limitSummary.includes("2"), `limit summary ${limitSummary}`);
+const chanceSummary = topicSummary("probability", undefined, "vi");
+assert(chanceSummary.includes("11"), `chance summary ${chanceSummary}`);
+
+const volume = integralQuestions.find((q) => q.id === "int-volume");
+assert(volume?.choices[0]?.includes("16"), "volume choice keeps 16π/15");
+assert(!volume?.choices[volume.answer]?.includes("4\\pi}{3}"), "volume answer is not the area times π");
+const bayesQ = probabilityQuestions.find((q) => q.id === "prob-bayes");
+assert(bayesQ?.choices[bayesQ.answer] === String.raw`$\dfrac{1}{6}$`, "bayes answer is 1/6");
+assert(bayesQ?.choices.some((choice) => choice.includes("99")), "bayes keeps the sensitivity distractor");
 
 if (fails.length) {
   console.error(fails.join("\n"));
