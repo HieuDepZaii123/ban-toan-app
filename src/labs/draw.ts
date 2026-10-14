@@ -126,10 +126,12 @@ export function strokeFn(
   fn: (x: number) => number,
   color: string,
   lineWidth = 2.4,
+  clip?: { x: number; y: number; w: number; h: number },
 ): void {
   ctx.save();
   ctx.beginPath();
-  ctx.rect(pad, pad, width - pad * 2, height - pad * 2);
+  if (clip) ctx.rect(clip.x, clip.y, clip.w, clip.h);
+  else ctx.rect(pad, pad, width - pad * 2, height - pad * 2);
   ctx.clip();
   ctx.beginPath();
   ctx.strokeStyle = color;

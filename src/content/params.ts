@@ -53,6 +53,38 @@ export const chanceRange: Range = {
   p: [0.1, 0.9, 0.1],
 };
 
+export const expInit = { scene: 0, base: 2, x: 2, rate: 8, years: 5, massTime: 20 };
+export const expRange: Range = {
+  scene: [0, 2, 1],
+  base: [0.2, 4, 0.1],
+  x: [-2, 3, 0.1],
+  rate: [1, 20, 1],
+  years: [0, 15, 1],
+  massTime: [0, 40, 1],
+};
+
+export const seqInit = { scene: 0, u1: 3, d: 4, n: 10, g1: 8, q: 0.5, gn: 6, drop: 8, ratio: 0.5, months: 12 };
+export const seqRange: Range = {
+  scene: [0, 2, 1],
+  u1: [-4, 8, 1],
+  d: [-5, 6, 1],
+  n: [1, 12, 1],
+  g1: [1, 8, 1],
+  q: [-1.5, 3, 0.1],
+  gn: [1, 8, 1],
+  drop: [2, 16, 1],
+  ratio: [0.2, 0.8, 0.1],
+  months: [1, 12, 1],
+};
+
+export const surveyInit = { scene: 0, x: 0, rx: 3, px: 0 };
+export const surveyRange: Range = {
+  scene: [0, 2, 1],
+  x: [-2.4, 2.4, 0.05],
+  rx: [-1.5, 4, 0.05],
+  px: [-2, 2, 0.05],
+};
+
 export const derivInit = { scene: 0, h: 1, v0: 20, time: 2, brake: 0 };
 export const derivRange: Range = {
   scene: [0, 2, 1],

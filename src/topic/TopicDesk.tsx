@@ -11,17 +11,23 @@ import { Notebook } from "./Notebook.tsx";
 import { Practice } from "./Practice.tsx";
 
 const QuadraticLab = lazy(() => import("../labs/QuadraticLab.tsx").then((mod) => ({ default: mod.QuadraticLab })));
+const ExpLab = lazy(() => import("../labs/ExpLab.tsx").then((mod) => ({ default: mod.ExpLab })));
+const SequenceLab = lazy(() => import("../labs/SequenceLab.tsx").then((mod) => ({ default: mod.SequenceLab })));
 const TrigLab = lazy(() => import("../labs/TrigLab.tsx").then((mod) => ({ default: mod.TrigLab })));
 const LimitLab = lazy(() => import("../labs/LimitLab.tsx").then((mod) => ({ default: mod.LimitLab })));
 const DerivativeLab = lazy(() => import("../labs/DerivativeLab.tsx").then((mod) => ({ default: mod.DerivativeLab })));
+const SurveyLab = lazy(() => import("../labs/SurveyLab.tsx").then((mod) => ({ default: mod.SurveyLab })));
 const IntegralLab = lazy(() => import("../labs/IntegralLab.tsx").then((mod) => ({ default: mod.IntegralLab })));
 const ProbabilityLab = lazy(() => import("../labs/ProbabilityLab.tsx").then((mod) => ({ default: mod.ProbabilityLab })));
 
 const labs = {
   quadratic: QuadraticLab,
+  exp: ExpLab,
+  sequence: SequenceLab,
   trig: TrigLab,
   limit: LimitLab,
   derivative: DerivativeLab,
+  survey: SurveyLab,
   integral: IntegralLab,
   probability: ProbabilityLab,
 } as const;
@@ -123,7 +129,7 @@ export function TopicDesk({ id }: { id: string }) {
           ) : (
             <div className="stub-stage" role="note">
               <b>{t(lang, "Đề đang soạn", "Questions still being written")}</b>
-              <p>{t(lang, "Sáu tờ đã có câu: hàm bậc hai, lượng giác, giới hạn, đạo hàm, tích phân, xác suất.", "Six sheets already have questions: quadratics, trigonometry, limits, the derivative, integrals, and probability.")}</p>
+              <p>{t(lang, "Chín tờ đã có câu: hàm bậc hai, mũ và logarit, dãy số, lượng giác, giới hạn, đạo hàm, khảo sát hàm số, tích phân, xác suất.", "Nine sheets already have questions: quadratics, exponents and logarithms, sequences, trigonometry, limits, the derivative, curve sketching, integrals, and probability.")}</p>
             </div>
           )
         ) : null}

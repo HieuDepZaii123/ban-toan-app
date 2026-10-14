@@ -294,3 +294,107 @@ export function binom(n: number, k: number, p: number): number {
 export function binomAtLeastOne(n: number, p: number): number {
   return 1 - (1 - p) ** Math.round(n);
 }
+
+/** A base is usable when it is positive and stays away from 1. 1ˣ is constantly 1, and log base 1 is undefined. */
+export function baseOk(base: number): boolean {
+  return base > 0 && Math.abs(base - 1) >= 0.05;
+}
+
+export function expY(base: number, x: number): number {
+  if (!baseOk(base)) return Number.NaN;
+  return base ** x;
+}
+
+export function logY(base: number, x: number): number {
+  if (!baseOk(base) || x <= 0) return Number.NaN;
+  return Math.log(x) / Math.log(base);
+}
+
+/** log(ab) = log a + log b. This is log(6) for 2 and 3, not log(5). */
+export function logProduct(a: number, b: number): number {
+  return Math.log10(a * b);
+}
+
+/** Compound growth of 10 triệu at `ratePct` percent per year. 8% for 5 years is about 14.69, not the simple 14. */
+export function compoundAmount(ratePct: number, years: number, principal = 10): number {
+  return principal * (1 + ratePct / 100) ** years;
+}
+
+export function simpleAmount(ratePct: number, years: number, principal = 10): number {
+  return principal * (1 + (ratePct / 100) * years);
+}
+
+/** Years to double: ln 2 / ln(1 + r). At 8% this is about 9.01, not 8 and not 100/8 = 12.5. */
+export function yearsToDouble(ratePct: number): number {
+  if (ratePct <= 0) return Number.NaN;
+  return Math.log(2) / Math.log(1 + ratePct / 100);
+}
+
+/** Half-life decay. 80 g with a 10-year half-life is 20 g after 20 years. */
+export function decayMass(t: number, m0 = 80, half = 10): number {
+  return m0 * 0.5 ** (t / half);
+}
+
+export function arithTerm(u1: number, d: number, n: number): number {
+  return u1 + (Math.round(n) - 1) * d;
+}
+
+export function arithSum(u1: number, d: number, n: number): number {
+  const count = Math.round(n);
+  return (count / 2) * (u1 + arithTerm(u1, d, count));
+}
+
+export function geomTerm(u1: number, q: number, n: number): number {
+  return u1 * q ** (Math.round(n) - 1);
+}
+
+export function geomPartial(u1: number, q: number, n: number): number {
+  const count = Math.round(n);
+  if (Math.abs(q - 1) < 1e-12) return u1 * count;
+  return (u1 * (1 - q ** count)) / (1 - q);
+}
+
+/** Infinite geometric sum. Null when |q| ≥ 1. For 8 + 4 + 2 + … the sum is 16; the terms tend to 0 but no term is 0. */
+export function geomInfinite(u1: number, q: number): number | null {
+  if (!(Math.abs(q) < 1)) return null;
+  return u1 / (1 - q);
+}
+
+/**
+ * Path of a ball dropped from `height` that rebounds with ratio `ratio`.
+ * The drop is counted once; every later bounce is up and down.
+ * Height 8 m and ratio 1/2 give 8 + 2·(4 / (1 − 1/2)) = 24 m.
+ */
+export function bouncePath(height: number, ratio: number): number | null {
+  if (!(ratio > 0 && ratio < 1)) return null;
+  return height + (2 * height * ratio) / (1 - ratio);
+}
+
+/** Deposits 1 + 2 + … + n. Twelve months total 78, not 12×12 and not n(n−1)/2. */
+export function savingsSum(months: number): number {
+  const n = Math.round(months);
+  return (n * (n + 1)) / 2;
+}
+
+export function cubicSecond(x: number): number {
+  return 6 * x;
+}
+
+export function pureCubic(x: number): number {
+  return x * x * x;
+}
+
+export function pureCubicSlope(x: number): number {
+  return 3 * x * x;
+}
+
+/** y = x² / (x − 1), undefined at x = 1. Equals x + 1 + 1/(x − 1). */
+export function rationalY(x: number): number {
+  if (Math.abs(x - 1) < 1e-9) return Number.NaN;
+  return (x * x) / (x - 1);
+}
+
+/** Oblique asymptote of x²/(x−1). It crosses the vertical asymptote at (1; 2), which is not on the graph. */
+export function rationalOblique(x: number): number {
+  return x + 1;
+}

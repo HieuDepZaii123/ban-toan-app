@@ -1,15 +1,18 @@
 /**
- * Pins the numbers the three desks teach. Run with:
+ * Pins the numbers the open desks teach. Run with:
  *   node --experimental-strip-types scripts/check-math.ts
  */
 import katex from "katex";
 import { QUESTION_TOTAL, topics } from "../src/content/catalog.ts";
 import { derivativeQuestions } from "../src/content/derivative.ts";
+import { expQuestions } from "../src/content/exp.ts";
 import { integralQuestions } from "../src/content/integral.ts";
 import { limitQuestions } from "../src/content/limit.ts";
 import { probabilityQuestions } from "../src/content/probability.ts";
 import { quadraticQuestions } from "../src/content/quadratic.ts";
+import { sequenceQuestions } from "../src/content/sequence.ts";
 import { topicSummary } from "../src/content/summary.ts";
+import { surveyQuestions } from "../src/content/survey.ts";
 import { trigQuestions } from "../src/content/trig.ts";
 import { quadText, vertexText } from "../src/lib/format.ts";
 import {
@@ -28,13 +31,31 @@ import {
   coneVolume,
   coolingTemp,
   cost,
+  arithSum,
+  arithTerm,
+  baseOk,
+  bouncePath,
+  compoundAmount,
   cubic,
+  cubicSecond,
   cubicSlope,
+  decayMass,
   diceCondition,
   fence,
+  expY,
+  geomInfinite,
+  geomTerm,
   holeY,
   jumpStudy,
+  logProduct,
+  logY,
   projectile,
+  pureCubicSlope,
+  rationalOblique,
+  rationalY,
+  savingsSum,
+  simpleAmount,
+  yearsToDouble,
   quadStudy,
   rootsText,
   secantSlope,
@@ -126,17 +147,38 @@ const expected: Record<string, string> = {
   "prob-bayes": String.raw`$\dfrac{1}{6}$`,
   "prob-binom": String.raw`$\dfrac{3}{8}$`,
   "prob-least": String.raw`$\dfrac{7}{8}$`,
+  "exp-power": String.raw`$8$`,
+  "exp-log": String.raw`$3$`,
+  "exp-sum": String.raw`$\log 6$`,
+  "exp-compound": "Khoảng 14,69 triệu",
+  "exp-double": "Khoảng 9 năm",
+  "exp-decay": "20 g",
+  "seq-term": String.raw`$39$`,
+  "seq-sum": String.raw`$210$`,
+  "seq-geom": String.raw`$162$`,
+  "seq-infinite": String.raw`$16$`,
+  "seq-bounce": "24 m",
+  "seq-save": "78 triệu",
+  "surv-max": String.raw`$2$ tại $x = -1$`,
+  "surv-min": String.raw`$-2$ tại $x = 1$`,
+  "surv-roots": String.raw`$-\sqrt{3}$, $0$, $\sqrt{3}$`,
+  "surv-mono": String.raw`$(-\infty; -1]$ và $[1; +\infty)$`,
+  "surv-flat": "Không có cực trị",
+  "surv-cross": "Không, vì x = 1 không thuộc tập xác định",
 };
 
 assert(topics.length === 14, `topic count ${topics.length}`);
-assert(topics.filter((topic) => topic.status === "ready").length === 6, "ready count");
-assert(QUESTION_TOTAL === 37, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
+assert(topics.filter((topic) => topic.status === "ready").length === 9, "ready count");
+assert(QUESTION_TOTAL === 55, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
 
 const banks = [
   ["quadratic", quadraticQuestions],
+  ["exp", expQuestions],
+  ["sequence", sequenceQuestions],
   ["trig", trigQuestions],
   ["limit", limitQuestions],
   ["derivative", derivativeQuestions],
+  ["survey", surveyQuestions],
   ["integral", integralQuestions],
   ["probability", probabilityQuestions],
 ] as const;
@@ -152,7 +194,7 @@ for (const [id, list] of banks) {
     if (correct) checkQuestion(question, correct);
   }
 }
-assert(counted === 37, `bank size ${counted}`);
+assert(counted === 55, `bank size ${counted}`);
 
 const study = quadStudy(1, -2, -3);
 near(study.delta, 16, "delta");
@@ -263,6 +305,49 @@ assert(!volume?.choices[volume.answer]?.includes("4\\pi}{3}"), "volume answer is
 const bayesQ = probabilityQuestions.find((q) => q.id === "prob-bayes");
 assert(bayesQ?.choices[bayesQ.answer] === String.raw`$\dfrac{1}{6}$`, "bayes answer is 1/6");
 assert(bayesQ?.choices.some((choice) => choice.includes("99")), "bayes keeps the sensitivity distractor");
+
+assert(!baseOk(1) && baseOk(2), "base 1 is refused");
+near(expY(2, 3), 8, "2^3");
+near(logY(2, 8), 3, "log2 8");
+near(Math.log10(2) + Math.log10(3), logProduct(2, 3), "log sum");
+assert(Math.abs(logProduct(2, 3) - Math.log10(5)) > 0.01, "log sum is not log 5");
+near(compoundAmount(8, 5), 10 * 1.08 ** 5, "compound");
+near(simpleAmount(8, 5), 14, "simple interest");
+assert(compoundAmount(8, 5) > 14.69 && compoundAmount(8, 5) < 14.7, "about 14.69");
+near(yearsToDouble(8), Math.log(2) / Math.log(1.08), "doubling");
+assert(yearsToDouble(8) > 9 && yearsToDouble(8) < 9.1, "doubling near 9, not 8 or 12.5");
+near(decayMass(0), 80, "decay start");
+near(decayMass(10), 40, "one half-life");
+near(decayMass(20), 20, "two half-lives");
+
+near(arithTerm(3, 4, 10), 39, "arith term");
+assert(arithTerm(3, 4, 10) !== 43, "not n steps");
+near(arithSum(3, 4, 10), 210, "arith sum");
+near(geomTerm(2, 3, 5), 162, "geom term");
+near(geomInfinite(8, 0.5) ?? NaN, 16, "infinite sum");
+assert(geomInfinite(2, 3) === null, "diverges");
+near(bouncePath(8, 0.5) ?? NaN, 24, "bounce path");
+assert(bouncePath(8, 1) === null, "bounce needs a ratio below 1");
+near(savingsSum(12), 78, "savings");
+
+near(cubicSecond(0), 0, "inflection");
+near(cubicSecond(1), 6, "second at 1");
+near(pureCubicSlope(0), 0, "pure slope 0");
+near(pureCubicSlope(1), 3, "pure slope 1");
+near(pureCubicSlope(-2), 12, "pure slope stays non-negative");
+near(rationalY(3), 4.5, "rational at 3");
+assert(!Number.isFinite(rationalY(1)), "rational undefined at 1");
+near(rationalOblique(1), 2, "asymptotes meet at 2");
+assert(cubicSlope(-2) > 0 && cubicSlope(0) < 0 && cubicSlope(2) > 0, "cubic changes sign");
+near(cubic(-Math.sqrt(3)), 0, "root lo");
+near(cubic(Math.sqrt(3)), 0, "root hi");
+
+const expHome = topicSummary("exp", undefined, "vi");
+assert(expHome.includes("2"), `exp summary ${expHome}`);
+const seqHome = topicSummary("sequence", undefined, "vi");
+assert(seqHome.includes("39") && seqHome.includes("210"), `sequence summary ${seqHome}`);
+const surveyHome = topicSummary("survey", undefined, "vi");
+assert(surveyHome.includes("−2") || surveyHome.includes("-2"), `survey summary ${surveyHome}`);
 
 if (fails.length) {
   console.error(fails.join("\n"));

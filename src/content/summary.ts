@@ -3,27 +3,42 @@ import {
   apex,
   archIntegral,
   archVolumeCoeff,
+  arithSum,
+  arithTerm,
   bayes,
   betweenIntegral,
   binom,
+  bouncePath,
   brakeMotion,
+  compoundAmount,
   coolingTemp,
+  cubic,
+  decayMass,
   diceCondition,
   fence,
+  geomInfinite,
+  geomTerm,
   holeY,
   jumpStudy,
   opening,
   quadStudy,
+  rationalY,
+  savingsSum,
   secantSlope,
   showCos,
   showSin,
+  simpleAmount,
+  yearsToDouble,
 } from "../lib/math.ts";
 import type { Lang } from "../lib/math.ts";
-import { chanceInit, derivInit, integralInit, limitInit, quadInit, trigInit } from "./params.ts";
+import { chanceInit, derivInit, expInit, integralInit, limitInit, quadInit, seqInit, surveyInit, trigInit } from "./params.ts";
 
 export function topicSummary(id: string, params: Record<string, number> | undefined, lang: Lang): string {
   if (id === "quadratic") return quadraticSummary(params, lang);
+  if (id === "exp") return expSummary(params, lang);
+  if (id === "sequence") return sequenceSummary(params, lang);
   if (id === "trig") return trigSummary(params, lang);
+  if (id === "survey") return surveySummary(params, lang);
   if (id === "limit") return limitSummary(params, lang);
   if (id === "derivative") return derivSummary(params, lang);
   if (id === "integral") return integralSummary(params, lang);
@@ -169,6 +184,73 @@ function chanceSummary(params: Record<string, number> | undefined, lang: Lang): 
   return lang === "en"
     ? `At least one ${trim(params?.face ?? chanceInit.face)}: ${dice.remain} pairs left.`
     : `Ít nhất một mặt ${trim(params?.face ?? chanceInit.face)}: còn ${dice.remain} cặp.`;
+}
+
+function expSummary(params: Record<string, number> | undefined, lang: Lang): string {
+  const scene = params?.scene ?? expInit.scene;
+  if (scene === 2) {
+    const time = params?.massTime ?? expInit.massTime;
+    return lang === "en"
+      ? `After ${trim(time)} years, ${trim(decayMass(time))} g remain.`
+      : `Sau ${trim(time)} năm còn ${trim(decayMass(time))} g.`;
+  }
+  if (scene === 1) {
+    const rate = params?.rate ?? expInit.rate;
+    const years = params?.years ?? expInit.years;
+    return lang === "en"
+      ? `Compound ${trim(compoundAmount(rate, years))} triệu, simple ${trim(simpleAmount(rate, years))} triệu. Doubles in ${trim(yearsToDouble(rate))} years.`
+      : `Kép ${trim(compoundAmount(rate, years))} triệu, đơn ${trim(simpleAmount(rate, years))} triệu. Gấp đôi sau ${trim(yearsToDouble(rate))} năm.`;
+  }
+  const base = params?.base ?? expInit.base;
+  const x = params?.x ?? expInit.x;
+  return lang === "en"
+    ? `Base ${trim(base)}, at x = ${trim(x)}.`
+    : `Cơ số ${trim(base)}, tại x = ${trim(x)}.`;
+}
+
+function sequenceSummary(params: Record<string, number> | undefined, lang: Lang): string {
+  const scene = params?.scene ?? seqInit.scene;
+  if (scene === 2) {
+    const drop = params?.drop ?? seqInit.drop;
+    const ratio = params?.ratio ?? seqInit.ratio;
+    const months = params?.months ?? seqInit.months;
+    return lang === "en"
+      ? `Path ${trim(bouncePath(drop, ratio) ?? 0)} m. Deposited ${trim(savingsSum(months))} triệu.`
+      : `Quãng ${trim(bouncePath(drop, ratio) ?? 0)} m. Đã gửi ${trim(savingsSum(months))} triệu.`;
+  }
+  if (scene === 1) {
+    const g1 = params?.g1 ?? seqInit.g1;
+    const q = params?.q ?? seqInit.q;
+    const infinite = geomInfinite(g1, q);
+    return lang === "en"
+      ? `Term ${trim(params?.gn ?? seqInit.gn)} is ${trim(geomTerm(g1, q, params?.gn ?? seqInit.gn))}. ${infinite === null ? "No infinite sum." : `Infinite sum ${trim(infinite)}.`}`
+      : `Số hạng ${trim(params?.gn ?? seqInit.gn)} là ${trim(geomTerm(g1, q, params?.gn ?? seqInit.gn))}. ${infinite === null ? "Không có tổng vô hạn." : `Tổng vô hạn ${trim(infinite)}.`}`;
+  }
+  const u1 = params?.u1 ?? seqInit.u1;
+  const d = params?.d ?? seqInit.d;
+  const n = params?.n ?? seqInit.n;
+  return lang === "en"
+    ? `Term ${trim(n)} is ${trim(arithTerm(u1, d, n))}. Sum ${trim(arithSum(u1, d, n))}.`
+    : `Số hạng ${trim(n)} là ${trim(arithTerm(u1, d, n))}. Tổng ${trim(arithSum(u1, d, n))}.`;
+}
+
+function surveySummary(params: Record<string, number> | undefined, lang: Lang): string {
+  const scene = params?.scene ?? surveyInit.scene;
+  if (scene === 2) {
+    return lang === "en"
+      ? "y = x³ has a horizontal tangent at 0 and no extremum."
+      : "y = x³ có tiếp tuyến ngang tại 0 và không có cực trị.";
+  }
+  if (scene === 1) {
+    const x = params?.rx ?? surveyInit.rx;
+    return lang === "en"
+      ? `At x = ${trim(x)}, y = ${trim(rationalY(x))}. (1; 2) is not on the graph.`
+      : `Tại x = ${trim(x)}, y = ${trim(rationalY(x))}. (1; 2) không thuộc đồ thị.`;
+  }
+  const x = params?.x ?? surveyInit.x;
+  return lang === "en"
+    ? `y = ${trim(cubic(x))} at x = ${trim(x)}. Maximum 2, minimum −2.`
+    : `y = ${trim(cubic(x))} tại x = ${trim(x)}. Cực đại 2, cực tiểu −2.`;
 }
 
 function trim(n: number): string {
