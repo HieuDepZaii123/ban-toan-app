@@ -5,8 +5,8 @@ import { A } from "../lib/route.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
 import { Prefs, useLang } from "../ui/Prefs.tsx";
+import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
-import { Spark } from "./Spark.tsx";
 
 export function HomeDesk() {
   const lang = useLang();
@@ -133,7 +133,7 @@ function TopicRow({ id }: { id: string }) {
   return (
     <A className={`topic${last ? " is-last" : ""}${ready ? "" : " is-stub"}`} href={`/t/${topic.id}`} data-topic={topic.id}>
       <span className="num">{topic.n}</span>
-      <Spark id={topic.id} />
+      <Motion id={topic.id} variant="card" />
       <span className="topic-copy">
         <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
         <small>

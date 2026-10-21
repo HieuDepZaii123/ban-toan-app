@@ -19,6 +19,7 @@ import {
   apex,
   archIntegral,
   archRiemann,
+  archY,
   archVolumeCoeff,
   bayes,
   betweenIntegral,
@@ -44,6 +45,7 @@ import {
   fence,
   expY,
   geomInfinite,
+  geomPartial,
   geomTerm,
   holeY,
   jumpStudy,
@@ -65,6 +67,39 @@ import {
   treeHeight,
 } from "../src/lib/math.ts";
 import { sceneFromHour } from "../src/home/day.ts";
+import {
+  ARRANGEMENTS,
+  VEC_U,
+  VEC_V,
+  adjacentSwap,
+  approachY,
+  arrangementAt,
+  diePair,
+  expMirror,
+  expX,
+  holeGap,
+  ineqFrame,
+  lineFoot,
+  motionArch,
+  motionCubic,
+  motionCubicSlope,
+  quadA,
+  quadVertex,
+  quadY,
+  rollsShown,
+  secantH,
+  shrinkPartial,
+  shrinkTerm,
+  similarCut,
+  stripCount,
+  sumHistogram,
+  surveyX,
+  tripAngle,
+  vecAdd,
+  walker,
+  ways,
+} from "../src/motion/facts.ts";
+import { loadClip } from "../src/motion/load.ts";
 import { fold } from "../src/lib/text.ts";
 import type { Question } from "../src/content/types.ts";
 
@@ -355,6 +390,125 @@ assert(sceneFromHour(11) === "noon" && sceneFromHour(13) === "noon", "noon band"
 assert(sceneFromHour(14) === "afternoon" && sceneFromHour(17) === "afternoon", "afternoon band");
 assert(sceneFromHour(18) === "evening" && sceneFromHour(4) === "evening" && sceneFromHour(0) === "evening", "night band");
 assert(sceneFromHour(24) === "evening" && sceneFromHour(-1) === "evening", "hour wraps");
+
+const aLo = quadA(0);
+const aHi = quadA(0.5);
+assert(Math.abs(quadVertex(aLo).x - quadVertex(aHi).x) > 0.5, "changing a slides the vertex");
+for (const a of [0.55, 1, 1.85]) {
+  const vertex = quadVertex(a);
+  const study = quadStudy(a, -2, 0);
+  near(vertex.x, study.vertex?.x ?? NaN, `vertex x ${a}`);
+  near(vertex.y, study.vertex?.y ?? NaN, `vertex y ${a}`);
+  near(vertex.y, -vertex.x, `vertex on y = −x ${a}`);
+  near(quadY(a, vertex.x), vertex.y, `vertex on the curve ${a}`);
+}
+
+const leftRay = ineqFrame(0.25);
+const rightRay = ineqFrame(0.75);
+assert(leftRay.hi === 2 && leftRay.lo === null && leftRay.amount > 0.99, "positive a solves x ≤ 2");
+assert(rightRay.lo === 2 && rightRay.hi === null && rightRay.amount > 0.99, "negative a flips the ray");
+
+near(expMirror(3).y, expY(2, 3), "clip 2^3");
+near(expMirror(3).my, logY(2, 8), "mirror is the log");
+near(expMirror(2).y, 4, "2^2");
+near(expMirror(2).mx, 4, "mirror x");
+near(expX(0), -0.7, "exp start");
+
+for (const n of [1, 2, 5, 7]) {
+  near(shrinkTerm(n), geomTerm(8, 0.5, n), `shrink term ${n}`);
+  near(shrinkPartial(n), geomPartial(8, 0.5, n), `shrink sum ${n}`);
+}
+assert(shrinkTerm(12) > 0, "no term is 0");
+assert(shrinkPartial(20) < 16 && shrinkPartial(20) > 15.9, "sum approaches 16");
+
+near(tripAngle(150 / 360), (150 * Math.PI) / 180, "150 degrees");
+near(Math.sin(tripAngle(150 / 360)), sinDeg(150), "sin 150");
+near(Math.cos(tripAngle(150 / 360)), cosDeg(150), "cos 150");
+near(Math.sin(tripAngle(150 / 360)), 0.5, "sin 150 is 1/2");
+near(Math.cos(tripAngle(150 / 360)), -Math.sqrt(3) / 2, "cos 150 is −√3/2");
+
+near(approachY(1.4), holeY(1.4), "hole matches the lesson");
+near(approachY(0.2), holeY(0.2), "hole from the left");
+assert(Math.abs(approachY(1.0001) - 2) < 1e-3, "both sides approach 2");
+assert(Math.abs(approachY(1.0001) - 5) > 1, "the value 5 is not the limit");
+const gap = holeGap(0.5);
+near(approachY(1 - gap), 2 - gap, "left approach");
+near(approachY(1 + gap), 2 + gap, "right approach");
+
+near(secantSlope(1, secantH(0)), 2 + secantH(0), "secant slope is 2 + h");
+near(secantSlope(1, 0), 2, "tangent slope of x² at 1");
+assert(secantH(0.5) < 0.06, "h closes on the tangent");
+
+for (const x of [-1, 0, 1, Math.sqrt(3), surveyX(0.2), surveyX(0.7)]) {
+  near(motionCubic(x), cubic(x), `cubic ${x}`);
+  near(motionCubicSlope(x), cubicSlope(x), `cubic slope ${x}`);
+}
+near(motionCubic(-1), 2, "cubic max");
+near(motionCubic(1), -2, "cubic min");
+near(motionCubicSlope(-1), 0, "flat at the max");
+near(motionCubicSlope(0), -3, "still decreasing at 0");
+
+near(motionArch(1), archY(1), "arch height");
+assert(stripCount(0) === 1 && stripCount(0.5) === 10, "riemann count");
+near(archRiemann(1, 2), 2, "one midpoint rectangle is 2");
+near(archIntegral(2), 4 / 3, "arch area 4/3");
+assert(Math.abs(archRiemann(stripCount(0.5), 2) - 4 / 3) < Math.abs(2 - 4 / 3), "more strips sit closer to 4/3");
+
+const vecSum = vecAdd(VEC_U, VEC_V);
+near(vecSum[0], VEC_U[0] + VEC_V[0], "vector sum x");
+near(vecSum[1], VEC_U[1] + VEC_V[1], "vector sum y");
+near(walker(0)[0], 0, "walker starts at the origin");
+near(walker(0)[1], 0, "walker starts at the origin y");
+near(walker(0.4)[0], VEC_U[0], "walker finishes u");
+near(walker(0.4)[1], VEC_U[1], "walker finishes u y");
+near(walker(0.75)[0], vecSum[0], "walker reaches u + v");
+near(walker(0.75)[1], vecSum[1], "walker reaches u + v y");
+near(walker(0.999)[0], 0, "walker returns on the diagonal", 0.05);
+near(walker(0.999)[1], 0, "walker returns on the diagonal y", 0.05);
+
+const foot = lineFoot(3, 1);
+near(foot.x, 2, "foot x");
+near(foot.y, 0, "foot y");
+near(foot.x + foot.y - 2, 0, "foot lies on the line");
+near(foot.dist, Math.SQRT2, "distance is √2");
+near(foot.dist, Math.abs(3 + 1 - 2) / Math.sqrt(2), "distance formula");
+
+const cut = similarCut(0.5);
+near(cut.ratio, 0.5, "parallel cut keeps the ratio");
+near(cut.p[1], cut.q[1], "the cut is parallel to the base");
+
+assert(ARRANGEMENTS.length === ways(3, 3, true), "3! arrangements");
+assert(ways(3, 2, false) === 3, "C(3, 2) = 3");
+assert(ways(4, 2, true) === 12 && ways(4, 2, false) === 6, "order makes A larger than C");
+assert(new Set(ARRANGEMENTS.map((row) => row.join(""))).size === 6, "every order once");
+for (let i = 0; i < ARRANGEMENTS.length; i += 1) {
+  const from = ARRANGEMENTS[i];
+  const to = ARRANGEMENTS[(i + 1) % ARRANGEMENTS.length];
+  assert(!!from && !!to && adjacentSwap(from, to), `adjacent swap ${i}`);
+}
+const posed = arrangementAt(0);
+near(posed.slot[0], 0, "A starts first");
+near(posed.slot[1], 1, "B starts in the middle");
+near(posed.slot[2], 2, "C starts last");
+
+const fullDice = sumHistogram(36);
+assert(fullDice[7] === 6 && fullDice[2] === 1 && fullDice[12] === 1, "dice sums make a triangle");
+assert(fullDice.reduce((acc, n) => acc + n, 0) === 36, "36 equally likely pairs");
+const pairs = new Set<string>();
+for (let i = 0; i < 36; i += 1) {
+  const pair = diePair(i);
+  pairs.add(`${pair.a},${pair.b}`);
+}
+assert(pairs.size === 36, "every face pair appears once");
+assert(rollsShown(0.95) === 36, "the histogram finishes");
+assert(sumHistogram(rollsShown(0.95))[7] === 6, "the finished picture peaks at 7");
+
+const clips = await Promise.all(topics.map((topic) => loadClip(topic.id)));
+clips.forEach((clip, index) => {
+  const topic = topics[index];
+  assert(typeof clip.draw === "function", `${topic?.id ?? index} draws`);
+  assert((clip.still ?? -1) >= 0 && clip.still <= 1, `${topic?.id ?? index} still frame`);
+});
 
 if (fails.length) {
   console.error(fails.join("\n"));

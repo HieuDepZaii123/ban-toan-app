@@ -7,6 +7,8 @@ import { setLast, toggleThink, useSlice, EMPTY_THINK } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { Prefs, useLang } from "../ui/Prefs.tsx";
+import { captions } from "../motion/captions.ts";
+import { Motion } from "../motion/Motion.tsx";
 import { Notebook } from "./Notebook.tsx";
 import { Practice } from "./Practice.tsx";
 
@@ -100,6 +102,7 @@ export function TopicDesk({ id }: { id: string }) {
       <main id="content">
         {tab === "hoc" ? (
           <div className="hoc">
+            <Motion id={topic.id} variant="stage" label={(captions[topic.id] ?? ["", ""])[lang === "en" ? 1 : 0]} />
             <div className="concept">
               {lesson ? (
                 <MathText text={lang === "en" ? lesson.conceptEn : lesson.concept} />

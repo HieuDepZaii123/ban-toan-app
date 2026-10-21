@@ -259,6 +259,29 @@ main {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+.motion {
+  position: relative;
+  display: block;
+  background: var(--plot-bg);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.motion-card { width: 96px; height: 56px; border-radius: 8px; }
+.motion-stage {
+  width: 100%;
+  height: clamp(148px, 28vw, 196px);
+  border-radius: 14px;
+}
+.motion-canvas { width: 100%; height: 100%; display: block; }
+.motion .spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+}
+.motion.is-ready .spark { display: none; }
 .topic-copy { min-width: 0; display: grid; }
 .topic-copy small { color: var(--muted); }
 .topic-meta { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.88rem; }
@@ -276,9 +299,12 @@ main {
     column-gap: 32px;
     align-items: start;
   }
-  .concept { grid-column: 1; grid-row: 1; }
-  .guide { grid-column: 1; grid-row: 2; }
-  .stage { grid-column: 2; grid-row: 1 / span 2; position: sticky; top: 108px; }
+  .motion-stage { grid-column: 1 / -1; grid-row: 1; }
+  .concept { grid-column: 1; grid-row: 2; }
+  .guide { grid-column: 1; grid-row: 3; }
+  .stage,
+  .hoc > .stub-stage,
+  .hoc > .graph-wrap { grid-column: 2; grid-row: 2 / span 2; position: sticky; top: 108px; }
 }
 .stage, .guide, .practice, .notebook { display: grid; gap: 12px; }
 .stage-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
