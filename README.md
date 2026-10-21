@@ -2,11 +2,11 @@
 
 Bàn làm việc cho toán THPT. Học sinh kéo tham số, nhìn đồ thị đổi, rồi làm câu có gợi ý và lời giải. Không phải trò chơi.
 
-Chín tờ đã mở: **Hàm số bậc hai**, **Mũ và logarit**, **Dãy số**, **Lượng giác**, **Giới hạn**, **Đạo hàm**, **Khảo sát hàm số**, **Tích phân**, **Xác suất**. Năm tờ kia có chỗ trên bàn (ý chính và bẫy hay gặp) nhưng hình kéo và đề vẫn đang soạn.
+Mười bốn tờ đã mở: **Hàm số bậc hai**, **Bất đẳng thức**, **Mũ và logarit**, **Dãy số**, **Lượng giác**, **Giới hạn**, **Đạo hàm**, **Khảo sát hàm số**, **Tích phân**, **Vectơ và ma trận**, **Hình giải tích**, **Hình phẳng và không gian**, **Tổ hợp và thống kê**, **Xác suất**. Mỗi tờ có hình kéo, một ví dụ số, ba bước Nhìn / Làm / Kết, và sáu câu có gợi ý cùng lời giải.
 
 Giao diện tiếng Việt, có thể chuyển EN. Giấy / đêm. Trên trang chủ có đèn bàn, đồng hồ Hà Nội cùng Tokyo, London và New York, và cửa sổ đổi Sáng / Trưa / Chiều / Đêm theo giờ trên máy (chọn tay được). Cảnh ngoài cửa là SVG, tải khi cảnh đó được mở. Tiến độ, ghi chú và tham số nằm trong `localStorage` (khóa `ban-toan`); đèn và cảnh cửa sổ nằm ở `ban-toan-room`.
 
-Mỗi tờ, kể cả tờ đang soạn, có một ảnh động ngắn ngay trên thẻ và ở đầu tab Học: đỉnh parabol trượt, tia nghiệm đổi chiều, mũ với log, dãy co về 0, đường tròn đơn vị, lỗ hổng của giới hạn, cát tuyến thành tiếp tuyến, bậc ba với dấu đạo hàm, hình chữ nhật Riemann, cộng vectơ, khoảng cách tới đường thẳng, tam giác đồng dạng, sáu cách xếp ba vật, và histogram hai xúc xắc. Ảnh vẽ bằng canvas, mỗi tờ một tệp riêng, chỉ tải khi thẻ hoặc trang Học đi vào khung nhìn, và dừng khi ra khỏi màn hình. Trên máy có chuột, thẻ chạy khi rê vào; trên cảm ứng thì chạy khi hiện. Nếu máy xin giảm chuyển động, ảnh giữ một khung đứng.
+Mỗi tờ có một ảnh động ngắn ngay trên thẻ và ở đầu tab Học: đỉnh parabol trượt, tia nghiệm đổi chiều, mũ với log, dãy co về 0, đường tròn đơn vị, lỗ hổng của giới hạn, cát tuyến thành tiếp tuyến, bậc ba với dấu đạo hàm, hình chữ nhật Riemann, cộng vectơ, khoảng cách tới đường thẳng, tam giác đồng dạng, sáu cách xếp ba vật, và histogram hai xúc xắc. Ảnh vẽ bằng canvas, mỗi tờ một tệp riêng, chỉ tải khi thẻ hoặc trang Học đi vào khung nhìn, và dừng khi ra khỏi màn hình. Trên máy có chuột, thẻ chạy khi rê vào; trên cảm ứng thì chạy khi hiện. Nếu máy xin giảm chuyển động, ảnh giữ một khung đứng.
 
 ## Chạy
 

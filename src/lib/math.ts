@@ -398,3 +398,159 @@ export function rationalY(x: number): number {
 export function rationalOblique(x: number): number {
   return x + 1;
 }
+
+/** AM–GM for two positive numbers. Equality only when a = b. Null if either is not positive. */
+export function amGm(a: number, b: number): { am: number; gm: number } | null {
+  if (!(a > 0) || !(b > 0)) return null;
+  return { am: (a + b) / 2, gm: Math.sqrt(a * b) };
+}
+
+/** Two positive numbers with a fixed sum. The product is largest when they are equal. */
+export function splitProduct(sum: number): number {
+  return (sum / 2) * (sum / 2);
+}
+
+/** (a²+b²)(c²+d²) ≥ (ac+bd)². Equality when (a,b) and (c,d) are proportional. */
+export function cauchyPair(a: number, b: number, c: number, d: number): { left: number; right: number; equal: boolean } {
+  const left = (a * a + b * b) * (c * c + d * d);
+  const right = (a * c + b * d) ** 2;
+  return { left, right, equal: Math.abs(a * d - b * c) <= 1e-8 * (1 + Math.abs(left)) };
+}
+
+/** Desks x and chairs y. Wood x+y ≤ 10, labour 2x+y ≤ 16, profit 5x+3y. Maximum 42 at (6, 4). */
+export function workshopOk(x: number, y: number): boolean {
+  return x >= -1e-9 && y >= -1e-9 && x + y <= 10 + 1e-9 && 2 * x + y <= 16 + 1e-9;
+}
+
+export function workshopProfit(x: number, y: number): number {
+  return 5 * x + 3 * y;
+}
+
+export function vec3Add(u: readonly [number, number, number], v: readonly [number, number, number]): [number, number, number] {
+  return [u[0] + v[0], u[1] + v[1], u[2] + v[2]];
+}
+
+export function vec3Dot(u: readonly [number, number, number], v: readonly [number, number, number]): number {
+  return u[0] * v[0] + u[1] * v[1] + u[2] * v[2];
+}
+
+export function vec3Len(u: readonly [number, number, number]): number {
+  return Math.hypot(u[0], u[1], u[2]);
+}
+
+export function vec3Cross(u: readonly [number, number, number], v: readonly [number, number, number]): [number, number, number] {
+  return [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]];
+}
+
+/** 2×2 determinant ad − bc. */
+export function det2(a: number, b: number, c: number, d: number): number {
+  return a * d - b * c;
+}
+
+/** Unique solution of a1 x + b1 y = c1, a2 x + b2 y = c2. Null when the determinant is 0. */
+export function solve2(a1: number, b1: number, c1: number, a2: number, b2: number, c2: number): { x: number; y: number } | null {
+  const d = det2(a1, b1, a2, b2);
+  if (Math.abs(d) < 1e-9) return null;
+  return { x: det2(c1, b1, c2, b2) / d, y: det2(a1, c1, a2, c2) / d };
+}
+
+/** Distance from (x, y) to ax + by + c = 0. */
+export function lineDist(a: number, b: number, c: number, x: number, y: number): number {
+  const norm = Math.hypot(a, b);
+  if (norm < 1e-9) return Number.NaN;
+  return Math.abs(a * x + b * y + c) / norm;
+}
+
+/** Foot of the perpendicular from (x, y) onto ax + by + c = 0. */
+export function lineFoot2(a: number, b: number, c: number, x: number, y: number): { x: number; y: number; dist: number } {
+  const norm = a * a + b * b;
+  if (norm < 1e-12) return { x, y, dist: Number.NaN };
+  const t = (a * x + b * y + c) / norm;
+  const fx = x - a * t;
+  const fy = y - b * t;
+  return { x: fx, y: fy, dist: Math.hypot(x - fx, y - fy) };
+}
+
+/** Distance from (x, y, z) to ax + by + cz + d = 0. */
+export function planeDist(a: number, b: number, c: number, d: number, x: number, y: number, z: number): number {
+  const norm = Math.hypot(a, b, c);
+  if (norm < 1e-9) return Number.NaN;
+  return Math.abs(a * x + b * y + c * z + d) / norm;
+}
+
+export function planeFoot(a: number, b: number, c: number, d: number, x: number, y: number, z: number): { x: number; y: number; z: number; dist: number } {
+  const norm = a * a + b * b + c * c;
+  if (norm < 1e-12) return { x, y, z, dist: Number.NaN };
+  const t = (a * x + b * y + c * z + d) / norm;
+  const fx = x - a * t;
+  const fy = y - b * t;
+  const fz = z - c * t;
+  return { x: fx, y: fy, z: fz, dist: Math.hypot(x - fx, y - fy, z - fz) };
+}
+
+/** Origin-centred circle. (3, 4) lies on the circle of radius 5. (6, 0) lies outside it. */
+export function circlePlace(x: number, y: number, radius: number): "in" | "on" | "out" {
+  const gap = x * x + y * y - radius * radius;
+  if (Math.abs(gap) <= 1e-6) return "on";
+  return gap < 0 ? "in" : "out";
+}
+
+export function triArea(base: number, height: number): number {
+  return (base * height) / 2;
+}
+
+export function boxVolume(length: number, width: number, height: number): number {
+  return length * width * height;
+}
+
+export function boxBase(length: number, width: number): number {
+  return length * width;
+}
+
+/** Square pyramid. Volume is one third of base area times height, not the base area itself. */
+export function pyramidVolume(side: number, height: number): number {
+  return (side * side * height) / 3;
+}
+
+export function pyramidBase(side: number): number {
+  return side * side;
+}
+
+/** Regular tetrahedron of edge a. Volume a³√2 / 12. All six edges equal a. */
+export function tetraVolume(edge: number): number {
+  return (edge * edge * edge * Math.sqrt(2)) / 12;
+}
+
+export function tetraVerts(edge: number): [number, number, number][] {
+  const a = edge;
+  return [
+    [0, 0, 0],
+    [a, 0, 0],
+    [a / 2, (a * Math.sqrt(3)) / 2, 0],
+    [a / 2, (a * Math.sqrt(3)) / 6, (a * Math.sqrt(6)) / 3],
+  ];
+}
+
+/** P(n, k) = n! / (n−k)!. Order counts. */
+export function arrange(n: number, k: number): number {
+  const nn = Math.round(n);
+  const kk = Math.round(k);
+  if (kk < 0 || kk > nn) return 0;
+  let p = 1;
+  for (let i = 0; i < kk; i += 1) p *= nn - i;
+  return p;
+}
+
+export function meanOf(values: readonly number[]): number {
+  if (values.length === 0) return Number.NaN;
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+/** Middle value after sorting. For 2, 3, 4, 5, 20 the median stays 4. */
+export function medianOf(values: readonly number[]): number {
+  if (values.length === 0) return Number.NaN;
+  const sorted = [...values].sort((p, q) => p - q);
+  const mid = Math.floor(sorted.length / 2);
+  if (sorted.length % 2 === 1) return sorted[mid] ?? Number.NaN;
+  return ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2;
+}

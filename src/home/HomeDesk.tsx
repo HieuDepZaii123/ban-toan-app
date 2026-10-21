@@ -65,8 +65,8 @@ export function HomeDesk() {
         <p className="lead">
           {t(
             lang,
-            "Kéo tham số, đọc số vừa tính, rồi làm câu có lời giải. Chín tờ đã mở. Năm tờ kia giữ chỗ, hình và đề đang soạn.",
-            "Drag a parameter, read the number you just computed, then answer a question with a worked solution. Nine sheets are open. Five others keep their place while the figures and questions are written.",
+            "Kéo tham số, đọc số vừa tính, rồi làm câu có lời giải. Mười bốn tờ đã mở.",
+            "Drag a parameter, read the number you just computed, then answer a question with a worked solution. All fourteen sheets are open.",
           )}
         </p>
         <ProgressLine />

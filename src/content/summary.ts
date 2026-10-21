@@ -1,4 +1,4 @@
-import { fmt, quadText, vertexText } from "../lib/format.ts";
+import { fmt, quadText, showExact, vertexText } from "../lib/format.ts";
 import {
   apex,
   archIntegral,
@@ -29,9 +29,27 @@ import {
   showSin,
   simpleAmount,
   yearsToDouble,
+  amGm,
+  arrange,
+  boxVolume,
+  cauchyPair,
+  circlePlace,
+  comb,
+  det2,
+  lineDist,
+  meanOf,
+  medianOf,
+  planeDist,
+  pyramidVolume,
+  solve2,
+  tetraVolume,
+  triArea,
+  vec3Len,
+  workshopOk,
+  workshopProfit,
 } from "../lib/math.ts";
 import type { Lang } from "../lib/math.ts";
-import { chanceInit, derivInit, expInit, integralInit, limitInit, quadInit, seqInit, surveyInit, trigInit } from "./params.ts";
+import { analyticInit, chanceInit, comboInit, derivInit, expInit, ineqInit, integralInit, limitInit, quadInit, seqInit, shapeInit, surveyInit, trigInit, vectorInit } from "./params.ts";
 
 export function topicSummary(id: string, params: Record<string, number> | undefined, lang: Lang): string {
   if (id === "quadratic") return quadraticSummary(params, lang);
@@ -43,6 +61,11 @@ export function topicSummary(id: string, params: Record<string, number> | undefi
   if (id === "derivative") return derivSummary(params, lang);
   if (id === "integral") return integralSummary(params, lang);
   if (id === "probability") return chanceSummary(params, lang);
+  if (id === "ineq") return ineqSummary(params, lang);
+  if (id === "vector") return vectorSummary(params, lang);
+  if (id === "analytic") return analyticSummary(params, lang);
+  if (id === "triangle") return shapeSummary(params, lang);
+  if (id === "combo") return comboSummary(params, lang);
   return "";
 }
 
@@ -251,6 +274,96 @@ function surveySummary(params: Record<string, number> | undefined, lang: Lang): 
   return lang === "en"
     ? `y = ${trim(cubic(x))} at x = ${trim(x)}. Maximum 2, minimum −2.`
     : `y = ${trim(cubic(x))} tại x = ${trim(x)}. Cực đại 2, cực tiểu −2.`;
+}
+
+function ineqSummary(params: Record<string, number> | undefined, lang: Lang): string {
+  const scene = params?.scene ?? ineqInit.scene;
+  if (scene === 2) {
+    const x = params?.x ?? ineqInit.x;
+    const y = params?.y ?? ineqInit.y;
+    const where = workshopOk(x, y) ? "" : lang === "en" ? " Outside." : " Ngoài miền.";
+    return lang === "en"
+      ? `P = ${trim(workshopProfit(x, y))} at (${trim(x)}; ${trim(y)}).${where}`
+      : `P = ${trim(workshopProfit(x, y))} tại (${trim(x)}; ${trim(y)}).${where}`;
+  }
+  if (scene === 1) {
+    const pair = cauchyPair(params?.p ?? ineqInit.p, params?.q ?? ineqInit.q, params?.c ?? ineqInit.c, params?.d ?? ineqInit.d);
+    return `${trim(pair.left)} ≥ ${trim(pair.right)}`;
+  }
+  const pair = amGm(params?.a ?? ineqInit.a, params?.b ?? ineqInit.b);
+  if (!pair) return lang === "en" ? "AM–GM needs two positive numbers." : "AM–GM cần hai số dương.";
+  return `AM ${trim(pair.am)} · GM ${trim(pair.gm)}`;
+}
+
+function vectorSummary(params: Record<string, number> | undefined, lang: Lang): string {
+  const scene = params?.scene ?? vectorInit.scene;
+  if (scene === 2) {
+    const solved = solve2(
+      params?.s11 ?? vectorInit.s11,
+      params?.s12 ?? vectorInit.s12,
+      params?.t1 ?? vectorInit.t1,
+      params?.s21 ?? vectorInit.s21,
+      params?.s22 ?? vectorInit.s22,
+      params?.t2 ?? vectorInit.t2,
+    );
+    if (!solved) return lang === "en" ? "No unique solution." : "Không có nghiệm duy nhất.";
+    return lang === "en" ? `x = ${trim(solved.x)}, y = ${trim(solved.y)}.` : `x = ${trim(solved.x)}, y = ${trim(solved.y)}.`;
+  }
+  if (scene === 1) {
+    const det = det2(params?.m11 ?? vectorInit.m11, params?.m12 ?? vectorInit.m12, params?.m21 ?? vectorInit.m21, params?.m22 ?? vectorInit.m22);
+    return `det = ${trim(det)}`;
+  }
+  const length = vec3Len([params?.ux ?? vectorInit.ux, params?.uy ?? vectorInit.uy, params?.uz ?? vectorInit.uz]);
+  return `|u| = ${showExact(length)}`;
+}
+
+function analyticSummary(params: Record<string, number> | undefined, lang: Lang): string {
+  const scene = params?.scene ?? analyticInit.scene;
+  if (scene === 2) {
+    const place = circlePlace(params?.cx ?? analyticInit.cx, params?.cy ?? analyticInit.cy, params?.radius ?? analyticInit.radius);
+    const word = place === "on" ? (lang === "en" ? "on" : "trên") : place === "in" ? (lang === "en" ? "inside" : "trong") : lang === "en" ? "outside" : "ngoài";
+    return lang === "en" ? `Point is ${word}.` : `Điểm nằm ${word}.`;
+  }
+  if (scene === 1) {
+    const dist = planeDist(
+      params?.pa ?? analyticInit.pa,
+      params?.pb ?? analyticInit.pb,
+      params?.pc ?? analyticInit.pc,
+      params?.pd ?? analyticInit.pd,
+      params?.qx ?? analyticInit.qx,
+      params?.qy ?? analyticInit.qy,
+      params?.qz ?? analyticInit.qz,
+    );
+    return `d = ${showExact(dist)}`;
+  }
+  const dist = lineDist(params?.a ?? analyticInit.a, params?.b ?? analyticInit.b, params?.c ?? analyticInit.c, params?.px ?? analyticInit.px, params?.py ?? analyticInit.py);
+  return `d = ${showExact(dist)}`;
+}
+
+function shapeSummary(params: Record<string, number> | undefined, lang: Lang): string {
+  const scene = params?.scene ?? shapeInit.scene;
+  if (scene === 3) return `V = ${showExact(tetraVolume(params?.edge ?? shapeInit.edge))}`;
+  if (scene === 2) return `V = ${trim(pyramidVolume(params?.side ?? shapeInit.side, params?.ph ?? shapeInit.ph))}`;
+  if (scene === 1) {
+    const volume = boxVolume(params?.len ?? shapeInit.len, params?.wid ?? shapeInit.wid, params?.ht ?? shapeInit.ht);
+    return `V = ${trim(volume)}`;
+  }
+  const area = triArea(params?.base ?? shapeInit.base, params?.tall ?? shapeInit.tall);
+  return lang === "en" ? `Area ${trim(area)}.` : `Diện tích ${trim(area)}.`;
+}
+
+function comboSummary(params: Record<string, number> | undefined, lang: Lang): string {
+  const scene = params?.scene ?? comboInit.scene;
+  if (scene === 2) {
+    const scores = [2, 3, 4, 5, params?.outlier ?? comboInit.outlier];
+    return lang === "en"
+      ? `Median ${trim(medianOf(scores))}, mean ${trim(meanOf(scores))}.`
+      : `Trung vị ${trim(medianOf(scores))}, trung bình ${trim(meanOf(scores))}.`;
+  }
+  if (scene === 1) return lang === "en" ? "3! = 6 seatings." : "3! = 6 cách xếp.";
+  const n = params?.n ?? comboInit.n;
+  const k = Math.min(params?.k ?? comboInit.k, n);
+  return `A = ${trim(arrange(n, k))} · C = ${trim(comb(n, k))}`;
 }
 
 function trim(n: number): string {

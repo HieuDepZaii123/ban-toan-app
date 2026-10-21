@@ -11,6 +11,22 @@ export function fmt(n: number, digits = 2): string {
   return text.replace(".", ",").replace("-", "−");
 }
 
+/** Textbook radicals when the value really is one: √2, √3, 18√2. Otherwise the usual comma. */
+export function showExact(n: number): string {
+  if (!Number.isFinite(n)) return "—";
+  const sign = n < 0 ? "−" : "";
+  const value = Math.abs(n);
+  if (value < 1e-9) return "0";
+  for (const rad of [2, 3, 5, 6, 7, 10, 29]) {
+    const coeff = value / Math.sqrt(rad);
+    const nearest = Math.round(coeff);
+    if (nearest >= 1 && nearest <= 40 && Math.abs(coeff - nearest) < 1e-6) {
+      return sign + (nearest === 1 ? `√${rad}` : `${nearest}√${rad}`);
+    }
+  }
+  return fmt(n);
+}
+
 export function snap(value: number, step: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   const n = Math.round(value / step) * step;

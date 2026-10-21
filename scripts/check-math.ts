@@ -3,9 +3,13 @@
  *   node --experimental-strip-types scripts/check-math.ts
  */
 import katex from "katex";
+import { analyticQuestions } from "../src/content/analytic.ts";
+import { questionsFor } from "../src/content/banks.ts";
 import { QUESTION_TOTAL, topics } from "../src/content/catalog.ts";
+import { comboQuestions } from "../src/content/combo.ts";
 import { derivativeQuestions } from "../src/content/derivative.ts";
 import { expQuestions } from "../src/content/exp.ts";
+import { ineqQuestions } from "../src/content/ineq.ts";
 import { integralQuestions } from "../src/content/integral.ts";
 import { limitQuestions } from "../src/content/limit.ts";
 import { probabilityQuestions } from "../src/content/probability.ts";
@@ -13,8 +17,10 @@ import { quadraticQuestions } from "../src/content/quadratic.ts";
 import { sequenceQuestions } from "../src/content/sequence.ts";
 import { topicSummary } from "../src/content/summary.ts";
 import { surveyQuestions } from "../src/content/survey.ts";
+import { triangleQuestions } from "../src/content/triangle.ts";
 import { trigQuestions } from "../src/content/trig.ts";
-import { quadText, vertexText } from "../src/lib/format.ts";
+import { vectorQuestions } from "../src/content/vector.ts";
+import { quadText, showExact, vertexText } from "../src/lib/format.ts";
 import {
   apex,
   archIntegral,
@@ -65,6 +71,29 @@ import {
   sinDeg,
   cosDeg,
   treeHeight,
+  amGm,
+  arrange,
+  boxBase,
+  boxVolume,
+  cauchyPair,
+  circlePlace,
+  det2,
+  lineFoot2,
+  meanOf,
+  medianOf,
+  planeFoot,
+  pyramidBase,
+  pyramidVolume,
+  solve2,
+  splitProduct,
+  tetraVerts,
+  tetraVolume,
+  triArea,
+  vec3Cross,
+  vec3Dot,
+  vec3Len,
+  workshopOk,
+  workshopProfit,
 } from "../src/lib/math.ts";
 import { sceneFromHour } from "../src/home/day.ts";
 import {
@@ -201,14 +230,45 @@ const expected: Record<string, string> = {
   "surv-mono": String.raw`$(-\infty; -1]$ và $[1; +\infty)$`,
   "surv-flat": "Không có cực trị",
   "surv-cross": "Không, vì x = 1 không thuộc tập xác định",
+  "ineq-am": "6,5 và 6",
+  "ineq-equal": "Khi a = b",
+  "ineq-split": "25",
+  "ineq-cauchy": String.raw`$125 \ge 121$`,
+  "ineq-lp": "42 tại (6; 4)",
+  "ineq-flip": String.raw`$x \ge -2$`,
+  "vec-len": String.raw`$3$`,
+  "vec-dot": String.raw`$0$`,
+  "vec-sum": String.raw`$(3;\ 1;\ 4)$`,
+  "vec-det": String.raw`$-3$`,
+  "vec-sys": String.raw`$x = 2$, $y = 1$`,
+  "vec-cross": String.raw`$(0;\ 0;\ 1)$`,
+  "ana-dist": String.raw`$\sqrt{2}$`,
+  "ana-foot": String.raw`$(2;\ 0)$`,
+  "ana-plane": String.raw`$\sqrt{3}$`,
+  "ana-dir": String.raw`$(1;\ -1)$`,
+  "ana-circle": "Nằm ngoài",
+  "ana-on": "Nằm trên",
+  "shp-tri": "12",
+  "shp-right": "6",
+  "shp-box": "60",
+  "shp-pyr": "48",
+  "shp-tet": String.raw`$18\sqrt{2}$`,
+  "shp-sim": "4",
+  "cmb-perm": "20",
+  "cmb-comb": "10",
+  "cmb-fact": "6",
+  "cmb-mean": "4",
+  "cmb-comm": "56",
+  "cmb-order": "6",
 };
 
 assert(topics.length === 14, `topic count ${topics.length}`);
-assert(topics.filter((topic) => topic.status === "ready").length === 9, "ready count");
-assert(QUESTION_TOTAL === 55, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
+assert(topics.filter((topic) => topic.status === "ready").length === 14, "ready count");
+assert(QUESTION_TOTAL === 85, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
 
 const banks = [
   ["quadratic", quadraticQuestions],
+  ["ineq", ineqQuestions],
   ["exp", expQuestions],
   ["sequence", sequenceQuestions],
   ["trig", trigQuestions],
@@ -216,6 +276,10 @@ const banks = [
   ["derivative", derivativeQuestions],
   ["survey", surveyQuestions],
   ["integral", integralQuestions],
+  ["vector", vectorQuestions],
+  ["analytic", analyticQuestions],
+  ["triangle", triangleQuestions],
+  ["combo", comboQuestions],
   ["probability", probabilityQuestions],
 ] as const;
 
@@ -230,7 +294,18 @@ for (const [id, list] of banks) {
     if (correct) checkQuestion(question, correct);
   }
 }
-assert(counted === 55, `bank size ${counted}`);
+assert(counted === 85, `bank size ${counted}`);
+for (const id of ["ineq", "vector", "analytic", "triangle", "combo"]) {
+  assert(questionsFor(id).length === 6, `${id} bank`);
+}
+assert(topicSummary("ineq", undefined, "vi").includes("6,5"), "ineq summary");
+assert(topicSummary("vector", undefined, "vi").includes("3"), "vector summary");
+assert(topicSummary("analytic", undefined, "vi").includes("√2"), "analytic summary");
+assert(topicSummary("triangle", { scene: 1 }, "vi").includes("60"), "box summary");
+assert(topicSummary("triangle", { scene: 2 }, "vi").includes("48"), "pyramid summary");
+assert(topicSummary("triangle", { scene: 3 }, "vi").includes("18√2"), "tetra summary");
+assert(topicSummary("combo", undefined, "vi").includes("20"), "combo summary");
+assert(topicSummary("combo", { scene: 2, outlier: 20 }, "vi").includes("4"), "median summary");
 
 const study = quadStudy(1, -2, -3);
 near(study.delta, 16, "delta");
@@ -502,6 +577,84 @@ for (let i = 0; i < 36; i += 1) {
 assert(pairs.size === 36, "every face pair appears once");
 assert(rollsShown(0.95) === 36, "the histogram finishes");
 assert(sumHistogram(rollsShown(0.95))[7] === 6, "the finished picture peaks at 7");
+
+const means = amGm(4, 9);
+near(means?.am ?? NaN, 6.5, "AM");
+near(means?.gm ?? NaN, 6, "GM");
+assert(amGm(0, 1) === null && amGm(-1, 2) === null, "AM–GM refuses non-positive");
+near(splitProduct(10), 25, "split product");
+const cauchy = cauchyPair(1, 2, 3, 4);
+near(cauchy.left, 125, "cauchy left");
+near(cauchy.right, 121, "cauchy right");
+assert(!cauchy.equal, "cauchy strict");
+const cauchyEqual = cauchyPair(1, 2, 3, 6);
+near(cauchyEqual.left, 225, "cauchy equal left");
+near(cauchyEqual.right, 225, "cauchy equal right");
+assert(cauchyEqual.equal, "cauchy equality");
+assert(workshopOk(6, 4) && !workshopOk(9, 2), "workshop region");
+near(workshopProfit(6, 4), 42, "workshop max");
+near(workshopProfit(8, 0), 40, "workshop (8,0)");
+near(workshopProfit(0, 10), 30, "workshop (0,10)");
+near(3 * 6 + 5 * 4, 38, "swapped profit");
+
+near(vec3Len([2, 1, 2]), 3, "|u|");
+near(vec3Dot([2, 1, 2], [1, -1, 2]), 5, "dot");
+near(vec3Dot([1, 2, -1], [2, -1, 0]), 0, "perpendicular");
+const cross = vec3Cross([2, 1, 2], [1, -1, 2]);
+near(cross[0], 4, "cross x");
+near(cross[1], -2, "cross y");
+near(cross[2], -3, "cross z");
+const basis = vec3Cross([1, 0, 0], [0, 1, 0]);
+assert(basis[0] === 0 && basis[1] === 0 && basis[2] === 1, "i × j");
+near(det2(2, 1, 1, -1), -3, "det");
+const solved = solve2(2, 1, 5, 1, -1, 1);
+near(solved?.x ?? NaN, 2, "system x");
+near(solved?.y ?? NaN, 1, "system y");
+assert(solve2(1, 1, 0, 2, 2, 0) === null, "singular system");
+
+const line = lineFoot2(1, 1, -2, 3, 1);
+near(line.x, 2, "line foot x");
+near(line.y, 0, "line foot y");
+near(line.dist, Math.SQRT2, "line distance");
+const plane = planeFoot(1, 1, 1, -6, 1, 1, 1);
+near(plane.x, 2, "plane foot x");
+near(plane.y, 2, "plane foot y");
+near(plane.z, 2, "plane foot z");
+near(plane.dist, Math.sqrt(3), "plane distance");
+assert(circlePlace(3, 4, 5) === "on", "(3,4) on the circle");
+assert(circlePlace(6, 0, 5) === "out", "(6,0) outside");
+assert(circlePlace(0, 0, 5) === "in", "origin inside");
+
+near(triArea(6, 4), 12, "triangle area");
+near(triArea(3, 4), 6, "right triangle area");
+near(boxVolume(3, 4, 5), 60, "box volume");
+near(boxBase(3, 4), 12, "box base");
+near(pyramidVolume(6, 4), 48, "pyramid volume");
+near(pyramidBase(6), 36, "pyramid base");
+near(tetraVolume(6), 18 * Math.SQRT2, "tetra volume 6");
+near(tetraVolume(1), Math.SQRT2 / 12, "tetra volume 1");
+const verts = tetraVerts(6);
+const tetraPairs: readonly (readonly [number, number])[] = [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]];
+for (const [i, j] of tetraPairs) {
+  const left = verts[i];
+  const right = verts[j];
+  assert(!!left && !!right, `tetra vertex ${i}${j}`);
+  if (!left || !right) continue;
+  near(Math.hypot(left[0] - right[0], left[1] - right[1], left[2] - right[2]), 6, `tetra edge ${i}${j}`);
+}
+assert(showExact(18 * Math.SQRT2) === "18√2", "show 18√2");
+assert(showExact(Math.SQRT2) === "√2" && showExact(Math.sqrt(3)) === "√3", "show radicals");
+assert(showExact(6.5) === "6,5" && showExact(3) === "3", "show ordinary numbers");
+
+near(arrange(5, 2), 20, "A(5,2)");
+near(comb(5, 2), 10, "C(5,2)");
+near(comb(8, 3), 56, "C(8,3)");
+near(arrange(8, 3), 336, "A(8,3)");
+near(arrange(3, 3), 6, "3!");
+near(medianOf([2, 3, 4, 5, 20]), 4, "median stays");
+near(meanOf([2, 3, 4, 5, 20]), 6.8, "mean follows");
+near(medianOf([2, 3, 4, 5, 6]), 4, "median before");
+near(meanOf([2, 3, 4, 5, 6]), 4, "mean before");
 
 const clips = await Promise.all(topics.map((topic) => loadClip(topic.id)));
 clips.forEach((clip, index) => {

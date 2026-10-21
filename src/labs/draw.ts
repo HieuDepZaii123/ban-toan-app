@@ -236,3 +236,94 @@ export function clipLine(
   ctx.stroke();
   ctx.restore();
 }
+
+/** +z is up. x runs up-right, y runs up-left. */
+export function projectIso(x: number, y: number, z: number): { x: number; y: number } {
+  return { x: (x - y) * Math.cos(Math.PI / 6), y: -z - (x + y) * 0.5 };
+}
+
+export function fitIso(
+  samples: readonly (readonly [number, number, number])[],
+  width: number,
+  height: number,
+  pad: number,
+): (x: number, y: number, z: number) => { x: number; y: number } {
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (const [x, y, z] of samples) {
+    const point = projectIso(x, y, z);
+    minX = Math.min(minX, point.x);
+    maxX = Math.max(maxX, point.x);
+    minY = Math.min(minY, point.y);
+    maxY = Math.max(maxY, point.y);
+  }
+  if (!Number.isFinite(minX)) {
+    minX = 0;
+    maxX = 1;
+    minY = 0;
+    maxY = 1;
+  }
+  const growX = (maxX - minX) * 0.08 || 0.2;
+  const growY = (maxY - minY) * 0.08 || 0.2;
+  minX -= growX;
+  maxX += growX;
+  minY -= growY;
+  maxY += growY;
+  const spanX = Math.max(1e-6, maxX - minX);
+  const spanY = Math.max(1e-6, maxY - minY);
+  const scale = Math.min((width - pad * 2) / spanX, (height - pad * 2) / spanY);
+  const ox = pad + (width - pad * 2 - spanX * scale) / 2 - minX * scale;
+  const oy = pad + (height - pad * 2 - spanY * scale) / 2 - minY * scale;
+  return (x, y, z) => {
+    const point = projectIso(x, y, z);
+    return { x: ox + point.x * scale, y: oy + point.y * scale };
+  };
+}
+
+export function arrow(
+  ctx: CanvasRenderingContext2D,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  color: string,
+): void {
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+  const head = 9;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 2.2;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - head * Math.cos(angle - 0.4), y2 - head * Math.sin(angle - 0.4));
+  ctx.lineTo(x2 - head * Math.cos(angle + 0.4), y2 - head * Math.sin(angle + 0.4));
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+export function nearestHandle(
+  handles: readonly { id: string; x: number; y: number }[],
+  px: number,
+  py: number,
+  limit = 28,
+): string | null {
+  let best: string | null = null;
+  let dist = limit * limit;
+  for (const handle of handles) {
+    const gap = (handle.x - px) ** 2 + (handle.y - py) ** 2;
+    if (gap <= dist) {
+      dist = gap;
+      best = handle.id;
+    }
+  }
+  return best;
+}

@@ -93,3 +93,70 @@ export const derivRange: Range = {
   time: [0, 10, 0.05],
   brake: [0, 5, 0.1],
 };
+
+export const ineqInit = { scene: 0, a: 4, b: 9, p: 1, q: 2, c: 3, d: 4, x: 6, y: 4 };
+export const ineqRange: Range = {
+  scene: [0, 2, 1],
+  a: [0, 12, 0.5],
+  b: [0, 12, 0.5],
+  p: [-6, 6, 0.5],
+  q: [-6, 6, 0.5],
+  c: [-6, 6, 0.5],
+  d: [-6, 6, 0.5],
+  x: [0, 10, 0.5],
+  y: [0, 10, 0.5],
+};
+
+export const vectorInit = {
+  scene: 0,
+  ux: 2, uy: 1, uz: 2,
+  vx: 1, vy: -1, vz: 2,
+  m11: 2, m12: 1, m21: 1, m22: -1,
+  s11: 2, s12: 1, t1: 5,
+  s21: 1, s22: -1, t2: 1,
+};
+export const vectorRange: Range = {
+  scene: [0, 2, 1],
+  ux: [-4, 4, 0.5], uy: [-4, 4, 0.5], uz: [-4, 4, 0.5],
+  vx: [-4, 4, 0.5], vy: [-4, 4, 0.5], vz: [-4, 4, 0.5],
+  m11: [-4, 4, 0.5], m12: [-4, 4, 0.5], m21: [-4, 4, 0.5], m22: [-4, 4, 0.5],
+  s11: [-4, 4, 0.5], s12: [-4, 4, 0.5], t1: [-6, 8, 0.5],
+  s21: [-4, 4, 0.5], s22: [-4, 4, 0.5], t2: [-6, 8, 0.5],
+};
+
+export const analyticInit = {
+  scene: 0,
+  a: 1, b: 1, c: -2, px: 3, py: 1,
+  pa: 1, pb: 1, pc: 1, pd: -6, qx: 1, qy: 1, qz: 1,
+  radius: 5, cx: 3, cy: 4,
+};
+export const analyticRange: Range = {
+  scene: [0, 2, 1],
+  a: [-3, 3, 0.5], b: [-3, 3, 0.5], c: [-6, 6, 0.5],
+  px: [-2, 6, 0.5], py: [-2, 6, 0.5],
+  pa: [0.5, 2, 0.5], pb: [0.5, 2, 0.5], pc: [0.5, 2, 0.5], pd: [-12, -1, 0.5],
+  qx: [-2, 8, 0.5], qy: [-2, 8, 0.5], qz: [-2, 8, 0.5],
+  radius: [1, 8, 0.5], cx: [-8, 8, 0.5], cy: [-8, 8, 0.5],
+};
+
+export const shapeInit = { scene: 0, base: 6, tall: 4, len: 3, wid: 4, ht: 5, side: 6, ph: 4, edge: 6 };
+export const shapeRange: Range = {
+  scene: [0, 3, 1],
+  base: [1, 12, 0.5],
+  tall: [1, 12, 0.5],
+  len: [1, 8, 0.5],
+  wid: [1, 8, 0.5],
+  ht: [1, 8, 0.5],
+  side: [2, 10, 0.5],
+  ph: [1, 10, 0.5],
+  edge: [2, 10, 0.5],
+};
+
+export const comboInit = { scene: 0, n: 5, k: 2, seat: 0, outlier: 6 };
+export const comboRange: Range = {
+  scene: [0, 2, 1],
+  n: [2, 8, 1],
+  k: [0, 8, 1],
+  seat: [0, 5, 1],
+  outlier: [0, 20, 1],
+};

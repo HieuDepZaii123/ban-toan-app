@@ -21,9 +21,15 @@ const DerivativeLab = lazy(() => import("../labs/DerivativeLab.tsx").then((mod) 
 const SurveyLab = lazy(() => import("../labs/SurveyLab.tsx").then((mod) => ({ default: mod.SurveyLab })));
 const IntegralLab = lazy(() => import("../labs/IntegralLab.tsx").then((mod) => ({ default: mod.IntegralLab })));
 const ProbabilityLab = lazy(() => import("../labs/ProbabilityLab.tsx").then((mod) => ({ default: mod.ProbabilityLab })));
+const IneqLab = lazy(() => import("../labs/IneqLab.tsx").then((mod) => ({ default: mod.IneqLab })));
+const VectorLab = lazy(() => import("../labs/VectorLab.tsx").then((mod) => ({ default: mod.VectorLab })));
+const AnalyticLab = lazy(() => import("../labs/AnalyticLab.tsx").then((mod) => ({ default: mod.AnalyticLab })));
+const ShapeLab = lazy(() => import("../labs/ShapeLab.tsx").then((mod) => ({ default: mod.ShapeLab })));
+const ComboLab = lazy(() => import("../labs/ComboLab.tsx").then((mod) => ({ default: mod.ComboLab })));
 
 const labs = {
   quadratic: QuadraticLab,
+  ineq: IneqLab,
   exp: ExpLab,
   sequence: SequenceLab,
   trig: TrigLab,
@@ -31,6 +37,10 @@ const labs = {
   derivative: DerivativeLab,
   survey: SurveyLab,
   integral: IntegralLab,
+  vector: VectorLab,
+  analytic: AnalyticLab,
+  triangle: ShapeLab,
+  combo: ComboLab,
   probability: ProbabilityLab,
 } as const;
 
@@ -132,7 +142,7 @@ export function TopicDesk({ id }: { id: string }) {
           ) : (
             <div className="stub-stage" role="note">
               <b>{t(lang, "Đề đang soạn", "Questions still being written")}</b>
-              <p>{t(lang, "Chín tờ đã có câu: hàm bậc hai, mũ và logarit, dãy số, lượng giác, giới hạn, đạo hàm, khảo sát hàm số, tích phân, xác suất.", "Nine sheets already have questions: quadratics, exponents and logarithms, sequences, trigonometry, limits, the derivative, curve sketching, integrals, and probability.")}</p>
+              <p>{t(lang, "Mười bốn tờ trên bàn đều đã có sáu câu, với gợi ý và ba bước giải.", "All fourteen sheets on the desk have six questions, each with a hint and three steps.")}</p>
             </div>
           )
         ) : null}
