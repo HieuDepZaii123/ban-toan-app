@@ -5,6 +5,7 @@ import { cosDeg, quadrant, showCos, showSin, showSinCos, showTan, sinDeg, treeHe
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -165,9 +166,13 @@ export function TrigLab() {
         </>
       )}
       <p className="note">
-        {scene === 0
-          ? t(lang, "Kéo điểm trên đường tròn. Cạnh ngang là cos, cạnh đứng là sin. Ở 150°, sin = 1/2 và cos = −√3/2.", "Drag the point on the circle. The horizontal side is cos, the vertical side is sin. At 150°, sin = 1/2 and cos = −√3/2.")
-          : t(lang, "Kéo ngọn cây. Tan = phần trên mắt / khoảng cách. Rồi cộng 1,5 m của mắt. Góc 30° và khoảng cách 20 m là bài trong phần Làm.", "Drag the treetop. Tan = height above the eye / distance. Then add the 1.5 m eye height. 30° at 20 m is the question in Practice.")}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$\\sin150^\\circ=\\frac12$, $\\cos150^\\circ=-\\frac{\\sqrt3}{2}$. $\\max(\\sin+\\cos)=\\sqrt2$.", "$\\sin150^\\circ=\\frac12$, $\\cos150^\\circ=-\\frac{\\sqrt3}{2}$. $\\max(\\sin+\\cos)=\\sqrt2$.")
+              : t(lang, "$20\\tan30^\\circ+1{,}5$.", "$20\\tan30^\\circ+1{,}5$.")
+          }
+        />
       </p>
     </div>
   );

@@ -3,8 +3,8 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const derivativeLesson: Lesson = {
-  concept: R`Đạo hàm tại $a$ là hệ số góc của tiếp tuyến. Cát tuyến qua $a$ và $a+h$ có hệ số góc $\dfrac{f(a+h)-f(a)}{h}$. Cho $h \to 0$, cát tuyến nằm xuống thành tiếp tuyến. Với $f(x) = x^2$, tỉ số ấy bằng $2a + h$, nên $f'(a) = 2a$. $f'(a) = 0$ chỉ nói tiếp tuyến nằm ngang. Đó là cực trị khi $f'$ đổi dấu. Với $y = x^3$, $y'(0) = 0$ nhưng $y'$ không đổi dấu, nên không có cực trị.`,
-  conceptEn: R`The derivative at $a$ is the slope of the tangent. The secant through $a$ and $a+h$ has slope $\dfrac{f(a+h)-f(a)}{h}$. As $h \to 0$ the secant settles onto the tangent. For $f(x) = x^2$ that ratio equals $2a + h$, so $f'(a) = 2a$. $f'(a) = 0$ only says the tangent is horizontal. It is an extremum when $f'$ changes sign. For $y = x^3$, $y'(0) = 0$ but $y'$ does not change sign, so there is no extremum.`,
+  concept: R`$\dfrac{f(a+h)-f(a)}{h}\to f'(a)$. $x^2$: cát tuyến $2+h$, tiếp tuyến $2$, $f'(2)=4$. $y'=0$ chưa là cực trị: $x^3$ tại $0$. $x^3-3x$: cực đại $2$, cực tiểu $-2$. $h=20t-5t^2$: đỉnh $t=2$, $h=20$; $h(1)=15$.`,
+  conceptEn: R`$\dfrac{f(a+h)-f(a)}{h}\to f'(a)$. $x^2$: secant $2+h$, tangent $2$, $f'(2)=4$. $y'=0$ is not yet an extremum: $x^3$ at $0$. $x^3-3x$: maximum $2$, minimum $-2$. $h=20t-5t^2$: apex $t=2$, $h=20$; $h(1)=15$.`,
 };
 
 export const derivativeQuestions: Question[] = [

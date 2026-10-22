@@ -5,6 +5,7 @@ import { baseOk, compoundAmount, decayMass, expY, logY, simpleAmount, yearsToDou
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -189,27 +190,15 @@ export function ExpLab() {
         <Slider label="t" min={0} max={40} step={1} suffix={t(lang, " năm", " years")} value={massTime} onChange={(next) => { stop(); patch({ massTime: next }); }} />
       ) : null}
       <p className="note">
-        {scene === 0
-          ? t(
-              lang,
-              "Kéo điểm trên đồ thị mũ. Điểm kia là ảnh của nó qua đường y = x, nên nó nằm trên logarit. Kéo cơ số qua 1: cơ số 1 không được dùng. 2³ = 8, và log₂ 8 = 3. log 2 + log 3 = log 6, không phải log 5. Một bước pH là hệ số 10.",
-              "Drag the point on the exponential. The other point is its mirror across y = x, so it lies on the logarithm. Drag the base through 1: base 1 is not allowed. 2³ = 8, and log₂ 8 = 3. log 2 + log 3 = log 6, not log 5. One pH step is a factor of 10.",
-            )
-          : null}
-        {scene === 1
-          ? t(
-              lang,
-              "Vốn 10 triệu. Kéo số năm. Tại 8% và 5 năm, lãi kép khoảng 14,69 triệu, lãi đơn đúng 14 triệu. Gấp đôi mất khoảng 9,01 năm, không phải 8 và không phải 12,5.",
-              "Principal 10 triệu. Drag the years. At 8% and 5 years, compound interest is about 14.69 triệu and simple interest is exactly 14 triệu. Doubling takes about 9.01 years, not 8 and not 12.5.",
-            )
-          : null}
-        {scene === 2
-          ? t(
-              lang,
-              "80 g, chu kỳ 10 năm. Kéo thời gian. Sau 10 năm còn 40 g, sau 20 năm còn 20 g. Bên phải là log₁₀ của khối lượng: cùng một phân rã thành một đường thẳng.",
-              "80 g, half-life 10 years. Drag time. After 10 years, 40 g remain; after 20 years, 20 g. On the right, log₁₀ of the mass: the same decay is a straight line.",
-            )
-          : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$2^3=8$, $\\log_2 8=3$. $\\log2+\\log3=\\log6\\neq\\log5$. $a\\neq1$.", "$2^3=8$, $\\log_2 8=3$. $\\log2+\\log3=\\log6\\neq\\log5$. $a\\neq1$.")
+              : scene === 1
+                ? t(lang, "$10(1{,}08)^5\\approx14{,}69\\neq14$. $\\dfrac{\\ln2}{\\ln(1{,}08)}\\approx9{,}01$.", "$10(1{,}08)^5\\approx14{,}69\\neq14$. $\\dfrac{\\ln2}{\\ln(1{,}08)}\\approx9{,}01$.")
+                : t(lang, "$80\\cdot(\\frac12)^2=20$. $\\log_{10}$: thẳng.", "$80\\cdot(\\frac12)^2=20$. $\\log_{10}$: a line.")
+          }
+        />
       </p>
     </div>
   );

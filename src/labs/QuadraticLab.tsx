@@ -5,6 +5,7 @@ import { fence, opening, quadStudy, rootsText } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -175,9 +176,15 @@ export function QuadraticLab() {
         <Slider label="x" min={0.5} max={19.5} step={0.1} suffix=" m" value={values.fence ?? 10} onChange={(fenceX) => { stop(); patch({ fence: fenceX }); }} />
       ) : null}
       <p className="note">
-        {scene === 0 ? t(lang, "Kéo a qua 0. Parabol dẹt thành đường thẳng và đỉnh ra khỏi khung, vì hoành độ đỉnh là −b/(2a).", "Drag a through 0. The parabola flattens into a line and the vertex leaves the frame, because its x-coordinate is −b/(2a).") : null}
-        {scene === 1 ? t(lang, "Kéo a. Đỉnh đứng yên. a chỉ đổi bề lõm và độ mở — đổi dấu là đổi vai, từ đáy thành đỉnh.", "Drag a. The vertex stays. a only changes the opening — a sign change swaps minimum and maximum.") : null}
-        {scene === 2 ? t(lang, "Kéo điểm trên mép chuồng, hoặc thanh x. Lớn nhất khi S′ = 0 và S″ < 0: x = 10 m, S = 200 m².", "Drag the point on the outer edge, or the x slider. The maximum is where S′ = 0 and S″ < 0: x = 10 m, S = 200 m².") : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "Đỉnh $x=-\\frac{b}{2a}$. Đổi $a$ thì đỉnh chạy.", "Vertex $x=-\\frac{b}{2a}$. Changing $a$ moves it.")
+              : scene === 1
+                ? t(lang, "$a(x-h)^2+k$: đỉnh đứng yên. Đổi dấu $a$: đổi vai.", "$a(x-h)^2+k$: the vertex stays. Sign of $a$: min or max.")
+                : t(lang, "$S=x(40-2x)$. $S'=0$ tại $x=10$, $\\max=200$.", "$S=x(40-2x)$. $S'=0$ at $x=10$, $\\max=200$.")
+          }
+        />
       </p>
     </div>
   );

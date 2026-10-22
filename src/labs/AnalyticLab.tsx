@@ -5,6 +5,7 @@ import { circlePlace, lineFoot2, planeFoot } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -237,15 +238,15 @@ export function AnalyticLab() {
         <Slider label={t(lang, "Bán kính", "Radius")} min={1} max={8} step={0.5} value={radius} onChange={(next) => { stop(); patch({ radius: next }); }} />
       ) : null}
       <p className="note">
-        {scene === 0
-          ? t(lang, "Kéo điểm P. Với đường x + y − 2 = 0 và P(3; 1), khoảng cách là √2, chân là (2; 0). Tử số 2 chưa phải khoảng cách. Chỉ phương là (1; −1). Pháp tuyến (1; 1) vuông góc với đường, đừng dùng nó làm chỉ phương.", "Drag the point P. For the line x + y − 2 = 0 and P(3; 1), the distance is √2 and the foot is (2; 0). The numerator 2 is not the distance. A direction vector is (1; −1). The normal (1; 1) is perpendicular to the line; do not use it as a direction.")
-          : null}
-        {scene === 1
-          ? t(lang, "Kéo điểm. Mặt phẳng x + y + z − 6 = 0 cách (1; 1; 1) một đoạn √3. Chân đường vuông góc là (2; 2; 2).", "Drag the point. The plane x + y + z − 6 = 0 is √3 away from (1; 1; 1). The foot of the perpendicular is (2; 2; 2).")
-          : null}
-        {scene === 2
-          ? t(lang, "Kéo điểm. Tâm O, bán kính 5: (3; 4) nằm trên vì 9 + 16 = 25. (6; 0) nằm ngoài vì khoảng cách tới tâm là 6.", "Drag the point. Centre O, radius 5: (3; 4) lies on the circle because 9 + 16 = 25. (6; 0) lies outside because its distance from the centre is 6.")
-          : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$\\dfrac{|3+1-2|}{\\sqrt{2}}=\\sqrt{2}$. Chân $(2;0)$. $\\vec d=(1;-1)\\neq\\vec n=(1;1)$.", "$\\dfrac{|3+1-2|}{\\sqrt{2}}=\\sqrt{2}$. Foot $(2;0)$. $\\vec d=(1;-1)\\neq\\vec n=(1;1)$.")
+              : scene === 1
+                ? t(lang, "$\\dfrac{|1+1+1-6|}{\\sqrt{3}}=\\sqrt{3}$. Chân $(2;2;2)$.", "$\\dfrac{|1+1+1-6|}{\\sqrt{3}}=\\sqrt{3}$. Foot $(2;2;2)$.")
+                : t(lang, "$3^2+4^2=25$ trên. $(6;0)$: $6>5$ ngoài.", "$3^2+4^2=25$ on. $(6;0)$: $6>5$ outside.")
+          }
+        />
       </p>
     </div>
   );

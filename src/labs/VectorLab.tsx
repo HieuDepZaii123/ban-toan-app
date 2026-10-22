@@ -5,6 +5,7 @@ import { det2, solve2, vec3Add, vec3Cross, vec3Dot, vec3Len } from "../lib/math.
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -235,24 +236,24 @@ export function VectorLab() {
       ) : null}
       {scene === 2 ? (
         <>
-          <Slider label={t(lang, "Hệ số x, phương trình 1", "x coefficient, equation 1")} min={-4} max={4} step={0.5} value={values.s11 ?? 2} onChange={(next) => { stop(); patch({ s11: next }); }} />
-          <Slider label={t(lang, "Hệ số y, phương trình 1", "y coefficient, equation 1")} min={-4} max={4} step={0.5} value={values.s12 ?? 1} onChange={(next) => { stop(); patch({ s12: next }); }} />
-          <Slider label={t(lang, "Vế phải 1", "Right side 1")} min={-6} max={8} step={0.5} value={values.t1 ?? 5} onChange={(next) => { stop(); patch({ t1: next }); }} />
-          <Slider label={t(lang, "Hệ số x, phương trình 2", "x coefficient, equation 2")} min={-4} max={4} step={0.5} value={values.s21 ?? 1} onChange={(next) => { stop(); patch({ s21: next }); }} />
-          <Slider label={t(lang, "Hệ số y, phương trình 2", "y coefficient, equation 2")} min={-4} max={4} step={0.5} value={values.s22 ?? -1} onChange={(next) => { stop(); patch({ s22: next }); }} />
-          <Slider label={t(lang, "Vế phải 2", "Right side 2")} min={-6} max={8} step={0.5} value={values.t2 ?? 1} onChange={(next) => { stop(); patch({ t2: next }); }} />
+          <Slider label="a₁" min={-4} max={4} step={0.5} value={values.s11 ?? 2} onChange={(next) => { stop(); patch({ s11: next }); }} />
+          <Slider label="b₁" min={-4} max={4} step={0.5} value={values.s12 ?? 1} onChange={(next) => { stop(); patch({ s12: next }); }} />
+          <Slider label="c₁" min={-6} max={8} step={0.5} value={values.t1 ?? 5} onChange={(next) => { stop(); patch({ t1: next }); }} />
+          <Slider label="a₂" min={-4} max={4} step={0.5} value={values.s21 ?? 1} onChange={(next) => { stop(); patch({ s21: next }); }} />
+          <Slider label="b₂" min={-4} max={4} step={0.5} value={values.s22 ?? -1} onChange={(next) => { stop(); patch({ s22: next }); }} />
+          <Slider label="c₂" min={-6} max={8} step={0.5} value={values.t2 ?? 1} onChange={(next) => { stop(); patch({ t2: next }); }} />
         </>
       ) : null}
       <p className="note">
-        {scene === 0
-          ? t(lang, "Kéo mũi tên, hoặc kéo uz. Với u = (2; 1; 2), độ dài là 3. Khi uz = 0 thì chỉ còn √5, vì đã bỏ tọa độ thứ ba. v = (1; −1; 2) cho tích vô hướng 5 và tích có hướng (4; −2; −3). (1; 2; −1) · (2; −1; 0) = 0: lực vuông góc với quãng đường thì công bằng 0.", "Drag an arrow, or drag uz. For u = (2; 1; 2) the length is 3. At uz = 0 only √5 remains, because the third coordinate was dropped. v = (1; −1; 2) gives dot product 5 and cross product (4; −2; −3). (1; 2; −1) · (2; −1; 0) = 0: a force perpendicular to the displacement does no work.")
-          : null}
-        {scene === 1
-          ? t(lang, "Kéo đầu cột thứ hai. Hai cột (2; 1) và (1; −1) có định thức 2·(−1) − 1·1 = −3. Diện tích hình bình hành là trị tuyệt đối, bằng 3.", "Drag the tip of the second column. The columns (2; 1) and (1; −1) have determinant 2·(−1) − 1·1 = −3. The parallelogram area is the absolute value, 3.")
-          : null}
-        {scene === 2
-          ? t(lang, "Hai đường cắt nhau tại nghiệm. Hệ 2x + y = 5, x − y = 1 có x = 2, y = 1. Định thức hệ số là −3, khác 0, nên không có vô số nghiệm.", "The lines meet at the solution. The system 2x + y = 5, x − y = 1 has x = 2, y = 1. The coefficient determinant is −3, not 0, so there are not infinitely many solutions.")
-          : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$|(2;1;2)|=3$. $u_z=0\\Rightarrow\\sqrt{5}$. $u\\cdot v=5$, $u\\times v=(4;-2;-3)$. $(1;2;-1)\\cdot(2;-1;0)=0$.", "$|(2;1;2)|=3$. $u_z=0\\Rightarrow\\sqrt{5}$. $u\\cdot v=5$, $u\\times v=(4;-2;-3)$. $(1;2;-1)\\cdot(2;-1;0)=0$.")
+              : scene === 1
+                ? t(lang, "$2(-1)-1\\cdot1=-3$. Diện tích $|\\det|=3$.", "$2(-1)-1\\cdot1=-3$. Area $|\\det|=3$.")
+                : t(lang, "$2x+y=5,\\ x-y=1\\Rightarrow(2;1)$. $\\det=-3\\neq0$.", "$2x+y=5,\\ x-y=1\\Rightarrow(2;1)$. $\\det=-3\\neq0$.")
+          }
+        />
       </p>
     </div>
   );

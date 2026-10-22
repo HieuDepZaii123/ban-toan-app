@@ -3,8 +3,8 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const trigLesson: Lesson = {
-  concept: R`Trên đường tròn bán kính $1$, một góc đặt một điểm. Hoành độ điểm đó là $\cos$, tung độ là $\sin$. Vì điểm cách gốc đúng $1$, ta có $\sin^2\alpha + \cos^2\alpha = 1$. $\tan\alpha = \sin\alpha / \cos\alpha$ khi $\cos\alpha \neq 0$. Tổng $\sin\alpha + \cos\alpha$ không tới $2$: lớn nhất là $\sqrt{2}$, tại $45^\circ$.`,
-  conceptEn: R`On the circle of radius $1$, an angle places a point. Its x-coordinate is $\cos$ and its y-coordinate is $\sin$. The point is $1$ from the origin, so $\sin^2\alpha + \cos^2\alpha = 1$. $\tan\alpha = \sin\alpha / \cos\alpha$ when $\cos\alpha \neq 0$. The sum $\sin\alpha + \cos\alpha$ never reaches $2$: its maximum is $\sqrt{2}$, at $45^\circ$.`,
+  concept: R`$\sin^2\alpha+\cos^2\alpha=1$. $\sin150^\circ=\dfrac12$, $\cos150^\circ=-\dfrac{\sqrt3}{2}$. $\max(\sin+\cos)=\sqrt2$ tại $45^\circ\neq2$. Cây: $20\tan30^\circ+1{,}5$.`,
+  conceptEn: R`$\sin^2\alpha+\cos^2\alpha=1$. $\sin150^\circ=\dfrac12$, $\cos150^\circ=-\dfrac{\sqrt3}{2}$. $\max(\sin+\cos)=\sqrt2$ at $45^\circ\neq2$. Tree: $20\tan30^\circ+1{,}5$.`,
 };
 
 export const trigQuestions: Question[] = [

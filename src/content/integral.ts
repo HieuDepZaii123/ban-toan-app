@@ -3,8 +3,8 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const integralLesson: Lesson = {
-  concept: R`Tích phân từ $a$ đến $b$ là diện tích có dấu dưới đường. Với $y = 2x - x^2$ trên $[0; 2]$, nguyên hàm là $x^2 - \dfrac{x^3}{3}$, thế cận được $4 - \dfrac{8}{3} = \dfrac{4}{3}$. Một hình chữ nhật trung điểm cho $2$, gần chứ chưa bằng. Giữa $y = x$ và $y = x^2$ trên $[0; 1]$, lấy đường trên trừ đường dưới: $\dfrac{1}{2} - \dfrac{1}{3} = \dfrac{1}{6}$. Quay miền dưới $y = 2x - x^2$ quanh Ox thì bán kính là chính hàm đó, $V = \pi$ nhân tích phân bình phương, bằng $\dfrac{16\pi}{15}$. Một ly nón bán kính $3$ cao $6$ có thể tích $\dfrac{1}{3}\pi r^2 h = 18\pi$.`,
-  conceptEn: R`The integral from $a$ to $b$ is signed area under the curve. For $y = 2x - x^2$ on $[0, 2]$ the antiderivative is $x^2 - \dfrac{x^3}{3}$, and the ends give $4 - \dfrac{8}{3} = \dfrac{4}{3}$. One midpoint rectangle gives $2$, close but not equal. Between $y = x$ and $y = x^2$ on $[0, 1]$, top minus bottom is $\dfrac{1}{2} - \dfrac{1}{3} = \dfrac{1}{6}$. Revolving the region under $y = 2x - x^2$ about the x-axis uses that function as the radius, so $V = \pi$ times the integral of the square, which is $\dfrac{16\pi}{15}$. A conical glass of radius $3$ and height $6$ has volume $\dfrac{1}{3}\pi r^2 h = 18\pi$.`,
+  concept: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. Một hình chữ nhật trung điểm: $2$. Giữa $y=x$ và $y=x^2$ trên $[0;1]$: $\dfrac16$. Quay: $\dfrac{16\pi}{15}$. Nón $r=3$, $h=6$: $V=18\pi\neq54\pi$.`,
+  conceptEn: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. One midpoint rectangle: $2$. Between $y=x$ and $y=x^2$ on $[0;1]$: $\dfrac16$. Revolution: $\dfrac{16\pi}{15}$. Cone $r=3$, $h=6$: $V=18\pi\neq54\pi$.`,
 };
 
 export const integralQuestions: Question[] = [

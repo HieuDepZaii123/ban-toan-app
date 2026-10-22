@@ -5,6 +5,7 @@ import { amGm, cauchyPair, workshopOk, workshopProfit } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -239,10 +240,10 @@ export function IneqLab() {
       ) : null}
       {scene === 1 ? (
         <>
-          <Slider label={t(lang, "Cặp một, số đầu", "First pair, first")} min={-6} max={6} step={0.5} value={p} onChange={(next) => { stop(); patch({ p: next }); }} />
-          <Slider label={t(lang, "Cặp một, số sau", "First pair, second")} min={-6} max={6} step={0.5} value={q} onChange={(next) => { stop(); patch({ q: next }); }} />
-          <Slider label={t(lang, "Cặp hai, số đầu", "Second pair, first")} min={-6} max={6} step={0.5} value={c} onChange={(next) => { stop(); patch({ c: next }); }} />
-          <Slider label={t(lang, "Cặp hai, số sau", "Second pair, second")} min={-6} max={6} step={0.5} value={d} onChange={(next) => { stop(); patch({ d: next }); }} />
+          <Slider label="a" min={-6} max={6} step={0.5} value={p} onChange={(next) => { stop(); patch({ p: next }); }} />
+          <Slider label="b" min={-6} max={6} step={0.5} value={q} onChange={(next) => { stop(); patch({ q: next }); }} />
+          <Slider label="c" min={-6} max={6} step={0.5} value={c} onChange={(next) => { stop(); patch({ c: next }); }} />
+          <Slider label="d" min={-6} max={6} step={0.5} value={d} onChange={(next) => { stop(); patch({ d: next }); }} />
         </>
       ) : null}
       {scene === 2 ? (
@@ -252,15 +253,15 @@ export function IneqLab() {
         </>
       ) : null}
       <p className="note">
-        {scene === 0
-          ? t(lang, "Kéo đầu mỗi cột. Với 4 và 9, trung bình cộng là 6,5 và trung bình nhân là 6. Hai số dương tổng 10 thì tích lớn nhất là 25, khi mỗi số bằng 5. Nếu một số không dương, cột ấy không được dùng.", "Drag the top of either bar. For 4 and 9 the arithmetic mean is 6.5 and the geometric mean is 6. Two positive numbers that sum to 10 have largest product 25, when each is 5. A number that is not positive cannot be used.")
-          : null}
-        {scene === 1
-          ? t(lang, "Kéo mũi tên. Cặp (1; 2) và (3; 4) cho 125 ≥ 121. Đưa cặp sau thành (3; 6) thì hai vế cùng bằng 225.", "Drag an arrow. The pairs (1; 2) and (3; 4) give 125 ≥ 121. Move the second pair to (3; 6) and both sides equal 225.")
-          : null}
-        {scene === 2
-          ? t(lang, "Kéo điểm trong xưởng. Gỗ x + y ≤ 10, công 2x + y ≤ 16, lợi nhuận 5x + 3y. Lớn nhất là 42 tại (6; 4). (9; 2) nằm ngoài vì tổng là 11. 38 là khi đảo hệ số thành 3x + 5y.", "Drag the point in the workshop. Wood x + y ≤ 10, labour 2x + y ≤ 16, profit 5x + 3y. The maximum is 42 at (6; 4). (9; 2) is outside because the sum is 11. 38 is the swapped objective 3x + 5y.")
-          : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$(4+9)/2=6{,}5\\ge6=\\sqrt{4\\cdot9}$. $a+b=10\\Rightarrow\\max ab=25$. $a\\le0$: bỏ.", "$(4+9)/2=6{,}5\\ge6=\\sqrt{4\\cdot9}$. $a+b=10\\Rightarrow\\max ab=25$. $a\\le0$: excluded.")
+              : scene === 1
+                ? t(lang, "$(1^2+2^2)(3^2+4^2)=125\\ge121$. $(3;6)$: $225=225$.", "$(1^2+2^2)(3^2+4^2)=125\\ge121$. $(3;6)$: $225=225$.")
+                : t(lang, "$P=5x+3y$. $\\max=42$ tại $(6;4)$. $(9;2)$: $x+y=11$. $3\\cdot6+5\\cdot4=38$.", "$P=5x+3y$. $\\max=42$ at $(6;4)$. $(9;2)$: $x+y=11$. $3\\cdot6+5\\cdot4=38$.")
+          }
+        />
       </p>
     </div>
   );

@@ -5,6 +5,7 @@ import { archIntegral, archRiemann, archVolumeCoeff, archY, betweenIntegral } fr
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -171,9 +172,15 @@ export function IntegralLab() {
         <Slider label="b" min={0.2} max={2} step={0.05} value={span} onChange={(next) => { stop(); patch({ span: next }); }} />
       ) : null}
       <p className="note">
-        {scene === 0 ? t(lang, "Kéo cận phải, hoặc tăng n. Tại b = 2 tích phân là 4/3. Một dải trung điểm cho 2: rộng 2, cao y(1) = 1. Đường x² − 2x nằm dưới Ox và cho −4/3.", "Drag the right end, or raise n. At b = 2 the integral is 4/3. One midpoint strip gives 2: width 2, height y(1) = 1. The curve x² − 2x lies below the x-axis and gives −4/3.") : null}
-        {scene === 1 ? t(lang, "Kéo cận. Trên [0; 1] đường thẳng nằm trên parabol. Diện tích là 1/2 − 1/3 = 1/6. Đảo hai đường thì ra −1/6, đó là tích phân có dấu chứ không phải diện tích.", "Drag the end. On [0, 1] the line is above the parabola. The area is 1/2 − 1/3 = 1/6. Swapping the curves gives −1/6, a signed integral rather than an area.") : null}
-        {scene === 2 ? t(lang, "Kéo mép khối. Bán kính lát là y, nên nhân π với tích phân y². Tại b = 2 thì V = 16π/15. Một ly nón bán kính 3 cao 6 là (1/3)πr²h = 18π, không phải 54π của hình trụ.", "Drag the end of the solid. The slice radius is y, so multiply π by the integral of y². At b = 2, V = 16π/15. A conical glass of radius 3 and height 6 is (1/3)πr²h = 18π, not the 54π of the cylinder.") : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$\\int_0^2(2x-x^2)\\,dx=\\frac43$. Trung điểm: $2$. $x^2-2x$: $-\\frac43$.", "$\\int_0^2(2x-x^2)\\,dx=\\frac43$. Midpoint: $2$. $x^2-2x$: $-\\frac43$.")
+              : scene === 1
+                ? t(lang, "$[0;1]$: $\\frac12-\\frac13=\\frac16$. Đảo: $-\\frac16$.", "$[0;1]$: $\\frac12-\\frac13=\\frac16$. Swapped: $-\\frac16$.")
+                : t(lang, "$V=\\frac{16\\pi}{15}$. Nón $\\frac13\\pi r^2 h=18\\pi\\neq54\\pi$.", "$V=\\frac{16\\pi}{15}$. Cone $\\frac13\\pi r^2 h=18\\pi\\neq54\\pi$.")
+          }
+        />
       </p>
     </div>
   );

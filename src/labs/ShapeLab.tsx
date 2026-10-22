@@ -5,6 +5,7 @@ import { boxBase, boxVolume, pyramidBase, pyramidVolume, tetraVerts, tetraVolume
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -224,18 +225,17 @@ export function ShapeLab() {
         <Slider label={t(lang, "Cạnh a", "Edge a")} min={2} max={10} step={0.5} value={edge} onChange={(next) => { stop(); patch({ edge: next }); }} />
       ) : null}
       <p className="note">
-        {scene === 0
-          ? t(lang, "Kéo đỉnh để đổi chiều cao, kéo góc phải để đổi đáy. Đáy 6 và cao 4 cho diện tích 12, không phải 24. Tam giác vuông cạnh 3 và 4 có diện tích 6; cạnh huyền 5 không phải diện tích. Đồng dạng tỉ số 2 thì diện tích nhân 4.", "Drag the apex to change the height, and the right corner to change the base. Base 6 and height 4 give area 12, not 24. A right triangle with legs 3 and 4 has area 6; the hypotenuse 5 is not the area. Similarity ratio 2 multiplies area by 4.")
-          : null}
-        {scene === 1
-          ? t(lang, "Kéo ba núm ở ba cạnh. Hộp 3 × 4 × 5 có thể tích 60. Số nhỏ hơn là diện tích đáy 12. Các cạnh vẽ trên hình chính là 3, 4 và 5.", "Drag the three handles on the three edges. A 3 × 4 × 5 box has volume 60. The smaller number is the base area 12. The edges drawn on the figure are 3, 4 and 5.")
-          : null}
-        {scene === 2
-          ? t(lang, "Kéo đỉnh để đổi chiều cao, kéo một góc đáy để đổi cạnh. Đáy vuông cạnh 6 có diện tích 36. Thể tích là một phần ba đáy nhân cao: 48, không phải 36.", "Drag the apex to change the height, and a base corner to change the side. A square base of side 6 has area 36. The volume is one third of the base times the height: 48, not 36.")
-          : null}
-        {scene === 3
-          ? t(lang, "Kéo để đổi cạnh a. Cả sáu cạnh cùng lớn lên, nên chúng vẫn bằng nhau. Với a = 6, thể tích là 18√2. 9√3 chỉ là diện tích một mặt.", "Drag to change the edge a. All six edges grow together, so they stay equal. For a = 6 the volume is 18√2. 9√3 is only the area of one face.")
-          : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$\\frac{6\\cdot4}{2}=12\\neq24$. Vuông $\\frac{3\\cdot4}{2}=6\\neq5$. $k=2\\Rightarrow k^2=4$.", "$\\frac{6\\cdot4}{2}=12\\neq24$. Right $\\frac{3\\cdot4}{2}=6\\neq5$. $k=2\\Rightarrow k^2=4$.")
+              : scene === 1
+                ? t(lang, "$3\\cdot4\\cdot5=60\\neq12$.", "$3\\cdot4\\cdot5=60\\neq12$.")
+                : scene === 2
+                  ? t(lang, "$\\frac13\\cdot6^2\\cdot4=48\\neq36$.", "$\\frac13\\cdot6^2\\cdot4=48\\neq36$.")
+                  : t(lang, "$V=\\frac{a^3\\sqrt{2}}{12}$. $a=6\\Rightarrow18\\sqrt{2}\\neq9\\sqrt{3}$. Sáu cạnh $=a$.", "$V=\\frac{a^3\\sqrt{2}}{12}$. $a=6\\Rightarrow18\\sqrt{2}\\neq9\\sqrt{3}$. Six edges $=a$.")
+          }
+        />
       </p>
     </div>
   );

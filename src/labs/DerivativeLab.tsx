@@ -5,6 +5,7 @@ import { apex, brakeMotion, brakeTimeFromDistance, flightTime, projectile, secan
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -185,9 +186,15 @@ export function DerivativeLab() {
       ) : null}
       {scene === 2 ? <Slider label="t" min={0} max={5} step={0.1} suffix=" s" value={brakeT} onChange={(next) => { stop(); patch({ brake: next }); }} /> : null}
       <p className="note">
-        {scene === 0 ? t(lang, "Kéo điểm B. Với y = x², cát tuyến qua x = 1 có hệ số góc 2 + h. Cho h về 0 thì còn tiếp tuyến, hệ số góc 2.", "Drag point B. For y = x² the secant through x = 1 has slope 2 + h. As h goes to 0 it becomes the tangent, slope 2.") : null}
-        {scene === 1 ? t(lang, "Lấy g = 10, nên h(t) = v₀t − 5t² và v(t) = v₀ − 10t. Với v₀ = 20, cao nhất lúc t = 2, cao 20 m. h(1) = 15 nhưng bóng vẫn đang lên.", "Take g = 10, so h(t) = v₀t − 5t² and v(t) = v₀ − 10t. For v₀ = 20 the top is at t = 2, height 20 m. h(1) = 15, but the ball is still rising.") : null}
-        {scene === 2 ? t(lang, "v = 20 − 4t tắt lúc t = 5 s. Quãng phanh là 50 m. Nếu mất thêm 1 giây mới đạp phanh, xe chạy thêm 20 m trước vạch 0, tổng 70 m.", "v = 20 − 4t is zero at t = 5 s. The braking distance is 50 m. A one-second reaction adds 20 m before the zero mark, 70 m in all.") : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$y=x^2$: cát tuyến $2+h$, tiếp tuyến $2$. $f'(2)=4$.", "$y=x^2$: secant $2+h$, tangent $2$. $f'(2)=4$.")
+              : scene === 1
+                ? t(lang, "$h=20t-5t^2$. Đỉnh $t=2$, $h=20$. $h(1)=15$.", "$h=20t-5t^2$. Apex $t=2$, $h=20$. $h(1)=15$.")
+                : t(lang, "$v=20-4t=0$ tại $t=5$. $s(5)=50$.", "$v=20-4t=0$ at $t=5$. $s(5)=50$.")
+          }
+        />
       </p>
     </div>
   );

@@ -3,8 +3,8 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const limitLesson: Lesson = {
-  concept: R`Giới hạn là giá trị hai phía tiến tới, không phải giá trị tại đúng một điểm. Với $\dfrac{x^2-1}{x-1}$, rút còn $x+1$ khi $x \neq 1$, nên khi $x \to 1$ giới hạn là $2$. Gán $f(1)$ bằng số khác không đổi giới hạn. Hàm chỉ liên tục khi số được gán cũng là $2$. Nếu hai phía khác nhau thì không có giới hạn. Cùng kiểu, $\dfrac{\sin x}{x}$ không viết được tại $0$ nhưng giới hạn là $1$. Một cốc nước $T(t) = 25 + 60e^{-t/4}$ tiến về $25^\circ\text{C}$ khi $t$ tăng, dù không chạm đúng $25$ trong thời gian hữu hạn.`,
-  conceptEn: R`A limit is the value both sides approach, not the value at the single point. $\dfrac{x^2-1}{x-1}$ simplifies to $x+1$ for $x \neq 1$, so as $x \to 1$ the limit is $2$. Assigning a different $f(1)$ does not change the limit. The function is continuous only when that assigned value is also $2$. If the two sides differ, there is no limit. In the same way $\dfrac{\sin x}{x}$ is undefined at $0$ but the limit is $1$. A cup of tea $T(t) = 25 + 60e^{-t/4}$ approaches $25^\circ\text{C}$ as $t$ grows, without landing on $25$ in finite time.`,
+  concept: R`$\dfrac{x^2-1}{x-1}\to2$ khi $x\to1$, kể cả $f(1)=5$. Liên tục chỉ khi $f(1)=2$. Nhảy $-1$ và $1$: không có giới hạn. $\dfrac{\sin x}{x}\to1$. $T=25+60e^{-t/4}$: $T(0)=85$, $\lim=25$.`,
+  conceptEn: R`$\dfrac{x^2-1}{x-1}\to2$ as $x\to1$, even if $f(1)=5$. Continuous only if $f(1)=2$. Jump $-1$ and $1$: no limit. $\dfrac{\sin x}{x}\to1$. $T=25+60e^{-t/4}$: $T(0)=85$, $\lim=25$.`,
 };
 
 export const limitQuestions: Question[] = [

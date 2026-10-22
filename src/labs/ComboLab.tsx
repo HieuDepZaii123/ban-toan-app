@@ -5,6 +5,7 @@ import { arrange, comb, meanOf, medianOf } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -172,15 +173,15 @@ export function ComboLab() {
         <Slider label={t(lang, "Điểm lệch", "Outlier")} min={0} max={20} step={1} value={outlier} onChange={(next) => { stop(); patch({ outlier: next }); }} />
       ) : null}
       <p className="note">
-        {scene === 0
-          ? t(lang, "Kéo để đổi k. A(5, 2) = 20 vì thứ tự có tính. C(5, 2) = 10 vì không kể thứ tự. Chọn ban 3 người trong 8 người, không phân vai, là C(8, 3) = 56, không phải A(8, 3) = 336.", "Drag to change k. A(5, 2) = 20 because order counts. C(5, 2) = 10 because order does not. A committee of 3 from 8, with no roles, is C(8, 3) = 56, not A(8, 3) = 336.")
-          : null}
-        {scene === 1
-          ? t(lang, "Chạm để xem cách xếp tiếp theo. Ba người vào ba ghế khác nhau có 3! = 6 cách.", "Tap to see the next seating. Three people in three distinct chairs can sit in 3! = 6 ways.")
-          : null}
-        {scene === 2
-          ? t(lang, "Kéo cột cuối. Các điểm 2, 3, 4, 5, 6 có trung bình 4 và trung vị 4. Đổi 6 thành 20 thì trung bình thành 6,8, trung vị vẫn là 4.", "Drag the last bar. The scores 2, 3, 4, 5, 6 have mean 4 and median 4. Changing 6 to 20 makes the mean 6.8, while the median stays 4.")
-          : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$A(5,2)=20$, $C(5,2)=10$. $C(8,3)=56\\neq336$.", "$A(5,2)=20$, $C(5,2)=10$. $C(8,3)=56\\neq336$.")
+              : scene === 1
+                ? t(lang, "$3!=6$.", "$3!=6$.")
+                : t(lang, "$2,3,4,5,6$: $\\bar x=4$, trung vị $4$. $6\\to20$: trung vị $4$, $\\bar x=6{,}8$.", "$2,3,4,5,6$: $\\bar x=4$, median $4$. $6\\to20$: median $4$, $\\bar x=6{,}8$.")
+          }
+        />
       </p>
     </div>
   );

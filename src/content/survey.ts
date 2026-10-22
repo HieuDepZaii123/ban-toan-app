@@ -3,8 +3,8 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const surveyLesson: Lesson = {
-  concept: R`Với $y = x^3 - 3x$, đạo hàm $y' = 3x^2 - 3$ bằng $0$ tại $x = \pm 1$ và đổi dấu. Cực đại là $y(-1) = 2$, cực tiểu là $y(1) = -2$. Hàm đồng biến trên $(-\infty; -1]$ và $[1; +\infty)$, nghịch biến trên $[-1; 1]$. Trên $\mathbb{R}$ không có giá trị lớn nhất. Nghiệm của $y$ là $-\sqrt{3}$, $0$, $\sqrt{3}$, không phải $\pm 1$. Riêng $y = x^3$ có $y' = 3x^2 \ge 0$, bằng $0$ tại $0$ nhưng không đổi dấu, nên không có cực trị. Hàm $y = \dfrac{x^2}{x-1}$ có tiệm cận đứng $x = 1$ và tiệm cận xiên $y = x + 1$. Hai đường đó cắt nhau tại $(1; 2)$, và điểm ấy không thuộc đồ thị.`,
-  conceptEn: R`For $y = x^3 - 3x$, the derivative $y' = 3x^2 - 3$ is $0$ at $x = \pm 1$ and changes sign. The maximum is $y(-1) = 2$ and the minimum is $y(1) = -2$. The function increases on $(-\infty; -1]$ and $[1; +\infty)$, and decreases on $[-1; 1]$. On $\mathbb{R}$ there is no greatest value. The roots of $y$ are $-\sqrt{3}$, $0$, $\sqrt{3}$, not $\pm 1$. By contrast $y = x^3$ has $y' = 3x^2 \ge 0$, zero at $0$ but with no sign change, so there is no extremum. The function $y = \dfrac{x^2}{x-1}$ has vertical asymptote $x = 1$ and oblique asymptote $y = x + 1$. Those two lines meet at $(1; 2)$, and that point is not on the graph.`,
+  concept: R`$y=x^3-3x$: $y'=0$ tại $\pm1$, cực đại $2$, cực tiểu $-2$. Nghiệm $0,\pm\sqrt3\neq\pm1$. $y=x^3$: $y'(0)=0$, không đổi dấu. $y=\dfrac{x^2}{x-1}=x+1+\dfrac{1}{x-1}$: tiệm cận $x=1$, $y=x+1$. Giao $(1;2)$ không trên đồ thị.`,
+  conceptEn: R`$y=x^3-3x$: $y'=0$ at $\pm1$, maximum $2$, minimum $-2$. Roots $0,\pm\sqrt3\neq\pm1$. $y=x^3$: $y'(0)=0$, no sign change. $y=\dfrac{x^2}{x-1}=x+1+\dfrac{1}{x-1}$: asymptotes $x=1$, $y=x+1$. The crossing $(1;2)$ is not on the graph.`,
 };
 
 export const surveyQuestions: Question[] = [

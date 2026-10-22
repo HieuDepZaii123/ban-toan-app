@@ -3,8 +3,8 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const sequenceLesson: Lesson = {
-  concept: R`Cấp số cộng thêm một công sai. Với $u_1 = 3$, $d = 4$, số hạng thứ $10$ là $u_1 + 9d = 39$, không phải $3 + 10 \times 4 = 43$. Tổng mười số hạng là $\dfrac{10}{2}(3 + 39) = 210$. Cấp số nhân nhân với công bội: $u_1 = 2$, $q = 3$ thì $u_5 = 2 \times 3^4 = 162$. Khi $|q| < 1$, số hạng tiến về $0$ nhưng không số hạng nào bằng $0$, và tổng vô hạn là $u_1/(1-q)$. Dãy $8 + 4 + 2 + \cdots$ có tổng $16$. Quả bóng rơi $8$ m, nảy với tỉ số $1/2$, đi cả lên lẫn xuống nên quãng đường là $24$ m. Gửi thêm mỗi tháng $1, 2, \ldots, 12$ triệu thì được $78$ triệu.`,
-  conceptEn: R`An arithmetic sequence adds a common difference. With $u_1 = 3$ and $d = 4$, the 10th term is $u_1 + 9d = 39$, not $3 + 10 \times 4 = 43$. The sum of ten terms is $\dfrac{10}{2}(3 + 39) = 210$. A geometric sequence multiplies by a common ratio: $u_1 = 2$, $q = 3$ gives $u_5 = 2 \times 3^4 = 162$. When $|q| < 1$ the terms tend to $0$ but no term is $0$, and the infinite sum is $u_1/(1-q)$. The series $8 + 4 + 2 + \cdots$ sums to $16$. A ball dropped $8$ m that rebounds at ratio $1/2$ travels up and down, so the path is $24$ m. Deposits of $1, 2, \ldots, 12$ triệu across the months total $78$ triệu.`,
+  concept: R`$u_1=3$, $d=4$: $u_{10}=u_1+9d=39\neq43$, $S_{10}=\dfrac{10}{2}(3+39)=210$. $u_1=2$, $q=3$: $u_5=2\cdot3^4=162$. $|q|<1$: $S=\dfrac{u_1}{1-q}$, số hạng $\neq0$. $8+4+2+\cdots=16$. Nảy: $24$. $1+\cdots+12=78$.`,
+  conceptEn: R`$u_1=3$, $d=4$: $u_{10}=u_1+9d=39\neq43$, $S_{10}=\dfrac{10}{2}(3+39)=210$. $u_1=2$, $q=3$: $u_5=2\cdot3^4=162$. $|q|<1$: $S=\dfrac{u_1}{1-q}$, no term $=0$. $8+4+2+\cdots=16$. Bounce: $24$. $1+\cdots+12=78$.`,
 };
 
 export const sequenceQuestions: Question[] = [

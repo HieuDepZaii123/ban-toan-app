@@ -5,6 +5,7 @@ import { cubic, cubicSecond, cubicSlope, pureCubic, pureCubicSlope, rationalObli
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -182,27 +183,15 @@ export function SurveyLab() {
       {scene === 1 ? <Slider label="x" min={-1.5} max={4} step={0.05} value={rx} onChange={(next) => { stop(); patch({ rx: avoidPole(next) }); }} /> : null}
       {scene === 2 ? <Slider label="x" min={-2} max={2} step={0.05} value={px} onChange={(next) => { stop(); patch({ px: next }); }} /> : null}
       <p className="note">
-        {scene === 0
-          ? t(
-              lang,
-              "Kéo điểm, hoặc chạm x = −1, 0, 1. y′ = 0 tại ±1 và có đổi dấu: cực đại 2, cực tiểu −2. Nghiệm là 0 và ±√3, không phải ±1. Trên ℝ không có giá trị lớn nhất. y″ đổi dấu tại 0 nên đó là điểm uốn, và y′(0) = −3 nên không phải cực trị.",
-              "Drag the point, or tap x = −1, 0, 1. y′ = 0 at ±1 and the sign changes: maximum 2, minimum −2. The roots are 0 and ±√3, not ±1. On ℝ there is no greatest value. y″ changes sign at 0, so that is inflection, and y′(0) = −3 so it is not an extremum.",
-            )
-          : null}
-        {scene === 1
-          ? t(
-              lang,
-              "Kéo dọc theo đồ thị. Đường đứt đứng là x = 1, đường đứt xiên là y = x + 1. Chúng cắt nhau tại (1; 2). Dấu × là điểm ấy, và nó không thuộc đồ thị vì mẫu bằng 0.",
-              "Drag along the graph. The vertical dashed line is x = 1 and the slanted dashed line is y = x + 1. They meet at (1, 2). The × is that point, and it is not on the graph because the denominator is 0.",
-            )
-          : null}
-        {scene === 2
-          ? t(
-              lang,
-              "Kéo qua 0. y′ = 3x² bằng 0 tại đó, tiếp tuyến nằm ngang, nhưng y′ không đổi dấu. Hàm vẫn đồng biến trên ℝ. Đây không phải cực trị của y = x³ − 3x.",
-              "Drag through 0. y′ = 3x² is 0 there and the tangent is horizontal, but y′ does not change sign. The function still increases on ℝ. This is not an extremum of y = x³ − 3x.",
-            )
-          : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$y'=0$ tại $\\pm1$: cực đại $2$, cực tiểu $-2$. Nghiệm $0,\\pm\\sqrt3\\neq\\pm1$.", "$y'=0$ at $\\pm1$: maximum $2$, minimum $-2$. Roots $0,\\pm\\sqrt3\\neq\\pm1$.")
+              : scene === 1
+                ? t(lang, "Tiệm cận $x=1$, $y=x+1$. Giao $(1;2)$ không trên đồ thị.", "Asymptotes $x=1$, $y=x+1$. Crossing $(1;2)$ is not on the graph.")
+                : t(lang, "$y=x^3$: $y'(0)=0$, không đổi dấu, không cực trị.", "$y=x^3$: $y'(0)=0$, no sign change, no extremum.")
+          }
+        />
       </p>
     </div>
   );

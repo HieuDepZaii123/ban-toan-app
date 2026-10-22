@@ -5,6 +5,7 @@ import { coolingTemp, holeY, jumpStudy } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -193,9 +194,15 @@ export function LimitLab() {
         <Slider label="t" min={0} max={20} step={0.1} suffix={t(lang, " phút", " min")} value={time} onChange={(next) => { stop(); patch({ time: next }); }} />
       ) : null}
       <p className="note">
-        {scene === 0 ? t(lang, "Kéo điểm lại gần x = 1. Biểu thức bằng x + 1 ở mọi chỗ khác 1, nên giới hạn là 2. Kéo f(1): số đó không kéo giới hạn theo.", "Drag the point toward x = 1. The expression equals x + 1 everywhere else, so the limit is 2. Drag f(1): that number does not drag the limit with it.") : null}
-        {scene === 1 ? t(lang, "Kéo điểm qua 0. Khi trái và phải khác nhau, không có giới hạn. Kéo cho hai phía bằng nhau thì giới hạn xuất hiện; liên tục còn cần f(0) trùng số đó.", "Drag the point across 0. When the sides differ there is no limit. Make the sides equal and the limit appears; continuity still needs f(0) to match.") : null}
-        {scene === 2 ? t(lang, "Kéo theo thời gian. T(0) = 85°C. Đường tiến về 25°C, nhiệt độ phòng, và không chạm đúng 25 trong thời gian hữu hạn.", "Drag along time. T(0) = 85°C. The curve approaches 25°C, room temperature, and does not land on 25 in finite time.") : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$\\frac{x^2-1}{x-1}=x+1$ khi $x\\neq1$. $\\lim_{x\\to1}=2$. $f(1)$ không kéo $\\lim$.", "$\\frac{x^2-1}{x-1}=x+1$ for $x\\neq1$. $\\lim_{x\\to1}=2$. $f(1)$ does not move $\\lim$.")
+              : scene === 1
+                ? t(lang, "Trái $\\neq$ phải $\\Rightarrow$ không có $\\lim$. Liên tục còn cần $f(0)=\\lim$.", "Left $\\neq$ right $\\Rightarrow$ no $\\lim$. Continuity still needs $f(0)=\\lim$.")
+                : t(lang, "$T(0)=85$. $\\lim=25$.", "$T(0)=85$. $\\lim=25$.")
+          }
+        />
       </p>
     </div>
   );

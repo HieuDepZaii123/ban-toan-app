@@ -5,6 +5,7 @@ import { arithSum, arithTerm, bouncePath, geomInfinite, geomPartial, geomTerm, s
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -199,27 +200,15 @@ export function SequenceLab() {
         </>
       ) : null}
       <p className="note">
-        {scene === 0
-          ? t(
-              lang,
-              "Kéo cột cuối để đổi số số hạng. Với u₁ = 3 và d = 4, số hạng thứ 10 là 39, tổng mười số là 210. Cột «n bước» là phép đếm thừa một bước.",
-              "Drag the last bar to change how many terms are shown. With u₁ = 3 and d = 4, the 10th term is 39 and the sum of ten terms is 210. The “n steps” figure counts one step too many.",
-            )
-          : null}
-        {scene === 1
-          ? t(
-              lang,
-              "Mặc định 8, 4, 2, … hội tụ. Tổng vô hạn là 16. Số hạng tiến về 0 nhưng không số hạng nào bằng 0. Đặt u₁ = 2, q = 3, n = 5 thì số hạng là 162, không phải 81.",
-              "The default 8, 4, 2, … converges. The infinite sum is 16. Terms tend to 0, but no term is 0. Set u₁ = 2, q = 3, n = 5 and the term is 162, not 81.",
-            )
-          : null}
-        {scene === 2
-          ? t(
-              lang,
-              "Kéo quả bóng để đổi độ cao, kéo cột cuối để đổi số tháng. Rơi 8 m, nảy một nửa: quãng đường 24 m, không phải 16 m. Gửi 1 đến 12 triệu thì được 78 triệu, không phải 144.",
-              "Drag the ball to change the drop, and the last bar to change the months. An 8 m drop rebounding by half travels 24 m, not 16 m. Deposits from 1 through 12 triệu total 78 triệu, not 144.",
-            )
-          : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "$u_1=3$, $d=4$: $u_{10}=39\\neq43$, $S_{10}=210$.", "$u_1=3$, $d=4$: $u_{10}=39\\neq43$, $S_{10}=210$.")
+              : scene === 1
+                ? t(lang, "$8+4+2+\\cdots=16$. $u_5=2\\cdot3^4=162\\neq81$.", "$8+4+2+\\cdots=16$. $u_5=2\\cdot3^4=162\\neq81$.")
+                : t(lang, "Nảy: $24\\neq16$. $1+\\cdots+12=78\\neq144$.", "Bounce: $24\\neq16$. $1+\\cdots+12=78\\neq144$.")
+          }
+        />
       </p>
     </div>
   );

@@ -1,8 +1,8 @@
 import type { Lesson, Question } from "./types.ts";
 
 export const quadraticLesson: Lesson = {
-  concept: String.raw`Hàm bậc hai viết $y = ax^2 + bx + c$ với $a \neq 0$. Đồ thị là một parabol. Hoành độ đỉnh là $x = -\dfrac{b}{2a}$, tung độ là giá trị của hàm tại đó. Dấu của $a$ chọn đáy hay đỉnh. $\Delta = b^2 - 4ac$ chỉ đếm số lần cắt trục Ox.`,
-  conceptEn: String.raw`A quadratic is $y = ax^2 + bx + c$ with $a \neq 0$. The graph is a parabola. The vertex has $x = -\dfrac{b}{2a}$, and $y$ is the function value there. The sign of $a$ chooses minimum or maximum. $\Delta = b^2 - 4ac$ only counts intersections with the x-axis.`,
+  concept: String.raw`$y=ax^2+bx+c$, $a\neq0$. Đỉnh $x=-\dfrac{b}{2a}$: đổi $a$ thì đỉnh chạy. $a(x-h)^2+k$: đỉnh đứng yên. $\Delta=b^2-4ac$: số giao Ox. $y=x^2-2x-3$: $(1;-4)$, $\Delta=16$, nghiệm $-1;3$. Rào $40$: $S=x(40-2x)$, $x=10$, $\max=200$.`,
+  conceptEn: String.raw`$y=ax^2+bx+c$, $a\neq0$. Vertex $x=-\dfrac{b}{2a}$: changing $a$ moves it. $a(x-h)^2+k$: the vertex stays. $\Delta=b^2-4ac$: count of Ox crossings. $y=x^2-2x-3$: $(1;-4)$, $\Delta=16$, roots $-1;3$. Fence $40$: $S=x(40-2x)$, $x=10$, $\max=200$.`,
 };
 
 const R = String.raw;

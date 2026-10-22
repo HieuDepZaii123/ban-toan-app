@@ -167,11 +167,11 @@ function Guide({ topic }: { topic: TopicMeta }) {
         {steps.map(([flag, label, text]) => (
           <button key={flag} type="button" className="think-step" aria-pressed={flags[flag]} onClick={() => toggleThink(topic.id, flag)}>
             <b>{label}</b>
-            <span>{text}</span>
+            <MathText text={text} />
           </button>
         ))}
       </div>
-      <p className="trap">{lang === "en" ? topic.trapEn : topic.trap}</p>
+      <p className="trap"><MathText text={lang === "en" ? topic.trapEn : topic.trap} /></p>
     </div>
   );
 }

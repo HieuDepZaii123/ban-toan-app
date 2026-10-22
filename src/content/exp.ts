@@ -3,8 +3,8 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const expLesson: Lesson = {
-  concept: R`Mũ và logarit là hai chiều của một việc. $y = a^x$ và $y = \log_a x$ đối xứng qua đường $y = x$, với cơ số $a > 0$ và $a \neq 1$. Cơ số $1$ không dùng được. $\log(ab) = \log a + \log b$, nên $\log 2 + \log 3 = \log 6$, không phải $\log 5$. Gửi $10$ triệu, lãi kép $8\%$ mỗi năm, sau $5$ năm còn $10(1{,}08)^5 \approx 14{,}69$ triệu, không phải $14$ triệu của lãi đơn. Gấp đôi mất khoảng $9$ năm: $\ln 2 / \ln(1{,}08) \approx 9{,}01$, không phải $8$ và không phải $100/8 = 12{,}5$. Phân rã: $80$ g, chu kỳ bán rã $10$ năm, sau $20$ năm còn $20$ g. Trên thang $\log_{10}$ đường đó thẳng.`,
-  conceptEn: R`An exponential and a logarithm are the two directions of one idea. $y = a^x$ and $y = \log_a x$ mirror across $y = x$, for a base $a > 0$, $a \neq 1$. Base $1$ is not allowed. $\log(ab) = \log a + \log b$, so $\log 2 + \log 3 = \log 6$, not $\log 5$. Ten triệu at $8\%$ compound interest is $10(1{,}08)^5 \approx 14{,}69$ triệu after $5$ years, not the $14$ triệu of simple interest. Doubling takes about $9$ years: $\ln 2 / \ln(1{,}08) \approx 9{,}01$, not $8$ and not $100/8 = 12{,}5$. Decay: $80$ g with a $10$-year half-life is $20$ g after $20$ years. On a $\log_{10}$ scale that curve is a straight line.`,
+  concept: R`$a^x$ đối xứng $\log_a$ qua $y=x$, $a>0$, $a\neq1$. $2^3=8$, $\log_2 8=3$. $\log2+\log3=\log6\neq\log5$. $10(1{,}08)^5\approx14{,}69\neq14$. $\dfrac{\ln2}{\ln(1{,}08)}\approx9{,}01\neq8,\neq12{,}5$. $80\cdot(\dfrac12)^2=20$.`,
+  conceptEn: R`$a^x$ mirrors $\log_a$ across $y=x$, $a>0$, $a\neq1$. $2^3=8$, $\log_2 8=3$. $\log2+\log3=\log6\neq\log5$. $10(1{,}08)^5\approx14{,}69\neq14$. $\dfrac{\ln2}{\ln(1{,}08)}\approx9{,}01\neq8,\neq12{,}5$. $80\cdot(\dfrac12)^2=20$.`,
 };
 
 export const expQuestions: Question[] = [

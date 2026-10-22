@@ -5,6 +5,7 @@ import { bayes, binom, binomAtLeastOne, diceCondition } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/Prefs.tsx";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
@@ -198,9 +199,15 @@ export function ProbabilityLab() {
         </>
       ) : null}
       <p className="note">
-        {scene === 0 ? t(lang, "Chạm một ô để chọn mặt đó. Hàng và cột của mặt ấy còn 11 ô, vì ô giao bị đếm một lần. Cả hai mặt ấy là 1/11, không phải 1/6. Hai người con, biết có ít nhất một bé trai, còn 3 trường hợp và cả hai trai là 1/3.", "Tap a cell to choose that face. Its row and column leave 11 cells, because the crossing is counted once. Both faces is 1/11, not 1/6. Two children, given at least one boy, leave 3 outcomes, and both boys is 1/3.") : null}
-        {scene === 1 ? t(lang, "Kéo tỉ lệ bệnh. Mặc định 10000 người, 1% bệnh, độ nhạy 99%, dương giả 5%: 99 ca thật và 495 ca giả, nên khi đã dương chỉ còn 1/6. 99% là độ nhạy, chưa phải câu trả lời.", "Drag the prevalence. The default is 10000 people, 1% ill, sensitivity 99%, false positives 5%: 99 true cases and 495 false ones, so a positive result leaves 1/6. 99% is the sensitivity, not the answer.") : null}
-        {scene === 2 ? t(lang, "Kéo n, k và p. Với đồng xu cân đối tung 3 lần, đúng hai mặt ngửa là 3/8. Ít nhất một mặt ngửa là 1 − 1/8 = 7/8. Quên C(n, k) thì chỉ còn một dãy, tức 1/8.", "Drag n, k and p. Three tosses of a fair coin, exactly two heads, is 3/8. At least one head is 1 − 1/8 = 7/8. Dropping C(n, k) leaves a single sequence, which is 1/8.") : null}
+        <MathText
+          text={
+            scene === 0
+              ? t(lang, "Ít nhất một $6$: $11$ cặp, $P=\\frac1{11}$. Hai con: $\\frac13$.", "At least one $6$: $11$ pairs, $P=\\frac1{11}$. Two children: $\\frac13$.")
+              : scene === 1
+                ? t(lang, "$\\frac{99}{99+495}=\\frac16\\neq99\\%$.", "$\\frac{99}{99+495}=\\frac16\\neq99\\%$.")
+                : t(lang, "$C(3,2)(\\frac12)^3=\\frac38$. Ít nhất một ngửa: $\\frac78$.", "$C(3,2)(\\frac12)^3=\\frac38$. At least one head: $\\frac78$.")
+          }
+        />
       </p>
     </div>
   );
