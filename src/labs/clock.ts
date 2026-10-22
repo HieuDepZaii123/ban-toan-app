@@ -27,8 +27,10 @@ export function useClock(
     }
     let raf = 0;
     let start = 0;
+    let hiddenAt = 0;
     const tick = (now: number) => {
       if (document.hidden) {
+        hiddenAt = now;
         raf = 0;
         return;
       }
@@ -43,7 +45,17 @@ export function useClock(
       raf = requestAnimationFrame(tick);
     };
     const onVis = () => {
-      if (!document.hidden && raf === 0) raf = requestAnimationFrame(tick);
+      if (document.hidden) {
+        hiddenAt = performance.now();
+        cancelAnimationFrame(raf);
+        raf = 0;
+        return;
+      }
+      if (hiddenAt) {
+        if (start) start += performance.now() - hiddenAt;
+        hiddenAt = 0;
+      }
+      if (raf === 0) raf = requestAnimationFrame(tick);
     };
     document.addEventListener("visibilitychange", onVis);
     raf = requestAnimationFrame(tick);

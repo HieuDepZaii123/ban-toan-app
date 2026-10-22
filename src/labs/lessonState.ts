@@ -6,17 +6,20 @@ export function useLessonState(id: string, initial: Record<string, number>, rang
   const [values, setValues] = useState(() => readParams(id, initial, ranges));
   const ref = useRef(values);
   ref.current = values;
-  const playing = useRef(false);
+  const [playing, setPlaying] = useState(false);
+  const playingRef = useRef(false);
+
   const play = () => {
-    playing.current = true;
+    playingRef.current = true;
+    setPlaying(true);
   };
   const halt = () => {
-    playing.current = false;
+    playingRef.current = false;
+    setPlaying(false);
   };
-  const isPlaying = () => playing.current;
 
   useEffect(() => {
-    if (playing.current) return;
+    if (playingRef.current) return;
     writeParams(id, values);
   }, [id, values]);
 
@@ -36,5 +39,5 @@ export function useLessonState(id: string, initial: Record<string, number>, rang
     });
   };
 
-  return { values, ref, patch, setValues, play, halt, isPlaying };
+  return { values, ref, patch, setValues, play, halt, playing };
 }

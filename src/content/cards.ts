@@ -36,7 +36,7 @@ export type Card = {
   questions: number;
 };
 
-export const cards: Card[] = [
+export const cards = [
   {
     "id": "quadratic",
     "n": "01",
@@ -205,7 +205,9 @@ export const cards: Card[] = [
     "blurbEn": "Once part of the outcome is known, the denominator is no longer the original sample.",
     "questions": 6
   }
-];
+] as const satisfies readonly Card[];
+
+export type CardId = (typeof cards)[number]["id"];
 
 export const QUESTION_TOTAL = cards.reduce((sum, card) => sum + card.questions, 0);
 

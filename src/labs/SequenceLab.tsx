@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { seqInit, seqRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { arithSum, arithTerm, bouncePath, geomInfinite, geomPartial, geomTerm, savingsSum } from "../lib/math.ts";
@@ -21,8 +21,7 @@ const NONE: Hit = { hx: -999, hy: -999, hx2: -999, hy2: -999, to: () => 0, to2: 
 export function SequenceLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("sequence", seqInit, seqRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("sequence", seqInit, seqRange);
   const hit = useRef<Hit>(NONE);
   const which = useRef<1 | 2>(1);
   const dragging = useRef(false);
@@ -46,22 +45,20 @@ export function SequenceLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("sequence", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 2800, false, (u) => patch({ n: snap(1 + 9 * u, 1, 1, 12) }, true), stop);
-  useClock(on && scene === 1 && !calm, 2800, false, (u) => patch({ gn: snap(1 + 7 * u, 1, 1, 8) }, true), stop);
-  useClock(on && scene === 2 && !calm, 3000, false, (u) => patch({ months: snap(1 + 11 * u, 1, 1, 12) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 2800, false, (u) => patch({ n: snap(1 + 9 * u, 1, 1, 12) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 2800, false, (u) => patch({ gn: snap(1 + 7 * u, 1, 1, 8) }, true), stop);
+  useClock(playing && scene === 2 && !calm, 3000, false, (u) => patch({ months: snap(1 + 11 * u, 1, 1, 12) }, true), stop);
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ n: 1 }, true);
     if (scene === 1) patch({ gn: 1 }, true);
     if (scene === 2) patch({ months: 1 }, true);
@@ -130,7 +127,7 @@ export function SequenceLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

@@ -37,7 +37,7 @@ Service worker đăng ký sau khi trang đã hiện, chỉ ở bản production.
 ## Thêm một tờ
 
 1. Thêm thẻ trong `src/content/cards.ts` và phần Nhìn / Làm / Kết trong `src/content/guides.ts`. `catalog.ts` ghép hai tệp đó cho tờ đang mở.
-2. Khi đã có nội dung: viết `src/content/<id>.ts` xuất `lesson` và `questions`, rồi nối vào `src/content/banks.ts`. Đặt `status: "ready"` và `questions` bằng số câu.
+2. Khi đã có nội dung: viết `src/content/<id>.ts` xuất `lesson` và `questions`, rồi nối vào `src/content/loadTopic.ts` và `src/content/banks.ts`. Đặt `status: "ready"` và `questions` bằng số câu.
 3. Hình kéo là một component trong `src/labs/`, vẽ bằng canvas, và được `lazy()` trong `src/topic/TopicDesk.tsx`. Số liệu dùng chung nằm ở `src/lib/math.ts` để phần Làm và phần hình không lệch nhau.
 4. Câu hỏi dùng `$...$` cho KaTeX. Chữ thường tiếng Việt có dấu. Mỗi câu bốn lựa chọn, một đáp án, một gợi ý, ba bước. Số sai phải là nhầm lẫn thật (đổi dấu, quên cộng mắt, lấy t = 1 thay vì đỉnh).
 5. `npm test` phải vẫn xanh. Hàm mới trong `src/lib/math.ts` thì thêm một khẳng định vào `scripts/check-math.ts`.

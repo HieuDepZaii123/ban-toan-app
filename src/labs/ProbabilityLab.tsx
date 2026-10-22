@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { chanceInit, chanceRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { bayes, binom, binomAtLeastOne, diceCondition } from "../lib/math.ts";
@@ -19,8 +19,7 @@ type Hit = { hx: number; hy: number; to: (px: number, py: number) => number } | 
 export function ProbabilityLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("probability", chanceInit, chanceRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("probability", chanceInit, chanceRange);
   const hit = useRef<Hit>(null);
   const dragging = useRef(false);
   const scene = values.scene ?? 0;
@@ -38,14 +37,13 @@ export function ProbabilityLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("probability", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 3000, false, (u) => patch({ face: snap(1 + 5 * u, 1, 1, 6) }, true), stop);
-  useClock(on && scene === 1 && !calm, 3200, false, (u) => patch({ prev: snap(1 + 19 * u, 1, 1, 20) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 3000, false, (u) => patch({ face: snap(1 + 5 * u, 1, 1, 6) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 3200, false, (u) => patch({ prev: snap(1 + 19 * u, 1, 1, 20) }, true), stop);
   useClock(
-    on && scene === 2 && !calm,
+    playing && scene === 2 && !calm,
     2800,
     false,
     (u) => {
@@ -57,12 +55,11 @@ export function ProbabilityLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ face: 1 }, true);
     if (scene === 1) patch({ prev: 1 }, true);
     if (scene === 2) patch({ k: 0 }, true);
@@ -132,7 +129,7 @@ export function ProbabilityLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

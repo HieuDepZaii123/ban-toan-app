@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { trigInit, trigRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { cosDeg, quadrant, showCos, showSin, showSinCos, showTan, sinDeg, treeHeight } from "../lib/math.ts";
@@ -21,8 +21,7 @@ type Hit =
 export function TrigLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("trig", trigInit, trigRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("trig", trigInit, trigRange);
   const hit = useRef<Hit | null>(null);
   const dragging = useRef(false);
   const scene = values.scene ?? 0;
@@ -32,18 +31,17 @@ export function TrigLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("trig", ref.current);
   };
 
   useClock(
-    on && scene === 0 && !calm,
+    playing && scene === 0 && !calm,
     8000,
     true,
     (u) => patch({ angle: snap(u * 360, 1, 0, 360) }, true),
   );
   useClock(
-    on && scene === 1 && !calm,
+    playing && scene === 1 && !calm,
     3600,
     false,
     (u) => patch({ tilt: snap(8 + u * 64, 1, 5, 75) }, true),
@@ -52,12 +50,11 @@ export function TrigLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ angle: 0 }, true);
     if (scene === 1) patch({ tilt: 8 }, true);
   };
@@ -128,7 +125,7 @@ export function TrigLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

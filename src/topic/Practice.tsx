@@ -51,6 +51,12 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
   const steps = lang === "en" ? question.stepsEn : question.steps;
   const hint = lang === "en" ? question.hintEn : question.hint;
   const answered = picked >= 0;
+  const choiceNo = picked + 1;
+  const statusText = !answered
+    ? ""
+    : picked === question.answer
+      ? t(lang, `Đúng. Đã chọn ${choiceNo}.`, `Correct. Chose ${choiceNo}.`)
+      : t(lang, `Chưa đúng. Đã chọn ${choiceNo}.`, `Not yet. Chose ${choiceNo}.`);
 
   return (
     <section className="practice" aria-labelledby="practice-title">
@@ -65,6 +71,7 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
               type="button"
               className={`choice${state}`}
               data-choice={choiceIndex}
+              aria-pressed={answered && choiceIndex === picked}
               onClick={() => recordAnswer(topicId, question.id, choiceIndex, choiceIndex === question.answer)}
             >
               <span className="key">{choiceIndex + 1}</span>
@@ -90,9 +97,9 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
         </button>
       </div>
       {hintOpen ? <p className="hint"><MathText text={hint} /></p> : null}
+      <p className="status" role="status" aria-live="polite">{statusText}</p>
       {answered ? (
         <div className="solution">
-          <p className="status" role="status" aria-live="polite">{picked === question.answer ? t(lang, "Đúng", "Correct") : t(lang, "Chưa đúng", "Not yet")}</p>
           <ol>
             {steps.map((step) => (
               <li key={step}><MathText text={step} /></li>

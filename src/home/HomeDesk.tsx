@@ -96,7 +96,7 @@ export function HomeDesk() {
 
 function ProgressLine() {
   const lang = useLang();
-  const done = useSlice((data) => countRight(data.right));
+  const done = Math.min(useSlice((data) => countRight(data.right)), QUESTION_TOTAL);
   return (
     <p className="progress-line">
       {done === 0
@@ -110,12 +110,49 @@ function Continue() {
   const lang = useLang();
   const lastId = useSlice((data) => data.lastId);
   const topic = cards.find((item) => item.id === (lastId ?? "quadratic")) ?? cards[0];
+  const params = useSlice((data) => (topic ? data.params[topic.id] : undefined));
+  const paramsKey = JSON.stringify(params ?? null);
+  const [summary, setSummary] = useState<{ id: string; lang: string; paramsKey: string; text: string } | null>(null);
+
+  useEffect(() => {
+    if (!topic) return;
+    let live = true;
+    const topicId = topic.id;
+    const run = () => {
+      void import("../content/summary.ts").then((mod) => {
+        if (!live) return;
+        setSummary({ id: topicId, lang, paramsKey, text: mod.topicSummary(topicId, params, lang) });
+      });
+    };
+    let idle = 0;
+    let timer = 0;
+    const host = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    const start = () => {
+      if (host.requestIdleCallback) idle = host.requestIdleCallback(run, { timeout: 4000 });
+      else timer = window.setTimeout(run, 1500);
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      live = false;
+      window.removeEventListener("load", start);
+      host.cancelIdleCallback?.(idle);
+      window.clearTimeout(timer);
+    };
+  }, [topic, params, paramsKey, lang]);
+
   if (!topic) return null;
+  const line = summary && summary.id === topic.id && summary.lang === lang && summary.paramsKey === paramsKey
+    ? summary.text
+    : lang === "en" ? topic.blurbEn : topic.blurb;
   return (
     <A className="continue" href={`/t/${topic.id}`}>
       <span>{lastId ? t(lang, "Tờ đang mở", "Open sheet") : t(lang, "Bắt đầu", "Start")}</span>
       <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
-      <em>{lang === "en" ? topic.blurbEn : topic.blurb}</em>
+      <em>{line}</em>
     </A>
   );
 }

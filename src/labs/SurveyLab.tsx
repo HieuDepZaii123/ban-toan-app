@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { surveyInit, surveyRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { cubic, cubicSecond, cubicSlope, pureCubic, pureCubicSlope, rationalOblique, rationalY } from "../lib/math.ts";
@@ -19,8 +19,7 @@ type Hit = { hx: number; hy: number; to: (px: number) => number };
 export function SurveyLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("survey", surveyInit, surveyRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("survey", surveyInit, surveyRange);
   const hit = useRef<Hit>({ hx: 0, hy: 0, to: () => 0 });
   const dragging = useRef(false);
   const scene = values.scene ?? 0;
@@ -32,22 +31,20 @@ export function SurveyLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("survey", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 3600, false, (u) => patch({ x: snap(-2.2 + 4.4 * u, 0.05, -2.4, 2.4) }, true), stop);
-  useClock(on && scene === 1 && !calm, 3200, false, (u) => patch({ rx: snap(1.8 + 2 * u, 0.05, -1.5, 4) }, true), stop);
-  useClock(on && scene === 2 && !calm, 3200, false, (u) => patch({ px: snap(-1.8 + 3.6 * u, 0.05, -2, 2) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 3600, false, (u) => patch({ x: snap(-2.2 + 4.4 * u, 0.05, -2.4, 2.4) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 3200, false, (u) => patch({ rx: snap(1.8 + 2 * u, 0.05, -1.5, 4) }, true), stop);
+  useClock(playing && scene === 2 && !calm, 3200, false, (u) => patch({ px: snap(-1.8 + 3.6 * u, 0.05, -2, 2) }, true), stop);
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ x: -2.2 }, true);
     if (scene === 1) patch({ rx: 1.8 }, true);
     if (scene === 2) patch({ px: -1.8 }, true);
@@ -117,7 +114,7 @@ export function SurveyLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

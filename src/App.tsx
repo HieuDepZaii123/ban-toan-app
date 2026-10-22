@@ -1,7 +1,9 @@
 import { Component, lazy, Suspense, useEffect, type ReactNode } from "react";
 import { HomeDesk } from "./home/HomeDesk.tsx";
-import { RouteProvider, useRoute } from "./lib/route.tsx";
+import { A, RouteProvider, useRoute } from "./lib/route.tsx";
 import { useSlice } from "./lib/store.ts";
+import { t } from "./lib/text.ts";
+import { useLang } from "./ui/Prefs.tsx";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 
@@ -31,13 +33,29 @@ function Guarded() {
   );
 }
 
+function topicId(path: string): string {
+  try {
+    return decodeURIComponent(path.slice(3));
+  } catch {
+    return "";
+  }
+}
+
 function Shell() {
   const { path } = useRoute();
-  if (path.startsWith("/t/")) {
-    const id = decodeURIComponent(path.slice(3));
-    return <TopicDesk id={id} />;
-  }
+  if (path.startsWith("/t/")) return <TopicDesk id={topicId(path)} />;
   return <HomeDesk />;
+}
+
+function Broken() {
+  const lang = useLang();
+  return (
+    <main className="desk" id="content">
+      <h1>{t(lang, "Bàn gặp lỗi", "The desk hit an error")}</h1>
+      <p>{t(lang, "Tờ này chưa mở được. Về bàn rồi thử lại.", "This sheet did not open. Go back to the desk and try again.")}</p>
+      <A href="/">{t(lang, "Về bàn", "Back to the desk")}</A>
+    </main>
+  );
 }
 
 function ThemeBridge() {
@@ -72,15 +90,7 @@ class Boundary extends Component<{ children: ReactNode }, { message: string | nu
   }
 
   render() {
-    if (this.state.message) {
-      return (
-        <main className="desk">
-          <h1>Bàn gặp lỗi</h1>
-          <p>{this.state.message}</p>
-          <a href="/">Về bàn</a>
-        </main>
-      );
-    }
+    if (this.state.message) return <Broken />;
     return this.props.children;
   }
 }

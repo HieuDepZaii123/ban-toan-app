@@ -195,7 +195,8 @@ h2 { font-size: 1.05rem; font-weight: 600; }
   border-bottom: 2px solid transparent;
   color: var(--ink-soft);
 }
-.tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.tab[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.status:empty { position: absolute; width: 1px; height: 1px; overflow: hidden; }
 
 main {
   width: min(1080px, 100%);

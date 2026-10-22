@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { derivInit, derivRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { apex, brakeMotion, brakeTimeFromDistance, flightTime, projectile, secantSlope } from "../lib/math.ts";
@@ -22,8 +22,7 @@ type Hit =
 export function DerivativeLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("derivative", derivInit, derivRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("derivative", derivInit, derivRange);
   const hit = useRef<Hit | null>(null);
   const dragging = useRef(false);
   const scene = values.scene ?? 0;
@@ -39,26 +38,25 @@ export function DerivativeLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("derivative", ref.current);
   };
 
   useClock(
-    on && scene === 0 && !calm,
+    playing && scene === 0 && !calm,
     2600,
     false,
     (u) => patch({ h: snap(1.5 + (0 - 1.5) * u, 0.05, -1.5, 1.5) }, true),
     stop,
   );
   useClock(
-    on && scene === 1 && !calm,
+    playing && scene === 1 && !calm,
     2800,
     false,
     (u) => patch({ time: snap(u * flightTime(ref.current.v0 ?? 20), 0.05, 0, 10) }, true),
     stop,
   );
   useClock(
-    on && scene === 2 && !calm,
+    playing && scene === 2 && !calm,
     2800,
     false,
     (u) => patch({ brake: snap(u * 5, 0.1, 0, 5) }, true),
@@ -67,12 +65,11 @@ export function DerivativeLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ h: 1.5 }, true);
     if (scene === 1) patch({ time: 0 }, true);
     if (scene === 2) patch({ brake: 0 }, true);
@@ -134,7 +131,7 @@ export function DerivativeLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

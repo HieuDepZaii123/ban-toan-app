@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { expInit, expRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { baseOk, compoundAmount, decayMass, expY, logY, simpleAmount, yearsToDouble } from "../lib/math.ts";
@@ -21,8 +21,7 @@ const NONE: Hit = { hx: -999, hy: -999, hx2: -999, hy2: -999, to: () => 0, to2: 
 export function ExpLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("exp", expInit, expRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("exp", expInit, expRange);
   const hit = useRef<Hit>(NONE);
   const which = useRef<1 | 2>(1);
   const dragging = useRef(false);
@@ -40,22 +39,20 @@ export function ExpLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("exp", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 3200, false, (u) => patch({ x: snap(-1.5 + 4.5 * u, 0.1, -2, 3) }, true), stop);
-  useClock(on && scene === 1 && !calm, 3400, false, (u) => patch({ years: snap(15 * u, 1, 0, 15) }, true), stop);
-  useClock(on && scene === 2 && !calm, 3600, false, (u) => patch({ massTime: snap(40 * u, 1, 0, 40) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 3200, false, (u) => patch({ x: snap(-1.5 + 4.5 * u, 0.1, -2, 3) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 3400, false, (u) => patch({ years: snap(15 * u, 1, 0, 15) }, true), stop);
+  useClock(playing && scene === 2 && !calm, 3600, false, (u) => patch({ massTime: snap(40 * u, 1, 0, 40) }, true), stop);
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ x: -1.5 }, true);
     if (scene === 1) patch({ years: 0 }, true);
     if (scene === 2) patch({ massTime: 0 }, true);
@@ -125,7 +122,7 @@ export function ExpLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

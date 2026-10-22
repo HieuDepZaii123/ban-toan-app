@@ -130,13 +130,30 @@ function readStorage(): string | null {
 }
 
 let data = load(readStorage());
+/** Last raw snapshot this tab loaded or wrote. A different disk value means another tab won. */
+let baseline = readStorage();
 let timer = 0;
 const listeners = new Set<() => void>();
+
+function notify(): void {
+  for (const listener of listeners) listener();
+}
 
 function saveNow(): void {
   if (typeof localStorage === "undefined") return;
   try {
-    localStorage.setItem(KEY, JSON.stringify(data));
+    const current = localStorage.getItem(KEY);
+    if (current !== baseline) {
+      if (typeof window !== "undefined") window.clearTimeout(timer);
+      timer = 0;
+      baseline = current;
+      data = load(current);
+      notify();
+      return;
+    }
+    const raw = JSON.stringify(data);
+    localStorage.setItem(KEY, raw);
+    baseline = raw;
   } catch {
     /* private mode or a full disk: the desk still works for this visit */
   }
@@ -151,7 +168,7 @@ function scheduleSave(): void {
 function commit(next: Data): void {
   data = next;
   scheduleSave();
-  for (const listener of listeners) listener();
+  notify();
 }
 
 export function getData(): Data {
@@ -172,8 +189,9 @@ export function applyStorageEvent(key: string | null, value: string | null): voi
   if (key !== KEY) return;
   if (typeof window !== "undefined") window.clearTimeout(timer);
   timer = 0;
+  baseline = value;
   data = load(value);
-  for (const listener of listeners) listener();
+  notify();
 }
 
 /** Test hook. Replaces the in-memory desk without writing storage. */
@@ -181,7 +199,20 @@ export function resetStore(next: Data = blank()): void {
   if (typeof window !== "undefined") window.clearTimeout(timer);
   timer = 0;
   data = next;
-  for (const listener of listeners) listener();
+  baseline = readStorage();
+  notify();
+}
+
+/** Test hook. True while a debounced write is waiting. */
+export function hasPendingSave(): boolean {
+  return timer !== 0;
+}
+
+/** Test hook. Runs the debounced write immediately. */
+export function flushSave(): void {
+  if (typeof window !== "undefined") window.clearTimeout(timer);
+  timer = 0;
+  saveNow();
 }
 
 if (typeof window !== "undefined") {

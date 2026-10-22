@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { integralInit, integralRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { archIntegral, archRiemann, archVolumeCoeff, archY, betweenIntegral } from "../lib/math.ts";
@@ -19,8 +19,7 @@ type Hit = { hx: number; hy: number; to: (px: number) => number };
 export function IntegralLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("integral", integralInit, integralRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("integral", integralInit, integralRange);
   const hit = useRef<Hit | null>(null);
   const dragging = useRef(false);
   const scene = values.scene ?? 0;
@@ -35,22 +34,20 @@ export function IntegralLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("integral", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 3200, false, (u) => patch({ strips: snap(1 + 23 * u, 1, 1, 24) }, true), stop);
-  useClock(on && scene === 1 && !calm, 2600, false, (u) => patch({ gap: snap(0.2 + 0.8 * u, 0.05, 0.2, 1) }, true), stop);
-  useClock(on && scene === 2 && !calm, 2800, false, (u) => patch({ span: snap(0.2 + 1.8 * u, 0.05, 0.2, 2) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 3200, false, (u) => patch({ strips: snap(1 + 23 * u, 1, 1, 24) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 2600, false, (u) => patch({ gap: snap(0.2 + 0.8 * u, 0.05, 0.2, 1) }, true), stop);
+  useClock(playing && scene === 2 && !calm, 2800, false, (u) => patch({ span: snap(0.2 + 1.8 * u, 0.05, 0.2, 2) }, true), stop);
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ strips: 1 }, true);
     if (scene === 1) patch({ gap: 0.2 }, true);
     if (scene === 2) patch({ span: 0.2 }, true);
@@ -109,7 +106,7 @@ export function IntegralLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

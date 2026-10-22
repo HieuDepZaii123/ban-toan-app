@@ -1,3 +1,4 @@
+import type { CardId } from "./cards.ts";
 import type { Think } from "./types.ts";
 
 export type Guide = {
@@ -9,7 +10,7 @@ export type Guide = {
   trapEn: string;
 };
 
-export const guides: Record<string, Guide> = {
+export const guides = {
   "quadratic": {
     "soon": "Ba hình: dạng tổng quát, dạng đỉnh, và chuồng tựa tường.",
     "soonEn": "Three figures: general form, vertex form, and a pen against a wall.",
@@ -234,4 +235,4 @@ export const guides: Record<string, Guide> = {
     "trap": "Dương: mẫu là số lần dương. Xúc xắc: $11$ cặp, không $12$, không $36$.",
     "trapEn": "A positive call: the sample is the positive calls. Dice: $11$ pairs, not $12$, not $36$."
   }
-};
+} satisfies Record<CardId, Guide>;

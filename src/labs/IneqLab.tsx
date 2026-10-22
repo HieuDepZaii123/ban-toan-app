@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { ineqInit, ineqRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { amGm, cauchyPair, workshopOk, workshopProfit } from "../lib/math.ts";
@@ -26,8 +26,7 @@ const VERTICES: readonly (readonly [number, number])[] = [
 export function IneqLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("ineq", ineqInit, ineqRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("ineq", ineqInit, ineqRange);
   const hit = useRef<Hit>(null);
   const drag = useRef<string | null>(null);
   const scene = values.scene ?? 0;
@@ -46,12 +45,11 @@ export function IneqLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("ineq", ref.current);
   };
 
   useClock(
-    on && scene === 0 && !calm,
+    playing && scene === 0 && !calm,
     2800,
     false,
     (u) => {
@@ -61,7 +59,7 @@ export function IneqLab() {
     stop,
   );
   useClock(
-    on && scene === 1 && !calm,
+    playing && scene === 1 && !calm,
     2800,
     false,
     (u) => {
@@ -74,7 +72,7 @@ export function IneqLab() {
     stop,
   );
   useClock(
-    on && scene === 2 && !calm,
+    playing && scene === 2 && !calm,
     3600,
     false,
     (u) => {
@@ -98,12 +96,11 @@ export function IneqLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ b: 12 }, true);
     if (scene === 1) patch({ d: 4 }, true);
     if (scene === 2) patch({ x: 0, y: 0 }, true);
@@ -183,7 +180,7 @@ export function IneqLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

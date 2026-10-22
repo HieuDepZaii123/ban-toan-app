@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { shapeInit, shapeRange } from "../content/params.ts";
 import { fmt, showExact, snap } from "../lib/format.ts";
 import { boxBase, boxVolume, pyramidBase, pyramidVolume, tetraVerts, tetraVolume, triArea } from "../lib/math.ts";
@@ -35,8 +35,7 @@ const TETRA_PAIRS: readonly (readonly [number, number])[] = [
 export function ShapeLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("triangle", shapeInit, shapeRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("triangle", shapeInit, shapeRange);
   const hit = useRef<{ handles: { id: string; x: number; y: number }[] } | null>(null);
   const drag = useRef<Drag | null>(null);
   const scene = values.scene ?? 0;
@@ -62,23 +61,21 @@ export function ShapeLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("triangle", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 2200, false, (u) => patch({ tall: snap(2 + 2 * u, 0.5, 1, 12) }, true), stop);
-  useClock(on && scene === 1 && !calm, 2200, false, (u) => patch({ ht: snap(2 + 3 * u, 0.5, 1, 8) }, true), stop);
-  useClock(on && scene === 2 && !calm, 2200, false, (u) => patch({ ph: snap(3 + u, 0.5, 1, 10) }, true), stop);
-  useClock(on && scene === 3 && !calm, 2200, false, (u) => patch({ edge: snap(4 + 2 * u, 0.5, 2, 10) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 2200, false, (u) => patch({ tall: snap(2 + 2 * u, 0.5, 1, 12) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 2200, false, (u) => patch({ ht: snap(2 + 3 * u, 0.5, 1, 8) }, true), stop);
+  useClock(playing && scene === 2 && !calm, 2200, false, (u) => patch({ ph: snap(3 + u, 0.5, 1, 10) }, true), stop);
+  useClock(playing && scene === 3 && !calm, 2200, false, (u) => patch({ edge: snap(4 + 2 * u, 0.5, 2, 10) }, true), stop);
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ tall: 2 }, true);
     if (scene === 1) patch({ ht: 2 }, true);
     if (scene === 2) patch({ ph: 3 }, true);
@@ -152,7 +149,7 @@ export function ShapeLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

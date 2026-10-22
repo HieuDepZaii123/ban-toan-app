@@ -4,7 +4,7 @@
  */
 import katex from "katex";
 import { analyticQuestions } from "../src/content/analytic.ts";
-import { questionsFor } from "../src/content/banks.ts";
+import { lessonFor, questionsFor } from "../src/content/banks.ts";
 import { QUESTION_TOTAL, topics } from "../src/content/catalog.ts";
 import { comboQuestions } from "../src/content/combo.ts";
 import { derivativeQuestions } from "../src/content/derivative.ts";
@@ -149,6 +149,16 @@ function texOf(text: string): string[] {
   return out;
 }
 
+function checkTex(label: string, text: string): void {
+  for (const tex of texOf(text)) {
+    try {
+      katex.renderToString(tex, { throwOnError: true });
+    } catch (error) {
+      fails.push(`${label} KaTeX: ${tex} (${error instanceof Error ? error.message : "fail"})`);
+    }
+  }
+}
+
 function checkQuestion(q: Question, correct: string): void {
   const choices = [...q.choices];
   assert(new Set(choices).size === 4, `${q.id} choices are not unique`);
@@ -158,13 +168,28 @@ function checkQuestion(q: Question, correct: string): void {
   assert(MARK.test(vi), `${q.id} Vietnamese copy has no diacritics`);
   assert(!BARE.test(vi), `${q.id} has an undiacritised Vietnamese word`);
   for (const blob of [q.prompt, q.promptEn, q.hint, q.hintEn, ...q.choices, ...q.choicesEn, ...q.steps, ...q.stepsEn]) {
-    for (const tex of texOf(blob)) {
-      try {
-        katex.renderToString(tex, { throwOnError: true });
-      } catch (error) {
-        fails.push(`${q.id} KaTeX: ${tex} (${error instanceof Error ? error.message : "fail"})`);
-      }
-    }
+    checkTex(q.id, blob);
+  }
+}
+
+function checkSheets(): void {
+  for (const topic of topics) {
+    const lesson = lessonFor(topic.id);
+    assert(lesson !== undefined, `${topic.id} has a lesson`);
+    if (!lesson) continue;
+    checkTex(`${topic.id} concept`, lesson.concept);
+    checkTex(`${topic.id} conceptEn`, lesson.conceptEn);
+    const sheets = [
+      ["nhin", topic.think.nhin],
+      ["lam", topic.think.lam],
+      ["ket", topic.think.ket],
+      ["nhinEn", topic.thinkEn.nhin],
+      ["lamEn", topic.thinkEn.lam],
+      ["ketEn", topic.thinkEn.ket],
+      ["trap", topic.trap],
+      ["trapEn", topic.trapEn],
+    ] as const;
+    for (const [name, text] of sheets) checkTex(`${topic.id} ${name}`, text);
   }
 }
 
@@ -289,6 +314,7 @@ for (const [id, list] of banks) {
   }
 }
 assert(counted === 85, `bank size ${counted}`);
+checkSheets();
 for (const id of ["ineq", "vector", "analytic", "triangle", "combo"]) {
   assert(questionsFor(id).length === 6, `${id} bank`);
 }

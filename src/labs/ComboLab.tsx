@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { comboInit, comboRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { arrange, comb, meanOf, medianOf } from "../lib/math.ts";
@@ -30,8 +30,7 @@ type Hit = { handles: { id: string; x: number; y: number }[]; toValue: (px: numb
 export function ComboLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("combo", comboInit, comboRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("combo", comboInit, comboRange);
   const hit = useRef<Hit>(null);
   const drag = useRef(false);
   const scene = values.scene ?? 0;
@@ -47,22 +46,20 @@ export function ComboLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("combo", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 2200, false, (u) => patch({ k: snap(Math.round(1 + u), 1, 0, ref.current.n ?? 5) }, true), stop);
-  useClock(on && scene === 1 && !calm, 3200, false, (u) => patch({ seat: snap(Math.round(u * 5), 1, 0, 5) }, true), stop);
-  useClock(on && scene === 2 && !calm, 2600, false, (u) => patch({ outlier: snap(6 + 14 * u, 1, 0, 20) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 2200, false, (u) => patch({ k: snap(Math.round(1 + u), 1, 0, ref.current.n ?? 5) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 3200, false, (u) => patch({ seat: snap(Math.round(u * 5), 1, 0, 5) }, true), stop);
+  useClock(playing && scene === 2 && !calm, 2600, false, (u) => patch({ outlier: snap(6 + 14 * u, 1, 0, 20) }, true), stop);
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ k: 1 }, true);
     if (scene === 1) patch({ seat: 0 }, true);
     if (scene === 2) patch({ outlier: 6 }, true);
@@ -117,7 +114,7 @@ export function ComboLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

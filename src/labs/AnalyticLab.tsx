@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { analyticInit, analyticRange } from "../content/params.ts";
 import { fmt, showExact, snap } from "../lib/format.ts";
 import { circlePlace, lineFoot2, planeFoot } from "../lib/math.ts";
@@ -34,8 +34,7 @@ type Hit = { map: Map2 | null; handles: { id: string; x: number; y: number }[] }
 export function AnalyticLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("analytic", analyticInit, analyticRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("analytic", analyticInit, analyticRange);
   const hit = useRef<Hit>(null);
   const drag = useRef(false);
   const scene = values.scene ?? 0;
@@ -61,14 +60,13 @@ export function AnalyticLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("analytic", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 2400, false, (u) => patch({ px: snap(1 + 2 * u, 0.5, -2, 6) }, true), stop);
-  useClock(on && scene === 1 && !calm, 2400, false, (u) => patch({ qz: snap(4 + (1 - 4) * u, 0.5, -2, 8) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 2400, false, (u) => patch({ px: snap(1 + 2 * u, 0.5, -2, 6) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 2400, false, (u) => patch({ qz: snap(4 + (1 - 4) * u, 0.5, -2, 8) }, true), stop);
   useClock(
-    on && scene === 2 && !calm,
+    playing && scene === 2 && !calm,
     2800,
     false,
     (u) => patch({ cx: snap(3 + 3 * u, 0.5, -8, 8), cy: snap(4 - 4 * u, 0.5, -8, 8) }, true),
@@ -77,12 +75,11 @@ export function AnalyticLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ px: 1, py: 1 }, true);
     if (scene === 1) patch({ qz: 4 }, true);
     if (scene === 2) patch({ cx: 3, cy: 4 }, true);
@@ -172,7 +169,7 @@ export function AnalyticLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

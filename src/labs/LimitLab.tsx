@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { limitInit, limitRange } from "../content/params.ts";
 import { fmt, snap } from "../lib/format.ts";
 import { coolingTemp, holeY, jumpStudy } from "../lib/math.ts";
@@ -19,8 +19,7 @@ type Hit = { hx: number; hy: number; to: (px: number, py: number) => number };
 export function LimitLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("limit", limitInit, limitRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("limit", limitInit, limitRange);
   const hit = useRef<Hit | null>(null);
   const dragging = useRef(false);
   const scene = values.scene ?? 0;
@@ -35,22 +34,20 @@ export function LimitLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("limit", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 2800, false, (u) => patch({ h: snap(1.5 * (1 - u), 0.05, -2, 2) }, true), stop);
-  useClock(on && scene === 1 && !calm, 3200, false, (u) => patch({ probe: snap(-2.2 + 4.4 * u, 0.05, -2.5, 2.5) }, true), stop);
-  useClock(on && scene === 2 && !calm, 3600, false, (u) => patch({ time: snap(16 * u, 0.1, 0, 20) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 2800, false, (u) => patch({ h: snap(1.5 * (1 - u), 0.05, -2, 2) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 3200, false, (u) => patch({ probe: snap(-2.2 + 4.4 * u, 0.05, -2.5, 2.5) }, true), stop);
+  useClock(playing && scene === 2 && !calm, 3600, false, (u) => patch({ time: snap(16 * u, 0.1, 0, 20) }, true), stop);
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ h: 1.5 }, true);
     if (scene === 1) patch({ probe: -2.2 }, true);
     if (scene === 2) patch({ time: 0 }, true);
@@ -125,7 +122,7 @@ export function LimitLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, type PointerEvent } from "react";
 import { vectorInit, vectorRange } from "../content/params.ts";
 import { fmt, showExact, snap } from "../lib/format.ts";
 import { det2, solve2, vec3Add, vec3Cross, vec3Dot, vec3Len } from "../lib/math.ts";
@@ -33,8 +33,7 @@ type Hit = { map: Map2 | null; handles: { id: string; x: number; y: number }[] }
 export function VectorLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("vector", vectorInit, vectorRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("vector", vectorInit, vectorRange);
   const hit = useRef<Hit>(null);
   const drag = useRef<string | null>(null);
   const scene = values.scene ?? 0;
@@ -47,22 +46,20 @@ export function VectorLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("vector", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 2600, false, (uNow) => patch({ uz: snap(2 * uNow, 0.5, -4, 4) }, true), stop);
-  useClock(on && scene === 1 && !calm, 2600, false, (uNow) => patch({ m22: snap(0.5 + (-1 - 0.5) * uNow, 0.5, -4, 4) }, true), stop);
-  useClock(on && scene === 2 && !calm, 2600, false, (uNow) => patch({ t2: snap(4 + (1 - 4) * uNow, 0.5, -6, 8) }, true), stop);
+  useClock(playing && scene === 0 && !calm, 2600, false, (uNow) => patch({ uz: snap(2 * uNow, 0.5, -4, 4) }, true), stop);
+  useClock(playing && scene === 1 && !calm, 2600, false, (uNow) => patch({ m22: snap(0.5 + (-1 - 0.5) * uNow, 0.5, -4, 4) }, true), stop);
+  useClock(playing && scene === 2 && !calm, 2600, false, (uNow) => patch({ t2: snap(4 + (1 - 4) * uNow, 0.5, -6, 8) }, true), stop);
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) patch({ uz: 0 }, true);
     if (scene === 1) patch({ m22: 0.5 }, true);
     if (scene === 2) patch({ t2: 4 }, true);
@@ -169,7 +166,7 @@ export function VectorLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

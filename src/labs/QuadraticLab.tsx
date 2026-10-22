@@ -19,8 +19,7 @@ type FenceHit = { hx: number; hy: number; origin: number; scale: number };
 export function QuadraticLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, patch, play, halt, isPlaying } = useLessonState("quadratic", quadInit, quadRange);
-  const [on, setOn] = useState(false);
+  const { values, ref, patch, play, halt, playing } = useLessonState("quadratic", quadInit, quadRange);
   const [mark, setMark] = useState<number | null>(null);
   const hit = useRef<FenceHit | null>(null);
   const dragging = useRef(false);
@@ -28,20 +27,19 @@ export function QuadraticLab() {
 
   const stop = () => {
     halt();
-    setOn(false);
     writeParams("quadratic", ref.current);
   };
 
-  useClock(on && scene === 0 && !calm, 8000, true, (u) => setMark(-5 + 10 * u));
+  useClock(playing && scene === 0 && !calm, 8000, true, (u) => setMark(-5 + 10 * u));
   useClock(
-    on && scene === 1 && !calm,
+    playing && scene === 1 && !calm,
     3200,
     false,
     (u) => patch({ va: snap(-2 + 4 * u, 0.1, -3, 3) }, true),
     stop,
   );
   useClock(
-    on && scene === 2 && !calm,
+    playing && scene === 2 && !calm,
     4200,
     false,
     (u) => patch({ fence: snap(0.5 + 19 * u, 0.1, 0.5, 19.5) }, true),
@@ -50,12 +48,11 @@ export function QuadraticLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (isPlaying()) {
+    if (playing) {
       stop();
       return;
     }
     play();
-    setOn(true);
     if (scene === 0) setMark(-5);
     if (scene === 1) patch({ va: -2 }, true);
     if (scene === 2) patch({ fence: 0.5 }, true);
@@ -128,7 +125,7 @@ export function QuadraticLab() {
         lang={lang}
         scene={scene}
         calm={calm}
-        playing={on}
+        playing={playing}
         onScene={choose}
         onPlay={toggle}
         scenes={[

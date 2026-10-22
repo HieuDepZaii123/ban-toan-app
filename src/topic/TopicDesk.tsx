@@ -1,7 +1,7 @@
-import { lazy, Suspense, useEffect } from "react";
-import { lessonFor, questionsFor } from "../content/banks.ts";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { streamName, topicById } from "../content/catalog.ts";
-import type { TopicMeta } from "../content/types.ts";
+import { loadTopic } from "../content/loadTopic.ts";
+import type { Lesson, Question, TopicMeta } from "../content/types.ts";
 import { A, useRoute } from "../lib/route.tsx";
 import { setLast, toggleThink, useSlice, EMPTY_THINK } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
@@ -27,6 +27,8 @@ const AnalyticLab = lazy(() => import("../labs/AnalyticLab.tsx").then((mod) => (
 const ShapeLab = lazy(() => import("../labs/ShapeLab.tsx").then((mod) => ({ default: mod.ShapeLab })));
 const ComboLab = lazy(() => import("../labs/ComboLab.tsx").then((mod) => ({ default: mod.ComboLab })));
 
+type Loaded = { id: string; lesson: Lesson | null; questions: Question[]; failed: boolean };
+
 const labs = {
   quadratic: QuadraticLab,
   ineq: IneqLab,
@@ -50,9 +52,27 @@ export function TopicDesk({ id }: { id: string }) {
   const { search, go } = useRoute();
   const tabParam = new URLSearchParams(search).get("tab");
   const tab = tabParam === "lam" || tabParam === "so" ? tabParam : "hoc";
+  const [pack, setPack] = useState<Loaded | null>(null);
 
   useEffect(() => {
     if (topic) setLast(topic.id);
+  }, [topic]);
+
+  useEffect(() => {
+    if (!topic) return;
+    let live = true;
+    const topicId = topic.id;
+    void loadTopic(topicId).then(
+      (next) => {
+        if (live) setPack({ id: topicId, lesson: next.lesson, questions: next.questions, failed: false });
+      },
+      () => {
+        if (live) setPack({ id: topicId, lesson: null, questions: [], failed: true });
+      },
+    );
+    return () => {
+      live = false;
+    };
   }, [topic]);
 
   useEffect(() => {
@@ -74,8 +94,9 @@ export function TopicDesk({ id }: { id: string }) {
     );
   }
 
-  const lesson = lessonFor(topic.id);
-  const questions = questionsFor(topic.id);
+  const ready = pack?.id === topic.id ? pack : null;
+  const lesson = ready?.lesson ?? null;
+  const questions = ready?.questions ?? [];
   const Lab = topic.id in labs ? labs[topic.id as keyof typeof labs] : null;
 
   return (
@@ -90,12 +111,11 @@ export function TopicDesk({ id }: { id: string }) {
           </div>
           <Prefs />
         </div>
-        <div className="tabs" role="tablist" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>
+        <nav className="tabs" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>
           {(["hoc", "lam", "so"] as const).map((item) => (
             <a
               key={item}
-              role="tab"
-              aria-selected={tab === item}
+              aria-current={tab === item ? "page" : undefined}
               className="tab"
               href={`/t/${topic.id}?tab=${item}`}
               onClick={(event) => {
@@ -107,14 +127,16 @@ export function TopicDesk({ id }: { id: string }) {
               {item === "hoc" ? t(lang, "Học", "Study") : item === "lam" ? t(lang, "Làm", "Practice") : t(lang, "Sổ", "Notebook")}
             </a>
           ))}
-        </div>
+        </nav>
       </header>
       <main id="content">
         {tab === "hoc" ? (
           <div className="hoc">
             <Motion id={topic.id} variant="stage" label={(captions[topic.id] ?? ["", ""])[lang === "en" ? 1 : 0]} />
             <div className="concept">
-              {lesson ? (
+              {!ready ? (
+                <p className="loading">{t(lang, "Đang mở tờ…", "Opening this sheet…")}</p>
+              ) : lesson ? (
                 <MathText text={lang === "en" ? lesson.conceptEn : lesson.concept} />
               ) : (
                 <>
@@ -137,7 +159,11 @@ export function TopicDesk({ id }: { id: string }) {
           </div>
         ) : null}
         {tab === "lam" ? (
-          questions.length > 0 ? (
+          !ready ? (
+            <p className="loading">{t(lang, "Đang mở tờ…", "Opening this sheet…")}</p>
+          ) : ready.failed ? (
+            <p className="empty">{t(lang, "Không mở được nội dung tờ này.", "This sheet's contents did not open.")}</p>
+          ) : questions.length > 0 ? (
             <Practice topicId={topic.id} questions={questions} />
           ) : (
             <div className="stub-stage" role="note">
@@ -146,7 +172,13 @@ export function TopicDesk({ id }: { id: string }) {
             </div>
           )
         ) : null}
-        {tab === "so" ? <Notebook topicId={topic.id} questions={questions} /> : null}
+        {tab === "so" ? (
+          !ready ? (
+            <p className="loading">{t(lang, "Đang mở tờ…", "Opening this sheet…")}</p>
+          ) : (
+            <Notebook topicId={topic.id} questions={questions} />
+          )
+        ) : null}
       </main>
     </div>
   );
