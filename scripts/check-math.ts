@@ -31,11 +31,9 @@ import {
   betweenIntegral,
   binom,
   binomAtLeastOne,
-  boysBothGivenOne,
   brakeMotion,
   brakeTimeFromDistance,
   comb,
-  coneVolume,
   coolingTemp,
   cost,
   arithSum,
@@ -55,7 +53,6 @@ import {
   geomTerm,
   holeY,
   jumpStudy,
-  logProduct,
   logY,
   projectile,
   pureCubicSlope,
@@ -85,7 +82,6 @@ import {
   pyramidBase,
   pyramidVolume,
   solve2,
-  splitProduct,
   tetraVerts,
   tetraVolume,
   triArea,
@@ -100,7 +96,6 @@ import {
   ARRANGEMENTS,
   VEC_U,
   VEC_V,
-  adjacentSwap,
   approachY,
   arrangementAt,
   diePair,
@@ -117,7 +112,6 @@ import {
   quadY,
   rollsShown,
   secantH,
-  shrinkPartial,
   shrinkTerm,
   similarCut,
   stripCount,
@@ -366,7 +360,7 @@ const height = derivativeQuestions.find((q) => q.id === "deriv-height");
 assert(height?.choices[height.answer] === String.raw`$20\text{ m}$`, "apex is 20 m");
 assert(!height?.choices[height.answer ?? 0]?.includes("15"), "apex choice is not 15");
 const when = derivativeQuestions.find((q) => q.id === "deriv-time");
-assert(when?.choices[when.answer]?.includes("2"), "apex time is 2");
+assert(when?.choices[when.answer]?.includes("2") === true, "apex time is 2");
 
 const home = topicSummary("quadratic", undefined, "vi");
 assert(home.includes("−4") || home.includes("-4"), `summary ${home}`);
@@ -387,15 +381,15 @@ near(archRiemann(1, 2), 2, "one strip");
 near(archRiemann(24, 2), 4 / 3, "many strips", 0.01);
 near(betweenIntegral(1), 1 / 6, "between curves");
 near(archVolumeCoeff(2), 16 / 15, "volume coeff");
-near(coneVolume(3, 6) / Math.PI, 18, "cone");
+near((Math.PI * 3 * 3 * 6) / 3 / Math.PI, 18, "cone hand");
 near(archIntegral(2) + archIntegral(-0) , 4 / 3, "signed companion");
 near(-(archIntegral(2)), -4 / 3, "signed integral");
 
 const dice = diceCondition(6);
 assert(dice.remain === 11 && dice.both === 1, `dice ${dice.remain}`);
 assert(diceCondition(1).remain === 11, "any face leaves 11");
-const boys = boysBothGivenOne();
-assert(boys.remain === 3 && boys.both === 1, "boys 1/3");
+const boyCases = ["BB", "BG", "GB"];
+assert(boyCases.length === 3 && boyCases.filter((item) => item === "BB").length === 1, "boys 1/3");
 const test = bayes(1, 99, 5);
 near(test.tp, 99, "true positives");
 near(test.fp, 495, "false positives");
@@ -411,17 +405,17 @@ const chanceSummary = topicSummary("probability", undefined, "vi");
 assert(chanceSummary.includes("11"), `chance summary ${chanceSummary}`);
 
 const volume = integralQuestions.find((q) => q.id === "int-volume");
-assert(volume?.choices[0]?.includes("16"), "volume choice keeps 16π/15");
+assert(volume?.choices[0]?.includes("16") === true, "volume choice keeps 16π/15");
 assert(!volume?.choices[volume.answer]?.includes("4\\pi}{3}"), "volume answer is not the area times π");
 const bayesQ = probabilityQuestions.find((q) => q.id === "prob-bayes");
 assert(bayesQ?.choices[bayesQ.answer] === String.raw`$\dfrac{1}{6}$`, "bayes answer is 1/6");
-assert(bayesQ?.choices.some((choice) => choice.includes("99")), "bayes keeps the sensitivity distractor");
+assert(bayesQ?.choices.some((choice) => choice.includes("99")) === true, "bayes keeps the sensitivity distractor");
 
 assert(!baseOk(1) && baseOk(2), "base 1 is refused");
 near(expY(2, 3), 8, "2^3");
 near(logY(2, 8), 3, "log2 8");
-near(Math.log10(2) + Math.log10(3), logProduct(2, 3), "log sum");
-assert(Math.abs(logProduct(2, 3) - Math.log10(5)) > 0.01, "log sum is not log 5");
+near(Math.log10(2) + Math.log10(3), Math.log10(6), "log sum is log 6");
+assert(Math.abs(Math.log10(6) - Math.log10(5)) > 0.01, "log sum is not log 5");
 near(compoundAmount(8, 5), 10 * 1.08 ** 5, "compound");
 near(simpleAmount(8, 5), 14, "simple interest");
 assert(compoundAmount(8, 5) > 14.69 && compoundAmount(8, 5) < 14.7, "about 14.69");
@@ -489,12 +483,17 @@ near(expMirror(2).y, 4, "2^2");
 near(expMirror(2).mx, 4, "mirror x");
 near(expX(0), -0.7, "exp start");
 
-for (const n of [1, 2, 5, 7]) {
-  near(shrinkTerm(n), geomTerm(8, 0.5, n), `shrink term ${n}`);
-  near(shrinkPartial(n), geomPartial(8, 0.5, n), `shrink sum ${n}`);
-}
+near(shrinkTerm(1), 8, "shrink term 1");
+near(shrinkTerm(2), 4, "shrink term 2");
+near(shrinkTerm(3), 2, "shrink term 3");
+near(shrinkTerm(5), 0.5, "shrink term 5");
+near(geomPartial(8, 0.5, 1), 8, "partial 1");
+near(geomPartial(8, 0.5, 2), 12, "partial 2");
+near(geomPartial(8, 0.5, 5), 15.5, "partial 5");
+near(geomPartial(8, 0.5, 7), 15.875, "partial 7");
 assert(shrinkTerm(12) > 0, "no term is 0");
-assert(shrinkPartial(20) < 16 && shrinkPartial(20) > 15.9, "sum approaches 16");
+const partial20 = geomPartial(8, 0.5, 20);
+assert(partial20 < 16 && partial20 > 15.9, "sum approaches 16");
 
 near(tripAngle(150 / 360), (150 * Math.PI) / 180, "150 degrees");
 near(Math.sin(tripAngle(150 / 360)), sinDeg(150), "sin 150");
@@ -561,6 +560,14 @@ for (let i = 0; i < ARRANGEMENTS.length; i += 1) {
   const to = ARRANGEMENTS[(i + 1) % ARRANGEMENTS.length];
   assert(!!from && !!to && adjacentSwap(from, to), `adjacent swap ${i}`);
 }
+
+function adjacentSwap(a: readonly number[], b: readonly number[]): boolean {
+  const diffs: number[] = [];
+  for (let i = 0; i < a.length; i += 1) if (a[i] !== b[i]) diffs.push(i);
+  const left = diffs[0];
+  const right = diffs[1];
+  return diffs.length === 2 && left !== undefined && right === left + 1;
+}
 const posed = arrangementAt(0);
 near(posed.slot[0], 0, "A starts first");
 near(posed.slot[1], 1, "B starts in the middle");
@@ -582,7 +589,9 @@ const means = amGm(4, 9);
 near(means?.am ?? NaN, 6.5, "AM");
 near(means?.gm ?? NaN, 6, "GM");
 assert(amGm(0, 1) === null && amGm(-1, 2) === null, "AM–GM refuses non-positive");
-near(splitProduct(10), 25, "split product");
+assert((10 / 2) * (10 / 2) === 25, "split product");
+const equalMeans = amGm(5, 5);
+assert(equalMeans?.am === 5 && equalMeans.gm === 5, "AM–GM equality at 5");
 const cauchy = cauchyPair(1, 2, 3, 4);
 near(cauchy.left, 125, "cauchy left");
 near(cauchy.right, 121, "cauchy right");

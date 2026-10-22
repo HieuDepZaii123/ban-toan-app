@@ -19,7 +19,7 @@ type Hit = { hx: number; hy: number; to: (px: number) => number };
 export function SurveyLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("survey", surveyInit, surveyRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("survey", surveyInit, surveyRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit>({ hx: 0, hy: 0, to: () => 0 });
   const dragging = useRef(false);
@@ -31,7 +31,7 @@ export function SurveyLab() {
   const pureSlope = pureCubicSlope(px);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("survey", ref.current);
   };
@@ -42,11 +42,11 @@ export function SurveyLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ x: -2.2 }, true);
     if (scene === 1) patch({ rx: 1.8 }, true);

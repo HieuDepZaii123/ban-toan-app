@@ -19,7 +19,7 @@ type Hit = { hx: number; hy: number; to: (px: number) => number };
 export function IntegralLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("integral", integralInit, integralRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("integral", integralInit, integralRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit | null>(null);
   const dragging = useRef(false);
@@ -34,7 +34,7 @@ export function IntegralLab() {
   const coeff = archVolumeCoeff(span);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("integral", ref.current);
   };
@@ -45,11 +45,11 @@ export function IntegralLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ strips: 1 }, true);
     if (scene === 1) patch({ gap: 0.2 }, true);

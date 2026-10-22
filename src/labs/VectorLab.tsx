@@ -33,7 +33,7 @@ type Hit = { map: Map2 | null; handles: { id: string; x: number; y: number }[] }
 export function VectorLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("vector", vectorInit, vectorRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("vector", vectorInit, vectorRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit>(null);
   const drag = useRef<string | null>(null);
@@ -46,7 +46,7 @@ export function VectorLab() {
   const solved = solve2(values.s11 ?? 2, values.s12 ?? 1, values.t1 ?? 5, values.s21 ?? 1, values.s22 ?? -1, values.t2 ?? 1);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("vector", ref.current);
   };
@@ -57,11 +57,11 @@ export function VectorLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ uz: 0 }, true);
     if (scene === 1) patch({ m22: 0.5 }, true);

@@ -22,7 +22,7 @@ type Hit =
 export function DerivativeLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("derivative", derivInit, derivRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("derivative", derivInit, derivRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit | null>(null);
   const dragging = useRef(false);
@@ -38,7 +38,7 @@ export function DerivativeLab() {
   const slope = secantSlope(1, h);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("derivative", ref.current);
   };
@@ -67,11 +67,11 @@ export function DerivativeLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ h: 1.5 }, true);
     if (scene === 1) patch({ time: 0 }, true);

@@ -21,7 +21,7 @@ type Hit =
 export function TrigLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("trig", trigInit, trigRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("trig", trigInit, trigRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit | null>(null);
   const dragging = useRef(false);
@@ -31,7 +31,7 @@ export function TrigLab() {
   const tilt = values.tilt ?? 30;
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("trig", ref.current);
   };
@@ -52,11 +52,11 @@ export function TrigLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ angle: 0 }, true);
     if (scene === 1) patch({ tilt: 8 }, true);

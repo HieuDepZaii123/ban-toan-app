@@ -61,7 +61,7 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
           const state = !answered ? "" : choiceIndex === question.answer ? " is-right" : choiceIndex === picked ? " is-wrong" : "";
           return (
             <button
-              key={choice}
+              key={choiceIndex}
               type="button"
               className={`choice${state}`}
               data-choice={choiceIndex}
@@ -92,7 +92,7 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
       {hintOpen ? <p className="hint"><MathText text={hint} /></p> : null}
       {answered ? (
         <div className="solution">
-          <p className="status">{picked === question.answer ? t(lang, "Đúng", "Correct") : t(lang, "Chưa đúng", "Not yet")}</p>
+          <p className="status" role="status" aria-live="polite">{picked === question.answer ? t(lang, "Đúng", "Correct") : t(lang, "Chưa đúng", "Not yet")}</p>
           <ol>
             {steps.map((step) => (
               <li key={step}><MathText text={step} /></li>

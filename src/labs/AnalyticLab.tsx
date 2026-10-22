@@ -34,7 +34,7 @@ type Hit = { map: Map2 | null; handles: { id: string; x: number; y: number }[] }
 export function AnalyticLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("analytic", analyticInit, analyticRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("analytic", analyticInit, analyticRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit>(null);
   const drag = useRef(false);
@@ -60,7 +60,7 @@ export function AnalyticLab() {
   const guest = circlePlace(6, 0, radius);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("analytic", ref.current);
   };
@@ -77,11 +77,11 @@ export function AnalyticLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ px: 1, py: 1 }, true);
     if (scene === 1) patch({ qz: 4 }, true);

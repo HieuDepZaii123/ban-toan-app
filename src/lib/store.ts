@@ -45,31 +45,91 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function load(): Data {
+function stringMap(value: unknown): Record<string, string> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, string> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (typeof item === "string") out[key] = item;
+  }
+  return out;
+}
+
+function wrongMap(value: unknown): Record<string, number> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, number> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (typeof item === "number" && Number.isFinite(item)) out[key] = item;
+  }
+  return out;
+}
+
+function thinkMap(value: unknown): Record<string, ThinkFlags> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, ThinkFlags> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (!isRecord(item)) continue;
+    if (typeof item.nhin !== "boolean" || typeof item.lam !== "boolean" || typeof item.ket !== "boolean") continue;
+    out[key] = { nhin: item.nhin, lam: item.lam, ket: item.ket };
+  }
+  return out;
+}
+
+function rightMap(value: unknown): Record<string, true> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, true> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (item === true) out[key] = true;
+  }
+  return out;
+}
+
+function paramsMap(value: unknown): Record<string, Record<string, number>> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, Record<string, number>> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (!isRecord(item)) continue;
+    const row: Record<string, number> = {};
+    for (const [name, num] of Object.entries(item)) {
+      if (typeof num === "number" && Number.isFinite(num)) row[name] = num;
+    }
+    out[key] = row;
+  }
+  return out;
+}
+
+/** Parse one stored snapshot. Corrupt JSON, a bad version, or a mistyped field is dropped. */
+export function load(raw: string | null): Data {
   const base = blank();
-  if (typeof localStorage === "undefined") return base;
+  if (!raw) return base;
   try {
-    const raw = localStorage.getItem(KEY);
-    if (!raw) return base;
-    const parsed = JSON.parse(raw) as Partial<Data>;
-    if (parsed.v !== 1) return base;
+    const parsed: unknown = JSON.parse(raw);
+    if (!isRecord(parsed) || parsed.v !== 1) return base;
     return {
       ...base,
       theme: parsed.theme === "night" || parsed.theme === "paper" ? parsed.theme : base.theme,
       lang: parsed.lang === "en" ? "en" : "vi",
       lastId: typeof parsed.lastId === "string" ? parsed.lastId : null,
-      notes: isRecord(parsed.notes) ? (parsed.notes as Record<string, string>) : {},
-      right: isRecord(parsed.right) ? (parsed.right as Record<string, true>) : {},
-      wrong: isRecord(parsed.wrong) ? (parsed.wrong as Record<string, number>) : {},
-      think: isRecord(parsed.think) ? (parsed.think as Record<string, ThinkFlags>) : {},
-      params: isRecord(parsed.params) ? (parsed.params as Record<string, Record<string, number>>) : {},
+      notes: stringMap(parsed.notes),
+      right: rightMap(parsed.right),
+      wrong: wrongMap(parsed.wrong),
+      think: thinkMap(parsed.think),
+      params: paramsMap(parsed.params),
     };
   } catch {
     return base;
   }
 }
 
-let data = load();
+function readStorage(): string | null {
+  if (typeof localStorage === "undefined") return null;
+  try {
+    return localStorage.getItem(KEY);
+  } catch {
+    return null;
+  }
+}
+
+let data = load(readStorage());
 let timer = 0;
 const listeners = new Set<() => void>();
 
@@ -107,8 +167,28 @@ export function useSlice<T>(select: (value: Data) => T): T {
   return useSyncExternalStore(subscribe, () => select(getData()), () => select(getData()));
 }
 
+/** Another tab wrote the same key. Take that snapshot and drop our unsent write, so we do not paint over it. */
+export function applyStorageEvent(key: string | null, value: string | null): void {
+  if (key !== KEY) return;
+  if (typeof window !== "undefined") window.clearTimeout(timer);
+  timer = 0;
+  data = load(value);
+  for (const listener of listeners) listener();
+}
+
+/** Test hook. Replaces the in-memory desk without writing storage. */
+export function resetStore(next: Data = blank()): void {
+  if (typeof window !== "undefined") window.clearTimeout(timer);
+  timer = 0;
+  data = next;
+  for (const listener of listeners) listener();
+}
+
 if (typeof window !== "undefined") {
   window.addEventListener("pagehide", saveNow);
+  window.addEventListener("storage", (event) => {
+    applyStorageEvent(event.key, event.newValue);
+  });
 }
 
 export function setTheme(theme: ThemeName): void {

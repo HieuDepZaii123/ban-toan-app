@@ -231,11 +231,6 @@ export function archVolumeCoeff(b: number): number {
   return (4 * b * b * b) / 3 - b ** 4 + (b ** 5) / 5;
 }
 
-/** Cone, or a full conical glass: V = (1/3) π r² h. Radius 3 and height 6 give 18π. */
-export function coneVolume(radius: number, height: number): number {
-  return (Math.PI * radius * radius * height) / 3;
-}
-
 /** Pairs of dice with at least one face equal to `face`. For any face: 11 pairs, one of them a double. */
 export function diceCondition(face: number): { remain: number; both: number } {
   const f = Math.round(face);
@@ -249,11 +244,6 @@ export function diceCondition(face: number): { remain: number; both: number } {
     }
   }
   return { remain, both };
-}
-
-/** BB, BG, GB remain after “at least one boy”. Both boys is 1 of those 3, not 1/2. */
-export function boysBothGivenOne(): { remain: number; both: number } {
-  return { remain: 3, both: 1 };
 }
 
 export const BAYES_POP = 10000;
@@ -308,11 +298,6 @@ export function expY(base: number, x: number): number {
 export function logY(base: number, x: number): number {
   if (!baseOk(base) || x <= 0) return Number.NaN;
   return Math.log(x) / Math.log(base);
-}
-
-/** log(ab) = log a + log b. This is log(6) for 2 and 3, not log(5). */
-export function logProduct(a: number, b: number): number {
-  return Math.log10(a * b);
 }
 
 /** Compound growth of 10 triệu at `ratePct` percent per year. 8% for 5 years is about 14.69, not the simple 14. */
@@ -403,11 +388,6 @@ export function rationalOblique(x: number): number {
 export function amGm(a: number, b: number): { am: number; gm: number } | null {
   if (!(a > 0) || !(b > 0)) return null;
   return { am: (a + b) / 2, gm: Math.sqrt(a * b) };
-}
-
-/** Two positive numbers with a fixed sum. The product is largest when they are equal. */
-export function splitProduct(sum: number): number {
-  return (sum / 2) * (sum / 2);
 }
 
 /** (a²+b²)(c²+d²) ≥ (ac+bd)². Equality when (a,b) and (c,d) are proportional. */

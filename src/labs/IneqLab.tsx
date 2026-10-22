@@ -26,7 +26,7 @@ const VERTICES: readonly (readonly [number, number])[] = [
 export function IneqLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("ineq", ineqInit, ineqRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("ineq", ineqInit, ineqRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit>(null);
   const drag = useRef<string | null>(null);
@@ -45,7 +45,7 @@ export function IneqLab() {
   const inside = workshopOk(x, y);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("ineq", ref.current);
   };
@@ -98,11 +98,11 @@ export function IneqLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ b: 12 }, true);
     if (scene === 1) patch({ d: 4 }, true);

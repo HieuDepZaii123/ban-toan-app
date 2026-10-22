@@ -56,11 +56,6 @@ export function shrinkTerm(n: number): number {
   return 8 * 0.5 ** (n - 1);
 }
 
-/** Partial sum of 8 + 4 + 2 + … approaches 16 and never lands on a zero term. */
-export function shrinkPartial(n: number): number {
-  return 16 * (1 - 0.5 ** n);
-}
-
 export function termsShown(u: number): number {
   return lerp(1, 7, ping(u));
 }
@@ -165,18 +160,13 @@ export const ARRANGEMENTS: readonly (readonly [number, number, number])[] = [
   [1, 0, 2],
 ];
 
-export function adjacentSwap(a: readonly number[], b: readonly number[]): boolean {
-  const diffs: number[] = [];
-  for (let i = 0; i < a.length; i += 1) if (a[i] !== b[i]) diffs.push(i);
-  return diffs.length === 2 && diffs[1] === diffs[0] + 1;
-}
-
 export function arrangementAt(u: number): { slot: [number, number, number]; index: number } {
   const scaled = wrap01(u) * ARRANGEMENTS.length;
   const index = Math.floor(scaled) % ARRANGEMENTS.length;
   const frac = smooth(scaled - Math.floor(scaled));
-  const curr = ARRANGEMENTS[index] ?? ARRANGEMENTS[0];
-  const next = ARRANGEMENTS[(index + 1) % ARRANGEMENTS.length] ?? ARRANGEMENTS[0];
+  const first = ARRANGEMENTS[0] ?? [0, 1, 2];
+  const curr = ARRANGEMENTS[index] ?? first;
+  const next = ARRANGEMENTS[(index + 1) % ARRANGEMENTS.length] ?? first;
   const slot: [number, number, number] = [0, 0, 0];
   for (let token = 0; token < 3; token += 1) {
     slot[token] = lerp(curr.indexOf(token), next.indexOf(token), frac);

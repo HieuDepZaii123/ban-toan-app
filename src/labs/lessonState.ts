@@ -7,6 +7,13 @@ export function useLessonState(id: string, initial: Record<string, number>, rang
   const ref = useRef(values);
   ref.current = values;
   const playing = useRef(false);
+  const play = () => {
+    playing.current = true;
+  };
+  const halt = () => {
+    playing.current = false;
+  };
+  const isPlaying = () => playing.current;
 
   useEffect(() => {
     if (playing.current) return;
@@ -14,7 +21,7 @@ export function useLessonState(id: string, initial: Record<string, number>, rang
   }, [id, values]);
 
   const patch = (partial: Record<string, number>, fromPlay = false) => {
-    if (!fromPlay) playing.current = false;
+    if (!fromPlay) halt();
     setValues((prev) => {
       let changed = false;
       const next = { ...prev };
@@ -29,5 +36,5 @@ export function useLessonState(id: string, initial: Record<string, number>, rang
     });
   };
 
-  return { values, ref, playing, patch, setValues };
+  return { values, ref, patch, setValues, play, halt, isPlaying };
 }

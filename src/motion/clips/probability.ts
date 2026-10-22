@@ -21,10 +21,13 @@ function die(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, 
   ctx.fill();
   ctx.stroke();
   ctx.fillStyle = ink.ink;
-  const pips = PIPS[face] ?? PIPS[1];
+  const pips = PIPS[face] ?? PIPS[1] ?? [];
   for (const pip of pips) {
+    const px = pip[0];
+    const py = pip[1];
+    if (px === undefined || py === undefined) continue;
     ctx.beginPath();
-    ctx.arc(x + pip[0] * size, y + pip[1] * size, size * 0.085, 0, Math.PI * 2);
+    ctx.arc(x + px * size, y + py * size, size * 0.085, 0, Math.PI * 2);
     ctx.fill();
   }
 }

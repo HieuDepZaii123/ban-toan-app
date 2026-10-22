@@ -3,11 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.6"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "test": "node --experimental-strip-types scripts/check-math.ts",
+    "test": "node --experimental-strip-types scripts/check-math.ts && node --experimental-strip-types scripts/golden.ts && node --experimental-strip-types scripts/store.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {

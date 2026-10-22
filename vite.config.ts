@@ -38,8 +38,20 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png,woff2,webmanifest}"],
+        globPatterns: ["**/*.{js,css,html,svg,png,webmanifest}"],
+        globIgnores: ["**/404.html"],
         navigateFallback: "index.html",
+        runtimeCaching: [
+          {
+            urlPattern: /\/assets\/KaTeX_.*\.(?:woff2|woff|ttf)$/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "katex-fonts",
+              expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
       },
     }),
   ],

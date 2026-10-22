@@ -19,7 +19,7 @@ type Hit = { hx: number; hy: number; to: (px: number, py: number) => number };
 export function LimitLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("limit", limitInit, limitRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("limit", limitInit, limitRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit | null>(null);
   const dragging = useRef(false);
@@ -34,7 +34,7 @@ export function LimitLab() {
   const study = jumpStudy(left, right, at);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("limit", ref.current);
   };
@@ -45,11 +45,11 @@ export function LimitLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ h: 1.5 }, true);
     if (scene === 1) patch({ probe: -2.2 }, true);

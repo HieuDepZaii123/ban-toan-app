@@ -30,7 +30,7 @@ type Hit = { handles: { id: string; x: number; y: number }[]; toValue: (px: numb
 export function ComboLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("combo", comboInit, comboRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("combo", comboInit, comboRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit>(null);
   const drag = useRef(false);
@@ -46,7 +46,7 @@ export function ComboLab() {
   const waysC = comb(n, k);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("combo", ref.current);
   };
@@ -57,11 +57,11 @@ export function ComboLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ k: 1 }, true);
     if (scene === 1) patch({ seat: 0 }, true);

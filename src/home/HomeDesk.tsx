@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { QUESTION_TOTAL, streamName, streams, topics } from "../content/catalog.ts";
-import { topicSummary } from "../content/summary.ts";
+import { cards, QUESTION_TOTAL, streamName, streams } from "../content/cards.ts";
 import { A } from "../lib/route.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
@@ -32,7 +31,7 @@ export function HomeDesk() {
 
   const visible = useMemo(
     () =>
-      topics.filter((topic) => {
+      cards.filter((topic) => {
         if (!folded) return true;
         const hay = fold(`${topic.title} ${topic.titleEn} ${topic.blurb} ${topic.blurbEn} ${streamName(topic.stream, "vi")} ${streamName(topic.stream, "en")}`);
         return hay.includes(folded);
@@ -110,22 +109,20 @@ function ProgressLine() {
 function Continue() {
   const lang = useLang();
   const lastId = useSlice((data) => data.lastId);
-  const params = useSlice((data) => (lastId ? data.params[lastId] : data.params.quadratic));
-  const topic = topics.find((item) => item.id === (lastId ?? "quadratic")) ?? topics[0];
+  const topic = cards.find((item) => item.id === (lastId ?? "quadratic")) ?? cards[0];
   if (!topic) return null;
-  const summary = topic.status === "ready" ? topicSummary(topic.id, params, lang) : "";
   return (
     <A className="continue" href={`/t/${topic.id}`}>
       <span>{lastId ? t(lang, "Tờ đang mở", "Open sheet") : t(lang, "Bắt đầu", "Start")}</span>
       <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
-      {summary ? <em>{summary}</em> : <em>{lang === "en" ? topic.blurbEn : topic.blurb}</em>}
+      <em>{lang === "en" ? topic.blurbEn : topic.blurb}</em>
     </A>
   );
 }
 
 function TopicRow({ id }: { id: string }) {
   const lang = useLang();
-  const topic = topics.find((item) => item.id === id);
+  const topic = cards.find((item) => item.id === id);
   const done = useSlice((data) => countRight(data.right, id));
   const last = useSlice((data) => data.lastId === id);
   if (!topic) return null;

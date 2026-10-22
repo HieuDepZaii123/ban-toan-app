@@ -7,5 +7,9 @@ export function Live({ text }: { text: string }) {
     const id = window.setTimeout(() => setLive(text), 450);
     return () => window.clearTimeout(id);
   }, [text]);
-  return <p className="sr">{live}</p>;
+  return (
+    <p className="sr" role="status" aria-live="polite">
+      {live}
+    </p>
+  );
 }

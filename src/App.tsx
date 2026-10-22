@@ -5,16 +5,29 @@ import { useSlice } from "./lib/store.ts";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 
+const CHUNK_RELOAD = "ban-toan-chunk-reload";
+
 export default function App() {
+  useEffect(() => {
+    const id = window.setTimeout(() => sessionStorage.removeItem(CHUNK_RELOAD), 4000);
+    return () => window.clearTimeout(id);
+  }, []);
   return (
     <RouteProvider>
       <ThemeBridge />
-      <Boundary>
-        <Suspense fallback={<p className="loading">Đang mở tờ…</p>}>
-          <Shell />
-        </Suspense>
-      </Boundary>
+      <Guarded />
     </RouteProvider>
+  );
+}
+
+function Guarded() {
+  const { path } = useRoute();
+  return (
+    <Boundary key={path}>
+      <Suspense fallback={<p className="loading">Đang mở tờ…</p>}>
+        <Shell />
+      </Suspense>
+    </Boundary>
   );
 }
 
@@ -39,11 +52,23 @@ function ThemeBridge() {
   return null;
 }
 
+function chunkFailed(error: unknown): boolean {
+  const text = error instanceof Error ? `${error.name} ${error.message}` : String(error);
+  return /dynamically imported module|Importing a module script failed|ChunkLoadError/i.test(text);
+}
+
 class Boundary extends Component<{ children: ReactNode }, { message: string | null }> {
   state = { message: null as string | null };
 
   static getDerivedStateFromError(error: unknown) {
     return { message: error instanceof Error ? error.message : "Lỗi" };
+  }
+
+  componentDidCatch(error: unknown) {
+    if (!chunkFailed(error)) return;
+    if (sessionStorage.getItem(CHUNK_RELOAD) === "1") return;
+    sessionStorage.setItem(CHUNK_RELOAD, "1");
+    window.location.reload();
   }
 
   render() {

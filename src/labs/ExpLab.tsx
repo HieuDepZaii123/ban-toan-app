@@ -21,7 +21,7 @@ const NONE: Hit = { hx: -999, hy: -999, hx2: -999, hy2: -999, to: () => 0, to2: 
 export function ExpLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("exp", expInit, expRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("exp", expInit, expRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit>(NONE);
   const which = useRef<1 | 2>(1);
@@ -39,7 +39,7 @@ export function ExpLab() {
   const mass = decayMass(massTime);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("exp", ref.current);
   };
@@ -50,11 +50,11 @@ export function ExpLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ x: -1.5 }, true);
     if (scene === 1) patch({ years: 0 }, true);

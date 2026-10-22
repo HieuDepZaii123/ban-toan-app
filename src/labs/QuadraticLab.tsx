@@ -19,7 +19,7 @@ type FenceHit = { hx: number; hy: number; origin: number; scale: number };
 export function QuadraticLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("quadratic", quadInit, quadRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("quadratic", quadInit, quadRange);
   const [on, setOn] = useState(false);
   const [mark, setMark] = useState<number | null>(null);
   const hit = useRef<FenceHit | null>(null);
@@ -27,7 +27,7 @@ export function QuadraticLab() {
   const scene = values.scene ?? 0;
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("quadratic", ref.current);
   };
@@ -50,11 +50,11 @@ export function QuadraticLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) setMark(-5);
     if (scene === 1) patch({ va: -2 }, true);

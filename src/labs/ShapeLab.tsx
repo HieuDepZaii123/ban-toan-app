@@ -35,7 +35,7 @@ const TETRA_PAIRS: readonly (readonly [number, number])[] = [
 export function ShapeLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("triangle", shapeInit, shapeRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("triangle", shapeInit, shapeRange);
   const [on, setOn] = useState(false);
   const hit = useRef<{ handles: { id: string; x: number; y: number }[] } | null>(null);
   const drag = useRef<Drag | null>(null);
@@ -55,12 +55,13 @@ export function ShapeLab() {
   const pyrBase = pyramidBase(side);
   const tet = tetraVolume(edge);
   const verts = tetraVerts(edge);
-  const edgeLens = TETRA_PAIRS.map(([i, j]) => dist3(verts[i] ?? verts[0], verts[j] ?? verts[0]));
+  const origin = verts[0] ?? ([0, 0, 0] as const);
+  const edgeLens = TETRA_PAIRS.map(([i, j]) => dist3(verts[i] ?? origin, verts[j] ?? origin));
   const edgeShown = edgeLens[0] ?? edge;
   const edgesEqual = edgeLens.every((length) => Math.abs(length - edgeShown) < 1e-6);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("triangle", ref.current);
   };
@@ -72,11 +73,11 @@ export function ShapeLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ tall: 2 }, true);
     if (scene === 1) patch({ ht: 2 }, true);

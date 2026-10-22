@@ -19,7 +19,7 @@ type Hit = { hx: number; hy: number; to: (px: number, py: number) => number } | 
 export function ProbabilityLab() {
   const lang = useLang();
   const calm = useCalm();
-  const { values, ref, playing, patch } = useLessonState("probability", chanceInit, chanceRange);
+  const { values, ref, patch, play, halt, isPlaying } = useLessonState("probability", chanceInit, chanceRange);
   const [on, setOn] = useState(false);
   const hit = useRef<Hit>(null);
   const dragging = useRef(false);
@@ -37,7 +37,7 @@ export function ProbabilityLab() {
   const least = binomAtLeastOne(n, p);
 
   const stop = () => {
-    playing.current = false;
+    halt();
     setOn(false);
     writeParams("probability", ref.current);
   };
@@ -57,11 +57,11 @@ export function ProbabilityLab() {
 
   const toggle = () => {
     if (calm) return;
-    if (playing.current) {
+    if (isPlaying()) {
       stop();
       return;
     }
-    playing.current = true;
+    play();
     setOn(true);
     if (scene === 0) patch({ face: 1 }, true);
     if (scene === 1) patch({ prev: 1 }, true);
