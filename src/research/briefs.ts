@@ -1,0 +1,33 @@
+/** Short titles for the notebook. The proofs stay in the research chunk. */
+export const studyBriefs = [
+  { id: "quad-r-locus", topic: "quadratic", title: "Quỹ tích đỉnh", titleEn: "Vertex locus" },
+  { id: "quad-r-slopes", topic: "quadratic", title: "Tổng hệ số góc tiếp tuyến", titleEn: "Sum of tangent slopes" },
+  { id: "ineq-r-amgm", topic: "ineq", title: "Dấu bằng AM–GM", titleEn: "AM–GM equality" },
+  { id: "ineq-r-cauchy", topic: "ineq", title: "Độ hở Cauchy", titleEn: "Cauchy gap" },
+  { id: "exp-r-log", topic: "exp", title: "Log của phân rã", titleEn: "Log of decay" },
+  { id: "exp-r-double", topic: "exp", title: "Thời gian gấp đôi", titleEn: "Doubling time" },
+  { id: "seq-r-arith", topic: "sequence", title: "Tổng cấp số cộng", titleEn: "Arithmetic sum" },
+  { id: "seq-r-geom", topic: "sequence", title: "Tổng cấp số nhân", titleEn: "Geometric sum" },
+  { id: "trig-r-one", topic: "trig", title: "Bình phương sin và cos", titleEn: "Sine and cosine squares" },
+  { id: "trig-r-double", topic: "trig", title: "Tích sin nhân cos", titleEn: "Sine times cosine" },
+  { id: "lim-r-hole", topic: "limit", title: "Giá trị sát lỗ hổng", titleEn: "Value beside the hole" },
+  { id: "lim-r-cool", topic: "limit", title: "Trà nguội về nhiệt phòng", titleEn: "Tea cooling to the room" },
+  { id: "deriv-r-secant", topic: "derivative", title: "Cát tuyến của $x^2$", titleEn: "Secant of $x^2$" },
+  { id: "deriv-r-apex", topic: "derivative", title: "Độ cao đỉnh ném", titleEn: "Apex of a throw" },
+  { id: "surv-r-cubic", topic: "survey", title: "Cực trị của $x^3-3x$", titleEn: "Extrema of $x^3-3x$" },
+  { id: "surv-r-gap", topic: "survey", title: "Khoảng cách tới tiệm cận xiên", titleEn: "Gap to the oblique asymptote" },
+  { id: "int-r-mid", topic: "integral", title: "Sai số trung điểm", titleEn: "Midpoint error" },
+  { id: "int-r-area", topic: "integral", title: "Diện tích giữa hai đồ thị", titleEn: "Area between two graphs" },
+  { id: "vec-r-dot", topic: "vector", title: "Khi nào vuông góc", titleEn: "When two vectors are perpendicular" },
+  { id: "vec-r-cross", topic: "vector", title: "Độ dài tích có hướng", titleEn: "Length of the cross product" },
+  { id: "ana-r-dist", topic: "analytic", title: "Khoảng cách tới đường thẳng", titleEn: "Distance to a line" },
+  { id: "ana-r-power", topic: "analytic", title: "Điểm trong đường tròn", titleEn: "A point inside a circle" },
+  { id: "shp-r-cone", topic: "triangle", title: "Nón nội tiếp mặt cầu", titleEn: "Cone inscribed in a sphere" },
+  { id: "shp-r-tet", topic: "triangle", title: "Thể tích tứ diện đều", titleEn: "Regular tetrahedron volume" },
+  { id: "cmb-r-sym", topic: "combo", title: "Đối xứng của tổ hợp", titleEn: "Symmetry of combinations" },
+  { id: "cmb-r-mean", topic: "combo", title: "Trung bình và trung vị", titleEn: "Mean and median" },
+  { id: "prob-r-lln", topic: "probability", title: "Luật số lớn với xúc xắc", titleEn: "Law of large numbers" },
+  { id: "prob-r-bayes", topic: "probability", title: "Xác suất sau khi dương tính", titleEn: "Probability after a positive test" },
+] as const;
+
+export type StudyBrief = (typeof studyBriefs)[number];

@@ -2,7 +2,7 @@
  * Corrupt snapshots, answer recording, and merges across tabs.
  * Run with: tsx scripts/store.test.ts
  */
-import { applyStorageEvent, ensureAttempt, flushSave, getData, hasPendingSave, load, recordAnswer, recordDss, resetAttempt, resetStore, setNote } from "../src/lib/store.ts";
+import { applyStorageEvent, ensureAttempt, flushSave, getData, hasPendingSave, load, recordAnswer, recordDss, resetAttempt, resetStore, saveStudy, setNote } from "../src/lib/store.ts";
 
 const fails: string[] = [];
 
@@ -167,6 +167,49 @@ assert(!("quadratic:quad-d-ad" in getData().wrong), "a perfect score clears the 
 resetAttempt("quadratic:quad-d-ad");
 assert(!("quadratic:quad-d-ad" in getData().scores), "a new draw clears the saved picks");
 assert(!("quadratic:quad-d-ad" in getData().right), "a new draw clears the solved mark");
+
+const keptStudy = load(JSON.stringify({
+  v: 1,
+  studies: {
+    ok: {
+      choice: "para",
+      hypothesis: "parabol",
+      rows: [{ b: 1, vx: -0.5, vy: -0.25 }, { bad: "x" }, { b: Number.NaN }],
+      conclusion: "y = -x^2",
+      revealed: true,
+    },
+    messy: { choice: 4, rows: "no" },
+  },
+}));
+assert(keptStudy.studies.ok?.choice === "para" && keptStudy.studies.ok.revealed === true, "a study keeps its choice and the reveal");
+assert(keptStudy.studies.ok?.rows.length === 1 && keptStudy.studies.ok.rows[0]?.vx === -0.5, "a study drops a non-numeric row");
+assert(keptStudy.studies.messy?.choice === "" && keptStudy.studies.messy?.rows.length === 0, "a mistyped study is kept empty");
+
+resetStore(load(JSON.stringify({
+  v: 1,
+  studies: { "quadratic:quad-r-locus": { choice: "line", hypothesis: "", rows: [], conclusion: "", revealed: false } },
+})));
+applyStorageEvent("ban-toan", JSON.stringify({
+  v: 1,
+  studies: {
+    "quadratic:quad-r-locus": {
+      choice: "para",
+      hypothesis: "xuống",
+      rows: [{ b: 1, vx: 1, vy: 1 }],
+      conclusion: "parabol",
+      revealed: false,
+    },
+  },
+}));
+assert(getData().studies["quadratic:quad-r-locus"]?.choice === "para", "the other tab's investigation wins when this tab has not edited it");
+assert(getData().studies["quadratic:quad-r-locus"]?.rows.length === 1, "the other tab's recorded rows are kept");
+
+resetStore();
+const locus = { choice: "para", hypothesis: "đỉnh", rows: [{ b: 0, vx: 0, vy: 0 }], conclusion: "", revealed: false };
+saveStudy("quadratic:quad-r-locus", locus);
+assert(getData().studies["quadratic:quad-r-locus"]?.hypothesis === "đỉnh", "a hypothesis is stored");
+saveStudy("quadratic:quad-r-locus", locus);
+assert(getData().studies["quadratic:quad-r-locus"]?.rows.length === 1, "saving the same log again keeps the row");
 
 resetStore();
 

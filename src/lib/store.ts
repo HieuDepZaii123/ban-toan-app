@@ -13,6 +13,18 @@ export type Attempt = { seed: number; pos: number };
 /** Four Đúng/Sai/Chưa đủ picks (0, 1, 2) and how many matched. */
 export type DssMark = { picks: [number, number, number, number]; score: number };
 
+/** One recorded row from Ghi. Keys are short names; values are finite measurements. */
+export type StudyRow = Record<string, number>;
+
+/** What the learner keeps for one investigation. */
+export type StudyLog = {
+  choice: string;
+  hypothesis: string;
+  rows: StudyRow[];
+  conclusion: string;
+  revealed: boolean;
+};
+
 export type Stamps = {
   theme: number;
   lang: number;
@@ -24,6 +36,7 @@ export type Stamps = {
   params: Record<string, number>;
   attempts: Record<string, number>;
   scores: Record<string, number>;
+  studies: Record<string, number>;
 };
 
 export type Data = {
@@ -40,6 +53,8 @@ export type Data = {
   attempts: Record<string, Attempt>;
   /** Saved Đúng/Sai/Chưa đủ picks and the x/4 score. */
   scores: Record<string, DssMark>;
+  /** Hypothesis, recorded rows, and conclusion for one investigation. */
+  studies: Record<string, StudyLog>;
   /** Per-key edit times. A missing stamp means 0, so an older snapshot still loads. */
   at: Stamps;
 };
@@ -53,7 +68,7 @@ function preferredTheme(): ThemeName {
 }
 
 function emptyAt(): Stamps {
-  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {}, attempts: {}, scores: {} };
+  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {}, attempts: {}, scores: {}, studies: {} };
 }
 
 function blank(): Data {
@@ -69,6 +84,7 @@ function blank(): Data {
     params: {},
     attempts: {},
     scores: {},
+    studies: {},
     at: emptyAt(),
   };
 }
@@ -138,6 +154,7 @@ function loadAt(value: unknown): Stamps {
     params: stampMap(value.params),
     attempts: stampMap(value.attempts),
     scores: stampMap(value.scores),
+    studies: stampMap(value.studies),
   };
 }
 
@@ -170,6 +187,53 @@ function scoreMap(value: unknown): Record<string, DssMark> {
     if (![a, b, c, d].every((pick) => pick === 0 || pick === 1 || pick === 2)) continue;
     if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 4) continue;
     out[key] = { picks: [a, b, c, d], score };
+  }
+  return out;
+}
+
+const STUDY_KEY = /^[a-z][a-z0-9]{0,11}$/;
+const STUDY_CHOICE = /^[a-z0-9-]{0,32}$/;
+
+function clipText(value: unknown, max: number): string {
+  if (typeof value !== "string") return "";
+  return value.split("\0").join("").slice(0, max);
+}
+
+function studyRow(value: unknown): StudyRow | null {
+  if (!isRecord(value)) return null;
+  const keys = Object.keys(value);
+  if (keys.length === 0 || keys.length > 8) return null;
+  const out: StudyRow = {};
+  for (const key of keys) {
+    if (!STUDY_KEY.test(key)) return null;
+    const num = value[key];
+    if (typeof num !== "number" || !Number.isFinite(num)) return null;
+    out[key] = num;
+  }
+  return out;
+}
+
+function studyMap(value: unknown): Record<string, StudyLog> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, StudyLog> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (!isRecord(item)) continue;
+    const choice = clipText(item.choice, 32);
+    const rows: StudyRow[] = [];
+    if (Array.isArray(item.rows)) {
+      for (const row of item.rows) {
+        const parsed = studyRow(row);
+        if (parsed) rows.push(parsed);
+        if (rows.length >= 12) break;
+      }
+    }
+    out[key] = {
+      choice: STUDY_CHOICE.test(choice) ? choice : "",
+      hypothesis: clipText(item.hypothesis, 240),
+      rows,
+      conclusion: clipText(item.conclusion, 600),
+      revealed: item.revealed === true,
+    };
   }
   return out;
 }
@@ -207,6 +271,7 @@ export function load(raw: string | null): Data {
       params: paramsMap(parsed.params),
       attempts: attemptMap(parsed.attempts),
       scores: scoreMap(parsed.scores),
+      studies: studyMap(parsed.studies),
       at: loadAt(parsed.at),
     };
   } catch {
@@ -297,6 +362,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
   const params = mergeMap(base.params, local.params, disk.params, base.at.params, local.at.params, disk.at.params);
   const attempts = mergeMap(base.attempts, local.attempts, disk.attempts, base.at.attempts, local.at.attempts, disk.at.attempts);
   const scores = mergeMap(base.scores, local.scores, disk.scores, base.at.scores, local.at.scores, disk.at.scores);
+  const studies = mergeMap(base.studies, local.studies, disk.studies, base.at.studies, local.at.studies, disk.at.studies);
   return {
     v: 1,
     theme: theme.value ?? base.theme,
@@ -309,6 +375,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
     params: params.value,
     attempts: attempts.value,
     scores: scores.value,
+    studies: studies.value,
     at: {
       theme: theme.at,
       lang: lang.at,
@@ -320,6 +387,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
       params: params.at,
       attempts: attempts.at,
       scores: scores.at,
+      studies: studies.at,
     },
   };
 }
@@ -334,7 +402,8 @@ function valuesEqual(a: Data, b: Data): boolean {
     && stable(a.think) === stable(b.think)
     && stable(a.params) === stable(b.params)
     && stable(a.attempts) === stable(b.attempts)
-    && stable(a.scores) === stable(b.scores);
+    && stable(a.scores) === stable(b.scores)
+    && stable(a.studies) === stable(b.studies);
 }
 
 function touchMap<T>(prev: Record<string, T>, next: Record<string, T>, stamps: Record<string, number>, now: number): Record<string, number> {
@@ -362,6 +431,7 @@ function stampChanges(prev: Data, next: Data, now: number): Data {
       params: touchMap(prev.params, next.params, prev.at.params, now),
       attempts: touchMap(prev.attempts, next.attempts, prev.at.attempts, now),
       scores: touchMap(prev.scores, next.scores, prev.at.scores, now),
+      studies: touchMap(prev.studies, next.studies, prev.at.studies, now),
     },
   };
 }
@@ -575,6 +645,17 @@ export function recordDss(
   commit({ ...data, right, wrong, scores: { ...data.scores, [key]: { picks, score } } });
 }
 
+export function studyKey(topicId: string, studyId: string): string {
+  return `${topicId}:${studyId}`;
+}
+
+/** Save one investigation. An identical log does not stamp a new edit. */
+export function saveStudy(key: string, log: StudyLog): void {
+  const prev = data.studies[key];
+  if (prev && stable(prev) === stable(log)) return;
+  commit({ ...data, studies: { ...data.studies, [key]: log } });
+}
+
 export function dismissWrong(key: string): void {
   if (!(key in data.wrong)) return;
   const wrong = { ...data.wrong };
@@ -589,9 +670,17 @@ export function toggleThink(id: string, flag: keyof ThinkFlags): void {
 }
 
 export function writeParams(id: string, params: Record<string, number>): void {
+  if (!stageParams(id, params)) return;
+  notify();
+}
+
+/** Remember a lab preset without notifying subscribers mid-render. */
+export function stageParams(id: string, params: Record<string, number>): boolean {
   const prev = data.params[id];
-  if (prev && sameParams(prev, params)) return;
-  commit({ ...data, params: { ...data.params, [id]: params } });
+  if (prev && sameParams(prev, params)) return false;
+  data = stampChanges(data, { ...data, params: { ...data.params, [id]: params } }, Date.now());
+  scheduleSave();
+  return true;
 }
 
 function sameParams(a: Record<string, number>, b: Record<string, number>): boolean {

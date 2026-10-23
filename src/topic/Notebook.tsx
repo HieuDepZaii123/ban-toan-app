@@ -1,8 +1,10 @@
 import type { Question } from "../content/types.ts";
 import type { Vary } from "../content/vary/types.ts";
+import { studyBriefs } from "../research/briefs.ts";
+import { studyDone } from "../research/done.ts";
 import { mulberry32 } from "../lib/prng.ts";
 import { A } from "../lib/route.tsx";
-import { dismissWrong, questionKey, setNote, useSlice } from "../lib/store.ts";
+import { dismissWrong, questionKey, setNote, studyKey, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -14,6 +16,9 @@ export function Notebook({ topicId, questions, vary }: { topicId: string; questi
   const wrong = useSlice((data) => data.wrong);
   const attempts = useSlice((data) => data.attempts);
   const scores = useSlice((data) => data.scores);
+  const studies = useSlice((data) => data.studies);
+  const briefs = studyBriefs.filter((item) => item.topic === topicId);
+  const concluded = briefs.filter((item) => studyDone(studies[studyKey(topicId, item.id)])).length;
   const misses = Object.entries(wrong).filter(([key]) => key.startsWith(`${topicId}:`));
 
   return (
@@ -25,6 +30,26 @@ export function Notebook({ topicId, questions, vary }: { topicId: string; questi
         placeholder={t(lang, "Một ý vừa thấy trên hình. Chỉ lưu trên máy này.", "A line you just saw on the figure. Stored only on this device.")}
         aria-label={t(lang, "Ghi chú", "Notes")}
       />
+      <h3>{t(lang, "Nghiên cứu", "Research")}</h3>
+      <p className="status">{t(lang, `Đã kết luận ${concluded}/${briefs.length}`, `Concluded ${concluded}/${briefs.length}`)}</p>
+      <ul className="misses">
+        {briefs.map((item) => {
+          const log = studies[studyKey(topicId, item.id)];
+          const rows = log?.rows.length ?? 0;
+          const finished = studyDone(log);
+          return (
+            <li key={item.id} className="mistake">
+              <p><MathText text={lang === "en" ? item.titleEn : item.title} /></p>
+              <p className="miss-line">
+                {finished
+                  ? t(lang, "Đã kết luận", "Concluded")
+                  : t(lang, `${rows}/5 dòng đã ghi`, `${rows}/5 rows recorded`)}
+              </p>
+              <A href={`/t/${topicId}?tab=nc&n=${item.id}`}>{t(lang, "Mở bài", "Open")}</A>
+            </li>
+          );
+        })}
+      </ul>
       <h3>{t(lang, "Câu đang sai", "Still wrong")}</h3>
       {misses.length === 0 ? (
         <p className="empty">{t(lang, "Chưa có câu sai. Làm ở tab Làm: câu chọn nhầm nằm ở đây cho đến khi làm đúng.", "Nothing missed yet. Use Practice: a wrong choice stays here until the answer is right.")}</p>

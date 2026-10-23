@@ -16,6 +16,8 @@ import { Motion } from "../motion/Motion.tsx";
 import { Notebook } from "./Notebook.tsx";
 import { Practice } from "./Practice.tsx";
 
+const Research = lazy(() => import("./Research.tsx").then((mod) => ({ default: mod.Research })));
+
 const QuadraticLab = lazy(() => import("../labs/QuadraticLab.tsx").then((mod) => ({ default: mod.QuadraticLab })));
 const ExpLab = lazy(() => import("../labs/ExpLab.tsx").then((mod) => ({ default: mod.ExpLab })));
 const SequenceLab = lazy(() => import("../labs/SequenceLab.tsx").then((mod) => ({ default: mod.SequenceLab })));
@@ -59,7 +61,7 @@ export function TopicDesk({ id }: { id: string }) {
   const lang = useLang();
   const { search, go } = useRoute();
   const tabParam = new URLSearchParams(search).get("tab");
-  const tab = tabParam === "lam" || tabParam === "so" ? tabParam : "hoc";
+  const tab = tabParam === "lam" || tabParam === "so" || tabParam === "nc" ? tabParam : "hoc";
   const [pack, setPack] = useState<Loaded | null>(null);
 
   useEffect(() => {
@@ -121,7 +123,7 @@ export function TopicDesk({ id }: { id: string }) {
           <Prefs />
         </div>
         <nav className="tabs" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>
-          {(["hoc", "lam", "so"] as const).map((item) => (
+          {(["hoc", "lam", "so", "nc"] as const).map((item) => (
             <a
               key={item}
               aria-current={tab === item ? "page" : undefined}
@@ -133,7 +135,13 @@ export function TopicDesk({ id }: { id: string }) {
                 go(`/t/${topic.id}?tab=${item}`);
               }}
             >
-              {item === "hoc" ? t(lang, "Học", "Study") : item === "lam" ? t(lang, "Làm", "Practice") : t(lang, "Sổ", "Notebook")}
+              {item === "hoc"
+                ? t(lang, "Học", "Study")
+                : item === "lam"
+                  ? t(lang, "Làm", "Practice")
+                  : item === "so"
+                    ? t(lang, "Sổ", "Notebook")
+                    : t(lang, "Nghiên cứu", "Research")}
             </a>
           ))}
         </nav>
@@ -180,6 +188,11 @@ export function TopicDesk({ id }: { id: string }) {
               <p>{t(lang, `Tờ này sẽ có ${topic.questions} câu, với gợi ý và ba bước giải.`, `This sheet will have ${topic.questions} questions, each with a hint and three steps.`)}</p>
             </div>
           )
+        ) : null}
+        {tab === "nc" ? (
+          <Suspense fallback={<p className="loading">{t(lang, "Đang mở nghiên cứu…", "Opening research…")}</p>}>
+            <Research topicId={topic.id} Lab={Lab} />
+          </Suspense>
         ) : null}
         {tab === "so" ? (
           !ready ? (

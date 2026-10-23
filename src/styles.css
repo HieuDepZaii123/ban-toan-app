@@ -314,7 +314,7 @@ main {
   .motion-stage { grid-column: 1 / -1; grid-row: 1; }
   .concept { grid-column: 1; grid-row: 2; }
   .guide { grid-column: 1; grid-row: 3; }
-  .stage,
+  .hoc > .stage,
   .hoc > .stub-stage,
   .hoc > .graph-wrap { grid-column: 2; grid-row: 2 / span 2; position: sticky; top: 108px; }
 }
@@ -594,6 +594,67 @@ html[data-lamp="on"] body::before {
   .window { grid-column: 2; grid-row: 1; }
   .clocks { grid-column: 3; grid-row: 1; }
 }
+.study-list { display: grid; gap: 12px; }
+.study-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--sheet);
+  color: inherit;
+  text-decoration: none;
+}
+.study-steps { display: grid; gap: 22px; margin-top: 16px; }
+.study-step { display: grid; gap: 8px; }
+.study-step > * { min-width: 0; }
+.study-step h3 { font-size: 1rem; }
+.study-step.is-locked { opacity: 0.72; }
+.guesses { display: grid; gap: 8px; }
+.guess {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--sheet);
+}
+.guess input { width: 1.15rem; height: 1.15rem; margin-top: 3px; }
+.guess.is-right { border-color: var(--ok); background: var(--ok-soft); }
+.guess.is-wrong { border-color: var(--clay); background: var(--clay-soft); }
+.study-write { display: grid; gap: 6px; }
+.study-write textarea { min-height: 72px; resize: vertical; }
+.study-ghi {
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  padding: 0 18px;
+  font: inherit;
+}
+.study-ghi:disabled { opacity: 0.45; }
+.study-table { width: 100%; border-collapse: collapse; }
+.study-table caption { text-align: left; font-weight: 600; margin-bottom: 6px; }
+.study-table th, .study-table td {
+  text-align: right;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+}
+.study-table th:first-child, .study-table td:first-child { text-align: left; }
+.study-plot {
+  height: 240px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--plot-bg);
+}
+.tab { font-size: 0.95rem; padding: 0 4px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
