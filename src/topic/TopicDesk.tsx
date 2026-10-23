@@ -3,6 +3,7 @@ import type { CardId } from "../content/cards.ts";
 import { streamName, topicById } from "../content/catalog.ts";
 import { loadTopic } from "../content/loadTopic.ts";
 import type { Lesson, Question, TopicMeta } from "../content/types.ts";
+import type { Vary } from "../content/vary/types.ts";
 import { A } from "../lib/route.tsx";
 import { useRoute } from "../lib/useRoute.ts";
 import { setLast, toggleThink, useSlice, EMPTY_THINK } from "../lib/store.ts";
@@ -30,7 +31,7 @@ const AnalyticLab = lazy(() => import("../labs/AnalyticLab.tsx").then((mod) => (
 const ShapeLab = lazy(() => import("../labs/ShapeLab.tsx").then((mod) => ({ default: mod.ShapeLab })));
 const ComboLab = lazy(() => import("../labs/ComboLab.tsx").then((mod) => ({ default: mod.ComboLab })));
 
-type Loaded = { id: string; lesson: Lesson | null; questions: Question[]; failed: boolean };
+type Loaded = { id: string; lesson: Lesson | null; questions: Question[]; vary: Vary[]; failed: boolean };
 
 const labs = {
   quadratic: QuadraticLab,
@@ -71,10 +72,10 @@ export function TopicDesk({ id }: { id: string }) {
     const topicId = topic.id;
     void loadTopic(topicId).then(
       (next) => {
-        if (live) setPack({ id: topicId, lesson: next.lesson, questions: next.questions, failed: false });
+        if (live) setPack({ id: topicId, lesson: next.lesson, questions: next.questions, vary: next.vary, failed: false });
       },
       () => {
-        if (live) setPack({ id: topicId, lesson: null, questions: [], failed: true });
+        if (live) setPack({ id: topicId, lesson: null, questions: [], vary: [], failed: true });
       },
     );
     return () => {
@@ -104,6 +105,7 @@ export function TopicDesk({ id }: { id: string }) {
   const ready = pack?.id === topic.id ? pack : null;
   const lesson = ready?.lesson ?? null;
   const questions = ready?.questions ?? [];
+  const vary = ready?.vary ?? [];
   const Lab = isCardId(topic.id) ? labs[topic.id] : null;
 
   return (
@@ -171,7 +173,7 @@ export function TopicDesk({ id }: { id: string }) {
           ) : ready.failed ? (
             <p className="empty">{t(lang, "Không mở được nội dung tờ này.", "This sheet's contents did not open.")}</p>
           ) : questions.length > 0 ? (
-            <Practice topicId={topic.id} questions={questions} />
+            <Practice key={topic.id} topicId={topic.id} questions={questions} vary={vary} />
           ) : (
             <div className="stub-stage" role="note">
               <b>{t(lang, "Đề đang soạn", "Questions still being written")}</b>
@@ -183,7 +185,7 @@ export function TopicDesk({ id }: { id: string }) {
           !ready ? (
             <p className="loading">{t(lang, "Đang mở tờ…", "Opening this sheet…")}</p>
           ) : (
-            <Notebook topicId={topic.id} questions={questions} />
+            <Notebook key={topic.id} topicId={topic.id} questions={questions} vary={vary} />
           )
         ) : null}
       </main>

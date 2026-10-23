@@ -1,14 +1,18 @@
 import type { Question } from "../content/types.ts";
+import type { Vary } from "../content/vary/types.ts";
+import { mulberry32 } from "../lib/prng.ts";
 import { A } from "../lib/route.tsx";
 import { dismissWrong, questionKey, setNote, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
+import { arrange } from "./show.ts";
 
-export function Notebook({ topicId, questions }: { topicId: string; questions: Question[] }) {
+export function Notebook({ topicId, questions, vary }: { topicId: string; questions: Question[]; vary: Vary[] }) {
   const lang = useLang();
   const note = useSlice((data) => data.notes[topicId] ?? "");
   const wrong = useSlice((data) => data.wrong);
+  const attempts = useSlice((data) => data.attempts);
   const misses = Object.entries(wrong).filter(([key]) => key.startsWith(`${topicId}:`));
 
   return (
@@ -27,8 +31,13 @@ export function Notebook({ topicId, questions }: { topicId: string; questions: Q
         <ul className="misses">
           {misses.map(([key, choice]) => {
             const qid = key.slice(topicId.length + 1);
-            const question = questions.find((item) => item.id === qid);
-            if (!question) return null;
+            const published = questions.find((item) => item.id === qid);
+            if (!published) return null;
+            const spec = vary.find((item) => item.id === published.id);
+            const attempt = attempts[key];
+            const question = attempt && spec
+              ? arrange(spec.draw(mulberry32(attempt.seed)).stem, attempt.pos, attempt.seed)
+              : published;
             const choices = lang === "en" ? question.choicesEn : question.choices;
             return (
               <li key={key} className="mistake">

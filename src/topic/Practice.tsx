@@ -1,91 +1,94 @@
 import { useEffect, useState } from "react";
 import type { Question } from "../content/types.ts";
+import type { Vary } from "../content/vary/types.ts";
+import { mulberry32 } from "../lib/prng.ts";
 import { useRoute } from "../lib/useRoute.ts";
-import { questionKey, recordAnswer, useSlice } from "../lib/store.ts";
+import { ensureAttempt, questionKey, recordAnswer, resetAttempt, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
-import { shuffleOrder } from "./shuffle.ts";
+import { arrange, sessionQuestions } from "./show.ts";
 
-export function Practice({ topicId, questions }: { topicId: string; questions: Question[] }) {
+export function Practice({ topicId, questions, vary }: { topicId: string; questions: Question[]; vary: Vary[] }) {
   const lang = useLang();
   const { search, go } = useRoute();
   const qid = new URLSearchParams(search).get("q");
-  const found = questions.findIndex((item) => item.id === qid);
+  const [ordered] = useState(() => sessionQuestions(topicId, questions));
+  const found = ordered.findIndex((item) => item.id === qid);
   const index = found >= 0 ? found : 0;
-  const question = questions[index];
-  const [hintFor, setHintFor] = useState<string | null>(null);
-  const [orderFor, setOrderFor] = useState(() => ({
-    id: question?.id ?? "",
-    order: shuffleOrder(question?.choices.length ?? 0),
-  }));
-
-  let order = orderFor.order;
-  if (question && orderFor.id !== question.id) {
-    order = shuffleOrder(question.choices.length);
-    setOrderFor({ id: question.id, order });
-  }
-
+  const question = ordered[index];
+  const spec = question ? vary.find((item) => item.id === question.id) : undefined;
+  const key = question ? questionKey(topicId, question.id) : "";
+  const attempt = useSlice((data) => (key === "" ? undefined : data.attempts[key]));
   const picked = useSlice((data) => {
-    if (!question) return -1;
-    const key = questionKey(topicId, question.id);
-    if (data.right[key]) return question.answer;
+    if (key === "") return -1;
+    if (data.right[key]) return data.attempts[key]?.pos ?? -1;
     const wrong = data.wrong[key];
     return typeof wrong === "number" ? wrong : -1;
   });
+  const [hintFor, setHintFor] = useState<string | null>(null);
 
   useEffect(() => {
     if (!question) return;
+    ensureAttempt(questionKey(topicId, question.id));
+  }, [topicId, question]);
+
+  useEffect(() => {
+    if (!question || !attempt || !spec) return;
+    const shown = arrange(spec.draw(mulberry32(attempt.seed)).stem, attempt.pos, attempt.seed);
     const onKey = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
       const target = event.target;
       if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) return;
       if (event.key < "1" || event.key > "4") return;
       const display = Number(event.key) - 1;
-      const original = order[display];
-      if (original === undefined) return;
+      if (display < 0 || display > 3) return;
       event.preventDefault();
-      recordAnswer(topicId, question.id, original, original === question.answer);
+      recordAnswer(topicId, question.id, display, display === shown.answer);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [question, topicId, order]);
+  }, [question, topicId, attempt, spec]);
 
   if (!question) {
     return <p className="empty">{t(lang, "Tờ này chưa có câu.", "This sheet has no questions yet.")}</p>;
   }
+  if (!spec) {
+    return <p className="empty">{t(lang, "Không dựng được câu này.", "This question could not be built.")}</p>;
+  }
+  if (!attempt) {
+    return <p className="loading">{t(lang, "Đang mở câu…", "Opening this question…")}</p>;
+  }
 
-  const prompt = lang === "en" ? question.promptEn : question.prompt;
-  const choices = lang === "en" ? question.choicesEn : question.choices;
-  const steps = lang === "en" ? question.stepsEn : question.steps;
-  const hint = lang === "en" ? question.hintEn : question.hint;
+  const shown = arrange(spec.draw(mulberry32(attempt.seed)).stem, attempt.pos, attempt.seed);
+  const prompt = lang === "en" ? shown.promptEn : shown.prompt;
+  const choices = lang === "en" ? shown.choicesEn : shown.choices;
+  const steps = lang === "en" ? shown.stepsEn : shown.steps;
+  const hint = lang === "en" ? shown.hintEn : shown.hint;
   const hintOpen = hintFor === question.id;
   const answered = picked >= 0;
-  const displayAt = order.indexOf(picked);
-  const choiceNo = displayAt + 1;
+  const choiceNo = picked + 1;
   const statusText = !answered
     ? ""
-    : picked === question.answer
+    : picked === shown.answer
       ? t(lang, `Đúng. Đã chọn ${choiceNo}.`, `Correct. Chose ${choiceNo}.`)
       : t(lang, `Chưa đúng. Đã chọn ${choiceNo}.`, `Not yet. Chose ${choiceNo}.`);
 
   return (
     <section className="practice" aria-labelledby="practice-title">
-      <p className="kicker">{t(lang, `Câu ${index + 1} / ${questions.length}`, `Question ${index + 1} / ${questions.length}`)}</p>
+      <p className="kicker">{t(lang, `Câu ${index + 1} / ${ordered.length}`, `Question ${index + 1} / ${ordered.length}`)}</p>
       <h2 id="practice-title"><MathText text={prompt} /></h2>
       <div className="choices" role="group" aria-label={t(lang, "Đáp án", "Choices")}>
-        {order.map((originalIndex, displayIndex) => {
-          const choice = choices[originalIndex];
-          if (choice === undefined) return null;
-          const state = !answered ? "" : originalIndex === question.answer ? " is-right" : originalIndex === picked ? " is-wrong" : "";
+        {choices.map((choice, displayIndex) => {
+          const state = !answered ? "" : displayIndex === shown.answer ? " is-right" : displayIndex === picked ? " is-wrong" : "";
           return (
             <button
-              key={originalIndex}
+              key={displayIndex}
               type="button"
               className={`choice${state}`}
               data-choice={displayIndex}
-              aria-pressed={answered && originalIndex === picked}
-              onClick={() => recordAnswer(topicId, question.id, originalIndex, originalIndex === question.answer)}
+              aria-pressed={answered && displayIndex === picked}
+              onClick={() => recordAnswer(topicId, question.id, displayIndex, displayIndex === shown.answer)}
             >
               <span className="key">{displayIndex + 1}</span>
               <span className="choice-body"><MathText text={choice} /></span>
@@ -97,11 +100,14 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
         <button type="button" className="text-btn" aria-expanded={hintOpen} onClick={() => setHintFor(hintOpen ? null : question.id)}>
           {hintOpen ? t(lang, "Giấu gợi ý", "Hide hint") : t(lang, "Gợi ý", "Hint")}
         </button>
+        <button type="button" className="text-btn" onClick={() => resetAttempt(key)}>
+          {t(lang, "Đề mới", "New numbers")}
+        </button>
         <button
           type="button"
           className="text-btn"
           onClick={() => {
-            const next = questions[(index + 1) % questions.length];
+            const next = ordered[(index + 1) % ordered.length];
             if (!next) return;
             go(`/t/${topicId}?tab=lam&q=${next.id}`, "replace");
           }}
@@ -120,7 +126,7 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
           </ol>
         </div>
       ) : (
-        <p className="note">{t(lang, "Phím 1–4 chọn đáp án. Câu chọn nhầm được giữ trong Sổ cho đến khi làm đúng.", "Keys 1–4 pick an answer. A miss stays in the notebook until you get it right.")}</p>
+        <p className="note">{t(lang, "Phím 1–4 chọn đáp án. Đề mới đổi các số. Câu chọn nhầm được giữ trong Sổ cho đến khi làm đúng.", "Keys 1–4 pick an answer. New numbers draws again. A miss stays in the notebook until you get it right.")}</p>
       )}
     </section>
   );

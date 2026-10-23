@@ -1,30 +1,87 @@
 import type { CardId } from "./cards.ts";
 import type { Lesson, Question } from "./types.ts";
+import type { Vary } from "./vary/types.ts";
 
-export type TopicPack = { lesson: Lesson; questions: Question[] };
+export type TopicPack = { lesson: Lesson; questions: Question[]; vary: Vary[] };
 
 const loaders = {
-  quadratic: () => import("./quadratic.ts").then((mod) => ({ lesson: mod.quadraticLesson, questions: mod.quadraticQuestions })),
-  ineq: () => import("./ineq.ts").then((mod) => ({ lesson: mod.ineqLesson, questions: mod.ineqQuestions })),
-  exp: () => import("./exp.ts").then((mod) => ({ lesson: mod.expLesson, questions: mod.expQuestions })),
-  sequence: () => import("./sequence.ts").then((mod) => ({ lesson: mod.sequenceLesson, questions: mod.sequenceQuestions })),
-  trig: () => import("./trig.ts").then((mod) => ({ lesson: mod.trigLesson, questions: mod.trigQuestions })),
-  limit: () => import("./limit.ts").then((mod) => ({ lesson: mod.limitLesson, questions: mod.limitQuestions })),
-  derivative: () => import("./derivative.ts").then((mod) => ({ lesson: mod.derivativeLesson, questions: mod.derivativeQuestions })),
-  survey: () => import("./survey.ts").then((mod) => ({ lesson: mod.surveyLesson, questions: mod.surveyQuestions })),
-  integral: () => import("./integral.ts").then((mod) => ({ lesson: mod.integralLesson, questions: mod.integralQuestions })),
-  vector: () => import("./vector.ts").then((mod) => ({ lesson: mod.vectorLesson, questions: mod.vectorQuestions })),
-  analytic: () => import("./analytic.ts").then((mod) => ({ lesson: mod.analyticLesson, questions: mod.analyticQuestions })),
-  triangle: () => import("./triangle.ts").then((mod) => ({ lesson: mod.triangleLesson, questions: mod.triangleQuestions })),
-  combo: () => import("./combo.ts").then((mod) => ({ lesson: mod.comboLesson, questions: mod.comboQuestions })),
-  probability: () => import("./probability.ts").then((mod) => ({ lesson: mod.probabilityLesson, questions: mod.probabilityQuestions })),
+  quadratic: () => Promise.all([import("./quadratic.ts"), import("./vary/quadratic.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.quadraticLesson,
+    questions: sheet.quadraticQuestions,
+    vary: vary.quadraticVary(sheet.quadraticQuestions),
+  })),
+  ineq: () => Promise.all([import("./ineq.ts"), import("./vary/ineq.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.ineqLesson,
+    questions: sheet.ineqQuestions,
+    vary: vary.ineqVary(sheet.ineqQuestions),
+  })),
+  exp: () => Promise.all([import("./exp.ts"), import("./vary/exp.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.expLesson,
+    questions: sheet.expQuestions,
+    vary: vary.expVary(sheet.expQuestions),
+  })),
+  sequence: () => Promise.all([import("./sequence.ts"), import("./vary/sequence.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.sequenceLesson,
+    questions: sheet.sequenceQuestions,
+    vary: vary.sequenceVary(sheet.sequenceQuestions),
+  })),
+  trig: () => Promise.all([import("./trig.ts"), import("./vary/trig.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.trigLesson,
+    questions: sheet.trigQuestions,
+    vary: vary.trigVary(sheet.trigQuestions),
+  })),
+  limit: () => Promise.all([import("./limit.ts"), import("./vary/limit.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.limitLesson,
+    questions: sheet.limitQuestions,
+    vary: vary.limitVary(sheet.limitQuestions),
+  })),
+  derivative: () => Promise.all([import("./derivative.ts"), import("./vary/derivative.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.derivativeLesson,
+    questions: sheet.derivativeQuestions,
+    vary: vary.derivativeVary(sheet.derivativeQuestions),
+  })),
+  survey: () => Promise.all([import("./survey.ts"), import("./vary/survey.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.surveyLesson,
+    questions: sheet.surveyQuestions,
+    vary: vary.surveyVary(sheet.surveyQuestions),
+  })),
+  integral: () => Promise.all([import("./integral.ts"), import("./vary/integral.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.integralLesson,
+    questions: sheet.integralQuestions,
+    vary: vary.integralVary(sheet.integralQuestions),
+  })),
+  vector: () => Promise.all([import("./vector.ts"), import("./vary/vector.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.vectorLesson,
+    questions: sheet.vectorQuestions,
+    vary: vary.vectorVary(sheet.vectorQuestions),
+  })),
+  analytic: () => Promise.all([import("./analytic.ts"), import("./vary/analytic.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.analyticLesson,
+    questions: sheet.analyticQuestions,
+    vary: vary.analyticVary(sheet.analyticQuestions),
+  })),
+  triangle: () => Promise.all([import("./triangle.ts"), import("./vary/triangle.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.triangleLesson,
+    questions: sheet.triangleQuestions,
+    vary: vary.triangleVary(sheet.triangleQuestions),
+  })),
+  combo: () => Promise.all([import("./combo.ts"), import("./vary/combo.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.comboLesson,
+    questions: sheet.comboQuestions,
+    vary: vary.comboVary(sheet.comboQuestions),
+  })),
+  probability: () => Promise.all([import("./probability.ts"), import("./vary/probability.ts")]).then(([sheet, vary]) => ({
+    lesson: sheet.probabilityLesson,
+    questions: sheet.probabilityQuestions,
+    vary: vary.probabilityVary(sheet.probabilityQuestions),
+  })),
 } satisfies Record<CardId, () => Promise<TopicPack>>;
 
 function isCardId(id: string): id is CardId {
   return Object.prototype.hasOwnProperty.call(loaders, id);
 }
 
-/** Lesson and questions for one sheet. Each id is its own chunk. */
+/** Lesson, questions, and number generators for one sheet. Each id is its own chunk. */
 export function loadTopic(id: string): Promise<TopicPack> {
   if (!isCardId(id)) return Promise.reject(new Error(id));
   return loaders[id]();

@@ -1,11 +1,14 @@
 import { useSyncExternalStore } from "react";
 import { snap } from "./format.ts";
+import { mulberry32, nextPos } from "./prng.ts";
 import type { Range } from "../content/params.ts";
 
 export type ThemeName = "paper" | "night";
 export type LangName = "vi" | "en";
 
 export type ThinkFlags = { nhin: boolean; lam: boolean; ket: boolean };
+
+export type Attempt = { seed: number; pos: number };
 
 export type Stamps = {
   theme: number;
@@ -16,6 +19,7 @@ export type Stamps = {
   wrong: Record<string, number>;
   think: Record<string, number>;
   params: Record<string, number>;
+  attempts: Record<string, number>;
 };
 
 export type Data = {
@@ -28,6 +32,8 @@ export type Data = {
   wrong: Record<string, number>;
   think: Record<string, ThinkFlags>;
   params: Record<string, Record<string, number>>;
+  /** Seed and correct-choice position for the question currently on screen. */
+  attempts: Record<string, Attempt>;
   /** Per-key edit times. A missing stamp means 0, so an older snapshot still loads. */
   at: Stamps;
 };
@@ -41,7 +47,7 @@ function preferredTheme(): ThemeName {
 }
 
 function emptyAt(): Stamps {
-  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {} };
+  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {}, attempts: {} };
 }
 
 function blank(): Data {
@@ -55,6 +61,7 @@ function blank(): Data {
     wrong: {},
     think: {},
     params: {},
+    attempts: {},
     at: emptyAt(),
   };
 }
@@ -122,7 +129,22 @@ function loadAt(value: unknown): Stamps {
     wrong: stampMap(value.wrong),
     think: stampMap(value.think),
     params: stampMap(value.params),
+    attempts: stampMap(value.attempts),
   };
+}
+
+function attemptMap(value: unknown): Record<string, Attempt> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, Attempt> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (!isRecord(item)) continue;
+    const seed = item.seed;
+    const pos = item.pos;
+    if (typeof seed !== "number" || !Number.isFinite(seed)) continue;
+    if (typeof pos !== "number" || !Number.isInteger(pos) || pos < 0 || pos > 3) continue;
+    out[key] = { seed: seed >>> 0, pos };
+  }
+  return out;
 }
 
 function paramsMap(value: unknown): Record<string, Record<string, number>> {
@@ -156,6 +178,7 @@ export function load(raw: string | null): Data {
       wrong: wrongMap(parsed.wrong),
       think: thinkMap(parsed.think),
       params: paramsMap(parsed.params),
+      attempts: attemptMap(parsed.attempts),
       at: loadAt(parsed.at),
     };
   } catch {
@@ -244,6 +267,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
   const wrong = mergeMap(base.wrong, local.wrong, disk.wrong, base.at.wrong, local.at.wrong, disk.at.wrong);
   const think = mergeMap(base.think, local.think, disk.think, base.at.think, local.at.think, disk.at.think);
   const params = mergeMap(base.params, local.params, disk.params, base.at.params, local.at.params, disk.at.params);
+  const attempts = mergeMap(base.attempts, local.attempts, disk.attempts, base.at.attempts, local.at.attempts, disk.at.attempts);
   return {
     v: 1,
     theme: theme.value ?? base.theme,
@@ -254,6 +278,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
     wrong: wrong.value,
     think: think.value,
     params: params.value,
+    attempts: attempts.value,
     at: {
       theme: theme.at,
       lang: lang.at,
@@ -263,6 +288,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
       wrong: wrong.at,
       think: think.at,
       params: params.at,
+      attempts: attempts.at,
     },
   };
 }
@@ -275,7 +301,8 @@ function valuesEqual(a: Data, b: Data): boolean {
     && stable(a.right) === stable(b.right)
     && stable(a.wrong) === stable(b.wrong)
     && stable(a.think) === stable(b.think)
-    && stable(a.params) === stable(b.params);
+    && stable(a.params) === stable(b.params)
+    && stable(a.attempts) === stable(b.attempts);
 }
 
 function touchMap<T>(prev: Record<string, T>, next: Record<string, T>, stamps: Record<string, number>, now: number): Record<string, number> {
@@ -301,6 +328,7 @@ function stampChanges(prev: Data, next: Data, now: number): Data {
       wrong: touchMap(prev.wrong, next.wrong, prev.at.wrong, now),
       think: touchMap(prev.think, next.think, prev.at.think, now),
       params: touchMap(prev.params, next.params, prev.at.params, now),
+      attempts: touchMap(prev.attempts, next.attempts, prev.at.attempts, now),
     },
   };
 }
@@ -436,6 +464,34 @@ export function setNote(id: string, note: string): void {
 
 export function questionKey(topicId: string, questionId: string): string {
   return `${topicId}:${questionId}`;
+}
+
+function freshAttempt(prev: number | undefined): Attempt {
+  const buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  const seed = buf[0] ?? 1;
+  const pos = nextPos(prev, mulberry32(seed));
+  return { seed, pos };
+}
+
+/** Keep the same seed until the learner answers or asks for a new draw. */
+export function ensureAttempt(key: string): void {
+  if (data.attempts[key]) return;
+  const right = { ...data.right };
+  const wrong = { ...data.wrong };
+  delete right[key];
+  delete wrong[key];
+  commit({ ...data, right, wrong, attempts: { ...data.attempts, [key]: freshAttempt(undefined) } });
+}
+
+/** New numbers, and a correct-choice position different from the previous attempt. */
+export function resetAttempt(key: string): void {
+  const prev = data.attempts[key]?.pos;
+  const right = { ...data.right };
+  const wrong = { ...data.wrong };
+  delete right[key];
+  delete wrong[key];
+  commit({ ...data, right, wrong, attempts: { ...data.attempts, [key]: freshAttempt(prev) } });
 }
 
 export function recordAnswer(topicId: string, questionId: string, choice: number, correct: boolean): void {

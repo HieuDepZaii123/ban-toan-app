@@ -2,7 +2,7 @@
  * Corrupt snapshots, answer recording, and merges across tabs.
  * Run with: tsx scripts/store.test.ts
  */
-import { applyStorageEvent, flushSave, getData, hasPendingSave, load, recordAnswer, resetStore, setNote } from "../src/lib/store.ts";
+import { applyStorageEvent, ensureAttempt, flushSave, getData, hasPendingSave, load, recordAnswer, resetAttempt, resetStore, setNote } from "../src/lib/store.ts";
 
 const fails: string[] = [];
 
@@ -34,6 +34,15 @@ assert(mixed.wrong["t:q"] === 2 && !("t:s" in mixed.wrong) && !("t:flag" in mixe
 assert(mixed.think.good?.nhin === true && mixed.think.good.lam === false && mixed.think.good.ket === true, "complete think flags kept");
 assert(!("short" in mixed.think) && !("messy" in mixed.think), "partial think rows dropped");
 assert(mixed.right["t:q"] === true && !("t:no" in mixed.right), "right keeps only true");
+
+const savedAttempts = load(JSON.stringify({
+  v: 1,
+  attempts: { "ineq:ineq-am": { seed: 5, pos: 2 }, bad: { seed: 1, pos: 9 } },
+}));
+assert(savedAttempts.attempts["ineq:ineq-am"]?.seed === 5 && savedAttempts.attempts["ineq:ineq-am"]?.pos === 2, "an attempt keeps its seed and position");
+assert(!("bad" in savedAttempts.attempts), "a position outside 0–3 is dropped");
+const zeroAttempt = load(JSON.stringify({ v: 1, attempts: { a: { seed: 0, pos: 0 } } }));
+assert(zeroAttempt.attempts.a?.pos === 0 && zeroAttempt.attempts.a.seed === 0, "position 0 is a real slot");
 
 resetStore();
 recordAnswer("ineq", "ineq-am", 1, false);
@@ -119,6 +128,19 @@ const older = JSON.stringify({
 memory.set("ban-toan", older);
 applyStorageEvent("ban-toan", older);
 assert(getData().notes.quadratic === "gõ tiếp", "an older disk edit does not replace a newer local note");
+
+resetStore();
+recordAnswer("ineq", "ineq-am", 1, false);
+ensureAttempt("ineq:ineq-am");
+const firstAttempt = getData().attempts["ineq:ineq-am"];
+assert(firstAttempt !== undefined && firstAttempt.pos >= 0 && firstAttempt.pos <= 3, "a new attempt has a slot");
+assert(!("ineq:ineq-am" in getData().wrong), "the first draw drops a mark from the old fixed question");
+ensureAttempt("ineq:ineq-am");
+assert(getData().attempts["ineq:ineq-am"]?.seed === firstAttempt?.seed, "the same attempt stays until reset");
+resetAttempt("ineq:ineq-am");
+const secondAttempt = getData().attempts["ineq:ineq-am"];
+assert(secondAttempt !== undefined && firstAttempt !== undefined && secondAttempt.pos !== firstAttempt.pos, "the next correct slot differs");
+assert(secondAttempt !== undefined && firstAttempt !== undefined && secondAttempt.seed !== firstAttempt.seed, "a reset draws a new seed");
 
 resetStore();
 
