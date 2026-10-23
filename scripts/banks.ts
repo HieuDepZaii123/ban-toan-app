@@ -18,22 +18,36 @@ import { triangleLesson, triangleQuestions } from "../src/content/triangle.ts";
 import { trigLesson, trigQuestions } from "../src/content/trig.ts";
 import type { Lesson, Question } from "../src/content/types.ts";
 import { vectorLesson, vectorQuestions } from "../src/content/vector.ts";
+import { analyticConceptQuestions } from "../src/content/vary/concept/analytic.ts";
+import { comboConceptQuestions } from "../src/content/vary/concept/combo.ts";
+import { derivativeConceptQuestions } from "../src/content/vary/concept/derivative.ts";
+import { expConceptQuestions } from "../src/content/vary/concept/exp.ts";
+import { ineqConceptQuestions } from "../src/content/vary/concept/ineq.ts";
+import { integralConceptQuestions } from "../src/content/vary/concept/integral.ts";
+import { limitConceptQuestions } from "../src/content/vary/concept/limit.ts";
+import { probabilityConceptQuestions } from "../src/content/vary/concept/probability.ts";
+import { quadraticConceptQuestions } from "../src/content/vary/concept/quadratic.ts";
+import { sequenceConceptQuestions } from "../src/content/vary/concept/sequence.ts";
+import { surveyConceptQuestions } from "../src/content/vary/concept/survey.ts";
+import { triangleConceptQuestions } from "../src/content/vary/concept/triangle.ts";
+import { trigConceptQuestions } from "../src/content/vary/concept/trig.ts";
+import { vectorConceptQuestions } from "../src/content/vary/concept/vector.ts";
 
 const banks = {
-  quadratic: { lesson: quadraticLesson, questions: quadraticQuestions },
-  ineq: { lesson: ineqLesson, questions: ineqQuestions },
-  exp: { lesson: expLesson, questions: expQuestions },
-  sequence: { lesson: sequenceLesson, questions: sequenceQuestions },
-  trig: { lesson: trigLesson, questions: trigQuestions },
-  limit: { lesson: limitLesson, questions: limitQuestions },
-  derivative: { lesson: derivativeLesson, questions: derivativeQuestions },
-  survey: { lesson: surveyLesson, questions: surveyQuestions },
-  integral: { lesson: integralLesson, questions: integralQuestions },
-  vector: { lesson: vectorLesson, questions: vectorQuestions },
-  analytic: { lesson: analyticLesson, questions: analyticQuestions },
-  triangle: { lesson: triangleLesson, questions: triangleQuestions },
-  combo: { lesson: comboLesson, questions: comboQuestions },
-  probability: { lesson: probabilityLesson, questions: probabilityQuestions },
+  quadratic: { lesson: quadraticLesson, questions: [...quadraticQuestions, ...quadraticConceptQuestions] },
+  ineq: { lesson: ineqLesson, questions: [...ineqQuestions, ...ineqConceptQuestions] },
+  exp: { lesson: expLesson, questions: [...expQuestions, ...expConceptQuestions] },
+  sequence: { lesson: sequenceLesson, questions: [...sequenceQuestions, ...sequenceConceptQuestions] },
+  trig: { lesson: trigLesson, questions: [...trigQuestions, ...trigConceptQuestions] },
+  limit: { lesson: limitLesson, questions: [...limitQuestions, ...limitConceptQuestions] },
+  derivative: { lesson: derivativeLesson, questions: [...derivativeQuestions, ...derivativeConceptQuestions] },
+  survey: { lesson: surveyLesson, questions: [...surveyQuestions, ...surveyConceptQuestions] },
+  integral: { lesson: integralLesson, questions: [...integralQuestions, ...integralConceptQuestions] },
+  vector: { lesson: vectorLesson, questions: [...vectorQuestions, ...vectorConceptQuestions] },
+  analytic: { lesson: analyticLesson, questions: [...analyticQuestions, ...analyticConceptQuestions] },
+  triangle: { lesson: triangleLesson, questions: [...triangleQuestions, ...triangleConceptQuestions] },
+  combo: { lesson: comboLesson, questions: [...comboQuestions, ...comboConceptQuestions] },
+  probability: { lesson: probabilityLesson, questions: [...probabilityQuestions, ...probabilityConceptQuestions] },
 } satisfies Record<CardId, { lesson: Lesson; questions: Question[] }>;
 
 function isSheet(id: string): id is CardId {

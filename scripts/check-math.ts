@@ -283,7 +283,7 @@ const expected: Record<string, string> = {
 
 assert(topics.length === 14, `topic count ${topics.length}`);
 assert(topics.filter((topic) => topic.status === "ready").length === 14, "ready count");
-assert(QUESTION_TOTAL === 85, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
+assert(QUESTION_TOTAL === 141, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
 
 const banks = [
   ["quadratic", quadraticQuestions],
@@ -303,21 +303,29 @@ const banks = [
 ] as const;
 
 let counted = 0;
-for (const [id, list] of banks) {
+for (const [id, numeric] of banks) {
+  const list = questionsFor(id);
   const meta = topics.find((topic) => topic.id === id);
   assert(meta?.questions === list.length, `${id} catalog count ${meta?.questions} vs ${list.length}`);
+  assert(list.length === numeric.length + 4, `${id} concept count`);
   counted += list.length;
-  for (const question of list) {
+  for (const question of numeric) {
     const correct = expected[question.id];
     assert(correct !== undefined, `missing expected answer for ${question.id}`);
     if (correct) checkQuestion(question, correct);
   }
+  for (const question of list) {
+    if (question.kind !== "concept") continue;
+    assert(question.answer === 0, `${question.id} concept answer is not first`);
+    checkQuestion(question, question.choices[0]);
+  }
 }
-assert(counted === 85, `bank size ${counted}`);
+assert(counted === 141, `bank size ${counted}`);
 checkSheets();
 for (const id of ["ineq", "vector", "analytic", "triangle", "combo"]) {
-  assert(questionsFor(id).length === 6, `${id} bank`);
+  assert(questionsFor(id).length === 10, `${id} bank`);
 }
+assert(questionsFor("derivative").length === 11, "derivative bank");
 assert(topicSummary("ineq", undefined, "vi").includes("6,5"), "ineq summary");
 assert(topicSummary("vector", undefined, "vi").includes("3"), "vector summary");
 assert(topicSummary("analytic", undefined, "vi").includes("√2"), "analytic summary");

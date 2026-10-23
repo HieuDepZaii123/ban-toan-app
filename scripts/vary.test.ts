@@ -34,6 +34,20 @@ import { triangleVary } from "../src/content/vary/triangle.ts";
 import { trigVary } from "../src/content/vary/trig.ts";
 import type { Vary } from "../src/content/vary/types.ts";
 import { vectorVary } from "../src/content/vary/vector.ts";
+import { analyticConceptQuestions, analyticConceptVary } from "../src/content/vary/concept/analytic.ts";
+import { comboConceptQuestions, comboConceptVary } from "../src/content/vary/concept/combo.ts";
+import { derivativeConceptQuestions, derivativeConceptVary } from "../src/content/vary/concept/derivative.ts";
+import { expConceptQuestions, expConceptVary } from "../src/content/vary/concept/exp.ts";
+import { ineqConceptQuestions, ineqConceptVary } from "../src/content/vary/concept/ineq.ts";
+import { integralConceptQuestions, integralConceptVary } from "../src/content/vary/concept/integral.ts";
+import { limitConceptQuestions, limitConceptVary } from "../src/content/vary/concept/limit.ts";
+import { probabilityConceptQuestions, probabilityConceptVary } from "../src/content/vary/concept/probability.ts";
+import { quadraticConceptQuestions, quadraticConceptVary } from "../src/content/vary/concept/quadratic.ts";
+import { sequenceConceptQuestions, sequenceConceptVary } from "../src/content/vary/concept/sequence.ts";
+import { surveyConceptQuestions, surveyConceptVary } from "../src/content/vary/concept/survey.ts";
+import { triangleConceptQuestions, triangleConceptVary } from "../src/content/vary/concept/triangle.ts";
+import { trigConceptQuestions, trigConceptVary } from "../src/content/vary/concept/trig.ts";
+import { vectorConceptQuestions, vectorConceptVary } from "../src/content/vary/concept/vector.ts";
 import { mulberry32, nextPos } from "../src/lib/prng.ts";
 import { sessionQuestions } from "../src/topic/show.ts";
 import { expectCorrect } from "./oracle.ts";
@@ -72,20 +86,20 @@ function checkTex(label: string, text: string): boolean {
 }
 
 const banks: { questions: Question[]; vary: Vary[] }[] = [
-  { questions: quadraticQuestions, vary: quadraticVary(quadraticQuestions) },
-  { questions: ineqQuestions, vary: ineqVary(ineqQuestions) },
-  { questions: expQuestions, vary: expVary(expQuestions) },
-  { questions: sequenceQuestions, vary: sequenceVary(sequenceQuestions) },
-  { questions: trigQuestions, vary: trigVary(trigQuestions) },
-  { questions: limitQuestions, vary: limitVary(limitQuestions) },
-  { questions: derivativeQuestions, vary: derivativeVary(derivativeQuestions) },
-  { questions: surveyQuestions, vary: surveyVary(surveyQuestions) },
-  { questions: integralQuestions, vary: integralVary(integralQuestions) },
-  { questions: vectorQuestions, vary: vectorVary(vectorQuestions) },
-  { questions: analyticQuestions, vary: analyticVary(analyticQuestions) },
-  { questions: triangleQuestions, vary: triangleVary(triangleQuestions) },
-  { questions: comboQuestions, vary: comboVary(comboQuestions) },
-  { questions: probabilityQuestions, vary: probabilityVary(probabilityQuestions) },
+  { questions: [...quadraticQuestions, ...quadraticConceptQuestions], vary: [...quadraticVary(quadraticQuestions), ...quadraticConceptVary] },
+  { questions: [...ineqQuestions, ...ineqConceptQuestions], vary: [...ineqVary(ineqQuestions), ...ineqConceptVary] },
+  { questions: [...expQuestions, ...expConceptQuestions], vary: [...expVary(expQuestions), ...expConceptVary] },
+  { questions: [...sequenceQuestions, ...sequenceConceptQuestions], vary: [...sequenceVary(sequenceQuestions), ...sequenceConceptVary] },
+  { questions: [...trigQuestions, ...trigConceptQuestions], vary: [...trigVary(trigQuestions), ...trigConceptVary] },
+  { questions: [...limitQuestions, ...limitConceptQuestions], vary: [...limitVary(limitQuestions), ...limitConceptVary] },
+  { questions: [...derivativeQuestions, ...derivativeConceptQuestions], vary: [...derivativeVary(derivativeQuestions), ...derivativeConceptVary] },
+  { questions: [...surveyQuestions, ...surveyConceptQuestions], vary: [...surveyVary(surveyQuestions), ...surveyConceptVary] },
+  { questions: [...integralQuestions, ...integralConceptQuestions], vary: [...integralVary(integralQuestions), ...integralConceptVary] },
+  { questions: [...vectorQuestions, ...vectorConceptQuestions], vary: [...vectorVary(vectorQuestions), ...vectorConceptVary] },
+  { questions: [...analyticQuestions, ...analyticConceptQuestions], vary: [...analyticVary(analyticQuestions), ...analyticConceptVary] },
+  { questions: [...triangleQuestions, ...triangleConceptQuestions], vary: [...triangleVary(triangleQuestions), ...triangleConceptVary] },
+  { questions: [...comboQuestions, ...comboConceptQuestions], vary: [...comboVary(comboQuestions), ...comboConceptVary] },
+  { questions: [...probabilityQuestions, ...probabilityConceptQuestions], vary: [...probabilityVary(probabilityQuestions), ...probabilityConceptVary] },
 ];
 
 let generators = 0;
@@ -98,26 +112,39 @@ for (const bank of banks) {
     const published = bank.questions.find((question) => question.id === spec.id);
     assert(published !== undefined && ids.has(spec.id), `${spec.id} is not on the sheet`);
     if (!published) continue;
+    const concept = spec.kind === "concept";
+    assert(concept === (published.kind === "concept"), `${spec.id} kind mismatch`);
     const canonical = spec.draw(() => 0);
     assert(canonical.stem.prompt === published.prompt, `${spec.id} canonical prompt drifted`);
     assert(canonical.stem.promptEn === published.promptEn, `${spec.id} canonical English prompt drifted`);
     assert(canonical.stem.choices.join("\n") === published.choices.join("\n"), `${spec.id} canonical choices drifted`);
     assert(canonical.stem.choicesEn.join("\n") === published.choicesEn.join("\n"), `${spec.id} canonical English choices drifted`);
-    const canonicalAnswer = expectCorrect(spec.id, canonical.params);
-    assert(canonicalAnswer.vi === published.choices[0], `${spec.id} oracle vi ${canonicalAnswer.vi} != ${published.choices[0]}`);
-    assert(canonicalAnswer.en === published.choicesEn[0], `${spec.id} oracle en ${canonicalAnswer.en} != ${published.choicesEn[0]}`);
+    if (!concept) {
+      const canonicalAnswer = expectCorrect(spec.id, canonical.params);
+      assert(canonicalAnswer.vi === published.choices[0], `${spec.id} oracle vi ${canonicalAnswer.vi} != ${published.choices[0]}`);
+      assert(canonicalAnswer.en === published.choicesEn[0], `${spec.id} oracle en ${canonicalAnswer.en} != ${published.choicesEn[0]}`);
+    }
 
     const prompts = new Set<string>();
+    const answers = new Set<string>();
     let bad = 0;
     for (let seed = 1; seed <= SEEDS; seed += 1) {
       const draw = spec.draw(mulberry32(seed));
       const stem = draw.stem;
       prompts.add(stem.prompt);
-      const expected = expectCorrect(spec.id, draw.params);
       const label = `${spec.id}#${seed}`;
-      if (stem.choices[0] !== expected.vi || stem.choicesEn[0] !== expected.en) {
-        assert(false, `${label} answer ${stem.choices[0]} / ${stem.choicesEn[0]} != ${expected.vi} / ${expected.en}`);
-        bad += 1;
+      if (concept) {
+        answers.add(stem.choices[0]);
+        if (stem.kind !== "concept") {
+          assert(false, `${label} lost kind`);
+          bad += 1;
+        }
+      } else {
+        const expected = expectCorrect(spec.id, draw.params);
+        if (stem.choices[0] !== expected.vi || stem.choicesEn[0] !== expected.en) {
+          assert(false, `${label} answer ${stem.choices[0]} / ${stem.choicesEn[0]} != ${expected.vi} / ${expected.en}`);
+          bad += 1;
+        }
       }
       if (new Set(stem.choices).size !== 4 || new Set(stem.choicesEn).size !== 4) {
         assert(false, `${label} choices are not distinct: ${stem.choices.join(" | ")} || ${stem.choicesEn.join(" | ")}`);
@@ -144,7 +171,10 @@ for (const bank of banks) {
       if (blobs.some((blob) => checkTex(label, blob))) bad += 1;
       if (bad >= 3) break;
     }
-    if (spec.fixed) {
+    if (concept) {
+      assert(prompts.size === 1, `${spec.id} concept prompt changed`);
+      assert(answers.size > 1, `${spec.id} never changed the true statement`);
+    } else if (spec.fixed) {
       assert(prompts.size === 1, `${spec.id} fixed question changed its prompt`);
     } else {
       assert(prompts.size > 1, `${spec.id} never changed its numbers`);
@@ -206,7 +236,7 @@ for (let i = 0; i < 8 && !moved; i += 1) {
 }
 assert(moved, "a new session reshuffles the questions");
 
-assert(generators === 85, `expected 85 generators, saw ${generators}`);
+assert(generators === 141, `expected 141 generators, saw ${generators}`);
 
 if (fails.length > 0) {
   console.error(fails.join("\n"));

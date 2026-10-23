@@ -23,6 +23,8 @@ export type TopicMeta = {
 
 export type Question = {
   id: string;
+  /** A concept-discrimination item. The stem is drawn from a pool of statements. */
+  kind?: "concept";
   prompt: string;
   promptEn: string;
   choices: [string, string, string, string];

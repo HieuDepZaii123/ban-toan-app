@@ -5,75 +5,75 @@ import type { Vary } from "./vary/types.ts";
 export type TopicPack = { lesson: Lesson; questions: Question[]; vary: Vary[] };
 
 const loaders = {
-  quadratic: () => Promise.all([import("./quadratic.ts"), import("./vary/quadratic.ts")]).then(([sheet, vary]) => ({
+  quadratic: () => Promise.all([import("./quadratic.ts"), import("./vary/quadratic.ts"), import("./vary/concept/quadratic.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.quadraticLesson,
-    questions: sheet.quadraticQuestions,
-    vary: vary.quadraticVary(sheet.quadraticQuestions),
+    questions: [...sheet.quadraticQuestions, ...concept.quadraticConceptQuestions],
+    vary: [...vary.quadraticVary(sheet.quadraticQuestions), ...concept.quadraticConceptVary],
   })),
-  ineq: () => Promise.all([import("./ineq.ts"), import("./vary/ineq.ts")]).then(([sheet, vary]) => ({
+  ineq: () => Promise.all([import("./ineq.ts"), import("./vary/ineq.ts"), import("./vary/concept/ineq.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.ineqLesson,
-    questions: sheet.ineqQuestions,
-    vary: vary.ineqVary(sheet.ineqQuestions),
+    questions: [...sheet.ineqQuestions, ...concept.ineqConceptQuestions],
+    vary: [...vary.ineqVary(sheet.ineqQuestions), ...concept.ineqConceptVary],
   })),
-  exp: () => Promise.all([import("./exp.ts"), import("./vary/exp.ts")]).then(([sheet, vary]) => ({
+  exp: () => Promise.all([import("./exp.ts"), import("./vary/exp.ts"), import("./vary/concept/exp.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.expLesson,
-    questions: sheet.expQuestions,
-    vary: vary.expVary(sheet.expQuestions),
+    questions: [...sheet.expQuestions, ...concept.expConceptQuestions],
+    vary: [...vary.expVary(sheet.expQuestions), ...concept.expConceptVary],
   })),
-  sequence: () => Promise.all([import("./sequence.ts"), import("./vary/sequence.ts")]).then(([sheet, vary]) => ({
+  sequence: () => Promise.all([import("./sequence.ts"), import("./vary/sequence.ts"), import("./vary/concept/sequence.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.sequenceLesson,
-    questions: sheet.sequenceQuestions,
-    vary: vary.sequenceVary(sheet.sequenceQuestions),
+    questions: [...sheet.sequenceQuestions, ...concept.sequenceConceptQuestions],
+    vary: [...vary.sequenceVary(sheet.sequenceQuestions), ...concept.sequenceConceptVary],
   })),
-  trig: () => Promise.all([import("./trig.ts"), import("./vary/trig.ts")]).then(([sheet, vary]) => ({
+  trig: () => Promise.all([import("./trig.ts"), import("./vary/trig.ts"), import("./vary/concept/trig.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.trigLesson,
-    questions: sheet.trigQuestions,
-    vary: vary.trigVary(sheet.trigQuestions),
+    questions: [...sheet.trigQuestions, ...concept.trigConceptQuestions],
+    vary: [...vary.trigVary(sheet.trigQuestions), ...concept.trigConceptVary],
   })),
-  limit: () => Promise.all([import("./limit.ts"), import("./vary/limit.ts")]).then(([sheet, vary]) => ({
+  limit: () => Promise.all([import("./limit.ts"), import("./vary/limit.ts"), import("./vary/concept/limit.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.limitLesson,
-    questions: sheet.limitQuestions,
-    vary: vary.limitVary(sheet.limitQuestions),
+    questions: [...sheet.limitQuestions, ...concept.limitConceptQuestions],
+    vary: [...vary.limitVary(sheet.limitQuestions), ...concept.limitConceptVary],
   })),
-  derivative: () => Promise.all([import("./derivative.ts"), import("./vary/derivative.ts")]).then(([sheet, vary]) => ({
+  derivative: () => Promise.all([import("./derivative.ts"), import("./vary/derivative.ts"), import("./vary/concept/derivative.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.derivativeLesson,
-    questions: sheet.derivativeQuestions,
-    vary: vary.derivativeVary(sheet.derivativeQuestions),
+    questions: [...sheet.derivativeQuestions, ...concept.derivativeConceptQuestions],
+    vary: [...vary.derivativeVary(sheet.derivativeQuestions), ...concept.derivativeConceptVary],
   })),
-  survey: () => Promise.all([import("./survey.ts"), import("./vary/survey.ts")]).then(([sheet, vary]) => ({
+  survey: () => Promise.all([import("./survey.ts"), import("./vary/survey.ts"), import("./vary/concept/survey.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.surveyLesson,
-    questions: sheet.surveyQuestions,
-    vary: vary.surveyVary(sheet.surveyQuestions),
+    questions: [...sheet.surveyQuestions, ...concept.surveyConceptQuestions],
+    vary: [...vary.surveyVary(sheet.surveyQuestions), ...concept.surveyConceptVary],
   })),
-  integral: () => Promise.all([import("./integral.ts"), import("./vary/integral.ts")]).then(([sheet, vary]) => ({
+  integral: () => Promise.all([import("./integral.ts"), import("./vary/integral.ts"), import("./vary/concept/integral.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.integralLesson,
-    questions: sheet.integralQuestions,
-    vary: vary.integralVary(sheet.integralQuestions),
+    questions: [...sheet.integralQuestions, ...concept.integralConceptQuestions],
+    vary: [...vary.integralVary(sheet.integralQuestions), ...concept.integralConceptVary],
   })),
-  vector: () => Promise.all([import("./vector.ts"), import("./vary/vector.ts")]).then(([sheet, vary]) => ({
+  vector: () => Promise.all([import("./vector.ts"), import("./vary/vector.ts"), import("./vary/concept/vector.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.vectorLesson,
-    questions: sheet.vectorQuestions,
-    vary: vary.vectorVary(sheet.vectorQuestions),
+    questions: [...sheet.vectorQuestions, ...concept.vectorConceptQuestions],
+    vary: [...vary.vectorVary(sheet.vectorQuestions), ...concept.vectorConceptVary],
   })),
-  analytic: () => Promise.all([import("./analytic.ts"), import("./vary/analytic.ts")]).then(([sheet, vary]) => ({
+  analytic: () => Promise.all([import("./analytic.ts"), import("./vary/analytic.ts"), import("./vary/concept/analytic.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.analyticLesson,
-    questions: sheet.analyticQuestions,
-    vary: vary.analyticVary(sheet.analyticQuestions),
+    questions: [...sheet.analyticQuestions, ...concept.analyticConceptQuestions],
+    vary: [...vary.analyticVary(sheet.analyticQuestions), ...concept.analyticConceptVary],
   })),
-  triangle: () => Promise.all([import("./triangle.ts"), import("./vary/triangle.ts")]).then(([sheet, vary]) => ({
+  triangle: () => Promise.all([import("./triangle.ts"), import("./vary/triangle.ts"), import("./vary/concept/triangle.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.triangleLesson,
-    questions: sheet.triangleQuestions,
-    vary: vary.triangleVary(sheet.triangleQuestions),
+    questions: [...sheet.triangleQuestions, ...concept.triangleConceptQuestions],
+    vary: [...vary.triangleVary(sheet.triangleQuestions), ...concept.triangleConceptVary],
   })),
-  combo: () => Promise.all([import("./combo.ts"), import("./vary/combo.ts")]).then(([sheet, vary]) => ({
+  combo: () => Promise.all([import("./combo.ts"), import("./vary/combo.ts"), import("./vary/concept/combo.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.comboLesson,
-    questions: sheet.comboQuestions,
-    vary: vary.comboVary(sheet.comboQuestions),
+    questions: [...sheet.comboQuestions, ...concept.comboConceptQuestions],
+    vary: [...vary.comboVary(sheet.comboQuestions), ...concept.comboConceptVary],
   })),
-  probability: () => Promise.all([import("./probability.ts"), import("./vary/probability.ts")]).then(([sheet, vary]) => ({
+  probability: () => Promise.all([import("./probability.ts"), import("./vary/probability.ts"), import("./vary/concept/probability.ts")]).then(([sheet, vary, concept]) => ({
     lesson: sheet.probabilityLesson,
-    questions: sheet.probabilityQuestions,
-    vary: vary.probabilityVary(sheet.probabilityQuestions),
+    questions: [...sheet.probabilityQuestions, ...concept.probabilityConceptQuestions],
+    vary: [...vary.probabilityVary(sheet.probabilityQuestions), ...concept.probabilityConceptVary],
   })),
 } satisfies Record<CardId, () => Promise<TopicPack>>;
 

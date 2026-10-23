@@ -76,7 +76,10 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
 
   return (
     <section className="practice" aria-labelledby="practice-title">
-      <p className="kicker">{t(lang, `Câu ${index + 1} / ${ordered.length}`, `Question ${index + 1} / ${ordered.length}`)}</p>
+      <p className="kicker">
+        {shown.kind === "concept" ? <span className="theory-tag">{t(lang, "Lý thuyết", "Concept")}</span> : null}
+        {t(lang, `Câu ${index + 1} / ${ordered.length}`, `Question ${index + 1} / ${ordered.length}`)}
+      </p>
       <h2 id="practice-title"><MathText text={prompt} /></h2>
       <div className="choices" role="group" aria-label={t(lang, "Đáp án", "Choices")}>
         {choices.map((choice, displayIndex) => {
@@ -101,7 +104,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
           {hintOpen ? t(lang, "Giấu gợi ý", "Hide hint") : t(lang, "Gợi ý", "Hint")}
         </button>
         <button type="button" className="text-btn" onClick={() => resetAttempt(key)}>
-          {t(lang, "Đề mới", "New numbers")}
+          {t(lang, "Đề mới", shown.kind === "concept" ? "New draw" : "New numbers")}
         </button>
         <button
           type="button"
@@ -126,7 +129,9 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
           </ol>
         </div>
       ) : (
-        <p className="note">{t(lang, "Phím 1–4 chọn đáp án. Đề mới đổi các số. Câu chọn nhầm được giữ trong Sổ cho đến khi làm đúng.", "Keys 1–4 pick an answer. New numbers draws again. A miss stays in the notebook until you get it right.")}</p>
+        <p className="note">{shown.kind === "concept"
+          ? t(lang, "Phím 1–4 chọn đáp án. Đề mới rút mệnh đề khác. Câu chọn nhầm được giữ trong Sổ cho đến khi làm đúng.", "Keys 1–4 pick an answer. New draw changes the statements. A miss stays in the notebook until you get it right.")
+          : t(lang, "Phím 1–4 chọn đáp án. Đề mới đổi các số. Câu chọn nhầm được giữ trong Sổ cho đến khi làm đúng.", "Keys 1–4 pick an answer. New numbers draws again. A miss stays in the notebook until you get it right.")}</p>
       )}
     </section>
   );

@@ -25,6 +25,7 @@ export function arrange(stem: Stem, pos: number, seed: number): Question {
   const answer = pos as 0 | 1 | 2 | 3;
   return {
     id: stem.id,
+    ...(stem.kind ? { kind: stem.kind } : {}),
     prompt: stem.prompt,
     promptEn: stem.promptEn,
     choices: [choices[0] ?? "", choices[1] ?? "", choices[2] ?? "", choices[3] ?? ""],

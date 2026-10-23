@@ -211,6 +211,17 @@ main {
   text-transform: uppercase;
   margin-bottom: 8px;
 }
+.theory-tag {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 0 7px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
 .lead { max-width: 62ch; margin-top: 12px; color: var(--ink-soft); }
 .progress-line { margin-top: 14px; color: var(--muted); font-size: 0.92rem; }
 .continue {

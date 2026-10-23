@@ -3,6 +3,7 @@ import type { Question } from "../types.ts";
 /** Choices are stored with the correct text first. Display order is applied later. */
 export type Stem = {
   id: string;
+  kind?: "concept";
   prompt: string;
   promptEn: string;
   choices: [string, string, string, string];
@@ -22,12 +23,15 @@ export type Vary = {
   id: string;
   /** A pure concept question. The text does not change from attempt to attempt. */
   fixed: boolean;
+  /** Discrimination item: the prompt stays, the statements are drawn from a pool. */
+  kind?: "concept";
   draw: (rng: () => number) => Draw;
 };
 
 export function stemOf(question: Question): Stem {
   return {
     id: question.id,
+    ...(question.kind ? { kind: question.kind } : {}),
     prompt: question.prompt,
     promptEn: question.promptEn,
     choices: question.choices,
