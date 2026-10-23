@@ -283,7 +283,7 @@ const expected: Record<string, string> = {
 
 assert(topics.length === 14, `topic count ${topics.length}`);
 assert(topics.filter((topic) => topic.status === "ready").length === 14, "ready count");
-assert(QUESTION_TOTAL === 141, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
+assert(QUESTION_TOTAL === 183, `QUESTION_TOTAL ${QUESTION_TOTAL}`);
 
 const banks = [
   ["quadratic", quadraticQuestions],
@@ -307,7 +307,7 @@ for (const [id, numeric] of banks) {
   const list = questionsFor(id);
   const meta = topics.find((topic) => topic.id === id);
   assert(meta?.questions === list.length, `${id} catalog count ${meta?.questions} vs ${list.length}`);
-  assert(list.length === numeric.length + 4, `${id} concept count`);
+  assert(list.length === numeric.length + 7, `${id} concept and dss count`);
   counted += list.length;
   for (const question of numeric) {
     const correct = expected[question.id];
@@ -315,17 +315,28 @@ for (const [id, numeric] of banks) {
     if (correct) checkQuestion(question, correct);
   }
   for (const question of list) {
+    if (question.kind === "dss") {
+      assert(question.verdicts?.includes("thieu") === true, `${question.id} canonical draw has no Chưa đủ`);
+      assert(question.reasons?.length === 4 && question.reasonsEn?.length === 4, `${question.id} needs four reasons`);
+      const vi = [question.prompt, question.hint, ...(question.reasons ?? [])].join(" ");
+      assert(MARK.test(vi), `${question.id} Vietnamese copy has no diacritics`);
+      assert(!BARE.test(vi), `${question.id} has an undiacritised Vietnamese word`);
+      for (const blob of [...question.choices, ...question.choicesEn, ...(question.reasons ?? []), ...(question.reasonsEn ?? [])]) {
+        checkTex(question.id, blob);
+      }
+      continue;
+    }
     if (question.kind !== "concept") continue;
     assert(question.answer === 0, `${question.id} concept answer is not first`);
     checkQuestion(question, question.choices[0]);
   }
 }
-assert(counted === 141, `bank size ${counted}`);
+assert(counted === 183, `bank size ${counted}`);
 checkSheets();
 for (const id of ["ineq", "vector", "analytic", "triangle", "combo"]) {
-  assert(questionsFor(id).length === 10, `${id} bank`);
+  assert(questionsFor(id).length === 13, `${id} bank`);
 }
-assert(questionsFor("derivative").length === 11, "derivative bank");
+assert(questionsFor("derivative").length === 14, "derivative bank");
 assert(topicSummary("ineq", undefined, "vi").includes("6,5"), "ineq summary");
 assert(topicSummary("vector", undefined, "vi").includes("3"), "vector summary");
 assert(topicSummary("analytic", undefined, "vi").includes("√2"), "analytic summary");

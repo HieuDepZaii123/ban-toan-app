@@ -421,6 +421,26 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .choice-body { min-width: 0; overflow-x: auto; }
 .choice.is-right { border-color: var(--ok); background: var(--ok-soft); }
 .choice.is-wrong { border-color: var(--clay); background: var(--clay-soft); }
+.dss-list { display: grid; gap: 14px; }
+.dss-item { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+.dss-stmt { margin: 0; }
+.dss-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.dss-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--sheet);
+  cursor: pointer;
+}
+.dss-opt input { width: 1.15rem; height: 1.15rem; margin: 0; }
+.dss-opt:has(input:disabled) { cursor: default; }
+.dss-opt.is-right { border-color: var(--ok); background: var(--ok-soft); }
+.dss-opt.is-wrong { border-color: var(--clay); background: var(--clay-soft); }
+.dss-reason { margin: 0; color: var(--ink-soft); }
 .practice-nav { display: flex; flex-wrap: wrap; gap: 8px; }
 .hint, .solution { background: var(--sheet); border-radius: 12px; padding: 12px 14px; }
 .status { font-weight: 600; color: var(--accent); }

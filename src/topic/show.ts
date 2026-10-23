@@ -1,9 +1,29 @@
 import type { Stem } from "../content/vary/types.ts";
 import type { Question } from "../content/types.ts";
+
+function asQuestion(stem: Stem): Question {
+  return {
+    id: stem.id,
+    ...(stem.kind ? { kind: stem.kind } : {}),
+    prompt: stem.prompt,
+    promptEn: stem.promptEn,
+    choices: stem.choices,
+    choicesEn: stem.choicesEn,
+    answer: 0,
+    hint: stem.hint,
+    hintEn: stem.hintEn,
+    steps: stem.steps,
+    stepsEn: stem.stepsEn,
+    ...(stem.verdicts ? { verdicts: stem.verdicts } : {}),
+    ...(stem.reasons ? { reasons: stem.reasons } : {}),
+    ...(stem.reasonsEn ? { reasonsEn: stem.reasonsEn } : {}),
+  };
+}
 import { freshSeed, mulberry32, shuffleIds } from "../lib/prng.ts";
 
 /** Put the correct choice (stem index 0) at `pos`. Distractor order comes from the seed. */
 export function arrange(stem: Stem, pos: number, seed: number): Question {
+  if (stem.kind === "dss") return asQuestion(stem);
   const rng = mulberry32(Math.imul(seed ^ 0x9e3779b9, 0x85ebca6b) >>> 0);
   const slots = [1, 2, 3];
   for (let i = slots.length - 1; i > 0; i -= 1) {

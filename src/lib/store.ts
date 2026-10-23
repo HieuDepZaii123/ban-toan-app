@@ -10,6 +10,9 @@ export type ThinkFlags = { nhin: boolean; lam: boolean; ket: boolean };
 
 export type Attempt = { seed: number; pos: number };
 
+/** Four Đúng/Sai/Chưa đủ picks (0, 1, 2) and how many matched. */
+export type DssMark = { picks: [number, number, number, number]; score: number };
+
 export type Stamps = {
   theme: number;
   lang: number;
@@ -20,6 +23,7 @@ export type Stamps = {
   think: Record<string, number>;
   params: Record<string, number>;
   attempts: Record<string, number>;
+  scores: Record<string, number>;
 };
 
 export type Data = {
@@ -34,6 +38,8 @@ export type Data = {
   params: Record<string, Record<string, number>>;
   /** Seed and correct-choice position for the question currently on screen. */
   attempts: Record<string, Attempt>;
+  /** Saved Đúng/Sai/Chưa đủ picks and the x/4 score. */
+  scores: Record<string, DssMark>;
   /** Per-key edit times. A missing stamp means 0, so an older snapshot still loads. */
   at: Stamps;
 };
@@ -47,7 +53,7 @@ function preferredTheme(): ThemeName {
 }
 
 function emptyAt(): Stamps {
-  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {}, attempts: {} };
+  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {}, attempts: {}, scores: {} };
 }
 
 function blank(): Data {
@@ -62,6 +68,7 @@ function blank(): Data {
     think: {},
     params: {},
     attempts: {},
+    scores: {},
     at: emptyAt(),
   };
 }
@@ -130,6 +137,7 @@ function loadAt(value: unknown): Stamps {
     think: stampMap(value.think),
     params: stampMap(value.params),
     attempts: stampMap(value.attempts),
+    scores: stampMap(value.scores),
   };
 }
 
@@ -143,6 +151,25 @@ function attemptMap(value: unknown): Record<string, Attempt> {
     if (typeof seed !== "number" || !Number.isFinite(seed)) continue;
     if (typeof pos !== "number" || !Number.isInteger(pos) || pos < 0 || pos > 3) continue;
     out[key] = { seed: seed >>> 0, pos };
+  }
+  return out;
+}
+
+function scoreMap(value: unknown): Record<string, DssMark> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, DssMark> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (!isRecord(item) || !Array.isArray(item.picks) || item.picks.length !== 4) continue;
+    const picks = item.picks;
+    const a = picks[0];
+    const b = picks[1];
+    const c = picks[2];
+    const d = picks[3];
+    const score = item.score;
+    if (typeof a !== "number" || typeof b !== "number" || typeof c !== "number" || typeof d !== "number") continue;
+    if (![a, b, c, d].every((pick) => pick === 0 || pick === 1 || pick === 2)) continue;
+    if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 4) continue;
+    out[key] = { picks: [a, b, c, d], score };
   }
   return out;
 }
@@ -179,6 +206,7 @@ export function load(raw: string | null): Data {
       think: thinkMap(parsed.think),
       params: paramsMap(parsed.params),
       attempts: attemptMap(parsed.attempts),
+      scores: scoreMap(parsed.scores),
       at: loadAt(parsed.at),
     };
   } catch {
@@ -268,6 +296,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
   const think = mergeMap(base.think, local.think, disk.think, base.at.think, local.at.think, disk.at.think);
   const params = mergeMap(base.params, local.params, disk.params, base.at.params, local.at.params, disk.at.params);
   const attempts = mergeMap(base.attempts, local.attempts, disk.attempts, base.at.attempts, local.at.attempts, disk.at.attempts);
+  const scores = mergeMap(base.scores, local.scores, disk.scores, base.at.scores, local.at.scores, disk.at.scores);
   return {
     v: 1,
     theme: theme.value ?? base.theme,
@@ -279,6 +308,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
     think: think.value,
     params: params.value,
     attempts: attempts.value,
+    scores: scores.value,
     at: {
       theme: theme.at,
       lang: lang.at,
@@ -289,6 +319,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
       think: think.at,
       params: params.at,
       attempts: attempts.at,
+      scores: scores.at,
     },
   };
 }
@@ -302,7 +333,8 @@ function valuesEqual(a: Data, b: Data): boolean {
     && stable(a.wrong) === stable(b.wrong)
     && stable(a.think) === stable(b.think)
     && stable(a.params) === stable(b.params)
-    && stable(a.attempts) === stable(b.attempts);
+    && stable(a.attempts) === stable(b.attempts)
+    && stable(a.scores) === stable(b.scores);
 }
 
 function touchMap<T>(prev: Record<string, T>, next: Record<string, T>, stamps: Record<string, number>, now: number): Record<string, number> {
@@ -329,6 +361,7 @@ function stampChanges(prev: Data, next: Data, now: number): Data {
       think: touchMap(prev.think, next.think, prev.at.think, now),
       params: touchMap(prev.params, next.params, prev.at.params, now),
       attempts: touchMap(prev.attempts, next.attempts, prev.at.attempts, now),
+      scores: touchMap(prev.scores, next.scores, prev.at.scores, now),
     },
   };
 }
@@ -479,9 +512,11 @@ export function ensureAttempt(key: string): void {
   if (data.attempts[key]) return;
   const right = { ...data.right };
   const wrong = { ...data.wrong };
+  const scores = { ...data.scores };
   delete right[key];
   delete wrong[key];
-  commit({ ...data, right, wrong, attempts: { ...data.attempts, [key]: freshAttempt(undefined) } });
+  delete scores[key];
+  commit({ ...data, right, wrong, scores, attempts: { ...data.attempts, [key]: freshAttempt(undefined) } });
 }
 
 /** New numbers, and a correct-choice position different from the previous attempt. */
@@ -489,9 +524,11 @@ export function resetAttempt(key: string): void {
   const prev = data.attempts[key]?.pos;
   const right = { ...data.right };
   const wrong = { ...data.wrong };
+  const scores = { ...data.scores };
   delete right[key];
   delete wrong[key];
-  commit({ ...data, right, wrong, attempts: { ...data.attempts, [key]: freshAttempt(prev) } });
+  delete scores[key];
+  commit({ ...data, right, wrong, scores, attempts: { ...data.attempts, [key]: freshAttempt(prev) } });
 }
 
 export function recordAnswer(topicId: string, questionId: string, choice: number, correct: boolean): void {
@@ -507,6 +544,35 @@ export function recordAnswer(topicId: string, questionId: string, choice: number
   const right = { ...data.right };
   delete right[key];
   commit({ ...data, right, wrong: { ...data.wrong, [key]: choice } });
+}
+
+const VERDICT_CODE = { dung: 0, sai: 1, thieu: 2 } as const;
+
+/** Save the four picks. One point per match, full marks when the score is 4. */
+export function recordDss(
+  topicId: string,
+  questionId: string,
+  picks: [number, number, number, number],
+  verdicts: readonly ["dung" | "sai" | "thieu", "dung" | "sai" | "thieu", "dung" | "sai" | "thieu", "dung" | "sai" | "thieu"],
+): void {
+  const key = questionKey(topicId, questionId);
+  let score = 0;
+  for (let i = 0; i < 4; i += 1) {
+    const verdict = verdicts[i];
+    if (verdict && picks[i] === VERDICT_CODE[verdict]) score += 1;
+  }
+  const prev = data.scores[key];
+  if (prev && prev.score === score && prev.picks.every((pick, index) => pick === picks[index])) return;
+  const right = { ...data.right };
+  const wrong = { ...data.wrong };
+  if (score === 4) {
+    right[key] = true;
+    delete wrong[key];
+  } else {
+    delete right[key];
+    wrong[key] = score;
+  }
+  commit({ ...data, right, wrong, scores: { ...data.scores, [key]: { picks, score } } });
 }
 
 export function dismissWrong(key: string): void {

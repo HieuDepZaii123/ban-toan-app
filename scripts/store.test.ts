@@ -2,7 +2,7 @@
  * Corrupt snapshots, answer recording, and merges across tabs.
  * Run with: tsx scripts/store.test.ts
  */
-import { applyStorageEvent, ensureAttempt, flushSave, getData, hasPendingSave, load, recordAnswer, resetAttempt, resetStore, setNote } from "../src/lib/store.ts";
+import { applyStorageEvent, ensureAttempt, flushSave, getData, hasPendingSave, load, recordAnswer, recordDss, resetAttempt, resetStore, setNote } from "../src/lib/store.ts";
 
 const fails: string[] = [];
 
@@ -141,6 +141,32 @@ resetAttempt("ineq:ineq-am");
 const secondAttempt = getData().attempts["ineq:ineq-am"];
 assert(secondAttempt !== undefined && firstAttempt !== undefined && secondAttempt.pos !== firstAttempt.pos, "the next correct slot differs");
 assert(secondAttempt !== undefined && firstAttempt !== undefined && secondAttempt.seed !== firstAttempt.seed, "a reset draws a new seed");
+
+const keptScores = load(JSON.stringify({
+  v: 1,
+  scores: {
+    ok: { picks: [0, 1, 2, 0], score: 2 },
+    bad: { picks: [0, 1, 4, 0], score: 2 },
+    short: { picks: [0, 1], score: 1 },
+  },
+}));
+assert(keptScores.scores.ok?.score === 2 && keptScores.scores.ok.picks[2] === 2, "a Đúng/Sai/Chưa đủ mark keeps four picks and the score");
+assert(!("bad" in keptScores.scores) && !("short" in keptScores.scores), "a pick outside 0–2 or a short row is dropped");
+
+resetStore();
+recordDss("quadratic", "quad-d-ad", [0, 0, 2, 1], ["dung", "sai", "thieu", "dung"]);
+assert(getData().scores["quadratic:quad-d-ad"]?.score === 2, "two matching statements score 2");
+assert(getData().wrong["quadratic:quad-d-ad"] === 2, "a partial score is stored on the miss");
+assert(!("quadratic:quad-d-ad" in getData().right), "a partial score is not a finished question");
+recordDss("quadratic", "quad-d-ad", [0, 0, 2, 1], ["dung", "sai", "thieu", "dung"]);
+assert(getData().scores["quadratic:quad-d-ad"]?.score === 2, "the same four picks are not written twice");
+recordDss("quadratic", "quad-d-ad", [0, 1, 2, 0], ["dung", "sai", "thieu", "dung"]);
+assert(getData().scores["quadratic:quad-d-ad"]?.score === 4, "four matches score 4");
+assert(getData().right["quadratic:quad-d-ad"] === true, "a perfect Đúng/Sai/Chưa đủ item counts as solved");
+assert(!("quadratic:quad-d-ad" in getData().wrong), "a perfect score clears the partial miss");
+resetAttempt("quadratic:quad-d-ad");
+assert(!("quadratic:quad-d-ad" in getData().scores), "a new draw clears the saved picks");
+assert(!("quadratic:quad-d-ad" in getData().right), "a new draw clears the solved mark");
 
 resetStore();
 

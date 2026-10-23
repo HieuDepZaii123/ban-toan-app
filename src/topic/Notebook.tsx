@@ -13,6 +13,7 @@ export function Notebook({ topicId, questions, vary }: { topicId: string; questi
   const note = useSlice((data) => data.notes[topicId] ?? "");
   const wrong = useSlice((data) => data.wrong);
   const attempts = useSlice((data) => data.attempts);
+  const scores = useSlice((data) => data.scores);
   const misses = Object.entries(wrong).filter(([key]) => key.startsWith(`${topicId}:`));
 
   return (
@@ -39,15 +40,22 @@ export function Notebook({ topicId, questions, vary }: { topicId: string; questi
               ? arrange(spec.draw(mulberry32(attempt.seed)).stem, attempt.pos, attempt.seed)
               : published;
             const choices = lang === "en" ? question.choicesEn : question.choices;
+            const dssScore = question.kind === "dss" ? (scores[key]?.score ?? choice) : null;
             return (
               <li key={key} className="mistake">
                 <p><MathText text={lang === "en" ? question.promptEn : question.prompt} /></p>
-                <p className="miss-line">
-                  {t(lang, "Đã chọn", "Chosen")}: <MathText text={choices[choice] ?? "—"} />
-                </p>
-                <p className="miss-line">
-                  {t(lang, "Đáp án", "Answer")}: <MathText text={choices[question.answer] ?? "—"} />
-                </p>
+                {dssScore !== null ? (
+                  <p className="miss-line">{t(lang, `Điểm ${dssScore}/4`, `Score ${dssScore}/4`)}</p>
+                ) : (
+                  <>
+                    <p className="miss-line">
+                      {t(lang, "Đã chọn", "Chosen")}: <MathText text={choices[choice] ?? "—"} />
+                    </p>
+                    <p className="miss-line">
+                      {t(lang, "Đáp án", "Answer")}: <MathText text={choices[question.answer] ?? "—"} />
+                    </p>
+                  </>
+                )}
                 <div className="practice-nav">
                   <A href={`/t/${topicId}?tab=lam&q=${question.id}`}>{t(lang, "Làm lại", "Try again")}</A>
                   <button type="button" className="text-btn" onClick={() => dismissWrong(questionKey(topicId, question.id))}>

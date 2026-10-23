@@ -7,6 +7,7 @@ import { ensureAttempt, questionKey, recordAnswer, resetAttempt, useSlice } from
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
+import { DssForm } from "./DssForm.tsx";
 import { arrange, sessionQuestions } from "./show.ts";
 
 export function Practice({ topicId, questions, vary }: { topicId: string; questions: Question[]; vary: Vary[] }) {
@@ -34,7 +35,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
   }, [topicId, question]);
 
   useEffect(() => {
-    if (!question || !attempt || !spec) return;
+    if (!question || !attempt || !spec || question.kind === "dss") return;
     const shown = arrange(spec.draw(mulberry32(attempt.seed)).stem, attempt.pos, attempt.seed);
     const onKey = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
@@ -66,7 +67,8 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
   const steps = lang === "en" ? shown.stepsEn : shown.steps;
   const hint = lang === "en" ? shown.hintEn : shown.hint;
   const hintOpen = hintFor === question.id;
-  const answered = picked >= 0;
+  const dss = shown.kind === "dss" && shown.verdicts !== undefined;
+  const answered = !dss && picked >= 0;
   const choiceNo = picked + 1;
   const statusText = !answered
     ? ""
@@ -78,10 +80,11 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
     <section className="practice" aria-labelledby="practice-title">
       <p className="kicker">
         {shown.kind === "concept" ? <span className="theory-tag">{t(lang, "Lý thuyết", "Concept")}</span> : null}
+        {shown.kind === "dss" ? <span className="theory-tag">{t(lang, "Đúng/Sai/Chưa đủ", "True/False/Not enough")}</span> : null}
         {t(lang, `Câu ${index + 1} / ${ordered.length}`, `Question ${index + 1} / ${ordered.length}`)}
       </p>
       <h2 id="practice-title"><MathText text={prompt} /></h2>
-      <div className="choices" role="group" aria-label={t(lang, "Đáp án", "Choices")}>
+      {dss ? <DssForm key={`${question.id}:${attempt.seed}`} topicId={topicId} question={shown} /> : <div className="choices" role="group" aria-label={t(lang, "Đáp án", "Choices")}>
         {choices.map((choice, displayIndex) => {
           const state = !answered ? "" : displayIndex === shown.answer ? " is-right" : displayIndex === picked ? " is-wrong" : "";
           return (
@@ -98,13 +101,13 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
             </button>
           );
         })}
-      </div>
+      </div>}
       <div className="practice-nav">
         <button type="button" className="text-btn" aria-expanded={hintOpen} onClick={() => setHintFor(hintOpen ? null : question.id)}>
           {hintOpen ? t(lang, "Giấu gợi ý", "Hide hint") : t(lang, "Gợi ý", "Hint")}
         </button>
         <button type="button" className="text-btn" onClick={() => resetAttempt(key)}>
-          {t(lang, "Đề mới", shown.kind === "concept" ? "New draw" : "New numbers")}
+          {t(lang, "Đề mới", shown.kind === "concept" || shown.kind === "dss" ? "New draw" : "New numbers")}
         </button>
         <button
           type="button"
@@ -119,8 +122,8 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
         </button>
       </div>
       {hintOpen ? <p className="hint"><MathText text={hint} /></p> : null}
-      <p className="status" role="status" aria-live="polite">{statusText}</p>
-      {answered ? (
+      {dss ? null : <p className="status" role="status" aria-live="polite">{statusText}</p>}
+      {dss ? null : answered ? (
         <div className="solution">
           <ol>
             {steps.map((step) => (

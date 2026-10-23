@@ -21,10 +21,12 @@ export type TopicMeta = {
   questions: number;
 };
 
+export type Verdict = "dung" | "sai" | "thieu";
+
 export type Question = {
   id: string;
-  /** A concept-discrimination item. The stem is drawn from a pool of statements. */
-  kind?: "concept";
+  /** concept: pick the true statement. dss: Đúng / Sai / Chưa đủ on four statements. */
+  kind?: "concept" | "dss";
   prompt: string;
   promptEn: string;
   choices: [string, string, string, string];
@@ -34,6 +36,10 @@ export type Question = {
   hintEn: string;
   steps: [string, string, string];
   stepsEn: [string, string, string];
+  /** Verdict of each shown statement, same order as choices. */
+  verdicts?: [Verdict, Verdict, Verdict, Verdict];
+  reasons?: [string, string, string, string];
+  reasonsEn?: [string, string, string, string];
 };
 
 export type Lesson = {

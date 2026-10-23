@@ -48,6 +48,20 @@ import { surveyConceptQuestions, surveyConceptVary } from "../src/content/vary/c
 import { triangleConceptQuestions, triangleConceptVary } from "../src/content/vary/concept/triangle.ts";
 import { trigConceptQuestions, trigConceptVary } from "../src/content/vary/concept/trig.ts";
 import { vectorConceptQuestions, vectorConceptVary } from "../src/content/vary/concept/vector.ts";
+import { analyticDssQuestions, analyticDssVary } from "../src/content/vary/dss/analytic.ts";
+import { comboDssQuestions, comboDssVary } from "../src/content/vary/dss/combo.ts";
+import { derivativeDssQuestions, derivativeDssVary } from "../src/content/vary/dss/derivative.ts";
+import { expDssQuestions, expDssVary } from "../src/content/vary/dss/exp.ts";
+import { ineqDssQuestions, ineqDssVary } from "../src/content/vary/dss/ineq.ts";
+import { integralDssQuestions, integralDssVary } from "../src/content/vary/dss/integral.ts";
+import { limitDssQuestions, limitDssVary } from "../src/content/vary/dss/limit.ts";
+import { probabilityDssQuestions, probabilityDssVary } from "../src/content/vary/dss/probability.ts";
+import { quadraticDssQuestions, quadraticDssVary } from "../src/content/vary/dss/quadratic.ts";
+import { sequenceDssQuestions, sequenceDssVary } from "../src/content/vary/dss/sequence.ts";
+import { surveyDssQuestions, surveyDssVary } from "../src/content/vary/dss/survey.ts";
+import { triangleDssQuestions, triangleDssVary } from "../src/content/vary/dss/triangle.ts";
+import { trigDssQuestions, trigDssVary } from "../src/content/vary/dss/trig.ts";
+import { vectorDssQuestions, vectorDssVary } from "../src/content/vary/dss/vector.ts";
 import { mulberry32, nextPos } from "../src/lib/prng.ts";
 import { sessionQuestions } from "../src/topic/show.ts";
 import { expectCorrect } from "./oracle.ts";
@@ -86,20 +100,20 @@ function checkTex(label: string, text: string): boolean {
 }
 
 const banks: { questions: Question[]; vary: Vary[] }[] = [
-  { questions: [...quadraticQuestions, ...quadraticConceptQuestions], vary: [...quadraticVary(quadraticQuestions), ...quadraticConceptVary] },
-  { questions: [...ineqQuestions, ...ineqConceptQuestions], vary: [...ineqVary(ineqQuestions), ...ineqConceptVary] },
-  { questions: [...expQuestions, ...expConceptQuestions], vary: [...expVary(expQuestions), ...expConceptVary] },
-  { questions: [...sequenceQuestions, ...sequenceConceptQuestions], vary: [...sequenceVary(sequenceQuestions), ...sequenceConceptVary] },
-  { questions: [...trigQuestions, ...trigConceptQuestions], vary: [...trigVary(trigQuestions), ...trigConceptVary] },
-  { questions: [...limitQuestions, ...limitConceptQuestions], vary: [...limitVary(limitQuestions), ...limitConceptVary] },
-  { questions: [...derivativeQuestions, ...derivativeConceptQuestions], vary: [...derivativeVary(derivativeQuestions), ...derivativeConceptVary] },
-  { questions: [...surveyQuestions, ...surveyConceptQuestions], vary: [...surveyVary(surveyQuestions), ...surveyConceptVary] },
-  { questions: [...integralQuestions, ...integralConceptQuestions], vary: [...integralVary(integralQuestions), ...integralConceptVary] },
-  { questions: [...vectorQuestions, ...vectorConceptQuestions], vary: [...vectorVary(vectorQuestions), ...vectorConceptVary] },
-  { questions: [...analyticQuestions, ...analyticConceptQuestions], vary: [...analyticVary(analyticQuestions), ...analyticConceptVary] },
-  { questions: [...triangleQuestions, ...triangleConceptQuestions], vary: [...triangleVary(triangleQuestions), ...triangleConceptVary] },
-  { questions: [...comboQuestions, ...comboConceptQuestions], vary: [...comboVary(comboQuestions), ...comboConceptVary] },
-  { questions: [...probabilityQuestions, ...probabilityConceptQuestions], vary: [...probabilityVary(probabilityQuestions), ...probabilityConceptVary] },
+  { questions: [...quadraticQuestions, ...quadraticConceptQuestions, ...quadraticDssQuestions], vary: [...quadraticVary(quadraticQuestions), ...quadraticConceptVary, ...quadraticDssVary] },
+  { questions: [...ineqQuestions, ...ineqConceptQuestions, ...ineqDssQuestions], vary: [...ineqVary(ineqQuestions), ...ineqConceptVary, ...ineqDssVary] },
+  { questions: [...expQuestions, ...expConceptQuestions, ...expDssQuestions], vary: [...expVary(expQuestions), ...expConceptVary, ...expDssVary] },
+  { questions: [...sequenceQuestions, ...sequenceConceptQuestions, ...sequenceDssQuestions], vary: [...sequenceVary(sequenceQuestions), ...sequenceConceptVary, ...sequenceDssVary] },
+  { questions: [...trigQuestions, ...trigConceptQuestions, ...trigDssQuestions], vary: [...trigVary(trigQuestions), ...trigConceptVary, ...trigDssVary] },
+  { questions: [...limitQuestions, ...limitConceptQuestions, ...limitDssQuestions], vary: [...limitVary(limitQuestions), ...limitConceptVary, ...limitDssVary] },
+  { questions: [...derivativeQuestions, ...derivativeConceptQuestions, ...derivativeDssQuestions], vary: [...derivativeVary(derivativeQuestions), ...derivativeConceptVary, ...derivativeDssVary] },
+  { questions: [...surveyQuestions, ...surveyConceptQuestions, ...surveyDssQuestions], vary: [...surveyVary(surveyQuestions), ...surveyConceptVary, ...surveyDssVary] },
+  { questions: [...integralQuestions, ...integralConceptQuestions, ...integralDssQuestions], vary: [...integralVary(integralQuestions), ...integralConceptVary, ...integralDssVary] },
+  { questions: [...vectorQuestions, ...vectorConceptQuestions, ...vectorDssQuestions], vary: [...vectorVary(vectorQuestions), ...vectorConceptVary, ...vectorDssVary] },
+  { questions: [...analyticQuestions, ...analyticConceptQuestions, ...analyticDssQuestions], vary: [...analyticVary(analyticQuestions), ...analyticConceptVary, ...analyticDssVary] },
+  { questions: [...triangleQuestions, ...triangleConceptQuestions, ...triangleDssQuestions], vary: [...triangleVary(triangleQuestions), ...triangleConceptVary, ...triangleDssVary] },
+  { questions: [...comboQuestions, ...comboConceptQuestions, ...comboDssQuestions], vary: [...comboVary(comboQuestions), ...comboConceptVary, ...comboDssVary] },
+  { questions: [...probabilityQuestions, ...probabilityConceptQuestions, ...probabilityDssQuestions], vary: [...probabilityVary(probabilityQuestions), ...probabilityConceptVary, ...probabilityDssVary] },
 ];
 
 let generators = 0;
@@ -113,13 +127,14 @@ for (const bank of banks) {
     assert(published !== undefined && ids.has(spec.id), `${spec.id} is not on the sheet`);
     if (!published) continue;
     const concept = spec.kind === "concept";
-    assert(concept === (published.kind === "concept"), `${spec.id} kind mismatch`);
+    const dss = spec.kind === "dss";
+    assert(spec.kind === published.kind, `${spec.id} kind mismatch`);
     const canonical = spec.draw(() => 0);
     assert(canonical.stem.prompt === published.prompt, `${spec.id} canonical prompt drifted`);
     assert(canonical.stem.promptEn === published.promptEn, `${spec.id} canonical English prompt drifted`);
     assert(canonical.stem.choices.join("\n") === published.choices.join("\n"), `${spec.id} canonical choices drifted`);
     assert(canonical.stem.choicesEn.join("\n") === published.choicesEn.join("\n"), `${spec.id} canonical English choices drifted`);
-    if (!concept) {
+    if (!concept && !dss) {
       const canonicalAnswer = expectCorrect(spec.id, canonical.params);
       assert(canonicalAnswer.vi === published.choices[0], `${spec.id} oracle vi ${canonicalAnswer.vi} != ${published.choices[0]}`);
       assert(canonicalAnswer.en === published.choicesEn[0], `${spec.id} oracle en ${canonicalAnswer.en} != ${published.choicesEn[0]}`);
@@ -139,6 +154,12 @@ for (const bank of banks) {
           assert(false, `${label} lost kind`);
           bad += 1;
         }
+      } else if (dss) {
+        answers.add(stem.choices.join("\n"));
+        if (stem.kind !== "dss" || !stem.verdicts?.includes("thieu") || stem.reasons?.length !== 4 || stem.reasonsEn?.length !== 4) {
+          assert(false, `${label} dss stem is incomplete`);
+          bad += 1;
+        }
       } else {
         const expected = expectCorrect(spec.id, draw.params);
         if (stem.choices[0] !== expected.vi || stem.choicesEn[0] !== expected.en) {
@@ -150,7 +171,7 @@ for (const bank of banks) {
         assert(false, `${label} choices are not distinct: ${stem.choices.join(" | ")} || ${stem.choicesEn.join(" | ")}`);
         bad += 1;
       }
-      const blobs = [stem.prompt, stem.promptEn, stem.hint, stem.hintEn, ...stem.choices, ...stem.choicesEn, ...stem.steps, ...stem.stepsEn];
+      const blobs = [stem.prompt, stem.promptEn, stem.hint, stem.hintEn, ...stem.choices, ...stem.choicesEn, ...stem.steps, ...stem.stepsEn, ...(stem.reasons ?? []), ...(stem.reasonsEn ?? [])];
       if (blobs.some((text) => text.length === 0 || /(?:^|[^a-zA-Z])(?:NaN|Infinity)(?:[^a-zA-Z]|$)/.test(text))) {
         assert(false, `${label} has an empty or non-finite value`);
         bad += 1;
@@ -174,6 +195,9 @@ for (const bank of banks) {
     if (concept) {
       assert(prompts.size === 1, `${spec.id} concept prompt changed`);
       assert(answers.size > 1, `${spec.id} never changed the true statement`);
+    } else if (dss) {
+      assert(prompts.size > 1, `${spec.id} never changed its numbers`);
+      assert(answers.size > 1, `${spec.id} never changed its statements`);
     } else if (spec.fixed) {
       assert(prompts.size === 1, `${spec.id} fixed question changed its prompt`);
     } else {
@@ -236,7 +260,7 @@ for (let i = 0; i < 8 && !moved; i += 1) {
 }
 assert(moved, "a new session reshuffles the questions");
 
-assert(generators === 141, `expected 141 generators, saw ${generators}`);
+assert(generators === 183, `expected 183 generators, saw ${generators}`);
 
 if (fails.length > 0) {
   console.error(fails.join("\n"));

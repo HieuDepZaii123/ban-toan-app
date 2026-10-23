@@ -1,9 +1,9 @@
-import type { Question } from "../types.ts";
+import type { Question, Verdict } from "../types.ts";
 
 /** Choices are stored with the correct text first. Display order is applied later. */
 export type Stem = {
   id: string;
-  kind?: "concept";
+  kind?: "concept" | "dss";
   prompt: string;
   promptEn: string;
   choices: [string, string, string, string];
@@ -12,6 +12,9 @@ export type Stem = {
   hintEn: string;
   steps: [string, string, string];
   stepsEn: [string, string, string];
+  verdicts?: [Verdict, Verdict, Verdict, Verdict];
+  reasons?: [string, string, string, string];
+  reasonsEn?: [string, string, string, string];
 };
 
 export type Draw = {
@@ -23,8 +26,8 @@ export type Vary = {
   id: string;
   /** A pure concept question. The text does not change from attempt to attempt. */
   fixed: boolean;
-  /** Discrimination item: the prompt stays, the statements are drawn from a pool. */
-  kind?: "concept";
+  /** concept: statements from a pool. dss: four statements, each Đúng, Sai, or Chưa đủ. */
+  kind?: "concept" | "dss";
   draw: (rng: () => number) => Draw;
 };
 
@@ -40,6 +43,9 @@ export function stemOf(question: Question): Stem {
     hintEn: question.hintEn,
     steps: question.steps,
     stepsEn: question.stepsEn,
+    ...(question.verdicts ? { verdicts: question.verdicts } : {}),
+    ...(question.reasons ? { reasons: question.reasons } : {}),
+    ...(question.reasonsEn ? { reasonsEn: question.reasonsEn } : {}),
   };
 }
 
