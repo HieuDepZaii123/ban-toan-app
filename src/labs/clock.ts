@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 export function reducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -13,8 +13,10 @@ export function useClock(
 ): void {
   const frameRef = useRef(onFrame);
   const doneRef = useRef(onDone);
-  frameRef.current = onFrame;
-  doneRef.current = onDone;
+  useLayoutEffect(() => {
+    frameRef.current = onFrame;
+    doneRef.current = onDone;
+  });
 
   useEffect(() => {
     if (!running) return;

@@ -6,7 +6,7 @@ import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
 import { MathText } from "../ui/MathText.tsx";
-import { useLang } from "../ui/Prefs.tsx";
+import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
 import { useCalm, useClock } from "./clock.ts";
 import { clipLine, dashed, dot, drawAxes, drawGrid, halo, makeMap, paintBase, readColors, strokeFn, type Map2, type PlotColors } from "./draw.ts";

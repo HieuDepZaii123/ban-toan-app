@@ -1,6 +1,6 @@
 /**
  * Hand-computed numbers. The expected value is written out, not taken from a second helper.
- *   node --experimental-strip-types scripts/golden.ts
+ *   tsx scripts/golden.ts
  */
 import { amGm, archIntegral, arrange, bayes, binom, boxVolume, cauchyPair, comb, det2, diceCondition, fence, lineDist, lineFoot2, meanOf, medianOf, pyramidVolume, secantSlope, solve2, tetraVolume, triArea, vec3Cross, vec3Dot, vec3Len, workshopProfit } from "../src/lib/math.ts";
 

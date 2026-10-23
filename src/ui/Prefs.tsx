@@ -1,4 +1,3 @@
-import type { Lang } from "../lib/math.ts";
 import { setLang, setTheme, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 
@@ -24,8 +23,4 @@ export function Prefs() {
       </div>
     </div>
   );
-}
-
-export function useLang(): Lang {
-  return useSlice((data) => data.lang);
 }

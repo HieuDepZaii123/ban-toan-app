@@ -1,8 +1,8 @@
 /**
- * Corrupt snapshots and answer recording. Run with:
- *   node --experimental-strip-types scripts/store.test.ts
+ * Corrupt snapshots, answer recording, and merges across tabs.
+ * Run with: tsx scripts/store.test.ts
  */
-import { applyStorageEvent, flushSave, getData, hasPendingSave, load, recordAnswer, resetStore } from "../src/lib/store.ts";
+import { applyStorageEvent, flushSave, getData, hasPendingSave, load, recordAnswer, resetStore, setNote } from "../src/lib/store.ts";
 
 const fails: string[] = [];
 
@@ -74,15 +74,18 @@ Object.assign(globalThis, {
 
 resetStore(load(JSON.stringify({ v: 1, notes: { a: "mine" } })));
 recordAnswer("ineq", "q1", 1, false);
+setNote("quadratic", "đang gõ");
 assert(hasPendingSave(), "a miss schedules a save");
-const remote = JSON.stringify({ v: 1, notes: { a: "theirs" } });
+const remote = JSON.stringify({ v: 1, notes: { a: "theirs", derivative: "tab kia" } });
 memory.set("ban-toan", remote);
 applyStorageEvent("ban-toan", remote);
-assert(!hasPendingSave(), "the other tab cancels the pending save");
-assert(getData().notes.a === "theirs" && !("ineq:q1" in getData().wrong), "the pending miss is dropped");
-flushSave();
-const kept = JSON.parse(memory.get("ban-toan") ?? "{}") as { notes?: { a?: string }; wrong?: Record<string, number> };
-assert(kept.notes?.a === "theirs" && kept.wrong?.["ineq:q1"] === undefined, "the cancelled save does not write the pending miss");
+assert(!hasPendingSave(), "the merge is written immediately");
+assert(getData().notes.a === "theirs", "the other tab's edit of a note this tab did not touch is kept");
+assert(getData().notes.derivative === "tab kia", "a note for another topic is merged in");
+assert(getData().notes.quadratic === "đang gõ", "a note being typed is kept");
+assert(getData().wrong["ineq:q1"] === 1, "the pending miss is reapplied");
+const kept = JSON.parse(memory.get("ban-toan") ?? "{}") as { notes?: { a?: string; quadratic?: string; derivative?: string }; wrong?: Record<string, number> };
+assert(kept.notes?.a === "theirs" && kept.notes.quadratic === "đang gõ" && kept.notes.derivative === "tab kia" && kept.wrong?.["ineq:q1"] === 1, "the stored snapshot keeps both tabs' edits");
 
 resetStore(load(JSON.stringify({ v: 1, notes: { a: "stale" } })));
 const fresh = JSON.stringify({ v: 1, notes: { a: "fresh" } });
@@ -95,6 +98,27 @@ memory.clear();
 resetStore(load(JSON.stringify({ v: 1, notes: { a: "kept" } })));
 flushSave();
 assert(JSON.parse(memory.get("ban-toan") ?? "{}").notes?.a === "kept", "a save writes when the disk still matches");
+
+resetStore();
+setNote("quadratic", "bản nháp");
+const newer = JSON.stringify({
+  v: 1,
+  notes: { quadratic: "mới hơn" },
+  at: { notes: { quadratic: Date.now() + 60_000 } },
+});
+memory.set("ban-toan", newer);
+applyStorageEvent("ban-toan", newer);
+assert(getData().notes.quadratic === "mới hơn", "a newer edit from the other tab wins the same note");
+
+setNote("quadratic", "gõ tiếp");
+const older = JSON.stringify({
+  v: 1,
+  notes: { quadratic: "cũ" },
+  at: { notes: { quadratic: 1 } },
+});
+memory.set("ban-toan", older);
+applyStorageEvent("ban-toan", older);
+assert(getData().notes.quadratic === "gõ tiếp", "an older disk edit does not replace a newer local note");
 
 resetStore();
 

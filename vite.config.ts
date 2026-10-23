@@ -38,8 +38,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png,webmanifest}"],
-        globIgnores: ["**/404.html"],
+        globPatterns: ["**/*.{js,css,html,svg,png,webmanifest,woff2}"],
+        globIgnores: ["**/404.html", "**/KaTeX_*"],
         navigateFallback: "index.html",
         runtimeCaching: [
           {

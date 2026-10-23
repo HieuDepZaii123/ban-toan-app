@@ -1,4 +1,6 @@
-export const captions: Record<string, [string, string]> = {
+import type { CardId } from "../content/cards.ts";
+
+export const captions = {
   quadratic: [
     "Đỉnh parabol trượt khi a đổi, vì hoành độ đỉnh là −b/(2a).",
     "The vertex slides as a changes, because its x-coordinate is −b/(2a).",
@@ -55,4 +57,10 @@ export const captions: Record<string, [string, string]> = {
     "36 kết quả của hai xúc xắc dựng histogram của tổng. Cột 7 cao nhất, bằng 6.",
     "All 36 outcomes of two dice build the histogram of the sum. The bar at 7 is tallest, height 6.",
   ],
-};
+} satisfies Record<CardId, [string, string]>;
+
+export function captionFor(id: string, english: boolean): string {
+  if (!Object.prototype.hasOwnProperty.call(captions, id)) return "";
+  const pair = captions[id as CardId];
+  return pair[english ? 1 : 0];
+}

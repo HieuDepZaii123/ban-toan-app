@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import type { Question } from "../content/types.ts";
-import { useRoute } from "../lib/route.tsx";
+import { useRoute } from "../lib/useRoute.ts";
 import { questionKey, recordAnswer, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
-import { useLang } from "../ui/Prefs.tsx";
+import { useLang } from "../ui/useLang.ts";
+import { shuffleOrder } from "./shuffle.ts";
 
 export function Practice({ topicId, questions }: { topicId: string; questions: Question[] }) {
   const lang = useLang();
@@ -13,11 +14,17 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
   const found = questions.findIndex((item) => item.id === qid);
   const index = found >= 0 ? found : 0;
   const question = questions[index];
-  const [hintOpen, setHintOpen] = useState(false);
+  const [hintFor, setHintFor] = useState<string | null>(null);
+  const [orderFor, setOrderFor] = useState(() => ({
+    id: question?.id ?? "",
+    order: shuffleOrder(question?.choices.length ?? 0),
+  }));
 
-  useEffect(() => {
-    setHintOpen(false);
-  }, [question?.id]);
+  let order = orderFor.order;
+  if (question && orderFor.id !== question.id) {
+    order = shuffleOrder(question.choices.length);
+    setOrderFor({ id: question.id, order });
+  }
 
   const picked = useSlice((data) => {
     if (!question) return -1;
@@ -34,13 +41,15 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
       const target = event.target;
       if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) return;
       if (event.key < "1" || event.key > "4") return;
+      const display = Number(event.key) - 1;
+      const original = order[display];
+      if (original === undefined) return;
       event.preventDefault();
-      const choice = Number(event.key) - 1;
-      recordAnswer(topicId, question.id, choice, choice === question.answer);
+      recordAnswer(topicId, question.id, original, original === question.answer);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [question, topicId]);
+  }, [question, topicId, order]);
 
   if (!question) {
     return <p className="empty">{t(lang, "Tờ này chưa có câu.", "This sheet has no questions yet.")}</p>;
@@ -50,8 +59,10 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
   const choices = lang === "en" ? question.choicesEn : question.choices;
   const steps = lang === "en" ? question.stepsEn : question.steps;
   const hint = lang === "en" ? question.hintEn : question.hint;
+  const hintOpen = hintFor === question.id;
   const answered = picked >= 0;
-  const choiceNo = picked + 1;
+  const displayAt = order.indexOf(picked);
+  const choiceNo = displayAt + 1;
   const statusText = !answered
     ? ""
     : picked === question.answer
@@ -63,25 +74,27 @@ export function Practice({ topicId, questions }: { topicId: string; questions: Q
       <p className="kicker">{t(lang, `Câu ${index + 1} / ${questions.length}`, `Question ${index + 1} / ${questions.length}`)}</p>
       <h2 id="practice-title"><MathText text={prompt} /></h2>
       <div className="choices" role="group" aria-label={t(lang, "Đáp án", "Choices")}>
-        {choices.map((choice, choiceIndex) => {
-          const state = !answered ? "" : choiceIndex === question.answer ? " is-right" : choiceIndex === picked ? " is-wrong" : "";
+        {order.map((originalIndex, displayIndex) => {
+          const choice = choices[originalIndex];
+          if (choice === undefined) return null;
+          const state = !answered ? "" : originalIndex === question.answer ? " is-right" : originalIndex === picked ? " is-wrong" : "";
           return (
             <button
-              key={choiceIndex}
+              key={originalIndex}
               type="button"
               className={`choice${state}`}
-              data-choice={choiceIndex}
-              aria-pressed={answered && choiceIndex === picked}
-              onClick={() => recordAnswer(topicId, question.id, choiceIndex, choiceIndex === question.answer)}
+              data-choice={displayIndex}
+              aria-pressed={answered && originalIndex === picked}
+              onClick={() => recordAnswer(topicId, question.id, originalIndex, originalIndex === question.answer)}
             >
-              <span className="key">{choiceIndex + 1}</span>
+              <span className="key">{displayIndex + 1}</span>
               <span className="choice-body"><MathText text={choice} /></span>
             </button>
           );
         })}
       </div>
       <div className="practice-nav">
-        <button type="button" className="text-btn" aria-expanded={hintOpen} onClick={() => setHintOpen((open) => !open)}>
+        <button type="button" className="text-btn" aria-expanded={hintOpen} onClick={() => setHintFor(hintOpen ? null : question.id)}>
           {hintOpen ? t(lang, "Giấu gợi ý", "Hide hint") : t(lang, "Gợi ý", "Hint")}
         </button>
         <button

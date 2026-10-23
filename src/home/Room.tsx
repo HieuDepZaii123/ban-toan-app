@@ -1,6 +1,6 @@
 import { Component, lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import { t } from "../lib/text.ts";
-import { useLang } from "../ui/Prefs.tsx";
+import { useLang } from "../ui/useLang.ts";
 import { isSceneMode, sceneFromHour, SCENES, ZONES, type SceneId, type SceneMode } from "./day.ts";
 
 const ROOM_KEY = "ban-toan-room";

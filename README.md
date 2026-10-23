@@ -2,7 +2,7 @@
 
 Bàn làm việc cho toán THPT. Học sinh kéo tham số, nhìn đồ thị đổi, rồi làm câu có gợi ý và lời giải. Không phải trò chơi.
 
-Mười bốn tờ đã mở: **Hàm số bậc hai**, **Bất đẳng thức**, **Mũ và logarit**, **Dãy số**, **Lượng giác**, **Giới hạn**, **Đạo hàm**, **Khảo sát hàm số**, **Tích phân**, **Vectơ và ma trận**, **Hình giải tích**, **Hình phẳng và không gian**, **Tổ hợp và thống kê**, **Xác suất**. Mỗi tờ có hình kéo, một ví dụ số, ba bước Nhìn / Làm / Kết, và sáu câu có gợi ý cùng lời giải.
+Mười bốn tờ đã mở: **Hàm số bậc hai**, **Bất đẳng thức**, **Mũ và logarit**, **Dãy số**, **Lượng giác**, **Giới hạn**, **Đạo hàm**, **Khảo sát hàm số**, **Tích phân**, **Vectơ và ma trận**, **Hình giải tích**, **Hình phẳng và không gian**, **Tổ hợp và thống kê**, **Xác suất**. Mỗi tờ có hình kéo, một ví dụ số, ba bước Nhìn / Làm / Kết, và câu luyện có gợi ý cùng lời giải. Số câu ghi trên từng thẻ (đạo hàm có bảy câu, các tờ còn lại sáu).
 
 Giao diện tiếng Việt, có thể chuyển EN. Giấy / đêm. Trên trang chủ có đèn bàn, đồng hồ Hà Nội cùng Tokyo, London và New York, và cửa sổ đổi Sáng / Trưa / Chiều / Đêm theo giờ trên máy (chọn tay được). Cảnh ngoài cửa là SVG, tải khi cảnh đó được mở. Tiến độ, ghi chú và tham số nằm trong `localStorage` (khóa `ban-toan`); đèn và cảnh cửa sổ nằm ở `ban-toan-room`.
 
@@ -24,7 +24,7 @@ npm run build
 npm run preview   # http://127.0.0.1:43991
 ```
 
-Cần Node 22.6 trở lên (xem `.nvmrc`). `npm test` dùng `--experimental-strip-types`, có từ Node 22.6.
+Cần Node 20 trở lên (xem `.nvmrc`). `npm test` chạy bằng `tsx`.
 
 ## Triển khai
 
@@ -37,7 +37,7 @@ Service worker đăng ký sau khi trang đã hiện, chỉ ở bản production.
 ## Thêm một tờ
 
 1. Thêm thẻ trong `src/content/cards.ts` và phần Nhìn / Làm / Kết trong `src/content/guides.ts`. `catalog.ts` ghép hai tệp đó cho tờ đang mở.
-2. Khi đã có nội dung: viết `src/content/<id>.ts` xuất `lesson` và `questions`, rồi nối vào `src/content/loadTopic.ts` và `src/content/banks.ts`. Đặt `status: "ready"` và `questions` bằng số câu.
+2. Khi đã có nội dung: viết `src/content/<id>.ts` xuất `lesson` và `questions`, rồi nối vào `src/content/loadTopic.ts`. `scripts/banks.ts` chỉ để `npm test` đối chiếu toàn bộ tờ; trang không import tệp đó. Đặt `status: "ready"` và `questions` bằng số câu.
 3. Hình kéo là một component trong `src/labs/`, vẽ bằng canvas, và được `lazy()` trong `src/topic/TopicDesk.tsx`. Số liệu dùng chung nằm ở `src/lib/math.ts` để phần Làm và phần hình không lệch nhau.
 4. Câu hỏi dùng `$...$` cho KaTeX. Chữ thường tiếng Việt có dấu. Mỗi câu bốn lựa chọn, một đáp án, một gợi ý, ba bước. Số sai phải là nhầm lẫn thật (đổi dấu, quên cộng mắt, lấy t = 1 thay vì đỉnh).
 5. `npm test` phải vẫn xanh. Hàm mới trong `src/lib/math.ts` thì thêm một khẳng định vào `scripts/check-math.ts`.

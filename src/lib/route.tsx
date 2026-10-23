@@ -1,12 +1,6 @@
-import { createContext, useContext, useEffect, useState, type AnchorHTMLAttributes, type ReactNode } from "react";
-
-type RouteValue = {
-  path: string;
-  search: string;
-  go: (href: string, mode?: "push" | "replace") => void;
-};
-
-const RouteContext = createContext<RouteValue | null>(null);
+import { useEffect, useState, type AnchorHTMLAttributes, type ReactNode } from "react";
+import { RouteContext } from "./routeContext.ts";
+import { useRoute } from "./useRoute.ts";
 
 function current(): { path: string; search: string } {
   let path = window.location.pathname;
@@ -35,12 +29,6 @@ export function RouteProvider({ children }: { children: ReactNode }) {
   };
 
   return <RouteContext.Provider value={{ path: loc.path, search: loc.search, go }}>{children}</RouteContext.Provider>;
-}
-
-export function useRoute(): RouteValue {
-  const value = useContext(RouteContext);
-  if (!value) throw new Error("Route");
-  return value;
 }
 
 export function A({

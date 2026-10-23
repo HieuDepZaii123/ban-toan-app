@@ -5,7 +5,6 @@ type Draw = (ctx: CanvasRenderingContext2D, width: number, height: number) => vo
 export function Graph({ draw, label }: { draw: Draw; label: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const drawRef = useRef(draw);
-  drawRef.current = draw;
 
   const paint = () => {
     const canvas = ref.current;
@@ -27,6 +26,7 @@ export function Graph({ draw, label }: { draw: Draw; label: string }) {
   };
 
   useLayoutEffect(() => {
+    drawRef.current = draw;
     paint();
   });
 

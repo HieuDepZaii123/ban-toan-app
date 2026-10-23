@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { Range } from "../content/params.ts";
 import { readParams, writeParams } from "../lib/store.ts";
 
 export function useLessonState(id: string, initial: Record<string, number>, ranges: Range) {
   const [values, setValues] = useState(() => readParams(id, initial, ranges));
   const ref = useRef(values);
-  ref.current = values;
+  useLayoutEffect(() => {
+    ref.current = values;
+  });
   const [playing, setPlaying] = useState(false);
   const playingRef = useRef(false);
 

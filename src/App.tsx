@@ -1,9 +1,10 @@
 import { Component, lazy, Suspense, useEffect, type ReactNode } from "react";
 import { HomeDesk } from "./home/HomeDesk.tsx";
-import { A, RouteProvider, useRoute } from "./lib/route.tsx";
+import { A, RouteProvider } from "./lib/route.tsx";
+import { useRoute } from "./lib/useRoute.ts";
 import { useSlice } from "./lib/store.ts";
 import { t } from "./lib/text.ts";
-import { useLang } from "./ui/Prefs.tsx";
+import { useLang } from "./ui/useLang.ts";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 

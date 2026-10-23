@@ -7,6 +7,17 @@ export type LangName = "vi" | "en";
 
 export type ThinkFlags = { nhin: boolean; lam: boolean; ket: boolean };
 
+export type Stamps = {
+  theme: number;
+  lang: number;
+  lastId: number;
+  notes: Record<string, number>;
+  right: Record<string, number>;
+  wrong: Record<string, number>;
+  think: Record<string, number>;
+  params: Record<string, number>;
+};
+
 export type Data = {
   v: 1;
   theme: ThemeName;
@@ -17,6 +28,8 @@ export type Data = {
   wrong: Record<string, number>;
   think: Record<string, ThinkFlags>;
   params: Record<string, Record<string, number>>;
+  /** Per-key edit times. A missing stamp means 0, so an older snapshot still loads. */
+  at: Stamps;
 };
 
 const KEY = "ban-toan";
@@ -25,6 +38,10 @@ export const EMPTY_THINK: ThinkFlags = { nhin: false, lam: false, ket: false };
 function preferredTheme(): ThemeName {
   if (typeof window === "undefined") return "paper";
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "paper";
+}
+
+function emptyAt(): Stamps {
+  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {} };
 }
 
 function blank(): Data {
@@ -38,6 +55,7 @@ function blank(): Data {
     wrong: {},
     think: {},
     params: {},
+    at: emptyAt(),
   };
 }
 
@@ -83,6 +101,30 @@ function rightMap(value: unknown): Record<string, true> {
   return out;
 }
 
+function stampMap(value: unknown): Record<string, number> {
+  if (!isRecord(value)) return {};
+  const out: Record<string, number> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (typeof item === "number" && Number.isFinite(item)) out[key] = item;
+  }
+  return out;
+}
+
+function loadAt(value: unknown): Stamps {
+  const empty = emptyAt();
+  if (!isRecord(value)) return empty;
+  return {
+    theme: typeof value.theme === "number" && Number.isFinite(value.theme) ? value.theme : 0,
+    lang: typeof value.lang === "number" && Number.isFinite(value.lang) ? value.lang : 0,
+    lastId: typeof value.lastId === "number" && Number.isFinite(value.lastId) ? value.lastId : 0,
+    notes: stampMap(value.notes),
+    right: stampMap(value.right),
+    wrong: stampMap(value.wrong),
+    think: stampMap(value.think),
+    params: stampMap(value.params),
+  };
+}
+
 function paramsMap(value: unknown): Record<string, Record<string, number>> {
   if (!isRecord(value)) return {};
   const out: Record<string, Record<string, number>> = {};
@@ -114,6 +156,7 @@ export function load(raw: string | null): Data {
       wrong: wrongMap(parsed.wrong),
       think: thinkMap(parsed.think),
       params: paramsMap(parsed.params),
+      at: loadAt(parsed.at),
     };
   } catch {
     return base;
@@ -130,7 +173,9 @@ function readStorage(): string | null {
 }
 
 let data = load(readStorage());
-/** Last raw snapshot this tab loaded or wrote. A different disk value means another tab won. */
+/** Last snapshot incorporated into this tab. Pending edits are the diff against it. */
+let baseData: Data = structuredClone(data);
+/** Last raw snapshot this tab loaded or wrote. A different disk value means another tab wrote. */
 let baseline = readStorage();
 let timer = 0;
 const listeners = new Set<() => void>();
@@ -139,21 +184,171 @@ function notify(): void {
   for (const listener of listeners) listener();
 }
 
+function stable(value: unknown): string {
+  if (value === undefined) return "u";
+  if (value === null || typeof value !== "object") return JSON.stringify(value) ?? "u";
+  if (Array.isArray(value)) return `[${value.map((item) => stable(item)).join(",")}]`;
+  const obj = value as Record<string, unknown>;
+  return `{${Object.keys(obj).sort().map((key) => `${JSON.stringify(key)}:${stable(obj[key])}`).join(",")}}`;
+}
+
+function owns(obj: object, key: string): boolean {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+function pickValue<T>(base: T | undefined, local: T | undefined, disk: T | undefined, baseAt: number, localAt: number, diskAt: number): { value: T | undefined; at: number } {
+  const localChanged = stable(local) !== stable(base);
+  const diskChanged = stable(disk) !== stable(base);
+  if (localChanged && diskChanged) {
+    if (diskAt > localAt) return { value: disk, at: diskAt };
+    return { value: local, at: localAt };
+  }
+  if (localChanged) return { value: local, at: localAt };
+  if (diskChanged) return { value: disk, at: diskAt };
+  return { value: local, at: Math.max(baseAt, localAt, diskAt) };
+}
+
+function mergeMap<T>(
+  base: Record<string, T>,
+  local: Record<string, T>,
+  disk: Record<string, T>,
+  baseAt: Record<string, number>,
+  localAt: Record<string, number>,
+  diskAt: Record<string, number>,
+): { value: Record<string, T>; at: Record<string, number> } {
+  const keys = new Set([...Object.keys(base), ...Object.keys(local), ...Object.keys(disk), ...Object.keys(baseAt), ...Object.keys(localAt), ...Object.keys(diskAt)]);
+  const value: Record<string, T> = {};
+  const at: Record<string, number> = {};
+  for (const key of keys) {
+    const picked = pickValue(
+      owns(base, key) ? base[key] : undefined,
+      owns(local, key) ? local[key] : undefined,
+      owns(disk, key) ? disk[key] : undefined,
+      baseAt[key] ?? 0,
+      localAt[key] ?? 0,
+      diskAt[key] ?? 0,
+    );
+    if (picked.value !== undefined) value[key] = picked.value;
+    if (picked.at !== 0) at[key] = picked.at;
+  }
+  return { value, at };
+}
+
+/** Disk wins where this tab has no newer pending edit. Notes are one key per topic. */
+function mergeData(base: Data, local: Data, disk: Data): Data {
+  const theme = pickValue(base.theme, local.theme, disk.theme, base.at.theme, local.at.theme, disk.at.theme);
+  const lang = pickValue(base.lang, local.lang, disk.lang, base.at.lang, local.at.lang, disk.at.lang);
+  const lastId = pickValue(base.lastId, local.lastId, disk.lastId, base.at.lastId, local.at.lastId, disk.at.lastId);
+  const notes = mergeMap(base.notes, local.notes, disk.notes, base.at.notes, local.at.notes, disk.at.notes);
+  const right = mergeMap(base.right, local.right, disk.right, base.at.right, local.at.right, disk.at.right);
+  const wrong = mergeMap(base.wrong, local.wrong, disk.wrong, base.at.wrong, local.at.wrong, disk.at.wrong);
+  const think = mergeMap(base.think, local.think, disk.think, base.at.think, local.at.think, disk.at.think);
+  const params = mergeMap(base.params, local.params, disk.params, base.at.params, local.at.params, disk.at.params);
+  return {
+    v: 1,
+    theme: theme.value ?? base.theme,
+    lang: lang.value ?? base.lang,
+    lastId: lastId.value === undefined ? base.lastId : lastId.value,
+    notes: notes.value,
+    right: right.value,
+    wrong: wrong.value,
+    think: think.value,
+    params: params.value,
+    at: {
+      theme: theme.at,
+      lang: lang.at,
+      lastId: lastId.at,
+      notes: notes.at,
+      right: right.at,
+      wrong: wrong.at,
+      think: think.at,
+      params: params.at,
+    },
+  };
+}
+
+function valuesEqual(a: Data, b: Data): boolean {
+  return a.theme === b.theme
+    && a.lang === b.lang
+    && a.lastId === b.lastId
+    && stable(a.notes) === stable(b.notes)
+    && stable(a.right) === stable(b.right)
+    && stable(a.wrong) === stable(b.wrong)
+    && stable(a.think) === stable(b.think)
+    && stable(a.params) === stable(b.params);
+}
+
+function touchMap<T>(prev: Record<string, T>, next: Record<string, T>, stamps: Record<string, number>, now: number): Record<string, number> {
+  const out = { ...stamps };
+  const keys = new Set([...Object.keys(prev), ...Object.keys(next)]);
+  for (const key of keys) {
+    const before = owns(prev, key) ? prev[key] : undefined;
+    const after = owns(next, key) ? next[key] : undefined;
+    if (stable(before) !== stable(after)) out[key] = now;
+  }
+  return out;
+}
+
+function stampChanges(prev: Data, next: Data, now: number): Data {
+  return {
+    ...next,
+    at: {
+      theme: next.theme === prev.theme ? prev.at.theme : now,
+      lang: next.lang === prev.lang ? prev.at.lang : now,
+      lastId: next.lastId === prev.lastId ? prev.at.lastId : now,
+      notes: touchMap(prev.notes, next.notes, prev.at.notes, now),
+      right: touchMap(prev.right, next.right, prev.at.right, now),
+      wrong: touchMap(prev.wrong, next.wrong, prev.at.wrong, now),
+      think: touchMap(prev.think, next.think, prev.at.think, now),
+      params: touchMap(prev.params, next.params, prev.at.params, now),
+    },
+  };
+}
+
+/** Take the disk snapshot, then put this tab's pending edits back. Newest stamp wins. */
+function absorb(raw: string | null): void {
+  if (typeof window !== "undefined") window.clearTimeout(timer);
+  timer = 0;
+  const disk = load(raw);
+  const merged = mergeData(baseData, data, disk);
+  data = merged;
+  baseData = structuredClone(merged);
+  if (typeof localStorage === "undefined") {
+    baseline = raw;
+    notify();
+    return;
+  }
+  try {
+    if (valuesEqual(merged, disk)) {
+      baseline = raw;
+    } else {
+      const next = JSON.stringify(merged);
+      localStorage.setItem(KEY, next);
+      baseline = next;
+    }
+  } catch {
+    baseline = raw;
+  }
+  notify();
+}
+
 function saveNow(): void {
   if (typeof localStorage === "undefined") return;
+  let current: string | null;
   try {
-    const current = localStorage.getItem(KEY);
-    if (current !== baseline) {
-      if (typeof window !== "undefined") window.clearTimeout(timer);
-      timer = 0;
-      baseline = current;
-      data = load(current);
-      notify();
-      return;
-    }
+    current = localStorage.getItem(KEY);
+  } catch {
+    return;
+  }
+  if (current !== baseline) {
+    absorb(current);
+    return;
+  }
+  try {
     const raw = JSON.stringify(data);
     localStorage.setItem(KEY, raw);
     baseline = raw;
+    baseData = structuredClone(data);
   } catch {
     /* private mode or a full disk: the desk still works for this visit */
   }
@@ -166,7 +361,7 @@ function scheduleSave(): void {
 }
 
 function commit(next: Data): void {
-  data = next;
+  data = stampChanges(data, next, Date.now());
   scheduleSave();
   notify();
 }
@@ -184,14 +379,10 @@ export function useSlice<T>(select: (value: Data) => T): T {
   return useSyncExternalStore(subscribe, () => select(getData()), () => select(getData()));
 }
 
-/** Another tab wrote the same key. Take that snapshot and drop our unsent write, so we do not paint over it. */
+/** Another tab wrote the same key. Merge that snapshot with edits this tab has not saved yet. */
 export function applyStorageEvent(key: string | null, value: string | null): void {
   if (key !== KEY) return;
-  if (typeof window !== "undefined") window.clearTimeout(timer);
-  timer = 0;
-  baseline = value;
-  data = load(value);
-  notify();
+  absorb(value);
 }
 
 /** Test hook. Replaces the in-memory desk without writing storage. */
@@ -199,6 +390,7 @@ export function resetStore(next: Data = blank()): void {
   if (typeof window !== "undefined") window.clearTimeout(timer);
   timer = 0;
   data = next;
+  baseData = structuredClone(next);
   baseline = readStorage();
   notify();
 }

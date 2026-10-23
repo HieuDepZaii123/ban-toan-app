@@ -1,10 +1,10 @@
 /**
  * Pins the numbers the open desks teach. Run with:
- *   node --experimental-strip-types scripts/check-math.ts
+ *   tsx scripts/check-math.ts
  */
 import katex from "katex";
 import { analyticQuestions } from "../src/content/analytic.ts";
-import { lessonFor, questionsFor } from "../src/content/banks.ts";
+import { lessonFor, questionsFor } from "./banks.ts";
 import { QUESTION_TOTAL, topics } from "../src/content/catalog.ts";
 import { comboQuestions } from "../src/content/combo.ts";
 import { derivativeQuestions } from "../src/content/derivative.ts";

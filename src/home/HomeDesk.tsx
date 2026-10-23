@@ -3,7 +3,8 @@ import { cards, QUESTION_TOTAL, streamName, streams } from "../content/cards.ts"
 import { A } from "../lib/route.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
-import { Prefs, useLang } from "../ui/Prefs.tsx";
+import { Prefs } from "../ui/Prefs.tsx";
+import { useLang } from "../ui/useLang.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
 

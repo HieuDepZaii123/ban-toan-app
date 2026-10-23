@@ -1,13 +1,16 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState, type ComponentType } from "react";
+import type { CardId } from "../content/cards.ts";
 import { streamName, topicById } from "../content/catalog.ts";
 import { loadTopic } from "../content/loadTopic.ts";
 import type { Lesson, Question, TopicMeta } from "../content/types.ts";
-import { A, useRoute } from "../lib/route.tsx";
+import { A } from "../lib/route.tsx";
+import { useRoute } from "../lib/useRoute.ts";
 import { setLast, toggleThink, useSlice, EMPTY_THINK } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
-import { Prefs, useLang } from "../ui/Prefs.tsx";
-import { captions } from "../motion/captions.ts";
+import { Prefs } from "../ui/Prefs.tsx";
+import { useLang } from "../ui/useLang.ts";
+import { captionFor } from "../motion/captions.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Notebook } from "./Notebook.tsx";
 import { Practice } from "./Practice.tsx";
@@ -44,7 +47,11 @@ const labs = {
   triangle: ShapeLab,
   combo: ComboLab,
   probability: ProbabilityLab,
-} as const;
+} satisfies Record<CardId, ComponentType>;
+
+function isCardId(id: string): id is CardId {
+  return Object.prototype.hasOwnProperty.call(labs, id);
+}
 
 export function TopicDesk({ id }: { id: string }) {
   const topic = topicById(id);
@@ -97,7 +104,7 @@ export function TopicDesk({ id }: { id: string }) {
   const ready = pack?.id === topic.id ? pack : null;
   const lesson = ready?.lesson ?? null;
   const questions = ready?.questions ?? [];
-  const Lab = topic.id in labs ? labs[topic.id as keyof typeof labs] : null;
+  const Lab = isCardId(topic.id) ? labs[topic.id] : null;
 
   return (
     <div className="desk">
@@ -132,7 +139,7 @@ export function TopicDesk({ id }: { id: string }) {
       <main id="content">
         {tab === "hoc" ? (
           <div className="hoc">
-            <Motion id={topic.id} variant="stage" label={(captions[topic.id] ?? ["", ""])[lang === "en" ? 1 : 0]} />
+            <Motion id={topic.id} variant="stage" label={captionFor(topic.id, lang === "en")} />
             <div className="concept">
               {!ready ? (
                 <p className="loading">{t(lang, "Đang mở tờ…", "Opening this sheet…")}</p>
@@ -168,7 +175,7 @@ export function TopicDesk({ id }: { id: string }) {
           ) : (
             <div className="stub-stage" role="note">
               <b>{t(lang, "Đề đang soạn", "Questions still being written")}</b>
-              <p>{t(lang, "Mười bốn tờ trên bàn đều đã có sáu câu, với gợi ý và ba bước giải.", "All fourteen sheets on the desk have six questions, each with a hint and three steps.")}</p>
+              <p>{t(lang, `Tờ này sẽ có ${topic.questions} câu, với gợi ý và ba bước giải.`, `This sheet will have ${topic.questions} questions, each with a hint and three steps.`)}</p>
             </div>
           )
         ) : null}

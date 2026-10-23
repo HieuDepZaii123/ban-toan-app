@@ -49,24 +49,31 @@ import {
   workshopProfit,
 } from "../lib/math.ts";
 import type { Lang } from "../lib/math.ts";
+import type { CardId } from "./cards.ts";
 import { analyticInit, chanceInit, comboInit, derivInit, expInit, ineqInit, integralInit, limitInit, quadInit, seqInit, shapeInit, surveyInit, trigInit, vectorInit } from "./params.ts";
 
+type SummaryFn = (params: Record<string, number> | undefined, lang: Lang) => string;
+
+const summaries = {
+  quadratic: quadraticSummary,
+  ineq: ineqSummary,
+  exp: expSummary,
+  sequence: sequenceSummary,
+  trig: trigSummary,
+  limit: limitSummary,
+  derivative: derivSummary,
+  survey: surveySummary,
+  integral: integralSummary,
+  vector: vectorSummary,
+  analytic: analyticSummary,
+  triangle: shapeSummary,
+  combo: comboSummary,
+  probability: chanceSummary,
+} satisfies Record<CardId, SummaryFn>;
+
 export function topicSummary(id: string, params: Record<string, number> | undefined, lang: Lang): string {
-  if (id === "quadratic") return quadraticSummary(params, lang);
-  if (id === "exp") return expSummary(params, lang);
-  if (id === "sequence") return sequenceSummary(params, lang);
-  if (id === "trig") return trigSummary(params, lang);
-  if (id === "survey") return surveySummary(params, lang);
-  if (id === "limit") return limitSummary(params, lang);
-  if (id === "derivative") return derivSummary(params, lang);
-  if (id === "integral") return integralSummary(params, lang);
-  if (id === "probability") return chanceSummary(params, lang);
-  if (id === "ineq") return ineqSummary(params, lang);
-  if (id === "vector") return vectorSummary(params, lang);
-  if (id === "analytic") return analyticSummary(params, lang);
-  if (id === "triangle") return shapeSummary(params, lang);
-  if (id === "combo") return comboSummary(params, lang);
-  return "";
+  if (!Object.prototype.hasOwnProperty.call(summaries, id)) return "";
+  return summaries[id as CardId](params, lang);
 }
 
 function quadraticSummary(params: Record<string, number> | undefined, lang: Lang): string {

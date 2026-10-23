@@ -3,7 +3,7 @@ import { A } from "../lib/route.tsx";
 import { dismissWrong, questionKey, setNote, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
-import { useLang } from "../ui/Prefs.tsx";
+import { useLang } from "../ui/useLang.ts";
 
 export function Notebook({ topicId, questions }: { topicId: string; questions: Question[] }) {
   const lang = useLang();
