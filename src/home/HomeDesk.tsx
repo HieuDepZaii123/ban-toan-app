@@ -89,7 +89,11 @@ export function HomeDesk() {
             );
           })
         )}
-        <p className="foot">{t(lang, "Số liệu nằm trên máy này. Sau lần mở đầu, bàn vẫn dùng được khi mất mạng.", "Numbers stay on this device. After the first load, the desk works offline.")}</p>
+        <p className="foot">
+          {t(lang, "Số liệu nằm trên máy này. Sau lần mở đầu, bàn vẫn dùng được khi mất mạng.", "Numbers stay on this device. After the first load, the desk works offline.")}
+          {" "}
+          <A href="/nang-cap">{t(lang, "Nâng cấp Premium", "Upgrade to Premium")}</A>
+        </p>
       </main>
     </div>
   );

@@ -12,6 +12,8 @@ dist
 uploads
 dist-ssr
 *.local
+.env
+data/
 
 # Editor directories and files
 .vscode/*

@@ -10,16 +10,18 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "test": "tsx scripts/check-math.ts && tsx scripts/golden.ts && tsx scripts/store.test.ts && tsx scripts/vary.test.ts && tsx scripts/concept.test.ts && tsx scripts/dss.test.ts && tsx scripts/research.test.ts",
+    "test": "tsx scripts/check-math.ts && tsx scripts/golden.ts && tsx scripts/store.test.ts && tsx scripts/vary.test.ts && tsx scripts/concept.test.ts && tsx scripts/dss.test.ts && tsx scripts/research.test.ts && tsx scripts/pay.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {
     "katex": "^0.19.0",
+    "qrcode": "^1.5.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",

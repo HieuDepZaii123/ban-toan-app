@@ -7,6 +7,7 @@ import { t } from "./lib/text.ts";
 import { useLang } from "./ui/useLang.ts";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
+const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ default: mod.Upgrade })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -45,6 +46,7 @@ function topicId(path: string): string {
 function Shell() {
   const { path } = useRoute();
   if (path.startsWith("/t/")) return <TopicDesk id={topicId(path)} />;
+  if (path === "/nang-cap") return <Upgrade />;
   return <HomeDesk />;
 }
 

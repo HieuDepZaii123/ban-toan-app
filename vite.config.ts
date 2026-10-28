@@ -2,6 +2,7 @@ import react from "@vitejs/plugin-react";
 import { copyFileSync, existsSync } from "node:fs";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { payApi } from "./server/pay/vitePlugin.ts";
 
 function spa404(): Plugin {
   return {
@@ -17,6 +18,7 @@ export default defineConfig({
   plugins: [
     react(),
     spa404(),
+    payApi(),
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: null,
@@ -41,6 +43,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,webmanifest,woff2}"],
         globIgnores: ["**/404.html", "**/KaTeX_*"],
         navigateFallback: "index.html",
+        navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
           {
             urlPattern: /\/assets\/KaTeX_.*\.(?:woff2|woff|ttf)$/i,
