@@ -659,8 +659,14 @@ html[data-lamp="on"] body::before {
 .pay h1 { max-width: none; }
 .pay-grid { display: grid; gap: 10px; }
 @media (min-width: 720px) {
-  .pay-grid.two { grid-template-columns: 1fr 1fr; }
+  .pay-grid.two, .pay-grid.methods, .pay-grid.chains { grid-template-columns: 1fr 1fr; }
 }
+.pay-set { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-inline-size: 0; }
+.pay-set legend { font-weight: 600; padding: 0; }
+.pay-clock { font-variant-numeric: tabular-nums; font-weight: 600; }
+.pay .text-btn { min-height: 44px; }
+.pay-tx { display: grid; gap: 8px; }
+.pay-tx input { width: 100%; }
 .pay-card {
   display: grid;
   gap: 6px;

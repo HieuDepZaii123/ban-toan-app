@@ -1,5 +1,20 @@
 import { randomBytes } from "node:crypto";
 import QRCode from "qrcode";
+import {
+  CHAINS,
+  chainSample,
+  CRYPTO_CHAIN_IDS,
+  displayFromSmallest,
+  isCryptoChain,
+  minConfirmations,
+  normalizeTx,
+  paymentUri,
+  quoteCrypto,
+  receiveAddress,
+  verifyCrypto,
+  chainSpec,
+  type CryptoQuote,
+} from "./crypto.ts";
 import { priceOf, type PayEnv, type PayMethod, type PlanId } from "./env.ts";
 import { createMomoPayment, ipnSignatureOk, readIpn } from "./momo.ts";
 import { licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
@@ -26,7 +41,7 @@ function planOf(value: unknown): PlanId | null {
 }
 
 function methodOf(value: unknown): PayMethod | null {
-  return value === "wallet" || value === "qr" || value === "bank" ? value : null;
+  return value === "wallet" || value === "qr" || value === "bank" || value === "crypto" ? value : null;
 }
 
 function termMs(plan: PlanId): number {
@@ -83,6 +98,7 @@ export async function handlePremium(request: Request, env: PayEnv): Promise<Resp
     if (path === "/api/premium/status" && request.method === "GET") return status(url, env, store);
     if (path === "/api/premium/bank" && request.method === "POST") return bankHook(request, env, store);
     if (path === "/api/premium/confirm" && request.method === "POST") return confirm(request, env, store);
+    if (path === "/api/premium/crypto" && request.method === "POST") return cryptoRoute(request, env, store);
     return json(404, { error: "not_found" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "error";
@@ -104,6 +120,15 @@ function plans(env: PayEnv): Response {
       bin: env.bankBin,
       bankName: env.bankName,
       accountName: emvName(env.bankAccountName),
+    },
+    crypto: {
+      chains: CRYPTO_CHAIN_IDS.map((id) => ({
+        id,
+        asset: CHAINS[id].asset,
+        network: CHAINS[id].network,
+        standard: CHAINS[id].standard,
+        sample: chainSample(env, id),
+      })),
     },
   });
 }
@@ -135,7 +160,32 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
     payUrl: "",
     deeplink: "",
     qrCodeUrl: "",
+    cryptoChain: null,
+    cryptoAsset: null,
+    cryptoUnits: null,
+    cryptoRate: null,
+    cryptoSuffix: null,
+    cryptoSource: null,
+    cryptoTx: null,
   };
+  if (method === "crypto") {
+    if (!isCryptoChain(body.chain)) return json(400, { error: "chain" });
+    const chain = body.chain;
+    try {
+      const quote = await quoteCrypto(env, chain, amount, (units) => store.cryptoTaken(chain, CHAINS[chain].asset, units, ""));
+      order.cryptoChain = quote.chain;
+      order.cryptoAsset = quote.asset;
+      order.cryptoUnits = quote.units;
+      order.cryptoRate = quote.rate;
+      order.cryptoSuffix = quote.suffix;
+      order.cryptoSource = quote.rateSource;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "quote";
+      return json(400, { error: "quote", message });
+    }
+    store.insertOrder(order);
+    return json(200, await enrich(env, order));
+  }
   store.insertOrder(order);
   try {
     const session = await createMomoPayment(env, {
@@ -157,12 +207,17 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
   return json(200, await enrich(env, order));
 }
 
-async function enrich(env: PayEnv, order: OrderRow): Promise<Json> {
+async function enrich(env: PayEnv, order: OrderRow, cryptoCheck?: Json): Promise<Json> {
   const base = publicOrder(env, order, {
     payUrl: order.payUrl,
     deeplink: order.deeplink,
     qrCodeUrl: order.qrCodeUrl,
+    ...(cryptoCheck ? { cryptoCheck } : {}),
   });
+  if (order.method === "crypto") {
+    const crypto = await cryptoPayload(env, order);
+    return crypto ? { ...base, crypto } : base;
+  }
   if (order.method === "wallet") return base;
   const payload = buildVietQr({
     bin: env.bankBin,
@@ -217,6 +272,143 @@ async function status(url: URL, env: PayEnv, store: PayStore): Promise<Response>
   const order = orderId ? store.getOrder(orderId, env.now()) : null;
   if (!order) return json(404, { error: "not_found" });
   return json(200, await enrich(env, order));
+}
+
+async function cryptoPayload(env: PayEnv, order: OrderRow): Promise<Json | null> {
+  if (!isCryptoChain(order.cryptoChain) || !order.cryptoUnits || order.cryptoRate === null || order.cryptoSuffix === null || !order.cryptoSource) {
+    return null;
+  }
+  const spec = chainSpec(order.cryptoChain);
+  let smallest: bigint;
+  try {
+    smallest = BigInt(order.cryptoUnits);
+  } catch {
+    return null;
+  }
+  const address = receiveAddress(env, spec.id);
+  const display = displayFromSmallest(smallest, spec.decimals);
+  const uri = paymentUri(spec, address, display, smallest, order.orderId);
+  return {
+    chain: spec.id,
+    asset: spec.asset,
+    network: spec.network,
+    standard: spec.standard,
+    decimals: spec.decimals,
+    display,
+    smallest: smallest.toString(),
+    address,
+    contract: spec.contract,
+    uri,
+    qrDataUrl: await qrImage(uri),
+    sample: chainSample(env, spec.id),
+    rate: order.cryptoRate,
+    rateSource: order.cryptoSource,
+    suffix: order.cryptoSuffix,
+    minConfirmations: minConfirmations(env, spec),
+    finalized: spec.family === "solana" && env.cryptoSolFinalized,
+    txHash: order.cryptoTx ?? "",
+  };
+}
+
+async function cryptoRoute(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  const body = await readJson(request);
+  if (body.watch === true) return watchCrypto(request, env, store);
+  const orderId = typeof body.orderId === "string" ? body.orderId : "";
+  const order = orderId ? store.getOrder(orderId, env.now()) : null;
+  if (!order) return json(404, { error: "not_found" });
+  if (order.method !== "crypto") return json(400, { error: "method" });
+  if (typeof body.chain === "string" && (typeof body.txHash !== "string" || body.txHash.trim() === "")) {
+    return rebindCrypto(env, store, order, body.chain);
+  }
+  const txRaw = typeof body.txHash === "string" && body.txHash.trim() ? body.txHash : order.cryptoTx ?? "";
+  if (!txRaw) return json(400, { error: "tx" });
+  const result = await settleCrypto(env, store, order, txRaw);
+  return cryptoResult(env, store, order, result);
+}
+
+async function rebindCrypto(env: PayEnv, store: PayStore, order: OrderRow, chainRaw: string): Promise<Response> {
+  if (!isCryptoChain(chainRaw)) return json(400, { error: "chain" });
+  if (order.status !== "pending") return json(409, { error: order.status });
+  if (order.cryptoTx) return json(409, { error: "tx" });
+    let quote: CryptoQuote;
+    try {
+      quote = await quoteCrypto(env, chainRaw, order.amount, (units) => store.cryptoTaken(chainRaw, CHAINS[chainRaw].asset, units, order.orderId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "quote";
+    return json(400, { error: "quote", message });
+  }
+  const saved = store.setCryptoQuote(order.orderId, {
+    chain: quote.chain,
+    asset: quote.asset,
+    units: quote.units,
+    rate: quote.rate,
+    suffix: quote.suffix,
+    source: quote.rateSource,
+  });
+  if (!saved) return json(409, { error: "order" });
+  const fresh = store.getOrder(order.orderId, env.now());
+  if (!fresh) return json(404, { error: "not_found" });
+  return json(200, await enrich(env, fresh));
+}
+
+async function watchCrypto(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
+  const rows = store.listPendingCrypto(env.now());
+  let checked = 0;
+  let applied = 0;
+  for (const order of rows) {
+    if (!order.cryptoTx) continue;
+    checked += 1;
+    const result = await settleCrypto(env, store, order, order.cryptoTx);
+    if (result.applied === true) applied += 1;
+  }
+  return json(200, { ok: true, checked, applied });
+}
+
+type Settle = { applied?: boolean; error?: string; field?: string; have?: number; need?: number };
+
+async function settleCrypto(env: PayEnv, store: PayStore, order: OrderRow, txRaw: string): Promise<Settle> {
+  if (order.status === "expired") return { error: "expired" };
+  if (order.status === "paid") return { applied: false };
+  if (!isCryptoChain(order.cryptoChain) || !order.cryptoUnits) return { error: "chain" };
+  const tx = normalizeTx(order.cryptoChain, txRaw);
+  if (!tx) return { error: "tx" };
+  const owner = store.eventOrder("crypto", tx);
+  if (owner && owner !== order.orderId) return { error: "reuse" };
+  if (owner === order.orderId) return { applied: false };
+  store.setCryptoTx(order.orderId, tx);
+  let smallest: bigint;
+  try {
+    smallest = BigInt(order.cryptoUnits);
+  } catch {
+    return { error: "amount" };
+  }
+  const checked = await verifyCrypto(env, order.cryptoChain, tx, smallest);
+  if (!checked.ok) {
+    return { error: checked.error, field: checked.field, have: checked.have, need: checked.need };
+  }
+  const marked = store.markPaid(order.orderId, env.now(), order.amount, tx, "crypto", tx);
+  if (!marked.ok) {
+    if (marked.error === "duplicate") {
+      const who = store.eventOrder("crypto", tx);
+      if (who && who !== order.orderId) return { error: "reuse" };
+      return { applied: false };
+    }
+    return { error: marked.error };
+  }
+  return { applied: marked.applied };
+}
+
+async function cryptoResult(env: PayEnv, store: PayStore, order: OrderRow, result: Settle): Promise<Response> {
+  if (result.error === "expired") return json(409, { error: "expired" });
+  if (result.error === "reuse") return json(409, { error: "reuse" });
+  if (result.error === "not_found") return json(404, { error: "not_found" });
+  if (result.error === "rpc") return json(502, { error: "rpc" });
+  if (result.error === "mismatch" || result.error === "failed" || result.error === "tx" || result.error === "amount" || result.error === "chain") {
+    return json(400, { error: result.error, field: result.field });
+  }
+  const fresh = store.getOrder(order.orderId, env.now()) ?? order;
+  return json(200, await enrich(env, fresh, result));
 }
 
 async function bankHook(request: Request, env: PayEnv, store: PayStore): Promise<Response> {

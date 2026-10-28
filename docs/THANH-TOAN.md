@@ -2,11 +2,12 @@
 
 Bàn Toán giữ toàn bộ tờ toán mở. Trang **Nâng cấp Premium** bán một quyền dùng gắn với email và một mã kích hoạt. Giá, số tài khoản và chữ ký chỉ nằm trên server. Trình duyệt không được gửi số tiền.
 
-Có ba cách trả:
+Có bốn cách trả:
 
 1. **Ví MoMo** — `requestType=captureWallet`. Người học mở `payUrl` hoặc deeplink. Quyền chỉ bật khi IPN hợp lệ.
 2. **Quét QR** — `requestType=payWithMethod`. Sandbox trả `payUrl` và, với `captureWallet`, một `qrCodeUrl` dạng `momo://`. Trang vẽ mã QR từ chuỗi đó để app MoMo quét, không nhúng ảnh từ máy MoMo. Kèm một **VietQR** (EMVCo/NAPAS, CRC-16/CCITT-FALSE) chuyển thẳng vào tài khoản cấu hình.
 3. **Chuyển khoản ngân hàng** — hiện số tài khoản, tên, ngân hàng, số tiền và nội dung `BTxxxxxxxx` riêng của đơn, có nút chép. Cùng chuỗi VietQR. Thêm link `payWithATM` nếu MoMo tạo được, để ATM xác nhận qua IPN. Đơn chờ hết hạn sau 15 phút. Phản hồi sandbox hiện không kèm `signature`; chữ ký phản hồi được kiểm khi MoMo có gửi, chữ ký IPN thì luôn bắt buộc.
+4. **Tiền mã hóa** — USDT TRC20 trên TRON, USDT và USDC BEP20 trên BSC, USDC SPL trên Solana. Người học chuyển thẳng vào ví của chủ app. Không có bên thứ ba giữ tiền, và server không bao giờ cần khóa riêng.
 
 ## Vì sao email và mã kích hoạt
 
@@ -18,7 +19,7 @@ File SQLite vẫn chứa mã thô để trang trạng thái trả lại cho ngư
 
 ```
 src/premium/Upgrade.tsx     trang /nang-cap, tải lười, không nhập vào các tờ toán
-server/pay/                 chữ ký MoMo, VietQR, đơn, SQLite
+server/pay/                 chữ ký MoMo, VietQR, crypto, đơn, SQLite
 api/premium/*.ts            hàm Vercel, mỗi đường một file
 ```
 
@@ -30,7 +31,8 @@ api/premium/*.ts            hàm Vercel, mỗi đường một file
 | `GET /api/premium/return` | Trình duyệt MoMo quay về. Chỉ chuyển sang `/nang-cap?orderId=`, không cấp quyền |
 | `GET /api/premium/status` | Theo `orderId` hoặc `license` |
 | `POST /api/premium/bank` | Webhook biến động số dư. Khớp nội dung CK và số tiền, idempotent theo mã giao dịch |
-| `POST /api/premium/confirm` | Duyệt tay. Header `Authorization: Bearer ADMIN_TOKEN` |
+| `POST /api/premium/confirm` | Duyệt tay mọi cách trả, kể cả crypto. Header `Authorization: Bearer ADMIN_TOKEN` |
+| `POST /api/premium/crypto` | Đổi mạng khi đơn còn chờ, dán mã giao dịch để đối soát on-chain, hoặc `{ "watch": true }` để worker rà các đơn đã có mã |
 
 Chữ ký tạo đơn, đúng thứ tự tài liệu captureWallet:
 
@@ -58,7 +60,54 @@ Adapter là `PayStore` trong `server/pay/store.ts`: `insertOrder`, `getOrder`, `
 2. Trong `storeFor`, nếu `PREMIUM_STORE=postgres` thì mở adapter đó thay vì SQLite.
 3. Đừng dùng file SQLite trên Vercel: đĩa chỉ ghi được ở `/tmp` và mất khi instance tắt. Trang IPN có thể rơi vào instance khác.
 
-Gợi ý cột Postgres: cùng tên với bảng `orders` và `payment_events` trong `openStore`.
+Gợi ý cột Postgres: cùng tên với bảng `orders` và `payment_events` trong `openStore`. Đơn crypto thêm `crypto_chain`, `crypto_asset`, `crypto_units` (đơn vị nhỏ nhất của token, dạng chữ), `crypto_rate`, `crypto_suffix`, `crypto_source` (`live` hoặc `config`), `crypto_tx`.
+
+## Tiền mã hóa
+
+Bốn lựa chọn, hợp đồng mainnet gắn trong mã, không đọc từ biến môi trường để khỏi trỏ nhầm token:
+
+| Mã | Mạng | Token | Thập phân | Hợp đồng |
+| --- | --- | --- | --- | --- |
+| `tron-usdt` | TRON | USDT | 6 | `TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t` |
+| `bsc-usdt` | BSC, chain id 56 | USDT | 18 | `0x55d398326f99059fF775485246999027B3197955` |
+| `bsc-usdc` | BSC, chain id 56 | USDC | 18 | `0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d` |
+| `sol-usdc` | Solana | USDC | 6 | `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v` |
+
+USDT và USDC trên BSC là bản Binance-Peg, 18 số lẻ, không phải 6. Số hiển thị vẫn có 6 số sau dấu phẩy. Phần nguyên và hai số xu lấy từ giá VND chia tỷ giá. Bốn số còn lại là hậu tố `1…9999` riêng từng đơn, để hai đơn cùng giá không trùng số token. Hậu tố đã dùng không được cấp lại.
+
+Tỷ giá là số nguyên đồng cho 1 USD. `CRYPTO_VND_PER_USD` mặc định `25000`. Nếu `CRYPTO_RATE_URL` có giá trị (mặc định Frankfurter `USD→VND`), server thử tỷ giá công khai và làm tròn. Lỗi mạng, JSON lạ, hoặc tỷ giá ngoài khoảng 1.000–1.000.000 thì dùng mức cấu hình. Đơn giữ tỷ giá lúc tạo trong 15 phút, không đổi khi thị trường chạy.
+
+Mã QR:
+
+- BSC: EIP-681 `ethereum:<hợp-đồng>@56/transfer?address=<ví>&uint256=<đơn-vị-nhỏ-nhất>`.
+- Solana: Solana Pay `solana:<ví>?amount=<số>&spl-token=<mint>`.
+- TRON: `tron:<ví>?amount=<số>&token=USDT&contract=<hợp-đồng>`. Một số ví chỉ đọc địa chỉ, nên trang luôn có nút chép số token.
+
+Xác nhận đọc RPC/API công khai, không ký gì:
+
+- BSC: `eth_chainId`, `eth_getTransactionReceipt`, `eth_blockNumber`. Đủ log `Transfer` đúng hợp đồng, đúng ví nhận, đúng số, biên lai `0x1`, và đủ số khối (`CRYPTO_BSC_CONFIRMATIONS`, mặc định 15).
+- TRON: `wallet/gettransactioninfobyid`, `wallet/gettransactionbyid`, `wallet/getnowblock` trên `CRYPTO_TRON_API` (mặc định TronGrid). Mặc định 19 khối.
+- Solana: `getTransaction` và `getSignatureStatuses`. Mặc định chỉ nhận `finalized`. Đặt `CRYPTO_SOL_REQUIRE_FINALIZED=0` thì nhận khi đủ `CRYPTO_SOL_CONFIRMATIONS` (mặc định 32) hoặc đã finalized. Số USDC lấy từ chênh lệch số dư token của đúng ví và đúng mint.
+
+`payment_events` khóa `(crypto, tx hash)`. Gửi lại cùng mã cho cùng đơn thì `applied: false`. Cùng mã cho đơn khác thì 409 `reuse`. Đơn hết 15 phút thì không đối soát và không duyệt tay. Trang tự hỏi lại mỗi 5 giây sau khi đã dán mã. Worker:
+
+```bash
+curl -s -X POST http://127.0.0.1:43123/api/premium/crypto \
+  -H 'content-type: application/json' \
+  -H 'authorization: Bearer doi-token-admin' \
+  -d '{"watch":true}'
+```
+
+Dán mã bằng tay: `{"orderId":"BT...","txHash":"..."}`. Đổi mạng khi chưa có mã: `{"orderId":"BT...","chain":"sol-usdc"}`. Duyệt tay vẫn là `POST /api/premium/confirm` với `ADMIN_TOKEN`.
+
+Ví nhận trong `.env.example` là địa chỉ **MẪU**. Trang hiện dòng cảnh báo. Đừng gửi tài sản thật vào đó. Đổi `CRYPTO_TRON_ADDRESS`, `CRYPTO_BSC_ADDRESS`, `CRYPTO_SOL_ADDRESS` thành ví bạn giữ khóa, trên máy deploy, không commit. Khóa riêng không có chỗ nào trong server: app chỉ cần địa chỉ để so sánh giao dịch người khác đã ký.
+
+Rủi ro:
+
+- Sai mạng hoặc sai loại token (USDT TRC20 gửi lên BSC, USDT gửi vào đơn USDC) thì log không khớp, đơn không bật, và tiền có thể không lấy lại được.
+- Tỷ giá khóa lúc tạo đơn. USDT/USDC lệch neo USD, hoặc VND chạy trong 15 phút, thì số token đã hiện không đổi theo.
+- RPC công khai có thể chậm hoặc giới hạn tần suất. Hãy trỏ `CRYPTO_BSC_RPC`, `CRYPTO_TRON_API`, `CRYPTO_SOL_RPC` tới nút của bạn trước khi nhận tiền thật. Chưa đủ xác nhận thì đơn vẫn chờ, không cấp quyền sớm.
+- Worker và trang chỉ tin giao dịch đã có trên mạng. Chúng không phát hiện chuyển khoản nếu người học không dán mã và không có tiến trình gọi `watch`.
 
 ## Chạy local
 
@@ -103,7 +152,7 @@ curl -s -X POST http://127.0.0.1:43123/api/premium/confirm \
 
 Repo đã có `vercel.json`: build `npm run build`, thư mục `dist`, rewrite SPA trừ `/api/`. Mỗi file trong `api/premium/` là một hàm Node.
 
-Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `PREMIUM_DB_PATH` hoặc adapter Postgres. `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy.
+Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `CRYPTO_*`, `PREMIUM_DB_PATH` hoặc adapter Postgres. `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy. Không đặt khóa riêng của ví.
 
 Service worker không nuốt `/api/` (`navigateFallbackDenylist`).
 
@@ -114,6 +163,9 @@ Service worker không nuốt `/api/` (`navigateFallbackDenylist`).
 - [ ] `PUBLIC_BASE_URL` là HTTPS đúng domain.
 - [ ] `BANK_ACCOUNT_NO` không còn `0000000000`, tên không còn `NGUOI DUNG MAU`. Trang phải hết dòng cảnh báo «MẪU».
 - [ ] `PREMIUM_PRICE_MONTH` và `PREMIUM_PRICE_YEAR` là giá thật, số nguyên đồng, từ 1.000 đến 50.000.000.
+- [ ] `CRYPTO_TRON_ADDRESS`, `CRYPTO_BSC_ADDRESS`, `CRYPTO_SOL_ADDRESS` không còn địa chỉ MẪU. Trang hết dòng «MẪU» ở mạng đang bán.
+- [ ] `CRYPTO_BSC_RPC`, `CRYPTO_TRON_API`, `CRYPTO_SOL_RPC` là nút của bạn, không phải RPC công khai mặc định, nếu bạn nhận nhiều đơn.
+- [ ] `CRYPTO_VND_PER_USD` là mức dự phòng bạn chấp nhận khi tỷ giá công khai hỏng.
 - [ ] `ADMIN_TOKEN` và `BANK_WEBHOOK_SECRET` dài, ngẫu nhiên, không dùng giá trị trong `.env.example`.
 - [ ] SQLite local không phải kho production. Đã có `PayStore` trên Postgres hoặc KV, và IPN với redirect rơi vào hai instance vẫn thấy cùng một đơn.
 - [ ] Thử một thanh toán sandbox: sai chữ ký bị 401, trả hai lần không ra hai mã, số tiền lệch không cấp quyền.

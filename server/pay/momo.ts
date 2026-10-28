@@ -20,6 +20,7 @@ export type MomoSession = {
 function requestType(method: PayMethod): string {
   if (method === "qr") return "payWithMethod";
   if (method === "bank") return "payWithATM";
+  if (method === "crypto") throw new Error("crypto is not a MoMo method");
   return "captureWallet";
 }
 

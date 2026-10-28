@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
+import { chainChoices, type CryptoChainId } from "./cryptoChoices.ts";
+import { ChainPicker, CryptoPay, type CryptoCheck, type CryptoView } from "./CryptoPay.tsx";
 import { A } from "../lib/route.tsx";
 import { useRoute } from "../lib/useRoute.ts";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 
 type PlanId = "month" | "year";
-type PayMethod = "wallet" | "qr" | "bank";
+type PayMethod = "wallet" | "qr" | "bank" | "crypto";
 
 type Plans = {
   sample: boolean;
   lockContent: boolean;
   plans: { id: PlanId; amount: number; days: number }[];
+  crypto?: { chains: { id: string; sample: boolean }[] };
 };
 
 type BankView = {
@@ -41,6 +44,8 @@ type OrderView = {
   momoQrDataUrl?: string;
   momoError?: string;
   bank?: BankView;
+  crypto?: CryptoView;
+  cryptoCheck?: CryptoCheck;
   error?: string;
 };
 
@@ -68,6 +73,7 @@ export function Upgrade() {
   const [email, setEmail] = useState("");
   const [plan, setPlan] = useState<PlanId>("month");
   const [method, setMethod] = useState<PayMethod>("wallet");
+  const [chain, setChain] = useState<CryptoChainId>("tron-usdt");
   const [order, setOrder] = useState<OrderView | null>(null);
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState("");
@@ -127,7 +133,7 @@ export function Upgrade() {
       const res = await fetch("/api/premium/create", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, plan, method }),
+        body: JSON.stringify({ email, plan, method, chain: method === "crypto" ? chain : undefined }),
       });
       const body = await res.json() as OrderView & { message?: string };
       if (!res.ok || !body.orderId) {
@@ -200,7 +206,7 @@ export function Upgrade() {
                 aria-label={t(lang, "Email nhận quyền Premium", "Email for the Premium license")}
               />
             </label>
-            <div className="pay-grid" role="radiogroup" aria-label={t(lang, "Cách thanh toán", "Payment method")}>
+            <div className="pay-grid methods" role="radiogroup" aria-label={t(lang, "Cách thanh toán", "Payment method")}>
               <MethodCard
                 id="wallet"
                 on={method === "wallet"}
@@ -222,7 +228,27 @@ export function Upgrade() {
                 body={t(lang, "Số tài khoản, số tiền và nội dung chuyển khoản riêng của đơn. Đơn chờ 15 phút.", "Account number, amount, and a transfer note unique to this order. The order waits 15 minutes.")}
                 onPick={() => setMethod("bank")}
               />
+              <MethodCard
+                id="crypto"
+                on={method === "crypto"}
+                title={t(lang, "Tiền mã hóa", "Crypto")}
+                body={t(lang, "USDT hoặc USDC chuyển thẳng vào ví chủ app. Không qua bên giữ tiền. Đơn chờ 15 phút.", "USDT or USDC sent straight to the app owner's wallet. No custodian. The order waits 15 minutes.")}
+                onPick={() => setMethod("crypto")}
+              />
             </div>
+            {method === "crypto" ? (
+              <>
+                <ChainPicker
+                  name="crypto-chain"
+                  value={chain}
+                  choices={chainChoices(lang, plans?.crypto?.chains.map((item) => item.id) ?? ["tron-usdt", "bsc-usdt", "bsc-usdc", "sol-usdc"])}
+                  onPick={(id) => setChain(id as CryptoChainId)}
+                />
+                {plans?.crypto?.chains.find((item) => item.id === chain)?.sample ? (
+                  <p className="pay-warn">{t(lang, "Ví nhận của mạng này đang là địa chỉ MẪU.", "The receiving wallet for this network is still a SAMPLE address.")}</p>
+                ) : null}
+              </>
+            ) : null}
             {formError ? <p className="pay-warn" role="alert">{formError}</p> : null}
             <button className="pay-btn" type="submit" disabled={busy || !plans}>
               {busy ? t(lang, "Đang tạo đơn…", "Creating the order…") : t(lang, "Tạo đơn thanh toán", "Create the payment")}
@@ -230,7 +256,7 @@ export function Upgrade() {
           </form>
         ) : (
           order ? (
-            <OrderPanel order={order} waiting={waiting} copied={copied} remain={left(order.expiresAt)} beat={tick} onCopy={copy} />
+            <OrderPanel order={order} waiting={waiting} copied={copied} remain={left(order.expiresAt)} beat={tick} onCopy={copy} onReplace={setOrder} />
           ) : (
             <p className="loading">{t(lang, "Đang mở đơn…", "Opening the order…")}</p>
           )
@@ -273,6 +299,7 @@ function OrderPanel({
   beat,
   copied,
   onCopy,
+  onReplace,
 }: {
   order: OrderView;
   waiting: boolean;
@@ -280,6 +307,7 @@ function OrderPanel({
   beat: number;
   copied: string;
   onCopy: (label: string, value: string) => Promise<void>;
+  onReplace: (order: OrderView) => void;
 }) {
   const lang = useLang();
   return (
@@ -300,6 +328,18 @@ function OrderPanel({
         </p>
       ) : null}
       {order.method === "wallet" ? <WalletBlock order={order} /> : null}
+      {order.method === "crypto" && order.crypto ? (
+        <CryptoPay
+          orderId={order.orderId}
+          status={order.status}
+          crypto={order.crypto}
+          check={order.cryptoCheck}
+          remain={remain}
+          copied={copied}
+          onCopy={onCopy}
+          onUpdated={(next) => onReplace(next as OrderView)}
+        />
+      ) : null}
       {order.method === "qr" || order.method === "bank" ? <QrBlock order={order} /> : null}
       {order.bank && (order.method === "bank" || order.method === "qr") ? (
         <BankBlock order={order} bank={order.bank} copied={copied} onCopy={onCopy} />
