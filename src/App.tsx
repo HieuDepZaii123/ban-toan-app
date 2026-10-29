@@ -1,4 +1,5 @@
 import { Component, lazy, Suspense, useEffect, type ReactNode } from "react";
+import { ChatEntry } from "./chat/ChatEntry.tsx";
 import { HomeDesk } from "./home/HomeDesk.tsx";
 import { A, RouteProvider } from "./lib/route.tsx";
 import { useRoute } from "./lib/useRoute.ts";
@@ -20,6 +21,7 @@ export default function App() {
     <RouteProvider>
       <ThemeBridge />
       <Guarded />
+      <ChatEntry />
     </RouteProvider>
   );
 }

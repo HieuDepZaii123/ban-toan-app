@@ -15,6 +15,7 @@ import { captionFor } from "../motion/captions.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Notebook } from "./Notebook.tsx";
 import { Practice } from "./Practice.tsx";
+import { LectureVideos } from "./LectureVideos.tsx";
 
 const Research = lazy(() => import("./Research.tsx").then((mod) => ({ default: mod.Research })));
 
@@ -161,6 +162,7 @@ export function TopicDesk({ id }: { id: string }) {
                   <p>{lang === "en" ? topic.soonEn : topic.soon}</p>
                 </>
               )}
+              <LectureVideos topicId={topic.id} />
             </div>
             {Lab ? (
               <Suspense fallback={<div className="graph-wrap skeleton" aria-hidden="true" />}>
