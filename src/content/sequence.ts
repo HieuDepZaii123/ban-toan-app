@@ -4,13 +4,13 @@ const R = String.raw;
 
 export const sequenceLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Cấp số cộng thêm một số cố định. Cấp số nhân nhân với một số cố định.`, en: R`An arithmetic sequence adds a fixed step. A geometric sequence multiplies by a fixed ratio.` },
-    { k: "vd", vi: R`$3,7,11,15$ có công sai $4$. Số thứ tư là $15$.`, en: R`$3,7,11,15$ has common difference $4$. The fourth term is $15$.` },
+    { k: "mo", vi: R`Cấp số cộng thêm một số cố định mỗi bước.`, en: R`An arithmetic sequence adds a fixed number each step.` },
+    { k: "vd", vi: R`$3,7,11,15$ có công sai $4$.`, en: R`$3,7,11,15$ has common difference $4$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$u_n=u_1+(n-1)d$. $S_n=\dfrac{n}{2}(u_1+u_n)$. Nếu $|q|<1$ thì $S=\dfrac{u_1}{1-q}$.`, en: R`$u_n=u_1+(n-1)d$. $S_n=\dfrac{n}{2}(u_1+u_n)$. If $|q|<1$ then $S=\dfrac{u_1}{1-q}$.` },
-    { k: "vd", vi: R`Công sai $4$: $u_{10}=39$ và $S_{10}=210$. Tổng $8+4+2+\cdots=16$.`, en: R`Common difference $4$: $u_{10}=39$ and $S_{10}=210$. The sum $8+4+2+\cdots=16$.` },
-    { k: "loi", vi: R`Dùng $10d$ thay vì $9d$ thì $u_{10}=43$. Số hạng về $0$ không có nghĩa tổng bằng $0$.`, en: R`Using $10d$ instead of $9d$ gives $u_{10}=43$. Terms going to $0$ does not make the sum $0$.` },
+    { k: "dinh", vi: R`$u_n=u_1+(n-1)d$ và $S_n=\dfrac{n}{2}(u_1+u_n)$.`, en: R`$u_n=u_1+(n-1)d$ and $S_n=\dfrac{n}{2}(u_1+u_n)$.` },
+    { k: "vd", vi: R`Với $u_1=3$, $d=4$: $u_{10}=39$ và $S_{10}=210$.`, en: R`With $u_1=3$, $d=4$: $u_{10}=39$ and $S_{10}=210$.` },
+    { k: "loi", vi: R`Lấy $10d$ thay vì $9d$ thì $u_{10}=43$.`, en: R`Using $10d$ instead of $9d$ gives $u_{10}=43$.` },
     { k: "kiem", vi: R`Tổng $1+\cdots+12=78$.`, en: R`The sum $1+\cdots+12=78$.` },
   ],
 };

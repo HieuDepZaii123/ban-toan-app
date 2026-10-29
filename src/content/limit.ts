@@ -4,14 +4,14 @@ const R = String.raw;
 
 export const limitLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Giới hạn là số mà hàm tiến tới. Nó không bắt buộc bằng giá trị đúng tại điểm đó.`, en: R`A limit is the number a function approaches. It need not equal the value exactly at that point.` },
-    { k: "vd", vi: R`$\dfrac{x^2-1}{x-1}=x+1$ khi $x\neq1$. Sát $x=1$, giá trị sát $2$.`, en: R`$\dfrac{x^2-1}{x-1}=x+1$ when $x\neq1$. Near $x=1$, the value is near $2$.` },
+    { k: "mo", vi: R`Giới hạn là số hàm tiến tới, không nhất thiết bằng giá trị tại điểm đó.`, en: R`A limit is the number approached, not necessarily the value at the point.` },
+    { k: "vd", vi: R`$\dfrac{x^2-1}{x-1}$ sát $1$ thì sát $2$.`, en: R`$\dfrac{x^2-1}{x-1}$ is near $2$ when $x$ is near $1$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$\lim_{x\to a}f(x)=L$ khi cả hai phía về $L$. Liên tục tại $a$ khi thêm $f(a)=L$.`, en: R`$\lim_{x\to a}f(x)=L$ when both sides approach $L$. Continuous at $a$ only if also $f(a)=L$.` },
-    { k: "vd", vi: R`Gán $f(1)=5$ thì giới hạn vẫn $2$. Nhảy từ $-1$ sang $1$: không có giới hạn.`, en: R`Setting $f(1)=5$ leaves the limit at $2$. A jump from $-1$ to $1$ means no limit.` },
-    { k: "loi", vi: R`Đừng lấy $f(a)$ làm giới hạn. $\dfrac{\sin x}{x}\to1$ khi $x\to0$, không phải $0$.`, en: R`Do not take $f(a)$ as the limit. $\dfrac{\sin x}{x}\to1$ as $x\to0$, not $0$.` },
-    { k: "kiem", vi: R`$T=25+60e^{-t/4}$: $T(0)=85$, về lâu là $25$.`, en: R`$T=25+60e^{-t/4}$: $T(0)=85$, and the long-run value is $25$.` },
+    { k: "dinh", vi: R`Có giới hạn $L$ khi cả hai phía về $L$; liên tục khi thêm $f(a)=L$.`, en: R`The limit is $L$ when both sides approach $L$; continuous when also $f(a)=L$.` },
+    { k: "vd", vi: R`Dù $f(1)=5$, $\dfrac{x^2-1}{x-1}$ vẫn tiến tới $2$.`, en: R`Even if $f(1)=5$, $\dfrac{x^2-1}{x-1}$ still approaches $2$.` },
+    { k: "loi", vi: R`Đừng lấy $f(a)$ làm giới hạn.`, en: R`Do not take $f(a)$ as the limit.` },
+    { k: "kiem", vi: R`$T=25+60e^{-t/4}$: lúc đầu $85$, về lâu là $25$.`, en: R`$T=25+60e^{-t/4}$: starts at $85$, tends to $25$.` },
   ],
 };
 

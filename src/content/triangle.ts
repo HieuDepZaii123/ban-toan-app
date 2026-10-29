@@ -4,13 +4,13 @@ const R = String.raw;
 
 export const triangleLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Diện tích tam giác là nửa đáy nhân chiều cao. Thể tích hộp chữ nhật là tích ba cạnh.`, en: R`A triangle's area is half the base times the height. A box's volume is the product of its three edges.` },
-    { k: "vd", vi: R`Đáy $6$, cao $4$: diện tích $12$. Hộp $3\cdot4\cdot5$ có thể tích $60$.`, en: R`Base $6$, height $4$: area $12$. A $3\cdot4\cdot5$ box has volume $60$.` },
+    { k: "mo", vi: R`Diện tích tam giác là nửa đáy nhân chiều cao.`, en: R`A triangle's area is half base times height.` },
+    { k: "vd", vi: R`Đáy $6$, cao $4$: diện tích $12$.`, en: R`Base $6$, height $4$: area $12$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Chóp $V=\dfrac13 Sh$. Tứ diện đều cạnh $a$: $V=\dfrac{a^3\sqrt2}{12}$. Đồng dạng tỉ số $k$ thì diện tích nhân $k^2$.`, en: R`A pyramid has $V=\dfrac13 Sh$. A regular tetrahedron of edge $a$ has $V=\dfrac{a^3\sqrt2}{12}$. Similarity ratio $k$ multiplies area by $k^2$.` },
-    { k: "vd", vi: R`Đáy vuông cạnh $6$, cao $4$: $V=48$. Cạnh $a=6$: $V=18\sqrt2$.`, en: R`Square base of side $6$, height $4$: $V=48$. Edge $a=6$: $V=18\sqrt2$.` },
-    { k: "loi", vi: R`Quên $\dfrac12$ thì diện tích thành $24$. Quên $\dfrac13$ thì thể tích chóp thành $144$.`, en: R`Dropping $\dfrac12$ turns the area into $24$. Dropping $\dfrac13$ turns the pyramid volume into $144$.` },
+    { k: "dinh", vi: R`Thể tích chóp là $V=\dfrac13 Sh$.`, en: R`A pyramid has volume $V=\dfrac13 Sh$.` },
+    { k: "vd", vi: R`Đáy vuông cạnh $6$, cao $4$: $V=48$.`, en: R`Square base of side $6$, height $4$: $V=48$.` },
+    { k: "loi", vi: R`Quên $\dfrac12$ thì diện tích đáy $6$, cao $4$ thành $24$.`, en: R`Dropping $\dfrac12$ turns base $6$, height $4$ into area $24$.` },
     { k: "kiem", vi: R`Tam giác vuông cạnh $3$ và $4$ có diện tích $6$.`, en: R`A right triangle with legs $3$ and $4$ has area $6$.` },
   ],
 };

@@ -4,13 +4,13 @@ const R = String.raw;
 
 export const probabilityLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn có thể, sau khi đã dùng điều đã biết.`, en: R`Probability is the favorable cases divided by the cases still possible, after using what is already known.` },
-    { k: "vd", vi: R`Một đồng xu: ngửa có xác suất $\dfrac12$. Hai đồng, ít nhất một ngửa: $3$ trường hợp trong $4$, nên $\dfrac34$.`, en: R`One coin: heads has probability $\dfrac12$. Two coins, at least one head: $3$ cases out of $4$, so $\dfrac34$.` },
+    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn.`, en: R`Probability is favorable cases divided by the cases that remain.` },
+    { k: "vd", vi: R`Một đồng xu, mặt ngửa: $\dfrac12$.`, en: R`One coin, heads: $\dfrac12$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Điều kiện đã biết làm đổi mẫu số. Công thức Bayes lấy phần thuận chia cho thuận cộng nhiễu.`, en: R`A known condition changes the denominator. Bayes divides the true positives by true positives plus false alarms.` },
-    { k: "vd", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: còn $11$ cặp, xác suất cả hai đều $6$ là $\dfrac1{11}$. Hai con, biết có ít nhất một trai: xác suất cả hai trai là $\dfrac13$.`, en: R`Two dice, given at least one $6$: $11$ pairs remain, so both sixes has probability $\dfrac1{11}$. Two children, given at least one boy: both boys has probability $\dfrac13$.` },
-    { k: "loi", vi: R`Vẫn chia cho $36$, hoặc lấy $\dfrac12$. Xét nghiệm dương không có nghĩa $99\%$: $\dfrac{99}{99+495}=\dfrac16$.`, en: R`Still dividing by $36$, or taking $\dfrac12$. A positive test is not $99\%$: $\dfrac{99}{99+495}=\dfrac16$.` },
+    { k: "dinh", vi: R`Điều đã biết làm đổi mẫu số của xác suất.`, en: R`What is already known changes the probability's denominator.` },
+    { k: "vd", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: xác suất cả hai đều $6$ là $\dfrac1{11}$.`, en: R`Two dice, given at least one $6$: both sixes has probability $\dfrac1{11}$.` },
+    { k: "loi", vi: R`Đừng chia cho $36$ khi đề đã biết có một mặt $6$.`, en: R`Do not divide by $36$ once the problem already knows there is a $6$.` },
     { k: "kiem", vi: R`Ba đồng xu, ít nhất một ngửa: $\dfrac78$.`, en: R`Three coins, at least one head: $\dfrac78$.` },
   ],
 };

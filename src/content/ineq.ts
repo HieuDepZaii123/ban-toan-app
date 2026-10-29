@@ -4,13 +4,13 @@ const R = String.raw;
 
 export const ineqLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Bất đẳng thức so hai đại lượng. Nhân hoặc chia với số âm thì chiều đảo.`, en: R`An inequality compares two amounts. Multiplying or dividing by a negative flips the direction.` },
-    { k: "vd", vi: R`$-2x\le4$. Chia $-2$: $x\ge-2$. Thử $x=0$ thì đúng. Thử $x=-3$: $6>4$, loại.`, en: R`$-2x\le4$. Divide by $-2$: $x\ge-2$. $x=0$ works. $x=-3$ gives $6>4$, so it fails.` },
+    { k: "mo", vi: R`Chia hoặc nhân với số âm thì đảo chiều bất đẳng thức.`, en: R`Dividing or multiplying by a negative flips the inequality.` },
+    { k: "vd", vi: R`$-2x\le4$ nên $x\ge-2$.`, en: R`$-2x\le4$, so $x\ge-2$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, bằng khi $a=b$. Hàm bậc nhất trên miền đa giác đạt lớn nhất tại một đỉnh.`, en: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, with equality when $a=b$. A linear function on a polygon is largest at a vertex.` },
-    { k: "vd", vi: R`$a+b=10$ thì $\max ab=25$ tại $a=b=5$. $P=5x+3y$ với $x+y\le10$, $2x+y\le16$: $\max=42$ tại $(6;4)$.`, en: R`If $a+b=10$ then $\max ab=25$ at $a=b=5$. $P=5x+3y$ with $x+y\le10$, $2x+y\le16$: $\max=42$ at $(6;4)$.` },
-    { k: "loi", vi: R`Quên đảo dấu khi chia âm. $(9;2)$ có $x+y=11$, nằm ngoài miền $x+y\le10$, không dùng làm chỗ lớn nhất.`, en: R`Forgetting to flip the sign when dividing by a negative. $(9;2)$ has $x+y=11$, outside $x+y\le10$, so it is not a candidate for the maximum.` },
+    { k: "dinh", vi: R`Với $a,b>0$, $\dfrac{a+b}{2}\ge\sqrt{ab}$, bằng khi $a=b$.`, en: R`For $a,b>0$, $\dfrac{a+b}{2}\ge\sqrt{ab}$, with equality when $a=b$.` },
+    { k: "vd", vi: R`$a+b=10$ thì $\max ab=25$ tại $a=b=5$.`, en: R`If $a+b=10$ then $\max ab=25$ at $a=b=5$.` },
+    { k: "loi", vi: R`Quên đảo dấu khi chia cho số âm.`, en: R`Forgetting to flip the sign when dividing by a negative.` },
     { k: "kiem", vi: R`$4$ và $9$: trung bình cộng $6{,}5$, trung bình nhân $6$.`, en: R`$4$ and $9$: arithmetic mean $6{,}5$, geometric mean $6$.` },
   ],
 };

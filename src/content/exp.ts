@@ -4,13 +4,13 @@ const R = String.raw;
 
 export const expLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Mũ là nhân lặp lại. Logarit hỏi: phải nhân cơ số mấy lần thì ra số đó.`, en: R`An exponent is repeated multiplication. A logarithm asks how many times to multiply the base to reach a number.` },
-    { k: "vd", vi: R`$2^3=2\cdot2\cdot2=8$, nên $\log_2 8=3$. $2^1=2$ và $2^2=4$.`, en: R`$2^3=2\cdot2\cdot2=8$, so $\log_2 8=3$. Also $2^1=2$ and $2^2=4$.` },
+    { k: "mo", vi: R`Mũ là nhân lặp; logarit hỏi phải nhân mấy lần.`, en: R`An exponent is repeated multiplication; a log asks how many times.` },
+    { k: "vd", vi: R`$2^3=8$, nên $\log_2 8=3$.`, en: R`$2^3=8$, so $\log_2 8=3$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$a>0$, $a\neq1$. Đồ thị $y=a^x$ và $y=\log_a x$ đối xứng qua $y=x$. $\log(ab)=\log a+\log b$.`, en: R`$a>0$, $a\neq1$. The graphs of $y=a^x$ and $y=\log_a x$ mirror across $y=x$. $\log(ab)=\log a+\log b$.` },
-    { k: "vd", vi: R`$10(1{,}08)^5\approx14{,}69$. Thời gian gấp đôi: $\dfrac{\ln 2}{\ln(1{,}08)}\approx9{,}01$ năm.`, en: R`$10(1{,}08)^5\approx14{,}69$. Doubling time: $\dfrac{\ln 2}{\ln(1{,}08)}\approx9{,}01$ years.` },
-    { k: "loi", vi: R`$\log(a+b)\neq\log a+\log b$. $10\cdot1{,}08\cdot5=54$, không phải $10(1{,}08)^5$.`, en: R`$\log(a+b)\neq\log a+\log b$. $10\cdot1{,}08\cdot5=54$, which is not $10(1{,}08)^5$.` },
+    { k: "dinh", vi: R`Với $a>0$, $a\neq1$, ta có $\log(ab)=\log a+\log b$.`, en: R`For $a>0$, $a\neq1$, $\log(ab)=\log a+\log b$.` },
+    { k: "vd", vi: R`Lãi $10(1{,}08)^5\approx14{,}69$.`, en: R`Interest $10(1{,}08)^5\approx14{,}69$.` },
+    { k: "loi", vi: R`Đừng viết $\log(a+b)=\log a+\log b$.`, en: R`Do not write $\log(a+b)=\log a+\log b$.` },
     { k: "kiem", vi: R`Còn lại $80\cdot\left(\dfrac12\right)^2=20$.`, en: R`What remains is $80\cdot\left(\dfrac12\right)^2=20$.` },
   ],
 };

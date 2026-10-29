@@ -4,13 +4,13 @@ const R = String.raw;
 
 export const vectorLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Vectơ là mũi tên có hướng. Cộng là nối đuôi mũi tên này vào đầu mũi tên kia. Độ dài là khoảng từ gốc tới ngọn.`, en: R`A vector is an arrow with direction. Addition joins the tail of one to the head of the other. Length is the distance from start to tip.` },
-    { k: "vd", vi: R`$(1;2)+(2;-1)=(3;1)$. Độ dài của $(3;4)$ là $5$.`, en: R`$(1;2)+(2;-1)=(3;1)$. The length of $(3;4)$ is $5$.` },
+    { k: "mo", vi: R`Vectơ là mũi tên có hướng; độ dài là khoảng từ gốc tới ngọn.`, en: R`A vector is a directed arrow; its length is the distance from start to tip.` },
+    { k: "vd", vi: R`Độ dài $(3;4)$ là $5$.`, en: R`The length of $(3;4)$ is $5$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$|u|=\sqrt{x^2+y^2+z^2}$. Tích vô hướng bằng $0$ thì hai vectơ vuông góc. $\det\neq0$ thì hệ hai ẩn có đúng một nghiệm.`, en: R`$|u|=\sqrt{x^2+y^2+z^2}$. A dot product of $0$ means the vectors are perpendicular. $\det\neq0$ means a two-unknown system has one solution.` },
-    { k: "vd", vi: R`$|(2;1;2)|=3$. $(2;1;2)\cdot(1;-1;2)=5$. Hệ $2x+y=5$, $x-y=1$ cho $(2;1)$.`, en: R`$|(2;1;2)|=3$. $(2;1;2)\cdot(1;-1;2)=5$. The system $2x+y=5$, $x-y=1$ gives $(2;1)$.` },
-    { k: "loi", vi: R`Cộng ba tọa độ ra $5$, không phải độ dài $3$. Tích có hướng không đổi thứ tự.`, en: R`Adding the three coordinates gives $5$, not the length $3$. The cross product changes if the order is swapped.` },
+    { k: "dinh", vi: R`$|u|=\sqrt{x^2+y^2+z^2}$; tích vô hướng $0$ thì vuông góc.`, en: R`$|u|=\sqrt{x^2+y^2+z^2}$; a dot product of $0$ means perpendicular.` },
+    { k: "vd", vi: R`Độ dài $|(2;1;2)|$ là $3$.`, en: R`The length $|(2;1;2)|$ is $3$.` },
+    { k: "loi", vi: R`Cộng $2+1+2=5$, không phải độ dài $3$.`, en: R`Adding $2+1+2=5$ is not the length $3$.` },
     { k: "kiem", vi: R`$(1;2;-1)\cdot(2;-1;0)=0$, nên hai vectơ vuông góc.`, en: R`$(1;2;-1)\cdot(2;-1;0)=0$, so the vectors are perpendicular.` },
   ],
 };

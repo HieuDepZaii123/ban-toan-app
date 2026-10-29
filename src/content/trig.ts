@@ -8,10 +8,10 @@ export const trigLesson: Lesson = {
     { k: "vd", vi: R`Góc $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$.`, en: R`At $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$\sin^2\alpha+\cos^2\alpha=1$. Góc bù: sin giữ nguyên, cos đổi dấu. $\tan=\dfrac{\sin}{\cos}$.`, en: R`$\sin^2\alpha+\cos^2\alpha=1$. A supplementary angle keeps sin and flips the sign of cos. $\tan=\dfrac{\sin}{\cos}$.` },
+    { k: "dinh", vi: R`$\sin^2\alpha+\cos^2\alpha=1$; góc bù giữ sin và đổi dấu cos.`, en: R`$\sin^2\alpha+\cos^2\alpha=1$; a supplementary angle keeps sin and flips cos.` },
     { k: "vd", vi: R`Góc $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.`, en: R`At $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.` },
-    { k: "loi", vi: R`$\sin+\cos$ không đạt $2$. Lớn nhất là $\sqrt2$, tại $45^\circ$.`, en: R`$\sin+\cos$ does not reach $2$. Its maximum is $\sqrt2$, at $45^\circ$.` },
-    { k: "kiem", vi: R`Cây cách $20$ m, góc $30^\circ$, mắt cao $1{,}5$ m: chiều cao $\dfrac{20\sqrt3}{3}+1{,}5$.`, en: R`A tree $20$ m away, angle $30^\circ$, eye height $1{,}5$ m: height $\dfrac{20\sqrt3}{3}+1{,}5$.` },
+    { k: "loi", vi: R`$\sin+\cos$ không đạt $2$; lớn nhất là $\sqrt2$.`, en: R`$\sin+\cos$ does not reach $2$; the maximum is $\sqrt2$.` },
+    { k: "kiem", vi: R`Cây $20$ m, góc $30^\circ$, mắt $1{,}5$ m: cao $\dfrac{20\sqrt3}{3}+1{,}5$.`, en: R`Tree $20$ m, angle $30^\circ$, eye $1{,}5$ m: height $\dfrac{20\sqrt3}{3}+1{,}5$.` },
   ],
 };
 

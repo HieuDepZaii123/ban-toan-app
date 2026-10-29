@@ -4,14 +4,14 @@ const R = String.raw;
 
 export const integralLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Tích phân là diện tích có dấu dưới đồ thị. Phần nằm dưới Ox bị tính âm.`, en: R`An integral is signed area under a graph. The part below Ox counts as negative.` },
-    { k: "vd", vi: R`Hình chữ nhật cao $2$, rộng $1$ có diện tích $2$.`, en: R`A rectangle of height $2$ and width $1$ has area $2$.` },
+    { k: "mo", vi: R`Tích phân là diện tích có dấu dưới đồ thị.`, en: R`An integral is signed area under a graph.` },
+    { k: "vd", vi: R`Hình cao $2$, rộng $1$ có diện tích $2$.`, en: R`Height $2$ and width $1$ give area $2$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$\int_a^b f=F(b)-F(a)$. Diện tích giữa hai đường là tích phân của đường trên trừ đường dưới.`, en: R`$\int_a^b f=F(b)-F(a)$. Area between two curves is the integral of the upper minus the lower.` },
-    { k: "vd", vi: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. Giữa $y=x$ và $y=x^2$ trên $[0;1]$: $\dfrac16$.`, en: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. Between $y=x$ and $y=x^2$ on $[0;1]$: $\dfrac16$.` },
-    { k: "loi", vi: R`Lấy diện tích mà quên trị tuyệt đối từng miền. Nón $r=3$, $h=6$: $V=18\pi$, không phải $54\pi$.`, en: R`Taking area without the absolute value on each piece. A cone $r=3$, $h=6$: $V=18\pi$, not $54\pi$.` },
-    { k: "kiem", vi: R`Một hình chữ nhật trung điểm trên $[0;2]$ cho diện tích $2$, lớn hơn $\dfrac43$.`, en: R`One midpoint rectangle on $[0;2]$ has area $2$, larger than $\dfrac43$.` },
+    { k: "dinh", vi: R`$\int_a^b f=F(b)-F(a)$ với $F'=f$.`, en: R`$\int_a^b f=F(b)-F(a)$ where $F'=f$.` },
+    { k: "vd", vi: R`Tích $\int_0^2(2x-x^2)\,dx=\dfrac43$.`, en: R`The integral $\int_0^2(2x-x^2)\,dx=\dfrac43$.` },
+    { k: "loi", vi: R`Nón $r=3$, $h=6$ có $V=18\pi$, không phải $54\pi$.`, en: R`A cone $r=3$, $h=6$ has $V=18\pi$, not $54\pi$.` },
+    { k: "kiem", vi: R`Hình trung điểm trên $[0;2]$ có diện tích $2$.`, en: R`The midpoint rectangle on $[0;2]$ has area $2$.` },
   ],
 };
 

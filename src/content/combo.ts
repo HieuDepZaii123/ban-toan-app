@@ -4,13 +4,13 @@ const R = String.raw;
 
 export const comboLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Có kể thứ tự thì nhân dần rồi dừng. Không kể thứ tự thì chia thêm cho số cách xếp những chỗ đã chọn.`, en: R`If order counts, multiply down and stop. If order does not count, also divide by the ways to arrange the chosen places.` },
-    { k: "vd", vi: R`Ba người, ba ghế: $3\cdot2\cdot1=6$. Chọn $2$ bạn trong $5$, không kể thứ tự: $10$.`, en: R`Three people, three seats: $3\cdot2\cdot1=6$. Choose $2$ of $5$ people, order ignored: $10$.` },
+    { k: "mo", vi: R`Có thứ tự thì nhân dần; không thứ tự thì chia cho số cách xếp.`, en: R`If order counts, multiply down; if not, divide by the arrangements.` },
+    { k: "vd", vi: R`Ba ghế: $3\cdot2\cdot1=6$.`, en: R`Three seats: $3\cdot2\cdot1=6$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$A(n,k)=\dfrac{n!}{(n-k)!}$, $C(n,k)=\dfrac{A(n,k)}{k!}$. Trung vị là số đứng giữa sau khi xếp. Trung bình cộng mọi số rồi chia.`, en: R`$A(n,k)=\dfrac{n!}{(n-k)!}$, $C(n,k)=\dfrac{A(n,k)}{k!}$. The median is the middle value after sorting. The mean adds every value and divides.` },
-    { k: "vd", vi: R`$C(8,3)=56$, $A(8,3)=336$. Điểm $2,3,4,5,6$: trung bình $4$, trung vị $4$.`, en: R`$C(8,3)=56$, $A(8,3)=336$. Scores $2,3,4,5,6$: mean $4$, median $4$.` },
-    { k: "loi", vi: R`Đề không kể thứ tự mà vẫn dùng $A$. Đổi $6$ thành $20$: trung bình thành $6{,}8$, trung vị vẫn $4$.`, en: R`Using $A$ when the problem ignores order. Changing $6$ to $20$: the mean becomes $6{,}8$, the median stays $4$.` },
+    { k: "dinh", vi: R`$A(n,k)=\dfrac{n!}{(n-k)!}$ và $C(n,k)=\dfrac{A(n,k)}{k!}$.`, en: R`$A(n,k)=\dfrac{n!}{(n-k)!}$ and $C(n,k)=\dfrac{A(n,k)}{k!}$.` },
+    { k: "vd", vi: R`$C(8,3)=56$, còn $A(8,3)=336$.`, en: R`$C(8,3)=56$, while $A(8,3)=336$.` },
+    { k: "loi", vi: R`Đề không kể thứ tự mà vẫn dùng $A$.`, en: R`Using $A$ when the problem ignores order.` },
     { k: "kiem", vi: R`$C(5,2)=10$ và $A(5,2)=20$.`, en: R`$C(5,2)=10$ and $A(5,2)=20$.` },
   ],
 };

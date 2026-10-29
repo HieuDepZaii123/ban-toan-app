@@ -4,14 +4,14 @@ const R = String.raw;
 
 export const derivativeLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Đạo hàm là độ dốc của tiếp tuyến, tức cát tuyến khi hai điểm khít lại.`, en: R`The derivative is the slope of the tangent, the secant once the two points meet.` },
-    { k: "vd", vi: R`$y=x^2$ từ $x=1$ đến $x=2$: độ dốc $\dfrac{4-1}{1}=3$. Công thức cát tuyến là $2+h$; với $h=1$ cũng ra $3$.`, en: R`$y=x^2$ from $x=1$ to $x=2$: slope $\dfrac{4-1}{1}=3$. The secant formula is $2+h$; at $h=1$ it is also $3$.` },
+    { k: "mo", vi: R`Đạo hàm là độ dốc của tiếp tuyến.`, en: R`The derivative is the slope of the tangent.` },
+    { k: "vd", vi: R`$y=x^2$ từ $1$ đến $2$ có độ dốc $3$.`, en: R`$y=x^2$ from $1$ to $2$ has slope $3$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$f'(a)=\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$. $f'=0$ chỉ là điểm dừng. Cực trị khi $f'$ đổi dấu.`, en: R`$f'(a)=\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$. $f'=0$ is only stationary. An extremum needs $f'$ to change sign.` },
-    { k: "vd", vi: R`$h=20t-5t^2$. Lúc $t=1$: cao $15$, vận tốc $10$. Đỉnh lúc $t=2$, cao $20$.`, en: R`$h=20t-5t^2$. At $t=1$: height $15$, velocity $10$. Apex at $t=2$, height $20$.` },
-    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng không cực trị. $(5t^2)'=10t$, không phải $5t$.`, en: R`$y=x^3$ has $y'(0)=0$ but no extremum. $(5t^2)'=10t$, not $5t$.` },
-    { k: "kiem", vi: R`$y=x^3-3x$ đạt $2$ tại $x=-1$ và $-2$ tại $x=1$.`, en: R`$y=x^3-3x$ reaches $2$ at $x=-1$ and $-2$ at $x=1$.` },
+    { k: "dinh", vi: R`Đạo hàm là $f'(a)=\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$.`, en: R`The derivative is $f'(a)=\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$.` },
+    { k: "vd", vi: R`$h=20t-5t^2$ đạt đỉnh lúc $t=2$, cao $20$.`, en: R`$h=20t-5t^2$ peaks at $t=2$, height $20$.` },
+    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng không phải cực trị.`, en: R`$y=x^3$ has $y'(0)=0$ but that is not an extremum.` },
+    { k: "kiem", vi: R`$y=x^3-3x$ đạt $2$ tại $x=-1$.`, en: R`$y=x^3-3x$ reaches $2$ at $x=-1$.` },
   ],
 };
 
