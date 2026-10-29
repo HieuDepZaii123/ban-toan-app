@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const integralLesson: Lesson = {
-  concept: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. Một hình chữ nhật trung điểm: $2$. Giữa $y=x$ và $y=x^2$ trên $[0;1]$: $\dfrac16$. Quay: $\dfrac{16\pi}{15}$. Nón $r=3$, $h=6$: $V=18\pi\neq54\pi$.`,
-  conceptEn: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. One midpoint rectangle: $2$. Between $y=x$ and $y=x^2$ on $[0;1]$: $\dfrac16$. Revolution: $\dfrac{16\pi}{15}$. Cone $r=3$, $h=6$: $V=18\pi\neq54\pi$.`,
+  basic: [
+    { k: "mo", vi: R`Tích phân là diện tích có dấu dưới đồ thị. Phần nằm dưới Ox bị tính âm.`, en: R`An integral is signed area under a graph. The part below Ox counts as negative.` },
+    { k: "vd", vi: R`Hình chữ nhật cao $2$, rộng $1$ có diện tích $2$.`, en: R`A rectangle of height $2$ and width $1$ has area $2$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$\int_a^b f=F(b)-F(a)$. Diện tích giữa hai đường là tích phân của đường trên trừ đường dưới.`, en: R`$\int_a^b f=F(b)-F(a)$. Area between two curves is the integral of the upper minus the lower.` },
+    { k: "vd", vi: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. Giữa $y=x$ và $y=x^2$ trên $[0;1]$: $\dfrac16$.`, en: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. Between $y=x$ and $y=x^2$ on $[0;1]$: $\dfrac16$.` },
+    { k: "loi", vi: R`Lấy diện tích mà quên trị tuyệt đối từng miền. Nón $r=3$, $h=6$: $V=18\pi$, không phải $54\pi$.`, en: R`Taking area without the absolute value on each piece. A cone $r=3$, $h=6$: $V=18\pi$, not $54\pi$.` },
+    { k: "kiem", vi: R`Một hình chữ nhật trung điểm trên $[0;2]$ cho diện tích $2$, lớn hơn $\dfrac43$.`, en: R`One midpoint rectangle on $[0;2]$ has area $2$, larger than $\dfrac43$.` },
+  ],
 };
 
 export const integralQuestions: Question[] = [

@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const expLesson: Lesson = {
-  concept: R`$a^x$ đối xứng $\log_a$ qua $y=x$, $a>0$, $a\neq1$. $2^3=8$, $\log_2 8=3$. $\log2+\log3=\log6\neq\log5$. $10(1{,}08)^5\approx14{,}69\neq14$. $\dfrac{\ln2}{\ln(1{,}08)}\approx9{,}01\neq8,\neq12{,}5$. $80\cdot(\dfrac12)^2=20$.`,
-  conceptEn: R`$a^x$ mirrors $\log_a$ across $y=x$, $a>0$, $a\neq1$. $2^3=8$, $\log_2 8=3$. $\log2+\log3=\log6\neq\log5$. $10(1{,}08)^5\approx14{,}69\neq14$. $\dfrac{\ln2}{\ln(1{,}08)}\approx9{,}01\neq8,\neq12{,}5$. $80\cdot(\dfrac12)^2=20$.`,
+  basic: [
+    { k: "mo", vi: R`Mũ là nhân lặp lại. Logarit hỏi: phải nhân cơ số mấy lần thì ra số đó.`, en: R`An exponent is repeated multiplication. A logarithm asks how many times to multiply the base to reach a number.` },
+    { k: "vd", vi: R`$2^3=2\cdot2\cdot2=8$, nên $\log_2 8=3$. $2^1=2$ và $2^2=4$.`, en: R`$2^3=2\cdot2\cdot2=8$, so $\log_2 8=3$. Also $2^1=2$ and $2^2=4$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$a>0$, $a\neq1$. Đồ thị $y=a^x$ và $y=\log_a x$ đối xứng qua $y=x$. $\log(ab)=\log a+\log b$.`, en: R`$a>0$, $a\neq1$. The graphs of $y=a^x$ and $y=\log_a x$ mirror across $y=x$. $\log(ab)=\log a+\log b$.` },
+    { k: "vd", vi: R`$10(1{,}08)^5\approx14{,}69$. Thời gian gấp đôi: $\dfrac{\ln 2}{\ln(1{,}08)}\approx9{,}01$ năm.`, en: R`$10(1{,}08)^5\approx14{,}69$. Doubling time: $\dfrac{\ln 2}{\ln(1{,}08)}\approx9{,}01$ years.` },
+    { k: "loi", vi: R`$\log(a+b)\neq\log a+\log b$. $10\cdot1{,}08\cdot5=54$, không phải $10(1{,}08)^5$.`, en: R`$\log(a+b)\neq\log a+\log b$. $10\cdot1{,}08\cdot5=54$, which is not $10(1{,}08)^5$.` },
+    { k: "kiem", vi: R`Còn lại $80\cdot\left(\dfrac12\right)^2=20$.`, en: R`What remains is $80\cdot\left(\dfrac12\right)^2=20$.` },
+  ],
 };
 
 export const expQuestions: Question[] = [

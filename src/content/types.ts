@@ -42,7 +42,16 @@ export type Question = {
   reasonsEn?: [string, string, string, string];
 };
 
+export type LessonKind = "mo" | "vd" | "dinh" | "loi" | "kiem";
+
+export type LessonBit = {
+  k: LessonKind;
+  vi: string;
+  en: string;
+};
+
+/** basic: plain start, then one small example. exam: definition, example, mistake, check. */
 export type Lesson = {
-  concept: string;
-  conceptEn: string;
+  basic: LessonBit[];
+  exam: LessonBit[];
 };

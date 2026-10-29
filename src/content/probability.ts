@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const probabilityLesson: Lesson = {
-  concept: R`Đã biết một phần: mẫu số là phần còn. Xúc xắc, ít nhất một $6$: $11$ cặp, $P=\dfrac1{11}\neq\dfrac1{36}$. Hai con, ít nhất một trai: $\dfrac13\neq\dfrac12$. Bayes: $\dfrac{99}{99+495}=\dfrac16\neq99\%$. $C(3,2)(\dfrac12)^3=\dfrac38$. Ít nhất một ngửa: $\dfrac78$.`,
-  conceptEn: R`Given part of the outcome, the denominator is what remains. Dice, at least one $6$: $11$ pairs, $P=\dfrac1{11}\neq\dfrac1{36}$. Two children, at least one boy: $\dfrac13\neq\dfrac12$. Bayes: $\dfrac{99}{99+495}=\dfrac16\neq99\%$. $C(3,2)(\dfrac12)^3=\dfrac38$. At least one head: $\dfrac78$.`,
+  basic: [
+    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn có thể, sau khi đã dùng điều đã biết.`, en: R`Probability is the favorable cases divided by the cases still possible, after using what is already known.` },
+    { k: "vd", vi: R`Một đồng xu: ngửa có xác suất $\dfrac12$. Hai đồng, ít nhất một ngửa: $3$ trường hợp trong $4$, nên $\dfrac34$.`, en: R`One coin: heads has probability $\dfrac12$. Two coins, at least one head: $3$ cases out of $4$, so $\dfrac34$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`Điều kiện đã biết làm đổi mẫu số. Công thức Bayes lấy phần thuận chia cho thuận cộng nhiễu.`, en: R`A known condition changes the denominator. Bayes divides the true positives by true positives plus false alarms.` },
+    { k: "vd", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: còn $11$ cặp, xác suất cả hai đều $6$ là $\dfrac1{11}$. Hai con, biết có ít nhất một trai: xác suất cả hai trai là $\dfrac13$.`, en: R`Two dice, given at least one $6$: $11$ pairs remain, so both sixes has probability $\dfrac1{11}$. Two children, given at least one boy: both boys has probability $\dfrac13$.` },
+    { k: "loi", vi: R`Vẫn chia cho $36$, hoặc lấy $\dfrac12$. Xét nghiệm dương không có nghĩa $99\%$: $\dfrac{99}{99+495}=\dfrac16$.`, en: R`Still dividing by $36$, or taking $\dfrac12$. A positive test is not $99\%$: $\dfrac{99}{99+495}=\dfrac16$.` },
+    { k: "kiem", vi: R`Ba đồng xu, ít nhất một ngửa: $\dfrac78$.`, en: R`Three coins, at least one head: $\dfrac78$.` },
+  ],
 };
 
 export const probabilityQuestions: Question[] = [

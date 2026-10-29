@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const vectorLesson: Lesson = {
-  concept: R`$|(2;\ 1;\ 2)|=\sqrt{4+1+4}=3\neq5,\ \neq\sqrt{5}$. $v=(1;\ -1;\ 2)$: $u\cdot v=5$, $u\times v=(4;\ -2;\ -3)$. $(1;\ 2;\ -1)\cdot(2;\ -1;\ 0)=0$ (công $0$). $(1;\ 2;\ 3)+(2;\ -1;\ 1)=(3;\ 1;\ 4)$. $\det=2(-1)-1\cdot1=-3$. $2x+y=5,\ x-y=1\Rightarrow(x;\ y)=(2;\ 1)$, $\det=-3\neq0$. $\vec i\times\vec j=(0;\ 0;\ 1)$.`,
-  conceptEn: R`$|(2;\ 1;\ 2)|=\sqrt{4+1+4}=3\neq5,\ \neq\sqrt{5}$. $v=(1;\ -1;\ 2)$: $u\cdot v=5$, $u\times v=(4;\ -2;\ -3)$. $(1;\ 2;\ -1)\cdot(2;\ -1;\ 0)=0$ (work $0$). $(1;\ 2;\ 3)+(2;\ -1;\ 1)=(3;\ 1;\ 4)$. $\det=2(-1)-1\cdot1=-3$. $2x+y=5,\ x-y=1\Rightarrow(x;\ y)=(2;\ 1)$, $\det=-3\neq0$. $\vec i\times\vec j=(0;\ 0;\ 1)$.`,
+  basic: [
+    { k: "mo", vi: R`Vectơ là mũi tên có hướng. Cộng là nối đuôi mũi tên này vào đầu mũi tên kia. Độ dài là khoảng từ gốc tới ngọn.`, en: R`A vector is an arrow with direction. Addition joins the tail of one to the head of the other. Length is the distance from start to tip.` },
+    { k: "vd", vi: R`$(1;2)+(2;-1)=(3;1)$. Độ dài của $(3;4)$ là $5$.`, en: R`$(1;2)+(2;-1)=(3;1)$. The length of $(3;4)$ is $5$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$|u|=\sqrt{x^2+y^2+z^2}$. Tích vô hướng bằng $0$ thì hai vectơ vuông góc. $\det\neq0$ thì hệ hai ẩn có đúng một nghiệm.`, en: R`$|u|=\sqrt{x^2+y^2+z^2}$. A dot product of $0$ means the vectors are perpendicular. $\det\neq0$ means a two-unknown system has one solution.` },
+    { k: "vd", vi: R`$|(2;1;2)|=3$. $(2;1;2)\cdot(1;-1;2)=5$. Hệ $2x+y=5$, $x-y=1$ cho $(2;1)$.`, en: R`$|(2;1;2)|=3$. $(2;1;2)\cdot(1;-1;2)=5$. The system $2x+y=5$, $x-y=1$ gives $(2;1)$.` },
+    { k: "loi", vi: R`Cộng ba tọa độ ra $5$, không phải độ dài $3$. Tích có hướng không đổi thứ tự.`, en: R`Adding the three coordinates gives $5$, not the length $3$. The cross product changes if the order is swapped.` },
+    { k: "kiem", vi: R`$(1;2;-1)\cdot(2;-1;0)=0$, nên hai vectơ vuông góc.`, en: R`$(1;2;-1)\cdot(2;-1;0)=0$, so the vectors are perpendicular.` },
+  ],
 };
 
 export const vectorQuestions: Question[] = [

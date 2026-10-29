@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const ineqLesson: Lesson = {
-  concept: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, bằng $\Leftrightarrow a=b$. $4,9\to 6{,}5;\ 6$. $a+b=10\Rightarrow\max ab=25$. $(1^2+2^2)(3^2+4^2)=125\ge121=(1\cdot3+2\cdot4)^2$. $(1;2)\parallel(3;6)\Rightarrow225=225$. $P=5x+3y$ trên $x,y\ge0$, $x+y\le10$, $2x+y\le16$: đỉnh $0,40,42,30$, nên $\max=42$ tại $(6;4)$. $(9;2)$: $x+y=11$. $-2x\le4\Rightarrow x\ge-2$.`,
-  conceptEn: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, equality $\Leftrightarrow a=b$. $4,9\to 6{,}5;\ 6$. $a+b=10\Rightarrow\max ab=25$. $(1^2+2^2)(3^2+4^2)=125\ge121=(1\cdot3+2\cdot4)^2$. $(1;2)\parallel(3;6)\Rightarrow225=225$. $P=5x+3y$ on $x,y\ge0$, $x+y\le10$, $2x+y\le16$: vertices $0,40,42,30$, so $\max=42$ at $(6;4)$. $(9;2)$: $x+y=11$. $-2x\le4\Rightarrow x\ge-2$.`,
+  basic: [
+    { k: "mo", vi: R`Bất đẳng thức so hai đại lượng. Nhân hoặc chia với số âm thì chiều đảo.`, en: R`An inequality compares two amounts. Multiplying or dividing by a negative flips the direction.` },
+    { k: "vd", vi: R`$-2x\le4$. Chia $-2$: $x\ge-2$. Thử $x=0$ thì đúng. Thử $x=-3$: $6>4$, loại.`, en: R`$-2x\le4$. Divide by $-2$: $x\ge-2$. $x=0$ works. $x=-3$ gives $6>4$, so it fails.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, bằng khi $a=b$. Hàm bậc nhất trên miền đa giác đạt lớn nhất tại một đỉnh.`, en: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, with equality when $a=b$. A linear function on a polygon is largest at a vertex.` },
+    { k: "vd", vi: R`$a+b=10$ thì $\max ab=25$ tại $a=b=5$. $P=5x+3y$ với $x+y\le10$, $2x+y\le16$: $\max=42$ tại $(6;4)$.`, en: R`If $a+b=10$ then $\max ab=25$ at $a=b=5$. $P=5x+3y$ with $x+y\le10$, $2x+y\le16$: $\max=42$ at $(6;4)$.` },
+    { k: "loi", vi: R`Quên đảo dấu khi chia âm. $(9;2)$ có $x+y=11$, nằm ngoài miền $x+y\le10$, không dùng làm chỗ lớn nhất.`, en: R`Forgetting to flip the sign when dividing by a negative. $(9;2)$ has $x+y=11$, outside $x+y\le10$, so it is not a candidate for the maximum.` },
+    { k: "kiem", vi: R`$4$ và $9$: trung bình cộng $6{,}5$, trung bình nhân $6$.`, en: R`$4$ and $9$: arithmetic mean $6{,}5$, geometric mean $6$.` },
+  ],
 };
 
 export const ineqQuestions: Question[] = [

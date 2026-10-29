@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const surveyLesson: Lesson = {
-  concept: R`$y=x^3-3x$: $y'=0$ tại $\pm1$, cực đại $2$, cực tiểu $-2$. Nghiệm $0,\pm\sqrt3\neq\pm1$. $y=x^3$: $y'(0)=0$, không đổi dấu. $y=\dfrac{x^2}{x-1}=x+1+\dfrac{1}{x-1}$: tiệm cận $x=1$, $y=x+1$. Giao $(1;2)$ không trên đồ thị.`,
-  conceptEn: R`$y=x^3-3x$: $y'=0$ at $\pm1$, maximum $2$, minimum $-2$. Roots $0,\pm\sqrt3\neq\pm1$. $y=x^3$: $y'(0)=0$, no sign change. $y=\dfrac{x^2}{x-1}=x+1+\dfrac{1}{x-1}$: asymptotes $x=1$, $y=x+1$. The crossing $(1;2)$ is not on the graph.`,
+  basic: [
+    { k: "mo", vi: R`Khảo sát là đọc hàm đi lên hay xuống, chỗ cao trên một đoạn, và chỗ đồ thị đổi chiều uốn.`, en: R`Sketching means reading where the function rises or falls, where it is high on an interval, and where the bend changes.` },
+    { k: "vd", vi: R`$y=x^3-3x$: tại $x=-1$ thì $y=2$, tại $x=0$ thì $y=0$, tại $x=1$ thì $y=-2$.`, en: R`$y=x^3-3x$: at $x=-1$, $y=2$; at $x=0$, $y=0$; at $x=1$, $y=-2$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$y'=0$ và $y'$ đổi dấu thì có cực trị. $y''$ đổi dấu thì có điểm uốn, kể cả khi $y'\neq0$.`, en: R`If $y'=0$ and $y'$ changes sign, there is an extremum. If $y''$ changes sign, there is an inflection, even when $y'\neq0$.` },
+    { k: "vd", vi: R`$y=x^3-3x$: cực đại $2$, cực tiểu $-2$. Nghiệm $0,\pm\sqrt3$, không phải $\pm1$.`, en: R`$y=x^3-3x$: maximum $2$, minimum $-2$. Roots $0,\pm\sqrt3$, not $\pm1$.` },
+    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng không cực trị. Giao hai tiệm cận không nằm trên đồ thị.`, en: R`$y=x^3$ has $y'(0)=0$ but no extremum. Where two asymptotes cross is not a point of the graph.` },
+    { k: "kiem", vi: R`$\dfrac{x^2}{x-1}=x+1+\dfrac{1}{x-1}$. Tiệm cận $x=1$ và $y=x+1$.`, en: R`$\dfrac{x^2}{x-1}=x+1+\dfrac{1}{x-1}$. Asymptotes $x=1$ and $y=x+1$.` },
+  ],
 };
 
 export const surveyQuestions: Question[] = [

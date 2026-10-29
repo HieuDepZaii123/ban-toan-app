@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const limitLesson: Lesson = {
-  concept: R`$\dfrac{x^2-1}{x-1}\to2$ khi $x\to1$, kể cả $f(1)=5$. Liên tục chỉ khi $f(1)=2$. Nhảy $-1$ và $1$: không có giới hạn. $\dfrac{\sin x}{x}\to1$. $T=25+60e^{-t/4}$: $T(0)=85$, $\lim=25$.`,
-  conceptEn: R`$\dfrac{x^2-1}{x-1}\to2$ as $x\to1$, even if $f(1)=5$. Continuous only if $f(1)=2$. Jump $-1$ and $1$: no limit. $\dfrac{\sin x}{x}\to1$. $T=25+60e^{-t/4}$: $T(0)=85$, $\lim=25$.`,
+  basic: [
+    { k: "mo", vi: R`Giới hạn là số mà hàm tiến tới. Nó không bắt buộc bằng giá trị đúng tại điểm đó.`, en: R`A limit is the number a function approaches. It need not equal the value exactly at that point.` },
+    { k: "vd", vi: R`$\dfrac{x^2-1}{x-1}=x+1$ khi $x\neq1$. Sát $x=1$, giá trị sát $2$.`, en: R`$\dfrac{x^2-1}{x-1}=x+1$ when $x\neq1$. Near $x=1$, the value is near $2$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$\lim_{x\to a}f(x)=L$ khi cả hai phía về $L$. Liên tục tại $a$ khi thêm $f(a)=L$.`, en: R`$\lim_{x\to a}f(x)=L$ when both sides approach $L$. Continuous at $a$ only if also $f(a)=L$.` },
+    { k: "vd", vi: R`Gán $f(1)=5$ thì giới hạn vẫn $2$. Nhảy từ $-1$ sang $1$: không có giới hạn.`, en: R`Setting $f(1)=5$ leaves the limit at $2$. A jump from $-1$ to $1$ means no limit.` },
+    { k: "loi", vi: R`Đừng lấy $f(a)$ làm giới hạn. $\dfrac{\sin x}{x}\to1$ khi $x\to0$, không phải $0$.`, en: R`Do not take $f(a)$ as the limit. $\dfrac{\sin x}{x}\to1$ as $x\to0$, not $0$.` },
+    { k: "kiem", vi: R`$T=25+60e^{-t/4}$: $T(0)=85$, về lâu là $25$.`, en: R`$T=25+60e^{-t/4}$: $T(0)=85$, and the long-run value is $25$.` },
+  ],
 };
 
 export const limitQuestions: Question[] = [

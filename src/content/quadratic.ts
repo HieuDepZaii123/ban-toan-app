@@ -1,11 +1,19 @@
 import type { Lesson, Question } from "./types.ts";
 
-export const quadraticLesson: Lesson = {
-  concept: String.raw`$y=ax^2+bx+c$, $a\neq0$. Đỉnh $x=-\dfrac{b}{2a}$: đổi $a$ thì đỉnh chạy. $a(x-h)^2+k$: đỉnh đứng yên. $\Delta=b^2-4ac$: số giao Ox. $y=x^2-2x-3$: $(1;-4)$, $\Delta=16$, nghiệm $-1;3$. Rào $40$: $S=x(40-2x)$, $x=10$, $\max=200$.`,
-  conceptEn: String.raw`$y=ax^2+bx+c$, $a\neq0$. Vertex $x=-\dfrac{b}{2a}$: changing $a$ moves it. $a(x-h)^2+k$: the vertex stays. $\Delta=b^2-4ac$: count of Ox crossings. $y=x^2-2x-3$: $(1;-4)$, $\Delta=16$, roots $-1;3$. Fence $40$: $S=x(40-2x)$, $x=10$, $\max=200$.`,
-};
-
 const R = String.raw;
+
+export const quadraticLesson: Lesson = {
+  basic: [
+    { k: "mo", vi: R`Parabol là đường cong hình chữ U. $a>0$ thì miệng hướng lên, $a<0$ thì hướng xuống.`, en: R`A parabola is a U-shaped curve. If $a>0$ it opens upward; if $a<0$ it opens downward.` },
+    { k: "vd", vi: R`Rào $40$ m, một cạnh là tường. Diện tích $S=x(40-2x)$. Lấy $x=10$ thì cạnh kia $20$ m và $S=200$.`, en: R`A $40$ m fence uses one wall. Area $S=x(40-2x)$. At $x=10$ the other side is $20$ m and $S=200$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$y=ax^2+bx+c$, $a\neq0$. Đỉnh có $x=-\dfrac{b}{2a}$. $\Delta=b^2-4ac$ cho $2$, $1$ hoặc $0$ giao điểm với Ox.`, en: R`$y=ax^2+bx+c$, $a\neq0$. The vertex has $x=-\dfrac{b}{2a}$. $\Delta=b^2-4ac$ gives $2$, $1$, or $0$ crossings of Ox.` },
+    { k: "vd", vi: R`$y=x^2-2x-3$. Đỉnh $(1;-4)$. $\Delta=16$, nghiệm $x=-1$ và $x=3$.`, en: R`$y=x^2-2x-3$. Vertex $(1;-4)$. $\Delta=16$, roots $x=-1$ and $x=3$.` },
+    { k: "loi", vi: R`Đừng lấy $\Delta$ để tìm đỉnh. Dạng $a(x-h)^2+k$: đỉnh $(h;k)$ đứng yên khi đổi $a$.`, en: R`Do not use $\Delta$ to find the vertex. In $a(x-h)^2+k$ the vertex $(h;k)$ stays when $a$ changes.` },
+    { k: "kiem", vi: R`$y=x^2-4x$ có đỉnh $(2;-4)$.`, en: R`$y=x^2-4x$ has vertex $(2;-4)$.` },
+  ],
+};
 
 export const quadraticQuestions: Question[] = [
   {

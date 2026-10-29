@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const analyticLesson: Lesson = {
-  concept: R`$x+y-2=0$: $\vec n=(1;\ 1)$, $\vec d=(1;\ -1)$. $d(P)=\dfrac{|3+1-2|}{\sqrt{2}}=\sqrt{2}\neq2$. Chân $(2;\ 0)$, không phải $(1;\ 1),\ (2;\ 2)$. $x+y+z-6=0$: $d=\sqrt{3}$, chân $(2;\ 2;\ 2)$. $x^2+y^2=25$: $(3;\ 4)$ trên ($9+16=25$), $(6;\ 0)$ ngoài ($6>5$).`,
-  conceptEn: R`$x+y-2=0$: $\vec n=(1;\ 1)$, $\vec d=(1;\ -1)$. $d(P)=\dfrac{|3+1-2|}{\sqrt{2}}=\sqrt{2}\neq2$. Foot $(2;\ 0)$, not $(1;\ 1)$ or $(2;\ 2)$. $x+y+z-6=0$: $d=\sqrt{3}$, foot $(2;\ 2;\ 2)$. $x^2+y^2=25$: $(3;\ 4)$ on ($9+16=25$), $(6;\ 0)$ outside ($6>5$).`,
+  basic: [
+    { k: "mo", vi: R`Đường thẳng có một hướng đi và một hướng vuông góc với nó, gọi là pháp tuyến.`, en: R`A line has a direction of travel and a direction straight across it, called the normal.` },
+    { k: "vd", vi: R`$x+y=2$ đi qua $(0;2)$ và $(2;0)$.`, en: R`$x+y=2$ passes through $(0;2)$ and $(2;0)$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$ax+by+c=0$ có pháp tuyến $(a;b)$. Khoảng cách từ $(x_0;y_0)$ là $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.`, en: R`$ax+by+c=0$ has normal $(a;b)$. Distance from $(x_0;y_0)$ is $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.` },
+    { k: "vd", vi: R`$x+y-2=0$ và điểm $(3;1)$: khoảng cách $\sqrt2$, chân đường vuông góc là $(2;0)$.`, en: R`$x+y-2=0$ and the point $(3;1)$: distance $\sqrt2$, foot of the perpendicular $(2;0)$.` },
+    { k: "loi", vi: R`$|3+1-2|=2$ chưa phải khoảng cách, vì chưa chia $\sqrt2$. $(6;0)$ nằm ngoài $x^2+y^2=25$.`, en: R`$|3+1-2|=2$ is not yet the distance, because it is not divided by $\sqrt2$. $(6;0)$ lies outside $x^2+y^2=25$.` },
+    { k: "kiem", vi: R`$(3;4)$ nằm trên $x^2+y^2=25$ vì $9+16=25$.`, en: R`$(3;4)$ lies on $x^2+y^2=25$ because $9+16=25$.` },
+  ],
 };
 
 export const analyticQuestions: Question[] = [
