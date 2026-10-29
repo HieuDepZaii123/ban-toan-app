@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const probabilityLesson: Lesson = {
-  concept: R`Đã biết một phần: mẫu số là phần còn. Xúc xắc, ít nhất một $6$: $11$ cặp, $P=\dfrac1{11}\neq\dfrac1{36}$. Hai con, ít nhất một trai: $\dfrac13\neq\dfrac12$. Bayes: $\dfrac{99}{99+495}=\dfrac16\neq99\%$. $C(3,2)(\dfrac12)^3=\dfrac38$. Ít nhất một ngửa: $\dfrac78$.`,
-  conceptEn: R`Given part of the outcome, the denominator is what remains. Dice, at least one $6$: $11$ pairs, $P=\dfrac1{11}\neq\dfrac1{36}$. Two children, at least one boy: $\dfrac13\neq\dfrac12$. Bayes: $\dfrac{99}{99+495}=\dfrac16\neq99\%$. $C(3,2)(\dfrac12)^3=\dfrac38$. At least one head: $\dfrac78$.`,
+  basic: [
+    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn.`, en: R`Probability is favorable cases divided by the cases that remain.` },
+    { k: "vd", vi: R`Một đồng xu, mặt ngửa: $\dfrac12$.`, en: R`One coin, heads: $\dfrac12$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`Điều đã biết làm đổi mẫu số của xác suất.`, en: R`What is already known changes the probability's denominator.` },
+    { k: "vd", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: xác suất cả hai đều $6$ là $\dfrac1{11}$.`, en: R`Two dice, given at least one $6$: both sixes has probability $\dfrac1{11}$.` },
+    { k: "loi", vi: R`Đừng chia cho $36$ khi đề đã biết có một mặt $6$.`, en: R`Do not divide by $36$ once the problem already knows there is a $6$.` },
+    { k: "kiem", vi: R`Ba đồng xu, ít nhất một ngửa: $\dfrac78$.`, en: R`Three coins, at least one head: $\dfrac78$.` },
+  ],
 };
 
 export const probabilityQuestions: Question[] = [

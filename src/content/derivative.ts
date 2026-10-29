@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const derivativeLesson: Lesson = {
-  concept: R`$\dfrac{f(a+h)-f(a)}{h}\to f'(a)$. $x^2$: cát tuyến $2+h$, tiếp tuyến $2$, $f'(2)=4$. $y'=0$ chưa là cực trị: $x^3$ tại $0$. $x^3-3x$: cực đại $2$, cực tiểu $-2$. $h=20t-5t^2$: đỉnh $t=2$, $h=20$; $h(1)=15$.`,
-  conceptEn: R`$\dfrac{f(a+h)-f(a)}{h}\to f'(a)$. $x^2$: secant $2+h$, tangent $2$, $f'(2)=4$. $y'=0$ is not yet an extremum: $x^3$ at $0$. $x^3-3x$: maximum $2$, minimum $-2$. $h=20t-5t^2$: apex $t=2$, $h=20$; $h(1)=15$.`,
+  basic: [
+    { k: "mo", vi: R`Đạo hàm là độ dốc của tiếp tuyến.`, en: R`The derivative is the slope of the tangent.` },
+    { k: "vd", vi: R`$y=x^2$ từ $1$ đến $2$ có độ dốc $3$.`, en: R`$y=x^2$ from $1$ to $2$ has slope $3$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`Đạo hàm là $f'(a)=\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$.`, en: R`The derivative is $f'(a)=\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$.` },
+    { k: "vd", vi: R`$h=20t-5t^2$ đạt đỉnh lúc $t=2$, cao $20$.`, en: R`$h=20t-5t^2$ peaks at $t=2$, height $20$.` },
+    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng không phải cực trị.`, en: R`$y=x^3$ has $y'(0)=0$ but that is not an extremum.` },
+    { k: "kiem", vi: R`$y=x^3-3x$ đạt $2$ tại $x=-1$.`, en: R`$y=x^3-3x$ reaches $2$ at $x=-1$.` },
+  ],
 };
 
 export const derivativeQuestions: Question[] = [

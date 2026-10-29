@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const trigLesson: Lesson = {
-  concept: R`$\sin^2\alpha+\cos^2\alpha=1$. $\sin150^\circ=\dfrac12$, $\cos150^\circ=-\dfrac{\sqrt3}{2}$. $\max(\sin+\cos)=\sqrt2$ tại $45^\circ\neq2$. Cây: $20\tan30^\circ+1{,}5$.`,
-  conceptEn: R`$\sin^2\alpha+\cos^2\alpha=1$. $\sin150^\circ=\dfrac12$, $\cos150^\circ=-\dfrac{\sqrt3}{2}$. $\max(\sin+\cos)=\sqrt2$ at $45^\circ\neq2$. Tree: $20\tan30^\circ+1{,}5$.`,
+  basic: [
+    { k: "mo", vi: R`Trên đường tròn bán kính $1$, cạnh ngang là cos, cạnh đứng là sin.`, en: R`On the circle of radius $1$, the horizontal side is cos and the vertical side is sin.` },
+    { k: "vd", vi: R`Góc $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$.`, en: R`At $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$\sin^2\alpha+\cos^2\alpha=1$; góc bù giữ sin và đổi dấu cos.`, en: R`$\sin^2\alpha+\cos^2\alpha=1$; a supplementary angle keeps sin and flips cos.` },
+    { k: "vd", vi: R`Góc $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.`, en: R`At $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.` },
+    { k: "loi", vi: R`$\sin+\cos$ không đạt $2$; lớn nhất là $\sqrt2$.`, en: R`$\sin+\cos$ does not reach $2$; the maximum is $\sqrt2$.` },
+    { k: "kiem", vi: R`Cây $20$ m, góc $30^\circ$, mắt $1{,}5$ m: cao $\dfrac{20\sqrt3}{3}+1{,}5$.`, en: R`Tree $20$ m, angle $30^\circ$, eye $1{,}5$ m: height $\dfrac{20\sqrt3}{3}+1{,}5$.` },
+  ],
 };
 
 export const trigQuestions: Question[] = [

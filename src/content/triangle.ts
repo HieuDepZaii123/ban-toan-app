@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const triangleLesson: Lesson = {
-  concept: R`$S=\dfrac{6\cdot4}{2}=12\neq24$. Vuông $3,4$: $S=6\neq5$. Hộp $3\cdot4\cdot5=60\neq12$. Chóp $\dfrac13\cdot6^2\cdot4=48\neq36$. Tứ diện đều: sáu cạnh $=a$, $V=\dfrac{a^3\sqrt{2}}{12}$; $a=6\Rightarrow18\sqrt{2}\neq9\sqrt{3}$. Đồng dạng $k=2\Rightarrow k^2=4$.`,
-  conceptEn: R`$S=\dfrac{6\cdot4}{2}=12\neq24$. Right $3,4$: $S=6\neq5$. Box $3\cdot4\cdot5=60\neq12$. Pyramid $\dfrac13\cdot6^2\cdot4=48\neq36$. Regular tetrahedron: six edges $=a$, $V=\dfrac{a^3\sqrt{2}}{12}$; $a=6\Rightarrow18\sqrt{2}\neq9\sqrt{3}$. Similarity $k=2\Rightarrow k^2=4$.`,
+  basic: [
+    { k: "mo", vi: R`Diện tích tam giác là nửa đáy nhân chiều cao.`, en: R`A triangle's area is half base times height.` },
+    { k: "vd", vi: R`Đáy $6$, cao $4$: diện tích $12$.`, en: R`Base $6$, height $4$: area $12$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`Thể tích chóp là $V=\dfrac13 Sh$.`, en: R`A pyramid has volume $V=\dfrac13 Sh$.` },
+    { k: "vd", vi: R`Đáy vuông cạnh $6$, cao $4$: $V=48$.`, en: R`Square base of side $6$, height $4$: $V=48$.` },
+    { k: "loi", vi: R`Quên $\dfrac12$ thì diện tích đáy $6$, cao $4$ thành $24$.`, en: R`Dropping $\dfrac12$ turns base $6$, height $4$ into area $24$.` },
+    { k: "kiem", vi: R`Tam giác vuông cạnh $3$ và $4$ có diện tích $6$.`, en: R`A right triangle with legs $3$ and $4$ has area $6$.` },
+  ],
 };
 
 export const triangleQuestions: Question[] = [

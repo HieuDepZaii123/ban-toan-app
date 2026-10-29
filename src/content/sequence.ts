@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const sequenceLesson: Lesson = {
-  concept: R`$u_1=3$, $d=4$: $u_{10}=u_1+9d=39\neq43$, $S_{10}=\dfrac{10}{2}(3+39)=210$. $u_1=2$, $q=3$: $u_5=2\cdot3^4=162$. $|q|<1$: $S=\dfrac{u_1}{1-q}$, số hạng $\neq0$. $8+4+2+\cdots=16$. Nảy: $24$. $1+\cdots+12=78$.`,
-  conceptEn: R`$u_1=3$, $d=4$: $u_{10}=u_1+9d=39\neq43$, $S_{10}=\dfrac{10}{2}(3+39)=210$. $u_1=2$, $q=3$: $u_5=2\cdot3^4=162$. $|q|<1$: $S=\dfrac{u_1}{1-q}$, no term $=0$. $8+4+2+\cdots=16$. Bounce: $24$. $1+\cdots+12=78$.`,
+  basic: [
+    { k: "mo", vi: R`Cấp số cộng thêm một số cố định mỗi bước.`, en: R`An arithmetic sequence adds a fixed number each step.` },
+    { k: "vd", vi: R`$3,7,11,15$ có công sai $4$.`, en: R`$3,7,11,15$ has common difference $4$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$u_n=u_1+(n-1)d$ và $S_n=\dfrac{n}{2}(u_1+u_n)$.`, en: R`$u_n=u_1+(n-1)d$ and $S_n=\dfrac{n}{2}(u_1+u_n)$.` },
+    { k: "vd", vi: R`Với $u_1=3$, $d=4$: $u_{10}=39$ và $S_{10}=210$.`, en: R`With $u_1=3$, $d=4$: $u_{10}=39$ and $S_{10}=210$.` },
+    { k: "loi", vi: R`Lấy $10d$ thay vì $9d$ thì $u_{10}=43$.`, en: R`Using $10d$ instead of $9d$ gives $u_{10}=43$.` },
+    { k: "kiem", vi: R`Tổng $1+\cdots+12=78$.`, en: R`The sum $1+\cdots+12=78$.` },
+  ],
 };
 
 export const sequenceQuestions: Question[] = [

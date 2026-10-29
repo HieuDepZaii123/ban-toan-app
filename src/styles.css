@@ -304,6 +304,36 @@ main {
 .hoc { display: flex; flex-direction: column; gap: 16px; }
 .concept { max-width: 68ch; }
 .concept p + p { margin-top: 8px; }
+.read { display: grid; gap: 12px; }
+.read-switch { display: flex; gap: 6px; }
+.read-switch button {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 0 14px;
+  font: inherit;
+}
+.read-switch button[aria-selected="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: transparent;
+}
+.read-bit { display: grid; gap: 4px; margin: 0; }
+.read-bit b {
+  color: var(--accent);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.read-bit .mathline { display: block; }
+.read-vd, .read-kiem {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--sheet);
+}
+.read-loi { padding-left: 12px; border-left: 2px solid var(--plot-alt); }
 @media (min-width: 960px) {
   .hoc {
     display: grid;

@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const limitLesson: Lesson = {
-  concept: R`$\dfrac{x^2-1}{x-1}\to2$ khi $x\to1$, kể cả $f(1)=5$. Liên tục chỉ khi $f(1)=2$. Nhảy $-1$ và $1$: không có giới hạn. $\dfrac{\sin x}{x}\to1$. $T=25+60e^{-t/4}$: $T(0)=85$, $\lim=25$.`,
-  conceptEn: R`$\dfrac{x^2-1}{x-1}\to2$ as $x\to1$, even if $f(1)=5$. Continuous only if $f(1)=2$. Jump $-1$ and $1$: no limit. $\dfrac{\sin x}{x}\to1$. $T=25+60e^{-t/4}$: $T(0)=85$, $\lim=25$.`,
+  basic: [
+    { k: "mo", vi: R`Giới hạn là số hàm tiến tới, không nhất thiết bằng giá trị tại điểm đó.`, en: R`A limit is the number approached, not necessarily the value at the point.` },
+    { k: "vd", vi: R`$\dfrac{x^2-1}{x-1}$ sát $1$ thì sát $2$.`, en: R`$\dfrac{x^2-1}{x-1}$ is near $2$ when $x$ is near $1$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`Có giới hạn $L$ khi cả hai phía về $L$; liên tục khi thêm $f(a)=L$.`, en: R`The limit is $L$ when both sides approach $L$; continuous when also $f(a)=L$.` },
+    { k: "vd", vi: R`Dù $f(1)=5$, $\dfrac{x^2-1}{x-1}$ vẫn tiến tới $2$.`, en: R`Even if $f(1)=5$, $\dfrac{x^2-1}{x-1}$ still approaches $2$.` },
+    { k: "loi", vi: R`Đừng lấy $f(a)$ làm giới hạn.`, en: R`Do not take $f(a)$ as the limit.` },
+    { k: "kiem", vi: R`$T=25+60e^{-t/4}$: lúc đầu $85$, về lâu là $25$.`, en: R`$T=25+60e^{-t/4}$: starts at $85$, tends to $25$.` },
+  ],
 };
 
 export const limitQuestions: Question[] = [

@@ -177,8 +177,19 @@ function checkSheets(): void {
     const lesson = lessonFor(topic.id);
     assert(lesson !== undefined, `${topic.id} has a lesson`);
     if (!lesson) continue;
-    checkTex(`${topic.id} concept`, lesson.concept);
-    checkTex(`${topic.id} conceptEn`, lesson.conceptEn);
+    const basicKinds = lesson.basic.map((bit) => bit.k);
+    const examKinds = lesson.exam.map((bit) => bit.k);
+    assert(basicKinds[0] === "mo" && basicKinds.includes("vd") && lesson.basic.length <= 3, `${topic.id} basic shape`);
+    assert(
+      examKinds.includes("dinh") && examKinds.includes("vd") && examKinds.includes("loi") && examKinds.includes("kiem") && lesson.exam.length <= 4,
+      `${topic.id} exam shape`,
+    );
+    for (const bit of [...lesson.basic, ...lesson.exam]) {
+      assert(MARK.test(bit.vi), `${topic.id} ${bit.k} Vietnamese has no diacritics`);
+      assert(!BARE.test(bit.vi), `${topic.id} ${bit.k} has an undiacritised Vietnamese word`);
+      checkTex(`${topic.id} ${bit.k}`, bit.vi);
+      checkTex(`${topic.id} ${bit.k} en`, bit.en);
+    }
     const sheets = [
       ["nhin", topic.think.nhin],
       ["lam", topic.think.lam],

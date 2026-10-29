@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const integralLesson: Lesson = {
-  concept: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. Một hình chữ nhật trung điểm: $2$. Giữa $y=x$ và $y=x^2$ trên $[0;1]$: $\dfrac16$. Quay: $\dfrac{16\pi}{15}$. Nón $r=3$, $h=6$: $V=18\pi\neq54\pi$.`,
-  conceptEn: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$. One midpoint rectangle: $2$. Between $y=x$ and $y=x^2$ on $[0;1]$: $\dfrac16$. Revolution: $\dfrac{16\pi}{15}$. Cone $r=3$, $h=6$: $V=18\pi\neq54\pi$.`,
+  basic: [
+    { k: "mo", vi: R`Tích phân là diện tích có dấu dưới đồ thị.`, en: R`An integral is signed area under a graph.` },
+    { k: "vd", vi: R`Hình cao $2$, rộng $1$ có diện tích $2$.`, en: R`Height $2$ and width $1$ give area $2$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$\int_a^b f=F(b)-F(a)$ với $F'=f$.`, en: R`$\int_a^b f=F(b)-F(a)$ where $F'=f$.` },
+    { k: "vd", vi: R`Tích $\int_0^2(2x-x^2)\,dx=\dfrac43$.`, en: R`The integral $\int_0^2(2x-x^2)\,dx=\dfrac43$.` },
+    { k: "loi", vi: R`Nón $r=3$, $h=6$ có $V=18\pi$, không phải $54\pi$.`, en: R`A cone $r=3$, $h=6$ has $V=18\pi$, not $54\pi$.` },
+    { k: "kiem", vi: R`Hình trung điểm trên $[0;2]$ có diện tích $2$.`, en: R`The midpoint rectangle on $[0;2]$ has area $2$.` },
+  ],
 };
 
 export const integralQuestions: Question[] = [

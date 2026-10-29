@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const surveyLesson: Lesson = {
-  concept: R`$y=x^3-3x$: $y'=0$ tại $\pm1$, cực đại $2$, cực tiểu $-2$. Nghiệm $0,\pm\sqrt3\neq\pm1$. $y=x^3$: $y'(0)=0$, không đổi dấu. $y=\dfrac{x^2}{x-1}=x+1+\dfrac{1}{x-1}$: tiệm cận $x=1$, $y=x+1$. Giao $(1;2)$ không trên đồ thị.`,
-  conceptEn: R`$y=x^3-3x$: $y'=0$ at $\pm1$, maximum $2$, minimum $-2$. Roots $0,\pm\sqrt3\neq\pm1$. $y=x^3$: $y'(0)=0$, no sign change. $y=\dfrac{x^2}{x-1}=x+1+\dfrac{1}{x-1}$: asymptotes $x=1$, $y=x+1$. The crossing $(1;2)$ is not on the graph.`,
+  basic: [
+    { k: "mo", vi: R`Khảo sát là xem hàm đang đi lên hay đi xuống.`, en: R`Sketching means seeing whether the function is rising or falling.` },
+    { k: "vd", vi: R`$y=x^3-3x$ tại $x=-1$ thì $y=2$.`, en: R`$y=x^3-3x$ at $x=-1$ gives $y=2$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$y'=0$ và $y'$ đổi dấu thì đó là cực trị.`, en: R`If $y'=0$ and $y'$ changes sign, that point is an extremum.` },
+    { k: "vd", vi: R`$y=x^3-3x$ có cực đại $2$ và cực tiểu $-2$.`, en: R`$y=x^3-3x$ has maximum $2$ and minimum $-2$.` },
+    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng không là cực trị.`, en: R`$y=x^3$ has $y'(0)=0$ but it is not an extremum.` },
+    { k: "kiem", vi: R`$\dfrac{x^2}{x-1}$ có tiệm cận đứng $x=1$.`, en: R`$\dfrac{x^2}{x-1}$ has vertical asymptote $x=1$.` },
+  ],
 };
 
 export const surveyQuestions: Question[] = [

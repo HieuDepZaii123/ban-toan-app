@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const expLesson: Lesson = {
-  concept: R`$a^x$ đối xứng $\log_a$ qua $y=x$, $a>0$, $a\neq1$. $2^3=8$, $\log_2 8=3$. $\log2+\log3=\log6\neq\log5$. $10(1{,}08)^5\approx14{,}69\neq14$. $\dfrac{\ln2}{\ln(1{,}08)}\approx9{,}01\neq8,\neq12{,}5$. $80\cdot(\dfrac12)^2=20$.`,
-  conceptEn: R`$a^x$ mirrors $\log_a$ across $y=x$, $a>0$, $a\neq1$. $2^3=8$, $\log_2 8=3$. $\log2+\log3=\log6\neq\log5$. $10(1{,}08)^5\approx14{,}69\neq14$. $\dfrac{\ln2}{\ln(1{,}08)}\approx9{,}01\neq8,\neq12{,}5$. $80\cdot(\dfrac12)^2=20$.`,
+  basic: [
+    { k: "mo", vi: R`Mũ là nhân lặp; logarit hỏi phải nhân mấy lần.`, en: R`An exponent is repeated multiplication; a log asks how many times.` },
+    { k: "vd", vi: R`$2^3=8$, nên $\log_2 8=3$.`, en: R`$2^3=8$, so $\log_2 8=3$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`Với $a>0$, $a\neq1$, ta có $\log(ab)=\log a+\log b$.`, en: R`For $a>0$, $a\neq1$, $\log(ab)=\log a+\log b$.` },
+    { k: "vd", vi: R`Lãi $10(1{,}08)^5\approx14{,}69$.`, en: R`Interest $10(1{,}08)^5\approx14{,}69$.` },
+    { k: "loi", vi: R`Đừng viết $\log(a+b)=\log a+\log b$.`, en: R`Do not write $\log(a+b)=\log a+\log b$.` },
+    { k: "kiem", vi: R`Còn lại $80\cdot\left(\dfrac12\right)^2=20$.`, en: R`What remains is $80\cdot\left(\dfrac12\right)^2=20$.` },
+  ],
 };
 
 export const expQuestions: Question[] = [

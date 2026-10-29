@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useState, type ComponentType } from "react";
 import type { CardId } from "../content/cards.ts";
 import { streamName, topicById } from "../content/catalog.ts";
 import { loadTopic } from "../content/loadTopic.ts";
-import type { Lesson, Question, TopicMeta } from "../content/types.ts";
+import type { Lesson, LessonKind, Question, TopicMeta } from "../content/types.ts";
 import type { Vary } from "../content/vary/types.ts";
 import { A } from "../lib/route.tsx";
 import { useRoute } from "../lib/useRoute.ts";
@@ -154,7 +154,7 @@ export function TopicDesk({ id }: { id: string }) {
               {!ready ? (
                 <p className="loading">{t(lang, "Đang mở tờ…", "Opening this sheet…")}</p>
               ) : lesson ? (
-                <MathText text={lang === "en" ? lesson.conceptEn : lesson.concept} />
+                <LessonRead key={topic.id} lesson={lesson} />
               ) : (
                 <>
                   <p>{lang === "en" ? topic.blurbEn : topic.blurb}</p>
@@ -202,6 +202,38 @@ export function TopicDesk({ id }: { id: string }) {
           )
         ) : null}
       </main>
+    </div>
+  );
+}
+
+const BIT_LABEL: Record<LessonKind, [string, string]> = {
+  mo: ["Bằng lời", "In words"],
+  vd: ["Ví dụ", "Example"],
+  dinh: ["Định nghĩa", "Definition"],
+  loi: ["Lỗi hay gặp", "Common mistake"],
+  kiem: ["Kiểm nhanh", "Quick check"],
+};
+
+function LessonRead({ lesson }: { lesson: Lesson }) {
+  const lang = useLang();
+  const [layer, setLayer] = useState<"basic" | "exam">("basic");
+  const bits = layer === "basic" ? lesson.basic : lesson.exam;
+  return (
+    <div className="read">
+      <div className="read-switch" role="tablist" aria-label={t(lang, "Mức bài học", "Lesson level")}>
+        <button type="button" role="tab" aria-selected={layer === "basic"} onClick={() => setLayer("basic")}>
+          {t(lang, "Cơ bản", "Basics")}
+        </button>
+        <button type="button" role="tab" aria-selected={layer === "exam"} onClick={() => setLayer("exam")}>
+          {t(lang, "Chuẩn thi", "Exam")}
+        </button>
+      </div>
+      {bits.map((bit) => (
+        <p key={bit.k} className={`read-bit read-${bit.k}`}>
+          <b>{t(lang, BIT_LABEL[bit.k][0], BIT_LABEL[bit.k][1])}</b>
+          <MathText text={lang === "en" ? bit.en : bit.vi} />
+        </p>
+      ))}
     </div>
   );
 }

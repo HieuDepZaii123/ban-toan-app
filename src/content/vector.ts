@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const vectorLesson: Lesson = {
-  concept: R`$|(2;\ 1;\ 2)|=\sqrt{4+1+4}=3\neq5,\ \neq\sqrt{5}$. $v=(1;\ -1;\ 2)$: $u\cdot v=5$, $u\times v=(4;\ -2;\ -3)$. $(1;\ 2;\ -1)\cdot(2;\ -1;\ 0)=0$ (công $0$). $(1;\ 2;\ 3)+(2;\ -1;\ 1)=(3;\ 1;\ 4)$. $\det=2(-1)-1\cdot1=-3$. $2x+y=5,\ x-y=1\Rightarrow(x;\ y)=(2;\ 1)$, $\det=-3\neq0$. $\vec i\times\vec j=(0;\ 0;\ 1)$.`,
-  conceptEn: R`$|(2;\ 1;\ 2)|=\sqrt{4+1+4}=3\neq5,\ \neq\sqrt{5}$. $v=(1;\ -1;\ 2)$: $u\cdot v=5$, $u\times v=(4;\ -2;\ -3)$. $(1;\ 2;\ -1)\cdot(2;\ -1;\ 0)=0$ (work $0$). $(1;\ 2;\ 3)+(2;\ -1;\ 1)=(3;\ 1;\ 4)$. $\det=2(-1)-1\cdot1=-3$. $2x+y=5,\ x-y=1\Rightarrow(x;\ y)=(2;\ 1)$, $\det=-3\neq0$. $\vec i\times\vec j=(0;\ 0;\ 1)$.`,
+  basic: [
+    { k: "mo", vi: R`Vectơ là mũi tên có hướng; độ dài là khoảng từ gốc tới ngọn.`, en: R`A vector is a directed arrow; its length is the distance from start to tip.` },
+    { k: "vd", vi: R`Độ dài $(3;4)$ là $5$.`, en: R`The length of $(3;4)$ is $5$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$|u|=\sqrt{x^2+y^2+z^2}$; tích vô hướng $0$ thì vuông góc.`, en: R`$|u|=\sqrt{x^2+y^2+z^2}$; a dot product of $0$ means perpendicular.` },
+    { k: "vd", vi: R`Độ dài $|(2;1;2)|$ là $3$.`, en: R`The length $|(2;1;2)|$ is $3$.` },
+    { k: "loi", vi: R`Cộng $2+1+2=5$, không phải độ dài $3$.`, en: R`Adding $2+1+2=5$ is not the length $3$.` },
+    { k: "kiem", vi: R`$(1;2;-1)\cdot(2;-1;0)=0$, nên hai vectơ vuông góc.`, en: R`$(1;2;-1)\cdot(2;-1;0)=0$, so the vectors are perpendicular.` },
+  ],
 };
 
 export const vectorQuestions: Question[] = [

@@ -3,8 +3,16 @@ import type { Lesson, Question } from "./types.ts";
 const R = String.raw;
 
 export const analyticLesson: Lesson = {
-  concept: R`$x+y-2=0$: $\vec n=(1;\ 1)$, $\vec d=(1;\ -1)$. $d(P)=\dfrac{|3+1-2|}{\sqrt{2}}=\sqrt{2}\neq2$. Chân $(2;\ 0)$, không phải $(1;\ 1),\ (2;\ 2)$. $x+y+z-6=0$: $d=\sqrt{3}$, chân $(2;\ 2;\ 2)$. $x^2+y^2=25$: $(3;\ 4)$ trên ($9+16=25$), $(6;\ 0)$ ngoài ($6>5$).`,
-  conceptEn: R`$x+y-2=0$: $\vec n=(1;\ 1)$, $\vec d=(1;\ -1)$. $d(P)=\dfrac{|3+1-2|}{\sqrt{2}}=\sqrt{2}\neq2$. Foot $(2;\ 0)$, not $(1;\ 1)$ or $(2;\ 2)$. $x+y+z-6=0$: $d=\sqrt{3}$, foot $(2;\ 2;\ 2)$. $x^2+y^2=25$: $(3;\ 4)$ on ($9+16=25$), $(6;\ 0)$ outside ($6>5$).`,
+  basic: [
+    { k: "mo", vi: R`Pháp tuyến là hướng vuông góc với đường thẳng.`, en: R`The normal is the direction straight across the line.` },
+    { k: "vd", vi: R`$x+y=2$ đi qua $(2;0)$.`, en: R`$x+y=2$ passes through $(2;0)$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`Khoảng cách tới $ax+by+c=0$ là $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.`, en: R`Distance to $ax+by+c=0$ is $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.` },
+    { k: "vd", vi: R`Điểm $(3;1)$ cách $x+y-2=0$ đúng $\sqrt2$.`, en: R`The point $(3;1)$ is $\sqrt2$ from $x+y-2=0$.` },
+    { k: "loi", vi: R`$|3+1-2|=2$ chưa chia $\sqrt2$, nên chưa phải khoảng cách.`, en: R`$|3+1-2|=2$ is not yet divided by $\sqrt2$, so it is not the distance.` },
+    { k: "kiem", vi: R`$(3;4)$ nằm trên $x^2+y^2=25$ vì $9+16=25$.`, en: R`$(3;4)$ lies on $x^2+y^2=25$ because $9+16=25$.` },
+  ],
 };
 
 export const analyticQuestions: Question[] = [

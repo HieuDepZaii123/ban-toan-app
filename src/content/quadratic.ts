@@ -1,11 +1,19 @@
 import type { Lesson, Question } from "./types.ts";
 
-export const quadraticLesson: Lesson = {
-  concept: String.raw`$y=ax^2+bx+c$, $a\neq0$. Đỉnh $x=-\dfrac{b}{2a}$: đổi $a$ thì đỉnh chạy. $a(x-h)^2+k$: đỉnh đứng yên. $\Delta=b^2-4ac$: số giao Ox. $y=x^2-2x-3$: $(1;-4)$, $\Delta=16$, nghiệm $-1;3$. Rào $40$: $S=x(40-2x)$, $x=10$, $\max=200$.`,
-  conceptEn: String.raw`$y=ax^2+bx+c$, $a\neq0$. Vertex $x=-\dfrac{b}{2a}$: changing $a$ moves it. $a(x-h)^2+k$: the vertex stays. $\Delta=b^2-4ac$: count of Ox crossings. $y=x^2-2x-3$: $(1;-4)$, $\Delta=16$, roots $-1;3$. Fence $40$: $S=x(40-2x)$, $x=10$, $\max=200$.`,
-};
-
 const R = String.raw;
+
+export const quadraticLesson: Lesson = {
+  basic: [
+    { k: "mo", vi: R`Parabol là đường cong chữ U: $a>0$ miệng lên, $a<0$ miệng xuống.`, en: R`A parabola is a U: $a>0$ opens up, $a<0$ opens down.` },
+    { k: "vd", vi: R`Rào $40$ m, $S=x(40-2x)$; $x=10$ thì $S=200$.`, en: R`A $40$ m fence, $S=x(40-2x)$; at $x=10$, $S=200$.` },
+  ],
+  exam: [
+    { k: "dinh", vi: R`$y=ax^2+bx+c$ ($a\neq0$) có đỉnh $x=-\dfrac{b}{2a}$ và $\Delta=b^2-4ac$.`, en: R`$y=ax^2+bx+c$ ($a\neq0$) has vertex $x=-\dfrac{b}{2a}$ and $\Delta=b^2-4ac$.` },
+    { k: "vd", vi: R`$y=x^2-2x-3$: đỉnh $(1;-4)$, nghiệm $-1$ và $3$.`, en: R`$y=x^2-2x-3$: vertex $(1;-4)$, roots $-1$ and $3$.` },
+    { k: "loi", vi: R`$\Delta$ không cho hoành độ đỉnh.`, en: R`$\Delta$ does not give the vertex $x$-coordinate.` },
+    { k: "kiem", vi: R`$y=x^2-4x$ có đỉnh $(2;-4)$.`, en: R`$y=x^2-4x$ has vertex $(2;-4)$.` },
+  ],
+};
 
 export const quadraticQuestions: Question[] = [
   {
