@@ -16,12 +16,13 @@ const art = {
   stars: lazy(() => import("./art/more.tsx").then((mod) => ({ default: mod.Starry }))),
 };
 
-function readRoom(): { lamp: boolean; mode: SceneMode } {
+function readRoom(): { lamp: boolean; mode: SceneMode; img: string } {
   try {
-    const raw = JSON.parse(localStorage.getItem(ROOM_KEY) || "null") as { lamp?: unknown; scene?: unknown };
-    return { lamp: raw?.lamp !== false, mode: isSceneMode(raw?.scene) ? raw.scene : "auto" };
+    const raw = JSON.parse(localStorage.getItem(ROOM_KEY) || "null") as { lamp?: unknown; scene?: unknown; img?: unknown };
+    const img = typeof raw?.img === "string" && raw.img.startsWith("data:image/") ? raw.img : "";
+    return { lamp: raw?.lamp !== false, mode: isSceneMode(raw?.scene) ? raw.scene : "auto", img };
   } catch {
-    return { lamp: true, mode: "auto" };
+    return { lamp: true, mode: "auto", img: "" };
   }
 }
 
@@ -29,15 +30,16 @@ export function Room() {
   const lang = useLang();
   const [lamp, setLamp] = useState(() => readRoom().lamp);
   const [mode, setMode] = useState<SceneMode>(() => readRoom().mode);
+  const [img, setImg] = useState(() => readRoom().img);
 
   useEffect(() => {
     document.documentElement.dataset.lamp = lamp ? "on" : "off";
     try {
-      localStorage.setItem(ROOM_KEY, JSON.stringify({ lamp, scene: mode }));
+      localStorage.setItem(ROOM_KEY, JSON.stringify({ lamp, scene: mode, img }));
     } catch {
-      /* the desk still works for this visit */
+      /* a large photo may not fit; the desk still works */
     }
-  }, [lamp, mode]);
+  }, [lamp, mode, img]);
 
   useEffect(() => () => {
     delete document.documentElement.dataset.lamp;
@@ -46,7 +48,7 @@ export function Room() {
   return (
     <section className={`room${lamp ? " is-lit" : ""}`} aria-label={t(lang, "Góc bàn", "Desk corner")}>
       <Lamp on={lamp} onToggle={() => setLamp((value) => !value)} />
-      <Window mode={mode} onMode={setMode} />
+      <Window mode={mode} onMode={setMode} img={img} onImg={setImg} />
       <Clocks />
     </section>
   );
@@ -65,14 +67,39 @@ function Lamp({ on, onToggle }: { on: boolean; onToggle: () => void }) {
   );
 }
 
-function Window({ mode, onMode }: { mode: SceneMode; onMode: (mode: SceneMode) => void }) {
+function shrinkImage(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      const scale = Math.min(1, 720 / Math.max(image.width, image.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(image.width * scale));
+      canvas.height = Math.max(1, Math.round(image.height * scale));
+      canvas.getContext("2d")?.drawImage(image, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      let data = canvas.toDataURL("image/jpeg", 0.72);
+      if (data.length > 350_000) data = canvas.toDataURL("image/jpeg", 0.5);
+      resolve(data);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("image"));
+    };
+    image.src = url;
+  });
+}
+
+function Window({ mode, onMode, img, onImg }: { mode: SceneMode; onMode: (mode: SceneMode) => void; img: string; onImg: (value: string) => void }) {
   const lang = useLang();
   const frame = useRef<HTMLDivElement>(null);
   const [hour, setHour] = useState(() => new Date().getHours());
+  const [note, setNote] = useState("");
   const [open, setOpen] = useState(() => {
     try { return localStorage.getItem("bt-win-open") === "1"; } catch { return false; }
   });
-  const scene: SceneId = mode === "auto" ? sceneFromHour(hour) : mode;
+  const photo = mode === "custom" && img.startsWith("data:image/");
+  const scene: SceneId = mode === "auto" || mode === "custom" ? sceneFromHour(hour) : mode;
   const Art = art[scene];
   const name = SCENES.find((item) => item.id === scene);
 
@@ -145,11 +172,13 @@ function Window({ mode, onMode }: { mode: SceneMode; onMode: (mode: SceneMode) =
             role="img"
             aria-label={t(lang, `Cửa sổ, cảnh ${name?.vi ?? ""}.`, `Window, ${name?.en ?? ""} outside.`)}
           >
-            <ArtBoundary key={scene}>
-              <Suspense fallback={null}>
-                <Art />
-              </Suspense>
-            </ArtBoundary>
+            {photo ? <img className="window-photo" src={img} alt="" /> : (
+              <ArtBoundary key={scene}>
+                <Suspense fallback={null}>
+                  <Art />
+                </Suspense>
+              </ArtBoundary>
+            )}
             <span className="day-glow" aria-hidden="true" />
             <span className="clouds" aria-hidden="true"><i /><i /><i /></span>
             <span className="mullion" aria-hidden="true" />
@@ -167,6 +196,9 @@ function Window({ mode, onMode }: { mode: SceneMode; onMode: (mode: SceneMode) =
         <button type="button" aria-pressed={mode === "auto"} title={t(lang, "Theo giờ trên máy này", "Follow this device's clock")} onClick={() => onMode("auto")}>
           {t(lang, "Theo giờ", "Local time")}
         </button>
+        <button type="button" aria-pressed={mode === "custom"} onClick={() => onMode("custom")}>
+          {t(lang, "Ảnh của bạn", "Your photo")}
+        </button>
         {SCENES.map((item) => (
           <button
             key={item.id}
@@ -179,6 +211,38 @@ function Window({ mode, onMode }: { mode: SceneMode; onMode: (mode: SceneMode) =
           </button>
         ))}
       </div>
+      <details className="wcustom">
+        <summary>{t(lang, "Ảnh nền cửa sổ", "Window photo")}</summary>
+        <label className="lecture-note">
+          {t(lang, "Chọn ảnh trên máy này", "Choose a photo on this device")}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              event.target.value = "";
+              if (!file) return;
+              if (!file.type.startsWith("image/")) {
+                setNote(t(lang, "Tệp này không phải ảnh.", "That file is not an image."));
+                return;
+              }
+              void shrinkImage(file).then((data) => {
+                if (data.length > 400_000) {
+                  setNote(t(lang, "Ảnh hơi lớn, chọn ảnh nhỏ hơn.", "That photo is too large."));
+                  return;
+                }
+                onImg(data);
+                onMode("custom");
+                setNote(t(lang, "Đã đặt ảnh nền.", "Photo set."));
+              }).catch(() => setNote(t(lang, "Không đọc được ảnh.", "The photo could not be read.")));
+            }}
+          />
+        </label>
+        <button type="button" className="text-btn" disabled={!img} onClick={() => { onImg(""); onMode("auto"); setNote(t(lang, "Đã xóa ảnh nền.", "Photo removed.")); }}>
+          {t(lang, "Xóa ảnh", "Remove photo")}
+        </button>
+        <p className="lecture-note" role="status">{note}</p>
+      </details>
     </div>
   );
 }

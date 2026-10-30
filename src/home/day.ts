@@ -10,7 +10,7 @@ export const SCENES = [
 ] as const;
 
 export type SceneId = (typeof SCENES)[number]["id"];
-export type SceneMode = "auto" | SceneId;
+export type SceneMode = "auto" | "custom" | SceneId;
 
 export const ZONES = [
   { id: "Asia/Ho_Chi_Minh", vi: "Hà Nội", en: "Hanoi" },
@@ -29,5 +29,5 @@ export function sceneFromHour(hour: number): "morning" | "noon" | "afternoon" | 
 }
 
 export function isSceneMode(value: unknown): value is SceneMode {
-  return value === "auto" || SCENES.some((scene) => scene.id === value);
+  return value === "auto" || value === "custom" || SCENES.some((scene) => scene.id === value);
 }

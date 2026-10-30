@@ -898,6 +898,11 @@ html[data-lamp="on"] body::before {
   position: sticky; top: 0; z-index: 6; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
   padding: 10px 16px; background: color-mix(in srgb, var(--bg) 92%, transparent); border-bottom: 1px solid var(--line);
 }
+.plane-canvas { display: block; width: 100%; touch-action: none; border: 1px solid var(--line); border-radius: 12px; background: var(--plot-bg); cursor: crosshair; }
+.window-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.code-block { margin: 0; padding: 10px 12px; overflow: auto; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.82rem; white-space: pre; }
+.wcustom { margin-top: 8px; }
+.wcustom input { display: block; margin-top: 4px; }
 .win3d { perspective: 700px; overflow: hidden; padding: 4px 6px 8px; }
 .wframe {
   position: relative; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));

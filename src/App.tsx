@@ -14,6 +14,9 @@ const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ defa
 const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
 const FormulaPage = lazy(() => import("./pages/FormulaPage.tsx").then((mod) => ({ default: mod.FormulaPage })));
 const AssessPage = lazy(() => import("./pages/AssessPage.tsx").then((mod) => ({ default: mod.AssessPage })));
+const WorkshopPage = lazy(() => import("./pages/WorkshopPage.tsx").then((mod) => ({ default: mod.WorkshopPage })));
+const DrillPage = lazy(() => import("./pages/DrillPage.tsx").then((mod) => ({ default: mod.DrillPage })));
+const MissPage = lazy(() => import("./pages/MissPage.tsx").then((mod) => ({ default: mod.MissPage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -57,6 +60,9 @@ function Shell() {
   if (path === "/nang-cap") return <Upgrade />;
   if (path === "/so-cong-thuc") return <FormulaPage />;
   if (path === "/danh-gia") return <AssessPage />;
+  if (path === "/xuong-hinh") return <WorkshopPage />;
+  if (path === "/luyen") return <DrillPage />;
+  if (path === "/so-loi") return <MissPage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   return <HomeDesk />;
 }

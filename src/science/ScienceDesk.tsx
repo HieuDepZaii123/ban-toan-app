@@ -5,7 +5,8 @@ import { LectureVideos } from "../topic/LectureVideos.tsx";
 import { AreaNav } from "../ui/AreaNav.tsx";
 import { Prefs } from "../ui/Prefs.tsx";
 import { useLang } from "../ui/useLang.ts";
-import { scienceById, sciences } from "./catalog.ts";
+import { scienceById, sciences, type ScienceId } from "./catalog.ts";
+import { ScienceStudy } from "./ScienceStudy.tsx";
 
 export function ScienceDesk({ path }: { path: string }) {
   const lang = useLang();
@@ -47,8 +48,8 @@ function ScienceHome() {
       <p className="lead">
         {t(
           lang,
-          "Lập trình, số liệu, đề chuyên, vật lý và hóa tính toán. Mỗi mảng có video bài giảng riêng, tách khỏi mười bốn chuyên đề Toán.",
-          "Programming, data, specialised papers, physics and calculation chemistry. Each area has its own lecture videos, apart from the fourteen maths topics.",
+          "Lập trình, số liệu, đề chuyên, vật lý và hóa tính toán. Mỗi mảng có bài Cơ bản, Chuẩn thi, Nâng cao và video. Tách khỏi mười bốn chuyên đề Toán.",
+          "Programming, data, specialised papers, physics and calculation chemistry. Each area has three layers and a video, apart from the fourteen maths topics.",
         )}
       </p>
       <div className="science-list">
@@ -75,6 +76,7 @@ function ScienceTopic({ id, title, blurb }: { id: string; title: string; blurb: 
       <p>
         <A href="/khoa-hoc">{t(lang, "← Các mảng Khoa học", "← Science areas")}</A>
       </p>
+      <ScienceStudy id={id as ScienceId} />
       <LectureVideos topicId={id} />
     </>
   );
