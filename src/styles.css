@@ -748,7 +748,23 @@ html[data-lamp="on"] body::before {
   min-height: 44px;
 }
 .lecture-poster:disabled { opacity: 0.8; }
-.lecture-poster small { color: var(--ink-soft); }
+.lecture-poster small, .lecture-note { color: var(--ink-soft); }
+.lecture-note { display: block; margin: 0; font-size: 0.82rem; font-weight: 400; }
+.area-nav { display: flex; gap: 6px; flex: 1 0 100%; }
+.science-list { display: grid; gap: 8px; margin: 10px 0 20px; }
+@media (min-width: 840px) { .science-list { grid-template-columns: 1fr 1fr; } }
+.area-nav a {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1px solid var(--line);
+}
+.area-nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
+.study-card strong { display: block; }
+.study-card .lecture-note { margin-top: 4px; }
 .lecture-frame { display: block; }
 .chat-fab {
   position: fixed;

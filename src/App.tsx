@@ -9,6 +9,7 @@ import { useLang } from "./ui/useLang.ts";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ default: mod.Upgrade })));
+const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -49,6 +50,7 @@ function Shell() {
   const { path } = useRoute();
   if (path.startsWith("/t/")) return <TopicDesk id={topicId(path)} />;
   if (path === "/nang-cap") return <Upgrade />;
+  if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   return <HomeDesk />;
 }
 

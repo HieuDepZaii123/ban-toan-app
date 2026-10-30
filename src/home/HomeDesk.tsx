@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cards, QUESTION_TOTAL, streamName, streams } from "../content/cards.ts";
 import { A } from "../lib/route.tsx";
+import { sciences } from "../science/catalog.ts";
+import { AreaNav } from "../ui/AreaNav.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
 import { Prefs } from "../ui/Prefs.tsx";
@@ -45,6 +47,7 @@ export function HomeDesk() {
       <a className="skip" href="#content">{t(lang, "Vào nội dung", "Skip to content")}</a>
       <header className="bar">
         <A className="brand" href="/">Bàn Toán</A>
+        <AreaNav />
         <form className="search" role="search" onSubmit={(event) => event.preventDefault()}>
           <input
             id="search"
@@ -89,6 +92,22 @@ export function HomeDesk() {
             );
           })
         )}
+        <section className="stream" aria-labelledby="science-home">
+          <h2 id="science-home">{t(lang, "Khoa học", "Science")}</h2>
+          <p className="lecture-note">
+            {t(lang, "Năm mảng riêng, không nằm trong mười bốn chuyên đề Toán. Mỗi mảng có video bài giảng.", "Five separate areas, outside the fourteen maths topics. Each one has lecture videos.")}
+          </p>
+          <div className="science-list">
+            {sciences.map((item) => (
+              <A key={item.id} className="study-card" href={`/khoa-hoc/${item.id}`}>
+                <span>
+                  <strong>{item.title}</strong>
+                  <small className="lecture-note">{item.blurb}</small>
+                </span>
+              </A>
+            ))}
+          </div>
+        </section>
         <p className="foot">
           {t(lang, "Số liệu nằm trên máy này. Sau lần mở đầu, bàn vẫn dùng được khi mất mạng.", "Numbers stay on this device. After the first load, the desk works offline.")}
           {" "}
