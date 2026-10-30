@@ -10,7 +10,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "test": "tsx scripts/check-math.ts && tsx scripts/golden.ts && tsx scripts/store.test.ts && tsx scripts/vary.test.ts && tsx scripts/concept.test.ts && tsx scripts/dss.test.ts && tsx scripts/research.test.ts && tsx scripts/pay.test.ts && tsx scripts/crypto.test.ts && tsx scripts/chat.test.ts && tsx scripts/lectures.test.ts",
+    "test": "tsx scripts/check-math.ts && tsx scripts/golden.ts && tsx scripts/store.test.ts && tsx scripts/vary.test.ts && tsx scripts/concept.test.ts && tsx scripts/dss.test.ts && tsx scripts/research.test.ts && tsx scripts/pay.test.ts && tsx scripts/crypto.test.ts && tsx scripts/chat.test.ts && tsx scripts/lectures.test.ts && tsx scripts/port.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {

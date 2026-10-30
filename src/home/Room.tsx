@@ -1,4 +1,4 @@
-import { Component, lazy, Suspense, useEffect, useState, type ReactNode } from "react";
+import { Component, lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 import { isSceneMode, sceneFromHour, SCENES, ZONES, type SceneId, type SceneMode } from "./day.ts";
@@ -10,6 +10,10 @@ const art = {
   noon: lazy(() => import("./art/noon.tsx").then((mod) => ({ default: mod.Noon }))),
   afternoon: lazy(() => import("./art/afternoon.tsx").then((mod) => ({ default: mod.Afternoon }))),
   evening: lazy(() => import("./art/evening.tsx").then((mod) => ({ default: mod.Evening }))),
+  sunset: lazy(() => import("./art/more.tsx").then((mod) => ({ default: mod.Sunset }))),
+  rain: lazy(() => import("./art/more.tsx").then((mod) => ({ default: mod.Rainy }))),
+  snow: lazy(() => import("./art/more.tsx").then((mod) => ({ default: mod.Snowy }))),
+  stars: lazy(() => import("./art/more.tsx").then((mod) => ({ default: mod.Starry }))),
 };
 
 function readRoom(): { lamp: boolean; mode: SceneMode } {
@@ -63,7 +67,11 @@ function Lamp({ on, onToggle }: { on: boolean; onToggle: () => void }) {
 
 function Window({ mode, onMode }: { mode: SceneMode; onMode: (mode: SceneMode) => void }) {
   const lang = useLang();
+  const frame = useRef<HTMLDivElement>(null);
   const [hour, setHour] = useState(() => new Date().getHours());
+  const [open, setOpen] = useState(() => {
+    try { return localStorage.getItem("bt-win-open") === "1"; } catch { return false; }
+  });
   const scene: SceneId = mode === "auto" ? sceneFromHour(hour) : mode;
   const Art = art[scene];
   const name = SCENES.find((item) => item.id === scene);
@@ -81,29 +89,78 @@ function Window({ mode, onMode }: { mode: SceneMode; onMode: (mode: SceneMode) =
     };
   }, []);
 
+  useEffect(() => {
+    const node = frame.current;
+    const host = node?.parentElement;
+    if (!node || !host) return;
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const max = calm ? 0 : 8;
+    let tx = 0;
+    let ty = 0;
+    let cx = 0;
+    let cy = 0;
+    let raf = 0;
+    const loop = () => {
+      cx += (tx - cx) * 0.14;
+      cy += (ty - cy) * 0.14;
+      node.style.setProperty("--rx", `${cx.toFixed(2)}deg`);
+      node.style.setProperty("--ry", `${cy.toFixed(2)}deg`);
+      raf = Math.abs(tx - cx) > 0.04 || Math.abs(ty - cy) > 0.04 ? requestAnimationFrame(loop) : 0;
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+    const move = (event: PointerEvent) => {
+      if (!max) return;
+      const box = node.getBoundingClientRect();
+      const nx = Math.max(-1, Math.min(1, (event.clientX - (box.left + box.width / 2)) / (box.width * 0.9)));
+      const ny = Math.max(-1, Math.min(1, (event.clientY - (box.top + box.height / 2)) / (box.height * 1.4)));
+      ty = nx * max;
+      tx = -ny * max * 0.65;
+      kick();
+    };
+    const reset = () => { tx = 0; ty = 0; kick(); };
+    host.addEventListener("pointermove", move);
+    host.addEventListener("pointerleave", reset);
+    return () => {
+      host.removeEventListener("pointermove", move);
+      host.removeEventListener("pointerleave", reset);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const toggle = () => {
+    setOpen((value) => {
+      const next = !value;
+      try { localStorage.setItem("bt-win-open", next ? "1" : "0"); } catch { /* ignore */ }
+      return next;
+    });
+  };
+
   return (
     <div className="window">
-      <div className="frame">
-        <div
-          className="pane"
-          data-scene={scene}
-          role="img"
-          aria-label={t(
-            lang,
-            `Cửa sổ, cảnh ${name?.vi ?? ""}.`,
-            `Window, ${name?.en ?? ""} outside.`,
-          )}
-        >
-          <ArtBoundary key={scene}>
-            <Suspense fallback={null}>
-              <Art />
-            </Suspense>
-          </ArtBoundary>
-          <span className="day-glow" aria-hidden="true" />
-          <span className="clouds" aria-hidden="true">
-            <i /><i /><i />
-          </span>
-          <span className="mullion" aria-hidden="true" />
+      <div className={`win3d${open ? " is-open" : ""}`}>
+        <div className="wframe" ref={frame}>
+          <div
+            className="pane"
+            data-scene={scene}
+            role="img"
+            aria-label={t(lang, `Cửa sổ, cảnh ${name?.vi ?? ""}.`, `Window, ${name?.en ?? ""} outside.`)}
+          >
+            <ArtBoundary key={scene}>
+              <Suspense fallback={null}>
+                <Art />
+              </Suspense>
+            </ArtBoundary>
+            <span className="day-glow" aria-hidden="true" />
+            <span className="clouds" aria-hidden="true"><i /><i /><i /></span>
+            <span className="mullion" aria-hidden="true" />
+          </div>
+          <button type="button" className="wsash" aria-pressed={open} aria-label={open ? t(lang, "Đóng cửa sổ", "Close the window") : t(lang, "Mở cửa sổ", "Open the window")} onClick={toggle} />
+        </div>
+        <div className="wbar">
+          <button type="button" className="text-btn" aria-pressed={open} onClick={toggle}>
+            {open ? t(lang, "Đóng cửa sổ", "Close the window") : t(lang, "Mở cửa sổ", "Open the window")}
+          </button>
+          <small>{t(lang, "Rê chuột để nghiêng", "Move the pointer to tilt")}</small>
         </div>
       </div>
       <div className="chips scene-switch" role="group" aria-label={t(lang, "Cảnh ngoài cửa sổ", "View outside")}>

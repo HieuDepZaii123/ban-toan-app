@@ -3,13 +3,17 @@ import { ChatEntry } from "./chat/ChatEntry.tsx";
 import { HomeDesk } from "./home/HomeDesk.tsx";
 import { A, RouteProvider } from "./lib/route.tsx";
 import { useRoute } from "./lib/useRoute.ts";
-import { useSlice } from "./lib/store.ts";
+import { setTheme, useSlice } from "./lib/store.ts";
 import { t } from "./lib/text.ts";
+import { Atmosphere } from "./ui/Atmosphere.tsx";
+import { effectiveTheme, readThemeMode } from "./ui/themeMode.ts";
 import { useLang } from "./ui/useLang.ts";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ default: mod.Upgrade })));
 const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
+const FormulaPage = lazy(() => import("./pages/FormulaPage.tsx").then((mod) => ({ default: mod.FormulaPage })));
+const AssessPage = lazy(() => import("./pages/AssessPage.tsx").then((mod) => ({ default: mod.AssessPage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -20,6 +24,7 @@ export default function App() {
   }, []);
   return (
     <RouteProvider>
+      <Atmosphere />
       <ThemeBridge />
       <Guarded />
       <ChatEntry />
@@ -50,6 +55,8 @@ function Shell() {
   const { path } = useRoute();
   if (path.startsWith("/t/")) return <TopicDesk id={topicId(path)} />;
   if (path === "/nang-cap") return <Upgrade />;
+  if (path === "/so-cong-thuc") return <FormulaPage />;
+  if (path === "/danh-gia") return <AssessPage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   return <HomeDesk />;
 }
@@ -69,10 +76,17 @@ function ThemeBridge() {
   const theme = useSlice((data) => data.theme);
   const lang = useSlice((data) => data.lang);
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.lang = lang === "en" ? "en" : "vi";
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "night" ? "#121411" : "#e7e0d2");
-    window.dispatchEvent(new Event("ban-toan-theme"));
+    const apply = () => {
+      const next = effectiveTheme(readThemeMode(theme));
+      document.documentElement.dataset.theme = next;
+      document.documentElement.lang = lang === "en" ? "en" : "vi";
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "night" ? "#1c1612" : "#e7e0d2");
+      window.dispatchEvent(new Event("ban-toan-theme"));
+      if (next !== theme) setTheme(next);
+    };
+    apply();
+    const id = window.setInterval(apply, 60_000);
+    return () => window.clearInterval(id);
   }, [theme, lang]);
   return null;
 }

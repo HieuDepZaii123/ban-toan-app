@@ -63,8 +63,7 @@ const KEY = "ban-toan";
 export const EMPTY_THINK: ThinkFlags = { nhin: false, lam: false, ket: false };
 
 function preferredTheme(): ThemeName {
-  if (typeof window === "undefined") return "paper";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "paper";
+  return "paper";
 }
 
 function emptyAt(): Stamps {

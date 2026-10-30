@@ -15,7 +15,9 @@ import { captionFor } from "../motion/captions.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Notebook } from "./Notebook.tsx";
 import { Practice } from "./Practice.tsx";
+import { FocusBar } from "./FocusBar.tsx";
 import { LectureVideos } from "./LectureVideos.tsx";
+import { SangTao } from "./SangTao.tsx";
 
 const Research = lazy(() => import("./Research.tsx").then((mod) => ({ default: mod.Research })));
 
@@ -64,6 +66,7 @@ export function TopicDesk({ id }: { id: string }) {
   const tabParam = new URLSearchParams(search).get("tab");
   const tab = tabParam === "lam" || tabParam === "so" || tabParam === "nc" ? tabParam : "hoc";
   const [pack, setPack] = useState<Loaded | null>(null);
+  const [focus, setFocus] = useState(false);
 
   useEffect(() => {
     if (topic) setLast(topic.id);
@@ -112,8 +115,9 @@ export function TopicDesk({ id }: { id: string }) {
   const Lab = isCardId(topic.id) ? labs[topic.id] : null;
 
   return (
-    <div className="desk">
+    <div className={`desk${focus ? " is-focus" : ""}`}>
       <a className="skip" href="#content">{t(lang, "Vào nội dung", "Skip to content")}</a>
+      {focus ? <FocusBar onExit={() => setFocus(false)} /> : null}
       <header className="bar">
         <div className="bar-row">
           <A className="back" href="/">{t(lang, "Bàn", "Desk")}</A>
@@ -121,6 +125,9 @@ export function TopicDesk({ id }: { id: string }) {
             <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
             <span>{streamName(topic.stream, lang)} · {t(lang, "Lớp", "Grade")} {topic.grade}</span>
           </div>
+          <button type="button" className="text-btn" onClick={() => { setFocus(true); go(`/t/${topic.id}?tab=hoc`); }}>
+            {t(lang, "Tập trung", "Focus")}
+          </button>
           <Prefs />
         </div>
         <nav className="tabs" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>
@@ -163,6 +170,7 @@ export function TopicDesk({ id }: { id: string }) {
                 </>
               )}
               <LectureVideos topicId={topic.id} />
+              <SangTao topicId={topic.id} />
             </div>
             {Lab ? (
               <Suspense fallback={<div className="graph-wrap skeleton" aria-hidden="true" />}>

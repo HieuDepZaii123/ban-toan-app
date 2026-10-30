@@ -175,8 +175,8 @@ export function Upgrade() {
         <p className="pay-note">
           {t(
             lang,
-            "Giá dưới đây là giá mẫu, sửa trong cấu hình server. Nội dung các tờ hiện có vẫn mở.",
-            "The prices below are samples, edited in the server config. The sheets you already have stay open.",
+            "49.000đ một tháng, 399.000đ một năm. Thanh toán bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Nội dung các tờ hiện có vẫn mở.",
+            "49,000 VND a month, 399,000 VND a year. Pay with MoMo, VietQR, bank transfer, or USDT/USDC. The sheets you already have stay open.",
           )}
           {plans?.lockContent
             ? t(lang, " Cờ khóa nội dung đang bật.", " The content lock is on.")
@@ -192,8 +192,8 @@ export function Upgrade() {
             }}
           >
             <div className="pay-grid two" role="radiogroup" aria-label={t(lang, "Gói", "Plan")}>
-              <PlanCard id="month" title={t(lang, "Một tháng", "One month")} days={month?.days ?? 30} amount={month?.amount} on={plan === "month"} onPick={() => setPlan("month")} />
-              <PlanCard id="year" title={t(lang, "Một năm", "One year")} days={year?.days ?? 365} amount={year?.amount} on={plan === "year"} onPick={() => setPlan("year")} />
+              <PlanCard id="month" title={t(lang, "Một tháng", "One month")} days={month?.days ?? 30} amount={month?.amount ?? 49000} on={plan === "month"} onPick={() => setPlan("month")} />
+              <PlanCard id="year" title={t(lang, "Một năm", "One year")} days={year?.days ?? 365} amount={year?.amount ?? 399000} on={plan === "year"} onPick={() => setPlan("year")} />
             </div>
             <label className="pay-row">
               <span>{t(lang, "Email", "Email")}</span>

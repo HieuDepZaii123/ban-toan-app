@@ -5,10 +5,12 @@ import { sciences } from "../science/catalog.ts";
 import { AreaNav } from "../ui/AreaNav.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
+import { Logo } from "../ui/Logo.tsx";
 import { Prefs } from "../ui/Prefs.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
+import { Welcome } from "./Welcome.tsx";
 
 export function HomeDesk() {
   const lang = useLang();
@@ -46,7 +48,7 @@ export function HomeDesk() {
     <div className="desk">
       <a className="skip" href="#content">{t(lang, "Vào nội dung", "Skip to content")}</a>
       <header className="bar">
-        <A className="brand" href="/">Bàn Toán</A>
+        <A className="brand" href="/"><Logo /> Bàn Toán</A>
         <AreaNav />
         <form className="search" role="search" onSubmit={(event) => event.preventDefault()}>
           <input
@@ -62,16 +64,8 @@ export function HomeDesk() {
         <Prefs />
       </header>
       <main id="content">
+        <Welcome />
         <Room />
-        <p className="kicker">{t(lang, "Lớp 10 – 12", "Grades 10–12")}</p>
-        <h1>{t(lang, "Bàn làm việc cho toán THPT.", "A workbench for high-school maths.")}</h1>
-        <p className="lead">
-          {t(
-            lang,
-            "Kéo tham số, đọc số vừa tính, rồi làm câu có lời giải. Mười bốn tờ đã mở.",
-            "Drag a parameter, read the number you just computed, then answer a question with a worked solution. All fourteen sheets are open.",
-          )}
-        </p>
         <ProgressLine />
         {folded ? null : <Continue />}
         {visible.length === 0 ? (
