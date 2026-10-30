@@ -3,10 +3,14 @@ export const SCENES = [
   { id: "noon", vi: "Trưa", en: "Noon" },
   { id: "afternoon", vi: "Chiều", en: "Afternoon" },
   { id: "evening", vi: "Đêm", en: "Night" },
+  { id: "sunset", vi: "Hoàng hôn", en: "Sunset" },
+  { id: "rain", vi: "Mưa", en: "Rain" },
+  { id: "snow", vi: "Tuyết", en: "Snow" },
+  { id: "stars", vi: "Đêm sao", en: "Stars" },
 ] as const;
 
 export type SceneId = (typeof SCENES)[number]["id"];
-export type SceneMode = "auto" | SceneId;
+export type SceneMode = "auto" | "custom" | SceneId;
 
 export const ZONES = [
   { id: "Asia/Ho_Chi_Minh", vi: "Hà Nội", en: "Hanoi" },
@@ -16,7 +20,7 @@ export const ZONES = [
 ] as const;
 
 /** Local hour bands: sáng 5–10, trưa 11–13, chiều 14–17, đêm otherwise. */
-export function sceneFromHour(hour: number): SceneId {
+export function sceneFromHour(hour: number): "morning" | "noon" | "afternoon" | "evening" {
   const h = ((Math.floor(hour) % 24) + 24) % 24;
   if (h >= 5 && h < 11) return "morning";
   if (h >= 11 && h < 14) return "noon";
@@ -25,5 +29,5 @@ export function sceneFromHour(hour: number): SceneId {
 }
 
 export function isSceneMode(value: unknown): value is SceneMode {
-  return value === "auto" || SCENES.some((scene) => scene.id === value);
+  return value === "auto" || value === "custom" || SCENES.some((scene) => scene.id === value);
 }

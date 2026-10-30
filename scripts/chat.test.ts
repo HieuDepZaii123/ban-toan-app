@@ -93,7 +93,10 @@ for (const card of cards) {
   const pair = lectures[card.id];
   assert(pair.length === 2, `${card.id} lectures`);
   assert(pair[0]?.level === "basic" && pair[1]?.level === "exam", `${card.id} levels`);
-  assert(pair.every((video) => video.title.length > 8 && !isYoutubeId(video.youtubeId)), `${card.id} placeholder id`);
+  assert(
+    pair.every((video) => video.title.length > 8 && (video.youtubeId === "" || isYoutubeId(video.youtubeId))),
+    `${card.id} lecture id`,
+  );
 }
 
 if (fails.length > 0) {
