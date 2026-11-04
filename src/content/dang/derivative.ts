@@ -15,7 +15,7 @@ export const derivativeDang: TopicDang = {
         steps: [
           { claim: R`Ta tính $y(1)=1-3=-2$.`, why: "Tiếp điểm phải nằm trên đồ thị, nên tung độ bằng giá trị hàm tại đúng hoành độ đã cho." },
           { claim: R`Đạo hàm là $y'=3x^2-6x$, nên $y'(1)=3-6=-3$.`, why: "Quy tắc đạo hàm lũy thừa áp dụng từng hạng tử, rồi thay đúng hoành độ tiếp xúc." },
-          { claim: R`Phương trình là $y=-3(x-1)-2$, tức là $y=-3x+1$.`, why: "Đây là dạng điểm và hệ số góc. Đa thức khả vi tại mọi điểm, nên không phải loại nghiệm." },
+          { claim: R`Phương trình là $y=-3(x-1)-2$, tức là $y=-3x+1$.`, why: "Đây là dạng điểm và hệ số góc. Đa thức khả vi tại mọi điểm, nên tiếp tuyến tồn tại tại điểm đã cho." },
         ],
         ket: R`Tiếp tuyến cần tìm là $y=-3x+1$.`,
         checks: [
@@ -137,7 +137,7 @@ export const derivativeDang: TopicDang = {
           { claim: R`Ta có $y(-1)=2$ và $y(1)=-2$.`, why: "Tọa độ cực trị gồm cả tung độ, lấy bằng giá trị hàm tại hoành độ vừa xác nhận." },
           { claim: R`Với $y=x^3$, $y'=3x^2$ bằng $0$ tại $x=0$ nhưng không âm ở cả hai phía, và $y''(0)=0$.`, why: "Điều kiện cần xảy ra, tiêu chuẩn cấp hai không kết luận, còn bảng dấu cho thấy không có cực trị." },
         ],
-        ket: R`Hàm $y=x^3-3x$ có cực đại $(-1;2)$ và cực tiểu $(1;-2)$. Hàm $y=x^3$ không có cực trị tại $x=0$.`,
+        ket: R`Hàm $y=x^3-3x$ có điểm cực đại của đồ thị $(-1;2)$ và điểm cực tiểu của đồ thị $(1;-2)$. Hàm $y=x^3$ không có cực trị tại $x=0$.`,
         checks: [
           { expr: "factor(diff(x**3-3*x, x))", expect: "3*(x-1)*(x+1)" },
           { expr: "diff(x**3-3*x, x, 2).subs(x,-1)", expect: "-6" },
@@ -247,7 +247,7 @@ export const derivativeDang: TopicDang = {
     {
       name: "Tính đơn điệu, kể cả khi có tham số",
       nhanDang: "Bài hỏi hàm đồng biến hay nghịch biến trên một khoảng, hoặc tìm tham số để hàm đồng biến trên cả tập số thực.",
-      phuongPhap: R`Nếu $f'$ liên tục, $f'(x)\ge 0$ trên một khoảng và $f'$ không đồng nhất bằng $0$ trên bất kỳ đoạn con nào, thì $f$ đồng biến ngặt trên khoảng đó. Đây là điều kiện đủ. Chiều ngược, nếu tìm được $a<b$ mà $f(b)<f(a)$, thì hàm không đồng biến trên mọi khoảng chứa cả hai điểm. Khi có tham số, phải xét đủ các trường hợp của dấu đạo hàm, vì một trường hợp làm điều kiện đủ thất bại chưa tự cho kết luận ngược.`,
+      phuongPhap: R`Nếu $f'$ liên tục, $f'(x)\ge 0$ trên một khoảng và $f'$ không đồng nhất bằng $0$ trên bất kỳ đoạn con nào, thì $f$ đồng biến ngặt trên khoảng đó. Đây là điều kiện đủ. Chiều ngược, nếu tìm được $a<b$ mà $f(b)<f(a)$, thì hàm không đồng biến trên bất kì khoảng nào chứa cả hai điểm. Khi có tham số, phải xét đủ các trường hợp của dấu đạo hàm, vì một trường hợp làm điều kiện đủ thất bại chưa tự cho kết luận ngược.`,
       viDu: {
         prompt: R`Tìm mọi số thực $m$ để $y=x^3+mx$ đồng biến trên $\mathbb{R}$.`,
         steps: [
@@ -266,16 +266,18 @@ export const derivativeDang: TopicDang = {
       loi: "Thấy đạo hàm âm ở một trường hợp rồi kết luận ngược cho cả họ tham số mà không chỉ ra hai điểm.",
       luyen: {
         kind: "luyen",
-        prompt: R`Với $m=-3$, hàm $y=x^3-3x$ nghịch biến trên đoạn nào trong các đoạn sau: $[-1;1]$?`,
-        think: "Tính đạo hàm và xét dấu trên đúng đoạn được hỏi. Một hiệu hàm âm giữa hai đầu đoạn cũng củng cố kết luận.",
-        answer: R`Hàm nghịch biến trên đoạn $[-1;1]$.`,
+        prompt: R`Tìm các khoảng đơn điệu của $y=x^3-3x$.`,
+        think: "Phân tích đạo hàm thành nhân tử, rồi xét dấu trên từng khoảng xác định bởi các nghiệm. Kết luận theo khoảng mở.",
+        answer: R`Hàm đồng biến trên $(-\infty;-1)$ và trên $(1;+\infty)$, nghịch biến trên $(-1;1)$.`,
         steps: [
-          { claim: R`Ta có $y'=3x^2-3=3(x-1)(x+1)\le 0$ trên $[-1;1]$, và bằng $0$ chỉ tại hai đầu.`, why: "Trên khoảng mở $(-1;1)$ đạo hàm âm. Điều kiện đủ của nghịch biến ngặt được thỏa." },
-          { claim: R`Ta có $y(1)-y(-1)=-2-2=-4<0$, phù hợp với chiều giảm.`, why: "Hiệu này là hệ quả đã kiểm lại, không thay cho bảng dấu." },
+          { claim: R`Ta có $y'=3(x-1)(x+1)$.`, why: "Hai nghiệm $-1$ và $1$ chia trục thành ba khoảng. Dấu trên mỗi khoảng là hằng." },
+          { claim: R`Đạo hàm dương trên $(-\infty;-1)$ và trên $(1;+\infty)$, âm trên $(-1;1)$.`, why: "Hệ số $3$ dương, nên đạo hàm âm đúng ở giữa hai nghiệm. Đây là bảng dấu đầy đủ." },
+          { claim: R`Vậy hàm đồng biến trên hai khoảng ngoài và nghịch biến trên khoảng giữa.`, why: "Đạo hàm dương trên một khoảng là điều kiện đủ của đồng biến. Đạo hàm âm trên một khoảng là điều kiện đủ của nghịch biến." },
         ],
         checks: [
+          { expr: "diff(x**3-3*x, x).subs(x,-2)", expect: "9" },
           { expr: "diff(x**3-3*x, x).subs(x,0)", expect: "-3" },
-          { expr: "(x**3-3*x).subs(x,1)-(x**3-3*x).subs(x,-1)", expect: "-4" },
+          { expr: "diff(x**3-3*x, x).subs(x,2)", expect: "9" },
         ],
       },
     },
@@ -283,6 +285,7 @@ export const derivativeDang: TopicDang = {
   sangTao: [
     {
       kind: "thuc-te",
+      sao: 3,
       prompt: R`Số liệu giả định. Một vật được ném lên với độ cao $h(t)=20t-5t^2$ mét, $t$ tính bằng giây và $t\ge 0$. Độ cao lớn nhất bằng bao nhiêu?`,
       think: R`Đạo hàm bằng không chỉ là điều kiện cần. Phải xét dấu trên miền $t\ge 0$ rồi mới thay vào hàm độ cao.`,
       answer: "Đáp số là $20$ mét tại $t=2$ giây; sau thời điểm này vật đi xuống.",
@@ -300,6 +303,7 @@ export const derivativeDang: TopicDang = {
     },
     {
       kind: "thuc-te",
+      sao: 3,
       prompt: R`Số liệu giả định. Chi phí sản xuất $x$ sản phẩm là $C(x)=x^2+20x+100$ nghìn đồng, với $x>0$. Đạo hàm chi phí tại $x=10$ bằng bao nhiêu?`,
       think: "Đạo hàm chi phí là tốc độ đổi của chi phí theo sản lượng, không phải chính số tiền chi tại mức đó.",
       answer: "Đáp số là $40$ nghìn đồng trên mỗi sản phẩm; quanh mức $10$ sản phẩm, chi phí đang tăng với tốc độ đó.",
@@ -314,6 +318,7 @@ export const derivativeDang: TopicDang = {
     },
     {
       kind: "thuc-te",
+      sao: 3,
       prompt: R`Số liệu giả định. Một hình chữ nhật nội tiếp nửa đường tròn bán kính $2$ mét, đáy nằm trên đường kính. Diện tích lớn nhất bằng bao nhiêu?`,
       think: "Đặt nửa đáy là $x$ mét. Diện tích dương, nên diện tích lớn nhất cùng chỗ với bình phương của nó. Xét dấu trên miền đáy còn dương.",
       answer: R`Đáp số là $4$ mét vuông, khi nửa đáy bằng $\sqrt{2}$ mét.`,
@@ -333,6 +338,7 @@ export const derivativeDang: TopicDang = {
     },
     {
       kind: "thuc-te",
+      sao: 3,
       prompt: R`Số liệu giả định. Nhiệt độ một cốc nước là $T(t)=25+60e^{-\frac{t}{4}}$ độ C, $t\ge 0$ tính bằng phút. Tốc độ thay đổi nhiệt độ tại $t=0$ bằng bao nhiêu?`,
       think: "Tốc độ thay đổi là đạo hàm, mang dấu. Dấu âm nghĩa là nhiệt đang giảm. Câu hỏi hỏi đạo hàm, không hỏi trị tuyệt đối thay cho đạo hàm.",
       answer: "Đáp số là $-15$ độ C mỗi phút; tại lúc đầu, nhiệt độ đang giảm $15$ độ C mỗi phút.",
@@ -347,6 +353,7 @@ export const derivativeDang: TopicDang = {
     },
     {
       kind: "mo",
+      sao: 3,
       prompt: R`Hệ số góc của tiếp tuyến của $y=x^3$ có thể nhận những giá trị nào? Nêu tập hợp đó và một tiếp tuyến ví dụ.`,
       think: "Đạo hàm $3x^2$ chỉ nhận giá trị không âm. Mỗi giá trị không âm đều đạt được tại ít nhất một hoành độ. Ví dụ do người giải chọn.",
       answer: R`Mọi hệ số góc $k\ge 0$ đều đạt được. Một ví dụ là tiếp tuyến tại $x=1$, có phương trình $y=3x-2$.`,
@@ -364,9 +371,10 @@ export const derivativeDang: TopicDang = {
     },
     {
       kind: "phan-bien",
+      sao: 4,
       prompt: R`Bạn A viết: hàm $y=x^4$ không có cực trị tại $x=0$ vì $y''(0)=0$. Hãy phản biện lập luận này.`,
       think: "Đạo hàm cấp hai bằng không làm tiêu chuẩn cấp hai không kết luận được. Muốn bác kết luận của bạn A, phải xét dấu đạo hàm cấp một.",
-      answer: "Lập luận chưa đúng. Hàm có cực tiểu tại $x=0$, vì đạo hàm cấp một đổi từ âm sang dương.",
+      answer: R`Lập luận chưa đúng. Đồ thị có điểm cực tiểu $(0;0)$, vì đạo hàm cấp một đổi từ âm sang dương.`,
       steps: [
         { claim: R`Ta có $y'=4x^3$ và $y''=12x^2$, nên $y'(0)=0$ và $y''(0)=0$.`, why: "Phần tính toán của bạn A đúng. Tiêu chuẩn cấp hai thực sự không kết luận tại điểm này." },
         { claim: R`Với $x<0$ thì $y'<0$, và với $x>0$ thì $y'>0$.`, why: "Dấu của $x^3$ chính là dấu của $x$. Đổi từ âm sang dương là điều kiện đủ của cực tiểu." },
@@ -382,9 +390,10 @@ export const derivativeDang: TopicDang = {
     },
     {
       kind: "doc",
+      sao: 3,
       prompt: R`Bảng xét dấu của $y=x^3-3x$ cho biết đạo hàm dương trên $(-\infty;-1)$, bằng $0$ tại $-1$, âm trên $(-1;1)$, bằng $0$ tại $1$, và dương trên $(1;+\infty)$. Bảng giá trị ghi $y(-1)=2$, $y(1)=-2$. Hãy đọc cực trị và các khoảng đơn điệu.`,
       think: "Đọc chỗ đạo hàm đổi dấu để gọi cực đại hoặc cực tiểu. Đọc các khoảng đạo hàm không âm hoặc không dương để gọi đồng biến hoặc nghịch biến.",
-      answer: R`Cực đại là $(-1;2)$, cực tiểu là $(1;-2)$. Hàm đồng biến trên $(-\infty;-1]$ và trên $[1;+\infty)$, nghịch biến trên $[-1;1]$.`,
+      answer: R`Điểm cực đại của đồ thị là $(-1;2)$, điểm cực tiểu của đồ thị là $(1;-2)$. Hàm đồng biến trên $(-\infty;-1]$ và trên $[1;+\infty)$, nghịch biến trên $[-1;1]$.`,
       steps: [
         { claim: R`Tại $x=-1$, đạo hàm đổi từ dương sang âm và $y(-1)=2$.`, why: "Đổi dấu theo chiều này là điều kiện đủ của cực đại. Tung độ lấy từ bảng giá trị." },
         { claim: R`Tại $x=1$, đạo hàm đổi từ âm sang dương và $y(1)=-2$.`, why: "Đổi dấu theo chiều này là điều kiện đủ của cực tiểu." },
@@ -400,13 +409,14 @@ export const derivativeDang: TopicDang = {
     },
     {
       kind: "uoc-luong",
+      sao: 3,
       prompt: R`Cho $f(x)=x^2+1$. Dùng giá trị nhỏ nhất và lớn nhất của $f'$ trên đoạn $[2;\frac{21}{10}]$ để ước lượng $f\left(\frac{21}{10}\right)$.`,
-      think: "Định lý Lagrange viết hiệu hàm thành đạo hàm tại một điểm trung gian nhân với độ dài đoạn. Khoảng của đạo hàm kéo thành khoảng của hiệu.",
+      think: R`Lập hai hàm phụ $f(x)-4x$ và $f(x)-\frac{21}{5}x$. Dấu đạo hàm của chúng cho chiều biến thiên, từ đó chặn được $f$ tại đầu phải.`,
       answer: R`Ước lượng là đoạn $\left[\frac{27}{5};\frac{271}{50}\right]$. Giá trị đúng bằng $\frac{541}{100}$.`,
       steps: [
         { claim: R`Ta có $f'(x)=2x$, liên tục và tăng trên $[2;\frac{21}{10}]$, nên $4\le f'(x)\le\frac{21}{5}$.`, why: "Đạo hàm cấp hai bằng $2>0$, nên nhỏ nhất ở đầu trái và lớn nhất ở đầu phải." },
-        { claim: R`Có điểm $c$ trong khoảng mở sao cho $f\left(\frac{21}{10}\right)-f(2)=f'(c)\cdot\frac{1}{10}$.`, why: "Định lý Lagrange áp dụng được vì $f$ liên tục trên đoạn đóng và có đạo hàm trên khoảng mở." },
-        { claim: R`Suy ra $\frac{4}{10}\le f\left(\frac{21}{10}\right)-5\le\frac{21}{50}$, tức là giá trị nằm trong $\left[\frac{27}{5};\frac{271}{50}\right]$.`, why: R`Nhân khoảng của đạo hàm với độ dài dương $\frac{1}{10}$, rồi cộng $f(2)=5$.` },
+        { claim: R`Hàm $f(x)-4x$ có đạo hàm $2x-4\ge 0$ trên đoạn, nên đồng biến, và $f\left(\frac{21}{10}\right)\ge \frac{27}{5}$.`, why: R`Đạo hàm không âm là điều kiện đủ của đồng biến. So hai đầu đoạn: $5-8+4\cdot\frac{21}{10}=\frac{27}{5}$.` },
+        { claim: R`Hàm $f(x)-\frac{21}{5}x$ có đạo hàm $2x-\frac{21}{5}\le 0$ trên đoạn, nên nghịch biến, và $f\left(\frac{21}{10}\right)\le \frac{271}{50}$.`, why: R`Đạo hàm không dương là điều kiện đủ của nghịch biến. Cận trên khai triển được là $\frac{271}{50}$.` },
         { claim: R`Giá trị đúng là $\left(\frac{21}{10}\right)^2+1=\frac{541}{100}$.`, why: "Phép ước lượng được kiểm lại bằng cách tính trực tiếp. Giá trị này nằm trong đoạn vừa tìm." },
       ],
       checks: [
@@ -414,11 +424,14 @@ export const derivativeDang: TopicDang = {
         { expr: "diff(x**2+1, x).subs(x,Rational(21,10))", expect: "Rational(21,5)" },
         { expr: "5+Rational(4,10)", expect: "Rational(27,5)" },
         { expr: "5+Rational(21,50)", expect: "Rational(271,50)" },
+        { expr: "(5-8)+4*Rational(21,10)", expect: "Rational(27,5)" },
+        { expr: "-Rational(17,5)+Rational(441,50)", expect: "Rational(271,50)" },
         { expr: "(Rational(21,10))**2+1", expect: "Rational(541,100)" },
       ],
     },
     {
       kind: "tu-ra-de",
+      sao: 4,
       prompt: R`Bài xuất phát: tiếp tuyến của $y=x^3$ tại $x=2$ là $y=12x-16$. Hãy đổi giả thiết bằng cách chọn một hoành độ nguyên khác, dự đoán hệ số góc mới trước khi khai triển, rồi viết tiếp tuyến và kiểm lại bằng đạo hàm.`,
       think: "Dự đoán hệ số góc bằng $3a^2$ ngay khi vừa chọn $a$. Sau đó mới tính tung độ và viết đường thẳng, rồi đối chiếu đạo hàm tại $a$.",
       answer: R`Một đề hợp lệ là tiếp tuyến của $y=x^3$ tại $x=1$. Dự đoán hệ số góc $3$, và đáp số là $y=3x-2$.`,

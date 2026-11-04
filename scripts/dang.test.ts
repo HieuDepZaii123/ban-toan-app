@@ -56,7 +56,7 @@ function walk(topic: TopicDang): void {
   }
 }
 
-const RICH = new Set(["derivative", "survey"]);
+const RICH = new Set(["derivative", "survey", "integral", "exp"]);
 const RICH_KINDS = ["thuc-te", "tu-ra-de", "mo", "phan-bien", "doc", "uoc-luong"] as const;
 
 function packOf(item: { check?: { expr: string; expect: string }; checks?: { expr: string; expect: string }[] }) {
@@ -72,7 +72,8 @@ function auditRich(topic: TopicDang): void {
   for (const item of topic.sangTao) {
     if (item.kind === "thuc-te") {
       assert(/số liệu giả định/i.test(item.prompt), `${topic.id} thực tế thiếu số liệu giả định`);
-      assert(/mét|đồng|độ|dm|sản phẩm|vé|mg|giây|phút/.test(item.answer), `${topic.id} thực tế thiếu đơn vị`);
+      assert(/mét|đồng|độ|dm|sản phẩm|vé|mg|giây|phút|lít|gam|cá thể/.test(item.answer), `${topic.id} thực tế thiếu đơn vị`);
+      assert(item.sao !== undefined && item.sao >= 1 && item.sao <= 5, `${topic.id} sáng tạo thiếu mức sao`);
     }
     assert(item.answer.trim().endsWith("."), `${topic.id} đáp sáng tạo thiếu chấm`);
     checkProse(`${topic.id} đáp sáng tạo`, item.answer);
@@ -117,6 +118,19 @@ function auditRich(topic: TopicDang): void {
   if (topic.id === "survey") {
     const tank = topic.sangTao.find((item) => item.answer.includes("128"));
     assert(!!tank && /lớn nhất/i.test(tank.prompt) && tank.answer.includes("x=2"), "bài thùng phải là tối ưu Vmax=128 tại x=2");
+    const own = topic.sangTao.find((item) => item.kind === "tu-ra-de");
+    assert(!!own && own.think.includes("x^3-3mx") && own.think.includes("\\sqrt{m}"), "tự ra đề phải dùng họ x^3-3mx");
+    assert(!!own && !own.think.includes("x^3-mx"), "không dùng công thức lệch của họ x^3-mx");
+    assert(blob.includes("năm trường hợp") || blob.includes("Năm trường hợp"), "phải đủ năm trường hợp nghiệm");
+    assert(blob.includes("g(x)=x^3-3x-1"), "phải định nghĩa g");
+  }
+  if (topic.id === "derivative") {
+    assert(!blob.includes("Lagrange"), "không dùng định lí Lagrange");
+    assert(!blob.includes("không phải loại nghiệm"), "bỏ cụm không phải loại nghiệm");
+    assert(blob.includes("bất kì khoảng nào chứa cả hai điểm"), "thiếu cụm khoảng chứa cả hai điểm");
+    const mono = topic.dang.find((dang) => dang.name.startsWith("Tính đơn điệu"));
+    assert(!!mono && mono.luyen.prompt.includes("khoảng đơn điệu"), "bài luyện đơn điệu phải hỏi các khoảng");
+    assert(!!mono && mono.luyen.answer.includes("(-\\infty;-1)") && mono.luyen.answer.includes("(-1;1)"), "khoảng đơn điệu chưa đúng");
   }
 }
 

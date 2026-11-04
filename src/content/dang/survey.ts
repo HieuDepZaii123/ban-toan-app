@@ -19,7 +19,7 @@ export const surveyDang: TopicDang = {
           { claim: R`Tại $x=1$, đạo hàm đổi từ âm sang dương và $y''(1)=6>0$, còn $y(1)=-2$.`, why: "Hai điều kiện đủ cùng cho cực tiểu." },
           { claim: R`Với $y=x^3$, đạo hàm $3x^2$ bằng $0$ tại $0$ nhưng không đổi dấu, và $y''(0)=0$.`, why: "Điều kiện cần xảy ra, tiêu chuẩn cấp hai không kết luận, bảng dấu cho thấy không có cực trị." },
         ],
-        ket: R`Hàm đã cho có cực đại $(-1;2)$ và cực tiểu $(1;-2)$. Hàm $y=x^3$ không có cực trị.`,
+        ket: R`Hàm đã cho có điểm cực đại của đồ thị $(-1;2)$ và điểm cực tiểu của đồ thị $(1;-2)$. Hàm $y=x^3$ không có cực trị.`,
         checks: [
           { expr: "factor(diff(x**3-3*x, x))", expect: "3*(x-1)*(x+1)" },
           { expr: "diff(x**3-3*x, x).subs(x,-2)", expect: "9" },
@@ -61,7 +61,7 @@ export const surveyDang: TopicDang = {
           { claim: R`Đạo hàm $3(x^2-1)$ dương ngoài $[-1;1]$ và âm trong khoảng $(-1;1)$.`, why: "Đổi từ dương sang âm tại $-1$, rồi từ âm sang dương tại $1$. Đây là bảng dấu xác nhận lại điều kiện đủ." },
           { claim: R`Ta có $y(-1)=2$ và $y(1)=-2$, với $y''(-1)=-6<0$ và $y''(1)=6>0$.`, why: "Tung độ lấy từ hàm. Dấu đạo hàm cấp hai cho cùng cách gọi cực đại và cực tiểu." },
         ],
-        ket: R`Cực đại là $(-1;2)$ và cực tiểu là $(1;-2)$.`,
+        ket: R`Điểm cực đại của đồ thị là $(-1;2)$ và điểm cực tiểu của đồ thị là $(1;-2)$.`,
         checks: [
           { expr: "diff(x**3-3*1*x, x).subs(x,-1)", expect: "0" },
           { expr: "diff(x**3-3*1*x, x).subs(x,1)", expect: "0" },
@@ -75,7 +75,7 @@ export const surveyDang: TopicDang = {
         kind: "luyen",
         prompt: R`Với $m=4$, tìm cực trị của $y=x^3-3mx$.`,
         think: R`Vì $m>0$, hai hoành độ là $\pm\sqrt{m}$. Tính tung độ và kiểm tra chiều đổi dấu trước khi gọi tên cực trị.`,
-        answer: R`Cực đại là $(-2;16)$ và cực tiểu là $(2;-16)$.`,
+        answer: R`Điểm cực đại của đồ thị là $(-2;16)$ và điểm cực tiểu của đồ thị là $(2;-16)$.`,
         steps: [
           { claim: R`Hai nghiệm của đạo hàm là $x=-2$ và $x=2$.`, why: "Căn của $m=4$ bằng $2$. Cả hai nghiệm đều phải giữ." },
           { claim: R`Đạo hàm $3(x-2)(x+2)$ đổi từ dương sang âm tại $-2$ và từ âm sang dương tại $2$.`, why: "Hệ số dương nên đạo hàm âm ở giữa hai nghiệm. Đổi dấu là điều kiện đủ." },
@@ -173,11 +173,12 @@ export const surveyDang: TopicDang = {
         steps: [
           { claim: R`Tập xác định là $x\neq 1$. Đạo hàm bằng $\frac{x(x-2)}{(x-1)^2}$.`, why: "Mẫu của đạo hàm là một bình phương, nên dấu đạo hàm là dấu của tử trên từng khoảng không chứa $1$." },
           { claim: R`Đạo hàm dương trên $(-\infty;0)$, âm trên $(0;1)$ và trên $(1;2)$, rồi dương trên $(2;+\infty)$.`, why: "Các mốc $0$, $1$ và $2$ chia trục. Đổi dấu chỉ xảy ra tại $0$ và tại $2$, không tại $1$ vì hàm không xác định ở đó." },
-          { claim: R`Cực đại là $(0;0)$ và cực tiểu là $(2;4)$.`, why: "Đổi từ dương sang âm tại $0$, từ âm sang dương tại $2$. Tung độ bằng giá trị hàm." },
+          { claim: R`Điểm cực đại của đồ thị là $(0;0)$ và điểm cực tiểu của đồ thị là $(2;4)$.`, why: "Đổi từ dương sang âm tại $0$, từ âm sang dương tại $2$. Tung độ bằng giá trị hàm." },
+          { claim: R`Khi $x$ ra âm vô cực thì $y$ ra âm vô cực, khi $x$ tiến tới $1$ từ bên trái thì $y$ ra âm vô cực, khi $x$ tiến tới $1$ từ bên phải thì $y$ ra dương vô cực, và khi $x$ ra dương vô cực thì $y$ ra dương vô cực.`, why: R`Vì $y=x+1+\frac{1}{x-1}$. Phần bậc nhất quyết định hai đầu vô cực, phần phân số quyết định hai phía của $x=1$. Bảng biến thiên phải ghi đủ bốn giới hạn này.` },
           { claim: R`Kết quả chia là $y=x+1+\frac{1}{x-1}$. Tiệm cận xiên là $y=x+1$, tiệm cận đứng là $x=1$.`, why: "Phần dư khác $0$ nên có tiệm cận xiên. Tử gốc tại $x=1$ bằng $1$, khác $0$, nên có tiệm cận đứng." },
           { claim: R`Phương trình $y=0$ trên tập xác định chỉ có nghiệm $x=0$.`, why: R`Tử $x^2=0$ chỉ tại $0$, và $0\neq 1$ nên nghiệm này được giữ. Đồ thị cắt trục hoành tại đúng một điểm.` },
         ],
-        ket: R`Hàm có cực đại $(0;0)$, cực tiểu $(2;4)$, tiệm cận xiên $y=x+1$, tiệm cận đứng $x=1$, và cắt trục hoành tại đúng một điểm.`,
+        ket: R`Hàm có điểm cực đại của đồ thị $(0;0)$, điểm cực tiểu của đồ thị $(2;4)$, tiệm cận xiên $y=x+1$, tiệm cận đứng $x=1$, và cắt trục hoành tại đúng một điểm.`,
         checks: [
           { expr: "simplify(diff(x**2/(x-1), x)-x*(x-2)/(x-1)**2)", expect: "0" },
           { expr: "diff(x**2/(x-1), x).subs(x,-1)", expect: "Rational(3,4)" },
@@ -187,6 +188,11 @@ export const surveyDang: TopicDang = {
           { expr: "(x**2/(x-1)).subs(x,0)", expect: "0" },
           { expr: "(x**2/(x-1)).subs(x,2)", expect: "4" },
           { expr: "simplify(x**2/(x-1)-(x+1)-1/(x-1))", expect: "0" },
+          { expr: "limit(x**2/(x-1)-(x+1), x, oo)", expect: "0" },
+          { expr: "limit(x**2/(x-1)-(x+1), x, -oo)", expect: "0" },
+          { expr: "(x**2/(x-1)).subs(x, Rational(1001,1000))", expect: "Rational(1002001,1000)" },
+          { expr: "(x**2/(x-1)).subs(x, Rational(999,1000))", expect: "Rational(-998001,1000)" },
+          { expr: "(x**2/(x-1)).subs(x, -100)", expect: "Rational(-10000,101)" },
         ],
       },
       loi: "Đọc một giao điểm từ đồ thị vẽ tay khi bảng biến thiên chưa chỉ ra nghiệm đó.",
@@ -194,7 +200,7 @@ export const surveyDang: TopicDang = {
         kind: "luyen",
         prompt: R`Từ bảng của $y=5-x^2$, với $y'=-2x$ và $y(0)=5$, hãy đọc cực trị.`,
         think: "Đọc dấu của $-2x$ hai bên $0$. Đổi dấu thì mới gọi cực trị, rồi lấy tung độ đã cho.",
-        answer: R`Hàm có cực đại $(0;5)$ và không có cực tiểu.`,
+        answer: R`Đồ thị có điểm cực đại $(0;5)$ và không có điểm cực tiểu.`,
         steps: [
           { claim: R`Đạo hàm dương trên $(-\infty;0)$ và âm trên $(0;+\infty)$.`, why: "Vì $-2x$ trái dấu với $x$. Bảng này đủ để kết luận chiều biến thiên trên cả tập số thực." },
           { claim: R`Đạo hàm đổi từ dương sang âm tại $x=0$, và $y(0)=5$.`, why: "Đây là điều kiện đủ của cực đại. Không còn điểm nào khác làm đạo hàm bằng $0$." },
@@ -209,16 +215,18 @@ export const surveyDang: TopicDang = {
     {
       name: "Tương giao và số nghiệm của f(x)=m",
       nhanDang: "Bài hỏi số giao điểm của đồ thị với đường ngang $y=m$, hoặc số nghiệm của phương trình $f(x)=m$.",
-      phuongPhap: R`Số nghiệm của $f(x)=m$ bằng số hoành độ mà đường ngang $y=m$ cắt đồ thị. Lập bảng biến thiên trước. Mỗi khoảng đồng biến hoặc nghịch biến đóng góp tối đa một nghiệm, vì trên đó hàm một-một. Tại cực trị, so sánh $m$ với tung độ cực trị: lớn hơn hẳn, bằng, hoặc nằm giữa hai tung độ là ba trường hợp khác nhau. Kết luận theo $m$ chỉ đúng sau khi đã xét hết các trường hợp này.`,
+      phuongPhap: R`Số nghiệm của $f(x)=m$ bằng số hoành độ mà đường ngang $y=m$ cắt đồ thị. Lập bảng biến thiên trước. Mỗi khoảng đồng biến hoặc nghịch biến đóng góp tối đa một nghiệm, vì trên đó hàm một-một. Với một cực đại và một cực tiểu phải xét đủ năm trường hợp: $m$ lớn hơn tung độ cực đại, $m$ bằng tung độ cực đại, $m$ nằm giữa hai tung độ, $m$ bằng tung độ cực tiểu, và $m$ nhỏ hơn tung độ cực tiểu. Kết luận theo $m$ chỉ đúng sau khi đã xét hết năm trường hợp này.`,
       viDu: {
         prompt: R`Biện luận theo $m$ số nghiệm của $x^3-3x=m$.`,
         steps: [
-          { claim: R`Hàm $y=x^3-3x$ có cực đại $y(-1)=2$, cực tiểu $y(1)=-2$, và tiến tới hai vô cực trái dấu ở hai đầu.`, why: "Bảng này đã có từ dạng cực trị. Đường ngang được đọc trên đúng bảng đó." },
-          { claim: R`Nếu $m>2$ hoặc $m<-2$ thì có đúng một nghiệm.`, why: "Đường ngang cắt đúng một nhánh ngoài hai cực trị, và không cắt đoạn nằm giữa tung độ $2$ và $-2$." },
-          { claim: R`Nếu $m=2$ hoặc $m=-2$ thì có đúng hai nghiệm phân biệt.`, why: "Đường ngang đi qua một cực trị và còn cắt nhánh bên kia. Nghiệm tại cực trị chỉ tính một lần." },
+          { claim: R`Hàm $y=x^3-3x$ có điểm cực đại của đồ thị $(-1;2)$, điểm cực tiểu của đồ thị $(1;-2)$, và tiến tới hai vô cực trái dấu ở hai đầu.`, why: "Bảng này đã có từ dạng cực trị. Đường ngang được đọc trên đúng bảng đó." },
+          { claim: R`Nếu $m>2$ thì có đúng một nghiệm, trên khoảng $(1;+\infty)$.`, why: "Đường ngang nằm trên cực đại, nên chỉ cắt nhánh tăng bên phải." },
+          { claim: R`Nếu $m=2$ thì có đúng hai nghiệm phân biệt.`, why: "Đường ngang đi qua điểm cực đại và còn cắt nhánh tăng bên phải. Điểm cực đại chỉ tính một lần." },
           { claim: R`Nếu $-2<m<2$ thì có đúng ba nghiệm.`, why: "Đường ngang cắt nhánh tăng bên trái, nhánh giảm ở giữa, và nhánh tăng bên phải, mỗi nhánh một lần." },
+          { claim: R`Nếu $m=-2$ thì có đúng hai nghiệm phân biệt.`, why: "Đường ngang đi qua điểm cực tiểu và còn cắt nhánh tăng bên trái." },
+          { claim: R`Nếu $m<-2$ thì có đúng một nghiệm, trên khoảng $(-\infty;-1)$.`, why: "Đường ngang nằm dưới cực tiểu, nên chỉ cắt nhánh tăng bên trái." },
         ],
-        ket: R`Số nghiệm là $1$ khi $|m|>2$, là $2$ khi $|m|=2$, và là $3$ khi $|m|<2$.`,
+        ket: R`Năm trường hợp cho số nghiệm $1$, $2$, $3$, $2$ và $1$, lần lượt khi $m>2$, $m=2$, $-2<m<2$, $m=-2$ và $m<-2$.`,
         checks: [
           { expr: "(x**3-3*x).subs(x,-1)", expect: "2" },
           { expr: "(x**3-3*x).subs(x,1)", expect: "-2" },
@@ -284,6 +292,7 @@ export const surveyDang: TopicDang = {
   sangTao: [
     {
       kind: "thuc-te",
+      sao: 3,
       prompt: R`Số liệu giả định. Doanh thu bán $x$ trăm vé là $R(x)=x(12-x)$ triệu đồng, với $0\le x\le 12$. Doanh thu lớn nhất bằng bao nhiêu?`,
       think: "Hàm liên tục trên đoạn đóng nên đạt giá trị lớn nhất. Danh sách so sánh gồm hai đầu mút và điểm đạo hàm bằng $0$ nếu điểm đó thuộc đoạn.",
       answer: "Đáp số là $36$ triệu đồng khi bán $600$ vé; bán $0$ vé hoặc $1200$ vé thì doanh thu bằng $0$ đồng.",
@@ -301,6 +310,7 @@ export const surveyDang: TopicDang = {
     },
     {
       kind: "thuc-te",
+      sao: 3,
       prompt: R`Số liệu giả định. Nồng độ một chất là $C(t)=\frac{4t}{t+1}$ miligam trên lít, với $t>0$ tính bằng giờ. Nồng độ có vượt quá $4$ miligam trên lít hay không?`,
       think: "Xét hiệu $4-C(t)$ sau khi quy đồng. Dấu của hiệu trả lời câu hỏi, còn giới hạn tại vô cực chỉ nói mức tiến tới.",
       answer: "Nồng độ luôn nhỏ hơn $4$ mg/L, nên không vượt quá mức đó; khi thời gian rất lớn, nồng độ chỉ tiến tới $4$ mg/L.",
@@ -316,6 +326,7 @@ export const surveyDang: TopicDang = {
     },
     {
       kind: "thuc-te",
+      sao: 3,
       prompt: R`Số liệu giả định. Một thùng không nắp gập từ tấm tôn vuông cạnh $12$ dm, cắt bốn ô vuông cạnh $x$ dm ở các góc, $0<x<6$. Thể tích $V(x)=x(12-2x)^2$ đêximét khối. Thể tích lớn nhất bằng bao nhiêu?`,
       think: "Đây là bài tối ưu trên khoảng mở. Đạo hàm bằng $0$ chỉ là điều kiện cần; phải xét dấu trên $(0;6)$ rồi mới tính thể tích.",
       answer: R`Thể tích lớn nhất bằng $128$ dm$^3$ khi $x=2$ dm; đó là lúc mỗi góc bị cắt một ô vuông cạnh $2$ dm.`,
@@ -334,6 +345,7 @@ export const surveyDang: TopicDang = {
     },
     {
       kind: "thuc-te",
+      sao: 3,
       prompt: R`Số liệu giả định. Lợi nhuận $P(x)=-x^2+8x-7$ triệu đồng, với $x\ge 0$ là số trăm sản phẩm. Lợi nhuận lớn nhất đạt khi nào, và bằng bao nhiêu?`,
       think: R`Miền $[0;+\infty)$ không phải đoạn đóng bị chặn. Dùng dấu đạo hàm trên miền đó, rồi tính giá trị tại điểm đổi dấu.`,
       answer: "Lợi nhuận lớn nhất bằng $9$ triệu đồng khi sản xuất $400$ sản phẩm.",
@@ -352,6 +364,7 @@ export const surveyDang: TopicDang = {
     },
     {
       kind: "mo",
+      sao: 3,
       prompt: R`Hãy nêu một phân thức bậc nhất trên bậc nhất có tiệm cận đứng, và một phân thức có mẫu triệt tiêu nhưng không có tiệm cận đứng. Nêu điều kiện dùng để phân biệt.`,
       think: R`Một ví dụ thỏa $ad-bc\neq 0$. Ví dụ kia phải rút gọn được, tức mẫu và tử có nhân tử chung. Có nhiều cặp ví dụ đúng.`,
       answer: R`Phân thức $\frac{2x+1}{x-1}$ có tiệm cận đứng $x=1$. Phân thức $\frac{x^2-1}{x-1}$ không có, vì nó bằng $x+1$ khi $x\neq 1$. Điều kiện phân biệt ở hàm bậc nhất trên bậc nhất là $ad-bc\neq 0$.`,
@@ -368,6 +381,7 @@ export const surveyDang: TopicDang = {
     },
     {
       kind: "phan-bien",
+      sao: 4,
       prompt: R`Một lời giải viết: tiệm cận đứng của $y=\frac{x^2-1}{x-1}$ là $x=1$ vì mẫu bằng $0$. Hãy phản biện.`,
       think: "Mẫu bằng $0$ chỉ là điều kiện cần để nghi ngờ tiệm cận đứng. Phải xét tử tại cùng điểm, rồi tính giới hạn hai phía.",
       answer: R`Lời giải chưa đúng. Hàm bằng $x+1$ khi $x\neq 1$, giới hạn tại $1$ bằng $2$, nên $x=1$ không phải tiệm cận đứng.`,
@@ -383,7 +397,8 @@ export const surveyDang: TopicDang = {
     },
     {
       kind: "doc",
-      prompt: R`Bảng biến thiên của $y=x^3-3x$ ghi cực đại $(-1;2)$, cực tiểu $(1;-2)$, giới hạn ở âm vô cực là âm vô cực và ở dương vô cực là dương vô cực. Hãy đọc số nghiệm của $y=2$.`,
+      sao: 3,
+      prompt: R`Bảng biến thiên của $y=x^3-3x$ ghi điểm cực đại của đồ thị $(-1;2)$, điểm cực tiểu của đồ thị $(1;-2)$, giới hạn ở âm vô cực là âm vô cực và ở dương vô cực là dương vô cực. Hãy đọc số nghiệm của $y=2$.`,
       think: "Đường ngang $y=2$ đi qua cực đại. Đếm số nhánh còn lại mà đường này còn cắt, rồi mới đối chiếu bằng phân tích đa thức.",
       answer: R`Phương trình $y=2$ có hai nghiệm phân biệt, $x=-1$ và $x=2$.`,
       steps: [
@@ -400,12 +415,13 @@ export const surveyDang: TopicDang = {
     },
     {
       kind: "uoc-luong",
+      sao: 3,
       prompt: R`Ước lượng nghiệm dương của $x^3-3x-1=0$ bằng một khoảng có độ dài $\frac{1}{10}$.`,
       think: R`Xét dấu tại các mốc. Hàm liên tục đổi dấu thì có nghiệm ở giữa. Đạo hàm cho biết trên $[1;+\infty)$ hàm tăng, nên nghiệm dương là duy nhất.`,
       answer: R`Nghiệm dương duy nhất nằm trong khoảng $\left(\frac{9}{5};\frac{19}{10}\right)$.`,
       steps: [
         { claim: R`Đạo hàm $3x^2-3$ âm trên $(0;1)$ và dương trên $(1;+\infty)$.`, why: "Trên $[0;1]$ hàm giảm từ $-1$ xuống $-3$, nên không có nghiệm trong $[0;1]$." },
-        { claim: R`Ta có $g(1)=-3<0$, $g\left(\frac{9}{5}\right)=-\frac{71}{125}<0$ và $g\left(\frac{19}{10}\right)=\frac{159}{1000}>0$.`, why: R`Hàm liên tục và tăng trên $[1;+\infty)$. Đổi dấu đúng một lần trong khoảng đã nêu.` },
+        { claim: R`Đặt $g(x)=x^3-3x-1$. Ta có $g(1)=-3<0$, $g\left(\frac{9}{5}\right)=-\frac{71}{125}<0$ và $g\left(\frac{19}{10}\right)=\frac{159}{1000}>0$.`, why: R`Hàm $g$ chính là vế trái của phương trình. Hàm này liên tục và tăng trên $[1;+\infty)$, nên đổi dấu đúng một lần trong khoảng đã nêu.` },
         { claim: R`Độ dài khoảng bằng $\frac{19}{10}-\frac{9}{5}=\frac{1}{10}$.`, why: "Khoảng này đủ độ mịn mà đề yêu cầu, và chứa đúng một nghiệm vì hàm tăng ngặt ở đó." },
       ],
       checks: [
@@ -417,16 +433,17 @@ export const surveyDang: TopicDang = {
     },
     {
       kind: "tu-ra-de",
-      prompt: R`Bài xuất phát: hàm $y=x^3-3x$ có cực đại tại $x=-1$ và cực tiểu tại $x=1$. Hãy đổi giả thiết bằng cách thay hệ số $3$ bởi một số dương khác, dự đoán hoành độ cực trị, rồi kiểm bằng đạo hàm và bằng bảng dấu.`,
-      think: R`Với $y=x^3-mx$ và $m>0$, dự đoán hai hoành độ $\pm\sqrt{m}$ trước khi tính tung độ. Sau đó xét dấu để chắc chúng là cực trị.`,
-      answer: R`Một đề hợp lệ là tìm cực trị của $y=x^3-12x$. Dự đoán hoành độ $\pm 2$, và đáp số là cực đại $(-2;16)$, cực tiểu $(2;-16)$.`,
+      sao: 4,
+      prompt: R`Bài xuất phát: hàm $y=x^3-3x$ có điểm cực đại của đồ thị tại $x=-1$ và điểm cực tiểu của đồ thị tại $x=1$. Hãy đổi giả thiết bằng cách thay hệ số $3$ bởi một số dương khác, dự đoán hoành độ cực trị, rồi kiểm bằng đạo hàm và bằng bảng dấu.`,
+      think: R`Với họ $y=x^3-3mx$ và $m>0$, dự đoán hai hoành độ $\pm\sqrt{m}$ trước khi tính tung độ. Sau đó xét dấu để chắc chúng là cực trị.`,
+      answer: R`Một đề hợp lệ là tìm cực trị của $y=x^3-12x$, tức $m=4$. Dự đoán hoành độ $\pm 2$, và đáp số là điểm cực đại của đồ thị $(-2;16)$ cùng điểm cực tiểu của đồ thị $(2;-16)$.`,
       steps: [
-        { claim: R`Đổi giả thiết từ hệ số $3$ sang $12$. Dự đoán hoành độ $\pm\sqrt{12/3}=\pm 2$.`, why: R`Công thức $\pm\sqrt{m}$ của họ $x^3-3mx$ được dùng làm dự đoán trước khi khai triển đạo hàm của đề mới.` },
+        { claim: R`Đổi giả thiết từ hệ số $3$ sang $12$, tức lấy $m=4$ trong họ $y=x^3-3mx$. Dự đoán hoành độ $\pm\sqrt{4}=\pm 2$.`, why: R`Công thức $\pm\sqrt{m}$ của họ $y=x^3-3mx$ được dùng làm dự đoán trước khi khai triển đạo hàm của đề mới.` },
         { claim: R`Đạo hàm $3x^2-12=3(x-2)(x+2)$ đúng bằng $0$ tại $\pm 2$.`, why: "Phép tính kiểm lại dự đoán. Hai nghiệm phân biệt vì $12>0$." },
         { claim: R`Đạo hàm đổi từ dương sang âm tại $-2$ và từ âm sang dương tại $2$. Tung độ là $16$ và $-16$.`, why: "Đổi dấu là điều kiện đủ. Tung độ tính sau khi hoành độ đã được xác nhận." },
       ],
       checks: [
-        { expr: "sqrt(12/3)", expect: "2" },
+        { expr: "sqrt(4)", expect: "2" },
         { expr: "diff(x**3-12*x, x).subs(x,2)", expect: "0" },
         { expr: "diff(x**3-12*x, x).subs(x,-2)", expect: "0" },
         { expr: "diff(x**3-12*x, x).subs(x,0)", expect: "-12" },

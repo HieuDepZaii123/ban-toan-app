@@ -29,6 +29,8 @@ export type Drill = {
   /** Nhiều đẳng thức độc lập, mỗi đẳng thức phải đúng với đáp số. */
   checks?: Check[];
   kind: "thuc-te" | "tu-ra-de" | "luyen" | "mo" | "phan-bien" | "doc" | "uoc-luong";
+  /** Độ khó của câu sáng tạo, từ 1 đến 5 sao. */
+  sao?: 1 | 2 | 3 | 4 | 5;
 };
 
 /** Một dạng bài trong chủ đề. */

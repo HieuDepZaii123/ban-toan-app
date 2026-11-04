@@ -56,6 +56,7 @@ function DrillBlock({ item }: { item: Drill }) {
   return (
     <div className="fitem">
       <p><b>{label}.</b> <MathText text={item.prompt} /></p>
+      {item.sao ? <p className="lecture-note">Độ khó: {"★".repeat(item.sao)}{"☆".repeat(5 - item.sao)}</p> : null}
       <p><b>Nghĩ thế nào.</b> <MathText text={item.think} /></p>
       <button type="button" className="text-btn" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
         {open ? "Ẩn lời giải" : "Xem lời giải"}
