@@ -88,7 +88,7 @@ export const comboDang: TopicDang = {
     {
       name: "Nhị thức Newton",
       nhanDang: R`Khai triển $(a+b)^n$ hoặc hỏi hệ số của một lũy thừa trong khai triển.`,
-      phuongPhap: R`Nhị thức Newton viết $(a+b)^n=\sum_{k=0}^{n}C_n^k a^{n-k}b^k$. Hệ số của số hạng ứng với $k$ là $C_n^k$ nhân các hệ số đến từ $a^{n-k}$ và $b^k$. Muốn số mũ của $x$ bằng một số cho trước thì giải đúng giá trị $k$ đó. Công thức này không liên quan đến trung bình hay trung vị của một dãy số liệu.`,
+      phuongPhap: R`Nhị thức Newton viết $(a+b)^n=\sum_{k=0}^{n}C_n^k a^{n-k}b^k$. Hệ số của số hạng ứng với $k$ là $C_n^k$ nhân các hệ số đến từ $a^{n-k}$ và $b^k$. Muốn số mũ của $x$ bằng một số cho trước thì giải đúng giá trị $k$ đó. Các bài ở đây lấy số mũ $n$ không vượt quá $5$. Công thức này không liên quan đến trung bình hay trung vị của một dãy số liệu.`,
       viDu: {
         prompt: R`Tìm hệ số của $x^2$ trong khai triển $(1+2x)^5$.`,
         steps: [
@@ -101,14 +101,14 @@ export const comboDang: TopicDang = {
       loi: "Lấy $k$ bằng số mũ của cả hai thừa số cộng lại, thay vì số mũ của riêng $x$.",
       luyen: {
         kind: "luyen",
-        prompt: R`Tìm hệ số của $x^3$ trong khai triển $(1+x)^6$.`,
-        think: "Số hạng cần là $C_6^3 x^3$. Hệ số chính là tổ hợp đó vì thừa số còn lại bằng $1$.",
-        answer: R`Hệ số bằng $20$.`,
+        prompt: R`Tìm hệ số của $x^3$ trong khai triển $(1+x)^5$.`,
+        think: "Số mũ $n=5$ không vượt quá $5$. Số hạng cần là $C_5^3 x^3$, và thừa số còn lại bằng $1$.",
+        answer: R`Hệ số bằng $10$.`,
         steps: [
-          { claim: R`Lấy $k=3$ trong $(1+x)^6$.`, why: "Số mũ của $x$ trong số hạng tổng quát chính là chỉ số $k$." },
-          { claim: R`Hệ số $C_6^3$ bằng $20$.`, why: "Vì $\\frac{6\\cdot 5\\cdot 4}{6}=20$. Thừa số $1^{3}$ không đổi hệ số." },
+          { claim: R`Lấy $k=3$ trong $(1+x)^5$.`, why: "Số mũ của $x$ trong số hạng tổng quát chính là chỉ số $k$. Số mũ của nhị thức là $5$." },
+          { claim: R`Hệ số $C_5^3$ bằng $10$.`, why: "Vì $\\frac{5\\cdot 4\\cdot 3}{6}=10$. Thừa số $1^{2}$ không đổi hệ số." },
         ],
-        checks: [{ expr: "binomial(6,3)", expect: "20" }],
+        checks: [{ expr: "binomial(5,3)", expect: "10" }],
       },
     },
     {
@@ -145,23 +145,23 @@ export const comboDang: TopicDang = {
       nhanDang: "Một dãy số liệu hữu hạn, hỏi độ phân tán quanh trung bình theo cách chia cho số phần tử.",
       phuongPhap: R`Gọi $\bar x$ là trung bình cộng của $n$ số $x_1,\ldots,x_n$. Phương sai là $\frac{1}{n}\sum_{i=1}^{n}(x_i-\bar x)^2$. Mẫu số là $n$, tức chia cho số phần tử. Phải tính trung bình trước khi bình phương các độ lệch. Phương sai bằng $0$ khi và chỉ khi mọi số liệu bằng nhau.`,
       viDu: {
-        prompt: R`Tính trung bình và phương sai của dãy $2, 4, 4, 6, 9$.`,
+        prompt: R`Tính trung bình và phương sai của dãy điểm $2, 4, 4, 6, 9$.`,
         steps: [
           { claim: R`Trung bình bằng $\frac{25}{5}=5$.`, why: "Tổng năm số là $25$. Phương sai chưa tính được khi chưa có trung bình này." },
-          { claim: R`Tổng bình phương độ lệch bằng $9+1+1+1+16=28$, nên phương sai bằng $\frac{28}{5}$.`, why: "Các độ lệch là $-3,-1,-1,1,4$. Chia tổng bình phương cho $n=5$, đúng quy ước lấy trung bình các bình phương độ lệch." },
+          { claim: R`Tổng bình phương độ lệch bằng $9+1+1+1+16=28$, nên phương sai bằng $\frac{28}{5}$ điểm$^2$.`, why: "Các độ lệch là $-3,-1,-1,1,4$. Chia tổng bình phương cho $n=5$. Đơn vị là điểm$^2$ vì đã bình phương độ lệch điểm." },
         ],
-        ket: R`Trung bình bằng $5$ và phương sai bằng $\frac{28}{5}$.`,
+        ket: R`Trung bình bằng $5$ điểm và phương sai bằng $\frac{28}{5}$ điểm$^2$.`,
         checks: [{ expr: "Rational((2-5)**2+(4-5)**2+(4-5)**2+(6-5)**2+(9-5)**2,5)", expect: "Rational(28,5)" }],
       },
       loi: "Chia tổng bình phương độ lệch cho $n-1$ khi đề đang dùng phương sai chia cho $n$.",
       luyen: {
         kind: "luyen",
-        prompt: R`Tính phương sai của dãy $1, 2, 3$.`,
-        think: "Trung bình là $2$. Bình phương các độ lệch $-1,0,1$ rồi chia cho $3$.",
-        answer: R`Phương sai bằng $\frac{2}{3}$.`,
+        prompt: R`Tính phương sai của dãy điểm $1, 2, 3$.`,
+        think: "Trung bình là $2$ điểm. Bình phương các độ lệch $-1,0,1$ rồi chia cho $3$. Đơn vị của phương sai là điểm$^2$.",
+        answer: R`Phương sai bằng $\frac{2}{3}$ điểm$^2$.`,
         steps: [
           { claim: R`Trung bình bằng $2$.`, why: "Tổng $6$ chia cho ba phần tử. Mọi độ lệch đều lấy so với số này." },
-          { claim: R`Phương sai bằng $\frac{1+0+1}{3}=\frac{2}{3}$.`, why: "Hai độ lệch đầu và cuối có bình phương $1$, độ lệch giữa bằng $0$. Mẫu số là số phần tử." },
+          { claim: R`Phương sai bằng $\frac{1+0+1}{3}=\frac{2}{3}$ điểm$^2$.`, why: "Hai độ lệch đầu và cuối có bình phương $1$, độ lệch giữa bằng $0$. Mẫu số là số phần tử, và đơn vị là điểm$^2$." },
         ],
         checks: [{ expr: "Rational((1-2)**2+(2-2)**2+(3-2)**2,3)", expect: "Rational(2,3)" }],
       },
@@ -169,12 +169,12 @@ export const comboDang: TopicDang = {
     {
       name: "Tứ phân vị",
       nhanDang: "Dãy đã xếp tăng, hỏi tứ phân vị thứ nhất, trung vị và tứ phân vị thứ ba.",
-      phuongPhap: R`Sắp dãy tăng. Nếu số phần tử chẵn, trung vị là trung bình của hai số đứng giữa. Nửa dưới gồm các số đứng trước hai số giữa, nửa trên gồm các số đứng sau. Tứ phân vị thứ nhất là trung vị của nửa dưới, tứ phân vị thứ ba là trung vị của nửa trên. Với một nửa có số lẻ phần tử thì lấy đúng số giữa của nửa đó. Với một nửa có số chẵn phần tử thì lấy trung bình hai số giữa của nửa.`,
+      phuongPhap: R`Sắp dãy tăng. Nếu số phần tử chẵn, trung vị là trung bình của hai số đứng giữa, rồi chia dãy thành hai nửa bằng nhau: nửa dưới là nửa đầu, nửa trên là nửa cuối. Mỗi nửa giữ một trong hai số đứng giữa, không bỏ hai số đó ra khỏi dãy trước khi chia. Tứ phân vị thứ nhất là trung vị của nửa dưới, tứ phân vị thứ ba là trung vị của nửa trên. Nửa có số lẻ phần tử thì lấy đúng số giữa. Nửa có số chẵn phần tử thì lấy trung bình hai số giữa của nửa.`,
       viDu: {
         prompt: R`Dãy đã xếp $1, 3, 5, 7, 9, 11$. Tìm tứ phân vị thứ nhất, trung vị và tứ phân vị thứ ba.`,
         steps: [
           { claim: R`Hai số giữa là $5$ và $7$, nên trung vị bằng $6$.`, why: "Sáu số, vị trí giữa là số thứ ba và thứ tư. Trung vị là trung bình của đúng hai số đó." },
-          { claim: R`Nửa dưới $1, 3, 5$ có số giữa $3$. Nửa trên $7, 9, 11$ có số giữa $9$.`, why: "Mỗi nửa còn ba số sau khi tách hai số đã dùng cho trung vị. Số giữa của nửa là tứ phân vị tương ứng." },
+          { claim: R`Nửa dưới $1, 3, 5$ có số giữa $3$. Nửa trên $7, 9, 11$ có số giữa $9$.`, why: "Sáu số chia thành hai nửa ba số. Số $5$ ở lại nửa dưới và số $7$ ở lại nửa trên. Số giữa của mỗi nửa là tứ phân vị tương ứng." },
         ],
         ket: R`Tứ phân vị thứ nhất bằng $3$, trung vị bằng $6$, tứ phân vị thứ ba bằng $9$.`,
         checks: [
@@ -236,10 +236,10 @@ export const comboDang: TopicDang = {
       sao: 3,
       prompt: R`Số liệu giả định. Điểm của $5$ người là $2, 4, 4, 6, 9$. Tính trung bình và phương sai, với phương sai chia cho số người.`,
       think: "Trung bình là $5$. Bình phương từng độ lệch so với $5$, cộng lại rồi chia cho $5$.",
-      answer: R`Trung bình là $5$ điểm. Phương sai là $\frac{28}{5}$ đơn vị trên mẫu $5$ người.`,
+      answer: R`Trung bình là $5$ điểm. Phương sai là $\frac{28}{5}$ điểm$^2$ trên mẫu $5$ người.`,
       steps: [
         { claim: R`Trung bình bằng $\frac{2+4+4+6+9}{5}=5$.`, why: "Tổng $25$ điểm của năm người. Độ lệch phải lấy so với trung bình này." },
-        { claim: R`Phương sai bằng $\frac{9+1+1+1+16}{5}=\frac{28}{5}$.`, why: "Các độ lệch là $-3,-1,-1,1,4$. Diễn giải: phương sai $\\frac{28}{5}$ là trung bình các bình phương độ lệch của năm người." },
+        { claim: R`Phương sai bằng $\frac{9+1+1+1+16}{5}=\frac{28}{5}$ điểm$^2$.`, why: "Các độ lệch là $-3,-1,-1,1,4$. Diễn giải: phương sai $\\frac{28}{5}$ điểm$^2$ là trung bình các bình phương độ lệch của năm người." },
       ],
       checks: [{ expr: "Rational((2-5)**2+(4-5)**2+(4-5)**2+(6-5)**2+(9-5)**2,5)", expect: "Rational(28,5)" }],
     },
@@ -251,7 +251,7 @@ export const comboDang: TopicDang = {
       answer: "Tứ phân vị thứ nhất là $3$ phút, trung vị là $6$ phút và tứ phân vị thứ ba là $9$ phút.",
       steps: [
         { claim: R`Trung vị bằng $\frac{5+7}{2}=6$ phút.`, why: "Sáu mốc, hai số giữa đứng ở vị trí thứ ba và thứ tư. Đơn vị phút được giữ." },
-        { claim: R`Tứ phân vị thứ nhất là $3$ phút và tứ phân vị thứ ba là $9$ phút.`, why: "Nửa dưới $1, 3, 5$ có số giữa $3$. Nửa trên $7, 9, 11$ có số giữa $9$. Diễn giải: một nửa khoảng giữa hai tứ phân vị chạy từ $3$ phút đến $9$ phút." },
+        { claim: R`Tứ phân vị thứ nhất là $3$ phút và tứ phân vị thứ ba là $9$ phút.`, why: "Nửa dưới $1, 3, 5$ có số giữa $3$. Nửa trên $7, 9, 11$ có số giữa $9$. Khoảng từ tứ phân vị thứ nhất đến tứ phân vị thứ ba chạy từ $3$ phút đến $9$ phút." },
       ],
       checks: [
         { expr: "Rational(5+7,2)", expect: "6" },

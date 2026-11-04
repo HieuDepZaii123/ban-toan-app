@@ -180,14 +180,220 @@ export const vectorDang: TopicDang = {
       loi: "Đặt tỉ số hai tọa độ bằng nhau rồi kết luận vuông góc. Đẳng thức tỉ số là điều kiện cùng phương.",
       luyen: {
         kind: "luyen",
-        prompt: R`Tìm $m$ để $(m;1)$ vuông góc với $(2;-4)$.`,
-        think: "Cho tích vô hướng bằng $0$ và giải một phương trình bậc nhất. Sau đó kiểm tra vectơ không bị triệt tiêu.",
-        answer: R`Đáp số là $m=2$.`,
+        prompt: R`Tìm $m$ để $(m;m)$ vuông góc với $(1;-1)$, và vectơ $(m;m)$ khác vectơ không.`,
+        think: "Tính tích vô hướng trước. Nếu tích ấy bằng $0$ với mọi $m$, hãy loại riêng giá trị làm vectơ thành vectơ không.",
+        answer: R`Mọi $m$ khác $0$ đều được giữ. Giá trị $m=0$ bị loại vì $(0;0)$ là vectơ không.`,
         steps: [
-          { claim: R`Tích vô hướng bằng $2m-4$.`, why: "Tung của vectơ thứ nhất là $1$, tung của vectơ thứ hai là $-4$, nên số hạng thứ hai bằng $-4$." },
-          { claim: R`Phương trình $2m-4=0$ cho $m=2$.`, why: "Điều kiện cần và đủ của vuông góc. Vectơ $(2;1)$ khác vectơ không nên nghiệm được giữ." },
+          { claim: R`Tích vô hướng bằng $m\cdot 1+m\cdot(-1)=0$ với mọi $m$.`, why: "Hai số hạng triệt tiêu nhau. Điều kiện vuông góc đúng trên cả đường thẳng tham số, kể cả khi vectơ bằng vectơ không." },
+          { claim: R`Vectơ $(m;m)$ bằng vectơ không khi và chỉ khi $m=0$, nên giá trị này bị loại.`, why: "Đề đòi vectơ khác vectơ không. Với mọi $m$ khác $0$, tích vô hướng vẫn bằng $0$ và vectơ còn lại khác vectơ không, nên những giá trị đó được giữ." },
         ],
-        checks: [{ expr: "2*2+1*(-4)", expect: "0" }],
+        checks: [
+          { expr: "3*1+3*(-1)", expect: "0" },
+          { expr: "0**2+0**2", expect: "0" },
+        ],
+      },
+    },
+    {
+      name: "Cùng phương, cùng hướng và bằng nhau",
+      nhanDang: "Hỏi hai vectơ có cùng phương, có cùng hướng, hay bằng nhau.",
+      phuongPhap: R`Với $\vec v\neq\vec 0$, hai vectơ cùng phương khi và chỉ khi có số thực $k$ sao cho $\vec u=k\vec v$. Theo tọa độ, điều này tương đương $x_1y_2-y_1x_2=0$. Cùng hướng khi số $k$ đó dương. Bằng nhau khi và chỉ khi $k=1$, tức hai vectơ có cùng tọa độ. Cùng phương với $k<0$ là ngược hướng.`,
+      viDu: {
+        prompt: R`Cho $\vec u=(2;4)$ và $\vec v=(1;2)$. Hai vectơ cùng phương, cùng hướng, hay bằng nhau?`,
+        steps: [
+          { claim: R`Ta có $(2;4)=2(1;2)$, và định thức $2\cdot 2-4\cdot 1=0$.`, why: "Có số $k=2$ để vectơ này là bội của vectơ kia. Định thức bằng $0$ xác nhận chúng cùng phương." },
+          { claim: R`Vì $k=2>0$, hai vectơ cùng hướng, nhưng $k\neq 1$ nên chúng không bằng nhau.`, why: "Cùng hướng đòi hệ số dương. Bằng nhau đòi hệ số đúng bằng $1$, tức cùng độ dài và cùng hướng." },
+        ],
+        ket: R`Hai vectơ cùng phương và cùng hướng, nhưng không bằng nhau.`,
+        checks: [
+          { expr: "2*2-4*1", expect: "0" },
+          { expr: "2*1", expect: "2" },
+        ],
+      },
+      loi: "Thấy định thức bằng $0$ rồi kết luận hai vectơ bằng nhau, trong khi hệ số có thể khác $1$.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Xét $\vec u=(-1;-2)$ và $\vec v=(2;4)$. Chúng cùng phương theo hướng nào?`,
+        think: "Tìm $k$ sao cho $\\vec u=k\\vec v$. Dấu của $k$ phân biệt cùng hướng và ngược hướng.",
+        answer: R`Hai vectơ cùng phương và ngược hướng, vì $k=-\frac{1}{2}<0$. Chúng không bằng nhau.`,
+        steps: [
+          { claim: R`Ta có $(-1;-2)=-\frac{1}{2}(2;4)$.`, why: R`Nhân $(2;4)$ với $-\frac{1}{2}$ ra đúng $(-1;-2)$. Định thức $-1\cdot 4-(-2)\cdot 2$ bằng $0$, nên chúng cùng phương.` },
+          { claim: R`Hệ số âm nên hai vectơ ngược hướng, và hệ số khác $1$ nên chúng không bằng nhau.`, why: "Cùng hướng chỉ khi hệ số dương. Ở đây hướng của $\\vec u$ trái với hướng của $\\vec v$." },
+        ],
+        checks: [{ expr: "(-1)*4-(-2)*2", expect: "0" }],
+      },
+    },
+    {
+      name: "Quy tắc ba điểm và hình bình hành",
+      nhanDang: "Cộng vectơ trên một đường gấp khúc, hoặc tìm đỉnh thứ tư của hình bình hành.",
+      phuongPhap: R`Quy tắc ba điểm: $\overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}$ với mọi bộ ba điểm. Trong hình bình hành $ABCD$, $\overrightarrow{AB}+\overrightarrow{AD}=\overrightarrow{AC}$ và các cạnh đối bằng nhau theo vectơ. Hai quy tắc này là đẳng thức vectơ, kiểm lại bằng cách cộng tọa độ.`,
+      viDu: {
+        prompt: R`Cho $A(0;0)$, $B(2;1)$ và $C(5;4)$. Kiểm tra $\overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}$.`,
+        steps: [
+          { claim: R`Ta có $\overrightarrow{AB}=(2;1)$ và $\overrightarrow{BC}=(3;3)$.`, why: "Mỗi vectơ là hiệu tọa độ điểm cuối trừ điểm đầu. Điểm giữa $B$ xuất hiện ở cả hai vectơ." },
+          { claim: R`Tổng bằng $(5;4)$, trùng $\overrightarrow{AC}$.`, why: "Quy tắc ba điểm. Cộng hoành $2+3$ và tung $1+3$ ra đúng hiệu tọa độ từ $A$ đến $C$." },
+        ],
+        ket: R`Đẳng thức $\overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}$ đúng với bộ ba điểm này.`,
+        checks: [
+          { expr: "2+3", expect: "5" },
+          { expr: "1+3", expect: "4" },
+        ],
+      },
+      loi: "Cộng $\\overrightarrow{AB}+\\overrightarrow{AC}$ rồi gọi đó là quy tắc ba điểm. Quy tắc ba điểm nối đầu vectơ sau với cuối vectơ trước.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Hình bình hành $ABCD$ có $A(0;0)$, $B(3;0)$ và $D(1;2)$. Tìm $C$.`,
+        think: "Đường chéo $\\overrightarrow{AC}$ bằng tổng $\\overrightarrow{AB}$ và $\\overrightarrow{AD}$. Điểm $C$ là đầu mút của tổng đó khi gốc tại $A$.",
+        answer: R`Đỉnh $C$ là $(4;2)$.`,
+        steps: [
+          { claim: R`Ta có $\overrightarrow{AB}=(3;0)$ và $\overrightarrow{AD}=(1;2)$.`, why: "Hai cạnh kề xuất phát từ $A$. Hình bình hành xác định đỉnh đối diện bằng tổng hai vectơ cạnh này." },
+          { claim: R`Vậy $\overrightarrow{AC}=(4;2)$, nên $C(4;2)$.`, why: "Cộng từng tọa độ. Điểm $C$ cách $A$ đúng vectơ tổng, và $ABCD$ là hình bình hành theo quy tắc hình bình hành." },
+        ],
+        checks: [
+          { expr: "3+1", expect: "4" },
+          { expr: "0+2", expect: "2" },
+        ],
+      },
+    },
+    {
+      name: "Chứng minh đẳng thức vectơ",
+      nhanDang: "Đề yêu cầu chứng minh một đẳng thức đúng với mọi vectơ, không chỉ với một bộ số.",
+      phuongPhap: R`Viết mỗi vectơ theo tọa độ tổng quát rồi so từng tọa độ. Đẳng thức vectơ đúng khi và chỉ khi mọi tọa độ tương ứng bằng nhau. Thử một bộ số chỉ là điều kiện cần. Muốn kết luận cho mọi vectơ thì phải thấy các tọa độ trùng nhau sau khi rút gọn, không phụ thuộc giá trị riêng của tọa độ.`,
+      viDu: {
+        prompt: R`Chứng minh $(\vec a+\vec b)+(\vec a-\vec b)=2\vec a$ với mọi vectơ trong mặt phẳng.`,
+        steps: [
+          { claim: R`Đặt $\vec a=(x_1;y_1)$ và $\vec b=(x_2;y_2)$. Vế trái có hoành $x_1+x_2+x_1-x_2$.`, why: "Cộng và trừ theo từng tọa độ. Các số hạng chứa $x_2$ đối nhau." },
+          { claim: R`Hoành vế trái bằng $2x_1$, tung bằng $2y_1$, trùng $2\vec a$.`, why: "Rút gọn không còn $x_2$ và $y_2$. Vì hai tọa độ đều khớp và không phụ thuộc bộ số riêng, đẳng thức đúng với mọi vectơ." },
+        ],
+        ket: R`Đẳng thức đúng với mọi vectơ trong mặt phẳng.`,
+        checks: [
+          { expr: "(x1+x2)+(x1-x2)-2*x1", expect: "0" },
+          { expr: "(y1+y2)+(y1-y2)-2*y1", expect: "0" },
+        ],
+      },
+      loi: "Thay một bộ số thấy đúng rồi kết luận đẳng thức đúng với mọi vectơ.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Chứng minh $(\vec a+\vec b)-(\vec a-\vec b)=2\vec b$.`,
+        think: "Khai triển hiệu theo từng tọa độ. Các số hạng của $\\vec a$ phải triệt tiêu, còn lại hai lần tọa độ của $\\vec b$.",
+        answer: R`Đẳng thức đúng với mọi vectơ, vì mỗi tọa độ của vế trái bằng hai lần tọa độ tương ứng của $\vec b$.`,
+        steps: [
+          { claim: R`Hoành vế trái là $(x_1+x_2)-(x_1-x_2)=2x_2$.`, why: "Trừ một hiệu thành cộng số đối. Số hạng $x_1$ mất, còn lại hai lần hoành của $\\vec b$." },
+          { claim: R`Tung cũng bằng $2y_2$, nên vế trái bằng $2\vec b$.`, why: "Cùng phép rút gọn trên tung độ. Hai tọa độ khớp nên đẳng thức vectơ được chứng minh cho mọi bộ tọa độ." },
+        ],
+        checks: [{ expr: "(x1+x2)-(x1-x2)-2*x2", expect: "0" }],
+      },
+    },
+    {
+      name: "Ba điểm thẳng hàng và hai đường song song",
+      nhanDang: "Hỏi ba điểm có thẳng hàng không, hoặc hai đoạn có song song không.",
+      phuongPhap: R`Ba điểm $A,B,C$ thẳng hàng khi và chỉ khi $\overrightarrow{AB}$ và $\overrightarrow{AC}$ cùng phương, tức định thức tọa độ bằng $0$. Hai đường $AB$ và $CD$ song song khi và chỉ khi $\overrightarrow{AB}$ và $\overrightarrow{CD}$ cùng phương. Vectơ không không xác định một phương của đường thẳng, nên các điểm phải phân biệt khi kết luận thẳng hàng hoặc song song.`,
+      viDu: {
+        prompt: R`Các điểm $A(0;0)$, $B(2;2)$ và $C(5;5)$ có thẳng hàng không?`,
+        steps: [
+          { claim: R`Ta có $\overrightarrow{AB}=(2;2)$ và $\overrightarrow{AC}=(5;5)$.`, why: "Cả hai vectơ xuất phát từ $A$. Ba điểm phân biệt vì các hiệu tọa độ không đồng thời bằng không." },
+          { claim: R`Định thức $2\cdot 5-2\cdot 5=0$, nên ba điểm thẳng hàng.`, why: "Định thức bằng $0$ là điều kiện cần và đủ để hai vectơ cùng phương. Cùng phương từ một điểm chung nghĩa là ba điểm nằm trên một đường thẳng." },
+        ],
+        ket: R`Ba điểm thẳng hàng.`,
+        checks: [{ expr: "2*5-2*5", expect: "0" }],
+      },
+      loi: "Thấy hai vectơ có tích vô hướng bằng $0$ rồi kết luận song song. Tích vô hướng bằng $0$ là điều kiện vuông góc.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Đoạn từ $(0;0)$ đến $(1;2)$ có song song với đoạn từ $(3;1)$ đến $(5;5)$ không?`,
+        think: "Lập hai vectơ chỉ phương. Song song khi định thức tọa độ bằng $0$, và cả hai vectơ đều khác vectơ không.",
+        answer: R`Hai đoạn song song.`,
+        steps: [
+          { claim: R`Hai vectơ chỉ phương là $(1;2)$ và $(2;4)$.`, why: "Hiệu tọa độ hai đầu mỗi đoạn. Cả hai khác vectơ không nên mỗi đoạn xác định một phương." },
+          { claim: R`Định thức $1\cdot 4-2\cdot 2=0$, nên hai đoạn song song.`, why: "Vectơ thứ hai bằng $2$ lần vectơ thứ nhất. Cùng phương với hệ số khác $0$ là điều kiện cần và đủ của song song." },
+        ],
+        checks: [{ expr: "1*4-2*2", expect: "0" }],
+      },
+    },
+    {
+      name: "Điểm thỏa một đẳng thức vectơ",
+      nhanDang: "Cho một đẳng thức có điểm chưa biết, tìm tọa độ điểm đó.",
+      phuongPhap: R`Viết mọi vectơ trong đẳng thức theo hiệu tọa độ của điểm cần tìm. Đẳng thức vectơ tương đương một hệ theo từng tọa độ. Giải hệ, rồi thay lại để thử đúng đẳng thức ban đầu. Nếu hệ vô nghiệm thì không có điểm thỏa đề.`,
+      viDu: {
+        prompt: R`Cho $A(1;3)$ và $B(5;7)$. Tìm $M$ sao cho $\overrightarrow{MA}+\overrightarrow{MB}=\vec 0$.`,
+        steps: [
+          { claim: R`Đẳng thức tương đương $(1;3)+(5;7)-2M=\vec 0$.`, why: "Mỗi vectơ xuất phát từ $M$ là hiệu tọa độ đầu trừ tọa độ $M$. Cộng hai hiệu được tổng hai điểm trừ hai lần $M$." },
+          { claim: R`Suy ra $M$ là trung điểm $\left(\frac{1+5}{2};\frac{3+7}{2}\right)=(3;5)$.`, why: "Chia tổng hai điểm cho $2$. Thay lại, hai vectơ từ trung điểm tới hai đầu là đối nhau, tổng bằng vectơ không." },
+        ],
+        ket: R`Điểm cần tìm là $M(3;5)$.`,
+        checks: [
+          { expr: "(1+5)/2", expect: "3" },
+          { expr: "(3+7)/2", expect: "5" },
+        ],
+      },
+      loi: "Giải một tọa độ của điểm rồi không thử lại tọa độ kia trong đẳng thức vectơ.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Cho $A(0;0)$ và $B(3;0)$. Tìm $M$ trên trục hoành sao cho $\overrightarrow{AM}=2\overrightarrow{MB}$.`,
+        think: "Đặt $M(x;0)$. Vectơ $\\overrightarrow{AM}=(x;0)$ và $\\overrightarrow{MB}=(3-x;0)$. Cân bằng hoành độ.",
+        answer: R`Điểm cần tìm là $M(2;0)$.`,
+        steps: [
+          { claim: R`Phương trình hoành là $x=2(3-x)$.`, why: "Hai vectơ cùng nằm trên trục hoành, nên đẳng thức vectơ quy về một phương trình bậc nhất theo hoành độ." },
+          { claim: R`Suy ra $3x=6$, tức $x=2$, và $M(2;0)$.`, why: "Nghiệm duy nhất. Thử lại: $\\overrightarrow{AM}=(2;0)$ và $2\\overrightarrow{MB}=2(1;0)=(2;0)$." },
+        ],
+        checks: [
+          { expr: "2*(3-2)", expect: "2" },
+          { expr: "2-0", expect: "2" },
+        ],
+      },
+    },
+    {
+      name: "Tích vô hướng theo độ dài và côsin",
+      nhanDang: "Biết độ dài hai vectơ và góc giữa chúng, hỏi tích vô hướng, chưa cho tọa độ.",
+      phuongPhap: R`Theo định nghĩa, $\vec a\cdot\vec b=|\vec a||\vec b|\cos(\vec a,\vec b)$ khi đã có góc giữa hai vectơ. Với tam giác đều cạnh $a$, góc ở đỉnh bằng $60^\circ$ và $\cos 60^\circ=\frac{1}{2}$, nên $\overrightarrow{AB}\cdot\overrightarrow{AC}=\frac{a^2}{2}$. Công thức này cần góc giữa đúng hai vectơ. Góc ngoài hay góc kề bù làm đổi dấu côsin.`,
+      viDu: {
+        prompt: R`Tam giác $ABC$ đều, cạnh bằng $4$. Tính $\overrightarrow{AB}\cdot\overrightarrow{AC}$.`,
+        steps: [
+          { claim: R`Góc giữa hai vectơ là $60^\circ$, và $\cos 60^\circ=\frac{1}{2}$.`, why: "Hai vectơ cùng xuất phát từ $A$ trong tam giác đều. Góc ở $A$ là góc giữa chúng." },
+          { claim: R`Tích vô hướng bằng $4\cdot 4\cdot\frac{1}{2}=8$, tức $\frac{4^2}{2}$.`, why: "Định nghĩa theo độ dài và côsin. Với cạnh $a$, kết quả tổng quát là $\\frac{a^2}{2}$." },
+        ],
+        ket: R`Tích vô hướng bằng $8$.`,
+        checks: [
+          { expr: "4*4*cos(pi/3)", expect: "8" },
+          { expr: "4**2/2", expect: "8" },
+        ],
+      },
+      loi: "Lấy côsin của góc đối diện cạnh đang xét, thay vì góc giữa hai vectơ xuất phát từ cùng một đỉnh.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Hai vectơ có độ dài $3$ và $4$, góc giữa chúng bằng $90^\circ$. Tích vô hướng bằng bao nhiêu?`,
+        think: "Côsin của góc vuông bằng $0$. Tích độ dài với côsin này phải bằng $0$.",
+        answer: R`Tích vô hướng bằng $0$.`,
+        steps: [
+          { claim: R`Theo định nghĩa, tích bằng $3\cdot 4\cdot\cos 90^\circ$.`, why: "Độ dài và góc giữa là đủ dữ kiện của định nghĩa. Chưa cần tọa độ." },
+          { claim: R`Vì $\cos 90^\circ=0$, tích vô hướng bằng $0$.`, why: "Hai vectơ vuông góc. Kết quả khớp điều kiện tích vô hướng bằng $0$." },
+        ],
+        checks: [{ expr: "3*4*cos(pi/2)", expect: "0" }],
+      },
+    },
+    {
+      name: "Tích vô hướng bằng cách phân tích trong hình",
+      nhanDang: "Trong một hình đã có góc vuông hoặc đường cao, tách một vectơ rồi tính tích vô hướng.",
+      phuongPhap: R`Nếu $\overrightarrow{AC}=\overrightarrow{AB'}+\overrightarrow{AH}$ với $\overrightarrow{AH}$ vuông góc $\overrightarrow{AB}$, thì $\overrightarrow{AB}\cdot\overrightarrow{AC}=\overrightarrow{AB}\cdot\overrightarrow{AB'}$. Thành phần vuông góc cho tích bằng $0$. Trong hình chữ nhật, đường chéo tách thành hai cạnh vuông góc nên tích của một cạnh với đường chéo bằng bình phương cạnh đó.`,
+      viDu: {
+        prompt: R`Hình chữ nhật $ABCD$ có $A(0;0)$, $B(3;0)$ và $D(0;2)$. Tính $\overrightarrow{AB}\cdot\overrightarrow{AC}$.`,
+        steps: [
+          { claim: R`Ta có $\overrightarrow{AC}=\overrightarrow{AB}+\overrightarrow{AD}$, và $\overrightarrow{AB}\cdot\overrightarrow{AD}=0$.`, why: "Quy tắc hình bình hành cho đường chéo. Hai cạnh kề của hình chữ nhật vuông góc, nên tích của chúng bằng $0$." },
+          { claim: R`Vậy $\overrightarrow{AB}\cdot\overrightarrow{AC}=|\overrightarrow{AB}|^2=9$.`, why: "Chỉ còn tích của $\\overrightarrow{AB}$ với chính nó. Hoành $3$ bình phương lên thành $9$, tung của $\\overrightarrow{AB}$ bằng $0$." },
+        ],
+        ket: R`Tích vô hướng bằng $9$.`,
+        checks: [{ expr: "3*3+0*2", expect: "9" }],
+      },
+      loi: "Cộng cả thành phần vuông góc vào tích vô hướng, dù thành phần đó cho tích bằng $0$.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Tam giác đều cạnh $6$, đỉnh $A$ tại $(0;0)$ và $B$ tại $(6;0)$. Vectơ $\overrightarrow{AC}$ có hình chiếu vuông góc trên $AB$ dài $3$. Tính $\overrightarrow{AB}\cdot\overrightarrow{AC}$.`,
+        think: "Tách $\\overrightarrow{AC}$ thành hình chiếu trên $AB$ và một vectơ vuông góc với $AB$. Chỉ hình chiếu còn lại trong tích vô hướng.",
+        answer: R`Tích vô hướng bằng $18$, đúng bằng $\frac{6^2}{2}$.`,
+        steps: [
+          { claim: R`Hình chiếu của $\overrightarrow{AC}$ trên $AB$ là vectơ độ dài $3$, cùng hướng $AB$.`, why: "Trong tam giác đều, hình chiếu của cạnh lên cạnh kề dài bằng nửa cạnh. Góc $60^\\circ$ cho côsin $\\frac{1}{2}$." },
+          { claim: R`Tích vô hướng bằng $6\cdot 3=18$.`, why: "Thành phần vuông góc với $AB$ không đóng góp. Kết quả trùng $\\frac{a^2}{2}$ với $a=6$." },
+        ],
+        checks: [{ expr: "6*3", expect: "18" }],
       },
     },
   ],
@@ -213,10 +419,10 @@ export const vectorDang: TopicDang = {
       sao: 3,
       prompt: R`Số liệu giả định. Một lực phẳng $(3;4)$ niutơn tác dụng khi vật dời $(4;0)$ mét. Tính công của lực. Nếu thay bằng lực $(0;4)$ niutơn trên cùng độ dời đó thì công bằng bao nhiêu?`,
       think: "Công của lực không đổi là tích vô hướng của lực với độ dời. Tính hai trường hợp riêng, rồi so với điều kiện vuông góc.",
-      answer: "Công của lực $(3;4)$ là $12$ đơn vị trên quãng dời $4$ mét. Lực $(0;4)$ vuông góc với độ dời nên công bằng $0$ đơn vị.",
+      answer: "Công của lực $(3;4)$ là $12$ J trên quãng dời $4$ mét. Lực $(0;4)$ vuông góc với độ dời nên công bằng $0$ J.",
       steps: [
-        { claim: R`Công thứ nhất bằng $3\cdot 4+4\cdot 0=12$ đơn vị.`, why: "Tích vô hướng của lực với độ dời. Đơn vị độ dời là mét, và số $12$ là công tương ứng." },
-        { claim: R`Công thứ hai bằng $0\cdot 4+4\cdot 0=0$.`, why: "Tích vô hướng bằng $0$ khi và chỉ khi lực vuông góc với độ dời. Diễn giải: lực này không sinh công trên quãng dời đã cho." },
+        { claim: R`Công thứ nhất bằng $3\cdot 4+4\cdot 0=12$ J.`, why: "Lực tính bằng niutơn, độ dời tính bằng mét, tích vô hướng là công tính bằng J." },
+        { claim: R`Công thứ hai bằng $0\cdot 4+4\cdot 0=0$ J.`, why: "Tích vô hướng bằng $0$ khi và chỉ khi lực vuông góc với độ dời. Diễn giải: lực này không sinh công trên quãng dời $4$ mét." },
       ],
       checks: [
         { expr: "3*4+4*0", expect: "12" },

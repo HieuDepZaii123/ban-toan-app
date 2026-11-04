@@ -150,17 +150,22 @@ function auditRich(topic: TopicDang): void {
     assert(!blob.includes("sin 3") && !blob.includes("sin3"), "còn giới hạn sin 3x/x");
     const used = collectChecks(topic).filter((check) => check.expr.includes("limit("));
     assert(used.length >= 8, "chưa đủ phép kiểm bằng sympy limit");
+    assert(blob.includes("2x+500"), "thiếu bài chi phí trung bình mỗi sản phẩm");
   }
   if (topic.id === "vector") {
     assert(!blob.includes("(2;1;2)"), "còn vectơ không gian");
     assert(!blob.includes("hợp lực"), "bài thuyền còn lẫn lực");
     assert(blob.includes("trọng tâm"), "thiếu trọng tâm");
     assert(blob.includes("Phân tích"), "thiếu phân tích vectơ");
+    assert(blob.includes("cùng hướng"), "thiếu cùng hướng");
+    assert(blob.includes("thẳng hàng"), "thiếu ba điểm thẳng hàng");
+    assert(blob.includes("$12$ J"), "bài công thiếu đơn vị J");
   }
   if (topic.id === "triangle") {
     assert(blob.includes("côsin"), "thiếu định lí côsin");
     assert(blob.includes("Định lí sin"), "thiếu định lí sin");
     assert(blob.includes("thể tích"), "thiếu thể tích khối");
+    assert(!blob.includes("một góc khác của tam giác"), "phản biện còn góc vuông mâu thuẫn");
   }
   if (topic.id === "quadratic") {
     assert(!blob.includes("đạo hàm"), "bậc hai còn đạo hàm");
@@ -173,6 +178,8 @@ function auditRich(topic: TopicDang): void {
     assert(topic.dang.some((dang) => dang.name.startsWith("Nhị thức")), "thiếu dạng nhị thức");
     assert(blob.includes("phương sai"), "thiếu phương sai");
     assert(blob.includes("Tứ phân vị"), "thiếu tứ phân vị");
+    assert(!blob.includes("(1+x)^6"), "nhị thức còn mũ 6");
+    assert(blob.includes("điểm$^2$") || blob.includes("điểm^2"), "phương sai thiếu đơn vị điểm mũ hai");
   }
   if (topic.id === "ineq") {
     assert(!blob.includes("đạo hàm"), "bất đẳng thức còn đạo hàm");

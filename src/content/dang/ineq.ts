@@ -139,14 +139,14 @@ export const ineqDang: TopicDang = {
       loi: "Viết bình phương của nửa tổng nhưng không kiểm tra điểm dấu bằng có thuộc miền hay không.",
       luyen: {
         kind: "luyen",
-        prompt: R`So sánh $\frac{4+9}{2}$ và $\sqrt{4\cdot 9}$.`,
-        think: "Một vế là trung bình cộng, một vế là trung bình nhân. Tính từng số, rồi xét hiệu.",
-        answer: R`Trung bình cộng bằng $\frac{13}{2}$, trung bình nhân bằng $6$, và $\frac{13}{2}>6$.`,
+        prompt: R`Với $x>0$, $y>0$ và $x+y=6$, tìm giá trị lớn nhất của $xy$.`,
+        think: "Tổng cố định bằng $6$. Tích lớn nhất khi hai số bằng nhau, rồi kiểm tra điểm đó còn dương.",
+        answer: R`Giá trị lớn nhất của tích bằng $9$, đạt tại $x=y=3$.`,
         steps: [
-          { claim: R`Ta có $\frac{4+9}{2}=\frac{13}{2}$ và $\sqrt{36}=6$.`, why: "Tích $4\\cdot 9$ bằng $36$. Hai giá trị này tính trực tiếp, chưa cần kết luận dấu bằng." },
-          { claim: R`Hiệu $\frac{13}{2}-6=\frac{1}{2}>0$.`, why: "Hiệu dương nên trung bình cộng lớn hơn. Dấu bằng không xảy ra vì $4$ khác $9$." },
+          { claim: R`Ta có $xy\le\left(\frac{6}{2}\right)^2=9$.`, why: "Hệ quả AM–GM khi tổng đã biết. Đây là nội dung nâng cao, và bất đẳng thức cho cận trên của tích." },
+          { claim: R`Dấu bằng khi $x=y=3$, và điểm này thuộc miền.`, why: "Hai số dương và tổng bằng $6$. Thuộc miền làm cận $9$ đạt được, nên đó là giá trị lớn nhất." },
         ],
-        checks: [{ expr: "Rational(13,2)-6", expect: "Rational(1,2)" }],
+        checks: [{ expr: "(6/2)**2", expect: "9" }],
       },
     },
   ],
@@ -154,13 +154,13 @@ export const ineqDang: TopicDang = {
     {
       kind: "thuc-te",
       sao: 4,
-      prompt: R`Số liệu giả định. Xưởng làm $x$ chiếc bàn và $y$ chiếc ghế, với $x\ge 0$, $y\ge 0$, $x+y\le 4$ và $x\le 3$. Lợi nhuận là $x+2y$ nghìn đồng. Tìm phương án lợi nhuận cao nhất và so với phương án $3$ bàn cùng $1$ ghế.`,
+      prompt: R`Số liệu giả định. Xưởng làm $x$ chiếc bàn và $y$ chiếc ghế, với $x\ge 0$, $y\ge 0$, $x+y\le 4$ và $x\le 3$. Lợi nhuận là $x+2y$ triệu đồng. Tìm phương án lợi nhuận cao nhất và so với phương án $3$ bàn cùng $1$ ghế.`,
       think: "Miền là đa giác có bốn đỉnh. Tính lợi nhuận tại đủ bốn đỉnh. Diễn giải phương án tối ưu theo số bàn và số ghế.",
-      answer: "Lợi nhuận cao nhất là $8$ nghìn đồng, khi làm $0$ bàn và $4$ ghế. Phương án $3$ bàn và $1$ ghế chỉ được $5$ nghìn đồng, thấp hơn $3$ nghìn đồng.",
+      answer: "Lợi nhuận cao nhất là $8$ triệu đồng, khi làm $0$ bàn và $4$ ghế. Phương án $3$ bàn và $1$ ghế chỉ được $5$ triệu đồng, thấp hơn $3$ triệu đồng.",
       steps: [
-        { claim: R`Bốn đỉnh cho lợi nhuận $0$, $3$, $5$ và $8$ nghìn đồng.`, why: "Các đỉnh là $(0;0)$, $(3;0)$, $(3;1)$ và $(0;4)$. Hàm bậc nhất trên đa giác đóng đạt lớn nhất tại một đỉnh, nên xét đủ bốn đỉnh." },
-        { claim: R`Mức cao nhất là $8$ nghìn đồng tại $(0;4)$.`, why: "Ghế mang hệ số $2$, lớn hơn hệ số của bàn. Diễn giải: phương án chỉ làm $4$ ghế dùng hết ràng buộc $x+y\\le 4$ và không chạm trần $3$ bàn." },
-        { claim: R`Phương án $(3;1)$ cho $5$ nghìn đồng, kém $3$ nghìn đồng.`, why: "Hiệu $8-5=3$. So sánh này cho thấy đỉnh có nhiều bàn hơn không phải phương án lợi nhuận cao nhất." },
+        { claim: R`Bốn đỉnh cho lợi nhuận $0$, $3$, $5$ và $8$ triệu đồng.`, why: "Các đỉnh là $(0;0)$, $(3;0)$, $(3;1)$ và $(0;4)$. Hàm bậc nhất trên đa giác đóng đạt lớn nhất tại một đỉnh, nên xét đủ bốn đỉnh." },
+        { claim: R`Mức cao nhất là $8$ triệu đồng tại $(0;4)$.`, why: "Ghế mang hệ số $2$, lớn hơn hệ số của bàn. Diễn giải: phương án chỉ làm $4$ ghế dùng hết ràng buộc $x+y\\le 4$ và không chạm trần $3$ bàn." },
+        { claim: R`Phương án $(3;1)$ cho $5$ triệu đồng, kém $3$ triệu đồng.`, why: "Hiệu $8-5=3$. So sánh này cho thấy đỉnh có nhiều bàn hơn không phải phương án lợi nhuận cao nhất." },
       ],
       checks: [
         { expr: "0+2*4", expect: "8" },
@@ -187,13 +187,13 @@ export const ineqDang: TopicDang = {
     {
       kind: "thuc-te",
       sao: 4,
-      prompt: R`Số liệu giả định. Chi phí một mẻ là $t+\frac{4}{t}$ đồng, với thời gian $t\ge 3$ giờ. Chứng minh mức $4$ đồng không đạt được, và tìm chi phí nhỏ nhất trên miền này.`,
+      prompt: R`Số liệu giả định. Chi phí một mẻ là $t+\frac{4}{t}$ triệu đồng, với thời gian $t\ge 3$ giờ. Chứng minh mức $4$ triệu đồng không đạt được, và tìm chi phí nhỏ nhất trên miền này.`,
       think: "AM–GM cho cận $4$ tại $t=2$, nhưng $2$ không thuộc $[3;+\\infty)$. Phân tích hiệu giữa biểu thức và $\\frac{13}{3}$ thành tích có dấu xác định khi $t\\ge 3$.",
-      answer: R`Mức $4$ đồng không đạt trên miền $t\ge 3$. Chi phí nhỏ nhất là $\frac{13}{3}$ đồng, tại $t=3$ giờ.`,
+      answer: R`Mức $4$ triệu đồng không đạt trên miền $t\ge 3$. Chi phí nhỏ nhất là $\frac{13}{3}$ triệu đồng, tại $t=3$ giờ.`,
       steps: [
-        { claim: R`Điểm $t=2$ làm $t=\frac{4}{t}$ nhưng $2<3$, nên $2$ không thuộc miền.`, why: "Dấu bằng của AM–GM nằm ngoài miền thời gian. Cận $4$ đồng vì thế chưa phải giá trị nhỏ nhất trên miền đã cho." },
+        { claim: R`Điểm $t=2$ làm $t=\frac{4}{t}$ nhưng $2<3$, nên $2$ không thuộc miền.`, why: "Dấu bằng của AM–GM nằm ngoài miền thời gian. Cận $4$ triệu đồng vì thế chưa phải giá trị nhỏ nhất trên miền đã cho." },
         { claim: R`Với $t>0$, $t+\frac{4}{t}-\frac{13}{3}=\frac{(3t-4)(t-3)}{3t}$.`, why: "Quy đồng rồi phân tích tử. Đây là một đẳng thức, dùng để xét dấu trên miền $t\\ge 3$." },
-        { claim: R`Khi $t\ge 3$, hiệu này không âm và bằng $0$ tại $t=3$.`, why: "Các thừa số $3t-4$, $t-3$ và $3t$ đều không âm trên miền. Diễn giải: chi phí nhỏ nhất là $\\frac{13}{3}$ đồng tại đúng $3$ giờ." },
+        { claim: R`Khi $t\ge 3$, hiệu này không âm và bằng $0$ tại $t=3$.`, why: "Các thừa số $3t-4$, $t-3$ và $3t$ đều không âm trên miền. Diễn giải: chi phí nhỏ nhất là $\\frac{13}{3}$ triệu đồng tại đúng $3$ giờ." },
       ],
       checks: [
         { expr: "3+Rational(4,3)", expect: "Rational(13,3)" },
@@ -230,12 +230,12 @@ export const ineqDang: TopicDang = {
     {
       kind: "phan-bien",
       sao: 4,
-      prompt: R`Bạn A nói: cứ chỗ hai số bằng nhau là giá trị nhỏ nhất của $x+\frac{4}{x}$ trên mọi miền đều bằng $4$. Xét miền $t\ge 3$ và phản biện.`,
-      think: "Kiểm tra $t=2$ có thuộc miền không. Nếu không, hãy tính giá trị tại đầu mút $t=3$ và chỉ ra nó lớn hơn $4$.",
-      answer: R`Mệnh đề của bạn A sai trên miền $t\ge 3$. Giá trị nhỏ nhất ở đó bằng $\frac{13}{3}$, đạt tại $t=3$, và $\frac{13}{3}>4$.`,
+      prompt: R`Bạn A nói: cứ chỗ hai số bằng nhau là giá trị nhỏ nhất của $x+\frac{4}{x}$ trên mọi miền đều bằng $4$. Xét miền $x\ge 3$ và phản biện.`,
+      think: "Giữ nguyên biến $x$. Kiểm tra $x=2$ có thuộc miền $x\\ge 3$ không. Nếu không, tính giá trị tại đầu mút $x=3$ và chỉ ra nó lớn hơn $4$.",
+      answer: R`Mệnh đề của bạn A sai trên miền $x\ge 3$. Giá trị nhỏ nhất ở đó bằng $\frac{13}{3}$, đạt tại $x=3$, và $\frac{13}{3}>4$.`,
       steps: [
-        { claim: R`Điểm làm hai số bằng nhau là $t=2$, và $2$ không thuộc $[3;+\infty)$.`, why: "Bạn A dùng dấu bằng của AM–GM như thể điểm đó luôn nằm trong miền. Với miền này, điều kiện thuộc miền đã thất bại." },
-        { claim: R`Tại $t=3$, biểu thức bằng $\frac{13}{3}$, và hiệu $\frac{13}{3}-4=\frac{1}{3}>0$.`, why: "Giá trị tại đầu mút lớn hơn $4$. Vì vậy $4$ không phải giá trị nhỏ nhất trên miền bạn A đang nói." },
+        { claim: R`Điểm làm hai số bằng nhau là $x=2$, và $2$ không thuộc $[3;+\infty)$.`, why: "Bạn A dùng dấu bằng của AM–GM như thể điểm đó luôn nằm trong miền. Với miền $x\\ge 3$, điều kiện thuộc miền đã thất bại." },
+        { claim: R`Tại $x=3$, biểu thức bằng $\frac{13}{3}$, và hiệu $\frac{13}{3}-4=\frac{1}{3}>0$.`, why: "Giá trị tại đầu mút lớn hơn $4$. Vì vậy $4$ không phải giá trị nhỏ nhất của cùng biểu thức theo biến $x$ trên miền này." },
       ],
       checks: [
         { expr: "3+Rational(4,3)", expect: "Rational(13,3)" },
@@ -257,12 +257,12 @@ export const ineqDang: TopicDang = {
     {
       kind: "uoc-luong",
       sao: 2,
-      prompt: R`Chi phí $\frac{13}{3}$ đồng cần được chặn giữa hai số nguyên liên tiếp. Hãy ước lượng phân số này.`,
+      prompt: R`Chi phí $\frac{13}{3}$ triệu đồng cần được chặn giữa hai số nguyên liên tiếp. Hãy ước lượng phân số này.`,
       think: "So $\\frac{13}{3}$ với $4$ và với $5$, tức so $13$ với $12$ và với $15$.",
-      answer: R`Vì $4<\frac{13}{3}<5$ nên chi phí nằm giữa $4$ đồng và $5$ đồng.`,
+      answer: R`Vì $4<\frac{13}{3}<5$ nên chi phí nằm giữa $4$ triệu đồng và $5$ triệu đồng.`,
       steps: [
-        { claim: R`Ta có $\frac{13}{3}-4=\frac{1}{3}>0$.`, why: "Tử $13$ lớn hơn $12$. Chi phí cao hơn $4$ đồng." },
-        { claim: R`Ta có $5-\frac{13}{3}=\frac{2}{3}>0$.`, why: "Tử $13$ nhỏ hơn $15$. Diễn giải: chi phí nhỏ nhất trên miền từ $3$ giờ chưa tới $5$ đồng." },
+        { claim: R`Ta có $\frac{13}{3}-4=\frac{1}{3}>0$.`, why: "Tử $13$ lớn hơn $12$. Chi phí cao hơn $4$ triệu đồng." },
+        { claim: R`Ta có $5-\frac{13}{3}=\frac{2}{3}>0$.`, why: "Tử $13$ nhỏ hơn $15$. Diễn giải: chi phí nhỏ nhất trên miền từ $3$ giờ chưa tới $5$ triệu đồng." },
       ],
       checks: [
         { expr: "Rational(13,3)-4", expect: "Rational(1,3)" },

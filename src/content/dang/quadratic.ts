@@ -208,12 +208,12 @@ export const quadraticDang: TopicDang = {
     {
       kind: "thuc-te",
       sao: 3,
-      prompt: R`Số liệu giả định. Lợi nhuận tính bằng đồng là $P(x)=-2x^2+8x-3$, với $x>0$ là số trăm sản phẩm. Tìm số sản phẩm cho lợi nhuận cao nhất và số tiền đó.`,
+      prompt: R`Số liệu giả định. Lợi nhuận tính bằng triệu đồng là $P(x)=-2x^2+8x-3$, với $x>0$ là số trăm sản phẩm. Tìm số sản phẩm cho lợi nhuận cao nhất và số tiền đó.`,
       think: "Hoàn thành bình phương. Hoành độ làm bình phương bằng $0$ phải dương thì mới là một mức sản xuất hợp lệ.",
-      answer: "Lợi nhuận cao nhất là $5$ đồng khi sản xuất $2$ trăm sản phẩm.",
+      answer: "Lợi nhuận cao nhất là $5$ triệu đồng khi sản xuất $2$ trăm sản phẩm.",
       steps: [
         { claim: R`Ta có $P(x)=-2(x-2)^2+5$.`, why: "Vì $-2x^2+8x-3=-2(x^2-4x)-3=-2\\left((x-2)^2-4\\right)-3$. Đẳng thức đúng với mọi $x$." },
-        { claim: R`Giá trị lớn nhất bằng $5$ đồng tại $x=2$.`, why: "Hệ số $-2$ làm bình phương kéo lợi nhuận xuống. Điểm $x=2$ thuộc miền $x>0$, tức $2$ trăm sản phẩm." },
+        { claim: R`Giá trị lớn nhất bằng $5$ triệu đồng tại $x=2$.`, why: "Hệ số $-2$ làm bình phương kéo lợi nhuận xuống. Điểm $x=2$ thuộc miền $x>0$, tức $2$ trăm sản phẩm và lợi nhuận $5$ triệu đồng." },
       ],
       checks: [{ expr: "-2*2**2+8*2-3", expect: "5" }],
     },
