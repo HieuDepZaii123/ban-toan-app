@@ -13,19 +13,36 @@ export type GradeExample = {
   checks: GradeCheck[];
 };
 
+export type AskNumber = { kind: "number"; value: number; tolerance?: number };
+export type AskChoice = { kind: "choice"; options: string[]; correct: number };
+export type GradeAsk = AskNumber | AskChoice;
+
+export type GradeWidget = "fraction" | "line" | "linear" | "quadratic";
+
 export type GradeDrill = {
   prompt: string;
   answer: string;
   /** Một câu lý do của đáp án luyện tập. */
   why?: string;
   checks: GradeCheck[];
+  /** 1 dễ, 2 vừa, 3 nâng cao. */
+  stars?: number;
+  hints?: string[];
+  ask?: GradeAsk;
 };
 
 export type GradeLesson = {
   id: string;
   title: string;
   summary: string;
+  /** Vì sao quy tắc trong bài đúng. */
+  whyTrue?: string;
+  /** Một lỗi học sinh hay mắc. */
+  pitfalls?: string;
+  /** Ghi khi số liệu trong bài là giả định. */
+  dataNote?: string;
   figure?: FigureKind;
+  widget?: GradeWidget;
   examples: GradeExample[];
   drills: GradeDrill[];
   /** Chuyên đề THPT đã có, nếu bài này nối sang đó. */
@@ -61,9 +78,13 @@ export function bai(
   summary: string,
   examples: GradeExample[],
   drills: GradeDrill[],
-  extra?: { figure?: FigureKind; topicId?: string },
+  extra?: { figure?: FigureKind; topicId?: string; whyTrue?: string; pitfalls?: string; dataNote?: string; widget?: GradeWidget },
 ): GradeLesson {
-  return { id, title, summary, examples, drills, figure: extra?.figure, topicId: extra?.topicId };
+  return {
+    id, title, summary, examples, drills,
+    figure: extra?.figure, topicId: extra?.topicId, whyTrue: extra?.whyTrue,
+    pitfalls: extra?.pitfalls, dataNote: extra?.dataNote, widget: extra?.widget,
+  };
 }
 
 export function chuong(id: string, title: string, lessons: GradeLesson[]): GradeChapter {

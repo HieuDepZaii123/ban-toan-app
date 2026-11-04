@@ -72,7 +72,11 @@ for (const book of gradeBooks) {
     assert(!ids.has(lesson.id), `lớp ${book.grade} trùng mã ${lesson.id}`);
     ids.add(lesson.id);
     assert(lesson.examples.length >= 1 && lesson.examples.length <= 2, `${lesson.id} cần 1 hoặc 2 ví dụ`);
-    assert(lesson.drills.length === 3, `${lesson.id} cần đúng 3 bài tự luyện`);
+    assert(lesson.drills.length >= 3 && lesson.drills.length <= 4, `${lesson.id} cần 3 hoặc 4 bài tự luyện`);
+    assert(!!lesson.whyTrue && !!lesson.pitfalls, `${lesson.id} thiếu vì sao đúng hoặc lỗi hay gặp`);
+    if (lesson.whyTrue) checkProse(`L${book.grade} vì sao`, lesson.whyTrue);
+    if (lesson.pitfalls) checkProse(`L${book.grade} lỗi`, lesson.pitfalls);
+    assert(lesson.drills.some((drill) => (drill.stars ?? 0) >= 2), `${lesson.id} thiếu bài nâng cao`);
     checkProse(`L${book.grade} ${lesson.title}`, lesson.title);
     checkProse(`L${book.grade} tóm tắt`, lesson.summary);
     if (lesson.topicId) {
@@ -105,6 +109,10 @@ for (const book of gradeBooks) {
         assert(drill.why.trim().length >= 24 && /[.!?]$/.test(drill.why.trim()), `${lesson.id} lý do luyện cụt`);
       }
       assert(drill.checks.length >= 1, `${lesson.id} luyện thiếu check`);
+      for (const hint of drill.hints ?? []) {
+        checkProse(`L${book.grade} gợi ý`, hint);
+        assert(hint.trim().length >= 24 && /[.!?]$/.test(hint.trim()), `${lesson.id} gợi ý cụt`);
+      }
       for (const check of drill.checks) {
         assert(check.expr.replace(/\s/g, "") !== check.expect.replace(/\s/g, ""), `${lesson.id} check không kiểm đáp số`);
       }
@@ -135,6 +143,8 @@ const g10 = JSON.stringify(gradeBooks.find((book) => book.grade === 10));
 const g11 = JSON.stringify(gradeBooks.find((book) => book.grade === 11));
 const g12 = JSON.stringify(gradeBooks.find((book) => book.grade === 12));
 assert(g6.includes("nguyên tố") && g6.includes("hỗn số") && g6.includes("ước lượng") && g6.includes("đối xứng"), "lớp 6 thiếu số nguyên tố, hỗn số, ước lượng hoặc đối xứng");
+assert(g6.includes("xác suất thực nghiệm") && g6.includes("đoạn thẳng") && g6.includes("tia"), "lớp 6 thiếu xác suất thực nghiệm hoặc bài điểm, đường, tia");
+assert(JSON.stringify(gradeBooks.find((book) => book.grade === 3)).includes("chắc chắn") && JSON.stringify(gradeBooks.find((book) => book.grade === 3)).includes("không thể"), "lớp 3 thiếu khả năng xảy ra");
 assert(g7.includes("biểu đồ quạt") && g7.includes("xác suất"), "lớp 7 thiếu thống kê hoặc xác suất");
 assert(!JSON.stringify(gradeBooks.find((book) => book.grade === 3)).includes("tử") && !JSON.stringify(gradeBooks.find((book) => book.grade === 3)).includes("mẫu"), "lớp 3 còn từ tử hoặc mẫu");
 assert(!g6.includes("Tổng các góc"), "lớp 6 còn tổng các góc của tam giác");

@@ -252,5 +252,45 @@ export const lop03: GradeBook = {
         { figure: "bar" },
       ),
     ]),
+    chuong("kha-nang", "Khả năng xảy ra", [
+      bai(
+        "chan-chan",
+        "Chắc chắn, có thể và không thể",
+        R`Số liệu giả định. Một việc chắc chắn xảy ra khi mọi kết quả đều thuận. Một việc không thể xảy ra khi không có kết quả thuận nào. Còn lại là việc có thể xảy ra.`,
+        [vd(
+          R`Túi chỉ có $5$ viên bi đỏ. Rút một viên. Việc được bi đỏ thuộc loại nào? Việc được bi xanh thuộc loại nào?`,
+          [
+            buoc(R`Cả $5$ viên đều đỏ, nên được bi đỏ là việc chắc chắn.`, "Mọi kết quả đều là bi đỏ. Không còn kết quả khác."),
+            buoc(R`Không có bi xanh, nên được bi xanh là việc không thể.`, "Không có kết quả thuận nào thì việc không xảy ra."),
+          ],
+          R`Được bi đỏ là chắc chắn. Được bi xanh là không thể.`,
+          [{ expr: "5/5", expect: "1" }, { expr: "0/5", expect: "0" }],
+        )],
+        [
+          luyen(R`Số liệu giả định. Túi có $3$ bi đỏ và $2$ bi xanh. Rút một bi đỏ là việc gì?`, R`Đó là việc có thể xảy ra.`, [{ expr: "Rational(3,5)", expect: "3/5" }], "Có bi đỏ nên việc xảy ra được, nhưng không phải viên nào cũng đỏ nên chưa chắc chắn."),
+          luyen(R`Gieo một xúc xắc cân đối. Ra một số từ $1$ đến $6$ là việc gì?`, R`Đó là việc chắc chắn.`, [{ expr: "6/6", expect: "1" }], "Cả sáu mặt đều là một số từ $1$ đến $6$. Mọi kết quả đều thuận."),
+          luyen(R`Túi chỉ có bi đỏ. Rút được bi xanh là việc gì?`, R`Đó là việc không thể xảy ra.`, [{ expr: "0/4", expect: "0" }], "Không có bi xanh nên không có kết quả thuận."),
+        ],
+      ),
+      bai(
+        "so-kha-nang",
+        "So sánh hai khả năng",
+        R`Số liệu giả định. Khi rút ngẫu nhiên một viên, việc nào có nhiều viên thuận hơn thì dễ xảy ra hơn.`,
+        [vd(
+          R`Túi có $4$ bi đỏ và $1$ bi xanh. Việc nào dễ xảy ra hơn khi rút một viên?`,
+          [
+            buoc(R`Bi đỏ nhiều hơn bi xanh: $4>1$.`, "So sánh số viên của mỗi màu trong cùng một túi."),
+            buoc(R`Vậy rút được bi đỏ dễ hơn rút được bi xanh.`, "Nhiều kết quả thuận hơn thì khả năng xảy ra lớn hơn."),
+          ],
+          R`Rút được bi đỏ dễ xảy ra hơn.`,
+          [{ expr: "4-1", expect: "3" }],
+        )],
+        [
+          luyen(R`Số liệu giả định. Túi có $2$ bi đỏ và $6$ bi xanh. Màu nào dễ được rút hơn?`, R`Bi xanh dễ được rút hơn.`, [{ expr: "6-2", expect: "4" }], "Sáu lớn hơn hai, nên bi xanh có nhiều kết quả thuận hơn."),
+          luyen(R`Túi có $3$ bi đỏ và $3$ bi xanh. Hai việc rút đỏ và rút xanh có cùng khả năng không?`, R`Có, hai việc cùng khả năng.`, [{ expr: "3-3", expect: "0" }], "Hai màu có cùng số viên thì không màu nào dễ hơn."),
+          luyen(R`Túi có $1$ bi đỏ và $8$ bi xanh. Hiệu số bi xanh trừ bi đỏ bằng bao nhiêu?`, R`Hiệu bằng $7$, nên bi xanh dễ được rút hơn.`, [{ expr: "8-1", expect: "7" }], "Hiệu dương cho biết màu đứng trước trong phép trừ ít hơn màu đứng sau."),
+        ],
+      ),
+    ]),
   ],
 };

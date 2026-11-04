@@ -295,6 +295,87 @@ export const lop06: GradeBook = {
         ],
         { figure: "rect" },
       ),
+      bai(
+        "diem-duong",
+        "Điểm, đường thẳng, tia và đoạn thẳng",
+        R`Điểm không có kích thước. Qua hai điểm phân biệt có đúng một đường thẳng. Tia có một gốc và đi về một phía. Đoạn thẳng có hai đầu mút.`,
+        [vd(
+          R`Ba điểm không thẳng hàng xác định bao nhiêu đoạn thẳng?`,
+          [
+            buoc(R`Mỗi cặp điểm cho một đoạn thẳng.`, "Hai điểm phân biệt xác định đúng một đoạn nối chúng."),
+            buoc(R`Ba điểm cho $3$ đoạn.`, "Số cặp chọn từ ba điểm bằng $3$. Ba đoạn này là ba cạnh của một tam giác."),
+          ],
+          R`Ba điểm xác định $3$ đoạn thẳng.`,
+          [{ expr: "binomial(3,2)", expect: "3" }],
+        )],
+        [
+          luyen(R`Bốn điểm, không có ba điểm nào thẳng hàng, xác định bao nhiêu đoạn thẳng?`, R`Có $6$ đoạn thẳng.`, [{ expr: "binomial(4,2)", expect: "6" }], "Mỗi cặp điểm cho một đoạn. Số cặp chọn từ bốn điểm bằng $6$."),
+          luyen(R`Đoạn $AB$ dài $9$ xentimét, điểm $M$ nằm giữa và $AM=4$ xentimét. Đoạn $MB$ dài bao nhiêu?`, R`Đoạn $MB$ dài $5$ xentimét.`, [{ expr: "9-4", expect: "5" }], "Điểm nằm giữa hai đầu mút thì cả đoạn bằng tổng hai đoạn nhỏ."),
+          luyen(R`Một tia có một gốc. Hai tia khác gốc có tất cả bao nhiêu gốc?`, R`Có $2$ gốc.`, [{ expr: "1+1", expect: "2" }], "Mỗi tia có đúng một gốc. Hai tia khác gốc thì có hai gốc."),
+        ],
+        { figure: "segment" },
+      ),
+    ]),
+    chuong("tk-xs-6", "Thống kê và xác suất thực nghiệm", [
+      bai(
+        "thu-thap",
+        "Thu thập dữ liệu",
+        R`Số liệu giả định. Thu thập là ghi lại từng giá trị đã quan sát. Cỡ mẫu là số giá trị đã ghi. Tổng các lần đếm bằng cỡ mẫu.`,
+        [vd(
+          R`Số liệu giả định. Một nhóm ghi $4$ lần giá trị A, $3$ lần giá trị B và $3$ lần giá trị C. Cỡ mẫu bằng bao nhiêu?`,
+          [
+            buoc(R`Cộng các lần đã ghi: $4+3+3$.`, "Mỗi lần quan sát được tính một lần, không bỏ nhóm nào."),
+            buoc(R`Cỡ mẫu bằng $10$.`, "Tổng các lần đếm là số giá trị trong mẫu."),
+          ],
+          R`Cỡ mẫu bằng $10$.`,
+          [{ expr: "4+3+3", expect: "10" }],
+        )],
+        [
+          luyen(R`Số liệu giả định. Ba nhóm được đếm $2$, $5$ và $1$ lần. Cỡ mẫu bằng bao nhiêu?`, R`Cỡ mẫu bằng $8$.`, [{ expr: "2+5+1", expect: "8" }], "Cộng đủ ba lần đếm. Kết quả là số quan sát đã thu."),
+          luyen(R`Số liệu giả định. Mẫu $12$ giá trị, đã ghi $7$ giá trị loại một. Còn bao nhiêu giá trị loại khác?`, R`Còn $5$ giá trị.`, [{ expr: "12-7", expect: "5" }], "Phần còn lại bằng cỡ mẫu trừ số đã đếm ở loại một."),
+          luyen(R`Số liệu giả định. Hai người cùng đếm một mẫu và cùng ra $9$. Hiệu hai lần đếm bằng bao nhiêu?`, R`Hiệu bằng $0$, hai lần đếm khớp nhau.`, [{ expr: "9-9", expect: "0" }], "Hai lần thu thập cùng một mẫu cho cùng một số thì hiệu bằng không."),
+        ],
+        { figure: "bar" },
+      ),
+      bai(
+        "bieu-dien-6",
+        "Biểu diễn dữ liệu",
+        R`Số liệu giả định. Biểu đồ cột dùng độ cao để biểu diễn số lần. Cột cao nhất là giá trị gặp nhiều nhất. Tổng độ cao các cột bằng cỡ mẫu khi mỗi đơn vị là một lần.`,
+        [vd(
+          R`Số liệu giả định. Ba cột cao $2$, $6$ và $4$. Giá trị nào gặp nhiều nhất, và cỡ mẫu bằng bao nhiêu?`,
+          [
+            buoc(R`Cột cao nhất là cột $6$.`, "So sánh ba độ cao. Số $6$ lớn hơn $2$ và $4$."),
+            buoc(R`Cỡ mẫu bằng $2+6+4=12$.`, "Cộng các lần được biểu diễn. Không bỏ một cột."),
+          ],
+          R`Giá trị của cột $6$ gặp nhiều nhất. Cỡ mẫu bằng $12$.`,
+          [{ expr: "Max(2,6,4)", expect: "6" }, { expr: "2+6+4", expect: "12" }],
+        )],
+        [
+          luyen(R`Số liệu giả định. Cột $8$ cao hơn cột $3$ bao nhiêu đơn vị?`, R`Cao hơn $5$ đơn vị.`, [{ expr: "8-3", expect: "5" }], "Hiệu hai độ cao là phần chênh trên biểu đồ."),
+          luyen(R`Số liệu giả định. Ba cột $1$, $1$ và $5$. Có một cột cao nhất duy nhất không?`, R`Có. Cột $5$ là cột cao nhất duy nhất.`, [{ expr: "Max(1,1,5)", expect: "5" }], "Hai cột cùng cao $1$, cột còn lại cao hơn nên là cột cao nhất duy nhất."),
+          luyen(R`Số liệu giả định. Các cột $3$, $3$ và $4$ có tổng bằng bao nhiêu?`, R`Tổng bằng $10$.`, [{ expr: "3+3+4", expect: "10" }], "Cộng các số đọc trên biểu đồ. Hai cột cùng độ cao đều được cộng."),
+        ],
+        { figure: "bar" },
+      ),
+      bai(
+        "xs-thuc-nghiem",
+        "Xác suất thực nghiệm",
+        R`Số liệu giả định. Xác suất thực nghiệm của một việc bằng số lần việc đó xảy ra chia cho số lần thử. Số này thay đổi khi mẫu thử còn nhỏ, và được dùng như ước lượng.`,
+        [vd(
+          R`Số liệu giả định. Gieo một đồng xu $20$ lần và được $9$ lần mặt ngửa. Xác suất thực nghiệm của mặt ngửa bằng bao nhiêu?`,
+          [
+            buoc(R`Số lần thuận là $9$, số lần thử là $20$.`, "Tử của ước lượng là số lần quan sát được việc. Mẫu số là cỡ của thí nghiệm."),
+            buoc(R`Xác suất thực nghiệm bằng $\frac{9}{20}$.`, "Chia số lần thuận cho số lần thử. Chưa rút gọn được nữa."),
+          ],
+          R`Xác suất thực nghiệm bằng $\frac{9}{20}$.`,
+          [{ expr: "Rational(9,20)", expect: "9/20" }],
+        )],
+        [
+          luyen(R`Số liệu giả định. Thử $10$ lần, việc xảy ra $3$ lần. Xác suất thực nghiệm bằng bao nhiêu?`, R`Bằng $\frac{3}{10}$.`, [{ expr: "Rational(3,10)", expect: "3/10" }], "Chia số lần xảy ra cho số lần thử."),
+          luyen(R`Số liệu giả định. Thử $20$ lần, mặt ngửa $9$ lần. Mặt sấp xảy ra bao nhiêu lần nếu mỗi lần ra đúng một mặt?`, R`Mặt sấp xảy ra $11$ lần.`, [{ expr: "20-9", expect: "11" }], "Mỗi lần thử ra đúng một mặt. Phần còn lại là mặt sấp."),
+          luyen(R`Số liệu giả định. Thử $5$ lần và cả $5$ lần đều thuận. Xác suất thực nghiệm bằng bao nhiêu?`, R`Bằng $1$.`, [{ expr: "5/5", expect: "1" }], "Mọi lần thử đều thuận thì ước lượng bằng một. Mẫu lớn hơn có thể cho số khác."),
+        ],
+      ),
     ]),
   ],
 };

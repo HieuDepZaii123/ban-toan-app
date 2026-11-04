@@ -10,13 +10,14 @@ import { lop09 } from "./lop09.ts";
 import { lop10 } from "./lop10.ts";
 import { lop11 } from "./lop11.ts";
 import { lop12 } from "./lop12.ts";
+import { deepen } from "./depth.ts";
 import type { GradeBook, GradeCheck, GradeLesson } from "./types.ts";
 
 export const gradeBooks: GradeBook[] = [
   lop01, lop02, lop03, lop04, lop05,
   lop06, lop07, lop08, lop09,
   lop10, lop11, lop12,
-];
+].map(deepen);
 
 export function bookByGrade(grade: number): GradeBook | undefined {
   return gradeBooks.find((book) => book.grade === grade);

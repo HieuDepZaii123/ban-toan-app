@@ -642,6 +642,14 @@ html[data-lamp="on"] body::before {
 }
 .study-list { display: grid; gap: 12px; }
 .grade-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; }
+.grade-progress-wrap { margin: 8px 0 12px; }
+.grade-progress { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.grade-progress > span { display: block; height: 100%; background: var(--accent); }
+.grade-ask { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0; }
+.grade-ask input, .grade-ask button, .grade-widget input { min-height: 44px; max-width: 100%; }
+.grade-ask input[type="range"], .grade-widget input[type="range"] { width: min(100%, 280px); }
+.grade-widget { width: min(100%, 420px); margin-top: 8px; }
+.grade-widget svg { width: 100%; height: auto; }
 .grade-figure { width: min(100%, 220px); height: auto; margin-top: 8px; }
 .grade-stroke { stroke: var(--ink); stroke-width: 3; }
 .grade-ink { fill: var(--accent); }
