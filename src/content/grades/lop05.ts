@@ -14,18 +14,18 @@ export const lop05: GradeBook = {
         "Nhân số thập phân",
         R`Nhân số thập phân có thể đổi về nhân phân số. Số chữ số sau dấu phẩy của tích bằng tổng số chữ số sau dấu phẩy của hai thừa số, trước khi rút gọn kết quả.`,
         [vd(
-          R`Tính $2{,}5\cdot 1{,}2$.`,
+          R`Tính $2{,}5\times 1{,}2$.`,
           [
             buoc(R`Đổi $2{,}5=\frac{5}{2}$ và $1{,}2=\frac{6}{5}$.`, "Một chữ số thập phân là mẫu $10$, và các phân số này đã rút gọn."),
-            buoc(R`Tích bằng $\frac{5}{2}\cdot\frac{6}{5}=3$.`, "Rút gọn $5$ và $2$ với $6$. Kết quả là số nguyên $3$."),
+            buoc(R`Tích bằng $\frac{5}{2}\times\frac{6}{5}=3$.`, "Rút gọn $5$ và $2$ với $6$. Kết quả là số nguyên $3$."),
           ],
           R`Tích bằng $3$.`,
           [{ expr: "Rational(5,2)*Rational(6,5)", expect: "3" }],
         )],
         [
-          luyen(R`Tính $0{,}5\cdot 0{,}4$.`, R`Tích bằng $0{,}2$.`, [{ expr: "Rational(1,2)*Rational(2,5)", expect: "Rational(1,5)" }], "Đổi sang phân số rồi nhân. Một nửa của $\\frac{2}{5}$ bằng $\\frac{1}{5}$, tức $0{,}2$."),
-          luyen(R`Tính $3{,}6$ chia $1{,}2$.`, R`Thương bằng $3$.`, [{ expr: "Rational(36,10)/Rational(12,10)", expect: "3" }], "Hai số có cùng một chữ số thập phân. Thương của $36$ và $12$ bằng $3$."),
-          luyen(R`Tính $1{,}5+2{,}5$.`, R`Tổng bằng $4$.`, [{ expr: "Rational(3,2)+Rational(5,2)", expect: "4" }], "Cộng phần thập phân cùng hàng. Năm phần mười cộng năm phần mười thành một đơn vị."),
+          luyen(R`Tính $0{,}5\times 0{,}4$.`, R`Tích bằng $0{,}2$.`, [{ expr: "Rational(1,2)*Rational(2,5)", expect: "Rational(1,5)" }], "Đổi sang phân số rồi nhân. Một nửa của $\\frac{2}{5}$ bằng $\\frac{1}{5}$, tức $0{,}2$."),
+          luyen(R`Tính $1{,}5\times 2$.`, R`Tích bằng $3$.`, [{ expr: "Rational(3,2)*2", expect: "3" }], "Một phẩy năm là $\\frac{3}{2}$. Nhân với $2$ được $3$."),
+          luyen(R`Tính $2{,}4\times 0{,}5$.`, R`Tích bằng $1{,}2$.`, [{ expr: "Rational(24,10)*Rational(1,2)", expect: "Rational(6,5)" }], "Một nửa của $2{,}4$ là $1{,}2$. Đây vẫn là phép nhân số thập phân."),
         ],
       ),
       bai(
@@ -39,11 +39,11 @@ export const lop05: GradeBook = {
             buoc(R`Số $3{,}24$ có chữ số phần trăm là $4<5$, nên làm tròn thành $3{,}2$.`, "Chữ số nhỏ hơn $5$ thì giữ nguyên chữ số phần mười và bỏ các chữ số phía sau."),
           ],
           R`Hai số làm tròn lần lượt thành $3{,}3$ và $3{,}2$.`,
-          [{ expr: "Rational(33,10)", expect: "33/10" }, { expr: "Rational(32,10)", expect: "16/5" }],
+          [{ expr: "round(Rational(326,100),1)", expect: "33/10" }, { expr: "round(Rational(324,100),1)", expect: "16/5" }],
         )],
         [
-          luyen(R`Làm tròn $7{,}85$ đến hàng phần mười cho kết quả nào?`, R`Kết quả là $7{,}9$.`, [{ expr: "Rational(79,10)", expect: "79/10" }], "Chữ số phần trăm là $5$, nên tăng chữ số phần mười từ $8$ lên $9$."),
-          luyen(R`Làm tròn $4{,}13$ đến hàng phần mười cho kết quả nào?`, R`Kết quả là $4{,}1$.`, [{ expr: "Rational(41,10)", expect: "41/10" }], "Chữ số phần trăm là $3$, nhỏ hơn $5$, nên giữ chữ số phần mười."),
+          luyen(R`Làm tròn $7{,}86$ đến hàng phần mười.`, R`Kết quả là $7{,}9$.`, [{ expr: "round(Rational(786,100),1)", expect: "79/10" }], "Chữ số phần trăm là $6$, lớn hơn $5$, nên tăng chữ số phần mười từ $8$ lên $9$."),
+          luyen(R`Làm tròn $4{,}13$ đến hàng phần mười.`, R`Kết quả là $4{,}1$.`, [{ expr: "round(Rational(413,100),1)", expect: "41/10" }], "Chữ số phần trăm là $3$, nhỏ hơn $5$, nên giữ chữ số phần mười."),
           luyen(R`Hiệu giữa $3{,}3$ và $3{,}26$ bằng bao nhiêu?`, R`Hiệu bằng $0{,}04$.`, [{ expr: "Rational(33,10)-Rational(326,100)", expect: "Rational(4,100)" }], "Số đã làm tròn lên lớn hơn số ban đầu. Hiệu là bốn phần trăm."),
         ],
       ),
@@ -56,7 +56,7 @@ export const lop05: GradeBook = {
         [vd(
           R`Tính $25\%$ của $80$ và tìm số mà $20\%$ của nó bằng $6$.`,
           [
-            buoc(R`Lấy $25\%$ của $80$ được $80\cdot\frac{25}{100}=20$.`, "Phần trăm là phân số mẫu $100$. Một phần tư của $80$ cũng bằng $20$."),
+            buoc(R`Lấy $25\%$ của $80$ được $80\times\frac{25}{100}=20$.`, "Phần trăm là phân số mẫu $100$. Một phần tư của $80$ cũng bằng $20$."),
             buoc(R`Nếu $20\%$ của một số bằng $6$ thì số đó bằng $6$ chia cho $\frac{20}{100}$, tức $30$.`, "Biết một phần thì chia để tìm cả số, và thương bằng $30$."),
           ],
           R`Có $25\%$ của $80$ bằng $20$, và số cần tìm bằng $30$.`,
@@ -99,8 +99,8 @@ export const lop05: GradeBook = {
         [vd(
           R`Tam giác có đáy $6$ và chiều cao $4$. Hình thang có hai đáy $3$ và $5$, chiều cao $4$. Tính hai diện tích.`,
           [
-            buoc(R`Diện tích tam giác bằng $\frac{1}{2}\cdot 6\cdot 4=12$.`, "Một nửa tích đáy với chiều cao đúng ứng với đáy đó."),
-            buoc(R`Diện tích hình thang bằng $\frac{3+5}{2}\cdot 4=16$.`, "Trung bình hai đáy là $4$, nhân với chiều cao $4$ được $16$."),
+            buoc(R`Diện tích tam giác bằng $\frac{1}{2}\times 6\times 4=12$.`, "Một nửa tích đáy với chiều cao đúng ứng với đáy đó."),
+            buoc(R`Diện tích hình thang bằng $\frac{3+5}{2}\times 4=16$.`, "Trung bình hai đáy là $4$, nhân với chiều cao $4$ được $16$."),
           ],
           R`Diện tích tam giác bằng $12$ và diện tích hình thang bằng $16$.`,
           [
@@ -118,20 +118,20 @@ export const lop05: GradeBook = {
       bai(
         "hinh-tron-5",
         "Chu vi và diện tích hình tròn",
-        R`Hình tròn bán kính $r$ có chu vi $2\pi r$ và diện tích $\pi r^2$. Bán kính bằng nửa đường kính. Dùng nhầm đường kính vào chỗ bán kính làm diện tích lớn gấp bốn lần.`,
+        R`Ở lớp $5$, lấy $3{,}14$ thay cho hệ số của đường tròn. Bán kính $r$ xentimét thì chu vi là $2\times 3{,}14\times r$ xentimét và diện tích là $3{,}14\times r\times r$ xentimét vuông.`,
         [vd(
-          R`Hình tròn có bán kính $5$ xentimét. Tính chu vi và diện tích.`,
+          R`Hình tròn có bán kính $5$ xentimét. Tính chu vi và diện tích, lấy $3{,}14$.`,
           [
-            buoc(R`Chu vi bằng $2\pi\cdot 5=10\pi$ xentimét.`, "Công thức chu vi nhân đôi bán kính rồi nhân với $\\pi$."),
-            buoc(R`Diện tích bằng $\pi\cdot 5^2=25\pi$ xentimét vuông.`, "Bình phương bán kính trước khi nhân $\\pi$. Không bình phương đường kính."),
+            buoc(R`Chu vi bằng $2\times 3{,}14\times 5=31{,}4$ xentimét.`, "Nhân đôi bán kính rồi nhân với $3{,}14$. Không thay đường kính vào chỗ bán kính."),
+            buoc(R`Diện tích bằng $3{,}14\times 5\times 5=78{,}5$ xentimét vuông.`, "Bình phương bán kính là $25$, rồi nhân với $3{,}14$."),
           ],
-          R`Chu vi bằng $10\pi$ xentimét và diện tích bằng $25\pi$ xentimét vuông.`,
-          [{ expr: "2*pi*5", expect: "10*pi" }, { expr: "pi*5**2", expect: "25*pi" }],
+          R`Chu vi bằng $31{,}4$ xentimét và diện tích bằng $78{,}5$ xentimét vuông.`,
+          [{ expr: "Rational(314,100)*2*5", expect: "Rational(157,5)" }, { expr: "Rational(314,100)*5**2", expect: "Rational(157,2)" }],
         )],
         [
           luyen(R`Đường kính bằng $10$ xentimét. Bán kính bằng bao nhiêu?`, R`Bán kính bằng $5$ xentimét.`, [{ expr: "10/2", expect: "5" }], "Bán kính là nửa đường kính. Công thức chu vi và diện tích dùng bán kính."),
-          luyen(R`Hình tròn bán kính $1$ có chu vi bằng bao nhiêu?`, R`Chu vi bằng $2\pi$.`, [{ expr: "2*pi*1", expect: "2*pi" }], "Nhân $2\\pi$ với bán kính $1$. Kết quả giữ $\\pi$ trong giá trị chính xác."),
-          luyen(R`Hình tròn bán kính $3$ có diện tích bằng bao nhiêu?`, R`Diện tích bằng $9\pi$.`, [{ expr: "pi*3**2", expect: "9*pi" }], "Bình phương bán kính bằng $9$, rồi nhân với $\\pi$."),
+          luyen(R`Hình tròn bán kính $1$ xentimét, lấy $3{,}14$. Chu vi bằng bao nhiêu?`, R`Chu vi bằng $6{,}28$ xentimét.`, [{ expr: "Rational(314,100)*2*1", expect: "Rational(157,25)" }], "Nhân $2$ với $3{,}14$ và với bán kính $1$."),
+          luyen(R`Hình tròn bán kính $3$ xentimét, lấy $3{,}14$. Diện tích bằng bao nhiêu?`, R`Diện tích bằng $28{,}26$ xentimét vuông.`, [{ expr: "Rational(314,100)*3**2", expect: "Rational(1413,50)" }], "Bình phương bán kính bằng $9$. Nhân $9$ với $3{,}14$."),
         ],
         { figure: "circle" },
       ),
@@ -140,20 +140,20 @@ export const lop05: GradeBook = {
       bai(
         "hop",
         "Thể tích hình hộp chữ nhật",
-        R`Hình hộp chữ nhật có ba kích thước $a, b, c$ thì thể tích bằng $a\cdot b\cdot c$. Đơn vị thể tích là đơn vị dài lập phương, ví dụ xentimét khối.`,
+        R`Hình hộp chữ nhật có ba kích thước $a, b, c$ thì thể tích bằng $a\times b\times c$. Đơn vị thể tích là đơn vị dài lập phương, ví dụ xentimét khối.`,
         [vd(
           R`Hộp có chiều dài $2$ xentimét, chiều rộng $3$ xentimét và chiều cao $4$ xentimét. Thể tích bằng bao nhiêu?`,
           [
-            buoc(R`Diện tích đáy bằng $2\cdot 3=6$ xentimét vuông.`, "Đáy là hình chữ nhật. Diện tích đáy nhân với chiều cao ra thể tích."),
-            buoc(R`Thể tích bằng $6\cdot 4=24$ xentimét khối.`, "Ba kích thước đều được nhân. Đơn vị là xentimét khối."),
+            buoc(R`Diện tích đáy bằng $2\times 3=6$ xentimét vuông.`, "Đáy là hình chữ nhật. Diện tích đáy nhân với chiều cao ra thể tích."),
+            buoc(R`Thể tích bằng $6\times 4=24$ xentimét khối.`, "Ba kích thước đều được nhân. Đơn vị là xentimét khối."),
           ],
           R`Thể tích bằng $24$ xentimét khối.`,
           [{ expr: "2*3*4", expect: "24" }],
         )],
         [
           luyen(R`Hình lập phương cạnh $3$ có thể tích bằng bao nhiêu?`, R`Thể tích bằng $27$.`, [{ expr: "3**3", expect: "27" }], "Hình lập phương có ba kích thước bằng nhau. Thể tích là lập phương của cạnh."),
-          luyen(R`Hộp $5\cdot 2\cdot 2$ có thể tích bằng bao nhiêu?`, R`Thể tích bằng $20$.`, [{ expr: "5*2*2", expect: "20" }], "Nhân lần lượt ba kích thước. Diện tích đáy $10$ nhân chiều cao $2$ cũng ra $20$."),
-          luyen(R`Hộp thể tích $24$ xentimét khối, xếp thành các lớp cao $4$ xentimét, mỗi lớp đặc. Diện tích đáy bằng bao nhiêu?`, R`Diện tích đáy bằng $6$ xentimét vuông.`, [{ expr: "24/4", expect: "6" }], "Thể tích bằng diện tích đáy nhân chiều cao. Chia thể tích cho chiều cao khác $0$."),
+          luyen(R`Hộp $5\times 2\times 2$ có thể tích bằng bao nhiêu?`, R`Thể tích bằng $20$.`, [{ expr: "5*2*2", expect: "20" }], "Nhân lần lượt ba kích thước. Diện tích đáy $10$ nhân chiều cao $2$ cũng ra $20$."),
+          luyen(R`Hộp có thể tích $24$ xentimét khối và chiều cao $4$ xentimét. Diện tích mặt đáy bằng bao nhiêu?`, R`Diện tích mặt đáy bằng $6$ xentimét vuông.`, [{ expr: "24/4", expect: "6" }], "Thể tích bằng diện tích đáy nhân chiều cao. Lấy $24:4$ được diện tích mặt đáy."),
         ],
         { figure: "rect" },
       ),
@@ -164,7 +164,7 @@ export const lop05: GradeBook = {
         [vd(
           R`Hình lập phương cạnh $4$ xentimét. Tính thể tích và diện tích toàn phần.`,
           [
-            buoc(R`Thể tích bằng $4^3=64$ xentimét khối.`, "Ba kích thước cùng bằng $4$. Nhân $4\\cdot 4\\cdot 4$."),
+            buoc(R`Thể tích bằng $4^3=64$ xentimét khối.`, "Ba kích thước cùng bằng $4$. Nhân $4\\times 4\\times 4$."),
             buoc(R`Một mặt có diện tích $16$, sáu mặt có diện tích $96$ xentimét vuông.`, "Mỗi mặt là hình vuông cạnh $4$. Sáu mặt không chồng nhau khi tính diện tích toàn phần."),
           ],
           R`Thể tích bằng $64$ xentimét khối và diện tích toàn phần bằng $96$ xentimét vuông.`,
@@ -174,6 +174,146 @@ export const lop05: GradeBook = {
           luyen(R`Hình lập phương cạnh $2$ có thể tích bằng bao nhiêu?`, R`Thể tích bằng $8$.`, [{ expr: "2**3", expect: "8" }], "Lập phương của $2$ là $8$. Cạnh nhân ba lần với chính nó."),
           luyen(R`Hình lập phương cạnh $5$ có diện tích một mặt bằng bao nhiêu?`, R`Diện tích một mặt bằng $25$.`, [{ expr: "5**2", expect: "25" }], "Mỗi mặt là hình vuông. Diện tích một mặt là bình phương cạnh."),
           luyen(R`Hình lập phương cạnh $5$ có diện tích toàn phần bằng bao nhiêu?`, R`Diện tích toàn phần bằng $150$.`, [{ expr: "6*5**2", expect: "150" }], "Sáu mặt vuông, mỗi mặt diện tích $25$. Sáu lần $25$ bằng $150$."),
+        ],
+      ),
+    ]),
+    chuong("ti-so", "Tỉ số, tỉ lệ bản đồ và chuyển động đều", [
+      bai(
+        "ti-so-5",
+        "Tỉ số",
+        R`Tỉ số của $a$ và $b$, với $b\neq 0$, viết $a:b$. Tỉ số $a:b$ bằng tỉ số $c:d$ khi $a\times d=b\times c$.`,
+        [vd(
+          R`Tỉ số $2:3$ có bằng tỉ số $4:6$ không?`,
+          [
+            buoc(R`Tích chéo $2\times 6$ và $3\times 4$.`, "Hai tỉ số bằng nhau khi hai tích chéo bằng nhau."),
+            buoc(R`Cả hai tích đều bằng $12$, nên hai tỉ số bằng nhau.`, "Hiệu hai tích chéo bằng $0$."),
+          ],
+          R`Hai tỉ số bằng nhau.`,
+          [{ expr: "2*6-3*4", expect: "0" }],
+        )],
+        [
+          luyen(R`Tỉ số $3:5$ có bằng $6:10$ không?`, R`Có, vì hai tích chéo cùng bằng $30$.`, [{ expr: "3*10-5*6", expect: "0" }], "Nhân các số chéo. Hiệu bằng $0$ thì hai tỉ số bằng nhau."),
+          luyen(R`Cho $4:x=2:5$ và $x\neq 0$. Tìm $x$.`, R`Giá trị $x$ bằng $10$.`, [{ expr: "4*5/2", expect: "10" }], "Tích chéo cho $2x=20$. Chia cho $2$ được $10$."),
+          luyen(R`Tỉ số $8:2$ bằng bao nhiêu?`, R`Tỉ số bằng $4$.`, [{ expr: "8/2", expect: "4" }], "Chia số đứng trước cho số đứng sau khi số sau khác $0$."),
+        ],
+      ),
+      bai(
+        "ban-do",
+        "Tỉ lệ bản đồ",
+        R`Tỉ lệ $1:100\,000$ nghĩa là $1$ xentimét trên bản đồ ứng với $100\,000$ xentimét ngoài thực địa. Một kilômét bằng $100\,000$ xentimét.`,
+        [vd(
+          R`Trên bản đồ tỉ lệ $1:100\,000$, đoạn dài $3$ xentimét. Ngoài thực địa đoạn đó dài bao nhiêu kilômét?`,
+          [
+            buoc(R`Độ dài thực bằng $3\times 100\,000=300\,000$ xentimét.`, "Nhân độ dài trên bản đồ với mẫu tỉ lệ."),
+            buoc(R`Đổi ra kilômét: $300\,000:100\,000=3$ kilômét.`, "Một kilômét có $100\,000$ xentimét."),
+          ],
+          R`Đoạn ngoài thực địa dài $3$ kilômét.`,
+          [{ expr: "3*100000/100000", expect: "3" }],
+        )],
+        [
+          luyen(R`Bản đồ $1:50\,000$, đoạn trên bản đồ dài $2$ xentimét. Độ dài thực bằng bao nhiêu xentimét?`, R`Độ dài thực bằng $100\,000$ xentimét.`, [{ expr: "2*50000", expect: "100000" }], "Nhân độ dài trên bản đồ với $50\,000$."),
+          luyen(R`Đổi $100\,000$ xentimét ra kilômét thì được bao nhiêu?`, R`Bằng $1$ kilômét.`, [{ expr: "100000/100000", expect: "1" }], "Chia cho $100\,000$ vì đó là số xentimét trong một kilômét."),
+          luyen(R`Bản đồ $1:100\,000$, quãng đường thực $4$ kilômét. Trên bản đồ dài bao nhiêu xentimét?`, R`Dài $4$ xentimét.`, [{ expr: "4*100000/100000", expect: "4" }], "Bốn kilômét là $400\,000$ xentimét. Chia cho mẫu tỉ lệ $100\,000$ được $4$ xentimét."),
+        ],
+      ),
+      bai(
+        "chuyen-dong",
+        "Chuyển động đều",
+        R`Chuyển động đều có vận tốc không đổi. Quãng đường bằng vận tốc nhân thời gian. Vận tốc bằng quãng đường chia thời gian.`,
+        [vd(
+          R`Một xe đi đều $60$ kilômét trong $2$ giờ. Hỏi trong $3$ giờ xe đi bao nhiêu kilômét?`,
+          [
+            buoc(R`Vận tốc bằng $60:2=30$ kilômét mỗi giờ.`, "Chia quãng đường cho thời gian khi xe đi đều."),
+            buoc(R`Trong $3$ giờ xe đi $30\times 3=90$ kilômét.`, "Nhân vận tốc với thời gian mới."),
+          ],
+          R`Xe đi $90$ kilômét.`,
+          [{ expr: "60/2*3", expect: "90" }],
+        )],
+        [
+          luyen(R`Xe đi đều $40$ kilômét mỗi giờ trong $3$ giờ. Quãng đường bằng bao nhiêu?`, R`Quãng đường bằng $120$ kilômét.`, [{ expr: "40*3", expect: "120" }], "Nhân vận tốc với thời gian."),
+          luyen(R`Đi $45$ kilômét trong $3$ giờ, đều. Vận tốc bằng bao nhiêu?`, R`Vận tốc bằng $15$ kilômét mỗi giờ.`, [{ expr: "45/3", expect: "15" }], "Chia quãng đường cho thời gian."),
+          luyen(R`Vận tốc $20$ kilômét mỗi giờ, quãng đường $80$ kilômét. Thời gian bằng bao nhiêu giờ?`, R`Thời gian bằng $4$ giờ.`, [{ expr: "80/20", expect: "4" }], "Thời gian bằng quãng đường chia vận tốc, khi vận tốc khác $0$."),
+        ],
+      ),
+    ]),
+    chuong("thoi-gian", "Số đo thời gian", [
+      bai(
+        "doi-gio",
+        "Đổi số đo thời gian",
+        R`Một giờ bằng $60$ phút. Một phút bằng $60$ giây. Đổi giờ ra phút thì nhân với $60$, rồi cộng số phút lẻ.`,
+        [vd(
+          R`Đổi $2$ giờ $15$ phút ra phút.`,
+          [
+            buoc(R`Hai giờ bằng $2\times 60=120$ phút.`, "Mỗi giờ có sáu mươi phút."),
+            buoc(R`Cộng $15$ phút được $135$ phút.`, "Phút lẻ được cộng sau khi đã đổi phần giờ."),
+          ],
+          R`Hai giờ mười lăm phút bằng $135$ phút.`,
+          [{ expr: "2*60+15", expect: "135" }],
+        )],
+        [
+          luyen(R`Đổi $3$ giờ ra phút.`, R`Bằng $180$ phút.`, [{ expr: "3*60", expect: "180" }], "Nhân số giờ với $60$ vì mỗi giờ có sáu mươi phút."),
+          luyen(R`Đổi $90$ phút ra giờ và phút.`, R`Bằng $1$ giờ $30$ phút.`, [{ expr: "90-60", expect: "30" }], "Một giờ lấy $60$ phút. Phần còn lại là số phút lẻ."),
+          luyen(R`Đổi $2$ phút ra giây.`, R`Bằng $120$ giây.`, [{ expr: "2*60", expect: "120" }], "Mỗi phút có $60$ giây. Hai phút là hai lần sáu mươi giây."),
+        ],
+      ),
+      bai(
+        "khoang-gio",
+        "Tính khoảng thời gian",
+        R`Khoảng thời gian từ lúc bắt đầu đến lúc kết thúc bằng hiệu hai mốc, sau khi đã đổi về cùng một đơn vị.`,
+        [vd(
+          R`Bắt đầu lúc $8$ giờ và kết thúc lúc $10$ giờ $30$ phút. Khoảng thời gian là bao nhiêu phút?`,
+          [
+            buoc(R`Đổi $8$ giờ thành $480$ phút và $10$ giờ $30$ phút thành $630$ phút.`, "Cùng đơn vị phút thì mới trừ được."),
+            buoc(R`Hiệu bằng $630-480=150$ phút.`, "Một trăm năm mươi phút là $2$ giờ $30$ phút."),
+          ],
+          R`Khoảng thời gian là $150$ phút.`,
+          [{ expr: "(10*60+30)-8*60", expect: "150" }],
+        )],
+        [
+          luyen(R`Từ $7$ giờ đến $9$ giờ là bao nhiêu giờ?`, R`Là $2$ giờ.`, [{ expr: "9-7", expect: "2" }], "Trừ hai mốc giờ khi cả hai đều là giờ đúng."),
+          luyen(R`Đổi $150$ phút ra giờ và phút.`, R`Bằng $2$ giờ $30$ phút.`, [{ expr: "150//60", expect: "2" }], "Chia cho $60$ được số giờ. Phần dư $30$ là số phút."),
+          luyen(R`Một việc làm từ $14$ giờ đến $14$ giờ $20$ phút. Khoảng thời gian là bao nhiêu phút?`, R`Là $20$ phút.`, [{ expr: "(14*60+20)-(14*60)", expect: "20" }], "Đổi cả hai mốc ra phút rồi trừ. Phần giờ giống nhau nên chỉ còn $20$ phút."),
+        ],
+      ),
+    ]),
+    chuong("bieu-do-5", "Biểu đồ hình quạt", [
+      bai(
+        "quat-5",
+        "Biểu đồ hình quạt",
+        R`Cả hình tròn là $360^\circ$ và là cả nhóm số liệu. Góc quạt của một phần bằng phần đó nhân với $360^\circ$.`,
+        [vd(
+          R`Một phần bằng $25\%$ cả nhóm. Quạt đó bao nhiêu độ?`,
+          [
+            buoc(R`Phần $25\%$ là $\frac{25}{100}=\frac{1}{4}$.`, "Đổi phần trăm thành phân số của cả nhóm."),
+            buoc(R`Số đo quạt bằng $\frac{1}{4}\times 360=90$ độ.`, "Nhân phần đó với một vòng."),
+          ],
+          R`Quạt là $90$ độ.`,
+          [{ expr: "Rational(25,100)*360", expect: "90" }],
+        )],
+        [
+          luyen(R`Một nửa nhóm ứng với quạt bao nhiêu độ?`, R`Quạt là $180$ độ.`, [{ expr: "Rational(1,2)*360", expect: "180" }], "Một nửa của $360$ độ là $180$ độ."),
+          luyen(R`Quạt $72$ độ ứng với phần nào của cả nhóm?`, R`Ứng với $\frac{1}{5}$ cả nhóm.`, [{ expr: "Rational(72,360)", expect: "Rational(1,5)" }], "Chia số đo quạt cho $360$ độ."),
+          luyen(R`Hai quạt $90$ độ và $120$ độ. Phần còn lại của hình tròn là bao nhiêu độ?`, R`Phần còn lại là $150$ độ.`, [{ expr: "360-90-120", expect: "150" }], "Tổng các quạt của một biểu đồ đủ nhóm bằng $360$ độ."),
+        ],
+        { figure: "circle" },
+      ),
+      bai(
+        "doc-quat",
+        "Đọc số liệu trên biểu đồ quạt",
+        R`Biết cả nhóm và số đo quạt thì số phần tử của quạt bằng cả nhóm nhân với quạt chia cho $360$.`,
+        [vd(
+          R`Lớp $40$ bạn, quạt một môn là $90$ độ. Có bao nhiêu bạn chọn môn đó?`,
+          [
+            buoc(R`Phần của quạt là $90:360=\frac{1}{4}$.`, "Chia số đo quạt cho cả vòng."),
+            buoc(R`Số bạn bằng $\frac{1}{4}\times 40=10$.`, "Nhân phần đó với số bạn của cả lớp."),
+          ],
+          R`Có $10$ bạn chọn môn đó.`,
+          [{ expr: "Rational(90,360)*40", expect: "10" }],
+        )],
+        [
+          luyen(R`Nhóm $20$ bạn, quạt $180$ độ. Quạt đó có bao nhiêu bạn?`, R`Có $10$ bạn.`, [{ expr: "Rational(180,360)*20", expect: "10" }], "Một nửa vòng là một nửa nhóm."),
+          luyen(R`Nhóm $30$ bạn, quạt $120$ độ. Quạt đó có bao nhiêu bạn?`, R`Có $10$ bạn.`, [{ expr: "Rational(120,360)*30", expect: "10" }], "Phần $\\frac{120}{360}$ bằng $\\frac{1}{3}$. Một phần ba của $30$ là $10$."),
+          luyen(R`Quạt $360$ độ của nhóm $15$ bạn có bao nhiêu bạn?`, R`Có $15$ bạn.`, [{ expr: "Rational(360,360)*15", expect: "15" }], "Cả hình tròn là cả nhóm."),
         ],
       ),
     ]),

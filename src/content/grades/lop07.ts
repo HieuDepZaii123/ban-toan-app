@@ -140,7 +140,7 @@ export const lop07: GradeBook = {
           R`Tam giác có hai góc $50^\circ$ và $60^\circ$. Góc thứ ba bằng bao nhiêu độ?`,
           [
             buoc(R`Tổng hai góc đã biết bằng $110^\circ$.`, "Cộng đúng hai số đo đã cho, chưa trừ khỏi $180^\\circ$."),
-            buoc(R`Góc thứ ba bằng $180^\circ-110^\circ=70^\circ$.`, "Tổng ba góc trong bằng $180^\\circ$, nên góc còn lại là phần bù của tổng hai góc kia."),
+            buoc(R`Góc thứ ba bằng $180^\circ-110^\circ=70^\circ$.`, "Tổng ba góc trong bằng $180^\\circ$. Góc còn lại bằng $180^\\circ$ trừ tổng hai góc đã biết."),
           ],
           R`Góc thứ ba bằng $70^\circ$.`,
           [{ expr: "180-50-60", expect: "70" }],
@@ -168,7 +168,7 @@ export const lop07: GradeBook = {
         [
           luyen(R`Tam giác bằng nhau với tam giác có các cạnh $5$, $6$ và $7$. Chu vi của tam giác kia bằng bao nhiêu?`, R`Chu vi bằng $18$.`, [{ expr: "5+6+7", expect: "18" }], "Tam giác bằng nhau thì các cạnh tương ứng bằng nhau, nên chu vi bằng tổng đúng ba cạnh đã cho."),
           luyen(R`Tam giác có các cạnh $3$, $4$ và $5$. Chu vi bằng bao nhiêu?`, R`Chu vi bằng $12$.`, [{ expr: "3+4+5", expect: "12" }], "Chu vi là tổng ba cạnh. Bộ ba này cũng là một trường hợp dùng được cho cạnh-cạnh-cạnh khi tam giác kia có cùng ba cạnh."),
-          luyen(R`Trường hợp cạnh-góc-cạnh dùng hai cạnh và góc xen giữa. Nếu hai cạnh là $5$ và $8$, tổng hai cạnh đó bằng bao nhiêu?`, R`Tổng bằng $13$.`, [{ expr: "5+8", expect: "13" }], "Góc dùng trong trường hợp này phải là góc nằm giữa đúng hai cạnh đã lấy. Tổng hai cạnh là số liệu kèm theo, chưa phải cạnh thứ ba."),
+          luyen(R`Hai tam giác có các cạnh $7$, $8$, $9$ và $7$, $8$, $9$. Chúng bằng nhau theo trường hợp nào, và chu vi mỗi tam giác bằng bao nhiêu?`, R`Bằng nhau theo cạnh-cạnh-cạnh. Chu vi bằng $24$.`, [{ expr: "7+8+9", expect: "24" }], "Đủ ba cặp cạnh tương ứng bằng nhau thì dùng cạnh-cạnh-cạnh. Chu vi là tổng ba cạnh."),
         ],
         { figure: "triangle" },
       ),
@@ -191,6 +191,67 @@ export const lop07: GradeBook = {
           luyen(R`Góc ngoài kề bù với một góc trong $50^\circ$ bằng bao nhiêu độ?`, R`Góc kề bù bằng $130^\circ$.`, [{ expr: "180-50", expect: "130" }], "Hai góc kề bù có tổng $180^\\circ$. Biết một góc thì góc kia là phần bù đến $180^\\circ$."),
         ],
         { figure: "triangle" },
+      ),
+    ]),
+    chuong("thong-ke", "Thống kê và xác suất", [
+      bai(
+        "doan-thang",
+        "Biểu đồ đoạn thẳng",
+        R`Biểu đồ đoạn thẳng nối các điểm theo thứ tự thời gian. Đoạn đi lên khi số liệu tăng, đi xuống khi số liệu giảm. Hiệu hai mốc liên tiếp là mức thay đổi.`,
+        [vd(
+          R`Nhiệt độ ba buổi là $20^\circ\mathrm{C}$, $26^\circ\mathrm{C}$ và $23^\circ\mathrm{C}$. Từ buổi một sang buổi hai, nhiệt độ tăng bao nhiêu độ?`,
+          [
+            buoc(R`Hai mốc liên tiếp là $20$ và $26$.`, "Biểu đồ đoạn thẳng đọc theo đúng thứ tự các mốc, không nhảy cóc."),
+            buoc(R`Mức tăng bằng $26-20=6$ độ.`, "Hiệu dương nghĩa là đoạn thẳng đi lên."),
+          ],
+          R`Nhiệt độ tăng $6$ độ.`,
+          [{ expr: "26-20", expect: "6" }],
+        )],
+        [
+          luyen(R`Từ $26^\circ\mathrm{C}$ xuống $23^\circ\mathrm{C}$, nhiệt độ giảm bao nhiêu độ?`, R`Nhiệt độ giảm $3$ độ.`, [{ expr: "26-23", expect: "3" }], "Hiệu của mốc trước trừ mốc sau là mức giảm. Đoạn thẳng tương ứng đi xuống."),
+          luyen(R`Một đoạn thẳng trên biểu đồ nối mốc $4$ với mốc $9$. Mức tăng bằng bao nhiêu?`, R`Mức tăng bằng $5$.`, [{ expr: "9-4", expect: "5" }], "Đi từ trái sang phải theo thời gian. Mốc sau lớn hơn mốc trước nên đoạn đi lên."),
+          luyen(R`Ba mốc $2, 5, 5$. Đoạn thứ hai đi lên, đi xuống hay nằm ngang?`, R`Đoạn thứ hai nằm ngang.`, [{ expr: "5-5", expect: "0" }], "Hai mốc bằng nhau thì hiệu bằng $0$. Đoạn thẳng nằm ngang."),
+        ],
+        { figure: "segment" },
+      ),
+      bai(
+        "quat-tron",
+        "Biểu đồ quạt tròn",
+        R`Một biểu đồ quạt tròn lấy cả hình tròn, tức $360^\circ$, để biểu diễn cả nhóm được khảo sát. Góc ở tâm của một quạt bằng số phần của nhóm đó nhân với $360^\circ$.`,
+        [vd(
+          R`Một lớp $40$ bạn có $10$ bạn chọn môn A. Quạt của môn A có số đo bao nhiêu độ?`,
+          [
+            buoc(R`Phần của môn A là $\frac{10}{40}=\frac{1}{4}$.`, "Tử đếm bạn chọn môn A. Mẫu đếm cả lớp, tức cả hình tròn."),
+            buoc(R`Số đo quạt bằng $\frac{1}{4}\cdot 360^\circ=90^\circ$.`, "Nhân phần đó với một vòng $360^\\circ$. Quạt vuông là một phần tư hình tròn."),
+          ],
+          R`Quạt của môn A là $90^\circ$.`,
+          [{ expr: "Rational(10,40)*360", expect: "90" }],
+        )],
+        [
+          luyen(R`Một nửa hình tròn ứng với bao nhiêu độ?`, R`Một nửa là $180^\circ$.`, [{ expr: "Rational(1,2)*360", expect: "180" }], "Một nửa của $360^\\circ$ là góc bẹt. Quạt này chiếm nửa biểu đồ."),
+          luyen(R`Nhóm chiếm $\frac{1}{5}$ số bạn. Quạt đó bao nhiêu độ?`, R`Quạt là $72^\circ$.`, [{ expr: "Rational(1,5)*360", expect: "72" }], "Nhân phần của nhóm với $360^\\circ$. Một phần năm của $360$ là $72$."),
+          luyen(R`Ba quạt $90^\circ$, $120^\circ$ và phần còn lại. Phần còn lại bao nhiêu độ?`, R`Phần còn lại là $150^\circ$.`, [{ expr: "360-90-120", expect: "150" }], "Tổng các quạt của một biểu đồ đủ nhóm bằng $360^\\circ$. Trừ hai quạt đã biết."),
+        ],
+        { figure: "circle" },
+      ),
+      bai(
+        "xs-bien-co",
+        "Xác suất của biến cố",
+        R`Khi các kết quả đồng khả năng, xác suất của biến cố $A$ là $\frac{n(A)}{n(\Omega)}$. Tử đếm kết quả thuận lợi. Mẫu đếm mọi kết quả có thể.`,
+        [vd(
+          R`Túi có $3$ bi đỏ và $2$ bi xanh, các bi cùng khả năng được rút. Xác suất rút được bi đỏ bằng bao nhiêu?`,
+          [
+            buoc(R`Có $5$ bi, nên $n(\Omega)=5$. Có $3$ bi đỏ.`, "Mỗi bi là một kết quả. Bi đỏ là kết quả thuận lợi của biến cố đang xét."),
+            buoc(R`Xác suất bằng $\frac{3}{5}$.`, "Chia số kết quả thuận lợi cho số kết quả có thể. Phân số này đã tối giản."),
+          ],
+          R`Xác suất rút được bi đỏ bằng $\frac{3}{5}$.`,
+          [{ expr: "Rational(3,5)", expect: "3/5" }],
+        )],
+        [
+          luyen(R`Một xúc xắc cân đối có $6$ mặt. Xác suất ra mặt $6$ bằng bao nhiêu?`, R`Xác suất bằng $\frac{1}{6}$.`, [{ expr: "Rational(1,6)", expect: "1/6" }], "Có một mặt thuận lợi trong sáu mặt đồng khả năng."),
+          luyen(R`Túi $3$ bi đỏ và $2$ bi xanh. Xác suất rút được bi xanh bằng bao nhiêu?`, R`Xác suất bằng $\frac{2}{5}$.`, [{ expr: "Rational(2,5)", expect: "2/5" }], "Hai bi xanh trên năm bi. Đây là biến cố còn lại so với biến cố rút bi đỏ."),
+          luyen(R`Xác suất bi đỏ $\frac{3}{5}$ và xác suất bi xanh $\frac{2}{5}$. Tổng hai xác suất bằng bao nhiêu?`, R`Tổng bằng $1$.`, [{ expr: "Rational(3,5)+Rational(2,5)", expect: "1" }], "Hai biến cố này không xảy ra cùng lúc và phủ hết các bi trong túi."),
+        ],
       ),
     ]),
   ],

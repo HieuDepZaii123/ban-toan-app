@@ -122,7 +122,7 @@ export const lop11: GradeBook = {
         [
           luyen(R`Tổng vô hạn $3+\frac{3}{2}+\frac{3}{4}+\cdots$ bằng bao nhiêu?`, R`Tổng bằng $6$.`, [{ expr: "3/(1-Rational(1,2))", expect: "6" }], "Công bội một nửa có trị tuyệt đối nhỏ hơn $1$, nên dùng tổng của các tổng riêng."),
           luyen(R`Dãy $u_n=\frac{1}{n}$ tiến tới bao nhiêu?`, R`Dãy tiến tới $0$.`, [{ expr: "limit(1/n, n, oo)", expect: "0" }], "Tử cố định và mẫu ra dương vô cực, nên thương tiến tới $0$."),
-          luyen(R`Cấp số nhân $u_1=1$, $q=2$ có tổng vô hạn hữu hạn không?`, R`Không, vì trị tuyệt đối của công bội bằng $2$, không nhỏ hơn $1$.`, [{ expr: "Abs(2)", expect: "2" }], "Công bội $2$ có trị tuyệt đối bằng $2$. Điều kiện để tổng vô hạn hữu hạn không được thỏa."),
+          luyen(R`Cấp số nhân $u_1=1$, $q=2$ có tổng vô hạn hữu hạn không?`, R`Không, vì $|2|=2$ không nhỏ hơn $1$.`, [{ expr: "Abs(2)<1", expect: "False" }], "Điều kiện để tổng vô hạn hữu hạn là trị tuyệt đối của công bội nhỏ hơn $1$. Với công bội $2$, điều kiện này sai."),
         ],
         { topicId: "limit" }),
       bai("gh-ham", "Giới hạn hàm số một bên và tại vô cực",

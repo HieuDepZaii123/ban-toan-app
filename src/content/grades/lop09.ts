@@ -12,12 +12,12 @@ export const lop09: GradeBook = {
       bai(
         "rut-gon-can",
         "Đưa thừa số ra ngoài căn",
-        R`Với $a\ge 0$ và $b\ge 0$, $\sqrt{a^2 b}=a\sqrt{b}$. Căn số học lấy giá trị không âm. Thừa số đưa ra ngoài căn phải không âm.`,
+        R`Với $b\ge 0$, $\sqrt{a^2 b}=|a|\sqrt{b}$. Căn số học không âm, nên thừa số đưa ra ngoài căn là trị tuyệt đối của $a$, không phải chính $a$ khi $a$ âm.`,
         [vd(
           R`Rút gọn $\sqrt{12}$.`,
           [
-            buoc(R`Ta có $12=4\cdot 3$ và $4$ là số chính phương.`, "Tách thừa số chính phương lớn nhất còn trong căn một thừa số không chính phương."),
-            buoc(R`Vậy $\sqrt{12}=2\sqrt{3}$.`, "Căn của $4$ bằng $2$, và $2$ không âm nên được đưa ra ngoài căn."),
+            buoc(R`Viết $12=2^2\cdot 3$.`, "Số $4$ là số chính phương, và $3$ không phải số chính phương. Tách $12$ thành tích của hai số này."),
+            buoc(R`Vậy $\sqrt{12}=|2|\sqrt{3}=2\sqrt{3}$.`, "Công thức đưa thừa số ra ngoài căn dùng trị tuyệt đối. Ở đây $|2|=2$."),
           ],
           R`Dạng rút gọn là $2\sqrt{3}$.`,
           [{ expr: "sqrt(12)", expect: "2*sqrt(3)" }],
@@ -25,7 +25,7 @@ export const lop09: GradeBook = {
         [
           luyen(R`Rút gọn $\sqrt{50}$.`, R`Dạng rút gọn là $5\sqrt{2}$.`, [{ expr: "sqrt(50)", expect: "5*sqrt(2)" }], "Tách $50=25\\cdot 2$. Căn của $25$ bằng $5$ và được đưa ra ngoài căn."),
           luyen(R`Tính $\sqrt{9}+\sqrt{16}$.`, R`Tổng bằng $7$.`, [{ expr: "sqrt(9)+sqrt(16)", expect: "7" }], "Mỗi căn của số chính phương là một số nguyên không âm. Cộng $3$ với $4$."),
-          luyen(R`Tính $(\sqrt{3})^2$.`, R`Bình phương bằng $3$.`, [{ expr: "sqrt(3)**2", expect: "3" }], "Bình phương của căn số học trả lại đúng số không âm trong căn."),
+          luyen(R`Rút gọn $\sqrt{(-3)^2\cdot 2}$.`, R`Dạng rút gọn là $3\sqrt{2}$.`, [{ expr: "sqrt((-3)**2*2)", expect: "Abs(-3)*sqrt(2)" }], "Vì $-3$ âm, thừa số đưa ra ngoài căn là $|-3|=3$, không phải $-3$."),
         ],
       ),
       bai(

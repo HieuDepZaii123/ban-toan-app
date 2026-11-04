@@ -24,7 +24,7 @@ export const lop02: GradeBook = {
         )],
         [
           luyen(R`Tính $36+8$.`, R`Tổng bằng $44$.`, [{ expr: "36+8", expect: "44" }], "Hàng đơn vị $6+8$ bằng $14$, viết $4$ nhớ $1$. Hàng chục thành $4$."),
-          luyen(R`Tính $50-18$.`, R`Hiệu bằng $32$.`, [{ expr: "50-18", expect: "32" }], "Mượn một chục khi hàng đơn vị không đủ trừ. Kết quả là $32$."),
+          luyen(R`Tính $50+18$.`, R`Tổng bằng $68$.`, [{ expr: "50+18", expect: "68" }], "Hàng đơn vị $0+8$ viết $8$. Hàng chục $5+1$ bằng $6$, tổng là $68$."),
           luyen(R`Tính $19+21$.`, R`Tổng bằng $40$.`, [{ expr: "19+21", expect: "40" }], "Hàng đơn vị $9+1$ bằng $10$, nhớ $1$ sang hàng chục và được $40$."),
         ],
       ),
@@ -52,40 +52,40 @@ export const lop02: GradeBook = {
       bai(
         "bang-nhan",
         "Bảng nhân $2$ và bảng nhân $5$",
-        R`Nhân là cộng lặp lại cùng một số. Bốn lần số $5$ viết là $5\cdot 4$ và bằng $20$.`,
+        R`Nhân là cộng lặp lại cùng một số. Bốn lần số $5$ viết là $5\times 4$ và bằng $20$.`,
         [vd(
           R`Mỗi túi có $5$ viên bi. Có $4$ túi. Hỏi có tất cả bao nhiêu viên?`,
           [
             buoc(R`Bốn túi là bốn lần số $5$.`, "Số viên mỗi túi giống nhau, nên dùng phép nhân."),
-            buoc(R`Ta có $5\cdot 4=20$ viên.`, "Bảng nhân $5$: năm, mười, mười lăm, hai mươi."),
+            buoc(R`Ta có $5\times 4=20$ viên.`, "Bảng nhân $5$: năm, mười, mười lăm, hai mươi."),
           ],
           R`Có tất cả $20$ viên bi.`,
           [{ expr: "5*4", expect: "20" }],
         )],
         [
-          luyen(R`Tính $2\cdot 6$.`, R`Tích bằng $12$.`, [{ expr: "2*6", expect: "12" }], "Sáu lần số $2$ là $12$. Đây là kết quả trong bảng nhân $2$."),
-          luyen(R`Tính $5\cdot 5$.`, R`Tích bằng $25$.`, [{ expr: "5*5", expect: "25" }], "Năm lần số $5$ bằng $25$. Bảng nhân $5$ kết thúc ở năm mươi khi nhân với mười."),
-          luyen(R`Tính $2\cdot 9$.`, R`Tích bằng $18$.`, [{ expr: "2*9", expect: "18" }], "Chín lần số $2$ bằng $18$. Cộng chín số $2$ cũng ra cùng kết quả."),
+          luyen(R`Tính $2\times 6$.`, R`Tích bằng $12$.`, [{ expr: "2*6", expect: "12" }], "Sáu lần số $2$ là $12$. Đây là kết quả trong bảng nhân $2$."),
+          luyen(R`Tính $5\times 5$.`, R`Tích bằng $25$.`, [{ expr: "5*5", expect: "25" }], "Năm lần số $5$ bằng $25$. Bảng nhân $5$ kết thúc ở năm mươi khi nhân với mười."),
+          luyen(R`Tính $2\times 9$.`, R`Tích bằng $18$.`, [{ expr: "2*9", expect: "18" }], "Chín lần số $2$ bằng $18$. Cộng chín số $2$ cũng ra cùng kết quả."),
         ],
         { figure: "count" },
       ),
       bai(
         "bang-chia",
         "Phép chia hết",
-        R`Chia hết là tách một nhóm thành các phần bằng nhau và không dư. Chia $20$ cho $4$ được $5$, vì $4\cdot 5=20$.`,
+        R`Phép chia viết bằng dấu hai chấm. Ta có $20:4=5$ vì $4\times 5=20$, và phép chia này hết, không dư.`,
         [vd(
-          R`Có $20$ cái kẹo, chia đều cho $4$ bạn. Mỗi bạn được bao nhiêu cái?`,
+          R`Có $20$ cái kẹo, tính $20:4$. Mỗi bạn được bao nhiêu cái?`,
           [
-            buoc(R`Tìm số $n$ sao cho $4\cdot n=20$.`, "Chia đều nghĩa là các phần bằng nhau và hết kẹo."),
-            buoc(R`Vì $4\cdot 5=20$, mỗi bạn được $5$ cái.`, "Phép nhân lại kiểm tra phép chia. Không còn kẹo dư."),
+            buoc(R`Tìm số $n$ sao cho $4\times n=20$.`, "Chia đều nghĩa là các phần bằng nhau và hết kẹo."),
+            buoc(R`Vì $4\times 5=20$, mỗi bạn được $5$ cái.`, "Phép nhân lại kiểm tra phép chia. Không còn kẹo dư."),
           ],
           R`Mỗi bạn được $5$ cái kẹo.`,
           [{ expr: "20/4", expect: "5" }],
         )],
         [
-          luyen(R`Tính $18$ chia $2$.`, R`Thương bằng $9$.`, [{ expr: "18/2", expect: "9" }], "Hai nhân $9$ bằng $18$, nên chia hết và thương là $9$."),
-          luyen(R`Tính $15$ chia $5$.`, R`Thương bằng $3$.`, [{ expr: "15/5", expect: "3" }], "Năm nhân $3$ bằng $15$. Phép chia này hết, không có dư."),
-          luyen(R`Tính $16$ chia $2$.`, R`Thương bằng $8$.`, [{ expr: "16/2", expect: "8" }], "Hai nhân $8$ bằng $16$. Thương của phép chia hết là $8$."),
+          luyen(R`Tính $18:2$.`, R`Thương bằng $9$.`, [{ expr: "18/2", expect: "9" }], "Hai nhân $9$ bằng $18$, nên chia hết và thương là $9$."),
+          luyen(R`Tính $15:5$.`, R`Thương bằng $3$.`, [{ expr: "15/5", expect: "3" }], "Năm nhân $3$ bằng $15$. Phép chia này hết, không có dư."),
+          luyen(R`Tính $16:2$.`, R`Thương bằng $8$.`, [{ expr: "16/2", expect: "8" }], "Hai nhân $8$ bằng $16$. Thương của phép chia hết là $8$."),
         ],
       ),
     ]),
@@ -158,7 +158,7 @@ export const lop02: GradeBook = {
         [vd(
           R`Đổi $3$ mét ra xentimét và đổi $200$ xentimét ra mét.`,
           [
-            buoc(R`Ba mét bằng $3\cdot 100=300$ xentimét.`, "Mỗi mét có một trăm xentimét. Nhân số mét với $100$."),
+            buoc(R`Ba mét bằng $3\times 100=300$ xentimét.`, "Mỗi mét có một trăm xentimét. Nhân số mét với $100$."),
             buoc(R`Hai trăm xentimét bằng $200:100=2$ mét.`, "Chia cho $100$ vì một mét chứa đúng một trăm xentimét."),
           ],
           R`Ba mét bằng $300$ xentimét và $200$ xentimét bằng $2$ mét.`,
