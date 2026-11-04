@@ -1,4 +1,8 @@
-/** Danh sách nhạc học. Mỗi youtubeId đã trả về tiêu đề qua oembed. */
+/**
+ * Danh sách nhạc học.
+ * Mỗi youtubeId có tiêu đề oEmbed, và trang nhúng báo playabilityStatus OK cùng playableInEmbed.
+ * Luồng trực tiếp đã kết thúc (màn hình kết) không được giữ, dù oEmbed vẫn trả 200.
+ */
 
 export type StudyTrack = { id: string; title: string; youtubeId: string };
 
@@ -9,7 +13,7 @@ export const STUDY_CATEGORIES: StudyCategory[] = [
     id: "lofi",
     title: "Lo-fi",
     tracks: [
-      { id: "lofi-radio", title: "Lo-fi radio để học", youtubeId: "5qap5aO4i9A" },
+      { id: "lofi-radio", title: "Lo-fi radio để học", youtubeId: "rFZHOHl-L8A" },
       { id: "lofi-1am", title: "Phiên học một giờ sáng", youtubeId: "lTRiuFIWV54" },
       { id: "lofi-chillhop", title: "Chillhop radio", youtubeId: "5yx6BWlEVcY" },
       { id: "lofi-beats", title: "Nhịp lo-fi để thư giãn", youtubeId: "7NOSDKb0HlU" },

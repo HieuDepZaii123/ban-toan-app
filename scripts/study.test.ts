@@ -6,13 +6,14 @@ const titles = ["Lo-fi", "Piano", "Nhạc cổ điển", "Tiếng mưa / ồn tr
 assert.deepEqual(STUDY_CATEGORIES.map((item) => item.title), titles);
 
 const seen = new Set<string>();
-const dead = new Set(["t2rAJI2tM0k", "Dx5qFachx6s", "1zxj-vf04wE", "bvGE_4Kz_sA", "HU7GL5_p5s0", "jfKfPfyJRdk", "7maJOI3QMu0", "vmDDOFXSgAs", "neV3EPgvZ3g", "so6ExplQlaY", "NJuSStkIZBg", "ZTzdHGa-sx4", "gD-OMO1pDNk"]);
+const dead = new Set(["t2rAJI2tM0k", "Dx5qFachx6s", "1zxj-vf04wE", "bvGE_4Kz_sA", "HU7GL5_p5s0", "jfKfPfyJRdk", "7maJOI3QMu0", "vmDDOFXSgAs", "so6ExplQlaY", "NJuSStkIZBg", "ZTzdHGa-sx4", "gD-OMO1pDNk", "5qap5aO4i9A"]);
 for (const category of STUDY_CATEGORIES) {
   assert.ok(category.tracks.length >= 3, category.title);
   for (const track of category.tracks) {
     assert.equal(track.youtubeId.length, 11, track.id);
     assert.equal(seen.has(track.youtubeId), false, track.youtubeId);
     assert.equal(dead.has(track.youtubeId), false, track.youtubeId);
+    if (track.id === "lofi-radio") assert.equal(track.youtubeId, "rFZHOHl-L8A");
     seen.add(track.youtubeId);
   }
 }
