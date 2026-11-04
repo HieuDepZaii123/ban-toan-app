@@ -143,7 +143,12 @@ function DrillBlock({ drill, index }: { drill: GradeDrill; index: number }) {
       <button type="button" className="text-btn" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
         {open ? "Ẩn đáp án" : "Xem đáp án"}
       </button>
-      {open ? <p><b>Đáp án.</b> <MathText text={drill.answer} /></p> : null}
+      {open ? (
+        <>
+          <p><b>Đáp án.</b> <MathText text={drill.answer} /></p>
+          {drill.why ? <p className="lecture-note">Lý do: <MathText text={drill.why} /></p> : null}
+        </>
+      ) : null}
     </div>
   );
 }

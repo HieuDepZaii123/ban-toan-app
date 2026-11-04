@@ -16,6 +16,8 @@ export type GradeExample = {
 export type GradeDrill = {
   prompt: string;
   answer: string;
+  /** Một câu lý do của đáp án luyện tập. */
+  why?: string;
   checks: GradeCheck[];
 };
 
@@ -49,8 +51,8 @@ export function vd(prompt: string, steps: GradeStep[], ket: string, checks: Grad
   return { prompt, steps, ket, checks };
 }
 
-export function luyen(prompt: string, answer: string, checks: GradeCheck[]): GradeDrill {
-  return { prompt, answer, checks };
+export function luyen(prompt: string, answer: string, checks: GradeCheck[], why?: string): GradeDrill {
+  return { prompt, answer, checks, why };
 }
 
 export function bai(

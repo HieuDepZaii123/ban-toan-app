@@ -45,8 +45,27 @@ export const lop08: GradeBook = {
         )],
         [
           luyen(R`Giải $2x+8=0$.`, R`Nghiệm là $x=-4$.`, [{ expr: "2*(-4)+8", expect: "0" }]),
-          luyen(R`Giải $5x=15$.`, R`Nghiệm là $x=3$.`, [{ expr: "15/5", expect: "3" }]),
-          luyen(R`Bất phương trình $x-2>0$ có một nghiệm là $x=5$ không?`, R`Có, vì $5-2=3>0$.`, [{ expr: "5-2", expect: "3" }]),
+          luyen(R`Giải $5x=15$.`, R`Nghiệm là $x=3$.`, [{ expr: "solve(5*x-15, x)[0]", expect: "3" }]),
+          luyen(R`Giải $4x-8=0$.`, R`Nghiệm là $x=2$.`, [{ expr: "solve(4*x-8, x)[0]", expect: "2" }]),
+        ],
+      ),
+      bai(
+        "bpt-mot-an",
+        "Bất phương trình bậc nhất một ẩn",
+        R`Với $a>0$, bất phương trình $ax+b>0$ tương đương $x>-\frac{b}{a}$. BPT chặt (dấu $>$) nên nghiệm làm vế trái bằng $0$ không thuộc tập nghiệm. Dạng một ẩn này học trước các bất phương trình hai ẩn của lớp 10.`,
+        [vd(
+          R`Giải $2x-6>0$.`,
+          [
+            buoc(R`Hệ số của $x$ bằng $2>0$, nên giữ chiều khi chia.`, "Chia cho số dương không đảo chiều bất phương trình."),
+            buoc(R`Ta được $x>3$. BPT chặt (dấu $>$) nên $x=3$ không thuộc tập nghiệm.`, "Tại $x=3$, vế trái bằng $0$, không thỏa dấu lớn hơn."),
+          ],
+          R`Tập nghiệm là $(3;+\infty)$.`,
+          [{ expr: "solve_univariate_inequality(2*x-6>0, x)", expect: "Interval.open(3, oo)" }],
+        )],
+        [
+          luyen(R`Giải $3x+6\le 0$.`, R`Tập nghiệm là $(-\infty;-2]$.`, [{ expr: "solve_univariate_inequality(3*x+6<=0, x)", expect: "Interval(-oo, -2)" }]),
+          luyen(R`Giải $-x<4$.`, R`Tập nghiệm là $(-4;+\infty)$.`, [{ expr: "solve_univariate_inequality(-x-4<0, x)", expect: "Interval.open(-4, oo)" }]),
+          luyen(R`Số $x=3$ có thuộc tập nghiệm của $2x-6>0$ không?`, R`Không thuộc. BPT chặt (dấu $>$) nên $x=3$ không thuộc tập nghiệm.`, [{ expr: "solve_univariate_inequality(2*x-6>0, x)", expect: "Interval.open(3, oo)" }]),
         ],
       ),
     ]),

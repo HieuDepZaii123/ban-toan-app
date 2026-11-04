@@ -78,23 +78,23 @@ export const lop09: GradeBook = {
       bai(
         "delta",
         "Biệt thức và công thức nghiệm",
-        R`Với $a\neq 0$, biệt thức $\Delta=b^2-4ac$. Nếu $\Delta>0$ thì có hai nghiệm phân biệt $x=\frac{-b\pm\sqrt{\Delta}}{2a}$. Nếu $a=0$ thì công thức này không dùng được.`,
+        R`Với $a\neq 0$, biệt thức $\Delta=b^2-4ac$. Nếu $\Delta>0$ thì có hai nghiệm phân biệt $x=\frac{-b\pm\sqrt{\Delta}}{2a}$. Dấu của tam thức và bất phương trình bậc hai là nội dung lớp 10. Nếu $a=0$ thì công thức nghiệm không dùng được.`,
         [vd(
-          R`Giải $x^2-5x+6=0$.`,
+          R`Giải $x^2-3x+2=0$.`,
           [
-            buoc(R`Ta có $a=1\neq 0$ và $\Delta=25-24=1>0$.`, "Biệt thức dương là điều kiện cần và đủ để có hai nghiệm thực phân biệt."),
-            buoc(R`Hai nghiệm là $x=\frac{5\pm 1}{2}$, tức $x=3$ và $x=2$.`, "Công thức nghiệm dùng được vì $a$ khác $0$ và biệt thức không âm."),
+            buoc(R`Ta có $a=1\neq 0$ và $\Delta=9-8=1>0$.`, "Biệt thức dương là điều kiện cần và đủ để có hai nghiệm thực phân biệt."),
+            buoc(R`Hai nghiệm là $x=\frac{3\pm 1}{2}$, tức $x=2$ và $x=1$.`, "Công thức nghiệm dùng được vì $a$ khác $0$ và biệt thức không âm."),
           ],
-          R`Nghiệm là $x=2$ và $x=3$.`,
+          R`Nghiệm là $x=1$ và $x=2$.`,
           [
-            { expr: "25-24", expect: "1" },
-            { expr: "2**2-5*2+6", expect: "0" },
+            { expr: "solve(x**2-3*x+2, x)[0]", expect: "1" },
+            { expr: "solve(x**2-3*x+2, x)[1]", expect: "2" },
           ],
         )],
         [
+          luyen(R`Giải $x^2-2x-3=0$.`, R`Hai nghiệm là $x=-1$ và $x=3$.`, [{ expr: "solve(x**2-2*x-3, x)[0]", expect: "-1" }, { expr: "solve(x**2-2*x-3, x)[1]", expect: "3" }]),
           luyen(R`Tính biệt thức của $x^2-2x-3=0$.`, R`Biệt thức bằng $16$.`, [{ expr: "(-2)**2-4*1*(-3)", expect: "16" }]),
-          luyen(R`Một nghiệm của $x^2-2x-3=0$ là $x=3$. Nghiệm còn lại bằng bao nhiêu?`, R`Nghiệm còn lại là $x=-1$.`, [{ expr: "(-1)**2-2*(-1)-3", expect: "0" }]),
-          luyen(R`Phương trình $0\cdot x^2+2x-6=0$ có nghiệm nào?`, R`Vì hệ số bậc hai bằng $0$, nghiệm bậc nhất là $x=3$.`, [{ expr: "2*3-6", expect: "0" }]),
+          luyen(R`Phương trình $0\cdot x^2+2x-6=0$ có nghiệm nào?`, R`Vì hệ số bậc hai bằng $0$, nghiệm bậc nhất là $x=3$.`, [{ expr: "solve(2*x-6, x)[0]", expect: "3" }]),
         ],
       ),
     ]),

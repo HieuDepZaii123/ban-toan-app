@@ -36,6 +36,32 @@ const linked = new Set<string>();
 
 for (const book of gradeBooks) {
   assert(book.chapters.length >= 1, `lớp ${book.grade} thiếu chương`);
+  if (book.grade >= 10) {
+    for (const chapter of book.chapters) {
+      assert(chapter.lessons.length >= 2 && chapter.lessons.length <= 4, `lớp ${book.grade} chương ${chapter.title} cần 2 đến 4 bài`);
+    }
+    const blob = JSON.stringify(book);
+    assert(!blob.includes("góc phần sáu"), `lớp ${book.grade} còn góc phần sáu`);
+    assert(!blob.includes("Hệ số hằng"), `lớp ${book.grade} còn hệ số hằng`);
+    assert(!blob.includes("tập nghiệm chặt"), `lớp ${book.grade} còn tập nghiệm chặt`);
+    assert(!blob.includes("đơn vị dài"), `lớp ${book.grade} còn đơn vị dài`);
+    assert(!blob.includes("sin(x)/x") && !blob.includes("sin x/x"), `lớp ${book.grade} còn giới hạn sin x/x`);
+  }
+  if (book.grade === 10) {
+    const blob = JSON.stringify(book);
+    assert(blob.includes("hai ẩn"), "lớp 10 thiếu bất phương trình hai ẩn");
+    assert(blob.includes("nhị thức") || blob.includes("Nhị thức"), "lớp 10 thiếu nhị thức Newton");
+    assert(!blob.includes("một ẩn"), "lớp 10 còn bài bậc nhất một ẩn");
+  }
+  if (book.grade === 11) {
+    const blob = JSON.stringify(book);
+    assert(blob.includes("logarit"), "lớp 11 thiếu mũ và logarit");
+  }
+  if (book.grade === 12) {
+    const blob = JSON.stringify(book);
+    assert(!blob.includes("Số phức") && !blob.includes("số phức"), "lớp 12 còn số phức");
+    assert(!blob.includes("logarit"), "lớp 12 còn chương mũ logarit");
+  }
   const lessons = lessonsOf(book);
   assert(lessons.length >= 4, `lớp ${book.grade} thiếu bài`);
   if (book.band === "tieu-hoc") {
@@ -73,6 +99,13 @@ for (const book of gradeBooks) {
       checkProse(`L${book.grade} luyện`, drill.prompt);
       checkProse(`L${book.grade} đáp`, drill.answer);
       assert(drill.answer.trim().endsWith("."), `${lesson.id} đáp luyện thiếu chấm`);
+      if (book.grade >= 10) {
+        assert(!!drill.why, `${lesson.id} luyện thiếu một câu lý do`);
+        if (drill.why) {
+          checkProse(`L${book.grade} lý do luyện`, drill.why);
+          assert(drill.why.trim().length >= 24 && /[.!?]$/.test(drill.why.trim()), `${lesson.id} lý do luyện cụt`);
+        }
+      }
       assert(drill.checks.length >= 1, `${lesson.id} luyện thiếu check`);
       for (const check of drill.checks) {
         assert(check.expr.replace(/\s/g, "") !== check.expect.replace(/\s/g, ""), `${lesson.id} check không kiểm đáp số`);
