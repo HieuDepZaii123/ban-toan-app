@@ -15,7 +15,7 @@ export const trigDang: TopicDang = {
         steps: [
           { claim: R`Ta có $150\cdot\frac{\pi}{180}=\frac{5\pi}{6}$.`, why: "Đổi độ sang radian bằng cách nhân với $\\frac{\\pi}{180}$ rồi rút gọn phân số." },
           { claim: R`Góc $\frac{5\pi}{6}$ nằm ở góc phần tư thứ hai.`, why: "Nó lớn hơn $\\frac{\\pi}{2}$ và nhỏ hơn $\\pi$." },
-          { claim: R`Vì vậy $\cos\frac{5\pi}{6}$ âm, và bằng $-\frac{\sqrt{3}}{2}$.`, why: "Ở góc phần tư thứ hai, côsin âm. Giá trị tuyệt đối bằng côsin của góc phụ $\\frac{\\pi}{6}$." },
+          { claim: R`Vì vậy $\cos\frac{5\pi}{6}$ âm, và bằng $-\frac{\sqrt{3}}{2}$.`, why: R`Ở góc phần tư thứ hai, côsin âm. Vì $\frac{5\pi}{6}$ và $\frac{\pi}{6}$ bù nhau, giá trị tuyệt đối bằng côsin của $\frac{\pi}{6}$.` },
         ],
         ket: R`Góc bằng $\frac{5\pi}{6}$ radian và côsin bằng $-\frac{\sqrt{3}}{2}$.`,
         checks: [
@@ -30,7 +30,7 @@ export const trigDang: TopicDang = {
         think: "Đưa về góc $\\frac{\\pi}{6}$. Ở góc phần tư thứ hai, sin giữ dấu dương.",
         answer: R`Đáp số là $\frac{1}{2}$.`,
         steps: [
-          { claim: R`Góc $\frac{5\pi}{6}$ thuộc góc phần tư thứ hai, và $\sin\frac{5\pi}{6}=\sin\frac{\pi}{6}$.`, why: "Sin của góc bù bằng sin của góc nhọn, và dấu ở góc phần tư này là dương." },
+          { claim: R`Góc $\frac{5\pi}{6}$ thuộc góc phần tư thứ hai, và $\sin\frac{5\pi}{6}=\sin\frac{\pi}{6}$.`, why: R`Sin của góc bù bằng sin của chính góc đó: $\sin(\pi-\alpha)=\sin\alpha$ với $\alpha=\frac{\pi}{6}$. Dấu ở góc phần tư này là dương.` },
           { claim: R`Giá trị bằng $\frac{1}{2}$.`, why: "Đây là giá trị đúng của sin một góc phần sáu radian, không làm tròn." },
         ],
         checks: [{ expr: "sin(5*pi/6)", expect: "Rational(1,2)" }],
@@ -98,7 +98,7 @@ export const trigDang: TopicDang = {
       viDu: {
         prompt: R`Viết $3\sin x+4\cos x$ dưới dạng $R\sin(x+\varphi)$ và tìm $x$ để biểu thức bằng $5$.`,
         steps: [
-          { claim: R`Ta có $R=\sqrt{3^2+4^2}=5$, $\cos\varphi=\frac{3}{5}$ và $\sin\varphi=\frac{4}{5}$.`, why: "Hai hệ số chia cho $R$ là cos và sin của góc phụ $\\varphi$. Bình phương của chúng cộng lại bằng $1$." },
+          { claim: R`Ta có $R=\sqrt{3^2+4^2}=5$, $\cos\varphi=\frac{3}{5}$ và $\sin\varphi=\frac{4}{5}$.`, why: R`Hai hệ số chia cho $R$ là côsin và sin của góc $\varphi$ xác định bởi hai hệ thức này. Bình phương của chúng cộng lại bằng $1$.` },
           { claim: R`Vậy $3\sin x+4\cos x=5\left(\sin x\cos\varphi+\cos x\sin\varphi\right)=5\sin(x+\varphi)$.`, why: "Công thức cộng biến ngoặc thành sin của một tổng. Hệ số $5$ là biên độ." },
           { claim: R`Biểu thức bằng $5$ khi $\sin(x+\varphi)=1$, tức $x=\frac{\pi}{2}-\varphi+2k\pi$.`, why: "Sin bằng $1$ khi và chỉ khi đối số bằng $\\frac{\\pi}{2}$ cộng bội của $2\\pi$." },
           { claim: R`Một nghiệm thỏa $\sin x=\frac{3}{5}$ và $\cos x=\frac{4}{5}$.`, why: "Khi đó $x=\\frac{\\pi}{2}-\\varphi$. Thay lại được $3\\cdot\\frac{3}{5}+4\\cdot\\frac{4}{5}=5$, đúng giá trị lớn nhất." },
@@ -257,11 +257,11 @@ export const trigDang: TopicDang = {
       kind: "uoc-luong",
       sao: 3,
       prompt: R`Ước lượng $\sin\frac{1}{10}$, với đối số tính bằng radian, bằng cách so với chính đối số.`,
-      think: R`Với $t>0$ nhỏ, $0<\sin t<t$. Mốc $\frac{1}{10}$ dương và nhỏ hơn $\frac{\pi}{2}$, nên bất đẳng thức này dùng được.`,
-      answer: R`Ta có $0<\sin\frac{1}{10}<\frac{1}{10}$.`,
+      think: R`Trên khoảng $(0;\frac{\pi}{2})$ có $\sin x<x<\tan x$. Mốc $\frac{1}{10}$ nằm trong khoảng đó.`,
+      answer: R`Ta có $\sin\frac{1}{10}<\frac{1}{10}<\tan\frac{1}{10}$.`,
       steps: [
-        { claim: R`Vì $0<\frac{1}{10}<\frac{\pi}{2}$, cung nhỏ hơn dây cung theo bán kính và nhỏ hơn tiếp tuyến.`, why: "Trên khoảng này, sin dương và nhỏ hơn chính đối số radian." },
-        { claim: R`Vậy $0<\sin\frac{1}{10}<\frac{1}{10}$.`, why: "Đây là ước lượng chưa cần giá trị thập phân. Cận trên là đúng đối số." },
+        { claim: R`Với mọi $x$ thuộc $(0;\frac{\pi}{2})$, $\sin x<x<\tan x$.`, why: "Đây là bất đẳng thức lượng giác trên góc phần tư thứ nhất, tính bằng radian. Không so sánh độ dài cung với dây cung theo chiều ngược." },
+        { claim: R`Vì $0<\frac{1}{10}<\frac{\pi}{2}$, bất đẳng thức áp dụng tại $x=\frac{1}{10}$.`, why: "Mốc dương và nhỏ hơn góc vuông, nên thuộc đúng khoảng của mệnh đề." },
       ],
       checks: [{ expr: "sin(Rational(1,10))**2+cos(Rational(1,10))**2", expect: "1" }],
     },

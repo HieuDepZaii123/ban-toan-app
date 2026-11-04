@@ -58,7 +58,10 @@ function walk(topic: TopicDang): void {
   }
 }
 
-const RICH = new Set(["derivative", "survey", "integral", "exp", "analytic", "probability", "trig", "sequence", "limit"]);
+const RICH = new Set([
+  "derivative", "survey", "integral", "exp", "analytic", "probability", "trig", "sequence", "limit",
+  "vector", "triangle", "quadratic", "combo", "ineq",
+]);
 const RICH_KINDS = ["thuc-te", "tu-ra-de", "mo", "phan-bien", "doc", "uoc-luong"] as const;
 
 function packOf(item: { check?: { expr: string; expect: string }; checks?: { expr: string; expect: string }[] }) {
@@ -148,6 +151,36 @@ function auditRich(topic: TopicDang): void {
     const used = collectChecks(topic).filter((check) => check.expr.includes("limit("));
     assert(used.length >= 8, "chưa đủ phép kiểm bằng sympy limit");
   }
+  if (topic.id === "vector") {
+    assert(!blob.includes("(2;1;2)"), "còn vectơ không gian");
+    assert(!blob.includes("hợp lực"), "bài thuyền còn lẫn lực");
+    assert(blob.includes("trọng tâm"), "thiếu trọng tâm");
+    assert(blob.includes("Phân tích"), "thiếu phân tích vectơ");
+  }
+  if (topic.id === "triangle") {
+    assert(blob.includes("côsin"), "thiếu định lí côsin");
+    assert(blob.includes("Định lí sin"), "thiếu định lí sin");
+    assert(blob.includes("thể tích"), "thiếu thể tích khối");
+  }
+  if (topic.id === "quadratic") {
+    assert(!blob.includes("đạo hàm"), "bậc hai còn đạo hàm");
+    assert(blob.includes("a=0"), "thiếu trường hợp a=0");
+    assert(blob.includes("loại"), "phương trình căn phải có bước loại");
+  }
+  if (topic.id === "combo") {
+    const median = topic.dang.find((dang) => dang.name.startsWith("Trung bình"));
+    assert(!!median && !median.luyen.prompt.includes("x^2"), "nhị thức còn nằm ở dạng trung bình");
+    assert(topic.dang.some((dang) => dang.name.startsWith("Nhị thức")), "thiếu dạng nhị thức");
+    assert(blob.includes("phương sai"), "thiếu phương sai");
+    assert(blob.includes("Tứ phân vị"), "thiếu tứ phân vị");
+  }
+  if (topic.id === "ineq") {
+    assert(!blob.includes("đạo hàm"), "bất đẳng thức còn đạo hàm");
+    assert(!blob.includes("điện trở"), "còn bài điện trở song song");
+    assert(blob.includes("Nâng cao"), "AM-GM phải ghi Nâng cao");
+    assert(blob.includes("quy hoạch"), "thiếu quy hoạch tuyến tính");
+    assert(!blob.includes("cần và đủ để khẳng định giá trị nhỏ nhất"), "còn câu sai về dấu bằng");
+  }
 }
 
 function filesUnder(dir: string, out: string[]): void {
@@ -169,12 +202,37 @@ for (const file of contentFiles) {
   }
 }
 
+function hasControl(text: string): boolean {
+  for (let i = 0; i < text.length; i += 1) {
+    const code = text.charCodeAt(i);
+    if (code <= 8 || code === 11 || code === 12 || (code >= 14 && code <= 31)) return true;
+  }
+  return false;
+}
+
+function controlChars(value: unknown, where: string): void {
+  if (typeof value === "string") {
+    assert(!hasControl(value), `${where} còn ký tự điều khiển`);
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => controlChars(item, `${where}[${index}]`));
+    return;
+  }
+  if (value && typeof value === "object") {
+    for (const [key, child] of Object.entries(value)) controlChars(child, `${where}.${key}`);
+  }
+}
+
+assert(hasControl(String.fromCharCode(11)), "bộ dò ký tự điều khiển");
+assert(!hasControl("ok"), "bộ dò ký tự điều khiển");
 assert(allDang.length === 14, "đủ 14 chủ đề");
 const ids = new Set(allDang.map((topic) => topic.id));
 for (const card of cards) assert(ids.has(card.id), `thiếu ${card.id}`);
 
 const checks: { where: string; expr: string; expect: string }[] = [];
 for (const topic of allDang) {
+  controlChars(topic, topic.id);
   walk(topic);
   auditRich(topic);
   collectChecks(topic).forEach((check, index) => {

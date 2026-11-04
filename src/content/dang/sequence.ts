@@ -38,7 +38,7 @@ export const sequenceDang: TopicDang = {
     {
       name: "Cấp số nhân và tổng của dãy",
       nhanDang: "Mỗi số hạng bằng số liền trước nhân với một hằng số $q$.",
-      phuongPhap: R`Số hạng là $u_n=u_1 q^{n-1}$. Khi $q\neq 1$, tổng hữu hạn là $S_n=u_1\frac{1-q^n}{1-q}$. Nếu $|q|<1$ và $u_1$ hữu hạn thì dãy tổng riêng hội tụ về $\frac{u_1}{1-q}$. Điều kiện $|q|<1$ là cần và đủ để tổng vô hạn ấy hữu hạn khi $u_1\neq 0$. Nếu $|q|\ge 1$ và $u_1\neq 0$ thì không có tổng vô hạn hữu hạn.`,
+      phuongPhap: R`Số hạng là $u_n=u_1 q^{n-1}$. Khi $q\neq 1$, tổng hữu hạn là $S_n=u_1\frac{1-q^n}{1-q}$. Nếu $|q|<1$ thì dãy các tổng riêng tiến tới $\frac{u_1}{1-q}$. Điều kiện $|q|<1$ là cần và đủ để tổng vô hạn ấy hữu hạn khi $u_1\neq 0$. Nếu $|q|\ge 1$ và $u_1\neq 0$ thì không có tổng vô hạn hữu hạn.`,
       viDu: {
         prompt: R`Cấp số nhân $u_1=2$, $q=3$. Tính $S_5$.`,
         steps: [
@@ -64,25 +64,25 @@ export const sequenceDang: TopicDang = {
     {
       name: "Dãy tăng và dãy giảm",
       nhanDang: "Hỏi một dãy số hạng tổng quát đi lên hay đi xuống.",
-      phuongPhap: R`Dãy tăng khi $u_{n+1}-u_n\ge 0$ với mọi $n$, và tăng ngặt khi hiệu này luôn dương. Dãy giảm khi hiệu không dương. Xét hiệu là điều kiện cần và đủ nếu đã xét mọi $n$ nguyên dương. Một vài số hạng đầu cùng chiều chưa đủ cho cả dãy.`,
+      phuongPhap: R`Theo chương trình, dãy tăng khi $u_{n+1}>u_n$ với mọi số nguyên dương $n$, và dãy giảm khi $u_{n+1}<u_n$ với mọi $n$. Dấu ở đây là dấu lớn hơn hoặc nhỏ hơn chặt. Xét hiệu trên mọi $n$ là điều kiện cần và đủ. Vài số hạng đầu cùng chiều chưa đủ cho cả dãy.`,
       viDu: {
         prompt: R`Xét $u_n=1-\frac{1}{n}$. Dãy có tăng không?`,
         steps: [
           { claim: R`Hiệu $u_{n+1}-u_n=\frac{1}{n}-\frac{1}{n+1}=\frac{1}{n(n+1)}$.`, why: "Quy đồng hai phân số. Mẫu $n(n+1)$ dương với mọi $n$ nguyên dương." },
-          { claim: R`Hiệu luôn dương, nên dãy tăng ngặt.`, why: "Hiệu dương với mọi $n$ là điều kiện đủ của dãy tăng ngặt. Không cần xét thêm trường hợp $n$." },
+          { claim: R`Hiệu luôn dương, nên $u_{n+1}>u_n$ với mọi $n$.`, why: "Dấu lớn hơn chặt đúng với định nghĩa dãy tăng. Không cần xét thêm trường hợp $n$." },
         ],
-        ket: "Dãy tăng ngặt.",
+        ket: "Dãy tăng.",
         checks: [{ expr: "1/n-1/(n+1)", expect: "1/(n*(n+1))" }],
       },
       loi: "Thấy vài số hạng đầu tăng rồi kết luận cả dãy tăng, khi chưa xét hiệu tổng quát.",
       luyen: {
         kind: "luyen",
         prompt: R`Dãy $u_n=2+\frac{1}{n}$ tăng hay giảm?`,
-        think: "Tính $u_n-u_{n+1}$. Nếu hiệu này dương với mọi $n$ thì dãy giảm ngặt.",
-        answer: "Dãy giảm ngặt.",
+        think: "Tính $u_n-u_{n+1}$. Nếu hiệu này dương với mọi $n$ thì dãy giảm.",
+        answer: "Dãy giảm.",
         steps: [
           { claim: R`Hiệu $u_n-u_{n+1}=\frac{1}{n}-\frac{1}{n+1}=\frac{1}{n(n+1)}>0$.`, why: "Tử và mẫu đều dương. Hiệu số hạng trước trừ số hạng sau dương nghĩa là dãy đi xuống." },
-          { claim: R`Vậy dãy giảm ngặt.`, why: "Điều kiện đủ đã được kiểm trên mọi số nguyên dương $n$." },
+          { claim: R`Vậy $u_{n+1}<u_n$ với mọi $n$, nên dãy giảm.`, why: "Dấu nhỏ hơn chặt đúng với định nghĩa dãy giảm. Điều này đã được kiểm trên mọi số nguyên dương $n$." },
         ],
         checks: [{ expr: "1/n-1/(n+1)", expect: "1/(n*(n+1))" }],
       },
@@ -94,10 +94,10 @@ export const sequenceDang: TopicDang = {
       viDu: {
         prompt: R`Chứng minh $u_n=1-\frac{1}{n}$ bị chặn.`,
         steps: [
-          { claim: R`Với mọi $n\ge 1$, $0<u_n<1$.`, why: "Vì $\\frac{1}{n}$ nằm trong $(0;1]$, nên $1-\\frac{1}{n}$ nằm trong $[0;1)$." },
-          { claim: R`Dãy bị chặn dưới bởi $0$ và bị chặn trên bởi $1$.`, why: "Hai hằng số này không phụ thuộc $n$. Có cả cận dưới và cận trên nên dãy bị chặn." },
+          { claim: R`Với mọi $n\ge 1$, $0\le u_n<1$.`, why: R`Vì $\frac{1}{n}$ thuộc $(0;1]$. Khi $n=1$ thì $u_1=0$, và với $n\ge 2$ thì $u_n>0$. Cả dãy nằm trong $[0;1)$.` },
+          { claim: R`Dãy bị chặn dưới bởi $0$ và bị chặn trên bởi $1$.`, why: "Hai hằng số này không phụ thuộc $n$. Có cả cận dưới và cận trên nên dãy bị chặn. Cận dưới $0$ đạt tại số hạng đầu." },
         ],
-        ket: "Dãy bị chặn, cụ thể $0<u_n<1$.",
+        ket: R`Dãy bị chặn, cụ thể $0\le u_n<1$, tức $u_n$ thuộc $[0;1)$.`,
         checks: [
           { expr: "1-1/1", expect: "0" },
           { expr: "1-1/2", expect: "Rational(1,2)" },
@@ -114,6 +114,62 @@ export const sequenceDang: TopicDang = {
           { claim: R`Vậy dãy không bị chặn trên.`, why: "Phủ định của bị chặn trên là với mọi hằng số đều có một số hạng vượt hằng số đó." },
         ],
         checks: [{ expr: "5-3", expect: "2" }],
+      },
+    },
+    {
+      name: "Tìm số hạng đầu và công sai từ một hệ",
+      nhanDang: "Cho hai điều kiện về các số hạng của một cấp số cộng, hỏi $u_1$ và $d$.",
+      phuongPhap: R`Viết mỗi điều kiện thành một phương trình bậc nhất theo $u_1$ và $d$, bằng công thức $u_n=u_1+(n-1)d$. Hệ hai phương trình này tương đương với hai điều kiện đã cho. Trừ từng vế để khử $u_1$, rồi thử lại cả hai số hạng.`,
+      viDu: {
+        prompt: R`Cấp số cộng thỏa $u_2=5$ và $u_5=14$. Tìm $u_1$ và $d$.`,
+        steps: [
+          { claim: R`Hai phương trình là $u_1+d=5$ và $u_1+4d=14$.`, why: "Hạng thứ hai cách hạng đầu một bước, hạng thứ năm cách bốn bước." },
+          { claim: R`Trừ từng vế được $3d=9$, nên $d=3$ và $u_1=2$.`, why: "Khử $u_1$. Thay $d=3$ vào phương trình thứ nhất được $u_1=5-3=2$." },
+          { claim: R`Thử lại: $u_2=2+3=5$ và $u_5=2+4\cdot 3=14$.`, why: "Cả hai điều kiện của đề đều thỏa. Nghiệm của hệ không bị loại." },
+        ],
+        ket: R`Kết quả là $u_1=2$ và $d=3$.`,
+        checks: [
+          { expr: "2+3", expect: "5" },
+          { expr: "2+4*3", expect: "14" },
+        ],
+      },
+      loi: "Lấy $u_5=u_1+5d$, đếm thừa một công sai.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Cấp số cộng thỏa $u_1+u_3=10$ và $d=2$. Tìm $u_1$.`,
+        think: "Viết $u_3=u_1+2d$. Thế $d=2$ vào tổng hai số hạng rồi giải một ẩn.",
+        answer: R`Đáp số là $u_1=3$.`,
+        steps: [
+          { claim: R`Ta có $u_3=u_1+4$, nên $u_1+(u_1+4)=10$.`, why: "Hai bước công sai $2$ làm hạng thứ ba hơn hạng đầu đúng $4$." },
+          { claim: R`Suy ra $2u_1=6$, nên $u_1=3$.`, why: "Phương trình bậc nhất có đúng một nghiệm. Thử lại: $u_3=7$ và tổng bằng $10$." },
+        ],
+        checks: [{ expr: "3+(3+2*2)", expect: "10" }],
+      },
+    },
+    {
+      name: "Số thập phân vô hạn tuần hoàn",
+      nhanDang: "Một số thập phân có một cụm chữ số lặp mãi, hỏi phân số bằng nó.",
+      phuongPhap: R`Đặt $x$ là số thập phân. Nhân $x$ với $10^k$, trong đó $k$ là số chữ số của cụm lặp, để dấu phẩy nhảy qua đúng một cụm. Hiệu hai lũy thừa này triệt phần đuôi tuần hoàn và cho một phương trình bậc nhất. Nghiệm là phân số cần tìm. Phải thử lại bằng cách viết lại phép chia nếu cụm ngắn.`,
+      viDu: {
+        prompt: R`Viết $0{,}232323\ldots$ thành phân số tối giản.`,
+        steps: [
+          { claim: R`Đặt $x=0{,}232323\ldots$. Cụm lặp có hai chữ số, nên xét $100x=23{,}232323\ldots$.`, why: "Nhân $10^2$ đẩy dấu phẩy qua đúng một cụm. Phần đuôi của $100x$ trùng phần đuôi của $x$." },
+          { claim: R`Hiệu $100x-x=23$, nên $99x=23$ và $x=\frac{23}{99}$.`, why: "Hai phần thập phân vô hạn trừ nhau hết. Mẫu $99$ và tử $23$ nguyên tố cùng nhau, nên phân số đã tối giản." },
+        ],
+        ket: R`Số đã cho bằng $\frac{23}{99}$.`,
+        checks: [{ expr: "Rational(23,99)*100-Rational(23,99)", expect: "23" }],
+      },
+      loi: "Nhân $10$ khi cụm lặp có hai chữ số, nên phần đuôi chưa trùng và không khử được.",
+      luyen: {
+        kind: "luyen",
+        prompt: R`Viết $0{,}444\ldots$ thành phân số tối giản.`,
+        think: "Cụm lặp chỉ có một chữ số $4$. Nhân $10$, trừ đi chính số đó, rồi rút gọn.",
+        answer: R`Đáp số là $\frac{4}{9}$.`,
+        steps: [
+          { claim: R`Đặt $x=0{,}444\ldots$. Khi đó $10x=4{,}444\ldots$ và $10x-x=4$.`, why: "Một chữ số lặp thì nhân $10$ là đủ để đuôi trùng nhau." },
+          { claim: R`Suy ra $9x=4$, nên $x=\frac{4}{9}$.`, why: "Tử và mẫu nguyên tố cùng nhau. Phân số này tối giản." },
+        ],
+        checks: [{ expr: "Rational(4,9)*10-Rational(4,9)", expect: "4" }],
       },
     },
   ],
