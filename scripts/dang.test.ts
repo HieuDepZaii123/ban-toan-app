@@ -3,6 +3,8 @@
  * Chạy: tsx scripts/dang.test.ts
  */
 import { execFileSync } from "node:child_process";
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { cards } from "../src/content/cards.ts";
 import { allDang, collectChecks } from "../src/content/dang/index.ts";
 import type { TopicDang } from "../src/content/dang/types.ts";
@@ -56,7 +58,7 @@ function walk(topic: TopicDang): void {
   }
 }
 
-const RICH = new Set(["derivative", "survey", "integral", "exp"]);
+const RICH = new Set(["derivative", "survey", "integral", "exp", "analytic", "probability"]);
 const RICH_KINDS = ["thuc-te", "tu-ra-de", "mo", "phan-bien", "doc", "uoc-luong"] as const;
 
 function packOf(item: { check?: { expr: string; expect: string }; checks?: { expr: string; expect: string }[] }) {
@@ -72,7 +74,7 @@ function auditRich(topic: TopicDang): void {
   for (const item of topic.sangTao) {
     if (item.kind === "thuc-te") {
       assert(/số liệu giả định/i.test(item.prompt), `${topic.id} thực tế thiếu số liệu giả định`);
-      assert(/mét|đồng|độ|dm|sản phẩm|vé|mg|giây|phút|lít|gam|cá thể/.test(item.answer), `${topic.id} thực tế thiếu đơn vị`);
+      assert(/mét|đồng|độ|dm|sản phẩm|vé|mg|giây|phút|lít|gam|cá thể|người|lần|bóng/.test(item.answer), `${topic.id} thực tế thiếu đơn vị`);
       assert(item.sao !== undefined && item.sao >= 1 && item.sao <= 5, `${topic.id} sáng tạo thiếu mức sao`);
     }
     assert(item.answer.trim().endsWith("."), `${topic.id} đáp sáng tạo thiếu chấm`);
@@ -131,6 +133,25 @@ function auditRich(topic: TopicDang): void {
     const mono = topic.dang.find((dang) => dang.name.startsWith("Tính đơn điệu"));
     assert(!!mono && mono.luyen.prompt.includes("khoảng đơn điệu"), "bài luyện đơn điệu phải hỏi các khoảng");
     assert(!!mono && mono.luyen.answer.includes("(-\\infty;-1)") && mono.luyen.answer.includes("(-1;1)"), "khoảng đơn điệu chưa đúng");
+  }
+}
+
+function filesUnder(dir: string, out: string[]): void {
+  for (const name of readdirSync(dir)) {
+    const path = join(dir, name);
+    if (statSync(path).isDirectory()) filesUnder(path, out);
+    else if (name.endsWith(".ts")) out.push(path);
+  }
+}
+
+const contentFiles: string[] = [];
+filesUnder("src/content", contentFiles);
+const doubled = /\\{2}(ln|frac|sqrt|pi|pm|log)/;
+for (const file of contentFiles) {
+  const source = readFileSync(file, "utf8");
+  const raws = source.match(/R`(?:\\`|[^`])*`/g) ?? [];
+  for (const raw of raws) {
+    assert(!doubled.test(raw), `${file} còn hai gạch chéo trước lệnh LaTeX`);
   }
 }
 

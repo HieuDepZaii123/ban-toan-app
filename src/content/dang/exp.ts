@@ -9,12 +9,12 @@ export const expDang: TopicDang = {
     {
       name: "Đưa về cùng cơ số",
       nhanDang: "Phương trình mũ mà hai vế viết được thành lũy thừa của cùng một cơ số dương khác $1$.",
-      phuongPhap: R`Với $a>0$ và $a\neq 1$, đẳng thức $a^u=a^v$ tương đương $u=v$. Đây là điều kiện cần và đủ, vì hàm mũ cơ số $a$ đơn ánh. Nếu cơ số nằm trong $(0;1)$, hàm vẫn đơn ánh nên vẫn tương đương, không đảo chiều ở phương trình. Điều kiện cơ số phải được kiểm trước khi dùng.`,
+      phuongPhap: R`Với $a>0$ và $a\neq 1$, đẳng thức $a^u=a^v$ tương đương $u=v$. Đây là điều kiện cần và đủ, vì hàm mũ cơ số $a$ nhận mỗi giá trị đúng một lần. Nếu cơ số nằm trong $(0;1)$, hàm vẫn nhận mỗi giá trị đúng một lần nên vẫn tương đương, không đảo chiều ở phương trình. Điều kiện cơ số phải được kiểm trước khi dùng.`,
       viDu: {
         prompt: R`Giải $2^{x+1}=16$.`,
         steps: [
           { claim: R`Cơ số $2>1$ hợp lệ, và $16=2^4$.`, why: "Hai vế phải cùng cơ số thì mới so được số mũ. Cơ số đã thỏa điều kiện của hàm mũ." },
-          { claim: R`Phương trình tương đương $x+1=4$.`, why: "Hàm $2^t$ đơn ánh trên tập số thực, nên hai lũy thừa bằng nhau khi và chỉ khi số mũ bằng nhau." },
+          { claim: R`Phương trình tương đương $x+1=4$.`, why: "Hàm $2^t$ nhận mỗi giá trị đúng một lần trên tập số thực, nên hai lũy thừa bằng nhau khi và chỉ khi số mũ bằng nhau." },
           { claim: R`Nghiệm là $x=3$.`, why: "Phương trình bậc nhất này xác định với mọi số thực, không còn điều kiện loại." },
         ],
         ket: "Nghiệm duy nhất là $x=3$.",
@@ -24,11 +24,11 @@ export const expDang: TopicDang = {
       luyen: {
         kind: "luyen",
         prompt: R`Giải $3^{2x}=81$.`,
-        think: "Viết $81$ theo cơ số $3$, kiểm tra cơ số, rồi dùng tính đơn ánh.",
+        think: "Viết $81$ theo cơ số $3$, kiểm tra cơ số, rồi đồng nhất số mũ.",
         answer: R`Đáp số là $x=2$.`,
         steps: [
           { claim: R`Cơ số $3>1$ và $81=3^4$.`, why: "Cơ số hợp lệ. Hai vế cùng cơ số thì số mũ mới so được." },
-          { claim: R`Vậy $2x=4$, nên $x=2$.`, why: "Hàm mũ cơ số $3$ đơn ánh, nên đẳng thức tương đương với đẳng thức số mũ." },
+          { claim: R`Vậy $2x=4$, nên $x=2$.`, why: "Hàm mũ cơ số $3$ nhận mỗi giá trị đúng một lần, nên đẳng thức tương đương với đẳng thức số mũ." },
         ],
         checks: [{ expr: "3**(2*2)", expect: "81" }],
       },
@@ -82,7 +82,7 @@ export const expDang: TopicDang = {
           { expr: "log(32,2)", expect: "5" },
         ],
       },
-      loi: R`Gộp $\\log_a b+\\log_a c$ khi một trong hai đối số âm.`,
+      loi: R`Gộp $\log_a b+\log_a c$ khi một trong hai đối số âm.`,
       luyen: {
         kind: "luyen",
         prompt: R`Tính $\log_3 9+\log_3 27$.`,
@@ -112,7 +112,7 @@ export const expDang: TopicDang = {
       luyen: {
         kind: "luyen",
         prompt: R`Tính $\log_8 4$.`,
-        think: R`Đổi về cơ số $2$. Kết quả là nghịch đảo của $\\log_4 8$ vì vai trò cơ số và đối số đổi chỗ.`,
+        think: R`Đổi về cơ số $2$. Kết quả là nghịch đảo của $\log_4 8$ vì vai trò cơ số và đối số đổi chỗ.`,
         answer: R`Đáp số là $\frac{2}{3}$.`,
         steps: [
           { claim: R`Cơ số $8$ và đối số $4$ hợp lệ.`, why: "Logarit tồn tại trước khi đổi cơ số." },
@@ -145,7 +145,7 @@ export const expDang: TopicDang = {
         think: "Cùng cơ số lớn hơn $1$, nên chỉ cần so đối số. Nêu chiều của hàm logarit trước khi kết luận.",
         answer: R`Ta có $\log_2 3<\log_2 5$.`,
         steps: [
-          { claim: R`Cơ số $2>1$, hàm $\log_2$ đồng biến trên $(0;+\infty)$.`, why: R`Đạo hàm của $\\log_2 x$ là $1/(x\\ln 2)$, dương khi $x>0$.` },
+          { claim: R`Cơ số $2>1$, hàm $\log_2$ đồng biến trên $(0;+\infty)$.`, why: R`Đạo hàm của $\log_2 x$ là $\frac{1}{x\ln 2}$, dương khi $x>0$.` },
           { claim: R`Vì $3<5$ và cả hai dương, $\log_2 3<\log_2 5$.`, why: "Hàm đồng biến bảo toàn thứ tự. Đây là điều kiện đủ." },
         ],
         checks: [
@@ -157,12 +157,12 @@ export const expDang: TopicDang = {
     {
       name: "Hàm số mũ và hàm số logarit",
       nhanDang: "Bài hỏi tập xác định, chiều biến thiên hoặc tập giá trị của hàm mũ hay logarit.",
-      phuongPhap: R`Hàm $y=a^x$ với $a>1$ xác định trên tập số thực, đồng biến, và có tập giá trị $(0;+\infty)$. Hàm $y=\log_a x$ với $a>1$ xác định khi $x>0$, đồng biến, và có tập giá trị là tập số thực. Đạo hàm của $\ln x$ là $1/x>0$ trên miền xác định, đó là điều kiện đủ của đồng biến. Giới hạn ở hai đầu miền cho tập giá trị.`,
+      phuongPhap: R`Hàm $y=a^x$ với $a>1$ xác định trên tập số thực, đồng biến, và có tập giá trị $(0;+\infty)$. Hàm $y=\log_a x$ với $a>1$ xác định khi $x>0$, đồng biến, và có tập giá trị là tập số thực. Đạo hàm của $\ln x$ là $\frac{1}{x}>0$ trên miền xác định, đó là điều kiện đủ của đồng biến. Giới hạn ở hai đầu miền cho tập giá trị.`,
       viDu: {
         prompt: R`Với $y=\ln x$, tìm tập xác định, chiều biến thiên và tập giá trị.`,
         steps: [
           { claim: R`Tập xác định là $x>0$.`, why: "Đối số của logarit tự nhiên phải dương. Cơ số $e$ đã hợp lệ." },
-          { claim: R`Đạo hàm $y'=1/x>0$ trên $(0;+\infty)$, nên hàm đồng biến.`, why: "Đạo hàm dương trên cả miền là điều kiện đủ của đồng biến ngặt." },
+          { claim: R`Đạo hàm $y'=\frac{1}{x}>0$ trên $(0;+\infty)$, nên hàm đồng biến.`, why: "Đạo hàm dương trên cả miền là điều kiện đủ của đồng biến ngặt." },
           { claim: R`Khi $x$ tiến tới $0$ từ bên phải, $y$ tiến tới âm vô cực. Khi $x$ ra dương vô cực, $y$ ra dương vô cực.`, why: "Hàm liên tục và đồng biến, hai giới hạn này cho tập giá trị là toàn bộ tập số thực." },
         ],
         ket: R`Tập xác định là $(0;+\infty)$, hàm đồng biến, tập giá trị là $\mathbb{R}$.`,
@@ -171,15 +171,15 @@ export const expDang: TopicDang = {
           { expr: "log(E)", expect: "1" },
         ],
       },
-      loi: R`Cho logarit nhận đối số âm, hoặc nói hàm $\\ln x$ nghịch biến.`,
+      loi: R`Cho logarit nhận đối số âm, hoặc nói hàm $\ln x$ nghịch biến.`,
       luyen: {
         kind: "luyen",
         prompt: R`Giải $\ln(x-1)=0$.`,
-        think: R`Viết điều kiện $x-1>0$ trước. Phương trình $\\ln t=0$ tương đương $t=1$ chỉ khi $t>0$.`,
+        think: R`Viết điều kiện $x-1>0$ trước. Phương trình $\ln t=0$ tương đương $t=1$ chỉ khi $t>0$.`,
         answer: R`Nghiệm là $x=2$.`,
         steps: [
           { claim: R`Điều kiện xác định là $x>1$.`, why: "Đối số của logarit phải dương." },
-          { claim: R`Phương trình tương đương $x-1=1$ trên miền đó, nên $x=2$.`, why: R`Vì $\\ln t=0$ khi và chỉ khi $t=1$, với $t>0$.` },
+          { claim: R`Phương trình tương đương $x-1=1$ trên miền đó, nên $x=2$.`, why: R`Vì $\ln t=0$ khi và chỉ khi $t=1$, với $t>0$.` },
           { claim: R`Giá trị $x=2$ thỏa $x>1$.`, why: "Thử lại điều kiện cần. Không có nghiệm bị loại." },
         ],
         checks: [{ expr: "log(2-1)", expect: "0" }],
@@ -221,12 +221,12 @@ export const expDang: TopicDang = {
     {
       name: "Logarit hóa",
       nhanDang: "Phương trình mũ không đưa được về cùng một lũy thừa nguyên quen thuộc.",
-      phuongPhap: R`Nếu hai vế dương và cơ số logarit hợp lệ, lấy logarit hai vế là phép tương đương, vì hàm logarit đơn ánh trên $(0;+\infty)$. Với $a^x=b$ và $b>0$, $a>0$, $a\neq 1$, nghiệm duy nhất là $x=\log_a b$. Phải kiểm tra vế phải dương trước khi lấy logarit.`,
+      phuongPhap: R`Nếu hai vế dương và cơ số logarit hợp lệ, lấy logarit hai vế là phép tương đương, vì hàm logarit nhận mỗi số dương đúng một lần. Với $a^x=b$ và $b>0$, $a>0$, $a\neq 1$, nghiệm duy nhất là $x=\log_a b$. Phải kiểm tra vế phải dương trước khi lấy logarit.`,
       viDu: {
         prompt: R`Giải $2^x=5$.`,
         steps: [
           { claim: R`Cơ số $2>1$ và vế phải $5>0$.`, why: "Hàm mũ luôn dương, vế phải dương nên phương trình có thể có nghiệm. Điều kiện để lấy logarit được thỏa." },
-          { claim: R`Lấy $\log_2$ hai vế được $x=\log_2 5$.`, why: "Hàm logarit đơn ánh trên khoảng dương, nên bước này tương đương với phương trình đã cho." },
+          { claim: R`Lấy $\log_2$ hai vế được $x=\log_2 5$.`, why: "Hàm logarit nhận mỗi số dương đúng một lần, nên bước này tương đương với phương trình đã cho." },
         ],
         ket: R`Nghiệm duy nhất là $x=\log_2 5$.`,
         checks: [{ expr: "2**log(5,2)", expect: "5" }],
@@ -238,7 +238,7 @@ export const expDang: TopicDang = {
         think: "Hai vế dương. Lấy logarit cơ số $3$, rồi tách số mũ $x+1$.",
         answer: R`Đáp số là $x=\log_3 7-1$.`,
         steps: [
-          { claim: R`Cơ số $3>1$ và $7>0$, nên lấy $\log_3$ hai vế được $x+1=\log_3 7$.`, why: "Phép lấy logarit tương đương vì hàm logarit đơn ánh trên khoảng dương." },
+          { claim: R`Cơ số $3>1$ và $7>0$, nên lấy $\log_3$ hai vế được $x+1=\log_3 7$.`, why: "Phép lấy logarit tương đương vì hàm logarit nhận mỗi số dương đúng một lần." },
           { claim: R`Vậy $x=\log_3 7-1$.`, why: "Phương trình bậc nhất theo $x$ không thêm nghiệm và không loại nghiệm." },
         ],
         checks: [{ expr: "3**(log(7,3)-1+1)", expect: "7" }],
@@ -265,7 +265,7 @@ export const expDang: TopicDang = {
       luyen: {
         kind: "luyen",
         prompt: R`Giải $\left(\frac{1}{3}\right)^x<9$.`,
-        think: R`Viết $9$ theo cơ số $\\frac{1}{3}$. Cơ số nhỏ hơn $1$ nên đổi chiều, và dấu nhỏ hơn chặt loại đúng biên.`,
+        think: R`Viết $9$ theo cơ số $\frac{1}{3}$. Cơ số nhỏ hơn $1$ nên đổi chiều, và dấu nhỏ hơn chặt loại đúng biên.`,
         answer: "Nghiệm là $x>-2$.",
         steps: [
           { claim: R`Ta có $9=\left(\frac{1}{3}\right)^{-2}$ và cơ số nằm trong $(0;1)$.`, why: "Hàm nghịch biến, nên bất phương trình của số mũ đổi chiều." },
@@ -286,7 +286,7 @@ export const expDang: TopicDang = {
         steps: [
           { claim: R`Đặt $t=2^x>0$. Phương trình thành $t+\frac{1}{t}=m$.`, why: R`Ẩn phụ dương là điều kiện cần và đủ. Mọi $t>0$ đều đạt được tại $x=\log_2 t$.` },
           { claim: R`Với $t>0$, $(t-1)^2\ge 0$ nên $t+\frac{1}{t}\ge 2$, đẳng thức tại $t=1$.`, why: R`Khai triển $(t-1)^2\ge 0$ rồi chia cho $t>0$. Đây là bất đẳng thức tương đương trên miền $t>0$.` },
-          { claim: R`Vậy $m\ge 2$ là điều kiện cần và đủ. Khi $m=2$ có đúng $x=0$.`, why: "Giá trị nhỏ nhất bằng $2$ đạt tại $t=1$, tức $x=0$. Với $m>2$, phương trình $t+1/t=m$ có nghiệm dương." },
+          { claim: R`Vậy $m\ge 2$ là điều kiện cần và đủ. Khi $m=2$ có đúng $x=0$.`, why: "Giá trị nhỏ nhất bằng $2$ đạt tại $t=1$, tức $x=0$. Với $m>2$, phương trình $t+\frac{1}{t}=m$ có nghiệm dương." },
         ],
         ket: R`Điều kiện cần và đủ là $m\ge 2$.`,
         checks: [
@@ -299,7 +299,7 @@ export const expDang: TopicDang = {
       luyen: {
         kind: "luyen",
         prompt: R`Với $m=\frac{5}{2}$, tìm một nghiệm của $2^x+2^{-x}=m$.`,
-        think: R`Vì $\\frac{5}{2}>2$, phương trình có nghiệm. Thử $x=1$ và nhớ hàm chẵn nên $x=-1$ cũng là nghiệm.`,
+        think: R`Vì $\frac{5}{2}>2$, phương trình có nghiệm. Thử $x=1$ và nhớ hàm chẵn nên $x=-1$ cũng là nghiệm.`,
         answer: R`Một nghiệm là $x=1$. Nghiệm còn lại là $x=-1$.`,
         steps: [
           { claim: R`Vì $\frac{5}{2}>2$, tham số thuộc tập giá trị.`, why: "Điều kiện cần và đủ đã chứng minh ở ví dụ. Bài này rơi vào trường hợp có nghiệm." },
@@ -330,7 +330,7 @@ export const expDang: TopicDang = {
       sao: 3,
       prompt: R`Số liệu giả định. Một quần thể tăng $8\%$ mỗi năm theo $N=10\cdot\left(\frac{27}{25}\right)^t$ nghìn cá thể. Sau $5$ năm số cá thể bằng bao nhiêu nghìn?`,
       think: R`Thay $t=5$. Giữ phân số $\frac{27}{25}$ để có giá trị đúng, không cộng $8\%$ theo lãi đơn.`,
-      answer: R`Đáp số là $\frac{28697814}{1953125}$ nghìn cá thể; quần thể lớn hơn mức ban đầu $10$ nghìn.`,
+      answer: R`Đáp số là $\frac{28697814}{1953125}$ nghìn cá thể, khoảng $14{,}69$ nghìn; quần thể lớn hơn mức ban đầu $10$ nghìn.`,
       steps: [
         { claim: R`Vì $1{,}08=\frac{108}{100}=\frac{27}{25}$, công thức đã viết đúng cơ số.`, why: "Cơ số lớn hơn $1$, nên dãy cá thể tăng. Điều kiện cơ số của hàm mũ được thỏa." },
         { claim: R`Sau $5$ năm, $N=10\left(\frac{27}{25}\right)^5=\frac{28697814}{1953125}$.`, why: "Thay đúng số mũ. Đơn vị là nghìn cá thể." },
@@ -354,10 +354,10 @@ export const expDang: TopicDang = {
       sao: 2,
       prompt: R`Số liệu giả định. Độ pH của một dung dịch là $-\log_{10}(10^{-3})$. Giá trị bằng bao nhiêu, và dung dịch này đứng về phía nào so với mức trung tính $7$?`,
       think: "Logarit cơ số $10$ của một lũy thừa của $10$ cho đúng số mũ. Đối số $10^{-3}$ phải dương.",
-      answer: "Đáp số là $3$ độ pH; dung dịch axit hơn mức trung tính $7$.",
+      answer: R`Đáp số là pH bằng $3$, tức nồng độ ion hiđro bằng $10^{-3}$ mol trên lít; dung dịch axit hơn mức trung tính $7$.`,
       steps: [
         { claim: R`Cơ số $10$ hợp lệ và đối số $10^{-3}>0$, nên $\log_{10}(10^{-3})=-3$.`, why: "Điều kiện xác định của logarit được thỏa. Định nghĩa cho đúng số mũ." },
-        { claim: R`Đối dấu được $3$, và $3<7$.`, why: "Công thức pH có dấu trừ ở ngoài. Giá trị nhỏ hơn $7$ nghĩa là axit hơn nước trung tính." },
+        { claim: R`Vì có dấu trừ ở ngoài, pH bằng $3$, và $3<7$.`, why: "Công thức pH lấy đối của logarit. Giá trị nhỏ hơn $7$ nghĩa là axit hơn nước trung tính." },
       ],
       checks: [{ expr: "-log(10**(-3), 10)", expect: "3" }],
     },
@@ -414,8 +414,8 @@ export const expDang: TopicDang = {
       think: "Kẹp $3$ giữa hai lũy thừa của $2$ mà số mũ là phân số. Vì hàm mũ cơ số $2$ đồng biến, thứ tự ngược lại thành khoảng của logarit.",
       answer: R`Ta có $\frac{3}{2}<\log_2 3<\frac{8}{5}$.`,
       steps: [
-        { claim: R`Ta có $2^3=8<9=3^2$, nên $2^{3/2}<3$.`, why: R`Nâng bậc $2$ bảo toàn thứ tự trên tập số dương. Chia số mũ cho $2$ được lũy thừa bậc $\\frac{3}{2}$.` },
-        { claim: R`Ta có $2^8=256>243=3^5$, nên $2^{8/5}>3$.`, why: "Cùng một lý do với bậc $5$. Hai bất đẳng thức này kẹp $3$ giữa hai lũy thừa của $2$." },
+          { claim: R`Ta có $2^3=8<9=3^2$, nên $2^{\frac{3}{2}}<3$.`, why: R`Nâng bậc $2$ bảo toàn thứ tự trên tập số dương. Chia số mũ cho $2$ được lũy thừa bậc $\frac{3}{2}$.` },
+          { claim: R`Ta có $2^8=256>243=3^5$, nên $2^{\frac{8}{5}}>3$.`, why: "Cùng một lý do với bậc $5$. Hai bất đẳng thức này kẹp $3$ giữa hai lũy thừa của $2$." },
         { claim: R`Vì hàm $\log_2$ đồng biến, $\frac{3}{2}<\log_2 3<\frac{8}{5}$.`, why: "Lấy logarit cơ số lớn hơn $1$ giữ chiều bất đẳng thức. Hai đầu là đúng hai số mũ vừa dùng." },
       ],
       checks: [
