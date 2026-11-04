@@ -36,10 +36,10 @@ const linked = new Set<string>();
 
 for (const book of gradeBooks) {
   assert(book.chapters.length >= 1, `lớp ${book.grade} thiếu chương`);
+  for (const chapter of book.chapters) {
+    assert(chapter.lessons.length >= 2 && chapter.lessons.length <= 4, `lớp ${book.grade} chương ${chapter.title} cần 2 đến 4 bài`);
+  }
   if (book.grade >= 10) {
-    for (const chapter of book.chapters) {
-      assert(chapter.lessons.length >= 2 && chapter.lessons.length <= 4, `lớp ${book.grade} chương ${chapter.title} cần 2 đến 4 bài`);
-    }
     const blob = JSON.stringify(book);
     assert(!blob.includes("góc phần sáu"), `lớp ${book.grade} còn góc phần sáu`);
     assert(!blob.includes("Hệ số hằng"), `lớp ${book.grade} còn hệ số hằng`);
@@ -99,12 +99,10 @@ for (const book of gradeBooks) {
       checkProse(`L${book.grade} luyện`, drill.prompt);
       checkProse(`L${book.grade} đáp`, drill.answer);
       assert(drill.answer.trim().endsWith("."), `${lesson.id} đáp luyện thiếu chấm`);
-      if (book.grade >= 10) {
-        assert(!!drill.why, `${lesson.id} luyện thiếu một câu lý do`);
-        if (drill.why) {
-          checkProse(`L${book.grade} lý do luyện`, drill.why);
-          assert(drill.why.trim().length >= 24 && /[.!?]$/.test(drill.why.trim()), `${lesson.id} lý do luyện cụt`);
-        }
+      assert(!!drill.why, `${lesson.id} luyện thiếu một câu lý do`);
+      if (drill.why) {
+        checkProse(`L${book.grade} lý do luyện`, drill.why);
+        assert(drill.why.trim().length >= 24 && /[.!?]$/.test(drill.why.trim()), `${lesson.id} lý do luyện cụt`);
       }
       assert(drill.checks.length >= 1, `${lesson.id} luyện thiếu check`);
       for (const check of drill.checks) {
@@ -115,6 +113,40 @@ for (const book of gradeBooks) {
 }
 
 for (const card of cards) assert(linked.has(card.id), `chuyên đề ${card.id} chưa được nối từ lớp 10–12`);
+
+const allBlob = JSON.stringify(gradeBooks);
+assert(!allBlob.includes("BPT"), "còn viết tắt BPT");
+assert(!allBlob.includes("góc nhọn phụ"), "còn cụm góc nhọn phụ");
+const checksEarly = collectGradeChecks();
+for (const check of checksEarly) {
+  const expr = check.expr.replace(/\s/g, "");
+  const expect = check.expect.replace(/\s/g, "");
+  assert(expr !== "2+2" && expect !== "2+2", `${check.where} còn check 2+2`);
+  assert(expr !== "5-2" && expr !== "2-1+1", `${check.where} còn check không kiểm đáp số`);
+  if (expr.includes("solve_univariate_inequality")) {
+    assert(expr.includes("relational=False"), `${check.where} thiếu relational=False`);
+  }
+}
+const g6 = JSON.stringify(gradeBooks.find((book) => book.grade === 6));
+const g7 = JSON.stringify(gradeBooks.find((book) => book.grade === 7));
+const g8 = JSON.stringify(gradeBooks.find((book) => book.grade === 8));
+const g9 = JSON.stringify(gradeBooks.find((book) => book.grade === 9));
+const g10 = JSON.stringify(gradeBooks.find((book) => book.grade === 10));
+const g11 = JSON.stringify(gradeBooks.find((book) => book.grade === 11));
+const g12 = JSON.stringify(gradeBooks.find((book) => book.grade === 12));
+assert(g6.includes("nguyên tố") && g6.includes("trực quan"), "lớp 6 thiếu số nguyên tố hoặc hình học trực quan");
+assert(!g6.includes("Tổng các góc"), "lớp 6 còn tổng các góc của tam giác");
+assert(g7.includes("bằng nhau") && g7.includes("đa thức") && g7.includes("tỉ lệ thuận"), "lớp 7 thiếu tam giác bằng nhau, đa thức hoặc đại lượng tỉ lệ");
+assert(!g7.includes("tần suất"), "lớp 7 còn tần suất");
+assert(g8.includes("Đồ thị của hàm số") && g8.includes("Pythagore") && g8.includes("phân thức") && g8.includes("chóp đều"), "lớp 8 thiếu hàm bậc nhất, Pythagore, phân thức hoặc chóp đều");
+assert(!g8.includes("bất phương trình") && !g8.includes("đường tròn"), "lớp 8 còn bất phương trình hoặc đường tròn");
+assert(g9.includes("bất phương trình") && g9.includes("tần số tương đối") && g9.includes("Vi-ét") && g9.includes("đường tròn"), "lớp 9 thiếu bất phương trình, tần số tương đối, Vi-ét hoặc đường tròn");
+assert(g9.includes("\\Delta=0") && g9.includes("\\Delta<0"), "lớp 9 thiếu trường hợp Delta bằng 0 hoặc Delta âm");
+assert(g9.includes("y=ax^2"), "lớp 9 thiếu hàm số y=ax^2");
+assert(g10.includes("vectơ pháp tuyến") && g10.includes("2px"), "lớp 10 thiếu pháp tuyến hoặc parabol y^2=2px");
+assert(g11.includes("nghiệm tổng quát") && g11.includes("ba đường vuông góc") && g11.includes("đáy đa giác"), "lớp 11 thiếu nghiệm tổng quát hoặc hình không gian tổng hợp");
+assert(!g11.includes("Oxyz") && !g11.includes("(1;0;0)"), "lớp 11 còn tọa độ Oxyz");
+assert(g12.includes("giá trị đại diện") && g12.includes("nội suy") && g12.includes("tiệm cận đứng"), "lớp 12 thiếu mẫu ghép nhóm hoặc hai tiệm cận đứng");
 
 if (fails.length) {
   console.error(fails.join("\n"));
