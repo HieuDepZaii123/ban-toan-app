@@ -3,6 +3,7 @@ import { useRoute } from "../lib/useRoute.ts";
 
 const LINKS = [
   { href: "/", id: "math", label: "Toán" },
+  { href: "/kien-thuc", id: "grades", label: "Lớp 1–12" },
   { href: "/khoa-hoc", id: "science", label: "Khoa học" },
   { href: "/xuong-hinh", id: "workshop", label: "Xưởng" },
   { href: "/luyen", id: "drill", label: "Luyện" },
@@ -12,6 +13,7 @@ const LINKS = [
 ] as const;
 
 function currentArea(path: string): string {
+  if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return "grades";
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return "science";
   if (path === "/xuong-hinh") return "workshop";
   if (path === "/luyen") return "drill";

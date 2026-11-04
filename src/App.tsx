@@ -12,6 +12,7 @@ import { useLang } from "./ui/useLang.ts";
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ default: mod.Upgrade })));
 const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
+const GradeDesk = lazy(() => import("./grades/GradeDesk.tsx").then((mod) => ({ default: mod.GradeDesk })));
 const FormulaPage = lazy(() => import("./pages/FormulaPage.tsx").then((mod) => ({ default: mod.FormulaPage })));
 const AssessPage = lazy(() => import("./pages/AssessPage.tsx").then((mod) => ({ default: mod.AssessPage })));
 const WorkshopPage = lazy(() => import("./pages/WorkshopPage.tsx").then((mod) => ({ default: mod.WorkshopPage })));
@@ -64,6 +65,7 @@ function Shell() {
   if (path === "/luyen") return <DrillPage />;
   if (path === "/so-loi") return <MissPage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
+  if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return <GradeDesk />;
   return <HomeDesk />;
 }
 

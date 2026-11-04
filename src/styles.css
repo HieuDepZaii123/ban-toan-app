@@ -641,6 +641,10 @@ html[data-lamp="on"] body::before {
   .clocks { grid-column: 3; grid-row: 1; }
 }
 .study-list { display: grid; gap: 12px; }
+.grade-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; }
+.grade-figure { width: min(100%, 220px); height: auto; margin-top: 8px; }
+.grade-stroke { stroke: var(--ink); stroke-width: 3; }
+.grade-ink { fill: var(--accent); }
 .study-card {
   display: flex;
   justify-content: space-between;
