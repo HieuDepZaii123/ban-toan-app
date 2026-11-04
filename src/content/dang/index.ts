@@ -37,14 +37,17 @@ export function dangFor(id: string): TopicDang | undefined {
   return byId.get(id);
 }
 
+function take(found: Check[], item: { check?: Check; checks?: Check[] }): void {
+  if (item.check) found.push(item.check);
+  if (item.checks) found.push(...item.checks);
+}
+
 export function collectChecks(topic: TopicDang): Check[] {
   const found: Check[] = [];
   for (const dang of topic.dang) {
-    if (dang.viDu.check) found.push(dang.viDu.check);
-    if (dang.luyen.check) found.push(dang.luyen.check);
+    take(found, dang.viDu);
+    take(found, dang.luyen);
   }
-  for (const item of topic.sangTao) {
-    if (item.check) found.push(item.check);
-  }
+  for (const item of topic.sangTao) take(found, item);
   return found;
 }

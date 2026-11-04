@@ -3,6 +3,16 @@ import { dangFor } from "../content/dang/index.ts";
 import type { Drill, ReasonStep, Worked } from "../content/dang/types.ts";
 import { MathText } from "../ui/MathText.tsx";
 
+const KIND_LABEL: Record<Drill["kind"], string> = {
+  luyen: "Tự luyện",
+  "thuc-te": "Thực tế",
+  "tu-ra-de": "Tự ra đề",
+  mo: "Mở",
+  "phan-bien": "Phản biện",
+  doc: "Đọc bảng hoặc đồ thị",
+  "uoc-luong": "Ước lượng",
+};
+
 export function DangHoc({ topicId }: { topicId: string }) {
   const pack = dangFor(topicId);
   if (!pack) return null;
@@ -42,7 +52,7 @@ function WorkedBlock({ item }: { item: Worked }) {
 
 function DrillBlock({ item }: { item: Drill }) {
   const [open, setOpen] = useState(false);
-  const label = item.kind === "tu-ra-de" ? "Tự ra đề" : item.kind === "thuc-te" ? "Thực tế" : "Tự luyện";
+  const label = KIND_LABEL[item.kind];
   return (
     <div className="fitem">
       <p><b>{label}.</b> <MathText text={item.prompt} /></p>

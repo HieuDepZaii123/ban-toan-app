@@ -16,6 +16,7 @@ export type Worked = {
   steps: ReasonStep[];
   ket: string;
   check?: Check;
+  checks?: Check[];
 };
 
 export type Drill = {
@@ -25,7 +26,9 @@ export type Drill = {
   answer: string;
   steps: ReasonStep[];
   check?: Check;
-  kind: "thuc-te" | "tu-ra-de" | "luyen";
+  /** Nhiều đẳng thức độc lập, mỗi đẳng thức phải đúng với đáp số. */
+  checks?: Check[];
+  kind: "thuc-te" | "tu-ra-de" | "luyen" | "mo" | "phan-bien" | "doc" | "uoc-luong";
 };
 
 /** Một dạng bài trong chủ đề. */

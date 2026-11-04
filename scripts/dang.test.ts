@@ -56,6 +56,70 @@ function walk(topic: TopicDang): void {
   }
 }
 
+const RICH = new Set(["derivative", "survey"]);
+const RICH_KINDS = ["thuc-te", "tu-ra-de", "mo", "phan-bien", "doc", "uoc-luong"] as const;
+
+function packOf(item: { check?: { expr: string; expect: string }; checks?: { expr: string; expect: string }[] }) {
+  return [...(item.check ? [item.check] : []), ...(item.checks ?? [])];
+}
+
+function auditRich(topic: TopicDang): void {
+  if (!RICH.has(topic.id)) return;
+  const kinds = new Set(topic.sangTao.map((item) => item.kind));
+  for (const kind of RICH_KINDS) assert(kinds.has(kind), `${topic.id} thiếu loại ${kind}`);
+  const own = topic.sangTao.find((item) => item.kind === "tu-ra-de");
+  assert(!!own && /đổi giả thiết/i.test(own.prompt) && /dự đoán/i.test(own.prompt), `${topic.id} tự ra đề chưa đòi đổi giả thiết rồi dự đoán`);
+  for (const item of topic.sangTao) {
+    if (item.kind === "thuc-te") {
+      assert(/số liệu giả định/i.test(item.prompt), `${topic.id} thực tế thiếu số liệu giả định`);
+      assert(/mét|đồng|độ|dm|sản phẩm|vé|mg|giây|phút/.test(item.answer), `${topic.id} thực tế thiếu đơn vị`);
+    }
+    assert(item.answer.trim().endsWith("."), `${topic.id} đáp sáng tạo thiếu chấm`);
+    checkProse(`${topic.id} đáp sáng tạo`, item.answer);
+    for (const step of item.steps) {
+      checkProse(`${topic.id} bước sáng tạo`, step.claim);
+      checkProse(`${topic.id} lý do sáng tạo`, step.why);
+      assert(step.why.trim().length >= 24 && /[.!?]$/.test(step.why.trim()), `${topic.id} lý do cụt: ${step.why}`);
+    }
+    const pack = packOf(item);
+    assert(pack.length >= 1, `${topic.id} sáng tạo thiếu check`);
+    for (const check of pack) {
+      assert(check.expr.replace(/\s/g, "") !== check.expect.replace(/\s/g, ""), `${topic.id} check không kiểm đáp số`);
+    }
+  }
+  for (const dang of topic.dang) {
+    assert(dang.viDu.ket.trim().endsWith("."), `${topic.id} kết thiếu chấm`);
+    assert(dang.luyen.answer.trim().endsWith("."), `${topic.id} đáp luyện thiếu chấm`);
+    checkProse(`${topic.id} luyện`, dang.luyen.prompt);
+    checkProse(`${topic.id} đáp luyện`, dang.luyen.answer);
+    for (const block of [dang.viDu, dang.luyen]) {
+      const pack = packOf(block);
+      assert(pack.length >= 1, `${topic.id} ${dang.name} thiếu check`);
+      for (const check of pack) {
+        assert(check.expr.replace(/\s/g, "") !== check.expect.replace(/\s/g, ""), `${topic.id} check không kiểm đáp số`);
+      }
+      for (const step of block.steps) {
+        checkProse(`${topic.id} bước`, step.claim);
+        checkProse(`${topic.id} lý do`, step.why);
+        assert(step.why.trim().length >= 24 && /[.!?]$/.test(step.why.trim()), `${topic.id} lý do cụt: ${step.why}`);
+      }
+    }
+  }
+  const blob = JSON.stringify(topic);
+  assert(!blob.includes("e^{-t/"), `${topic.id} còn mũ e^{-t/4}`);
+  assert(!blob.includes("Quy đồng."), `${topic.id} còn câu cụt`);
+  if (topic.id === "derivative") {
+    const tangent = topic.dang.find((dang) => dang.name.startsWith("Tiếp tuyến tại"));
+    assert(!!tangent && tangent.luyen.answer.includes("24x-16"), "bài luyện tiếp tuyến phải là y=24x-16");
+    const signed = collectChecks(topic).some((check) => check.expect.replace(/\s/g, "") === "-15");
+    assert(signed, "phải có check T'(0)=-15");
+  }
+  if (topic.id === "survey") {
+    const tank = topic.sangTao.find((item) => item.answer.includes("128"));
+    assert(!!tank && /lớn nhất/i.test(tank.prompt) && tank.answer.includes("x=2"), "bài thùng phải là tối ưu Vmax=128 tại x=2");
+  }
+}
+
 assert(allDang.length === 14, "đủ 14 chủ đề");
 const ids = new Set(allDang.map((topic) => topic.id));
 for (const card of cards) assert(ids.has(card.id), `thiếu ${card.id}`);
@@ -63,6 +127,7 @@ for (const card of cards) assert(ids.has(card.id), `thiếu ${card.id}`);
 const checks: { where: string; expr: string; expect: string }[] = [];
 for (const topic of allDang) {
   walk(topic);
+  auditRich(topic);
   collectChecks(topic).forEach((check, index) => {
     checks.push({ where: `${topic.id}#${index}`, expr: check.expr, expect: check.expect });
   });
