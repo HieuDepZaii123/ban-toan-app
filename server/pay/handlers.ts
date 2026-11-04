@@ -15,6 +15,7 @@ import {
   chainSpec,
   type CryptoQuote,
 } from "./crypto.ts";
+import { commissionOf, normalizeCode, sameReferrer, secretHash } from "./affiliate.ts";
 import { priceOf, type PayEnv, type PayMethod, type PlanId } from "./env.ts";
 import { createMomoPayment, ipnSignatureOk, readIpn } from "./momo.ts";
 import { licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
@@ -99,6 +100,8 @@ export async function handlePremium(request: Request, env: PayEnv): Promise<Resp
     if (path === "/api/premium/bank" && request.method === "POST") return bankHook(request, env, store);
     if (path === "/api/premium/confirm" && request.method === "POST") return confirm(request, env, store);
     if (path === "/api/premium/crypto" && request.method === "POST") return cryptoRoute(request, env, store);
+    if (path === "/api/premium/affiliate" && request.method === "POST") return affiliateRoute(request, env, store);
+    if (path === "/api/premium/affiliate-admin" && request.method === "POST") return affiliateAdmin(request, env, store);
     return json(404, { error: "not_found" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "error";
@@ -142,6 +145,7 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
   if (!plan || !method) return json(400, { error: "plan" });
   const amount = priceOf(env, plan);
   const now = env.now();
+  const referred = acceptedRef(store, body, email, env.affiliateRateBps);
   const order: OrderRow = {
     orderId: `BT${idPart(8)}`,
     requestId: `RQ${idPart(8)}`,
@@ -167,6 +171,8 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
     cryptoSuffix: null,
     cryptoSource: null,
     cryptoTx: null,
+    refCode: referred.code,
+    refBps: referred.bps,
   };
   if (method === "crypto") {
     if (!isCryptoChain(body.chain)) return json(400, { error: "chain" });
@@ -472,6 +478,77 @@ function oneNotice(value: unknown): BankNotice[] {
 function transferCodeIn(content: string): string | null {
   const match = content.toUpperCase().match(/BT[0-9A-F]{8}/);
   return match ? match[0] : null;
+}
+
+function acceptedRef(store: PayStore, body: Record<string, unknown>, email: string, rateBps: number): { code: string | null; bps: number | null } {
+  const code = normalizeCode(body.ref);
+  if (!code) return { code: null, bps: null };
+  const affiliate = store.affiliateOfCode(code);
+  if (!affiliate) return { code: null, bps: null };
+  if (sameReferrer(secretHash(body.ownerSecret), affiliate.ownerHash, email, affiliate.email)) return { code: null, bps: null };
+  return { code, bps: rateBps };
+}
+
+function optionalEmail(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const email = value.trim().toLowerCase();
+  return EMAIL.test(email) && email.length <= 120 ? email : null;
+}
+
+async function affiliateRoute(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  const body = await readJson(request);
+  const action = body.action;
+  if (action === "open") {
+    const owner = secretHash(body.ownerSecret);
+    if (!owner) return json(400, { error: "secret" });
+    const row = store.ensureAffiliate(owner, optionalEmail(body.email), env.now());
+    return json(200, {
+      code: row.code,
+      rateBps: env.affiliateRateBps,
+      sampleMonth: commissionOf(priceOf(env, "month"), env.affiliateRateBps),
+    });
+  }
+  if (action === "visit") {
+    const code = normalizeCode(body.code);
+    const visitor = secretHash(body.visitorId);
+    if (!code || !visitor) return json(200, { ok: true, recorded: false });
+    const affiliate = store.affiliateOfCode(code);
+    if (!affiliate) return json(200, { ok: true, recorded: false });
+    if (sameReferrer(secretHash(body.ownerSecret), affiliate.ownerHash, "", affiliate.email)) {
+      return json(200, { ok: true, recorded: false });
+    }
+    return json(200, { ok: true, recorded: store.recordVisit(code, visitor, env.now()) });
+  }
+  if (action === "stats") {
+    const owner = secretHash(body.ownerSecret);
+    if (!owner) return json(400, { error: "secret" });
+    const row = store.ensureAffiliate(owner, optionalEmail(body.email), env.now());
+    const affiliate = store.affiliateOfCode(row.code);
+    const stats = store.affiliateStats(row.code, env.now());
+    return json(200, {
+      code: row.code,
+      rateBps: env.affiliateRateBps,
+      sampleMonth: commissionOf(priceOf(env, "month"), env.affiliateRateBps),
+      email: affiliate?.email ?? null,
+      ...stats,
+    });
+  }
+  return json(400, { error: "action" });
+}
+
+async function affiliateAdmin(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
+  const body = await readJson(request);
+  if (body.action === "list") {
+    return json(200, { rateBps: env.affiliateRateBps, affiliates: store.listAffiliates(env.now()) });
+  }
+  if (body.action === "approve") {
+    const code = normalizeCode(body.code);
+    if (!code || !store.affiliateOfCode(code)) return json(404, { error: "not_found" });
+    const result = store.approveAffiliate(code, env.now());
+    return json(200, { ok: true, code, ...result, transferred: false });
+  }
+  return json(400, { error: "action" });
 }
 
 async function readJson(request: Request): Promise<Record<string, unknown>> {
