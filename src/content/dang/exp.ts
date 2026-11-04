@@ -286,7 +286,7 @@ export const expDang: TopicDang = {
         steps: [
           { claim: R`Đặt $t=2^x>0$. Phương trình thành $t+\frac{1}{t}=m$.`, why: R`Ẩn phụ dương là điều kiện cần và đủ. Mọi $t>0$ đều đạt được tại $x=\log_2 t$.` },
           { claim: R`Với $t>0$, $(t-1)^2\ge 0$ nên $t+\frac{1}{t}\ge 2$, đẳng thức tại $t=1$.`, why: R`Khai triển $(t-1)^2\ge 0$ rồi chia cho $t>0$. Đây là bất đẳng thức tương đương trên miền $t>0$.` },
-          { claim: R`Vậy $m\ge 2$ là điều kiện cần và đủ. Khi $m=2$ có đúng $x=0$.`, why: "Giá trị nhỏ nhất bằng $2$ đạt tại $t=1$, tức $x=0$. Với $m>2$, phương trình $t+\frac{1}{t}=m$ có nghiệm dương." },
+          { claim: R`Vậy $m\ge 2$ là điều kiện cần và đủ. Khi $m=2$ có đúng $x=0$.`, why: R`Giá trị nhỏ nhất bằng $2$ đạt tại $t=1$, tức $x=0$. Với $m>2$, phương trình $t+\frac{1}{t}=m$ có nghiệm dương.` },
         ],
         ket: R`Điều kiện cần và đủ là $m\ge 2$.`,
         checks: [

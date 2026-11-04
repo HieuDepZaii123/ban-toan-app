@@ -9,7 +9,7 @@ export const probabilityDang: TopicDang = {
     {
       name: "Xác suất cổ điển và biến cố đối",
       nhanDang: "Không gian mẫu hữu hạn, các kết quả đồng khả năng, hoặc câu hỏi dạng ít nhất một.",
-      phuongPhap: R`Nếu các kết quả đồng khả năng thì $P(A)=\frac{n(A)}{n(\Omega)}$. Tỉ số đếm chỉ là xác suất khi giả thiết đồng khả năng đã có. Với biến cố đối, $P(\overline A)=1-P(A)$ là hệ thức tương đương. Câu ít nhất một thường đổi sang biến cố không có kết quả nào.`,
+      phuongPhap: R`Nếu các kết quả đồng khả năng thì $P(A)=\frac{n(A)}{n(\Omega)}$. Tỉ số đếm chỉ là xác suất khi giả thiết đồng khả năng đã có. Công thức biến cố đối là $P(\overline A)=1-P(A)$. Câu ít nhất một thường đổi sang biến cố không có kết quả nào.`,
       viDu: {
         prompt: "Gieo hai xúc xắc cân đối và phân biệt. Xác suất tổng bằng $7$ bằng bao nhiêu?",
         steps: [
@@ -29,7 +29,7 @@ export const probabilityDang: TopicDang = {
         steps: [
           { claim: R`Có $2^3=8$ kết quả đồng khả năng.`, why: "Mỗi đồng xu hai mặt và các lần tung độc lập." },
           { claim: R`Cả ba sấp là một kết quả, xác suất $\frac{1}{8}$.`, why: "Đây là biến cố đối của ít nhất một mặt ngửa." },
-          { claim: R`Xác suất cần tìm là $1-\frac{1}{8}=\frac{7}{8}$.`, why: "Hệ thức biến cố đối. Kết quả không âm và không vượt quá $1$." },
+          { claim: R`Xác suất cần tìm là $1-\frac{1}{8}=\frac{7}{8}$.`, why: "Công thức biến cố đối. Kết quả không âm và không vượt quá $1$." },
         ],
         checks: [{ expr: "1-Rational(1,8)", expect: "Rational(7,8)" }],
       },
@@ -161,7 +161,7 @@ export const probabilityDang: TopicDang = {
         answer: R`Đáp số là $\frac{2}{3}$. Sau khi thấy ngửa, khả năng gặp đồng hai mặt tăng từ $\frac{1}{2}$ lên $\frac{2}{3}$.`,
         steps: [
           { claim: R`Xác suất ra ngửa bằng $\frac{1}{2}\cdot\frac{1}{2}+\frac{1}{2}\cdot 1=\frac{3}{4}$.`, why: "Xác suất toàn phần của điều đã quan sát." },
-          { claim: R`Nhánh đồng hai mặt và ra ngửa có xác suất $\frac{1}{2}$. Thương bằng $\frac{1/2}{3/4}=\frac{2}{3}$.`, why: "Bayes. Diễn giải: quan sát ngửa làm tăng xác suất của đồng hai mặt so với xác suất ban đầu $\\frac{1}{2}$." },
+          { claim: R`Nhánh đồng hai mặt và ra ngửa có xác suất $\frac{1}{2}$. Thương bằng $\frac{\frac{1}{2}}{\frac{3}{4}}=\frac{2}{3}$.`, why: "Bayes. Diễn giải: quan sát ngửa làm tăng xác suất của đồng hai mặt so với xác suất ban đầu $\\frac{1}{2}$." },
         ],
         checks: [{ expr: "(Rational(1,2)*1)/(Rational(1,2)*Rational(1,2)+Rational(1,2)*1)", expect: "Rational(2,3)" }],
       },
@@ -199,16 +199,25 @@ export const probabilityDang: TopicDang = {
     {
       name: "Thống kê ghép nhóm",
       nhanDang: "Bảng tần số theo lớp, hỏi số trung bình hoặc lớp có tần số lớn nhất.",
-      phuongPhap: R`Với các lớp có điểm giữa $x_i$ và tần số $n_i$, số trung bình là $\frac{\sum n_i x_i}{\sum n_i}$. Điểm giữa của một lớp là trung bình hai mút. Lớp có tần số lớn nhất là lớp yếu vị. Không được lấy trung bình các điểm giữa mà bỏ tần số, trừ khi mọi lớp có cùng tần số.`,
+      phuongPhap: R`Với các lớp có điểm giữa $x_i$ và tần số $n_i$, số trung bình là $\frac{\sum n_i x_i}{\sum n_i}$. Điểm giữa của một lớp là trung bình hai mút. Nhóm chứa mốt là nhóm có tần số lớn nhất. Trung vị ghép nhóm nằm ở nhóm mà tần số tích lũy lần đầu đạt ít nhất $\frac{n}{2}$, rồi nội suy. Tứ phân vị làm tương tự với $\frac{n}{4}$ và $\frac{3n}{4}$. Phương sai mẫu ghép nhóm trong chương trình là $\frac{1}{n}\sum n_i(x_i-\bar x)^2$, chia cho $n$ chứ không chia cho $n-1$. Không được lấy trung bình các điểm giữa mà bỏ tần số, trừ khi mọi nhóm có cùng tần số.`,
       viDu: {
         prompt: R`Ba lớp $[0;10)$, $[10;20)$, $[20;30)$ có tần số $2$, $3$ và $5$. Số trung bình bằng bao nhiêu?`,
         steps: [
           { claim: R`Điểm giữa là $5$, $15$ và $25$. Tổng tần số bằng $10$.`, why: "Điểm giữa bằng trung bình hai đầu lớp. Mẫu số của số trung bình là tổng tần số." },
           { claim: R`Tử bằng $2\cdot 5+3\cdot 15+5\cdot 25=10+45+125=180$.`, why: "Mỗi điểm giữa được nhân với tần số của đúng lớp ấy. Bỏ tần số sẽ coi ba lớp ngang nhau." },
-          { claim: R`Số trung bình bằng $\frac{180}{10}=18$.`, why: "Chia tổng có trọng số cho cỡ mẫu. Lớp yếu vị là $[20;30)$ vì tần số $5$ lớn nhất." },
+          { claim: R`Số trung bình bằng $\frac{180}{10}=18$. Nhóm chứa mốt là $[20;30)$.`, why: "Chia tổng có trọng số cho cỡ mẫu. Tần số $5$ lớn nhất nên mốt nằm trong nhóm cuối." },
+          { claim: R`Vị trí trung vị là $\frac{10}{2}=5$. Tần số tích lũy $2$ rồi $5$, nên trung vị ở nhóm $[10;20)$ và bằng $10+\frac{5-2}{3}\cdot 10=20$.`, why: "Nhóm trung vị là nhóm mà tích lũy lần đầu đạt ít nhất một nửa cỡ mẫu. Công thức nội suy dùng độ rộng nhóm $10$." },
+          { claim: R`Tứ phân vị dưới có vị trí $2{,}5$, bằng $10+\frac{2{,}5-2}{3}\cdot 10=\frac{35}{3}$. Tứ phân vị trên có vị trí $7{,}5$, bằng $20+\frac{7{,}5-5}{5}\cdot 10=25$.`, why: "Vị trí $\\frac{n}{4}$ rơi vào nhóm thứ hai, vị trí $\\frac{3n}{4}$ rơi vào nhóm thứ ba." },
+          { claim: R`Phương sai mẫu bằng $\frac{1}{10}\bigl(2\cdot 13^2+3\cdot 3^2+5\cdot 7^2\bigr)=61$.`, why: "Độ lệch so với trung bình $18$ là $-13$, $-3$ và $7$. Chia cho $n=10$ theo công thức phương sai mẫu ghép nhóm." },
         ],
-        ket: "Số trung bình bằng $18$. Lớp yếu vị là $[20;30)$.",
-        checks: [{ expr: "(2*5+3*15+5*25)/10", expect: "18" }],
+        ket: R`Số trung bình bằng $18$, nhóm chứa mốt là $[20;30)$, trung vị bằng $20$, tứ phân vị là $\frac{35}{3}$ và $25$, phương sai mẫu bằng $61$.`,
+        checks: [
+          { expr: "(2*5+3*15+5*25)/10", expect: "18" },
+          { expr: "10+(5-2)/3*10", expect: "20" },
+          { expr: "10+(Rational(5,2)-2)/3*10", expect: "Rational(35,3)" },
+          { expr: "20+(Rational(15,2)-5)/5*10", expect: "25" },
+          { expr: "(2*13**2+3*3**2+5*7**2)/10", expect: "61" },
+        ],
       },
       loi: "Lấy trung bình của $5$, $15$ và $25$ thành $15$, bỏ tần số.",
       luyen: {
@@ -240,38 +249,51 @@ export const probabilityDang: TopicDang = {
     {
       kind: "thuc-te",
       sao: 2,
-      prompt: R`Số liệu giả định. Một lô có $20$ bóng đèn, trong đó $3$ bóng hỏng. Lấy ngẫu nhiên $1$ bóng. Xác suất lấy được bóng tốt bằng bao nhiêu?`,
-      think: "Biến cố đối của lấy bóng hỏng. Mỗi bóng trong lô đồng khả năng.",
-      answer: R`Đáp số là $\frac{17}{20}$. Trong $20$ bóng có $17$ bóng tốt.`,
+      prompt: R`Số liệu giả định. Một lô có $20$ bóng đèn, trong đó $3$ bóng hỏng. Lấy ngẫu nhiên $3$ bóng. Xác suất có ít nhất một bóng hỏng bằng bao nhiêu?`,
+      think: "Biến cố đối là cả ba bóng đều tốt. Mẫu là $C_{20}^{3}$, tử của biến cố đối là $C_{17}^{3}$. Dùng công thức biến cố đối.",
+      answer: R`Đáp số là $\frac{23}{57}$. Khi rút $3$ bóng, khả năng dính ít nhất một bóng hỏng là $23$ trên $57$, lớn hơn $\frac{1}{3}$.`,
       steps: [
-        { claim: R`Số bóng tốt là $20-3=17$.`, why: "Phần bù của số bóng hỏng trong lô." },
-        { claim: R`Xác suất bằng $\frac{17}{20}$.`, why: "Mỗi bóng đồng khả năng được rút. Đơn vị đếm là bóng." },
+        { claim: R`Có $17$ bóng tốt. Số cách lấy $3$ bóng tốt là $C_{17}^{3}=680$, số cách lấy $3$ bóng bất kỳ là $C_{20}^{3}=1140$.`, why: "Lấy đồng thời nên dùng tổ hợp, không kể thứ tự." },
+        { claim: R`Xác suất cả ba tốt bằng $\frac{680}{1140}=\frac{34}{57}$.`, why: "Các bộ ba đồng khả năng. Đây là biến cố đối của ít nhất một bóng hỏng." },
+        { claim: R`Công thức biến cố đối cho $1-\frac{34}{57}=\frac{23}{57}$.`, why: "Phần bù mới là câu hỏi. Diễn giải: hơn một phần ba số lần rút ba bóng sẽ có ít nhất một bóng hỏng." },
       ],
-      checks: [{ expr: "Rational(20-3,20)", expect: "Rational(17,20)" }],
+      checks: [
+        { expr: "binomial(17,3)", expect: "680" },
+        { expr: "binomial(20,3)", expect: "1140" },
+        { expr: "1-binomial(17,3)/binomial(20,3)", expect: "Rational(23,57)" },
+      ],
     },
     {
       kind: "thuc-te",
       sao: 2,
-      prompt: "Số liệu giả định. Một học sinh đoán ngẫu nhiên một câu trắc nghiệm bốn lựa chọn, chỉ một đáp án đúng. Xác suất đoán sai trong một lần bằng bao nhiêu?",
-      think: "Bốn lựa chọn đồng khả năng. Đoán sai là biến cố đối của đoán đúng.",
-      answer: R`Đáp số là $\frac{3}{4}$. Mỗi lần đoán, ba lựa chọn trong bốn lựa chọn là sai.`,
+      prompt: "Số liệu giả định. Một học sinh đoán ngẫu nhiên hai câu trắc nghiệm độc lập, mỗi câu bốn lựa chọn và chỉ một đáp án đúng. Xác suất sai cả hai câu, và xác suất đúng ít nhất một câu, bằng bao nhiêu?",
+      think: "Mỗi câu sai với xác suất $\\frac{3}{4}$. Hai câu độc lập nên nhân. Ít nhất một câu đúng là biến cố đối của sai cả hai, dùng công thức biến cố đối.",
+      answer: R`Mỗi lần làm hai câu, xác suất sai cả hai là $\frac{9}{16}$ và xác suất đúng ít nhất một câu là $\frac{7}{16}$.`,
       steps: [
-        { claim: R`Xác suất đúng trong một lần là $\frac{1}{4}$.`, why: "Một lựa chọn đúng trong bốn lựa chọn đồng khả năng." },
-        { claim: R`Xác suất sai là $1-\frac{1}{4}=\frac{3}{4}$.`, why: "Biến cố đối. Kết quả tính trên một lần đoán." },
+        { claim: R`Xác suất sai một câu là $\frac{3}{4}$.`, why: "Ba lựa chọn sai trong bốn lựa chọn đồng khả năng." },
+        { claim: R`Vì hai câu độc lập, xác suất sai cả hai là $\frac{3}{4}\cdot\frac{3}{4}=\frac{9}{16}$.`, why: "Quy tắc nhân cho biến cố độc lập." },
+        { claim: R`Công thức biến cố đối cho xác suất đúng ít nhất một câu là $1-\frac{9}{16}=\frac{7}{16}$.`, why: "Đối của sai cả hai chính là có ít nhất một câu đúng. Diễn giải: chưa đến một nửa số lần làm hai câu sẽ có ít nhất một câu đúng." },
       ],
-      checks: [{ expr: "1-Rational(1,4)", expect: "Rational(3,4)" }],
+      checks: [
+        { expr: "Rational(3,4)*Rational(3,4)", expect: "Rational(9,16)" },
+        { expr: "1-Rational(9,16)", expect: "Rational(7,16)" },
+      ],
     },
     {
       kind: "thuc-te",
       sao: 2,
-      prompt: R`Số liệu giả định. Gieo một xúc xắc cân đối hai lần độc lập. Xác suất cả hai lần đều ra mặt chẵn bằng bao nhiêu?`,
-      think: "Hai lần độc lập. Xác suất một lần ra chẵn là $\\frac{1}{2}$.",
-      answer: R`Đáp số là $\frac{1}{4}$. Cứ bốn lần gieo cặp thì khoảng một lần cả hai mặt đều chẵn.`,
+      prompt: R`Số liệu giả định. Gieo một xúc xắc cân đối hai lần độc lập. Tính xác suất cả hai lần chẵn, rồi xác suất có ít nhất một lần chẵn.`,
+      think: "Một lần chẵn có xác suất $\\frac{1}{2}$, một lần lẻ cũng vậy. Cả hai chẵn là tích vì độc lập. Ít nhất một lần chẵn là đối của cả hai lẻ, dùng công thức biến cố đối.",
+      answer: R`Cả hai lần chẵn với xác suất $\frac{1}{4}$. Có ít nhất một lần chẵn với xác suất $\frac{3}{4}$, nghĩa là đa số các lần gieo cặp có mặt chẵn.`,
       steps: [
-        { claim: R`Một lần ra chẵn có xác suất $\frac{1}{2}$.`, why: "Ba mặt chẵn trong sáu mặt." },
-        { claim: R`Vì độc lập, xác suất cả hai lần là $\frac{1}{4}$.`, why: "Quy tắc nhân. Diễn giải trên số lần gieo cặp." },
+        { claim: R`Xác suất một lần chẵn và xác suất một lần lẻ đều bằng $\frac{1}{2}$.`, why: "Ba mặt chẵn và ba mặt lẻ trong sáu mặt." },
+        { claim: R`Vì độc lập, xác suất cả hai chẵn là $\frac{1}{4}$ và xác suất cả hai lẻ cũng là $\frac{1}{4}$.`, why: "Quy tắc nhân áp dụng cho từng cặp biến cố độc lập." },
+        { claim: R`Công thức biến cố đối cho xác suất có ít nhất một lần chẵn là $1-\frac{1}{4}=\frac{3}{4}$.`, why: "Đối của cả hai lẻ chính là có ít nhất một mặt chẵn. Diễn giải: ba phần tư số lần gieo cặp có mặt chẵn." },
       ],
-      checks: [{ expr: "Rational(1,2)*Rational(1,2)", expect: "Rational(1,4)" }],
+      checks: [
+        { expr: "Rational(1,2)*Rational(1,2)", expect: "Rational(1,4)" },
+        { expr: "1-Rational(1,4)", expect: "Rational(3,4)" },
+      ],
     },
     {
       kind: "mo",
@@ -288,11 +310,11 @@ export const probabilityDang: TopicDang = {
     {
       kind: "phan-bien",
       sao: 3,
-      prompt: "Bạn A nói xác suất tổng hai xúc xắc phân biệt bằng $7$ là $\\frac{1}{7}$, vì có bảy tổng có thể từ $1$ đến $7$ và chỉ một tổng đúng. Hãy phản biện.",
+      prompt: "Bạn A nói xác suất tổng hai xúc xắc phân biệt bằng $7$ là $\\frac{1}{11}$, vì có mười một tổng có thể từ $2$ đến $12$ và chúng đồng khả năng. Hãy phản biện.",
       think: "Các tổng không đồng khả năng. Phải đếm số cặp, không đếm số giá trị của tổng.",
       answer: R`Lập luận chưa đúng. Có $6$ cặp tổng $7$ trong $36$ cặp đồng khả năng, nên xác suất bằng $\frac{1}{6}$.`,
       steps: [
-        { claim: R`Các giá trị tổng từ $2$ đến $12$ không đồng khả năng.`, why: "Tổng $7$ có nhiều cặp hơn tổng $2$. Bạn A đã dùng công thức cổ điển khi giả thiết đồng khả năng không đúng." },
+          { claim: R`Tổng hai xúc xắc chạy từ $2$ đến $12$, không có tổng $1$, và mười một giá trị này không đồng khả năng.`, why: "Tiền đề của bạn A đúng về miền tổng, nhưng sai khi coi các tổng đồng khả năng. Tổng $7$ có sáu cặp, tổng $2$ chỉ có một cặp." },
         { claim: R`Đếm trên $36$ cặp được $\frac{6}{36}=\frac{1}{6}$.`, why: "Không gian mẫu đúng là các cặp mặt, không phải các giá trị của tổng." },
       ],
       checks: [{ expr: "Rational(6,36)", expect: "Rational(1,6)" }],
@@ -300,12 +322,12 @@ export const probabilityDang: TopicDang = {
     {
       kind: "doc",
       sao: 2,
-      prompt: R`Bảng ghép nhóm ghi lớp $[0;10)$ tần số $2$, lớp $[10;20)$ tần số $3$, lớp $[20;30)$ tần số $5$. Hãy đọc số trung bình và lớp yếu vị.`,
-      think: "Lấy điểm giữa $5$, $15$, $25$. Nhân với tần số trên cùng hàng rồi chia cho tổng tần số. Lớp yếu vị là lớp có tần số lớn nhất.",
-      answer: "Số trung bình bằng $18$. Lớp yếu vị là $[20;30)$.",
+      prompt: R`Bảng ghép nhóm ghi nhóm $[0;10)$ tần số $2$, nhóm $[10;20)$ tần số $3$, nhóm $[20;30)$ tần số $5$. Hãy đọc số trung bình và nhóm chứa mốt.`,
+      think: "Lấy điểm giữa $5$, $15$, $25$. Nhân với tần số trên cùng hàng rồi chia cho tổng tần số. Nhóm chứa mốt là nhóm có tần số lớn nhất.",
+      answer: "Số trung bình bằng $18$. Nhóm chứa mốt là $[20;30)$.",
       steps: [
         { claim: R`Tử bằng $2\cdot 5+3\cdot 15+5\cdot 25=180$, mẫu bằng $10$.`, why: "Đọc tần số từng hàng nhân với điểm giữa của hàng đó." },
-        { claim: R`Thương bằng $18$. Tần số lớn nhất là $5$, thuộc lớp $[20;30)$.`, why: "Số trung bình là thương này. Lớp yếu vị đọc ở cột tần số, không phải ở cột điểm giữa." },
+        { claim: R`Thương bằng $18$. Tần số lớn nhất là $5$, thuộc nhóm $[20;30)$.`, why: "Số trung bình là thương này. Nhóm chứa mốt đọc ở cột tần số, không phải ở cột điểm giữa." },
       ],
       checks: [{ expr: "(2*5+3*15+5*25)/(2+3+5)", expect: "18" }],
     },

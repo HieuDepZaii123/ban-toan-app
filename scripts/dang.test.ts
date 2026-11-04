@@ -58,7 +58,7 @@ function walk(topic: TopicDang): void {
   }
 }
 
-const RICH = new Set(["derivative", "survey", "integral", "exp", "analytic", "probability"]);
+const RICH = new Set(["derivative", "survey", "integral", "exp", "analytic", "probability", "trig", "sequence", "limit"]);
 const RICH_KINDS = ["thuc-te", "tu-ra-de", "mo", "phan-bien", "doc", "uoc-luong"] as const;
 
 function packOf(item: { check?: { expr: string; expect: string }; checks?: { expr: string; expect: string }[] }) {
@@ -74,7 +74,7 @@ function auditRich(topic: TopicDang): void {
   for (const item of topic.sangTao) {
     if (item.kind === "thuc-te") {
       assert(/số liệu giả định/i.test(item.prompt), `${topic.id} thực tế thiếu số liệu giả định`);
-      assert(/mét|đồng|độ|dm|sản phẩm|vé|mg|giây|phút|lít|gam|cá thể|người|lần|bóng/.test(item.answer), `${topic.id} thực tế thiếu đơn vị`);
+      assert(/mét|đồng|độ|dm|sản phẩm|vé|mg|giây|phút|lít|gam|cá thể|người|lần|bóng|ghế|vòng|đơn vị/.test(item.answer), `${topic.id} thực tế thiếu đơn vị`);
       assert(item.sao !== undefined && item.sao >= 1 && item.sao <= 5, `${topic.id} sáng tạo thiếu mức sao`);
     }
     assert(item.answer.trim().endsWith("."), `${topic.id} đáp sáng tạo thiếu chấm`);
@@ -133,6 +133,20 @@ function auditRich(topic: TopicDang): void {
     const mono = topic.dang.find((dang) => dang.name.startsWith("Tính đơn điệu"));
     assert(!!mono && mono.luyen.prompt.includes("khoảng đơn điệu"), "bài luyện đơn điệu phải hỏi các khoảng");
     assert(!!mono && mono.luyen.answer.includes("(-\\infty;-1)") && mono.luyen.answer.includes("(-1;1)"), "khoảng đơn điệu chưa đúng");
+  }
+  if (topic.id === "trig") {
+    assert(blob.includes("góc phần tư"), "thiếu góc phần tư");
+    assert(!blob.includes("quý"), "còn chữ quý");
+    assert(blob.includes("5\\\\sin"), "thiếu dạng 5 sin(x+phi)");
+  }
+  if (topic.id === "sequence") {
+    assert(!blob.includes("chuỗi"), "còn chữ chuỗi");
+    assert(blob.includes("bị chặn"), "thiếu dãy bị chặn");
+  }
+  if (topic.id === "limit") {
+    assert(!blob.includes("sin 3") && !blob.includes("sin3"), "còn giới hạn sin 3x/x");
+    const used = collectChecks(topic).filter((check) => check.expr.includes("limit("));
+    assert(used.length >= 8, "chưa đủ phép kiểm bằng sympy limit");
   }
 }
 

@@ -22,7 +22,7 @@ export const integralDang: TopicDang = {
           { expr: "simplify(diff((x**4+exp(x)+5)-(x**4+exp(x)), x))", expect: "0" },
         ],
       },
-      loi: "Quên hằng số, hoặc viết nguyên hàm của $e^x$ thành $\frac{e^x}{x}$.",
+      loi: R`Quên hằng số, hoặc viết nguyên hàm của $e^x$ thành $\frac{e^x}{x}$.`,
       luyen: {
         kind: "luyen",
         prompt: R`Tính $\int_1^e \frac{1}{x}\,dx$.`,
@@ -90,7 +90,7 @@ export const integralDang: TopicDang = {
         think: "Thừa số $2x$ là đạo hàm của $x^2+1$. Đặt $u=x^2+1$, tính nguyên hàm theo $u$, rồi trở lại $x$.",
         answer: R`Một nguyên hàm là $\frac{(x^2+1)^4}{4}$.`,
         steps: [
-          { claim: R`Đặt $u=x^2+1$ thì $du=2x\,dx$, nên nguyên hàm là $\frac{u^4}{4}$.`, why: "Nguyên hàm của $u^3$ là $\frac{u^4}{4}$. Bước này còn ở biến mới." },
+          { claim: R`Đặt $u=x^2+1$ thì $du=2x\,dx$, nên nguyên hàm là $\frac{u^4}{4}$.`, why: R`Nguyên hàm của $u^3$ là $\frac{u^4}{4}$. Bước này còn ở biến mới.` },
           { claim: R`Trở lại $x$ được $\frac{(x^2+1)^4}{4}$.`, why: "Đề hỏi nguyên hàm theo $x$. Đạo hàm của kết quả này trả lại hàm ban đầu." },
         ],
         checks: [{ expr: "simplify(diff((x**2+1)**4/4, x)-2*x*(x**2+1)**3)", expect: "0" }],
@@ -131,7 +131,7 @@ export const integralDang: TopicDang = {
         steps: [
           { claim: R`Biểu thức $x$ bằng $0$ tại $x=0$, và $0$ nằm trong $(-1;2)$.`, why: "Điểm này là chỗ phải tách. Hai đầu mút không thêm một điểm tách mới." },
           { claim: R`Trên $[-1;0]$ thì $|x|=-x$, trên $[0;2]$ thì $|x|=x$.`, why: "Dấu của $x$ đã xét đủ hai phía. Đây là điều kiện đủ để bỏ trị tuyệt đối trên từng đoạn con." },
-          { claim: R`Ta có $\int_{-1}^{0}(-x)\,dx+\int_0^{2}x\,dx=\frac{1}{2}+2=\frac{5}{2}$.`, why: "Cộng hai tích phân đa thức liên tục. Nguyên hàm của $-x$ là $-\frac{x^2}{2}$, của $x$ là $\frac{x^2}{2}$." },
+          { claim: R`Ta có $\int_{-1}^{0}(-x)\,dx+\int_0^{2}x\,dx=\frac{1}{2}+2=\frac{5}{2}$.`, why: R`Cộng hai tích phân đa thức liên tục. Nguyên hàm của $-x$ là $-\frac{x^2}{2}$, của $x$ là $\frac{x^2}{2}$.` },
         ],
         ket: R`Tích phân bằng $\frac{5}{2}$.`,
         checks: [{ expr: "integrate(Abs(x), (x, -1, 2))", expect: "Rational(5,2)" }],
@@ -251,7 +251,7 @@ export const integralDang: TopicDang = {
         prompt: R`Miền dưới $y=x$ trên $[0;1]$ quay quanh trục hoành. Thể tích khối bằng bao nhiêu?`,
         steps: [
           { claim: R`Hàm $y=x$ liên tục và không âm trên $[0;1]$.`, why: "Điều kiện đủ của công thức đĩa tròn được thỏa. Bán kính thiết diện tại hoành độ $x$ bằng $x$." },
-          { claim: R`Thể tích là $\pi\int_0^1 x^2\,dx=\pi\left[\frac{x^3}{3}\right]_0^1=\frac{\pi}{3}$.`, why: "Bình phương bán kính là $x^2$. Nguyên hàm của $x^2$ là $\frac{x^3}{3}$." },
+          { claim: R`Thể tích là $\pi\int_0^1 x^2\,dx=\pi\left[\frac{x^3}{3}\right]_0^1=\frac{\pi}{3}$.`, why: R`Bình phương bán kính là $x^2$. Nguyên hàm của $x^2$ là $\frac{x^3}{3}$.` },
         ],
         ket: R`Thể tích bằng $\frac{\pi}{3}$.`,
         checks: [{ expr: "pi*integrate(x**2, (x, 0, 1))", expect: "pi/3" }],
@@ -264,7 +264,7 @@ export const integralDang: TopicDang = {
         answer: R`Đáp số là $\frac{\pi}{2}$.`,
         steps: [
           { claim: R`Trên $[0;1]$, $\sqrt{x}$ liên tục và không âm, bình phương bằng $x$.`, why: "Căn xác định trên đoạn này. Bình phương triệt căn." },
-          { claim: R`Thể tích là $\pi\int_0^1 x\,dx=\pi\cdot\frac{1}{2}=\frac{\pi}{2}$.`, why: "Nguyên hàm của $x$ là $\frac{x^2}{2}$, hiệu hai cận bằng $\frac{1}{2}$." },
+          { claim: R`Thể tích là $\pi\int_0^1 x\,dx=\pi\cdot\frac{1}{2}=\frac{\pi}{2}$.`, why: R`Nguyên hàm của $x$ là $\frac{x^2}{2}$, hiệu hai cận bằng $\frac{1}{2}$.` },
         ],
         checks: [{ expr: "pi*integrate(x, (x, 0, 1))", expect: "pi/2" }],
       },
@@ -298,14 +298,14 @@ export const integralDang: TopicDang = {
     {
       kind: "thuc-te",
       sao: 2,
-      prompt: R`Số liệu giả định. Nước chảy vào bể với lưu lượng $2$ lít mỗi phút, đều trong $15$ phút. Thể tích nước vào bể bằng bao nhiêu?`,
-      think: "Lưu lượng không đổi và dương. Thể tích là tích phân của hằng số, tức là tích lưu lượng với thời gian.",
-      answer: "Đáp số là $30$ lít sau $15$ phút; bể nhận thêm đúng lượng nước đó.",
+      prompt: R`Số liệu giả định. Nước chảy vào bể với lưu lượng $r(t)=4-t$ lít mỗi phút, $t$ tính bằng phút trên đoạn $[0;4]$. Thể tích nước vào bể bằng bao nhiêu?`,
+      think: "Lưu lượng giảm theo thời gian. Phải xét dấu trên cả đoạn trước khi lấy tích phân, vì thể tích chỉ cộng phần chảy vào.",
+      answer: "Đáp số là $8$ lít; lưu lượng giảm từ $4$ lít mỗi phút xuống $0$, và bể nhận thêm $8$ lít.",
       steps: [
-        { claim: R`Lưu lượng $r(t)=2$ dương trên $[0;15]$.`, why: "Không có chiều chảy ngược, nên thể tích bằng tích phân lưu lượng." },
-        { claim: R`Ta có $\int_0^{15} 2\,dt=30$.`, why: "Nguyên hàm của hằng số $2$ là $2t$. Đơn vị là lít." },
+        { claim: R`Trên $[0;4]$, $r(t)=4-t\ge 0$, và bằng $0$ chỉ tại $t=4$.`, why: "Lưu lượng không đổi chiều. Thể tích bằng tích phân của $r$, không cần trị tuyệt đối." },
+        { claim: R`Một nguyên hàm là $4t-\frac{t^2}{2}$. Tại $4$ được $16-8=8$, tại $0$ được $0$.`, why: "Newton–Leibniz. Đơn vị của tích phân là lít." },
       ],
-      checks: [{ expr: "integrate(2, (t, 0, 15))", expect: "30" }],
+      checks: [{ expr: "integrate(4-t, (t, 0, 4))", expect: "8" }],
     },
     {
       kind: "thuc-te",
@@ -373,7 +373,7 @@ export const integralDang: TopicDang = {
       answer: R`Ước lượng là đoạn $\left[\frac{1}{4};\frac{1}{2}\right]$. Giá trị đúng bằng $\frac{1}{3}$.`,
       steps: [
         { claim: R`Vì $x^3\le x^2\le x$ trên $[0;1]$, ta có $\int_0^1 x^3\,dx\le \int_0^1 x^2\,dx\le \int_0^1 x\,dx$.`, why: "Cả ba hàm liên tục. Tích phân trên một đoạn bảo toàn bất đẳng thức." },
-        { claim: R`Hai đầu là $\frac{1}{4}$ và $\frac{1}{2}$.`, why: "Nguyên hàm của $x^3$ là $\frac{x^4}{4}$, của $x$ là $\frac{x^2}{2}$, tính từ $0$ đến $1$." },
+        { claim: R`Hai đầu là $\frac{1}{4}$ và $\frac{1}{2}$.`, why: R`Nguyên hàm của $x^3$ là $\frac{x^4}{4}$, của $x$ là $\frac{x^2}{2}$, tính từ $0$ đến $1$.` },
         { claim: R`Giá trị đúng là $\frac{1}{3}$, nằm trong đoạn ước lượng.`, why: "Tính trực tiếp để kiểm lại khoảng vừa tìm." },
       ],
       checks: [
