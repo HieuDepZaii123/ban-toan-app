@@ -6,6 +6,7 @@ import { A, RouteProvider } from "./lib/route.tsx";
 import { useRoute } from "./lib/useRoute.ts";
 import { setTheme, useSlice } from "./lib/store.ts";
 import { t } from "./lib/text.ts";
+import { StudyPlayer } from "./study/StudyPlayer.tsx";
 import { Atmosphere } from "./ui/Atmosphere.tsx";
 import { effectiveTheme, readThemeMode } from "./ui/themeMode.ts";
 import { useLang } from "./ui/useLang.ts";
@@ -34,6 +35,7 @@ export default function App() {
       <Atmosphere />
       <ThemeBridge />
       <Guarded />
+      <StudyPlayer />
       <ChatEntry />
     </RouteProvider>
   );

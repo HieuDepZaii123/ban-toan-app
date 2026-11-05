@@ -32,6 +32,7 @@
 }
 
 :root {
+  --study-h: 248px;
   --logo-accent: #e0a84a;
   --bg: #e7e0d2;
   --sheet: #f7f3ea;
@@ -141,7 +142,7 @@ h3 { letter-spacing: -0.01em; line-height: 1.35; }
 }
 .skip:focus { top: 8px; }
 
-.desk { min-height: 100dvh; position: relative; z-index: 1; animation: pageIn .28s cubic-bezier(.2, .7, .2, 1) both; }
+.desk { min-height: 100dvh; position: relative; z-index: 1; padding-bottom: calc(var(--study-h) + env(safe-area-inset-bottom)); animation: pageIn .28s cubic-bezier(.2, .7, .2, 1) both; }
 @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .desk.is-focus > header.bar { display: none; }
 .bar {
@@ -797,7 +798,7 @@ html[data-lamp="on"] body::before {
 .chat-fab {
   position: fixed;
   right: 16px;
-  bottom: 16px;
+  bottom: calc(var(--study-h) + 12px);
   z-index: 30;
   min-height: 44px;
   border: 0;
@@ -811,7 +812,7 @@ html[data-lamp="on"] body::before {
 .chat-panel {
   position: fixed;
   right: 16px;
-  bottom: 68px;
+  bottom: calc(var(--study-h) + 64px);
   z-index: 30;
   width: min(400px, calc(100vw - 24px));
   max-height: min(74vh, 620px);
@@ -862,6 +863,59 @@ html[data-lamp="on"] body::before {
 .rain-pick { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--ink-soft); }
 .rain-vol { width: 72px; }
 .atmosphere { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.study-player {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 28;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 8px 148px calc(8px + env(safe-area-inset-bottom)) 12px;
+  background: color-mix(in srgb, var(--sheet) 96%, transparent);
+  border-top: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+}
+.study-player label {
+  display: grid;
+  gap: 2px;
+  flex: 1 1 140px;
+  min-width: 0;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.study-player select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--sheet);
+  color: var(--ink);
+  padding: 0 8px;
+  font: inherit;
+}
+.study-player .text-btn { min-height: 44px; }
+.study-player .text-btn:disabled { opacity: 0.6; }
+.study-vol { flex: 1 1 180px; }
+.study-vol input { width: 100%; min-height: 44px; accent-color: var(--accent); }
+.study-fallback { flex: 1 1 100%; margin: 0; color: var(--accent); font-size: 0.9rem; }
+.study-frame {
+  position: fixed;
+  width: 200px;
+  height: 113px;
+  left: -240px;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+@media (max-width: 720px) {
+  .study-player { padding-right: 12px; }
+}
+@media (min-width: 960px) {
+  :root { --study-h: 112px; }
+}
 .sky-layer, .rain-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
 .day-orb {
   position: absolute; width: 42vw; height: 42vw; left: -8vw; top: -12vw; border-radius: 50%;
