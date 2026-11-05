@@ -1,6 +1,7 @@
 import { Component, lazy, Suspense, useEffect, type ReactNode } from "react";
 import { ChatEntry } from "./chat/ChatEntry.tsx";
 import { HomeDesk } from "./home/HomeDesk.tsx";
+import { captureReferral } from "./lib/referral.ts";
 import { A, RouteProvider } from "./lib/route.tsx";
 import { useRoute } from "./lib/useRoute.ts";
 import { setTheme, useSlice } from "./lib/store.ts";
@@ -18,11 +19,13 @@ const AssessPage = lazy(() => import("./pages/AssessPage.tsx").then((mod) => ({ 
 const WorkshopPage = lazy(() => import("./pages/WorkshopPage.tsx").then((mod) => ({ default: mod.WorkshopPage })));
 const DrillPage = lazy(() => import("./pages/DrillPage.tsx").then((mod) => ({ default: mod.DrillPage })));
 const MissPage = lazy(() => import("./pages/MissPage.tsx").then((mod) => ({ default: mod.MissPage })));
+const ReferPage = lazy(() => import("./pages/ReferPage.tsx").then((mod) => ({ default: mod.ReferPage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
 export default function App() {
   useEffect(() => {
+    captureReferral();
     const id = window.setTimeout(() => sessionStorage.removeItem(CHUNK_RELOAD), 4000);
     return () => window.clearTimeout(id);
   }, []);
@@ -65,6 +68,7 @@ function Shell() {
   if (path === "/xuong-hinh") return <WorkshopPage />;
   if (path === "/luyen") return <DrillPage />;
   if (path === "/so-loi") return <MissPage />;
+  if (path === "/gioi-thieu") return <ReferPage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   return <HomeDesk />;
 }

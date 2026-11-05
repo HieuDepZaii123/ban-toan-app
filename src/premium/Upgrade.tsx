@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { chainChoices, type CryptoChainId } from "./cryptoChoices.ts";
 import { ChainPicker, CryptoPay, type CryptoCheck, type CryptoView } from "./CryptoPay.tsx";
+import { checkoutRef } from "../lib/referral.ts";
 import { A } from "../lib/route.tsx";
 import { useRoute } from "../lib/useRoute.ts";
 import { t } from "../lib/text.ts";
@@ -133,7 +134,7 @@ export function Upgrade() {
       const res = await fetch("/api/premium/create", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, plan, method, chain: method === "crypto" ? chain : undefined }),
+        body: JSON.stringify({ email, plan, method, chain: method === "crypto" ? chain : undefined, ...checkoutRef() }),
       });
       const body = await res.json() as OrderView & { message?: string };
       if (!res.ok || !body.orderId) {
@@ -178,6 +179,8 @@ export function Upgrade() {
             "49.000đ một tháng, 399.000đ một năm. Thanh toán bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Nội dung các tờ hiện có vẫn mở.",
             "49,000 VND a month, 399,000 VND a year. Pay with MoMo, VietQR, bank transfer, or USDT/USDC. The sheets you already have stay open.",
           )}
+          {" "}
+          <A href="/gioi-thieu">{t(lang, "Giới thiệu bạn bè", "Refer a friend")}</A>
           {plans?.lockContent
             ? t(lang, " Cờ khóa nội dung đang bật.", " The content lock is on.")
             : t(lang, " Cờ khóa nội dung đang tắt.", " The content lock is off.")}

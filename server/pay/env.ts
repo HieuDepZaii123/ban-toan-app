@@ -32,6 +32,8 @@ export type PayEnv = {
   cryptoBscConfirmations: number;
   cryptoSolConfirmations: number;
   cryptoSolFinalized: boolean;
+  /** Hoa hồng theo phần vạn. 1000 = 10%. Chỉ áp vào đơn đã thanh toán. */
+  affiliateRateBps: number;
   now: () => number;
   fetchImpl: typeof fetch;
 };
@@ -94,6 +96,7 @@ export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => numbe
     cryptoBscConfirmations: bounded(source.CRYPTO_BSC_CONFIRMATIONS, 15, 1, 200),
     cryptoSolConfirmations: bounded(source.CRYPTO_SOL_CONFIRMATIONS, 32, 1, 200),
     cryptoSolFinalized: source.CRYPTO_SOL_REQUIRE_FINALIZED !== "0",
+    affiliateRateBps: bounded(source.AFFILIATE_RATE_BPS, 1000, 0, 5000),
     now,
     fetchImpl,
   };
