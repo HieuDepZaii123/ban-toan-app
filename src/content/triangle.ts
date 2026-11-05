@@ -6,7 +6,7 @@ export const triangleLesson: Lesson = {
   basic: [
     { k: "mo", vi: R`Diện tích tam giác là nửa đáy nhân chiều cao. Thể tích hộp là dài nhân rộng nhân cao.`, en: R`A triangle's area is half base times height. A box's volume is length times width times height.` },
     { k: "dinh", vi: R`$S=\dfrac12 bh$. Chóp $V=\dfrac13 Sh$. Tứ diện đều cạnh $a$: $V=\dfrac{a^3\sqrt2}{12}$.`, en: R`$S=\dfrac12 bh$. Pyramid $V=\dfrac13 Sh$. Regular tetrahedron of edge $a$: $V=\dfrac{a^3\sqrt2}{12}$.` },
-    { k: "vd", vi: R`Đáy $6$, cao $4$: $S=\dfrac{6\cdot 4}{2}=12$. Tam giác vuông cạnh $3$ và $4$: $S=6$.`, en: R`Base $6$, height $4$: $S=\dfrac{6\cdot 4}{2}=12$. Right triangle with legs $3$ and $4$: $S=6$.` },
+    { k: "vd", vi: R`Tam giác đáy $6$, cao $4$: $S=\dfrac{6\cdot 4}{2}=12$.`, en: R`A triangle with base $6$ and height $4$: $S=\dfrac{6\cdot 4}{2}=12$.` },
   ],
   exam: [
     { k: "dinh", vi: R`Phóng cạnh theo $k$ thì diện tích nhân $k^2$, thể tích nhân $k^3$.`, en: R`Scaling edges by $k$ multiplies area by $k^2$ and volume by $k^3$.` },

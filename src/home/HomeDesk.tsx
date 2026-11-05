@@ -89,7 +89,7 @@ export function HomeDesk() {
         <section className="stream" aria-labelledby="science-home">
           <h2 id="science-home">{t(lang, "Khoa học", "Science")}</h2>
           <p className="lecture-note">
-            {t(lang, "Năm mảng ngoài mười bốn chuyên đề. Mỗi mảng có video.", "Five areas outside the fourteen topics. Each one has a video.")}
+            {t(lang, "Năm mảng này nằm ngoài mười bốn chuyên đề Toán. Mỗi mảng có video.", "These five areas sit outside the fourteen maths topics. Each one has a video.")}
           </p>
           <div className="science-list">
             {sciences.map((item) => (

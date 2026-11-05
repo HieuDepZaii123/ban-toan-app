@@ -43,7 +43,7 @@ export function AssessPage() {
     <PageFrame
       kicker="Đánh giá năng lực"
       title="Ba bộ tự chấm"
-      lead="Ba mức: tư duy, tổng hợp, đội tuyển. Lời giải mở sau khi chấm. Điểm lưu trên máy này."
+      lead="Ba mức: tư duy, tổng hợp, đội tuyển. Lời giải hiện sau khi chấm. Điểm giữ trên máy này."
     >
       <div className="read-switch" role="tablist" aria-label="Bộ đánh giá">
         {assessBanks.map((item) => {

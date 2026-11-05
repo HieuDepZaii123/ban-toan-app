@@ -6,7 +6,7 @@ export const comboLesson: Lesson = {
   basic: [
     { k: "mo", vi: R`Có thứ tự thì nhân dần các chỗ còn lại. Không thứ tự thì chia cho số cách xếp của nhóm đã chọn.`, en: R`If order counts, multiply the remaining places. If not, divide by the arrangements of the chosen group.` },
     { k: "dinh", vi: R`$A(n,k)=\dfrac{n!}{(n-k)!}$, $C(n,k)=\dfrac{A(n,k)}{k!}$. Và $C(n,k)=C(n,n-k)$.`, en: R`$A(n,k)=\dfrac{n!}{(n-k)!}$, $C(n,k)=\dfrac{A(n,k)}{k!}$. And $C(n,k)=C(n,n-k)$.` },
-    { k: "vd", vi: R`Ba ghế: $3!=6$. $A(5,2)=5\cdot 4=20$, $C(5,2)=\dfrac{20}{2}=10$.`, en: R`Three seats: $3!=6$. $A(5,2)=5\cdot 4=20$, $C(5,2)=\dfrac{20}{2}=10$.` },
+    { k: "vd", vi: R`Chọn $2$ phần tử trong $5$: có thứ tự thì $A(5,2)=5\cdot 4=20$, không thứ tự thì $C(5,2)=10$.`, en: R`Choose $2$ items from $5$: with order, $A(5,2)=5\cdot 4=20$; without order, $C(5,2)=10$.` },
   ],
   exam: [
     { k: "dinh", vi: R`Trung bình bị kéo bởi một điểm lệch. Trung vị là số ở giữa sau khi sắp, không đổi nếu điểm lệch vẫn ở một phía.`, en: R`The mean is pulled by an outlier. The median is the middle value after sorting, and can stay put if the outlier remains on one side.` },

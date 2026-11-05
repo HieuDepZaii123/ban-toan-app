@@ -6,7 +6,7 @@ export const vectorLesson: Lesson = {
   basic: [
     { k: "mo", vi: R`Vectơ là mũi tên có hướng. Độ dài là khoảng từ gốc tới ngọn, không phải tổng các thành phần.`, en: R`A vector is a directed arrow. Its length is the distance from tail to tip, not the sum of the components.` },
     { k: "dinh", vi: R`$|\vec u|=\sqrt{x^2+y^2+z^2}$. $\vec u\cdot\vec v=0$ thì hai vectơ vuông góc.`, en: R`$|\vec u|=\sqrt{x^2+y^2+z^2}$. $\vec u\cdot\vec v=0$ means the vectors are perpendicular.` },
-    { k: "vd", vi: R`Độ dài $|(3;4)|=\sqrt{9+16}=5$. Độ dài $|(2;1;2)|=\sqrt{4+1+4}=3$.`, en: R`Length $|(3;4)|=\sqrt{9+16}=5$. Length $|(2;1;2)|=\sqrt{4+1+4}=3$.` },
+    { k: "vd", vi: R`Độ dài $|(2;1;2)|=\sqrt{2^2+1^2+2^2}=\sqrt{9}=3$.`, en: R`The length $|(2;1;2)|=\sqrt{2^2+1^2+2^2}=\sqrt{9}=3$.` },
   ],
   exam: [
     { k: "dinh", vi: R`$\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc$. Khác $0$ thì hệ hai ẩn có đúng một nghiệm.`, en: R`$\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc$. If it is not $0$, the two-unknown system has one solution.` },

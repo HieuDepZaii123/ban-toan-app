@@ -6,7 +6,7 @@ export const trigLesson: Lesson = {
   basic: [
     { k: "mo", vi: R`Trên đường tròn bán kính $1$, hoành độ là $\cos$, tung độ là $\sin$.`, en: R`On the circle of radius $1$, the $x$-coordinate is $\cos$ and the $y$-coordinate is $\sin$.` },
     { k: "dinh", vi: R`Hệ thức $\sin^2\alpha+\cos^2\alpha=1$. $\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}$ khi $\cos\alpha\neq 0$.`, en: R`Identity $\sin^2\alpha+\cos^2\alpha=1$. $\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}$ when $\cos\alpha\neq 0$.` },
-    { k: "vd", vi: R`Góc $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$. Góc $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.`, en: R`Angle $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$. Angle $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.` },
+    { k: "vd", vi: R`Góc $150^\circ=180^\circ-30^\circ$: $\sin$ giữ $\dfrac12$, $\cos$ đổi thành $-\dfrac{\sqrt3}{2}$.`, en: R`The angle $150^\circ=180^\circ-30^\circ$: $\sin$ stays $\dfrac12$, and $\cos$ becomes $-\dfrac{\sqrt3}{2}$.` },
   ],
   exam: [
     { k: "dinh", vi: R`$\sin\alpha+\cos\alpha=\sqrt2\sin(\alpha+45^\circ)$, nên lớn nhất là $\sqrt2$.`, en: R`$\sin\alpha+\cos\alpha=\sqrt2\sin(\alpha+45^\circ)$, so the maximum is $\sqrt2$.` },
@@ -94,7 +94,7 @@ export const trigQuestions: Question[] = [
       R`$\dfrac{20\sqrt{3}}{3}\text{ m}$`,
     ],
     answer: 0,
-    hint: "Tan = đối / kề. Cạnh kề là 20 m trên mặt đất. Nhớ cộng chiều cao mắt.",
+    hint: R`Chiều cao bằng $20\tan 30^\circ+1{,}5$.`,
     hintEn: "Tan = opposite / adjacent. The adjacent side is the 20 m on the ground. Add the eye height.",
     steps: [
       R`Tam giác vuông có cạnh kề $20$ m và góc $30^\circ$. Phần cây cao hơn mắt là cạnh đối.`,

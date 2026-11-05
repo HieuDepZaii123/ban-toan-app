@@ -24,7 +24,7 @@ export const integralQuestions: Question[] = [
     choices: [R`$\dfrac{4}{3}$`, R`$2$`, R`$\dfrac{8}{3}$`, R`$4$`],
     choicesEn: [R`$\dfrac{4}{3}$`, R`$2$`, R`$\dfrac{8}{3}$`, R`$4$`],
     answer: 0,
-    hint: "Nguyên hàm của 2x là x², của x² là x³/3. Rồi lấy F(2) − F(0).",
+    hint: R`Lấy nguyên hàm, rồi tính $F(2)-F(0)$.`,
     hintEn: "The antiderivative of 2x is x², and of x² is x³/3. Then take F(2) − F(0).",
     steps: [
       R`$\int (2x - x^2)\,dx = x^2 - \dfrac{x^3}{3}$.`,
@@ -44,7 +44,7 @@ export const integralQuestions: Question[] = [
     choices: [R`$-\dfrac{4}{3}$`, R`$\dfrac{4}{3}$`, R`$0$`, R`$-4$`],
     choicesEn: [R`$-\dfrac{4}{3}$`, R`$\dfrac{4}{3}$`, R`$0$`, R`$-4$`],
     answer: 0,
-    hint: "Đây là đúng miền vừa rồi, nhưng đường nằm dưới Ox. Tích phân giữ dấu.",
+    hint: "Cùng miền đó, đường nằm dưới Ox nên tích phân âm.",
     hintEn: "This is the same region, but the curve is below the x-axis. The integral keeps the sign.",
     steps: [
       R`$x^2 - 2x = -(2x - x^2)$. Nguyên hàm là $\dfrac{x^3}{3} - x^2$.`,
@@ -64,7 +64,7 @@ export const integralQuestions: Question[] = [
     choices: [R`$\dfrac{1}{6}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{1}{3}$`, R`$-\dfrac{1}{6}$`],
     choicesEn: [R`$\dfrac{1}{6}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{1}{3}$`, R`$-\dfrac{1}{6}$`],
     answer: 0,
-    hint: "Trên [0; 1], đường y = x nằm trên y = x². Lấy hiệu.",
+    hint: R`Trên $[0;1]$, lấy $x-x^2$.`,
     hintEn: "On [0, 1] the line y = x is above y = x². Subtract.",
     steps: [
       R`$\int_0^1 x\,dx = \dfrac{1}{2}$. $\int_0^1 x^2\,dx = \dfrac{1}{3}$.`,
@@ -84,7 +84,7 @@ export const integralQuestions: Question[] = [
     choices: [R`$\dfrac{16\pi}{15}$`, R`$\dfrac{4\pi}{3}$`, R`$\dfrac{16\pi}{3}$`, R`$\dfrac{4}{3}$`],
     choicesEn: [R`$\dfrac{16\pi}{15}$`, R`$\dfrac{4\pi}{3}$`, R`$\dfrac{16\pi}{3}$`, R`$\dfrac{4}{3}$`],
     answer: 0,
-    hint: "Bán kính lát là y. Công thức đĩa là π nhân tích phân y². y² đã không âm.",
+    hint: R`Thể tích đĩa là $\pi\int y^2\,dx$.`,
     hintEn: "The slice radius is y. The disk formula is π times the integral of y². y² is already non-negative.",
     steps: [
       R`$(2x - x^2)^2 = 4x^2 - 4x^3 + x^4$.`,
@@ -104,7 +104,7 @@ export const integralQuestions: Question[] = [
     choices: [R`$2$`, R`$\dfrac{4}{3}$`, R`$1$`, R`$4$`],
     choicesEn: [R`$2$`, R`$\dfrac{4}{3}$`, R`$1$`, R`$4$`],
     answer: 0,
-    hint: "Trung điểm là x = 1. Cao bằng y(1). Rộng bằng cả đoạn.",
+    hint: R`Trung điểm $x=1$: diện tích bằng $y(1)$ nhân độ rộng.`,
     hintEn: "The midpoint is x = 1. The height is y(1). The width is the whole interval.",
     steps: [
       R`Trung điểm của $[0; 2]$ là $x = 1$. $y(1) = 1$.`,
@@ -124,7 +124,7 @@ export const integralQuestions: Question[] = [
     choices: [R`$18\pi\text{ cm}^3$`, R`$54\pi\text{ cm}^3$`, R`$9\pi\text{ cm}^3$`, R`$6\pi\text{ cm}^3$`],
     choicesEn: [R`$18\pi\text{ cm}^3$`, R`$54\pi\text{ cm}^3$`, R`$9\pi\text{ cm}^3$`, R`$6\pi\text{ cm}^3$`],
     answer: 0,
-    hint: "V = (1/3) π r² h. Quên 1/3 là lấy thể tích trụ cùng đáy và cùng cao.",
+    hint: R`$V=\dfrac13\pi r^2 h$. Bỏ $\dfrac13$ thì ra thể tích trụ.`,
     hintEn: "V = (1/3) π r² h. Dropping the 1/3 gives the cylinder with the same base and height.",
     steps: [
       R`$r = 3$, $h = 6$. $r^2 h = 54$.`,

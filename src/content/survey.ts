@@ -24,7 +24,7 @@ export const surveyQuestions: Question[] = [
     choices: [R`$2$ tại $x = -1$`, R`$-2$ tại $x = -1$`, R`$0$ tại $x = 0$`, R`$2$ tại $x = 1$`],
     choicesEn: [R`$2$ at $x = -1$`, R`$-2$ at $x = -1$`, R`$0$ at $x = 0$`, R`$2$ at $x = 1$`],
     answer: 0,
-    hint: "Giải y′ = 0, rồi xem y′ đổi từ dương sang âm ở đâu.",
+    hint: "Giải y′ = 0, rồi tìm chỗ y′ đổi từ dương sang âm.",
     hintEn: "Solve y′ = 0, then see where y′ changes from positive to negative.",
     steps: [
       R`$y' = 3x^2 - 3 = 3(x-1)(x+1)$.`,
@@ -44,7 +44,7 @@ export const surveyQuestions: Question[] = [
     choices: [R`$-2$ tại $x = 1$`, R`$2$ tại $x = 1$`, R`$-2$ tại $x = -1$`, R`$0$ tại $x = 0$`],
     choicesEn: [R`$-2$ at $x = 1$`, R`$2$ at $x = 1$`, R`$-2$ at $x = -1$`, R`$0$ at $x = 0$`],
     answer: 0,
-    hint: "Cực tiểu là chỗ y′ đổi từ âm sang dương.",
+    hint: "Cực tiểu nằm ở chỗ y′ đổi từ âm sang dương.",
     hintEn: "A minimum is where y′ changes from negative to positive.",
     steps: [
       R`Trên $(-1; 1)$, $y' < 0$. Bên phải $x = 1$, $y' > 0$.`,
@@ -64,7 +64,7 @@ export const surveyQuestions: Question[] = [
     choices: [R`$-\sqrt{3}$, $0$, $\sqrt{3}$`, R`$-1$, $0$, $1$`, R`$\pm 1$`, "Không có nghiệm"],
     choicesEn: [R`$-\sqrt{3}$, $0$, $\sqrt{3}$`, R`$-1$, $0$, $1$`, R`$\pm 1$`, "No roots"],
     answer: 0,
-    hint: "Đặt y = 0 và phân tích x(x² − 3). Đừng lấy nghiệm của đạo hàm.",
+    hint: R`Giải $y=0$ bằng $x(x^2-3)=0$, không lấy nghiệm của $y'$.`,
     hintEn: "Set y = 0 and factor x(x² − 3). Do not take the roots of the derivative.",
     steps: [
       R`$x^3 - 3x = x(x^2 - 3) = x(x - \sqrt{3})(x + \sqrt{3})$.`,
@@ -94,7 +94,7 @@ export const surveyQuestions: Question[] = [
       R`$(-1; 1)$`,
     ],
     answer: 0,
-    hint: "Đồng biến nơi y′ không âm. Ở đây y′ dương ngoài đoạn giữa hai điểm dừng.",
+    hint: "Đồng biến ở nơi y′ không âm, tức ngoài đoạn giữa hai điểm dừng.",
     hintEn: "The function increases where y′ is non-negative. Here y′ is positive outside the interval between the two stationary points.",
     steps: [
       R`$y' = 3(x-1)(x+1)$ dương khi $x < -1$ hoặc $x > 1$.`,
@@ -114,7 +114,7 @@ export const surveyQuestions: Question[] = [
     choices: ["Không có cực trị", "Cực tiểu, y = 0", "Cực đại, y = 0", "Cực tiểu, y = −2"],
     choicesEn: ["No extremum", "A minimum, y = 0", "A maximum, y = 0", "A minimum, y = −2"],
     answer: 0,
-    hint: "y′ = 0 chưa đủ. Phải xem y′ có đổi dấu hay không.",
+    hint: "Sau khi có y′ = 0, hãy xét y′ có đổi dấu hay không.",
     hintEn: "y′ = 0 is not enough. Check whether y′ changes sign.",
     steps: [
       R`$y' = 3x^2$. Tại $x = 0$, đạo hàm bằng $0$, và tiếp tuyến nằm ngang.`,
@@ -144,7 +144,7 @@ export const surveyQuestions: Question[] = [
       "Yes, y(1) = 0",
     ],
     answer: 0,
-    hint: "Xem mẫu số tại x = 1 trước khi thế vào tử.",
+    hint: "Xét mẫu tại x = 1 trước khi thế số vào tử.",
     hintEn: "Look at the denominator at x = 1 before substituting into the numerator.",
     steps: [
       R`Mẫu $x - 1$ bằng $0$ khi $x = 1$, nên hàm không xác định tại đó.`,

@@ -44,12 +44,12 @@ function ScienceHome() {
   return (
     <>
       <p className="kicker">{t(lang, "Khoa học", "Science")}</p>
-      <h1>{t(lang, "Năm mảng ngoài chuyên đề toán.", "Five areas outside the maths topics.")}</h1>
+      <h1>{t(lang, "Năm mảng sát toán.", "Five areas beside the maths.")}</h1>
       <p className="lead">
         {t(
           lang,
-          "Lập trình, số liệu, đề chuyên, vật lý, hóa. Mỗi mảng có ba mức và video.",
-          "Programming, data, specialised papers, physics, chemistry. Each area has three layers and a video.",
+          "Lập trình, số liệu, đề chuyên, vật lý và hóa. Mỗi mảng có ba mức và một video.",
+          "Programming, data, specialised papers, physics and chemistry. Each area has three layers and one video.",
         )}
       </p>
       <div className="science-list">

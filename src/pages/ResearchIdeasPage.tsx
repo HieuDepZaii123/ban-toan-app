@@ -16,10 +16,10 @@ export function ResearchIdeasPage() {
     <PageFrame
       kicker="Nghiên cứu"
       title="Ý tưởng và chủ đề"
-      lead="Câu hỏi mở, một cách làm, và vài bước. Thí nghiệm kéo số nằm ở tab Nghiên cứu của từng tờ."
+      lead="Mỗi mục có một câu hỏi, một cách làm, và vài bước tính. Muốn kéo số thì mở tab Nghiên cứu trên tờ đó."
     >
-      <IdeaGroup id="y-tuong" title="Ý tưởng" note="Một câu hỏi đủ cho một buổi." items={sparks} />
-      <IdeaGroup id="chu-de" title="Chủ đề nghiên cứu" note="Đủ cho một báo cáo ngắn: câu hỏi, cách làm, rồi một số cụ thể." items={themes} />
+      <IdeaGroup id="y-tuong" title="Ý tưởng" note="Một câu hỏi cho một buổi làm." items={sparks} />
+      <IdeaGroup id="chu-de" title="Chủ đề nghiên cứu" note="Một báo cáo ngắn: câu hỏi, cách làm, rồi một con số." items={themes} />
     </PageFrame>
   );
 }

@@ -6,7 +6,7 @@ export const ineqLesson: Lesson = {
   basic: [
     { k: "mo", vi: R`Nhân hoặc chia cả hai vế với số âm thì đảo chiều. Với số dương, chiều giữ nguyên.`, en: R`Multiplying or dividing both sides by a negative flips the inequality. A positive keeps the direction.` },
     { k: "dinh", vi: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, đẳng thức khi $a=b$.`, en: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, with equality when $a=b$.` },
-    { k: "vd", vi: R`$-2x\le 4$. Chia $-2$: $x\ge -2$. Với $4$ và $9$: $\dfrac{4+9}{2}=6{,}5>\sqrt{36}=6$.`, en: R`$-2x\le 4$. Divide by $-2$: $x\ge -2$. For $4$ and $9$: $\dfrac{4+9}{2}=6{,}5>\sqrt{36}=6$.` },
+    { k: "vd", vi: R`Với $4$ và $9$: $\dfrac{4+9}{2}=6{,}5$ và $\sqrt{4\cdot 9}=6$.`, en: R`For $4$ and $9$: $\dfrac{4+9}{2}=6{,}5$ and $\sqrt{4\cdot 9}=6$.` },
   ],
   exam: [
     { k: "dinh", vi: R`Cauchy: $(a^2+b^2)(c^2+d^2)\ge(ac+bd)^2$, đẳng thức khi $(a;b)$ và $(c;d)$ tỉ lệ.`, en: R`Cauchy: $(a^2+b^2)(c^2+d^2)\ge(ac+bd)^2$, with equality when $(a;b)$ and $(c;d)$ are proportional.` },

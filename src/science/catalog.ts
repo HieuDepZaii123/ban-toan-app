@@ -12,7 +12,7 @@ export const sciences = [
   {
     id: "chuyen",
     title: "Đề trường chuyên",
-    blurb: "Bài kiểu chuyên: điều kiện trước, rồi thử lại.",
+    blurb: "Bài kiểu chuyên: viết điều kiện, rồi thử lại vào đề.",
   },
   {
     id: "vat-ly",

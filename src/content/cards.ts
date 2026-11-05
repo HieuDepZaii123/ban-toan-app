@@ -57,8 +57,8 @@ export const cards = [
     "status": "ready",
     "title": "Bất đẳng thức",
     "titleEn": "Inequalities",
-    "blurb": "AM–GM, Cauchy, cực trị ở đỉnh miền.",
-    "blurbEn": "AM–GM, Cauchy, and an extremum at a vertex of the region.",
+    "blurb": "AM–GM và Cauchy. Cực trị nằm ở một đỉnh của miền.",
+    "blurbEn": "AM–GM and Cauchy. The extremum sits at a vertex of the region.",
     "questions": 13
   },
   {
@@ -81,8 +81,8 @@ export const cards = [
     "status": "ready",
     "title": "Dãy số",
     "titleEn": "Sequences",
-    "blurb": "Cộng d, hoặc nhân q. Tổng khi |q| < 1.",
-    "blurbEn": "Add d, or multiply by q. The sum when |q| < 1.",
+    "blurb": "Cộng d hoặc nhân q. Có tổng vô hạn khi |q| < 1.",
+    "blurbEn": "Add d, or multiply by q. An infinite sum when |q| < 1.",
     "questions": 13
   },
   {
@@ -105,8 +105,8 @@ export const cards = [
     "status": "ready",
     "title": "Giới hạn",
     "titleEn": "Limits",
-    "blurb": "Hai phía cùng một số. f(a) không quyết định.",
-    "blurbEn": "Both sides share a number. f(a) does not decide it.",
+    "blurb": "Hai phía cùng tiến tới một số. Giá trị tại điểm không quyết định giới hạn.",
+    "blurbEn": "Both sides approach one number. The value at the point does not decide the limit.",
     "questions": 13
   },
   {
@@ -153,8 +153,8 @@ export const cards = [
     "status": "ready",
     "title": "Vectơ và ma trận",
     "titleEn": "Vectors and matrices",
-    "blurb": "Độ dài, định thức, hệ hai ẩn một nghiệm.",
-    "blurbEn": "Length, determinant, and a two-unknown system with one solution.",
+    "blurb": "Độ dài, định thức, và hệ hai ẩn khi có đúng một nghiệm.",
+    "blurbEn": "Length, a determinant, and a two-unknown system with exactly one solution.",
     "questions": 13
   },
   {
@@ -165,8 +165,8 @@ export const cards = [
     "status": "ready",
     "title": "Hình giải tích",
     "titleEn": "Coordinate geometry",
-    "blurb": "Khoảng cách tới đường, rồi điểm với đường tròn.",
-    "blurbEn": "Distance to a line, then a point against a circle.",
+    "blurb": "Khoảng cách từ một điểm tới đường thẳng, rồi vị trí với đường tròn.",
+    "blurbEn": "Distance from a point to a line, then where the point sits against a circle.",
     "questions": 13
   },
   {
@@ -201,8 +201,8 @@ export const cards = [
     "status": "ready",
     "title": "Xác suất",
     "titleEn": "Probability",
-    "blurb": "Biết thêm dữ kiện thì mẫu số đổi.",
-    "blurbEn": "New information changes the denominator.",
+    "blurb": "Khi đã biết thêm một dữ kiện, mẫu số không còn là mẫu lúc đầu.",
+    "blurbEn": "Once one more fact is known, the denominator is no longer the original sample.",
     "questions": 13
   }
 ] as const satisfies readonly Card[];

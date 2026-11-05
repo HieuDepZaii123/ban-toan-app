@@ -4,9 +4,9 @@ const R = String.raw;
 
 export const expLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`$a^n$ ($n$ nguyên dương) là $a$ nhân $n$ lần. $\log_a b$ là số mũ $x$ sao cho $a^x=b$.`, en: R`$a^n$ (positive integer $n$) is $a$ multiplied $n$ times. $\log_a b$ is the exponent $x$ with $a^x=b$.` },
+    { k: "mo", vi: R`$a^n$ là $a$ nhân $n$ lần, với $n$ nguyên dương. $\log_a b$ là số mũ $x$ thỏa $a^x=b$, chẳng hạn $2^3=8$ nên $\log_2 8=3$.`, en: R`$a^n$ is $a$ multiplied $n$ times, for a positive integer $n$. $\log_a b$ is the exponent $x$ with $a^x=b$; for example $2^3=8$ so $\log_2 8=3$.` },
     { k: "dinh", vi: R`$a>0$, $a\neq 1$: $\log_a(bc)=\log_a b+\log_a c$ và $\log_a(b^k)=k\log_a b$.`, en: R`$a>0$, $a\neq 1$: $\log_a(bc)=\log_a b+\log_a c$ and $\log_a(b^k)=k\log_a b$.` },
-    { k: "vd", vi: R`$2^3=8$ nên $\log_2 8=3$. Vốn $10(1{,}08)^5\approx 14{,}69$, không phải $10+0{,}8\cdot 5=14$.`, en: R`$2^3=8$ so $\log_2 8=3$. Principal $10(1{,}08)^5\approx 14{,}69$, not $10+0{,}8\cdot 5=14$.` },
+    { k: "vd", vi: R`Vốn $10$, lãi kép $8\%$ trong $5$ năm: $10(1{,}08)^5\approx 14{,}69$. Lãi đơn cùng kỳ là $14$.`, en: R`Principal $10$, compound interest $8\%$ for $5$ years: $10(1{,}08)^5\approx 14{,}69$. Simple interest over the same time is $14$.` },
   ],
   exam: [
     { k: "dinh", vi: R`Gấp đôi với lãi $r$: $(1+r)^t=2$, nên $t=\dfrac{\ln 2}{\ln(1+r)}$.`, en: R`Doubling at rate $r$: $(1+r)^t=2$, so $t=\dfrac{\ln 2}{\ln(1+r)}$.` },

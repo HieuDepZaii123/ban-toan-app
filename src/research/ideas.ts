@@ -35,11 +35,11 @@ export const researchIdeas: readonly ResearchIdea[] = [
     field: "Đại số",
     title: "Quy tắc 72 và thời gian gấp đôi",
     question: R`Với lãi suất $r$, $t=\dfrac{\ln 2}{\ln(1+r)}$ lệch bao nhiêu so với $\dfrac{72}{100r}$?`,
-    method: R`Tính cả hai tại vài giá trị $r$, rồi lấy sai số tương đối.`,
+    method: R`Tính cả hai công thức tại $r=0{,}08$ và $r=0{,}20$, rồi so lệch.`,
     steps: [
-      R`$r=0{,}08$: $\dfrac{\ln 2}{\ln 1{,}08}\approx 9{,}01$, còn $\dfrac{72}{8}=9$.`,
-      R`Sai số khoảng $0{,}01$ năm, dưới $0{,}2\%$.`,
-      R`Khi $r$ tăng, quy tắc 72 lệch dần. Công thức log giữ đúng định nghĩa $(1+r)^t=2$.`,
+      R`$r=0{,}08$: $\dfrac{\ln 2}{\ln 1{,}08}\approx 9{,}006$, còn $\dfrac{72}{8}=9$.`,
+      R`Lệch khoảng $0{,}006$ năm, tức khoảng $0{,}07\%$.`,
+      R`$r=0{,}20$: log cho $\approx 3{,}80$, quy tắc $\dfrac{72}{20}=3{,}6$, lệch khoảng $0{,}20$ năm.`,
     ],
     href: "/t/exp?tab=nc&n=exp-r-double",
   },
@@ -53,7 +53,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     steps: [
       R`$\int_0^2 x^2\,dx=\left[\dfrac{x^3}{3}\right]_0^2=\dfrac{8}{3}$.`,
       R`Trung điểm $x=1$, cao $1$, rộng $2$: diện tích $2$.`,
-      R`Thiếu $\dfrac{2}{3}$. Chia đôi đoạn rồi cộng hai hình chữ nhật để xem phần thiếu giảm.`,
+      R`Chia đôi: hình tại $0{,}5$ và $1{,}5$ cho $0{,}25+2{,}25=2{,}5$. Thiếu còn $\dfrac{8}{3}-\dfrac{5}{2}=\dfrac{1}{6}$.`,
     ],
     href: "/t/integral?tab=nc&n=int-r-mid",
   },
@@ -63,7 +63,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     field: "Xác suất",
     title: "Mẫu số sau khi biết có mặt 6",
     question: R`Hai xúc xắc, biết có ít nhất một mặt $6$. Vì sao xác suất cả hai mặt $6$ là $\dfrac{1}{11}$?`,
-    method: "Liệt kê không gian còn lại. Không dùng mẫu $6$ hay $36$ của đề chưa có điều kiện.",
+    method: "Đếm các cặp còn lại sau khi đã biết có mặt 6. Không chia cho 36 của lúc chưa biết.",
     steps: [
       R`Ban đầu có $36$ cặp. Cặp không có mặt $6$: $5\cdot 5=25$.`,
       R`Còn $36-25=11$ cặp.`,
@@ -77,7 +77,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     field: "Xác suất",
     title: "Vì sao $C(n,k)=C(n,n-k)$",
     question: R`Chọn $k$ phần tử và chọn $n-k$ phần tử để loại có cùng số cách không?`,
-    method: "Lập song ánh bằng phần bù, rồi mới kiểm bằng giai thừa.",
+    method: "Ghép mỗi tập với phần bù của nó, rồi kiểm bằng một bộ số.",
     steps: [
       R`Mỗi tập $k$ phần tử để lại đúng một phần bù có $n-k$ phần tử.`,
       R`Phép lấy bù là song ánh, nên hai số cách bằng nhau.`,
@@ -119,11 +119,11 @@ export const researchIdeas: readonly ResearchIdea[] = [
     field: "Giải tích",
     title: "Nước nóng về nhiệt phòng",
     question: R`$T(t)=25+60e^{-t/4}$. Sau bao lâu nhiệt độ còn cách phòng dưới $1^\circ\mathrm{C}$?`,
-    method: "Giải bất phương trình mũ, rồi thế lại để kiểm.",
+    method: "Giải bất phương trình mũ, rồi thế một giá trị trở lại.",
     steps: [
-      R`$|T-25|<1$ tương đương $60e^{-t/4}<1$.`,
+      R`$T$ cách $25$ dưới $1$ khi $60e^{-t/4}<1$.`,
       R`$t>4\ln 60$. Vì $\ln 60\approx 4{,}094$ nên $t>16{,}38$ phút.`,
-      R`Tại $t=16{,}4$, số mũ còn dương nên $T$ vẫn trên $25$ và dưới $26$.`,
+      R`Tại $t=16{,}4$: $60e^{-4{,}1}\approx 0{,}994$, nên $T\approx 25{,}99$.`,
     ],
     href: "/t/limit?tab=nc&n=lim-r-cool",
   },
@@ -133,7 +133,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     field: "Hình",
     title: "Khoảng cách từ điểm tới đường thẳng",
     question: R`Vì sao $d=\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$, và tử số chưa phải khoảng cách?`,
-    method: "Chia cho độ dài pháp tuyến. Tử là hình chiếu chưa chuẩn hóa.",
+    method: "Lấy trị tuyệt đối ở tử, rồi chia cho độ dài của pháp tuyến.",
     steps: [
       R`Pháp tuyến $\vec n=(a;b)$ có độ dài $\sqrt{a^2+b^2}$.`,
       R`Điểm $(3;1)$, đường $x+y-2=0$: tử $|3+1-2|=2$.`,
@@ -150,7 +150,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     method: R`Viết $V(h)$, đạo hàm, rồi kiểm bằng số $R=6$.`,
     steps: [
       R`Bán kính đáy thỏa $r^2=h(2R-h)$, $0<h<2R$.`,
-      R`$V=\dfrac{\pi}{3}(2Rh^2-h^3)$. $V'=0$ khi $h=\dfrac{4R}{3}$.`,
+      R`$V=\dfrac{\pi}{3}(2Rh^2-h^3)$, nên $V'=\dfrac{\pi}{3}h(4R-3h)=0$ khi $h=\dfrac{4R}{3}$.`,
       R`Với $R=6$, cực đại tại $h=8$. Hai đầu $h\to 0$ và $h\to 12$ thì $V\to 0$.`,
     ],
     href: "/t/triangle?tab=nc&n=shp-r-cone",
@@ -165,7 +165,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     steps: [
       R`Mỗi mặt có xác suất $\dfrac{1}{6}$. Số lần ra mặt đó theo nhị thức.`,
       R`Độ lệch chuẩn của tần suất là $\sqrt{\dfrac{5}{36n}}$, tiến về $0$ khi $n\to\infty$.`,
-      R`Một mẫu nhỏ có thể lệch xa $\dfrac{1}{6}$. Lệch đó không đổi xác suất của mặt.`,
+      R`Với $n=36$, độ lệch chuẩn là $\sqrt{\dfrac{5}{36\cdot 36}}\approx 0{,}062$. Một mẫu nhỏ vẫn có thể lệch khỏi $\dfrac{1}{6}$.`,
     ],
     href: "/t/probability?tab=nc&n=prob-r-lln",
   },
@@ -175,7 +175,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     field: "Xác suất",
     title: "Xác suất bệnh sau kết quả dương",
     question: R`Dân số $10\,000$, bệnh $1\%$, độ nhạy $99\%$, dương tính giả $5\%$. Dương tính thì xác suất thật sự bệnh bằng bao nhiêu?`,
-    method: "Đếm dương thật và dương giả. Mẫu số là tổng hai số đó, không phải dân số.",
+    method: "Đếm ca dương thật và ca dương giả. Mẫu số là tổng hai số đó.",
     steps: [
       R`Người bệnh: $100$. Người không bệnh: $9\,900$.`,
       R`Dương thật: $99$. Dương giả: $0{,}05\cdot 9\,900=495$.`,

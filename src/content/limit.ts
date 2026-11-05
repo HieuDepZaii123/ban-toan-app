@@ -6,7 +6,7 @@ export const limitLesson: Lesson = {
   basic: [
     { k: "mo", vi: R`$\lim_{x\to a}f(x)=L$ khi cả hai phía tiến tới $L$. Giá trị $f(a)$ không quyết định giới hạn.`, en: R`$\lim_{x\to a}f(x)=L$ when both sides approach $L$. The value $f(a)$ does not decide the limit.` },
     { k: "dinh", vi: R`Liên tục tại $a$ khi giới hạn tồn tại và bằng $f(a)$.`, en: R`Continuous at $a$ when the limit exists and equals $f(a)$.` },
-    { k: "vd", vi: R`$\dfrac{x^2-1}{x-1}=x+1$ khi $x\neq 1$. Sát $1$ thì sát $2$, dù gán $f(1)=5$.`, en: R`$\dfrac{x^2-1}{x-1}=x+1$ when $x\neq 1$. Near $1$ it is near $2$, even if $f(1)=5$.` },
+    { k: "vd", vi: R`Với $x\neq 1$, $\dfrac{x^2-1}{x-1}=x+1$. Khi $x$ sát $1$, biểu thức sát $2$, dù có gán $f(1)=5$.`, en: R`For $x\neq 1$, $\dfrac{x^2-1}{x-1}=x+1$. When $x$ is near $1$, the expression is near $2$, even if $f(1)=5$.` },
   ],
   exam: [
     { k: "dinh", vi: R`Hai phía khác nhau thì không có giới hạn. Không lấy trung bình hai phía.`, en: R`Different one-sided limits mean there is no limit. Do not average the two sides.` },
@@ -24,7 +24,7 @@ export const limitQuestions: Question[] = [
     choices: [R`$2$`, R`$0$`, "Không tồn tại", R`$1$`],
     choicesEn: [R`$2$`, R`$0$`, "Does not exist", R`$1$`],
     answer: 0,
-    hint: "Rút nhân tử x − 1 trước. Đừng thế x = 1 vào biểu thức chưa rút.",
+    hint: R`Rút $x-1$ trước, rồi mới thế.`,
     hintEn: "Cancel the factor x − 1 first. Do not substitute x = 1 into the original expression.",
     steps: [
       R`$x^2 - 1 = (x-1)(x+1)$. Với $x \neq 1$, biểu thức bằng $x+1$.`,
@@ -44,7 +44,7 @@ export const limitQuestions: Question[] = [
     choices: [R`$2$`, R`$5$`, "Không tồn tại", R`$0$`],
     choicesEn: [R`$2$`, R`$5$`, "Does not exist", R`$0$`],
     answer: 0,
-    hint: "Giới hạn nhìn các điểm xung quanh, không nhìn đúng một điểm.",
+    hint: "Nhìn hai phía quanh điểm đó, không lấy giá trị tại đúng điểm.",
     hintEn: "The limit looks at the points around it, not at that single point.",
     steps: [
       R`Với mọi $x \neq 1$, $f(x) = x+1$.`,
@@ -64,7 +64,7 @@ export const limitQuestions: Question[] = [
     choices: ["Không tồn tại", R`$-1$`, R`$0$`, R`$1$`],
     choicesEn: ["Does not exist", R`$-1$`, R`$0$`, R`$1$`],
     answer: 0,
-    hint: "Tính riêng phía trái và phía phải. Đừng lấy trung bình.",
+    hint: "Tính riêng phía trái và phía phải, không lấy trung bình.",
     hintEn: "Compute the left side and the right side separately. Do not average them.",
     steps: [
       R`Phía trái tiến tới $-1$. Phía phải tiến tới $1$.`,
@@ -94,7 +94,7 @@ export const limitQuestions: Question[] = [
       "Continuous only when f(1) = 0",
     ],
     answer: 0,
-    hint: "Liên tục khi giới hạn tồn tại và bằng đúng số đã gán.",
+    hint: "Liên tục khi giới hạn bằng đúng số đã gán tại điểm đó.",
     hintEn: "Continuity needs the limit to exist and to equal the assigned value.",
     steps: [
       R`Giới hạn là $2$, như sau khi rút gọn.`,
@@ -114,7 +114,7 @@ export const limitQuestions: Question[] = [
     choices: [R`$25^\circ\text{C}$`, R`$85^\circ\text{C}$`, R`$0^\circ\text{C}$`, R`$60^\circ\text{C}$`],
     choicesEn: [R`$25^\circ\text{C}$`, R`$85^\circ\text{C}$`, R`$0^\circ\text{C}$`, R`$60^\circ\text{C}$`],
     answer: 0,
-    hint: "Số mũ âm rất lớn thì e mũ tiến về 0. Số 25 đứng ngoài.",
+    hint: R`Khi $t\to+\infty$, $e^{-t/4}\to 0$, còn lại $25$.`,
     hintEn: "A large negative exponent sends the exponential to 0. The 25 sits outside it.",
     steps: [
       R`Khi $t \to +\infty$, $-t/4 \to -\infty$ nên $e^{-t/4} \to 0$.`,
@@ -134,7 +134,7 @@ export const limitQuestions: Question[] = [
     choices: [R`$1$`, R`$0$`, "Không tồn tại", R`$x$`],
     choicesEn: [R`$1$`, R`$0$`, "Does not exist", R`$x$`],
     answer: 0,
-    hint: "Tại x = 0 mẫu bằng 0, nhưng hai phía cùng tiến về một số.",
+    hint: "Mẫu bằng 0 tại điểm đó, nhưng hai phía cùng tiến về một số.",
     hintEn: "At x = 0 the denominator is 0, but both sides approach the same number.",
     steps: [
       R`Biểu thức không xác định tại $0$. Giới hạn không cần giá trị tại đúng điểm đó.`,
