@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const analyticLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Pháp tuyến là hướng vuông góc với đường thẳng.`, en: R`The normal is the direction straight across the line.` },
-    { k: "vd", vi: R`$x+y=2$ đi qua $(2;0)$.`, en: R`$x+y=2$ passes through $(2;0)$.` },
+    { k: "mo", vi: R`Đường $x+y-2=0$ có pháp tuyến $(1;1)$, dài $\sqrt2$. Khoảng cách bằng tử chia cho $\sqrt2$.`, en: R`The line $x+y-2=0$ has normal $(1;1)$, of length $\sqrt2$. Distance is the numerator divided by $\sqrt2$.` },
+    { k: "dinh", vi: R`Khoảng cách từ $(x_0;y_0)$ tới $ax+by+c=0$ là $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.`, en: R`Distance from $(x_0;y_0)$ to $ax+by+c=0$ is $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.` },
+    { k: "vd", vi: R`$(3;1)$ tới $x+y-2=0$: $\dfrac{|3+1-2|}{\sqrt2}=\sqrt2$.`, en: R`$(3;1)$ to $x+y-2=0$: $\dfrac{|3+1-2|}{\sqrt2}=\sqrt2$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Khoảng cách tới $ax+by+c=0$ là $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.`, en: R`Distance to $ax+by+c=0$ is $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.` },
-    { k: "vd", vi: R`Điểm $(3;1)$ cách $x+y-2=0$ đúng $\sqrt2$.`, en: R`The point $(3;1)$ is $\sqrt2$ from $x+y-2=0$.` },
-    { k: "loi", vi: R`$|3+1-2|=2$ chưa chia $\sqrt2$, nên chưa phải khoảng cách.`, en: R`$|3+1-2|=2$ is not yet divided by $\sqrt2$, so it is not the distance.` },
-    { k: "kiem", vi: R`$(3;4)$ nằm trên $x^2+y^2=25$ vì $9+16=25$.`, en: R`$(3;4)$ lies on $x^2+y^2=25$ because $9+16=25$.` },
+    { k: "dinh", vi: R`Điểm $(x;y)$ và đường tròn tâm $O$ bán kính $r$: so $x^2+y^2$ với $r^2$.`, en: R`Point $(x;y)$ and a circle centered at $O$ of radius $r$: compare $x^2+y^2$ with $r^2$.` },
+    { k: "vd", vi: R`Điểm $(3;4)$: $3^2+4^2=25$, nên nó nằm trên đường tròn $x^2+y^2=25$.`, en: R`The point $(3;4)$: $3^2+4^2=25$, so it lies on the circle $x^2+y^2=25$.` },
+    { k: "loi", vi: R`$|3+1-2|=2$ chưa chia $\sqrt2$. Đó là tử, chưa phải khoảng cách $\sqrt2$.`, en: R`$|3+1-2|=2$ is not yet divided by $\sqrt2$. That is the numerator, not the distance $\sqrt2$.` },
+    { k: "kiem", vi: R`Đường $x+y-2=0$ đi qua $(2;0)$ vì $2+0-2=0$.`, en: R`The line $x+y-2=0$ passes through $(2;0)$ because $2+0-2=0$.` },
   ],
 };
 

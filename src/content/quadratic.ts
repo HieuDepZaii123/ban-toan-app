@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const quadraticLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Parabol là đường cong chữ U: $a>0$ miệng lên, $a<0$ miệng xuống.`, en: R`A parabola is a U: $a>0$ opens up, $a<0$ opens down.` },
-    { k: "vd", vi: R`Rào $40$ m, $S=x(40-2x)$; $x=10$ thì $S=200$.`, en: R`A $40$ m fence, $S=x(40-2x)$; at $x=10$, $S=200$.` },
+    { k: "mo", vi: R`Parabol $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: miệng lên, có cực tiểu. $a<0$: miệng xuống, có cực đại.`, en: R`The parabola $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: opens up, a minimum. $a<0$: opens down, a maximum.` },
+    { k: "dinh", vi: R`Đỉnh $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, với $\Delta=b^2-4ac$.`, en: R`Vertex $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, where $\Delta=b^2-4ac$.` },
+    { k: "vd", vi: R`Chuồng $40$ m, một cạnh tựa tường: $S=x(40-2x)=-2x^2+40x$. $S'=0$ tại $x=10$, và $S(10)=200$.`, en: R`A $40$ m pen with one side against a wall: $S=x(40-2x)=-2x^2+40x$. $S'=0$ at $x=10$, and $S(10)=200$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$y=ax^2+bx+c$ ($a\neq0$) có đỉnh $x=-\dfrac{b}{2a}$ và $\Delta=b^2-4ac$.`, en: R`$y=ax^2+bx+c$ ($a\neq0$) has vertex $x=-\dfrac{b}{2a}$ and $\Delta=b^2-4ac$.` },
-    { k: "vd", vi: R`$y=x^2-2x-3$: đỉnh $(1;-4)$, nghiệm $-1$ và $3$.`, en: R`$y=x^2-2x-3$: vertex $(1;-4)$, roots $-1$ and $3$.` },
-    { k: "loi", vi: R`$\Delta$ không cho hoành độ đỉnh.`, en: R`$\Delta$ does not give the vertex $x$-coordinate.` },
-    { k: "kiem", vi: R`$y=x^2-4x$ có đỉnh $(2;-4)$.`, en: R`$y=x^2-4x$ has vertex $(2;-4)$.` },
+    { k: "dinh", vi: R`$y=a(x-h)^2+k$ có đỉnh $(h;k)$ đứng yên khi đổi $a$. Dạng $ax^2+bx+c$: đổi $a$ thì đỉnh chạy.`, en: R`$y=a(x-h)^2+k$ has vertex $(h;k)$, fixed when $a$ changes. In $ax^2+bx+c$, changing $a$ moves the vertex.` },
+    { k: "vd", vi: R`$y=x^2-2x-3=(x-1)^2-4$. Đỉnh $(1;-4)$. $\Delta=16$, nghiệm $x=-1$ và $x=3$.`, en: R`$y=x^2-2x-3=(x-1)^2-4$. Vertex $(1;-4)$. $\Delta=16$, roots $x=-1$ and $x=3$.` },
+    { k: "loi", vi: R`Với $y=x^2-2x+1$, lấy đỉnh từ $\Delta=0$ ra $x=0$ thì sai. Đỉnh vẫn là $x=-\dfrac{b}{2a}=1$.`, en: R`For $y=x^2-2x+1$, reading the vertex from $\Delta=0$ as $x=0$ is wrong. The vertex is still $x=-\dfrac{b}{2a}=1$.` },
+    { k: "kiem", vi: R`$y=x^2-4x=(x-2)^2-4$. Đỉnh $(2;-4)$.`, en: R`$y=x^2-4x=(x-2)^2-4$. Vertex $(2;-4)$.` },
   ],
 };
 
@@ -23,7 +24,7 @@ export const quadraticQuestions: Question[] = [
     choices: [R`$(1; -4)$`, R`$(-1; -4)$`, R`$(1; 4)$`, R`$(2; -3)$`],
     choicesEn: [R`$(1, -4)$`, R`$(-1, -4)$`, R`$(1, 4)$`, R`$(2, -3)$`],
     answer: 0,
-    hint: "Hoành độ đỉnh là −b/(2a). Tính xong thì thế vào hàm, đừng đổi dấu tung độ.",
+    hint: R`Tính $x=-\dfrac{b}{2a}$, rồi thế vào $y$.`,
     hintEn: "The vertex x-coordinate is −b/(2a). Substitute it; do not flip the sign of y.",
     steps: [
       R`$a = 1$, $b = -2$, $c = -3$. Hoành độ đỉnh $x = -\dfrac{b}{2a} = -\dfrac{-2}{2} = 1$.`,
@@ -43,7 +44,7 @@ export const quadraticQuestions: Question[] = [
     choices: [R`$x = -1$ và $x = 3$`, R`$x = 1$ và $x = -3$`, R`$x = -1$ và $x = -3$`, "Vô nghiệm"],
     choicesEn: [R`$x = -1$ and $x = 3$`, R`$x = 1$ and $x = -3$`, R`$x = -1$ and $x = -3$`, "No solution"],
     answer: 0,
-    hint: "Nhẩm (x − 3)(x + 1), hoặc tính Δ = 16.",
+    hint: R`Phân tích $(x-3)(x+1)$, hoặc tính $\Delta=16$.`,
     hintEn: "Factor as (x − 3)(x + 1), or compute Δ = 16.",
     steps: [
       R`$\Delta = (-2)^2 - 4\cdot 1\cdot (-3) = 16 > 0$, nên có hai nghiệm phân biệt.`,
@@ -63,7 +64,7 @@ export const quadraticQuestions: Question[] = [
     choices: [R`$(-\infty; 8]$`, R`$[8; +\infty)$`, R`$(-\infty; 1]$`, R`$\mathbb{R}$`],
     choicesEn: [R`$(-\infty, 8]$`, R`$[8, +\infty)$`, R`$(-\infty, 1]$`, R`$\mathbb{R}$`],
     answer: 0,
-    hint: "a < 0 thì đỉnh là giá trị lớn nhất. Tung độ đỉnh đọc ở hằng số cuối của dạng đỉnh.",
+    hint: R`$a<0$: đọc tung độ ở hằng số của dạng $a(x-h)^2+k$.`,
     hintEn: "If a < 0 the vertex is the maximum. Its y-coordinate is the constant at the end of vertex form.",
     steps: [
       R`$a = -2 < 0$, bề lõm hướng xuống, đỉnh là giá trị lớn nhất.`,
@@ -83,7 +84,7 @@ export const quadraticQuestions: Question[] = [
     choices: [R`$200\text{ m}^2$`, R`$400\text{ m}^2$`, R`$100\text{ m}^2$`, R`$192\text{ m}^2$`],
     choicesEn: [R`$200\text{ m}^2$`, R`$400\text{ m}^2$`, R`$100\text{ m}^2$`, R`$192\text{ m}^2$`],
     answer: 0,
-    hint: "Gọi x là cạnh vuông góc với tường. Cạnh song song tường còn 40 − 2x. Cho S′ = 0.",
+    hint: R`Đặt $S=x(40-2x)$, rồi giải $S'=0$.`,
     hintEn: "Let x be the side perpendicular to the wall. The side along the wall is 40 − 2x. Set S′ = 0.",
     steps: [
       R`Hai cạnh vuông góc tường dài $x$ mét, cạnh song song tường dài $40 - 2x$ mét. $S = x(40 - 2x) = -2x^2 + 40x$, với $0 < x < 20$.`,
@@ -113,7 +114,7 @@ export const quadraticQuestions: Question[] = [
       "The parabola cuts the x-axis at two distinct points",
     ],
     answer: 0,
-    hint: "Δ gắn với phương trình y = 0. Δ = 0 là một nghiệm kép.",
+    hint: R`$\Delta=0$ nghĩa là $y=0$ có một nghiệm kép.`,
     hintEn: "Δ belongs to the equation y = 0. Δ = 0 means a double root.",
     steps: [
       R`$\Delta = b^2 - 4ac$ là biệt thức của phương trình $y = 0$.`,
@@ -133,7 +134,7 @@ export const quadraticQuestions: Question[] = [
     choices: [R`$3$ tại $x = 2$`, R`$11$ tại $x = 0$`, R`$-5$ tại $x = 2$`, R`$3$ tại $x = 4$`],
     choicesEn: [R`$3$ at $x = 2$`, R`$11$ at $x = 0$`, R`$-5$ at $x = 2$`, R`$3$ at $x = 4$`],
     answer: 0,
-    hint: "C′(x) = 4x − 8. Đừng đọc hệ số tự do, và đừng quên số 2 ở mẫu của −b/(2a).",
+    hint: R`Giải $C'(x)=4x-8=0$.`,
     hintEn: "C′(x) = 4x − 8. Do not read off the constant term, and do not drop the 2 in −b/(2a).",
     steps: [
       R`$C'(x) = 4x - 8 = 0$ tại $x = 2$. Cũng là $x = -\dfrac{b}{2a} = \dfrac{8}{4}$.`,

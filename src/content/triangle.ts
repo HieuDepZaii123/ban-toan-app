@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const triangleLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Diện tích tam giác là nửa đáy nhân chiều cao.`, en: R`A triangle's area is half base times height.` },
-    { k: "vd", vi: R`Đáy $6$, cao $4$: diện tích $12$.`, en: R`Base $6$, height $4$: area $12$.` },
+    { k: "mo", vi: R`Diện tích tam giác là nửa đáy nhân chiều cao. Thể tích hộp là dài nhân rộng nhân cao.`, en: R`A triangle's area is half base times height. A box's volume is length times width times height.` },
+    { k: "dinh", vi: R`$S=\dfrac12 bh$. Chóp $V=\dfrac13 Sh$. Tứ diện đều cạnh $a$: $V=\dfrac{a^3\sqrt2}{12}$.`, en: R`$S=\dfrac12 bh$. Pyramid $V=\dfrac13 Sh$. Regular tetrahedron of edge $a$: $V=\dfrac{a^3\sqrt2}{12}$.` },
+    { k: "vd", vi: R`Tam giác đáy $6$, cao $4$: $S=\dfrac{6\cdot 4}{2}=12$.`, en: R`A triangle with base $6$ and height $4$: $S=\dfrac{6\cdot 4}{2}=12$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Thể tích chóp là $V=\dfrac13 Sh$.`, en: R`A pyramid has volume $V=\dfrac13 Sh$.` },
-    { k: "vd", vi: R`Đáy vuông cạnh $6$, cao $4$: $V=48$.`, en: R`Square base of side $6$, height $4$: $V=48$.` },
-    { k: "loi", vi: R`Quên $\dfrac12$ thì diện tích đáy $6$, cao $4$ thành $24$.`, en: R`Dropping $\dfrac12$ turns base $6$, height $4$ into area $24$.` },
-    { k: "kiem", vi: R`Tam giác vuông cạnh $3$ và $4$ có diện tích $6$.`, en: R`A right triangle with legs $3$ and $4$ has area $6$.` },
+    { k: "dinh", vi: R`Phóng cạnh theo $k$ thì diện tích nhân $k^2$, thể tích nhân $k^3$.`, en: R`Scaling edges by $k$ multiplies area by $k^2$ and volume by $k^3$.` },
+    { k: "vd", vi: R`Chóp đáy vuông cạnh $6$, cao $4$: $S=36$, $V=\dfrac13\cdot 36\cdot 4=48$.`, en: R`Pyramid with square base of side $6$ and height $4$: $S=36$, $V=\dfrac13\cdot 36\cdot 4=48$.` },
+    { k: "loi", vi: R`Bỏ $\dfrac12$ thì đáy $6$, cao $4$ thành $24$. Diện tích đúng là $12$.`, en: R`Dropping $\dfrac12$ turns base $6$ and height $4$ into $24$. The area is $12$.` },
+    { k: "kiem", vi: R`Hộp $3\times 4\times 5$ có $V=60$. Cạnh gấp đôi thì diện tích đáy nhân $4$.`, en: R`A $3\times 4\times 5$ box has $V=60$. Doubling the edges multiplies the base area by $4$.` },
   ],
 };
 

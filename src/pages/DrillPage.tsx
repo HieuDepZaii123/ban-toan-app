@@ -25,7 +25,7 @@ export function DrillPage() {
     <PageFrame
       kicker="Luyện tập"
       title="Đề 14 câu"
-      lead="Một đề dùng chung, phủ nhiều chuyên đề. Câu chọn nhầm vào Sổ lỗi trên máy này. Sổ từng tờ vẫn giữ riêng."
+      lead="14 câu trên nhiều chuyên đề. Câu sai được ghi vào Sổ lỗi trên máy này."
     >
       <p className="lecture-note">Điểm {right}/{sharedDrill.length} · Câu {index + 1}/{sharedDrill.length}</p>
       <article className="tool-card">

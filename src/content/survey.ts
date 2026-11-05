@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const surveyLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Khảo sát là xem hàm đang đi lên hay đi xuống.`, en: R`Sketching means seeing whether the function is rising or falling.` },
-    { k: "vd", vi: R`$y=x^3-3x$ tại $x=-1$ thì $y=2$.`, en: R`$y=x^3-3x$ at $x=-1$ gives $y=2$.` },
+    { k: "mo", vi: R`Chiều đi theo dấu $y'$. Với $y=x^3-3x$, $y'=3(x^2-1)$ dương khi $|x|>1$.`, en: R`Direction follows the sign of $y'$. For $y=x^3-3x$, $y'=3(x^2-1)$ is positive when $|x|>1$.` },
+    { k: "dinh", vi: R`$y'>0$: đồng biến. $y'=0$ và $y'$ đổi dấu: cực trị. $y''$ đổi dấu: điểm uốn.`, en: R`$y'>0$: increasing. $y'=0$ and $y'$ changes sign: an extremum. $y''$ changes sign: an inflection point.` },
+    { k: "vd", vi: R`$y=x^3-3x$, $y'=3(x-1)(x+1)$. $y'=0$ tại $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.`, en: R`$y=x^3-3x$, $y'=3(x-1)(x+1)$. $y'=0$ at $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$y'=0$ và $y'$ đổi dấu thì đó là cực trị.`, en: R`If $y'=0$ and $y'$ changes sign, that point is an extremum.` },
-    { k: "vd", vi: R`$y=x^3-3x$ có cực đại $2$ và cực tiểu $-2$.`, en: R`$y=x^3-3x$ has maximum $2$ and minimum $-2$.` },
-    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng không là cực trị.`, en: R`$y=x^3$ has $y'(0)=0$ but it is not an extremum.` },
-    { k: "kiem", vi: R`$\dfrac{x^2}{x-1}$ có tiệm cận đứng $x=1$.`, en: R`$\dfrac{x^2}{x-1}$ has vertical asymptote $x=1$.` },
+    { k: "dinh", vi: R`Cực trị cần $y'$ đổi dấu. Trên $\mathbb{R}$, đa thức bậc ba không có giá trị lớn nhất.`, en: R`An extremum needs $y'$ to change sign. On $\mathbb{R}$ a cubic has no greatest value.` },
+    { k: "vd", vi: R`$y=x^3-3x=x(x-\sqrt3)(x+\sqrt3)$. Ba nghiệm $0,\pm\sqrt3$. Cực trị ở $\pm 1$, không phải ở nghiệm.`, en: R`$y=x^3-3x=x(x-\sqrt3)(x+\sqrt3)$. Three roots $0,\pm\sqrt3$. Extrema at $\pm 1$, not at the roots.` },
+    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$, nhưng $y(-1)=-1$ và $y(1)=1$: hàm vẫn tăng, không có cực trị.`, en: R`$y=x^3$ has $y'(0)=0$, but $y(-1)=-1$ and $y(1)=1$: it still increases, so there is no extremum.` },
+    { k: "kiem", vi: R`$\dfrac{x^2}{x-1}$: mẫu bằng $0$ tại $x=1$, đó là tiệm cận đứng.`, en: R`$\dfrac{x^2}{x-1}$: the denominator is $0$ at $x=1$, a vertical asymptote.` },
   ],
 };
 
@@ -23,7 +24,7 @@ export const surveyQuestions: Question[] = [
     choices: [R`$2$ tại $x = -1$`, R`$-2$ tại $x = -1$`, R`$0$ tại $x = 0$`, R`$2$ tại $x = 1$`],
     choicesEn: [R`$2$ at $x = -1$`, R`$-2$ at $x = -1$`, R`$0$ at $x = 0$`, R`$2$ at $x = 1$`],
     answer: 0,
-    hint: "Giải y′ = 0, rồi xem y′ đổi từ dương sang âm ở đâu.",
+    hint: "Giải y′ = 0, rồi tìm chỗ y′ đổi từ dương sang âm.",
     hintEn: "Solve y′ = 0, then see where y′ changes from positive to negative.",
     steps: [
       R`$y' = 3x^2 - 3 = 3(x-1)(x+1)$.`,
@@ -43,7 +44,7 @@ export const surveyQuestions: Question[] = [
     choices: [R`$-2$ tại $x = 1$`, R`$2$ tại $x = 1$`, R`$-2$ tại $x = -1$`, R`$0$ tại $x = 0$`],
     choicesEn: [R`$-2$ at $x = 1$`, R`$2$ at $x = 1$`, R`$-2$ at $x = -1$`, R`$0$ at $x = 0$`],
     answer: 0,
-    hint: "Cực tiểu là chỗ y′ đổi từ âm sang dương.",
+    hint: "Cực tiểu nằm ở chỗ y′ đổi từ âm sang dương.",
     hintEn: "A minimum is where y′ changes from negative to positive.",
     steps: [
       R`Trên $(-1; 1)$, $y' < 0$. Bên phải $x = 1$, $y' > 0$.`,
@@ -63,7 +64,7 @@ export const surveyQuestions: Question[] = [
     choices: [R`$-\sqrt{3}$, $0$, $\sqrt{3}$`, R`$-1$, $0$, $1$`, R`$\pm 1$`, "Không có nghiệm"],
     choicesEn: [R`$-\sqrt{3}$, $0$, $\sqrt{3}$`, R`$-1$, $0$, $1$`, R`$\pm 1$`, "No roots"],
     answer: 0,
-    hint: "Đặt y = 0 và phân tích x(x² − 3). Đừng lấy nghiệm của đạo hàm.",
+    hint: R`Giải $y=0$ bằng $x(x^2-3)=0$, không lấy nghiệm của $y'$.`,
     hintEn: "Set y = 0 and factor x(x² − 3). Do not take the roots of the derivative.",
     steps: [
       R`$x^3 - 3x = x(x^2 - 3) = x(x - \sqrt{3})(x + \sqrt{3})$.`,
@@ -93,7 +94,7 @@ export const surveyQuestions: Question[] = [
       R`$(-1; 1)$`,
     ],
     answer: 0,
-    hint: "Đồng biến nơi y′ không âm. Ở đây y′ dương ngoài đoạn giữa hai điểm dừng.",
+    hint: "Đồng biến ở nơi y′ không âm, tức ngoài đoạn giữa hai điểm dừng.",
     hintEn: "The function increases where y′ is non-negative. Here y′ is positive outside the interval between the two stationary points.",
     steps: [
       R`$y' = 3(x-1)(x+1)$ dương khi $x < -1$ hoặc $x > 1$.`,
@@ -113,7 +114,7 @@ export const surveyQuestions: Question[] = [
     choices: ["Không có cực trị", "Cực tiểu, y = 0", "Cực đại, y = 0", "Cực tiểu, y = −2"],
     choicesEn: ["No extremum", "A minimum, y = 0", "A maximum, y = 0", "A minimum, y = −2"],
     answer: 0,
-    hint: "y′ = 0 chưa đủ. Phải xem y′ có đổi dấu hay không.",
+    hint: "Sau khi có y′ = 0, hãy xét y′ có đổi dấu hay không.",
     hintEn: "y′ = 0 is not enough. Check whether y′ changes sign.",
     steps: [
       R`$y' = 3x^2$. Tại $x = 0$, đạo hàm bằng $0$, và tiếp tuyến nằm ngang.`,
@@ -143,7 +144,7 @@ export const surveyQuestions: Question[] = [
       "Yes, y(1) = 0",
     ],
     answer: 0,
-    hint: "Xem mẫu số tại x = 1 trước khi thế vào tử.",
+    hint: "Xét mẫu tại x = 1 trước khi thế số vào tử.",
     hintEn: "Look at the denominator at x = 1 before substituting into the numerator.",
     steps: [
       R`Mẫu $x - 1$ bằng $0$ khi $x = 1$, nên hàm không xác định tại đó.`,

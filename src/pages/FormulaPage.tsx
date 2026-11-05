@@ -10,7 +10,7 @@ export function FormulaPage() {
     <PageFrame
       kicker="Sổ công thức"
       title="Công thức cần nhớ"
-      lead="Tra nhanh khi luyện. Hiểu sâu vẫn là việc của bạn trên từng tờ."
+      lead="Công thức và điều kiện dùng. Cách tính ở từng tờ."
     >
       <form className="search" role="search" onSubmit={(event) => event.preventDefault()}>
         <input

@@ -17,12 +17,12 @@ export function Welcome() {
           <Logo size={64} />
           <b>Bàn Toán</b>
         </div>
-        <h1>{t(lang, "Chạm vào toán, rồi tự tay kiểm lại.", "Touch the maths, then check it yourself.")}</h1>
+        <h1>{t(lang, "Mười bốn chuyên đề, có số để tự kiểm.", "Fourteen topics, with a number you can check.")}</h1>
         <p className="lead">
           {t(
             lang,
-            "Kéo tham số, đọc số vừa tính, làm câu có lời giải. Mười bốn chuyên đề đi từ Cơ bản, qua Chuẩn thi, tới một lớp Sáng tạo ngắn.",
-            "Drag a parameter, read the number you just computed, then work a question with a solution. Fourteen topics move from a plain start to the exam layer and a short creative layer.",
+            "Kéo một tham số, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
+            "Drag one parameter, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
           )}
         </p>
         <svg className="hero-stroke" viewBox="0 0 280 72" aria-hidden="true">
@@ -32,15 +32,15 @@ export function Welcome() {
       <section className="tier-row" aria-label={t(lang, "Ba mức học", "Three levels")}>
         <article>
           <b>{t(lang, "Học", "Study")}</b>
-          <span>{t(lang, "Cơ bản: một ý và một ví dụ nhỏ.", "Basics: one idea and one small example.")}</span>
+          <span>{t(lang, "Một định nghĩa, kèm một số cụ thể.", "One definition, with one concrete number.")}</span>
         </article>
         <article>
           <b>{t(lang, "Làm việc", "Work")}</b>
-          <span>{t(lang, "Chuẩn thi: định nghĩa, ví dụ, lỗi hay gặp.", "Exam layer: definition, example, common mistake.")}</span>
+          <span>{t(lang, "Công thức, một phép tính, và lỗi hay gặp.", "A formula, one calculation, and a common mistake.")}</span>
         </article>
         <article>
           <b>{t(lang, "Sáng tạo", "Create")}</b>
-          <span>{t(lang, "Nâng cao: một hướng khó hơn, có lời giải từng bước.", "A harder line, with a worked solution.")}</span>
+          <span>{t(lang, "Một câu khó, lời giải đi từng bước.", "One harder question, solved step by step.")}</span>
         </article>
       </section>
       <div className="home-tools">
@@ -87,7 +87,7 @@ function FormulaPeek() {
   return (
     <section className="tool-card peek" tabIndex={0}>
       <b>{t(lang, "Tiếp tuyến của y = x²", "Tangent to y = x²")}</b>
-      <p className="lecture-note">{t(lang, "Rê vào thẻ để thấy đường trượt.", "Hover the card to see the line move.")}</p>
+      <p className="lecture-note">{t(lang, "Rê vào thẻ: tiếp tuyến chạy theo x.", "Hover the card: the tangent follows x.")}</p>
       <div className="peek-stage">
         <svg viewBox="-2.2 -0.4 4.4 4.6" className="peek-plot" aria-hidden="true">
           <line x1="-2" y1="0" x2="2" y2="0" className="axis" />

@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const limitLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Giới hạn là số hàm tiến tới, không nhất thiết bằng giá trị tại điểm đó.`, en: R`A limit is the number approached, not necessarily the value at the point.` },
-    { k: "vd", vi: R`$\dfrac{x^2-1}{x-1}$ sát $1$ thì sát $2$.`, en: R`$\dfrac{x^2-1}{x-1}$ is near $2$ when $x$ is near $1$.` },
+    { k: "mo", vi: R`$\lim_{x\to a}f(x)=L$ khi cả hai phía tiến tới $L$. Giá trị $f(a)$ không quyết định giới hạn.`, en: R`$\lim_{x\to a}f(x)=L$ when both sides approach $L$. The value $f(a)$ does not decide the limit.` },
+    { k: "dinh", vi: R`Liên tục tại $a$ khi giới hạn tồn tại và bằng $f(a)$.`, en: R`Continuous at $a$ when the limit exists and equals $f(a)$.` },
+    { k: "vd", vi: R`Với $x\neq 1$, $\dfrac{x^2-1}{x-1}=x+1$. Khi $x$ sát $1$, biểu thức sát $2$, dù có gán $f(1)=5$.`, en: R`For $x\neq 1$, $\dfrac{x^2-1}{x-1}=x+1$. When $x$ is near $1$, the expression is near $2$, even if $f(1)=5$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Có giới hạn $L$ khi cả hai phía về $L$; liên tục khi thêm $f(a)=L$.`, en: R`The limit is $L$ when both sides approach $L$; continuous when also $f(a)=L$.` },
-    { k: "vd", vi: R`Dù $f(1)=5$, $\dfrac{x^2-1}{x-1}$ vẫn tiến tới $2$.`, en: R`Even if $f(1)=5$, $\dfrac{x^2-1}{x-1}$ still approaches $2$.` },
-    { k: "loi", vi: R`Đừng lấy $f(a)$ làm giới hạn.`, en: R`Do not take $f(a)$ as the limit.` },
-    { k: "kiem", vi: R`$T=25+60e^{-t/4}$: lúc đầu $85$, về lâu là $25$.`, en: R`$T=25+60e^{-t/4}$: starts at $85$, tends to $25$.` },
+    { k: "dinh", vi: R`Hai phía khác nhau thì không có giới hạn. Không lấy trung bình hai phía.`, en: R`Different one-sided limits mean there is no limit. Do not average the two sides.` },
+    { k: "vd", vi: R`$T(t)=25+60e^{-t/4}$. $T(0)=85$. Khi $t\to+\infty$, $e^{-t/4}\to 0$ nên $T\to 25$.`, en: R`$T(t)=25+60e^{-t/4}$. $T(0)=85$. As $t\to+\infty$, $e^{-t/4}\to 0$ so $T\to 25$.` },
+    { k: "loi", vi: R`Thế $x=1$ vào $\dfrac{x^2-1}{x-1}$ khi mẫu bằng $0$. Rút còn $x+1$, giới hạn là $2$.`, en: R`Substituting $x=1$ into $\dfrac{x^2-1}{x-1}$ while the denominator is $0$. After cancelling, it is $x+1$ and the limit is $2$.` },
+    { k: "kiem", vi: R`$f(x)=-1$ khi $x<0$ và $f(x)=1$ khi $x>0$. Hai phía khác nhau: không có $\lim_{x\to 0}f(x)$.`, en: R`$f(x)=-1$ for $x<0$ and $f(x)=1$ for $x>0$. The sides differ: $\lim_{x\to 0}f(x)$ does not exist.` },
   ],
 };
 
@@ -23,7 +24,7 @@ export const limitQuestions: Question[] = [
     choices: [R`$2$`, R`$0$`, "Không tồn tại", R`$1$`],
     choicesEn: [R`$2$`, R`$0$`, "Does not exist", R`$1$`],
     answer: 0,
-    hint: "Rút nhân tử x − 1 trước. Đừng thế x = 1 vào biểu thức chưa rút.",
+    hint: R`Rút $x-1$ trước, rồi mới thế.`,
     hintEn: "Cancel the factor x − 1 first. Do not substitute x = 1 into the original expression.",
     steps: [
       R`$x^2 - 1 = (x-1)(x+1)$. Với $x \neq 1$, biểu thức bằng $x+1$.`,
@@ -43,7 +44,7 @@ export const limitQuestions: Question[] = [
     choices: [R`$2$`, R`$5$`, "Không tồn tại", R`$0$`],
     choicesEn: [R`$2$`, R`$5$`, "Does not exist", R`$0$`],
     answer: 0,
-    hint: "Giới hạn nhìn các điểm xung quanh, không nhìn đúng một điểm.",
+    hint: "Nhìn hai phía quanh điểm đó, không lấy giá trị tại đúng điểm.",
     hintEn: "The limit looks at the points around it, not at that single point.",
     steps: [
       R`Với mọi $x \neq 1$, $f(x) = x+1$.`,
@@ -63,7 +64,7 @@ export const limitQuestions: Question[] = [
     choices: ["Không tồn tại", R`$-1$`, R`$0$`, R`$1$`],
     choicesEn: ["Does not exist", R`$-1$`, R`$0$`, R`$1$`],
     answer: 0,
-    hint: "Tính riêng phía trái và phía phải. Đừng lấy trung bình.",
+    hint: "Tính riêng phía trái và phía phải, không lấy trung bình.",
     hintEn: "Compute the left side and the right side separately. Do not average them.",
     steps: [
       R`Phía trái tiến tới $-1$. Phía phải tiến tới $1$.`,
@@ -93,7 +94,7 @@ export const limitQuestions: Question[] = [
       "Continuous only when f(1) = 0",
     ],
     answer: 0,
-    hint: "Liên tục khi giới hạn tồn tại và bằng đúng số đã gán.",
+    hint: "Liên tục khi giới hạn bằng đúng số đã gán tại điểm đó.",
     hintEn: "Continuity needs the limit to exist and to equal the assigned value.",
     steps: [
       R`Giới hạn là $2$, như sau khi rút gọn.`,
@@ -113,7 +114,7 @@ export const limitQuestions: Question[] = [
     choices: [R`$25^\circ\text{C}$`, R`$85^\circ\text{C}$`, R`$0^\circ\text{C}$`, R`$60^\circ\text{C}$`],
     choicesEn: [R`$25^\circ\text{C}$`, R`$85^\circ\text{C}$`, R`$0^\circ\text{C}$`, R`$60^\circ\text{C}$`],
     answer: 0,
-    hint: "Số mũ âm rất lớn thì e mũ tiến về 0. Số 25 đứng ngoài.",
+    hint: R`Khi $t\to+\infty$, $e^{-t/4}\to 0$, còn lại $25$.`,
     hintEn: "A large negative exponent sends the exponential to 0. The 25 sits outside it.",
     steps: [
       R`Khi $t \to +\infty$, $-t/4 \to -\infty$ nên $e^{-t/4} \to 0$.`,
@@ -133,7 +134,7 @@ export const limitQuestions: Question[] = [
     choices: [R`$1$`, R`$0$`, "Không tồn tại", R`$x$`],
     choicesEn: [R`$1$`, R`$0$`, "Does not exist", R`$x$`],
     answer: 0,
-    hint: "Tại x = 0 mẫu bằng 0, nhưng hai phía cùng tiến về một số.",
+    hint: "Mẫu bằng 0 tại điểm đó, nhưng hai phía cùng tiến về một số.",
     hintEn: "At x = 0 the denominator is 0, but both sides approach the same number.",
     steps: [
       R`Biểu thức không xác định tại $0$. Giới hạn không cần giá trị tại đúng điểm đó.`,

@@ -6,7 +6,7 @@ export function WorkshopPage() {
     <PageFrame
       kicker="Xưởng hình"
       title="Dựng hình phẳng"
-      lead="Đặt điểm, nối đoạn, lấy trung điểm hoặc hạ vuông góc. Kéo điểm để hình đổi theo. Khối 3D vẫn mở trong chuyên đề Hình."
+      lead="Đặt điểm, nối đoạn, lấy trung điểm hoặc hạ vuông góc. Kéo điểm thì số đo đổi theo. Khối nằm ở chuyên đề Hình."
     >
       <PlaneShop />
     </PageFrame>

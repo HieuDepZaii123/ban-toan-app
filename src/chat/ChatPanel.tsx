@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { A } from "../lib/route.tsx";
+import { useRoute } from "../lib/useRoute.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { ChatText } from "./ChatText.tsx";
 import { mockTutor } from "./mock.ts";
+import { TOPIC_QUICK, topicById } from "./tutorCopy.ts";
 
 type Turn = { role: "user" | "assistant"; content: string };
 type ChatState = {
@@ -25,7 +27,16 @@ const URL_KEY = "bt-ask-url";
 const MOCK_KEY = "bt-ask-mock";
 const LOCAL_LIMIT = 8;
 
-const QUICK = ["Đạo hàm là gì?", "Gợi ý phương trình bậc hai", "Giới hạn dạng 0/0"];
+const QUICK = ["Đạo hàm của x mũ 2", "Đỉnh của parabol?", "giới hạn dạng 0/0"];
+
+function sheetId(path: string): string {
+  if (!path.startsWith("/t/")) return "";
+  try {
+    return decodeURIComponent(path.slice(3).split("/")[0] ?? "");
+  } catch {
+    return "";
+  }
+}
 
 function sessionId(): string {
   const saved = sessionStorage.getItem(SESSION);
@@ -67,6 +78,9 @@ function loadHistory(): Turn[] {
 
 export function ChatPanel({ onClose }: { onClose: () => void }) {
   const lang = useLang();
+  const { path } = useRoute();
+  const studying = topicById(sheetId(path));
+  const quick = studying ? TOPIC_QUICK[studying.id] : QUICK;
   const [turns, setTurns] = useState<Turn[]>(loadHistory);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
@@ -85,6 +99,14 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     box.current?.focus();
   }, []);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 
   useEffect(() => {
     try { localStorage.setItem(HISTORY, JSON.stringify(turns)); } catch { /* ignore */ }
@@ -108,7 +130,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       let reply = "";
       if (mock) {
         bumpToday();
-        reply = mockTutor(content);
+        reply = mockTutor(content, studying?.id);
         setMeta({ mode: "demo" });
       } else if (url.trim()) {
         bumpToday();
@@ -125,7 +147,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "content-type": "application/json", "x-ban-toan-session": sessionId() },
-          body: JSON.stringify({ messages: next, license }),
+          body: JSON.stringify({ messages: next, license, topic: studying?.id ?? "" }),
         });
         const body = await res.json() as ChatState;
         setMeta(body);
@@ -159,21 +181,25 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         {mock || url.trim() ? <span>{t(lang, `Mẫu trên máy: còn ${localLeft}/${LOCAL_LIMIT}.`, `On this device: ${localLeft}/${LOCAL_LIMIT} left.`)} </span> : null}
         {meta.premium ? null : <A href="/nang-cap">{t(lang, "Nâng cấp", "Upgrade")}</A>}
       </p>
+      {studying ? <p className="chat-context">Đang học: {studying.title}</p> : null}
       <div className="chat-log" ref={scroller} aria-live="polite">
         {turns.length === 0 ? (
-          <p className="chat-note">{t(lang, "Gửi một bài. Mình gợi ý từng bước, bạn làm bước cuối.", "Send a problem. I suggest the steps; you finish the last one.")}</p>
+          <p className="chat-note">{t(lang, "Hỏi một bài THPT. Mình gợi ý từng bước, bạn tính bước cuối.", "Ask one THPT problem. I suggest the steps; you compute the last one.")}</p>
         ) : null}
         {turns.map((turn, index) => (
           <article key={`${turn.role}-${index}`} className={`chat-turn is-${turn.role}`}>
             <b>{turn.role === "user" ? t(lang, "Bạn", "You") : t(lang, "Trợ lý", "Tutor")}</b>
             <Bubble role={turn.role} content={turn.content} />
+            {turn.role === "assistant" ? (
+              <FollowUps content={turn.content} fallbackId={studying?.id} busy={busy} onAsk={(item) => void send(item)} />
+            ) : null}
           </article>
         ))}
         {busy ? <p className="chat-typing">{t(lang, "Đang soạn…", "Typing…")}</p> : null}
         {note ? <p className="chat-note" role="status">{note}</p> : null}
       </div>
       <div className="quick-row">
-        {QUICK.map((item) => (
+        {quick.map((item) => (
           <button key={item} type="button" className="text-btn" disabled={busy} onClick={() => void send(item)}>{item}</button>
         ))}
       </div>
@@ -231,18 +257,61 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
 }
 
 function Bubble({ role, content }: { role: Turn["role"]; content: string }) {
-  if (role === "user") return <ChatText text={content} />;
   const lines = content.split("\n").filter((line) => line.trim().length > 0);
   const steps = lines.filter((line) => /^\d+[.)]/.test(line.trim()));
-  if (steps.length < 2) return <ChatText text={content} />;
+  const [open, setOpen] = useState<boolean[]>(() => steps.map(() => false));
+  const [copied, setCopied] = useState(false);
+  if (role === "user") return <ChatText text={content} />;
   const intro = lines.filter((line) => !/^\d+[.)]/.test(line.trim())).join("\n");
+  const allOpen = open.length > 0 && open.every(Boolean);
+
+  async function copy(): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1200);
+    } catch {
+      setCopied(false);
+    }
+  }
+
   return (
     <>
       {intro ? <ChatText text={intro} /> : null}
-      <details className="chat-steps">
-        <summary>Các bước ({steps.length})</summary>
-        <ChatText text={steps.join("\n")} />
-      </details>
+      {steps.map((step, index) => (
+        <details
+          key={step}
+          className="chat-step"
+          open={open[index]}
+          onToggle={(event) => {
+            const next = event.currentTarget.open;
+            setOpen((current) => current[index] === next ? current : current.map((value, place) => (place === index ? next : value)));
+          }}
+        >
+          <summary>Bước {index + 1}</summary>
+          <ChatText text={step.replace(/^\d+[.)]\s*/, "")} />
+        </details>
+      ))}
+      <div className="chat-tools">
+        <button type="button" className="text-btn" onClick={() => void copy()}>{copied ? "Đã chép" : "Chép"}</button>
+        {steps.length > 1 ? (
+          <button type="button" className="text-btn" onClick={() => setOpen(steps.map(() => !allOpen))}>
+            {allOpen ? "Gộp hết" : "Mở hết"}
+          </button>
+        ) : null}
+      </div>
     </>
+  );
+}
+
+function FollowUps({ content, fallbackId, busy, onAsk }: { content: string; fallbackId?: string; busy: boolean; onAsk: (text: string) => void }) {
+  const found = /\/t\/([a-z0-9-]+)/.exec(content);
+  const topic = topicById(found?.[1] ?? fallbackId ?? "");
+  return (
+    <div className="quick-row">
+      <button type="button" className="text-btn" disabled={busy} onClick={() => onAsk("Thử lại với số 5")}>Thử số 5</button>
+      {topic ? <A className="text-btn" href={`/t/${topic.id}`}>Mở tờ</A> : null}
+      <button type="button" className="text-btn" disabled={busy} onClick={() => onAsk("Giải thích bước 2 bằng một số cụ thể")}>Giải thích bước 2</button>
+    </div>
   );
 }

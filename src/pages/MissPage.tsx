@@ -25,7 +25,7 @@ export function MissPage() {
     <PageFrame
       kicker="Sổ lỗi"
       title="Những câu còn sai"
-      lead="Đề 14 câu ghi ở đây. Câu sai trong từng tờ vẫn nằm trong Sổ của tờ đó."
+      lead="Câu sai của đề 14 câu. Sổ từng tờ vẫn để riêng."
     >
       <h2>Đề dùng chung</h2>
       {rows.length === 0 ? <p className="empty">Chưa có câu sai trong đề 14 câu.</p> : (

@@ -45,7 +45,7 @@ export function ReferPage() {
     <PageFrame
       kicker="Giới thiệu"
       title="Giới thiệu bạn bè"
-      lead="Chia sẻ link. Khi bạn bè trả phí Premium, bạn được ghi một phần hoa hồng. Tiền không tự chuyển — admin duyệt chi bằng tay."
+      lead="Link của bạn. Hoa hồng ghi khi bạn bè trả Premium. Admin duyệt rồi mới chi."
     >
       {error ? <p className="empty">{error}</p> : null}
       {!stats && !error ? <p className="loading">Đang mở mã…</p> : null}

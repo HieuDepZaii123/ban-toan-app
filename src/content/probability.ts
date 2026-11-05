@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const probabilityLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn.`, en: R`Probability is favorable cases divided by the cases that remain.` },
-    { k: "vd", vi: R`Một đồng xu, mặt ngửa: $\dfrac12$.`, en: R`One coin, heads: $\dfrac12$.` },
+    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn sau điều kiện đã biết.`, en: R`Probability is the favorable cases divided by the cases that remain after what is already known.` },
+    { k: "dinh", vi: R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ khi $P(B)\neq 0$. Mẫu số là $B$, không phải không gian cũ.`, en: R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ when $P(B)\neq 0$. The denominator is $B$, not the original space.` },
+    { k: "vd", vi: R`Ba đồng xu, ít nhất một mặt ngửa: $1-\left(\dfrac12\right)^3=\dfrac78$.`, en: R`Three coins, at least one head: $1-\left(\dfrac12\right)^3=\dfrac78$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Điều đã biết làm đổi mẫu số của xác suất.`, en: R`What is already known changes the probability's denominator.` },
-    { k: "vd", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: xác suất cả hai đều $6$ là $\dfrac1{11}$.`, en: R`Two dice, given at least one $6$: both sixes has probability $\dfrac1{11}$.` },
-    { k: "loi", vi: R`Đừng chia cho $36$ khi đề đã biết có một mặt $6$.`, en: R`Do not divide by $36$ once the problem already knows there is a $6$.` },
-    { k: "kiem", vi: R`Ba đồng xu, ít nhất một ngửa: $\dfrac78$.`, en: R`Three coins, at least one head: $\dfrac78$.` },
+    { k: "dinh", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: còn $36-25=11$ cặp, không còn $36$.`, en: R`Two dice, given at least one $6$: $36-25=11$ pairs remain, not $36$.` },
+    { k: "vd", vi: R`Trong $11$ cặp đó chỉ có $(6;6)$. Xác suất cả hai đều $6$ là $\dfrac{1}{11}$.`, en: R`Among those $11$ pairs only $(6;6)$ works. The probability both are $6$ is $\dfrac{1}{11}$.` },
+    { k: "loi", vi: R`Chia $1$ cặp cho $36$ ra $\dfrac{1}{36}$. Mẫu còn $11$ cặp, nên đúng là $\dfrac{1}{11}$.`, en: R`Dividing $1$ pair by $36$ gives $\dfrac{1}{36}$. Eleven pairs remain, so the probability is $\dfrac{1}{11}$.` },
+    { k: "kiem", vi: R`$10\,000$ người, bệnh $1\%$, độ nhạy $99\%$, dương giả $5\%$: $\dfrac{99}{99+495}=\dfrac16$.`, en: R`$10\,000$ people, prevalence $1\%$, sensitivity $99\%$, false positives $5\%$: $\dfrac{99}{99+495}=\dfrac16$.` },
   ],
 };
 
@@ -23,7 +24,7 @@ export const probabilityQuestions: Question[] = [
     choices: [R`$\dfrac{1}{11}$`, R`$\dfrac{1}{6}$`, R`$\dfrac{1}{36}$`, R`$\dfrac{1}{2}$`],
     choicesEn: [R`$\dfrac{1}{11}$`, R`$\dfrac{1}{6}$`, R`$\dfrac{1}{36}$`, R`$\dfrac{1}{2}$`],
     answer: 0,
-    hint: "Liệt kê các cặp còn lại. Đừng chia cho 6 hoặc cho 36.",
+    hint: "Liệt kê các cặp còn lại. Mẫu không còn là 36.",
     hintEn: "List the pairs that remain. Do not divide by 6 or by 36.",
     steps: [
       R`Mẫu gốc có $36$ cặp.`,
@@ -43,7 +44,7 @@ export const probabilityQuestions: Question[] = [
     choices: [R`$11$`, R`$12$`, R`$6$`, R`$36$`],
     choicesEn: [R`$11$`, R`$12$`, R`$6$`, R`$36$`],
     answer: 0,
-    hint: "Cộng hai hàng rồi trừ cặp bị đếm hai lần.",
+    hint: "Cộng hai nhóm, rồi trừ phần bị đếm hai lần.",
     hintEn: "Add the two lines, then subtract the pair that was counted twice.",
     steps: [
       R`Sáu cặp có xúc xắc A là $6$, sáu cặp có xúc xắc B là $6$.`,
@@ -63,7 +64,7 @@ export const probabilityQuestions: Question[] = [
     choices: [R`$\dfrac{1}{3}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{1}{4}$`, R`$\dfrac{2}{3}$`],
     choicesEn: [R`$\dfrac{1}{3}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{1}{4}$`, R`$\dfrac{2}{3}$`],
     answer: 0,
-    hint: "Bốn khả năng BB, BG, GB, GG cùng khả năng. Bỏ GG.",
+    hint: "Bốn khả năng BB, BG, GB, GG ngang nhau. Bỏ GG.",
     hintEn: "The four outcomes BB, BG, GB, GG are equally likely. Drop GG.",
     steps: [
       R`Thứ tự sinh phân biệt BG và GB.`,
@@ -83,7 +84,7 @@ export const probabilityQuestions: Question[] = [
     choices: [R`$\dfrac{1}{6}$`, R`$99\%$`, R`$1\%$`, R`$95\%$`],
     choicesEn: [R`$\dfrac{1}{6}$`, R`$99\%$`, R`$1\%$`, R`$95\%$`],
     answer: 0,
-    hint: "Đếm số người dương thật và số người dương giả. Mẫu số là tổng hai số đó.",
+    hint: "Mẫu số là số dương thật cộng số dương giả.",
     hintEn: "Count the true positives and the false positives. The denominator is their sum.",
     steps: [
       R`$1\%$ của $10000$ là $100$ người bệnh. Dương thật: $0{,}99 \cdot 100 = 99$.`,
@@ -103,7 +104,7 @@ export const probabilityQuestions: Question[] = [
     choices: [R`$\dfrac{3}{8}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{1}{8}$`, R`$\dfrac{2}{3}$`],
     choicesEn: [R`$\dfrac{3}{8}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{1}{8}$`, R`$\dfrac{2}{3}$`],
     answer: 0,
-    hint: "Có C(3, 2) dãy. Mỗi dãy có xác suất 1/8.",
+    hint: R`Có $C(3,2)$ dãy, mỗi dãy xác suất $\dfrac18$.`,
     hintEn: "There are C(3, 2) sequences. Each sequence has probability 1/8.",
     steps: [
       R`Mỗi lần xác suất $\dfrac{1}{2}$, nên một dãy cụ thể có xác suất $\dfrac{1}{8}$.`,
@@ -123,7 +124,7 @@ export const probabilityQuestions: Question[] = [
     choices: [R`$\dfrac{7}{8}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{3}{8}$`, R`$\dfrac{1}{8}$`],
     choicesEn: [R`$\dfrac{7}{8}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{3}{8}$`, R`$\dfrac{1}{8}$`],
     answer: 0,
-    hint: "Lấy phần bù: không có mặt ngửa nào.",
+    hint: "Lấy phần bù: xác suất không có mặt ngửa nào.",
     hintEn: "Use the complement: no heads at all.",
     steps: [
       R`Không ngửa nào nghĩa là cả ba sấp, xác suất $\dfrac{1}{8}$.`,

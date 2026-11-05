@@ -176,14 +176,14 @@ export function Upgrade() {
         <p className="pay-note">
           {t(
             lang,
-            "49.000đ một tháng, 399.000đ một năm. Thanh toán bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Nội dung các tờ hiện có vẫn mở.",
-            "49,000 VND a month, 399,000 VND a year. Pay with MoMo, VietQR, bank transfer, or USDT/USDC. The sheets you already have stay open.",
+            "49.000đ mỗi tháng, 399.000đ mỗi năm. Trả bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Các tờ đang có vẫn mở.",
+            "49,000 VND a month, 399,000 VND a year. Pay with MoMo, VietQR, bank transfer, or USDT/USDC. The sheets already here stay open.",
           )}
           {" "}
           <A href="/gioi-thieu">{t(lang, "Giới thiệu bạn bè", "Refer a friend")}</A>
           {plans?.lockContent
-            ? t(lang, " Cờ khóa nội dung đang bật.", " The content lock is on.")
-            : t(lang, " Cờ khóa nội dung đang tắt.", " The content lock is off.")}
+            ? t(lang, " Khóa nội dung đang bật.", " The content lock is on.")
+            : t(lang, " Khóa nội dung đang tắt.", " The content lock is off.")}
         </p>
         {loadError ? <p className="empty">{t(lang, "Không tải được bảng giá.", "The price list did not load.")}</p> : null}
         {!orderId ? (

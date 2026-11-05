@@ -1,4 +1,5 @@
 import { demoReply, isOffTopic, REFUSAL, TUTOR_INSTRUCTIONS } from "./policy.ts";
+import { tutorTopics } from "./topics.ts";
 import type { Quota } from "./limit.ts";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -55,6 +56,8 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
 
   const ip = clientIp(request);
   const license = typeof body.license === "string" ? body.license.trim() : "";
+  const askedTopic = typeof body.topic === "string" ? body.topic : "";
+  const topicId = tutorTopics.some((item) => item.id === askedTopic) ? askedTopic : "";
   const premium = license ? env.premium(license) : false;
   const dailyLimit = premium ? env.premiumDaily : env.freeDaily;
   if (env.quota.used(`win:${ip}`, env.now(), env.windowMs) >= env.windowLimit) {
@@ -85,9 +88,10 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
     return json(200, { reply: REFUSAL, mode: env.mode, remaining, limit: dailyLimit, premium });
   }
   try {
+    const note = topicId ? `\nHọc sinh đang mở tờ /t/${topicId}.` : "";
     const reply = env.mode === "demo"
-      ? demoReply(last.content)
-      : await env.complete(TUTOR_INSTRUCTIONS, messages);
+      ? demoReply(last.content, topicId)
+      : await env.complete(TUTOR_INSTRUCTIONS + note, messages);
     const text = reply.trim();
     if (!text) return json(502, { error: "model", message: "Trợ lý chưa trả lời được. Thử lại sau.", premium, remaining, limit: dailyLimit });
     return json(200, { reply: text, mode: env.mode, remaining, limit: dailyLimit, premium });

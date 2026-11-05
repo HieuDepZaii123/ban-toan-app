@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const comboLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Có thứ tự thì nhân dần; không thứ tự thì chia cho số cách xếp.`, en: R`If order counts, multiply down; if not, divide by the arrangements.` },
-    { k: "vd", vi: R`Ba ghế: $3\cdot2\cdot1=6$.`, en: R`Three seats: $3\cdot2\cdot1=6$.` },
+    { k: "mo", vi: R`Có thứ tự thì nhân dần các chỗ còn lại. Không thứ tự thì chia cho số cách xếp của nhóm đã chọn.`, en: R`If order counts, multiply the remaining places. If not, divide by the arrangements of the chosen group.` },
+    { k: "dinh", vi: R`$A(n,k)=\dfrac{n!}{(n-k)!}$, $C(n,k)=\dfrac{A(n,k)}{k!}$. Và $C(n,k)=C(n,n-k)$.`, en: R`$A(n,k)=\dfrac{n!}{(n-k)!}$, $C(n,k)=\dfrac{A(n,k)}{k!}$. And $C(n,k)=C(n,n-k)$.` },
+    { k: "vd", vi: R`Chọn $2$ phần tử trong $5$: có thứ tự thì $A(5,2)=5\cdot 4=20$, không thứ tự thì $C(5,2)=10$.`, en: R`Choose $2$ items from $5$: with order, $A(5,2)=5\cdot 4=20$; without order, $C(5,2)=10$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$A(n,k)=\dfrac{n!}{(n-k)!}$ và $C(n,k)=\dfrac{A(n,k)}{k!}$.`, en: R`$A(n,k)=\dfrac{n!}{(n-k)!}$ and $C(n,k)=\dfrac{A(n,k)}{k!}$.` },
-    { k: "vd", vi: R`$C(8,3)=56$, còn $A(8,3)=336$.`, en: R`$C(8,3)=56$, while $A(8,3)=336$.` },
-    { k: "loi", vi: R`Đề không kể thứ tự mà vẫn dùng $A$.`, en: R`Using $A$ when the problem ignores order.` },
-    { k: "kiem", vi: R`$C(5,2)=10$ và $A(5,2)=20$.`, en: R`$C(5,2)=10$ and $A(5,2)=20$.` },
+    { k: "dinh", vi: R`Trung bình bị kéo bởi một điểm lệch. Trung vị là số ở giữa sau khi sắp, không đổi nếu điểm lệch vẫn ở một phía.`, en: R`The mean is pulled by an outlier. The median is the middle value after sorting, and can stay put if the outlier remains on one side.` },
+    { k: "vd", vi: R`Tính $C(8,3)=\dfrac{8\cdot 7\cdot 6}{6}=56$. Và $A(8,3)=8\cdot 7\cdot 6=336$.`, en: R`Compute $C(8,3)=\dfrac{8\cdot 7\cdot 6}{6}=56$. And $A(8,3)=8\cdot 7\cdot 6=336$.` },
+    { k: "loi", vi: R`Đề không kể thứ tự mà dùng $A(5,2)=20$ thay cho $C(5,2)=10$.`, en: R`Using $A(5,2)=20$ when the problem ignores order, instead of $C(5,2)=10$.` },
+    { k: "kiem", vi: R`Điểm $2,3,4,5,6$: trung vị $4$, trung bình $4$. Đổi $6$ thành $20$: trung vị vẫn $4$, trung bình $6{,}8$.`, en: R`Scores $2,3,4,5,6$: median $4$, mean $4$. Change $6$ to $20$: the median stays $4$, the mean becomes $6{,}8$.` },
   ],
 };
 

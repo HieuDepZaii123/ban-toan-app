@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const sequenceLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Cấp số cộng thêm một số cố định mỗi bước.`, en: R`An arithmetic sequence adds a fixed number each step.` },
-    { k: "vd", vi: R`$3,7,11,15$ có công sai $4$.`, en: R`$3,7,11,15$ has common difference $4$.` },
+    { k: "mo", vi: R`Cấp số cộng: mỗi bước cộng $d$. Cấp số nhân: mỗi bước nhân $q$.`, en: R`An arithmetic sequence adds $d$ each step. A geometric sequence multiplies by $q$.` },
+    { k: "dinh", vi: R`$u_n=u_1+(n-1)d$. Nếu $q\neq 1$ thì $S_n=u_1\dfrac{1-q^n}{1-q}$.`, en: R`$u_n=u_1+(n-1)d$. If $q\neq 1$ then $S_n=u_1\dfrac{1-q^n}{1-q}$.` },
+    { k: "vd", vi: R`Dãy $3,7,11,15$ có công sai $d=4$. Số hạng thứ $10$ là $u_{10}=3+9\cdot 4=39$.`, en: R`The sequence $3,7,11,15$ has common difference $d=4$. The 10th term is $u_{10}=3+9\cdot 4=39$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$u_n=u_1+(n-1)d$ và $S_n=\dfrac{n}{2}(u_1+u_n)$.`, en: R`$u_n=u_1+(n-1)d$ and $S_n=\dfrac{n}{2}(u_1+u_n)$.` },
-    { k: "vd", vi: R`Với $u_1=3$, $d=4$: $u_{10}=39$ và $S_{10}=210$.`, en: R`With $u_1=3$, $d=4$: $u_{10}=39$ and $S_{10}=210$.` },
-    { k: "loi", vi: R`Lấy $10d$ thay vì $9d$ thì $u_{10}=43$.`, en: R`Using $10d$ instead of $9d$ gives $u_{10}=43$.` },
-    { k: "kiem", vi: R`Tổng $1+\cdots+12=78$.`, en: R`The sum $1+\cdots+12=78$.` },
+    { k: "dinh", vi: R`$|q|<1$ thì tổng vô hạn $S=\dfrac{u_1}{1-q}$. Số hạng dần về $0$, tổng thì không.`, en: R`If $|q|<1$ the infinite sum is $S=\dfrac{u_1}{1-q}$. Terms tend to $0$; the sum does not.` },
+    { k: "vd", vi: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. Phần dư sau $n$ hạng là $16\left(\dfrac12\right)^n$.`, en: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. The remainder after $n$ terms is $16\left(\dfrac12\right)^n$.` },
+    { k: "loi", vi: R`$u_{10}=u_1+10d$ thừa một bước. Với $u_1=3$, $d=4$ thì ra $43$, đúng là $39$.`, en: R`$u_{10}=u_1+10d$ takes one extra step. With $u_1=3$, $d=4$ that gives $43$; the term is $39$.` },
+    { k: "kiem", vi: R`Tổng $1+\cdots+12=\dfrac{12\cdot 13}{2}=78$.`, en: R`The sum $1+\cdots+12=\dfrac{12\cdot 13}{2}=78$.` },
   ],
 };
 
@@ -23,7 +24,7 @@ export const sequenceQuestions: Question[] = [
     choices: [R`$39$`, R`$43$`, R`$40$`, R`$30$`],
     choicesEn: [R`$39$`, R`$43$`, R`$40$`, R`$30$`],
     answer: 0,
-    hint: "Từ số hạng đầu tới số hạng thứ 10 có 9 bước, không phải 10.",
+    hint: R`Từ hạng $1$ tới hạng $10$ có $9$ bước: cộng $9d$.`,
     hintEn: "From the first term to the 10th there are 9 steps, not 10.",
     steps: [
       R`$u_n = u_1 + (n-1)d$.`,
@@ -43,7 +44,7 @@ export const sequenceQuestions: Question[] = [
     choices: [R`$210$`, R`$39$`, R`$390$`, R`$43$`],
     choicesEn: [R`$210$`, R`$39$`, R`$390$`, R`$43$`],
     answer: 0,
-    hint: "Tổng là số số hạng nhân trung bình cộng của số đầu và số cuối.",
+    hint: R`Tổng $S_n=\dfrac{n}{2}(u_1+u_n)$.`,
     hintEn: "The sum is the number of terms times the average of the first and the last.",
     steps: [
       R`Số cuối là $u_{10} = 39$.`,
@@ -63,7 +64,7 @@ export const sequenceQuestions: Question[] = [
     choices: [R`$162$`, R`$81$`, R`$14$`, R`$243$`],
     choicesEn: [R`$162$`, R`$81$`, R`$14$`, R`$243$`],
     answer: 0,
-    hint: "Nhân bốn lần công bội, vì từ hạng 1 tới hạng 5 có 4 bước.",
+    hint: R`Từ hạng $1$ tới hạng $5$ nhân $q$ đúng $4$ lần.`,
     hintEn: "Multiply by the ratio four times: from term 1 to term 5 there are 4 steps.",
     steps: [
       R`$u_n = u_1 \cdot q^{n-1}$.`,
@@ -83,7 +84,7 @@ export const sequenceQuestions: Question[] = [
     choices: [R`$16$`, R`$0$`, R`$8$`, "Không có tổng"],
     choicesEn: [R`$16$`, R`$0$`, R`$8$`, "No sum"],
     answer: 0,
-    hint: "Công bội là 1/2, nhỏ hơn 1. Tổng là số hạng đầu chia cho 1 trừ công bội.",
+    hint: R`Khi $|q|<1$, tổng là $S=\dfrac{u_1}{1-q}$.`,
     hintEn: "The ratio is 1/2, which is less than 1. The sum is the first term divided by 1 minus the ratio.",
     steps: [
       R`$u_1 = 8$, $q = 1/2$, và $|q| < 1$.`,
@@ -103,7 +104,7 @@ export const sequenceQuestions: Question[] = [
     choices: ["24 m", "16 m", "8 m", "12 m"],
     choicesEn: ["24 m", "16 m", "8 m", "12 m"],
     answer: 0,
-    hint: "Lần rơi đầu chỉ đi xuống. Mỗi lần nảy sau đó đi lên rồi lại đi xuống.",
+    hint: "Lần rơi đầu chỉ đi xuống. Mỗi lần nảy sau đi lên rồi xuống.",
     hintEn: "The first drop only goes down. Every later bounce goes up and then down.",
     steps: [
       R`Các đỉnh sau lần rơi đầu là $4 + 2 + 1 + \cdots = 4 / (1 - 1/2) = 8$ m.`,
@@ -123,7 +124,7 @@ export const sequenceQuestions: Question[] = [
     choices: ["78 triệu", "12 triệu", "144 triệu", "66 triệu"],
     choicesEn: ["78 triệu", "12 triệu", "144 triệu", "66 triệu"],
     answer: 0,
-    hint: "Đây là tổng 1 + 2 + … + 12. Lấy số tháng nhân với tháng kế tiếp, rồi chia đôi.",
+    hint: R`Tổng $1+\cdots+12=\dfrac{12\cdot 13}{2}$.`,
     hintEn: "This is the sum 1 + 2 + … + 12. Multiply the number of months by the next integer, then halve.",
     steps: [
       R`Các khoản là cấp số cộng $1, 2, \ldots, 12$.`,

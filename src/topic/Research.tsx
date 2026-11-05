@@ -43,8 +43,8 @@ function StudyList({ topicId, studies }: { topicId: string; studies: Study[] }) 
       <p className="note">
         {t(
           lang,
-          "Mỗi bài đi sáu bước: câu hỏi, giả thuyết, thí nghiệm, quan sát, kết luận, mở rộng. Giả thuyết, bảng số và kết luận được lưu trên máy này.",
-          "Each investigation has six steps: question, hypothesis, experiment, observation, conclusion, extension. The hypothesis, the table, and the conclusion stay on this device.",
+          "Sáu bước: câu hỏi, giả thuyết, thí nghiệm, quan sát, kết luận, rồi mở rộng. Bảng số nằm trên máy này.",
+          "Six steps: question, hypothesis, experiment, observation, conclusion, then an extension. The table stays on this device.",
         )}
       </p>
       <p className="status">{t(lang, `Đã kết luận ${done}/${studies.length}`, `Concluded ${done}/${studies.length}`)}</p>

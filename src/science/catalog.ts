@@ -2,27 +2,27 @@ export const sciences = [
   {
     id: "python",
     title: "Lập trình toán",
-    blurb: "Python cho bài toán THPT: vòng lặp, hàm và đồ thị.",
+    blurb: "Vòng lặp tính tổng 1 + … + n, rồi vẽ đồ thị.",
   },
   {
     id: "du-lieu",
     title: "Ứng dụng dữ liệu",
-    blurb: "Thống kê mô tả và cách đọc một biểu đồ số liệu.",
+    blurb: "Dãy 2, 3, 4, 5, 20: trung vị 4, trung bình 6,8.",
   },
   {
     id: "chuyen",
     title: "Đề trường chuyên",
-    blurb: "Bài phong cách trường chuyên, làm chậm và đối chiếu lời giải.",
+    blurb: "Bài kiểu chuyên: viết điều kiện, rồi thử lại vào đề.",
   },
   {
     id: "vat-ly",
     title: "Vật lý toán",
-    blurb: "Chuyển động, lực và điện ở mức THPT, viết bằng công thức toán.",
+    blurb: "s = 20t − 5t², vận tốc bằng 0 tại t = 2.",
   },
   {
     id: "hoa",
     title: "Hóa tính toán",
-    blurb: "Lượng chất, nồng độ và pH — tính được thì mới cân được.",
+    blurb: "pH = −log[H⁺]: nồng độ 10⁻³ thì pH = 3.",
   },
 ] as const;
 
