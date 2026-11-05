@@ -988,6 +988,23 @@ html[data-lamp="on"] body::before {
 .wbar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 8px; }
 .wbar small { color: var(--ink-soft); }
 .panel { display: grid; gap: 12px; }
+.doc-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 12px 0; }
+.doc-tools label { display: grid; gap: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.doc-tools select { min-height: 40px; border: 1px solid var(--line); border-radius: 10px; background: var(--sheet); color: var(--ink); padding: 0 8px; }
+.doc-split { display: grid; gap: 12px; }
+@media (min-width: 900px) { .doc-split { grid-template-columns: 1fr 1fr; align-items: start; } }
+.doc-source { display: grid; gap: 4px; font-size: 0.82rem; color: var(--ink-soft); }
+.doc-source textarea { min-height: 360px; font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.92rem; line-height: 1.5; }
+.doc-sheet { display: grid; gap: 8px; }
+.doc-sheet h1, .doc-sheet h2, .doc-sheet h3 { margin: 0; }
+.doc-sheet p { margin: 0; }
+@media print {
+  .bar, .menu-tab, .menu-layer, .chat-fab, .chat-panel, .study-player, .atmosphere, .skip, .doc-tools, .doc-source, .kicker, .lead, main > h1, .doc-preview > b, .lecture-note { display: none !important; }
+  .desk { padding: 0 !important; animation: none !important; background: #fff; }
+  body { background: #fff; }
+  .doc-split { display: block; }
+  .doc-preview { border: 0; background: #fff; box-shadow: none; }
+}
 .menu-tab {
   position: fixed;
   right: 0;

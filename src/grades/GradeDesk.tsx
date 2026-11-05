@@ -11,9 +11,9 @@ import { GradeWidgetView } from "./GradeWidgets.tsx";
 import { doneCount, markDone, readDone } from "./progress.ts";
 
 const BAND = [
-  { id: "tieu-hoc", title: "Tiểu học" },
-  { id: "thcs", title: "Trung học cơ sở" },
-  { id: "thpt", title: "Trung học phổ thông" },
+  { id: "tieu-hoc", title: "Tiểu học 1–5" },
+  { id: "thcs", title: "THCS 6–9" },
+  { id: "thpt", title: "THPT 10–12" },
 ] as const;
 
 export function GradeDesk() {
@@ -78,7 +78,7 @@ function GradeHome() {
     <PageFrame
       kicker="Chương trình GDPT 2018"
       title="Kiến thức lớp 1–12"
-      lead="Chọn một lớp. Mỗi bài có ví dụ làm từng bước, một lỗi hay gặp, và ô để nhập đáp án."
+      lead="Tiểu học lớp 1–5, THCS lớp 6–9, THPT lớp 10–12. Mỗi bài có ví dụ tính được và bài luyện."
     >
       {BAND.map((band) => (
         <section key={band.id} className="stream">

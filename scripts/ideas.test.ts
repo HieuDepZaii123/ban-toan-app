@@ -13,6 +13,7 @@ const BARE = /\b(khong|duoc|dinh|nghiem|phuong trinh|ham so)\b/i;
 const ROUTES = new Set([
   "/",
   "/kien-thuc",
+  "/soan-tai-lieu",
   "/xuong-hinh",
   "/luyen",
   "/so-loi",

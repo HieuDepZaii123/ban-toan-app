@@ -2,6 +2,7 @@
 export const MENU_LINKS = [
   { href: "/", id: "home", label: "Bàn" },
   { href: "/kien-thuc", id: "grades", label: "Lớp 1–12" },
+  { href: "/soan-tai-lieu", id: "soan", label: "Soạn tài liệu" },
   { href: "/xuong-hinh", id: "workshop", label: "Xưởng hình" },
   { href: "/luyen", id: "drill", label: "Luyện" },
   { href: "/so-loi", id: "miss", label: "Sổ lỗi" },
@@ -17,6 +18,7 @@ export type MenuLinkId = (typeof MENU_LINKS)[number]["id"];
 
 export function menuArea(path: string): MenuLinkId | "music" | "" {
   if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return "grades";
+  if (path === "/soan-tai-lieu") return "soan";
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return "science";
   if (path === "/xuong-hinh") return "workshop";
   if (path === "/luyen") return "drill";

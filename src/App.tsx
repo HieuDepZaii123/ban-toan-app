@@ -23,6 +23,7 @@ const DrillPage = lazy(() => import("./pages/DrillPage.tsx").then((mod) => ({ de
 const MissPage = lazy(() => import("./pages/MissPage.tsx").then((mod) => ({ default: mod.MissPage })));
 const ReferPage = lazy(() => import("./pages/ReferPage.tsx").then((mod) => ({ default: mod.ReferPage })));
 const ResearchIdeasPage = lazy(() => import("./pages/ResearchIdeasPage.tsx").then((mod) => ({ default: mod.ResearchIdeasPage })));
+const DocPage = lazy(() => import("./pages/DocPage.tsx").then((mod) => ({ default: mod.DocPage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -74,6 +75,7 @@ function Shell() {
   if (path === "/so-loi") return <MissPage />;
   if (path === "/gioi-thieu") return <ReferPage />;
   if (path === "/nghien-cuu") return <ResearchIdeasPage />;
+  if (path === "/soan-tai-lieu") return <DocPage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return <GradeDesk />;
   return <HomeDesk />;
