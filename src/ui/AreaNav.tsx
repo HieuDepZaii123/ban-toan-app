@@ -10,6 +10,7 @@ const LINKS = [
   { href: "/so-loi", id: "miss", label: "Sổ lỗi" },
   { href: "/so-cong-thuc", id: "formula", label: "Công thức" },
   { href: "/danh-gia", id: "assess", label: "Đánh giá" },
+  { href: "/gioi-thieu", id: "refer", label: "Giới thiệu" },
 ] as const;
 
 function currentArea(path: string): string {
@@ -20,6 +21,7 @@ function currentArea(path: string): string {
   if (path === "/so-loi") return "miss";
   if (path === "/so-cong-thuc") return "formula";
   if (path === "/danh-gia") return "assess";
+  if (path === "/gioi-thieu") return "refer";
   if (path === "/nang-cap") return "";
   return "math";
 }
