@@ -3,7 +3,7 @@ import type { Question } from "../content/types.ts";
 import type { Vary } from "../content/vary/types.ts";
 import { mulberry32 } from "../lib/prng.ts";
 import { useRoute } from "../lib/useRoute.ts";
-import { ensureAttempt, questionKey, recordAnswer, resetAttempt, useSlice } from "../lib/store.ts";
+import { countRight, ensureAttempt, questionKey, recordAnswer, resetAttempt, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -28,6 +28,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
     return typeof wrong === "number" ? wrong : -1;
   });
   const [hintFor, setHintFor] = useState<string | null>(null);
+  const saved = useSlice((data) => countRight(data.right, topicId));
 
   useEffect(() => {
     if (!question) return;
@@ -81,7 +82,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
       <p className="kicker">
         {shown.kind === "concept" ? <span className="theory-tag">{t(lang, "Lý thuyết", "Concept")}</span> : null}
         {shown.kind === "dss" ? <span className="theory-tag">{t(lang, "Đúng/Sai/Chưa đủ", "True/False/Not enough")}</span> : null}
-        {t(lang, `Câu ${index + 1} / ${ordered.length}`, `Question ${index + 1} / ${ordered.length}`)}
+        {t(lang, `Câu ${index + 1} / ${ordered.length} · Điểm ${Math.min(saved, ordered.length)}/${ordered.length}`, `Question ${index + 1} / ${ordered.length} · Score ${Math.min(saved, ordered.length)}/${ordered.length}`)}
       </p>
       <h2 id="practice-title"><MathText text={prompt} /></h2>
       {dss ? <DssForm key={`${question.id}:${attempt.seed}`} topicId={topicId} question={shown} /> : <div className="choices" role="group" aria-label={t(lang, "Đáp án", "Choices")}>

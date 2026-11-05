@@ -1,15 +1,22 @@
 import assert from "node:assert/strict";
+import katex from "katex";
 import { isSharedCorrect, sharedDrill } from "../src/content/sharedDrill.ts";
 import { withPick, withoutMiss, type MissRow } from "../src/lib/missBook.ts";
 import { sciences } from "../src/science/catalog.ts";
 import { scienceLessons } from "../src/science/lessons.ts";
 import { foot, midpoint } from "../src/workshop/plane.ts";
 
-assert.equal(sharedDrill.length, 14);
+assert.ok(sharedDrill.length >= 26 && sharedDrill.length <= 30);
 assert.equal(sharedDrill[0]?.answer, 2);
 assert.equal(isSharedCorrect(0, 2), true);
 assert.equal(isSharedCorrect(0, 0), false);
-assert.equal(new Set(sharedDrill.map((item) => item.id)).size, 14);
+assert.equal(new Set(sharedDrill.map((item) => item.id)).size, sharedDrill.length);
+for (const item of sharedDrill) {
+  assert.ok(item.steps.length >= 2, item.id);
+  for (const tex of [item.prompt, ...item.choices, ...item.steps].join(" ").match(/\$[^$]+\$/g) ?? []) {
+    katex.renderToString(tex.slice(1, -1), { throwOnError: true });
+  }
+}
 
 const wrong = withPick([], sharedDrill[0]!, 0);
 assert.equal(wrong.length, 1);

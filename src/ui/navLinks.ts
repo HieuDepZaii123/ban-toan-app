@@ -1,17 +1,17 @@
 /** Main sections that already have a route. The right menu reads this list. */
 export const MENU_LINKS = [
-  { href: "/", id: "home", label: "Bàn" },
-  { href: "/kien-thuc", id: "grades", label: "Lớp 1–12" },
-  { href: "/soan-tai-lieu", id: "soan", label: "Soạn tài liệu" },
-  { href: "/xuong-hinh", id: "workshop", label: "Xưởng hình" },
-  { href: "/luyen", id: "drill", label: "Luyện" },
-  { href: "/so-loi", id: "miss", label: "Sổ lỗi" },
-  { href: "/danh-gia", id: "assess", label: "Đánh giá" },
-  { href: "/so-cong-thuc", id: "formula", label: "Công thức" },
-  { href: "/nghien-cuu", id: "research", label: "Nghiên cứu" },
-  { href: "/khoa-hoc", id: "science", label: "Khoa học" },
-  { href: "/gioi-thieu", id: "refer", label: "Giới thiệu" },
-  { href: "/nang-cap", id: "premium", label: "Premium" },
+  { href: "/", id: "home", label: "Bàn", en: "Desk" },
+  { href: "/kien-thuc", id: "grades", label: "Lớp 1–12", en: "Grades 1–12" },
+  { href: "/soan-tai-lieu", id: "soan", label: "Soạn tài liệu", en: "Documents" },
+  { href: "/xuong-hinh", id: "workshop", label: "Xưởng hình", en: "Workshop" },
+  { href: "/luyen", id: "drill", label: "Luyện", en: "Practice" },
+  { href: "/so-loi", id: "miss", label: "Sổ lỗi", en: "Miss book" },
+  { href: "/danh-gia", id: "assess", label: "Đánh giá", en: "Assess" },
+  { href: "/so-cong-thuc", id: "formula", label: "Công thức", en: "Formulas" },
+  { href: "/nghien-cuu", id: "research", label: "Nghiên cứu", en: "Research" },
+  { href: "/khoa-hoc", id: "science", label: "Khoa học", en: "Science" },
+  { href: "/gioi-thieu", id: "refer", label: "Giới thiệu", en: "Refer" },
+  { href: "/nang-cap", id: "premium", label: "Premium", en: "Premium" },
 ] as const;
 
 export type MenuLinkId = (typeof MENU_LINKS)[number]["id"];

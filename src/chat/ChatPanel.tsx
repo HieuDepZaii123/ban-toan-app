@@ -28,6 +28,7 @@ const MOCK_KEY = "bt-ask-mock";
 const LOCAL_LIMIT = 8;
 
 const QUICK = ["Đạo hàm của x mũ 2", "Đỉnh của parabol?", "giới hạn dạng 0/0"];
+const QUICK_EN = ["Derivative of x squared", "Vertex of a parabola?", "A 0/0 limit"];
 
 function sheetId(path: string): string {
   if (!path.startsWith("/t/")) return "";
@@ -80,7 +81,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   const lang = useLang();
   const { path } = useRoute();
   const studying = topicById(sheetId(path));
-  const quick = studying ? TOPIC_QUICK[studying.id] : QUICK;
+  const quick = studying ? TOPIC_QUICK[studying.id] : (lang === "en" ? QUICK_EN : QUICK);
   const [turns, setTurns] = useState<Turn[]>(loadHistory);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
@@ -181,10 +182,10 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         {mock || url.trim() ? <span>{t(lang, `Mẫu trên máy: còn ${localLeft}/${LOCAL_LIMIT}.`, `On this device: ${localLeft}/${LOCAL_LIMIT} left.`)} </span> : null}
         {meta.premium ? null : <A href="/nang-cap">{t(lang, "Nâng cấp", "Upgrade")}</A>}
       </p>
-      {studying ? <p className="chat-context">Đang học: {studying.title}</p> : null}
+      {studying ? <p className="chat-context">{t(lang, `Đang học: ${studying.title}`, `Studying: ${studying.title}`)}</p> : null}
       <div className="chat-log" ref={scroller} aria-live="polite">
         {turns.length === 0 ? (
-          <p className="chat-note">{t(lang, "Hỏi một bài THPT. Mình gợi ý từng bước, bạn tính bước cuối.", "Ask one THPT problem. I suggest the steps; you compute the last one.")}</p>
+          <p className="chat-note">{t(lang, "Cứ nói chuyện. Gặp bài thì mình nêu tư duy giải, rồi gợi ý từng bước.", "Talk freely. On a problem I show the solution thinking, then hint the steps.")}</p>
         ) : null}
         {turns.map((turn, index) => (
           <article key={`${turn.role}-${index}`} className={`chat-turn is-${turn.role}`}>
@@ -257,6 +258,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
 }
 
 function Bubble({ role, content }: { role: Turn["role"]; content: string }) {
+  const lang = useLang();
   const lines = content.split("\n").filter((line) => line.trim().length > 0);
   const steps = lines.filter((line) => /^\d+[.)]/.test(line.trim()));
   const [open, setOpen] = useState<boolean[]>(() => steps.map(() => false));
@@ -288,15 +290,15 @@ function Bubble({ role, content }: { role: Turn["role"]; content: string }) {
             setOpen((current) => current[index] === next ? current : current.map((value, place) => (place === index ? next : value)));
           }}
         >
-          <summary>Bước {index + 1}</summary>
+          <summary>{t(lang, `Bước ${index + 1}`, `Step ${index + 1}`)}</summary>
           <ChatText text={step.replace(/^\d+[.)]\s*/, "")} />
         </details>
       ))}
       <div className="chat-tools">
-        <button type="button" className="text-btn" onClick={() => void copy()}>{copied ? "Đã chép" : "Chép"}</button>
+        <button type="button" className="text-btn" onClick={() => void copy()}>{copied ? t(lang, "Đã chép", "Copied") : t(lang, "Chép", "Copy")}</button>
         {steps.length > 1 ? (
           <button type="button" className="text-btn" onClick={() => setOpen(steps.map(() => !allOpen))}>
-            {allOpen ? "Gộp hết" : "Mở hết"}
+            {allOpen ? t(lang, "Gộp hết", "Collapse") : t(lang, "Mở hết", "Expand")}
           </button>
         ) : null}
       </div>
@@ -305,13 +307,14 @@ function Bubble({ role, content }: { role: Turn["role"]; content: string }) {
 }
 
 function FollowUps({ content, fallbackId, busy, onAsk }: { content: string; fallbackId?: string; busy: boolean; onAsk: (text: string) => void }) {
+  const lang = useLang();
   const found = /\/t\/([a-z0-9-]+)/.exec(content);
   const topic = topicById(found?.[1] ?? fallbackId ?? "");
   return (
     <div className="quick-row">
-      <button type="button" className="text-btn" disabled={busy} onClick={() => onAsk("Thử lại với số 5")}>Thử số 5</button>
-      {topic ? <A className="text-btn" href={`/t/${topic.id}`}>Mở tờ</A> : null}
-      <button type="button" className="text-btn" disabled={busy} onClick={() => onAsk("Giải thích bước 2 bằng một số cụ thể")}>Giải thích bước 2</button>
+      <button type="button" className="text-btn" disabled={busy} onClick={() => onAsk(t(lang, "Thử lại với số 5", "Try the number 5"))}>{t(lang, "Thử số 5", "Try 5")}</button>
+      {topic ? <A className="text-btn" href={`/t/${topic.id}`}>{t(lang, "Mở tờ", "Open sheet")}</A> : null}
+      <button type="button" className="text-btn" disabled={busy} onClick={() => onAsk(t(lang, "Giải thích bước 2 bằng một số cụ thể", "Explain step 2 with one number"))}>{t(lang, "Giải thích bước 2", "Explain step 2")}</button>
     </div>
   );
 }

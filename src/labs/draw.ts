@@ -108,6 +108,25 @@ export function drawAxes(
   }
   ctx.textAlign = "left";
   ctx.fillText(yLabel, pad + 4, pad + 12);
+  ctx.font = "11px 'Be Vietnam Pro', sans-serif";
+  if (y0 < 0 && y1 > 0) {
+    const step = x1 - x0 > 16 ? 2 : 1;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    for (let i = Math.ceil(x0 / step) * step; i <= x1; i += step) {
+      if (Math.abs(i) < 1e-9) continue;
+      ctx.fillText(String(i), map.x(i), map.y(0) + 4);
+    }
+  }
+  if (x0 < 0 && x1 > 0) {
+    const step = y1 - y0 > 16 ? 2 : 1;
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    for (let j = Math.ceil(y0 / step) * step; j <= y1; j += step) {
+      if (Math.abs(j) < 1e-9) continue;
+      ctx.fillText(String(j), map.x(0) - 6, map.y(j));
+    }
+  }
   ctx.restore();
 }
 
