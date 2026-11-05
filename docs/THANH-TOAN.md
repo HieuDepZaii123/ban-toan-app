@@ -32,6 +32,8 @@ api/premium/*.ts            hàm Vercel, mỗi đường một file
 | `GET /api/premium/status` | Theo `orderId` hoặc `license` |
 | `POST /api/premium/bank` | Webhook biến động số dư. Khớp nội dung CK và số tiền, idempotent theo mã giao dịch |
 | `POST /api/premium/confirm` | Duyệt tay mọi cách trả, kể cả crypto. Header `Authorization: Bearer ADMIN_TOKEN` |
+| `POST /api/premium/affiliate` | Mã giới thiệu, đếm lượt, xem thống kê của chính mình |
+| `POST /api/premium/affiliate-admin` | Admin xem danh sách và duyệt chi. Không chuyển tiền |
 | `POST /api/premium/crypto` | Đổi mạng khi đơn còn chờ, dán mã giao dịch để đối soát on-chain, hoặc `{ "watch": true }` để worker rà các đơn đã có mã |
 
 Chữ ký tạo đơn, đúng thứ tự tài liệu captureWallet:
@@ -140,6 +142,25 @@ curl -s -X POST http://127.0.0.1:43123/api/premium/confirm \
   -d '{"orderId":"BT..."}'
 ```
 
+## Giới thiệu bạn bè
+
+Mỗi trình duyệt giữ một bí mật cục bộ (`ban-toan-aff-owner`). Server chỉ lưu SHA-256 của bí mật đó, rồi cấp mã 8 ký tự. Link có dạng `/?ref=MA`. Khi khách mở link, mã được giữ trên máy họ và gắn vào đơn Premium lúc tạo — MoMo, VietQR, chuyển khoản và crypto đều đi qua `POST /api/premium/create`.
+
+Hoa hồng là `AFFILIATE_RATE_BPS` phần vạn (mặc định `1000`, tức 10%) của số tiền server đã chốt. Chỉ ghi khi `markPaid` áp dụng lần đầu. Đơn chờ hoặc hết hạn không có hoa hồng. Một đơn chỉ một dòng hoa hồng.
+
+Không tính khi người mua gửi đúng bí mật của chủ mã, hoặc email đơn trùng email đã gắn với mã. Lượt khách trùng một mã máy không đếm hai lần. Chủ mã mở link của mình thì trang xóa ref đã lưu.
+
+Trạng thái hoa hồng: `accrued` (tạm tính, đơn đã trả) và `approved` (admin đã duyệt chi). Duyệt bằng:
+
+```bash
+curl -X POST "$PUBLIC_BASE_URL/api/premium/affiliate-admin" \
+  -H "Authorization: Bearer $ADMIN_TOKEN" \
+  -H "content-type: application/json" \
+  -d '{"action":"approve","code":"MA"}'
+```
+
+`{"action":"list"}` xem mọi mã. Phản hồi duyệt có `transferred: false`. Không có lệnh chuyển khoản.
+
 ## Lấy khóa MoMo doanh nghiệp
 
 1. Đăng ký đối tác tại [https://business.momo.vn/](https://business.momo.vn/).
@@ -152,7 +173,7 @@ curl -s -X POST http://127.0.0.1:43123/api/premium/confirm \
 
 Repo đã có `vercel.json`: build `npm run build`, thư mục `dist`, rewrite SPA trừ `/api/`. Mỗi file trong `api/premium/` là một hàm Node.
 
-Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `CRYPTO_*`, `PREMIUM_DB_PATH` hoặc adapter Postgres. `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy. Không đặt khóa riêng của ví.
+Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `AFFILIATE_RATE_BPS`, `CRYPTO_*`, `PREMIUM_DB_PATH` hoặc adapter Postgres. `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy. Không đặt khóa riêng của ví.
 
 Service worker không nuốt `/api/` (`navigateFallbackDenylist`).
 
