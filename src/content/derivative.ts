@@ -11,7 +11,7 @@ export const derivativeLesson: Lesson = {
   exam: [
     { k: "dinh", vi: R`$(x^n)'=nx^{n-1}$. Trên đoạn đóng, giá trị lớn nhất nằm ở đầu mút hoặc tại điểm $f'$ đổi dấu.`, en: R`$(x^n)'=nx^{n-1}$. On a closed interval the maximum is at an endpoint or where $f'$ changes sign.` },
     { k: "vd", vi: R`Ném lên: $h=20t-5t^2$, vận tốc $v=20-10t$. Đỉnh khi $v=0$, tức $t=2$, và $h(2)=20$.`, en: R`A throw: $h=20t-5t^2$, velocity $v=20-10t$. The top is where $v=0$, so $t=2$, and $h(2)=20$.` },
-    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng $y'=3x^2$ không đổi dấu, nên không phải cực trị.`, en: R`$y=x^3$ has $y'(0)=0$, but $y'=3x^2$ does not change sign, so it is not an extremum.` },
+    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$, nhưng $y(-1)=-1$ và $y(1)=1$: hàm vẫn tăng, không phải cực trị.`, en: R`$y=x^3$ has $y'(0)=0$, but $y(-1)=-1$ and $y(1)=1$: it still increases, so that is not an extremum.` },
     { k: "kiem", vi: R`$y=x^3-3x$, $y'=3x^2-3=0$ tại $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.`, en: R`$y=x^3-3x$, $y'=3x^2-3=0$ at $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.` },
   ],
 };

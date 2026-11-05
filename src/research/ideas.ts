@@ -79,9 +79,9 @@ export const researchIdeas: readonly ResearchIdea[] = [
     question: R`Chọn $k$ phần tử và chọn $n-k$ phần tử để loại có cùng số cách không?`,
     method: "Ghép mỗi tập với phần bù của nó, rồi kiểm bằng một bộ số.",
     steps: [
-      R`Mỗi tập $k$ phần tử để lại đúng một phần bù có $n-k$ phần tử.`,
-      R`Phép lấy bù là song ánh, nên hai số cách bằng nhau.`,
-      R`Kiểm: $C(8,3)=C(8,5)=56$.`,
+      R`Với $n=8$, $k=3$: mỗi bộ $3$ người để lại đúng một bộ $5$ người.`,
+      R`Phép lấy bù ghép từng bộ với một bộ, nên hai số cách bằng nhau.`,
+      R`Kiểm: $C(8,3)=\dfrac{8\cdot 7\cdot 6}{6}=56$ và $C(8,5)=56$.`,
     ],
     href: "/t/combo?tab=nc&n=cmb-r-sym",
   },
@@ -94,7 +94,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     method: R`Xét dấu $y'$ hai bên. Phương trình $y'=0$ chỉ tìm điểm dừng.`,
     steps: [
       R`$y'=3x^2\ge 0$ trên $\mathbb{R}$, bằng $0$ chỉ tại $0$.`,
-      R`Dấu không đổi, hàm vẫn đồng biến.`,
+      R`$y(-1)=-1$, $y(0)=0$, $y(1)=1$: hàm vẫn tăng qua $0$.`,
       R`Với $y=x^3-3x$, $y'=3(x^2-1)$ đổi dấu tại $\pm 1$: đó mới là cực trị.`,
     ],
     href: "/t/survey?tab=nc&n=surv-r-cubic",
@@ -109,7 +109,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     steps: [
       R`$S(x)=-2x^2+40x$. Đỉnh $x=-\dfrac{40}{2\cdot(-2)}=10$.`,
       R`$S(10)=200$. Khi $x\to 0^+$ hoặc $x\to 20^-$, $S\to 0$.`,
-      R`Đỉnh nằm trong $(0;20)$, nên đó là giá trị lớn nhất trên miền cho phép.`,
+      R`$S(9)=198$ và $S(11)=198$, đều nhỏ hơn $S(10)=200$.`,
     ],
     href: "/t/quadratic?tab=hoc",
   },
@@ -135,7 +135,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     question: R`Vì sao $d=\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$, và tử số chưa phải khoảng cách?`,
     method: "Lấy trị tuyệt đối ở tử, rồi chia cho độ dài của pháp tuyến.",
     steps: [
-      R`Pháp tuyến $\vec n=(a;b)$ có độ dài $\sqrt{a^2+b^2}$.`,
+      R`Với $\vec n=(1;1)$, độ dài là $\sqrt{1+1}=\sqrt2$.`,
       R`Điểm $(3;1)$, đường $x+y-2=0$: tử $|3+1-2|=2$.`,
       R`Chia $\sqrt{2}$ được $d=\sqrt{2}$. Dừng ở $2$ là chưa chia độ dài pháp tuyến.`,
     ],
@@ -149,9 +149,9 @@ export const researchIdeas: readonly ResearchIdea[] = [
     question: R`Nón nội tiếp mặt cầu bán kính $R$. Chiều cao nào cho thể tích lớn nhất?`,
     method: R`Viết $V(h)$, đạo hàm, rồi kiểm bằng số $R=6$.`,
     steps: [
-      R`Bán kính đáy thỏa $r^2=h(2R-h)$, $0<h<2R$.`,
+      R`Với $R=6$ và $h=8$: $r^2=8(12-8)=32$.`,
       R`$V=\dfrac{\pi}{3}(2Rh^2-h^3)$, nên $V'=\dfrac{\pi}{3}h(4R-3h)=0$ khi $h=\dfrac{4R}{3}$.`,
-      R`Với $R=6$, cực đại tại $h=8$. Hai đầu $h\to 0$ và $h\to 12$ thì $V\to 0$.`,
+      R`Tại $h=8$, $V=\dfrac{256\pi}{3}$. Tại $h=6$, $V=72\pi$, nhỏ hơn.`,
     ],
     href: "/t/triangle?tab=nc&n=shp-r-cone",
   },
@@ -163,7 +163,7 @@ export const researchIdeas: readonly ResearchIdea[] = [
     question: R`Tung một xúc xắc $n$ lần. Tần suất một mặt có tiến về $\dfrac{1}{6}$ không?`,
     method: R`Kỳ vọng của tần suất là $\dfrac{1}{6}$. Độ lệch chuẩn giảm theo $\sqrt{n}$.`,
     steps: [
-      R`Mỗi mặt có xác suất $\dfrac{1}{6}$. Số lần ra mặt đó theo nhị thức.`,
+      R`Mỗi mặt có xác suất $\dfrac{1}{6}$. Trong $6$ lần, kỳ vọng là đúng $1$ lần.`,
       R`Độ lệch chuẩn của tần suất là $\sqrt{\dfrac{5}{36n}}$, tiến về $0$ khi $n\to\infty$.`,
       R`Với $n=36$, độ lệch chuẩn là $\sqrt{\dfrac{5}{36\cdot 36}}\approx 0{,}062$. Một mẫu nhỏ vẫn có thể lệch khỏi $\dfrac{1}{6}$.`,
     ],

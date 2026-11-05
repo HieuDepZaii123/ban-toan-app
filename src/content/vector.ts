@@ -11,7 +11,7 @@ export const vectorLesson: Lesson = {
   exam: [
     { k: "dinh", vi: R`$\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc$. Khác $0$ thì hệ hai ẩn có đúng một nghiệm.`, en: R`$\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc$. If it is not $0$, the two-unknown system has one solution.` },
     { k: "vd", vi: R`$(1;2;-1)\cdot(2;-1;0)=2-2+0=0$, nên hai vectơ vuông góc.`, en: R`$(1;2;-1)\cdot(2;-1;0)=2-2+0=0$, so the vectors are perpendicular.` },
-    { k: "loi", vi: R`Cộng $2+1+2=5$ không phải độ dài. Bỏ $z$ thì $|(2;1;2)|$ thành $\sqrt5$, sai.`, en: R`Adding $2+1+2=5$ is not the length. Dropping $z$ turns $|(2;1;2)|$ into $\sqrt5$, which is wrong.` },
+    { k: "loi", vi: R`Cộng $2+1+2=5$. Độ dài đúng là $\sqrt{4+1+4}=3$.`, en: R`Adding $2+1+2=5$. The length is $\sqrt{4+1+4}=3$.` },
     { k: "kiem", vi: R`$\begin{vmatrix}1&2\\3&4\end{vmatrix}=4-6=-2\neq 0$, nên hệ có một nghiệm.`, en: R`$\begin{vmatrix}1&2\\3&4\end{vmatrix}=4-6=-2\neq 0$, so the system has one solution.` },
   ],
 };

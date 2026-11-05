@@ -11,7 +11,7 @@ export const limitLesson: Lesson = {
   exam: [
     { k: "dinh", vi: R`Hai phía khác nhau thì không có giới hạn. Không lấy trung bình hai phía.`, en: R`Different one-sided limits mean there is no limit. Do not average the two sides.` },
     { k: "vd", vi: R`$T(t)=25+60e^{-t/4}$. $T(0)=85$. Khi $t\to+\infty$, $e^{-t/4}\to 0$ nên $T\to 25$.`, en: R`$T(t)=25+60e^{-t/4}$. $T(0)=85$. As $t\to+\infty$, $e^{-t/4}\to 0$ so $T\to 25$.` },
-    { k: "loi", vi: R`Thế $x=1$ vào $\dfrac{x^2-1}{x-1}$ khi mẫu bằng $0$. Rút $x-1$ trước.`, en: R`Substituting $x=1$ into $\dfrac{x^2-1}{x-1}$ while the denominator is $0$. Cancel $x-1$ first.` },
+    { k: "loi", vi: R`Thế $x=1$ vào $\dfrac{x^2-1}{x-1}$ khi mẫu bằng $0$. Rút còn $x+1$, giới hạn là $2$.`, en: R`Substituting $x=1$ into $\dfrac{x^2-1}{x-1}$ while the denominator is $0$. After cancelling, it is $x+1$ and the limit is $2$.` },
     { k: "kiem", vi: R`$f(x)=-1$ khi $x<0$ và $f(x)=1$ khi $x>0$. Hai phía khác nhau: không có $\lim_{x\to 0}f(x)$.`, en: R`$f(x)=-1$ for $x<0$ and $f(x)=1$ for $x>0$. The sides differ: $\lim_{x\to 0}f(x)$ does not exist.` },
   ],
 };

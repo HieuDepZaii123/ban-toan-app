@@ -15,7 +15,7 @@ export const probabilityDang: TopicDang = {
         steps: [
           { claim: R`Không gian mẫu có $6\cdot 6=36$ kết quả đồng khả năng.`, why: "Mỗi xúc xắc có $6$ mặt. Hai xúc xắc phân biệt nên cặp đảo thứ tự là hai kết quả." },
           { claim: R`Các cặp tổng $7$ là $(1;6)$, $(2;5)$, $(3;4)$, $(4;3)$, $(5;2)$, $(6;1)$, gồm $6$ cặp.`, why: "Liệt kê đủ. Không gộp $(1;6)$ với $(6;1)$." },
-          { claim: R`Xác suất bằng $\frac{6}{36}=\frac{1}{6}$.`, why: "Công thức cổ điển. Giả thiết cân đối đã cho đồng khả năng." },
+          { claim: R`Xác suất bằng $\frac{6}{36}=\frac{1}{6}$.`, why: "Sáu cặp thuận trên 36 cặp đồng khả năng, vì xúc xắc cân đối. Tỉ số đó bằng 1/6." },
         ],
         ket: R`Xác suất bằng $\frac{1}{6}$.`,
         checks: [{ expr: "Rational(6,36)", expect: "Rational(1,6)" }],
@@ -29,7 +29,7 @@ export const probabilityDang: TopicDang = {
         steps: [
           { claim: R`Có $2^3=8$ kết quả đồng khả năng.`, why: "Mỗi đồng xu hai mặt và các lần tung độc lập." },
           { claim: R`Cả ba sấp là một kết quả, xác suất $\frac{1}{8}$.`, why: "Đây là biến cố đối của ít nhất một mặt ngửa." },
-          { claim: R`Xác suất cần tìm là $1-\frac{1}{8}=\frac{7}{8}$.`, why: "Công thức biến cố đối. Kết quả không âm và không vượt quá $1$." },
+          { claim: R`Xác suất cần tìm là $1-\frac{1}{8}=\frac{7}{8}$.`, why: "Cả ba sấp chỉ chiếm 1/8. Phần còn lại, ít nhất một mặt ngửa, là 7/8." },
         ],
         checks: [{ expr: "1-Rational(1,8)", expect: "Rational(7,8)" }],
       },
@@ -43,7 +43,7 @@ export const probabilityDang: TopicDang = {
         steps: [
           { claim: R`Điều kiện tổng bằng $8$ gồm năm kết quả: $(2;6)$, $(3;5)$, $(4;4)$, $(5;3)$, $(6;2)$.`, why: "Không gian đã thu hẹp đúng bằng biến cố điều kiện. Năm kết quả này vẫn đồng khả năng." },
           { claim: R`Trong năm kết quả đó, có mặt $6$ là $(2;6)$ và $(6;2)$, gồm hai kết quả.`, why: "Cặp $(4;4)$ có tổng $8$ nhưng không có mặt $6$, nên không tính." },
-          { claim: R`Xác suất có điều kiện bằng $\frac{2}{5}$.`, why: "Mẫu là số phần tử của điều đã biết, tử là số phần tử của giao. Đây là công thức cổ điển trên không gian đã thu hẹp." },
+          { claim: R`Xác suất có điều kiện bằng $\frac{2}{5}$.`, why: "Hai cặp có mặt 6 trong năm cặp tổng 8. Chia cho 36 là bỏ điều kiện vừa biết." },
         ],
         ket: R`Xác suất có điều kiện bằng $\frac{2}{5}$.`,
         checks: [{ expr: "2/(2+3)", expect: "Rational(2,5)" }],
@@ -108,7 +108,7 @@ export const probabilityDang: TopicDang = {
         answer: R`Đáp số là $\frac{1}{4}$.`,
         steps: [
           { claim: R`Mỗi lần tung, xác suất ngửa bằng $\frac{1}{2}$.`, why: "Đồng xu cân đối có hai mặt đồng khả năng." },
-          { claim: R`Vì độc lập, xác suất cả hai ngửa bằng $\frac{1}{4}$.`, why: "Quy tắc nhân cho biến cố độc lập." },
+          { claim: R`Vì độc lập, xác suất cả hai ngửa bằng $\frac{1}{4}$.`, why: "Hai lần độc lập, nên nhân 1/2 với 1/2 và được 1/4." },
         ],
         checks: [{ expr: "Rational(1,2)*Rational(1,2)", expect: "Rational(1,4)" }],
       },
@@ -133,14 +133,14 @@ export const probabilityDang: TopicDang = {
         think: "Cộng hai nhánh. Mỗi nhánh là xác suất chọn máy nhân xác suất đạt của máy đó.",
         answer: R`Đáp số là $\frac{3}{4}$.`,
         steps: [
-          { claim: R`Hai máy phủ hết và xung khắc.`, why: "Công thức toàn phần áp dụng được." },
+          { claim: R`Hai máy phủ hết và xung khắc.`, why: "Hai máy không cùng chạy và phủ hết các khả năng, nên được cộng hai nhánh." },
           { claim: R`Xác suất đạt bằng $\frac{1}{2}\cdot\frac{1}{2}+\frac{1}{2}\cdot 1=\frac{3}{4}$.`, why: "Cộng hai nhánh. Không lấy trung bình cộng của $\\frac{1}{2}$ và $1$ rồi quên rằng mỗi máy đã được nhân $\\frac{1}{2}$." },
         ],
         checks: [{ expr: "Rational(1,2)*Rational(1,2)+Rational(1,2)*1", expect: "Rational(3,4)" }],
       },
     },
     {
-      name: "Công thức Bayes và diễn giải",
+      name: "Hỏi nguyên nhân sau khi đã thấy kết quả",
       nhanDang: "Đã quan sát kết quả, hỏi xác suất của một nguyên nhân.",
       phuongPhap: R`Khi $P(A)>0$, $P(B_1|A)=\frac{P(A|B_1)P(B_1)}{P(A)}$. Mẫu số là xác suất toàn phần của điều đã quan sát. Tử là đúng nhánh của nguyên nhân đang hỏi. Kết quả Bayes phải được diễn giải trên nhóm đã quan sát, không diễn giải thành xác suất ban đầu của nguyên nhân.`,
       viDu: {
@@ -161,7 +161,7 @@ export const probabilityDang: TopicDang = {
         answer: R`Đáp số là $\frac{2}{3}$. Sau khi thấy ngửa, khả năng gặp đồng hai mặt tăng từ $\frac{1}{2}$ lên $\frac{2}{3}$.`,
         steps: [
           { claim: R`Xác suất ra ngửa bằng $\frac{1}{2}\cdot\frac{1}{2}+\frac{1}{2}\cdot 1=\frac{3}{4}$.`, why: "Xác suất toàn phần của điều đã quan sát." },
-          { claim: R`Nhánh đồng hai mặt và ra ngửa có xác suất $\frac{1}{2}$. Thương bằng $\frac{\frac{1}{2}}{\frac{3}{4}}=\frac{2}{3}$.`, why: "Bayes. Diễn giải: quan sát ngửa làm tăng xác suất của đồng hai mặt so với xác suất ban đầu $\\frac{1}{2}$." },
+          { claim: R`Nhánh đồng hai mặt và ra ngửa có xác suất $\frac{1}{2}$. Thương bằng $\frac{\frac{1}{2}}{\frac{3}{4}}=\frac{2}{3}$.`, why: "Nhánh đồng hai mặt là 1/2, toàn bộ mặt ngửa là 3/4, thương bằng 2/3. Trước khi tung, xác suất chỉ là 1/2." },
         ],
         checks: [{ expr: "(Rational(1,2)*1)/(Rational(1,2)*Rational(1,2)+Rational(1,2)*1)", expect: "Rational(2,3)" }],
       },
@@ -242,7 +242,7 @@ export const probabilityDang: TopicDang = {
       answer: R`Đáp số là $\frac{99}{598}$. Trong nhóm dương tính, chỉ khoảng một phần sáu là người bệnh.`,
       steps: [
         { claim: R`Nhánh bệnh và dương tính có xác suất $\frac{99}{50000}$.`, why: "Nhân tỉ lệ bệnh với độ nhạy của xét nghiệm." },
-        { claim: R`Xác suất dương tính bằng $\frac{598}{50000}$, thương bằng $\frac{99}{598}$.`, why: "Bayes. Diễn giải: phần lớn kết quả dương tính đến từ người khỏe, vì người khỏe đông hơn rất nhiều." },
+        { claim: R`Xác suất dương tính bằng $\frac{598}{50000}$, thương bằng $\frac{99}{598}$.`, why: "99 ca bệnh trên 598 ca dương. Phần còn lại là người khỏe bị dương nhầm, vì họ đông hơn nhiều." },
       ],
       checks: [{ expr: "(Rational(1,500)*Rational(99,100))/(Rational(1,500)*Rational(99,100)+Rational(499,500)*Rational(1,100))", expect: "Rational(99,598)" }],
     },
@@ -255,7 +255,7 @@ export const probabilityDang: TopicDang = {
       steps: [
         { claim: R`Có $17$ bóng tốt. Số cách lấy $3$ bóng tốt là $C_{17}^{3}=680$, số cách lấy $3$ bóng bất kỳ là $C_{20}^{3}=1140$.`, why: "Lấy đồng thời nên dùng tổ hợp, không kể thứ tự." },
         { claim: R`Xác suất cả ba tốt bằng $\frac{680}{1140}=\frac{34}{57}$.`, why: "Các bộ ba đồng khả năng. Đây là biến cố đối của ít nhất một bóng hỏng." },
-        { claim: R`Công thức biến cố đối cho $1-\frac{34}{57}=\frac{23}{57}$.`, why: "Phần bù mới là câu hỏi. Diễn giải: hơn một phần ba số lần rút ba bóng sẽ có ít nhất một bóng hỏng." },
+        { claim: R`Ít nhất một bóng hỏng là $1-\frac{34}{57}=\frac{23}{57}$.`, why: "Cả ba tốt chiếm 34/57, nên phần có ít nhất một bóng hỏng là 23/57, hơn một phần ba." },
       ],
       checks: [
         { expr: "binomial(17,3)", expect: "680" },
@@ -272,7 +272,7 @@ export const probabilityDang: TopicDang = {
       steps: [
         { claim: R`Xác suất sai một câu là $\frac{3}{4}$.`, why: "Ba lựa chọn sai trong bốn lựa chọn đồng khả năng." },
         { claim: R`Vì hai câu độc lập, xác suất sai cả hai là $\frac{3}{4}\cdot\frac{3}{4}=\frac{9}{16}$.`, why: "Quy tắc nhân cho biến cố độc lập." },
-        { claim: R`Công thức biến cố đối cho xác suất đúng ít nhất một câu là $1-\frac{9}{16}=\frac{7}{16}$.`, why: "Đối của sai cả hai chính là có ít nhất một câu đúng. Diễn giải: chưa đến một nửa số lần làm hai câu sẽ có ít nhất một câu đúng." },
+        { claim: R`Đúng ít nhất một câu là $1-\frac{9}{16}=\frac{7}{16}$.`, why: "Sai cả hai chiếm 9/16. Phần còn lại, có ít nhất một câu đúng, là 7/16, chưa tới một nửa." },
       ],
       checks: [
         { expr: "Rational(3,4)*Rational(3,4)", expect: "Rational(9,16)" },
@@ -288,7 +288,7 @@ export const probabilityDang: TopicDang = {
       steps: [
         { claim: R`Xác suất một lần chẵn và xác suất một lần lẻ đều bằng $\frac{1}{2}$.`, why: "Ba mặt chẵn và ba mặt lẻ trong sáu mặt." },
         { claim: R`Vì độc lập, xác suất cả hai chẵn là $\frac{1}{4}$ và xác suất cả hai lẻ cũng là $\frac{1}{4}$.`, why: "Quy tắc nhân áp dụng cho từng cặp biến cố độc lập." },
-        { claim: R`Công thức biến cố đối cho xác suất có ít nhất một lần chẵn là $1-\frac{1}{4}=\frac{3}{4}$.`, why: "Đối của cả hai lẻ chính là có ít nhất một mặt chẵn. Diễn giải: ba phần tư số lần gieo cặp có mặt chẵn." },
+        { claim: R`Ít nhất một lần chẵn là $1-\frac{1}{4}=\frac{3}{4}$.`, why: "Cả hai lẻ chiếm 1/4. Phần còn lại, có ít nhất một mặt chẵn, là 3/4." },
       ],
       checks: [
         { expr: "Rational(1,2)*Rational(1,2)", expect: "Rational(1,4)" },
@@ -303,7 +303,7 @@ export const probabilityDang: TopicDang = {
       answer: R`Một đề đúng: biết tổng bằng $7$, xác suất xúc xắc thứ nhất ra $1$ bằng $\frac{1}{6}$. Không gian thu hẹp có $6$ cặp.`,
       steps: [
         { claim: R`Sáu cặp tổng $7$ là không gian đã thu hẹp.`, why: "Điều kiện khác với tổng bằng $8$, nên đây là một đề mới hợp lệ." },
-        { claim: R`Chỉ một cặp có số đầu bằng $1$, nên xác suất bằng $\frac{1}{6}$.`, why: "Công thức có điều kiện trên các kết quả đồng khả năng còn lại." },
+        { claim: R`Chỉ một cặp có số đầu bằng $1$, nên xác suất bằng $\frac{1}{6}$.`, why: "Trong sáu cặp tổng 7 chỉ một cặp có số đầu bằng 1, nên xác suất là 1/6." },
       ],
       checks: [{ expr: "1/(1+1+1+1+1+1)", expect: "Rational(1,6)" }],
     },

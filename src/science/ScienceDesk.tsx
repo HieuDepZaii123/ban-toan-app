@@ -48,7 +48,7 @@ function ScienceHome() {
       <p className="lead">
         {t(
           lang,
-          "Lập trình, số liệu, đề chuyên, vật lý và hóa. Mỗi mảng có ba mức và một video.",
+          "Lập trình, số liệu, đề chuyên, vật lý, hóa. Mỗi mảng có ba mức và một video.",
           "Programming, data, specialised papers, physics and chemistry. Each area has three layers and one video.",
         )}
       </p>

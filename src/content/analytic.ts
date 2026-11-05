@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const analyticLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Pháp tuyến vuông góc với đường. Khoảng cách đo theo hướng đó, rồi chia cho độ dài pháp tuyến.`, en: R`The normal is perpendicular to the line. Distance is measured along it, then divided by the normal's length.` },
+    { k: "mo", vi: R`Đường $x+y-2=0$ có pháp tuyến $(1;1)$, dài $\sqrt2$. Khoảng cách bằng tử chia cho $\sqrt2$.`, en: R`The line $x+y-2=0$ has normal $(1;1)$, of length $\sqrt2$. Distance is the numerator divided by $\sqrt2$.` },
     { k: "dinh", vi: R`Khoảng cách từ $(x_0;y_0)$ tới $ax+by+c=0$ là $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.`, en: R`Distance from $(x_0;y_0)$ to $ax+by+c=0$ is $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.` },
     { k: "vd", vi: R`$(3;1)$ tới $x+y-2=0$: $\dfrac{|3+1-2|}{\sqrt2}=\sqrt2$.`, en: R`$(3;1)$ to $x+y-2=0$: $\dfrac{|3+1-2|}{\sqrt2}=\sqrt2$.` },
   ],

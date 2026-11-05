@@ -11,7 +11,7 @@ export const quadraticLesson: Lesson = {
   exam: [
     { k: "dinh", vi: R`$y=a(x-h)^2+k$ có đỉnh $(h;k)$ đứng yên khi đổi $a$. Dạng $ax^2+bx+c$: đổi $a$ thì đỉnh chạy.`, en: R`$y=a(x-h)^2+k$ has vertex $(h;k)$, fixed when $a$ changes. In $ax^2+bx+c$, changing $a$ moves the vertex.` },
     { k: "vd", vi: R`$y=x^2-2x-3=(x-1)^2-4$. Đỉnh $(1;-4)$. $\Delta=16$, nghiệm $x=-1$ và $x=3$.`, en: R`$y=x^2-2x-3=(x-1)^2-4$. Vertex $(1;-4)$. $\Delta=16$, roots $x=-1$ and $x=3$.` },
-    { k: "loi", vi: R`$\Delta=0$ chỉ nói tiếp xúc Ox. Hoành độ đỉnh vẫn là $-\dfrac{b}{2a}$.`, en: R`$\Delta=0$ only says the graph touches the $x$-axis. The vertex $x$-coordinate is still $-\dfrac{b}{2a}$.` },
+    { k: "loi", vi: R`Với $y=x^2-2x+1$, lấy đỉnh từ $\Delta=0$ ra $x=0$ thì sai. Đỉnh vẫn là $x=-\dfrac{b}{2a}=1$.`, en: R`For $y=x^2-2x+1$, reading the vertex from $\Delta=0$ as $x=0$ is wrong. The vertex is still $x=-\dfrac{b}{2a}=1$.` },
     { k: "kiem", vi: R`$y=x^2-4x=(x-2)^2-4$. Đỉnh $(2;-4)$.`, en: R`$y=x^2-4x=(x-2)^2-4$. Vertex $(2;-4)$.` },
   ],
 };

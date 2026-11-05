@@ -57,8 +57,8 @@ export const cards = [
     "status": "ready",
     "title": "Bất đẳng thức",
     "titleEn": "Inequalities",
-    "blurb": "AM–GM và Cauchy. Cực trị nằm ở một đỉnh của miền.",
-    "blurbEn": "AM–GM and Cauchy. The extremum sits at a vertex of the region.",
+    "blurb": "4 và 9: trung bình cộng 6,5, trung bình nhân 6.",
+    "blurbEn": "4 and 9: arithmetic mean 6.5, geometric mean 6.",
     "questions": 13
   },
   {
@@ -69,8 +69,8 @@ export const cards = [
     "status": "ready",
     "title": "Mũ và logarit",
     "titleEn": "Exponents and logarithms",
-    "blurb": "aˣ và logₐ. Lãi kép, thời gian gấp đôi.",
-    "blurbEn": "aˣ and logₐ. Compound interest and doubling time.",
+    "blurb": "10 triệu, lãi kép 8% sau 5 năm khoảng 14,69, không phải 14.",
+    "blurbEn": "10 million at 8% compound for 5 years is about 14.69, not 14.",
     "questions": 13
   },
   {
@@ -93,8 +93,8 @@ export const cards = [
     "status": "ready",
     "title": "Lượng giác",
     "titleEn": "Trigonometry",
-    "blurb": "Đường tròn đơn vị: cos ngang, sin đứng.",
-    "blurbEn": "Unit circle: cos horizontal, sin vertical.",
+    "blurb": "Đường tròn bán kính 1: góc 90° là điểm (0; 1).",
+    "blurbEn": "Circle of radius 1: 90° is the point (0, 1).",
     "questions": 13
   },
   {
@@ -129,8 +129,8 @@ export const cards = [
     "status": "ready",
     "title": "Khảo sát hàm số",
     "titleEn": "Curve sketching",
-    "blurb": "Dấu y′ và y″: đồng biến, cực trị, điểm uốn.",
-    "blurbEn": "Signs of y′ and y″: increase, extrema, inflection.",
+    "blurb": "y = x³ − 3x: cực đại 2 tại x = −1, cực tiểu −2 tại x = 1.",
+    "blurbEn": "y = x³ − 3x: maximum 2 at x = −1, minimum −2 at x = 1.",
     "questions": 13
   },
   {
@@ -165,8 +165,8 @@ export const cards = [
     "status": "ready",
     "title": "Hình giải tích",
     "titleEn": "Coordinate geometry",
-    "blurb": "Khoảng cách từ một điểm tới đường thẳng, rồi vị trí với đường tròn.",
-    "blurbEn": "Distance from a point to a line, then where the point sits against a circle.",
+    "blurb": "(3; 1) cách đường x + y − 2 = 0 đúng √2.",
+    "blurbEn": "(3, 1) is exactly √2 from the line x + y − 2 = 0.",
     "questions": 13
   },
   {
@@ -177,8 +177,8 @@ export const cards = [
     "status": "ready",
     "title": "Hình phẳng và không gian",
     "titleEn": "Plane and solid figures",
-    "blurb": "Diện tích tam giác. Thể tích hộp, chóp, tứ diện.",
-    "blurbEn": "Triangle area. Volume of a box, a pyramid, a tetrahedron.",
+    "blurb": "Đáy 6, cao 4 thì diện tích 12. Chóp còn nhân 1/3.",
+    "blurbEn": "Base 6 and height 4 give area 12. A pyramid also multiplies by 1/3.",
     "questions": 13
   },
   {

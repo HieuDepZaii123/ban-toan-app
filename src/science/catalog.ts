@@ -2,12 +2,12 @@ export const sciences = [
   {
     id: "python",
     title: "Lập trình toán",
-    blurb: "Vòng lặp, hàm, và đồ thị cho bài THPT.",
+    blurb: "Vòng lặp tính tổng 1 + … + n, rồi vẽ đồ thị.",
   },
   {
     id: "du-lieu",
     title: "Ứng dụng dữ liệu",
-    blurb: "Trung bình, trung vị, và cách đọc biểu đồ.",
+    blurb: "Dãy 2, 3, 4, 5, 20: trung vị 4, trung bình 6,8.",
   },
   {
     id: "chuyen",
@@ -17,12 +17,12 @@ export const sciences = [
   {
     id: "vat-ly",
     title: "Vật lý toán",
-    blurb: "Chuyển động, lực, điện — viết bằng công thức.",
+    blurb: "s = 20t − 5t², vận tốc bằng 0 tại t = 2.",
   },
   {
     id: "hoa",
     title: "Hóa tính toán",
-    blurb: "Số mol, nồng độ, pH: đổi đơn vị rồi mới tính.",
+    blurb: "pH = −log[H⁺]: nồng độ 10⁻³ thì pH = 3.",
   },
 ] as const;
 
