@@ -857,7 +857,10 @@ html[data-lamp="on"] body::before {
 .chat-preview, .chat-config { font-size: 0.82rem; color: var(--ink-soft); }
 .chat-config input[type="url"] { width: 100%; margin-top: 4px; }
 .chat-check { display: flex; gap: 8px; align-items: center; margin: 6px 0; }
-.chat-steps { margin-top: 4px; }
+.chat-context { margin: 0; color: var(--accent); font-size: 0.86rem; font-weight: 600; }
+.chat-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.chat-step { margin: 0; border-top: 1px solid var(--line); padding-top: 4px; }
+.chat-step summary { cursor: pointer; }
 .theme-pick select, .rain-vol { background: var(--sheet); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; }
 .theme-pick select { min-height: 40px; padding: 0 8px; }
 .rain-pick { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--ink-soft); }

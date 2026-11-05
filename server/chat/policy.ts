@@ -1,3 +1,4 @@
+import { tutorAnswer } from "../../src/chat/tutorCopy.ts";
 import { matchTopic, topicMenu } from "./topics.ts";
 
 const OFF_TOPIC = /thời tiết|nấu ăn|nấu phở|công thức nấu|bóng đá|chính trị|bầu cử|viết văn|làm thơ|mật khẩu|hack |bitcoin|chứng khoán|ngoại ngữ|dịch giúp/i;
@@ -23,7 +24,7 @@ export function isOffTopic(text: string): boolean {
 
 export const REFUSAL = "Mình chỉ hỗ trợ Toán THPT và cách học trên Bàn Toán. Hãy hỏi một khái niệm hoặc một bài trong chương trình.";
 
-export function demoReply(text: string): string {
+export function demoReply(text: string, topicId?: string): string {
   if (GREETING.test(text.trim()) && !matchTopic(text)) {
     return [
       "Chào bạn. Mình gợi ý từng bước, không chốt hộ đáp án.",
@@ -31,25 +32,5 @@ export function demoReply(text: string): string {
       "Hãy tự kiểm chứng công thức trước khi chốt.",
     ].join("\n");
   }
-  const topic = matchTopic(text);
-  const link = topic ? `[${topic.title}](/t/${topic.id})` : "các tờ trên bàn học";
-  const steps = topic
-    ? [
-        `Đọc đề và gọi tên dạng bài trong ${topic.title}.`,
-        "Viết dữ kiện đã cho và công thức đúng dạng đó, trong dấu $.",
-        "Tính một bước, rồi thế lại để kiểm.",
-      ]
-    : [
-        "Gọi tên dạng bài: hàm, phương trình, hình, hay xác suất.",
-        "Viết dữ kiện và một công thức, trong dấu $.",
-        "Tính một bước rồi kiểm chiều và đơn vị.",
-      ];
-  return [
-    "Mình không chốt đáp án hộ. Làm lần lượt:",
-    `1. ${steps[0]}`,
-    `2. ${steps[1]}`,
-    `3. ${steps[2]}`,
-    `Xem bài trong app: ${link}.`,
-    "Hãy tự kiểm chứng công thức trước khi chốt.",
-  ].join("\n");
+  return tutorAnswer(text, topicId);
 }

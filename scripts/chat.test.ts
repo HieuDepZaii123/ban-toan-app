@@ -7,6 +7,7 @@ import { isYoutubeId, lectures } from "../src/content/lectures.ts";
 import { handleChat, type ChatEnv, type ChatTurn } from "../server/chat/handlers.ts";
 import { createQuota } from "../server/chat/limit.ts";
 import { REFUSAL } from "../server/chat/policy.ts";
+import { tutorTopics } from "../server/chat/topics.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
@@ -57,6 +58,14 @@ assert(cook.json.reply === REFUSAL, "recipe refused");
 const hello = await post(env(), ask("Xin chào"));
 assert(String(hello.json.reply).includes("từng bước"), "greeting stays a tutor");
 assert(hello.json.mode === "demo", "no key means demo mode");
+
+for (const topic of tutorTopics) {
+  const sample = await post(env(), ask(`${topic.keys[0]} ví dụ số`));
+  const text = String(sample.json.reply);
+  assert(text.includes(`/t/${topic.id}`), `${topic.id} link ${text}`);
+  assert(text.includes("$"), `${topic.id} katex`);
+  assert(/\n1\)/.test(text), `${topic.id} numbered step`);
+}
 
 const math = await post(env(), ask("Giải thích đỉnh của parabol bậc hai"));
 const reply = String(math.json.reply);
