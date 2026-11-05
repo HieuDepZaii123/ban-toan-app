@@ -15,6 +15,7 @@ import { captionFor } from "../motion/captions.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Notebook } from "./Notebook.tsx";
 import { Practice } from "./Practice.tsx";
+import { DangHoc } from "./DangHoc.tsx";
 import { FocusBar } from "./FocusBar.tsx";
 import { LectureVideos } from "./LectureVideos.tsx";
 import { SangTao } from "./SangTao.tsx";
@@ -169,6 +170,7 @@ export function TopicDesk({ id }: { id: string }) {
                   <p>{lang === "en" ? topic.soonEn : topic.soon}</p>
                 </>
               )}
+              <DangHoc topicId={topic.id} />
               <LectureVideos topicId={topic.id} />
               <SangTao topicId={topic.id} />
             </div>
