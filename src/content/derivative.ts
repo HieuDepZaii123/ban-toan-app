@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const derivativeLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Đạo hàm là độ dốc của tiếp tuyến.`, en: R`The derivative is the slope of the tangent.` },
-    { k: "vd", vi: R`$y=x^2$ từ $1$ đến $2$ có độ dốc $3$.`, en: R`$y=x^2$ from $1$ to $2$ has slope $3$.` },
+    { k: "mo", vi: R`Đạo hàm tại $a$ là hệ số góc của tiếp tuyến, tức giới hạn của hệ số góc cát tuyến.`, en: R`The derivative at $a$ is the slope of the tangent, the limit of the secant slope.` },
+    { k: "dinh", vi: R`$f'(a)=\lim_{h\to 0}\dfrac{f(a+h)-f(a)}{h}$, khi giới hạn đó tồn tại.`, en: R`$f'(a)=\lim_{h\to 0}\dfrac{f(a+h)-f(a)}{h}$, when that limit exists.` },
+    { k: "vd", vi: R`$f(x)=x^2$ từ $1$ đến $1+h$: $\dfrac{(1+h)^2-1}{h}=2+h$. Cho $h\to 0$ được $f'(1)=2$.`, en: R`$f(x)=x^2$ from $1$ to $1+h$: $\dfrac{(1+h)^2-1}{h}=2+h$. Sending $h\to 0$ gives $f'(1)=2$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Đạo hàm là $f'(a)=\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$.`, en: R`The derivative is $f'(a)=\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$.` },
-    { k: "vd", vi: R`$h=20t-5t^2$ đạt đỉnh lúc $t=2$, cao $20$.`, en: R`$h=20t-5t^2$ peaks at $t=2$, height $20$.` },
-    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng không phải cực trị.`, en: R`$y=x^3$ has $y'(0)=0$ but that is not an extremum.` },
-    { k: "kiem", vi: R`$y=x^3-3x$ đạt $2$ tại $x=-1$.`, en: R`$y=x^3-3x$ reaches $2$ at $x=-1$.` },
+    { k: "dinh", vi: R`$(x^n)'=nx^{n-1}$. Trên đoạn đóng, giá trị lớn nhất nằm ở đầu mút hoặc tại điểm $f'$ đổi dấu.`, en: R`$(x^n)'=nx^{n-1}$. On a closed interval the maximum is at an endpoint or where $f'$ changes sign.` },
+    { k: "vd", vi: R`$h=20t-5t^2$, $v=20-10t$. $v=0$ tại $t=2$, $h(2)=20$. $(5t^2)'=10t$, không phải $5t$.`, en: R`$h=20t-5t^2$, $v=20-10t$. $v=0$ at $t=2$, $h(2)=20$. $(5t^2)'=10t$, not $5t$.` },
+    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng $y'=3x^2$ không đổi dấu, nên không phải cực trị.`, en: R`$y=x^3$ has $y'(0)=0$, but $y'=3x^2$ does not change sign, so it is not an extremum.` },
+    { k: "kiem", vi: R`$y=x^3-3x$, $y'=3x^2-3=0$ tại $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.`, en: R`$y=x^3-3x$, $y'=3x^2-3=0$ at $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.` },
   ],
 };
 
@@ -23,8 +24,8 @@ export const derivativeQuestions: Question[] = [
     choices: [R`$4$`, R`$2$`, R`$2x$`, R`$0$`],
     choicesEn: [R`$4$`, R`$2$`, R`$2x$`, R`$0$`],
     answer: 0,
-    hint: "Đạo hàm của x² là 2x. Nhớ thế x = 2.",
-    hintEn: "The derivative of x² is 2x. Remember to substitute x = 2.",
+    hint: R`$f'(x)=2x$. Thế $x=2$.`,
+    hintEn: R`$f'(x)=2x$. Substitute $x=2$.`,
     steps: [
       R`$f(x) = x^2$ có $f'(x) = 2x$.`,
       R`$f'(2) = 4$. Đó là hệ số góc của tiếp tuyến tại $x = 2$.`,
@@ -43,8 +44,8 @@ export const derivativeQuestions: Question[] = [
     choices: [R`$2 + h$`, R`$2$`, R`$h$`, R`$2h$`],
     choicesEn: [R`$2 + h$`, R`$2$`, R`$h$`, R`$2h$`],
     answer: 0,
-    hint: "Khai (1+h)² − 1 rồi chia cho h. Đừng vội cho h về 0.",
-    hintEn: "Expand (1+h)² − 1 and divide by h. Do not send h to 0 yet.",
+    hint: R`Khai $(1+h)^2-1$, chia $h$, rồi cho $h\to 0$.`,
+    hintEn: R`Expand $(1+h)^2-1$, divide by $h$, then send $h\to 0$.`,
     steps: [
       R`$(1+h)^2 - 1^2 = 1 + 2h + h^2 - 1 = 2h + h^2$.`,
       R`Chia cho $h \neq 0$: $\dfrac{2h + h^2}{h} = 2 + h$.`,
@@ -63,8 +64,8 @@ export const derivativeQuestions: Question[] = [
     choices: [R`$t = 2\text{ s}$`, R`$t = 1\text{ s}$`, R`$t = 4\text{ s}$`, R`$t = 0\text{ s}$`],
     choicesEn: [R`$t = 2\text{ s}$`, R`$t = 1\text{ s}$`, R`$t = 4\text{ s}$`, R`$t = 0\text{ s}$`],
     answer: 0,
-    hint: "Cao nhất khi vận tốc bằng 0. Đạo hàm của 5t² là 10t, không phải 5t.",
-    hintEn: "The top is where velocity is 0. The derivative of 5t² is 10t, not 5t.",
+    hint: R`Cao nhất khi $v=0$. $(5t^2)'=10t$.`,
+    hintEn: R`The top is where $v=0$. $(5t^2)'=10t$.`,
     steps: [
       R`$h'(t) = 20 - 10t$. Hệ số $10$ là $2 \cdot 5$, vì đạo hàm của $t^2$ mang thêm $2$.`,
       R`$h' = 0$ khi $t = 2$ s.`,
@@ -83,8 +84,8 @@ export const derivativeQuestions: Question[] = [
     choices: [R`$20\text{ m}$`, R`$15\text{ m}$`, R`$40\text{ m}$`, R`$10\text{ m}$`],
     choicesEn: [R`$20\text{ m}$`, R`$15\text{ m}$`, R`$40\text{ m}$`, R`$10\text{ m}$`],
     answer: 0,
-    hint: "Thế đúng thời điểm vận tốc bằng 0. Đừng thế t = 1 chỉ vì ra số tròn.",
-    hintEn: "Substitute the time when velocity is 0. Do not substitute t = 1 just because the number looks tidy.",
+    hint: R`Thế $t$ tại $v=0$, không thế $t=1$.`,
+    hintEn: R`Substitute the $t$ where $v=0$, not $t=1$.`,
     steps: [
       R`Cao nhất khi $h'(t) = 20 - 10t = 0$, tức $t = 2$.`,
       R`$h(2) = 40 - 20 = 20$ m.`,
@@ -103,8 +104,8 @@ export const derivativeQuestions: Question[] = [
     choices: [R`$x = -1$ và $x = 1$`, R`chỉ $x = 0$`, R`$x = -\sqrt{3}$ và $x = \sqrt{3}$`, "Không có nghiệm"],
     choicesEn: [R`$x = -1$ and $x = 1$`, R`only $x = 0$`, R`$x = -\sqrt{3}$ and $x = \sqrt{3}$`, "No solution"],
     answer: 0,
-    hint: "Đạo hàm trước, rồi giải 3x² − 3 = 0. Đừng giải f(x) = 0.",
-    hintEn: "Differentiate first, then solve 3x² − 3 = 0. Do not solve f(x) = 0.",
+    hint: R`Giải $3x^2-3=0$, không giải $f(x)=0$.`,
+    hintEn: R`Solve $3x^2-3=0$, not $f(x)=0$.`,
     steps: [
       R`$f'(x) = 3x^2 - 3 = 3(x - 1)(x + 1)$.`,
       R`$f' = 0$ tại $x = -1$ và $x = 1$. $f(-1) = 2$ là cực đại, $f(1) = -2$ là cực tiểu, vì $f'$ đổi dấu tại cả hai.`,
@@ -123,8 +124,8 @@ export const derivativeQuestions: Question[] = [
     choices: [R`$3$ tại $x = 3$`, R`$-1$ tại $x = 1$`, R`$0$ tại $x = 0$`, R`$1$ tại $x = 1$`],
     choicesEn: [R`$3$ at $x = 3$`, R`$-1$ at $x = 1$`, R`$0$ at $x = 0$`, R`$1$ at $x = 1$`],
     answer: 0,
-    hint: "So ba ứng viên: hai đầu mút và điểm y′ = 0. Điểm dừng ở đây là đáy, không phải đỉnh.",
-    hintEn: "Compare three candidates: both endpoints and the point where y′ = 0. The stationary point here is the bottom, not the top.",
+    hint: "So hai đầu mút và điểm dừng. Điểm dừng này là đáy.",
+    hintEn: "Compare both endpoints and the stationary point. That stationary point is the bottom.",
     steps: [
       R`$y' = 2x - 2 = 0$ tại $x = 1$, và $y(1) = -1$. Vì $y'' = 2 > 0$, đây là giá trị nhỏ nhất.`,
       R`Hai đầu mút: $y(0) = 0$ và $y(3) = 9 - 6 = 3$.`,
@@ -143,8 +144,8 @@ export const derivativeQuestions: Question[] = [
     choices: [R`$50\text{ m}$`, R`$100\text{ m}$`, R`$20\text{ m}$`, R`$80\text{ m}$`],
     choicesEn: [R`$50\text{ m}$`, R`$100\text{ m}$`, R`$20\text{ m}$`, R`$80\text{ m}$`],
     answer: 0,
-    hint: "Tìm lúc v = 0 trước. Rồi tính s, đừng nhân 20 m/s với cả 5 giây.",
-    hintEn: "Find when v = 0 first. Then compute s. Do not multiply 20 m/s by the full 5 seconds.",
+    hint: R`Tìm $t$ khi $v=0$, rồi tính $s$.`,
+    hintEn: R`Find $t$ when $v=0$, then compute $s$.`,
     steps: [
       R`Dừng khi $v = 0$: $20 - 4t = 0$, nên $t = 5$ s.`,
       R`Nguyên hàm của vận tốc là $s(t) = 20t - 2t^2$. $s(5) = 100 - 50 = 50$ m. Cũng bằng vận tốc trung bình $\dfrac{20 + 0}{2} \cdot 5 = 50$ m.`,

@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const limitLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Giới hạn là số hàm tiến tới, không nhất thiết bằng giá trị tại điểm đó.`, en: R`A limit is the number approached, not necessarily the value at the point.` },
-    { k: "vd", vi: R`$\dfrac{x^2-1}{x-1}$ sát $1$ thì sát $2$.`, en: R`$\dfrac{x^2-1}{x-1}$ is near $2$ when $x$ is near $1$.` },
+    { k: "mo", vi: R`$\lim_{x\to a}f(x)=L$ khi cả hai phía tiến tới $L$. Giá trị $f(a)$ không quyết định giới hạn.`, en: R`$\lim_{x\to a}f(x)=L$ when both sides approach $L$. The value $f(a)$ does not decide the limit.` },
+    { k: "dinh", vi: R`Liên tục tại $a$ khi giới hạn tồn tại và bằng $f(a)$.`, en: R`Continuous at $a$ when the limit exists and equals $f(a)$.` },
+    { k: "vd", vi: R`$\dfrac{x^2-1}{x-1}=x+1$ khi $x\neq 1$. Sát $1$ thì sát $2$, dù gán $f(1)=5$.`, en: R`$\dfrac{x^2-1}{x-1}=x+1$ when $x\neq 1$. Near $1$ it is near $2$, even if $f(1)=5$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Có giới hạn $L$ khi cả hai phía về $L$; liên tục khi thêm $f(a)=L$.`, en: R`The limit is $L$ when both sides approach $L$; continuous when also $f(a)=L$.` },
-    { k: "vd", vi: R`Dù $f(1)=5$, $\dfrac{x^2-1}{x-1}$ vẫn tiến tới $2$.`, en: R`Even if $f(1)=5$, $\dfrac{x^2-1}{x-1}$ still approaches $2$.` },
-    { k: "loi", vi: R`Đừng lấy $f(a)$ làm giới hạn.`, en: R`Do not take $f(a)$ as the limit.` },
-    { k: "kiem", vi: R`$T=25+60e^{-t/4}$: lúc đầu $85$, về lâu là $25$.`, en: R`$T=25+60e^{-t/4}$: starts at $85$, tends to $25$.` },
+    { k: "dinh", vi: R`Hai phía khác nhau thì không có giới hạn. Không lấy trung bình hai phía.`, en: R`Different one-sided limits mean there is no limit. Do not average the two sides.` },
+    { k: "vd", vi: R`$T(t)=25+60e^{-t/4}$. $T(0)=85$. Khi $t\to+\infty$, $e^{-t/4}\to 0$ nên $T\to 25$.`, en: R`$T(t)=25+60e^{-t/4}$. $T(0)=85$. As $t\to+\infty$, $e^{-t/4}\to 0$ so $T\to 25$.` },
+    { k: "loi", vi: R`Thế $x=1$ vào $\dfrac{x^2-1}{x-1}$ khi mẫu bằng $0$. Rút $x-1$ trước.`, en: R`Substituting $x=1$ into $\dfrac{x^2-1}{x-1}$ while the denominator is $0$. Cancel $x-1$ first.` },
+    { k: "kiem", vi: R`$f(x)=-1$ khi $x<0$ và $f(x)=1$ khi $x>0$. Hai phía khác nhau: không có $\lim_{x\to 0}f(x)$.`, en: R`$f(x)=-1$ for $x<0$ and $f(x)=1$ for $x>0$. The sides differ: $\lim_{x\to 0}f(x)$ does not exist.` },
   ],
 };
 

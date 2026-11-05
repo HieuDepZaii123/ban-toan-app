@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const probabilityLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn.`, en: R`Probability is favorable cases divided by the cases that remain.` },
-    { k: "vd", vi: R`Một đồng xu, mặt ngửa: $\dfrac12$.`, en: R`One coin, heads: $\dfrac12$.` },
+    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn sau điều kiện đã biết.`, en: R`Probability is the favorable cases divided by the cases that remain after what is already known.` },
+    { k: "dinh", vi: R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ khi $P(B)\neq 0$. Mẫu số là $B$, không phải không gian cũ.`, en: R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ when $P(B)\neq 0$. The denominator is $B$, not the original space.` },
+    { k: "vd", vi: R`Một đồng xu, mặt ngửa: $\dfrac12$. Ba đồng xu, ít nhất một ngửa: $1-\dfrac18=\dfrac78$.`, en: R`One coin, heads: $\dfrac12$. Three coins, at least one head: $1-\dfrac18=\dfrac78$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Điều đã biết làm đổi mẫu số của xác suất.`, en: R`What is already known changes the probability's denominator.` },
-    { k: "vd", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: xác suất cả hai đều $6$ là $\dfrac1{11}$.`, en: R`Two dice, given at least one $6$: both sixes has probability $\dfrac1{11}$.` },
-    { k: "loi", vi: R`Đừng chia cho $36$ khi đề đã biết có một mặt $6$.`, en: R`Do not divide by $36$ once the problem already knows there is a $6$.` },
-    { k: "kiem", vi: R`Ba đồng xu, ít nhất một ngửa: $\dfrac78$.`, en: R`Three coins, at least one head: $\dfrac78$.` },
+    { k: "dinh", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: còn $36-25=11$ cặp, không còn $36$.`, en: R`Two dice, given at least one $6$: $36-25=11$ pairs remain, not $36$.` },
+    { k: "vd", vi: R`Trong $11$ cặp đó chỉ có $(6;6)$. Xác suất cả hai đều $6$ là $\dfrac{1}{11}$.`, en: R`Among those $11$ pairs only $(6;6)$ works. The probability both are $6$ is $\dfrac{1}{11}$.` },
+    { k: "loi", vi: R`Chia cho $36$ hoặc cho $6$ là dùng mẫu của đề chưa biết có mặt $6$.`, en: R`Dividing by $36$ or by $6$ uses the sample from before the problem knew there was a $6$.` },
+    { k: "kiem", vi: R`$10\,000$ người, bệnh $1\%$, độ nhạy $99\%$, dương giả $5\%$: $\dfrac{99}{99+495}=\dfrac16$.`, en: R`$10\,000$ people, prevalence $1\%$, sensitivity $99\%$, false positives $5\%$: $\dfrac{99}{99+495}=\dfrac16$.` },
   ],
 };
 

@@ -8,6 +8,7 @@ import { setTheme, useSlice } from "./lib/store.ts";
 import { t } from "./lib/text.ts";
 import { StudyPlayer } from "./study/StudyPlayer.tsx";
 import { Atmosphere } from "./ui/Atmosphere.tsx";
+import { RightMenu } from "./ui/RightMenu.tsx";
 import { effectiveTheme, readThemeMode } from "./ui/themeMode.ts";
 import { useLang } from "./ui/useLang.ts";
 
@@ -21,6 +22,7 @@ const WorkshopPage = lazy(() => import("./pages/WorkshopPage.tsx").then((mod) =>
 const DrillPage = lazy(() => import("./pages/DrillPage.tsx").then((mod) => ({ default: mod.DrillPage })));
 const MissPage = lazy(() => import("./pages/MissPage.tsx").then((mod) => ({ default: mod.MissPage })));
 const ReferPage = lazy(() => import("./pages/ReferPage.tsx").then((mod) => ({ default: mod.ReferPage })));
+const ResearchIdeasPage = lazy(() => import("./pages/ResearchIdeasPage.tsx").then((mod) => ({ default: mod.ResearchIdeasPage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -37,6 +39,7 @@ export default function App() {
       <Guarded />
       <StudyPlayer />
       <ChatEntry />
+      <RightMenu />
     </RouteProvider>
   );
 }
@@ -70,6 +73,7 @@ function Shell() {
   if (path === "/luyen") return <DrillPage />;
   if (path === "/so-loi") return <MissPage />;
   if (path === "/gioi-thieu") return <ReferPage />;
+  if (path === "/nghien-cuu") return <ResearchIdeasPage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return <GradeDesk />;
   return <HomeDesk />;

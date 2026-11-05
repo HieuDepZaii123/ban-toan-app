@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const surveyLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Khảo sát là xem hàm đang đi lên hay đi xuống.`, en: R`Sketching means seeing whether the function is rising or falling.` },
-    { k: "vd", vi: R`$y=x^3-3x$ tại $x=-1$ thì $y=2$.`, en: R`$y=x^3-3x$ at $x=-1$ gives $y=2$.` },
+    { k: "mo", vi: R`Khảo sát đọc chiều biến thiên từ dấu của $y'$, và độ lõm từ dấu của $y''$.`, en: R`A sketch reads increase from the sign of $y'$, and concavity from the sign of $y''$.` },
+    { k: "dinh", vi: R`$y'>0$: đồng biến. $y'=0$ và $y'$ đổi dấu: cực trị. $y''$ đổi dấu: điểm uốn.`, en: R`$y'>0$: increasing. $y'=0$ and $y'$ changes sign: an extremum. $y''$ changes sign: an inflection point.` },
+    { k: "vd", vi: R`$y=x^3-3x$, $y'=3(x-1)(x+1)$. $y'=0$ tại $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.`, en: R`$y=x^3-3x$, $y'=3(x-1)(x+1)$. $y'=0$ at $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$y'=0$ và $y'$ đổi dấu thì đó là cực trị.`, en: R`If $y'=0$ and $y'$ changes sign, that point is an extremum.` },
-    { k: "vd", vi: R`$y=x^3-3x$ có cực đại $2$ và cực tiểu $-2$.`, en: R`$y=x^3-3x$ has maximum $2$ and minimum $-2$.` },
-    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$ nhưng không là cực trị.`, en: R`$y=x^3$ has $y'(0)=0$ but it is not an extremum.` },
-    { k: "kiem", vi: R`$\dfrac{x^2}{x-1}$ có tiệm cận đứng $x=1$.`, en: R`$\dfrac{x^2}{x-1}$ has vertical asymptote $x=1$.` },
+    { k: "dinh", vi: R`Cực trị cần $y'$ đổi dấu. Trên $\mathbb{R}$, đa thức bậc ba không có giá trị lớn nhất.`, en: R`An extremum needs $y'$ to change sign. On $\mathbb{R}$ a cubic has no greatest value.` },
+    { k: "vd", vi: R`$y=x^3-3x=x(x-\sqrt3)(x+\sqrt3)$. Ba nghiệm $0,\pm\sqrt3$. Cực trị ở $\pm 1$, không phải ở nghiệm.`, en: R`$y=x^3-3x=x(x-\sqrt3)(x+\sqrt3)$. Three roots $0,\pm\sqrt3$. Extrema at $\pm 1$, not at the roots.` },
+    { k: "loi", vi: R`$y=x^3$: $y'(0)=0$ nhưng $y'$ không đổi dấu, không có cực trị.`, en: R`$y=x^3$: $y'(0)=0$ but $y'$ does not change sign, so there is no extremum.` },
+    { k: "kiem", vi: R`$\dfrac{x^2}{x-1}$: mẫu bằng $0$ tại $x=1$, đó là tiệm cận đứng.`, en: R`$\dfrac{x^2}{x-1}$: the denominator is $0$ at $x=1$, a vertical asymptote.` },
   ],
 };
 

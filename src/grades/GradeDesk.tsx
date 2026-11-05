@@ -78,7 +78,7 @@ function GradeHome() {
     <PageFrame
       kicker="Chương trình GDPT 2018"
       title="Kiến thức lớp 1–12"
-      lead="Chọn lớp để xem chương và bài. Mỗi bài có vì sao đúng, lỗi hay gặp, ví dụ mở từng bước, và bài luyện có chỗ nhập đáp án."
+      lead="Chọn lớp. Mỗi bài có ví dụ có bước, lỗi hay gặp, và chỗ nhập đáp án."
     >
       {BAND.map((band) => (
         <section key={band.id} className="stream">

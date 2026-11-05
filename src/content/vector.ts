@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const vectorLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Vectơ là mũi tên có hướng; độ dài là khoảng từ gốc tới ngọn.`, en: R`A vector is a directed arrow; its length is the distance from start to tip.` },
-    { k: "vd", vi: R`Độ dài $(3;4)$ là $5$.`, en: R`The length of $(3;4)$ is $5$.` },
+    { k: "mo", vi: R`Vectơ là mũi tên có hướng. Độ dài là khoảng từ gốc tới ngọn, không phải tổng các thành phần.`, en: R`A vector is a directed arrow. Its length is the distance from tail to tip, not the sum of the components.` },
+    { k: "dinh", vi: R`$|\vec u|=\sqrt{x^2+y^2+z^2}$. $\vec u\cdot\vec v=0$ thì hai vectơ vuông góc.`, en: R`$|\vec u|=\sqrt{x^2+y^2+z^2}$. $\vec u\cdot\vec v=0$ means the vectors are perpendicular.` },
+    { k: "vd", vi: R`Độ dài $|(3;4)|=\sqrt{9+16}=5$. Độ dài $|(2;1;2)|=\sqrt{4+1+4}=3$.`, en: R`Length $|(3;4)|=\sqrt{9+16}=5$. Length $|(2;1;2)|=\sqrt{4+1+4}=3$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$|u|=\sqrt{x^2+y^2+z^2}$; tích vô hướng $0$ thì vuông góc.`, en: R`$|u|=\sqrt{x^2+y^2+z^2}$; a dot product of $0$ means perpendicular.` },
-    { k: "vd", vi: R`Độ dài $|(2;1;2)|$ là $3$.`, en: R`The length $|(2;1;2)|$ is $3$.` },
-    { k: "loi", vi: R`Cộng $2+1+2=5$, không phải độ dài $3$.`, en: R`Adding $2+1+2=5$ is not the length $3$.` },
-    { k: "kiem", vi: R`$(1;2;-1)\cdot(2;-1;0)=0$, nên hai vectơ vuông góc.`, en: R`$(1;2;-1)\cdot(2;-1;0)=0$, so the vectors are perpendicular.` },
+    { k: "dinh", vi: R`$\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc$. Khác $0$ thì hệ hai ẩn có đúng một nghiệm.`, en: R`$\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc$. If it is not $0$, the two-unknown system has one solution.` },
+    { k: "vd", vi: R`$(1;2;-1)\cdot(2;-1;0)=2-2+0=0$, nên hai vectơ vuông góc.`, en: R`$(1;2;-1)\cdot(2;-1;0)=2-2+0=0$, so the vectors are perpendicular.` },
+    { k: "loi", vi: R`Cộng $2+1+2=5$ không phải độ dài. Bỏ $z$ thì $|(2;1;2)|$ thành $\sqrt5$, sai.`, en: R`Adding $2+1+2=5$ is not the length. Dropping $z$ turns $|(2;1;2)|$ into $\sqrt5$, which is wrong.` },
+    { k: "kiem", vi: R`$\begin{vmatrix}1&2\\3&4\end{vmatrix}=4-6=-2\neq 0$, nên hệ có một nghiệm.`, en: R`$\begin{vmatrix}1&2\\3&4\end{vmatrix}=4-6=-2\neq 0$, so the system has one solution.` },
   ],
 };
 

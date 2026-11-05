@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const integralLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Tích phân là diện tích có dấu dưới đồ thị.`, en: R`An integral is signed area under a graph.` },
-    { k: "vd", vi: R`Hình cao $2$, rộng $1$ có diện tích $2$.`, en: R`Height $2$ and width $1$ give area $2$.` },
+    { k: "mo", vi: R`Tích phân xác định là diện tích có dấu: phần dưới Ox tính âm.`, en: R`A definite integral is signed area: the part below the $x$-axis counts as negative.` },
+    { k: "dinh", vi: R`Nếu $F'=f$ thì $\displaystyle\int_a^b f(x)\,dx=F(b)-F(a)$.`, en: R`If $F'=f$ then $\displaystyle\int_a^b f(x)\,dx=F(b)-F(a)$.` },
+    { k: "vd", vi: R`Tính $\int_0^2(2x-x^2)\,dx=\left[x^2-\dfrac{x^3}{3}\right]_0^2=4-\dfrac{8}{3}=\dfrac{4}{3}$.`, en: R`Compute $\int_0^2(2x-x^2)\,dx=\left[x^2-\dfrac{x^3}{3}\right]_0^2=4-\dfrac{8}{3}=\dfrac{4}{3}$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$\int_a^b f=F(b)-F(a)$ với $F'=f$.`, en: R`$\int_a^b f=F(b)-F(a)$ where $F'=f$.` },
-    { k: "vd", vi: R`Tích $\int_0^2(2x-x^2)\,dx=\dfrac43$.`, en: R`The integral $\int_0^2(2x-x^2)\,dx=\dfrac43$.` },
-    { k: "loi", vi: R`Nón $r=3$, $h=6$ có $V=18\pi$, không phải $54\pi$.`, en: R`A cone $r=3$, $h=6$ has $V=18\pi$, not $54\pi$.` },
-    { k: "kiem", vi: R`Hình trung điểm trên $[0;2]$ có diện tích $2$.`, en: R`The midpoint rectangle on $[0;2]$ has area $2$.` },
+    { k: "dinh", vi: R`Hai đồ thị: lấy hàm trên trừ hàm dưới. Quay quanh Ox: $\pi\int_a^b y^2\,dx$.`, en: R`Two graphs: upper minus lower. Revolution about the $x$-axis: $\pi\int_a^b y^2\,dx$.` },
+    { k: "vd", vi: R`Trên $[0;1]$, $x\ge x^2$. $\int_0^1(x-x^2)\,dx=\left[\dfrac{x^2}{2}-\dfrac{x^3}{3}\right]_0^1=\dfrac16$.`, en: R`On $[0;1]$, $x\ge x^2$. $\int_0^1(x-x^2)\,dx=\left[\dfrac{x^2}{2}-\dfrac{x^3}{3}\right]_0^1=\dfrac16$.` },
+    { k: "loi", vi: R`Nón $r=3$, $h=6$: $V=\dfrac13\pi r^2 h=18\pi$. Bỏ $\dfrac13$ thì ra $54\pi$, là thể tích trụ.`, en: R`Cone $r=3$, $h=6$: $V=\dfrac13\pi r^2 h=18\pi$. Dropping $\dfrac13$ gives $54\pi$, the cylinder.` },
+    { k: "kiem", vi: R`Trung điểm của $[0;2]$ cho $y=x^2$ là $x=1$. Diện tích hình chữ nhật $2\cdot 1^2=2$, trong khi $\int_0^2 x^2\,dx=\dfrac83$.`, en: R`The midpoint of $[0;2]$ for $y=x^2$ is $x=1$. The rectangle has area $2\cdot 1^2=2$, while $\int_0^2 x^2\,dx=\dfrac83$.` },
   ],
 };
 

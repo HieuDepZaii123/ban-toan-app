@@ -985,6 +985,65 @@ html[data-lamp="on"] body::before {
 .wbar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 8px; }
 .wbar small { color: var(--ink-soft); }
 .panel { display: grid; gap: 12px; }
+.menu-tab {
+  position: fixed;
+  right: 0;
+  top: 38%;
+  z-index: 34;
+  border: 1px solid var(--line);
+  border-right: 0;
+  border-radius: 12px 0 0 12px;
+  background: var(--sheet);
+  color: var(--accent);
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px 8px;
+  writing-mode: vertical-rl;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.menu-layer { position: fixed; inset: 0; z-index: 45; }
+.menu-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(28, 25, 21, 0.38);
+  padding: 0;
+}
+.menu-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(320px, 88vw);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+  background: var(--sheet);
+  border-left: 1px solid var(--line);
+  overflow: auto;
+}
+.menu-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.menu-panel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.menu-panel a, .menu-panel li > button {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+  text-decoration: none;
+  text-align: left;
+}
+.menu-panel a[aria-current="page"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: transparent;
+  font-weight: 600;
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
   .wframe { transform: none !important; }

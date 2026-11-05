@@ -36,6 +36,7 @@ export function A({
   mode = "push",
   className,
   children,
+  onClick,
   ...rest
 }: {
   href: string;
@@ -50,6 +51,8 @@ export function A({
       className={className}
       {...rest}
       onClick={(event) => {
+        onClick?.(event);
+        if (event.defaultPrevented) return;
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
         event.preventDefault();
         go(href, mode);

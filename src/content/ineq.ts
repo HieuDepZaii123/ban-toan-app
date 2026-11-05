@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const ineqLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Chia hoặc nhân với số âm thì đảo chiều bất đẳng thức.`, en: R`Dividing or multiplying by a negative flips the inequality.` },
-    { k: "vd", vi: R`$-2x\le4$ nên $x\ge-2$.`, en: R`$-2x\le4$, so $x\ge-2$.` },
+    { k: "mo", vi: R`Nhân hoặc chia cả hai vế với số âm thì đảo chiều. Với số dương, chiều giữ nguyên.`, en: R`Multiplying or dividing both sides by a negative flips the inequality. A positive keeps the direction.` },
+    { k: "dinh", vi: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, đẳng thức khi $a=b$.`, en: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, with equality when $a=b$.` },
+    { k: "vd", vi: R`$-2x\le 4$. Chia $-2$: $x\ge -2$. Với $4$ và $9$: $\dfrac{4+9}{2}=6{,}5>\sqrt{36}=6$.`, en: R`$-2x\le 4$. Divide by $-2$: $x\ge -2$. For $4$ and $9$: $\dfrac{4+9}{2}=6{,}5>\sqrt{36}=6$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Với $a,b>0$, $\dfrac{a+b}{2}\ge\sqrt{ab}$, bằng khi $a=b$.`, en: R`For $a,b>0$, $\dfrac{a+b}{2}\ge\sqrt{ab}$, with equality when $a=b$.` },
-    { k: "vd", vi: R`$a+b=10$ thì $\max ab=25$ tại $a=b=5$.`, en: R`If $a+b=10$ then $\max ab=25$ at $a=b=5$.` },
-    { k: "loi", vi: R`Quên đảo dấu khi chia cho số âm.`, en: R`Forgetting to flip the sign when dividing by a negative.` },
-    { k: "kiem", vi: R`$4$ và $9$: trung bình cộng $6{,}5$, trung bình nhân $6$.`, en: R`$4$ and $9$: arithmetic mean $6{,}5$, geometric mean $6$.` },
+    { k: "dinh", vi: R`Cauchy: $(a^2+b^2)(c^2+d^2)\ge(ac+bd)^2$, đẳng thức khi $(a;b)$ và $(c;d)$ tỉ lệ.`, en: R`Cauchy: $(a^2+b^2)(c^2+d^2)\ge(ac+bd)^2$, with equality when $(a;b)$ and $(c;d)$ are proportional.` },
+    { k: "vd", vi: R`$a+b=10$, $a,b>0$. $ab\le\left(\dfrac{10}{2}\right)^2=25$, đạt tại $a=b=5$.`, en: R`$a+b=10$, $a,b>0$. $ab\le\left(\dfrac{10}{2}\right)^2=25$, reached at $a=b=5$.` },
+    { k: "loi", vi: R`Chia $-2$ mà giữ $\le$ thì ra $x\le -2$, sai. $a\le 0$ thì không dùng AM–GM.`, en: R`Dividing by $-2$ and keeping $\le$ gives $x\le -2$, which is wrong. If $a\le 0$, AM–GM does not apply.` },
+    { k: "kiem", vi: R`$a=2$, $b=3$, $c=1$, $d=1$: vế trái $(4+9)(1+1)=26$, vế phải $(2+3)^2=25$.`, en: R`$a=2$, $b=3$, $c=1$, $d=1$: left side $(4+9)(1+1)=26$, right side $(2+3)^2=25$.` },
   ],
 };
 

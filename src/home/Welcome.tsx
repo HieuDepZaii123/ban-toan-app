@@ -17,12 +17,12 @@ export function Welcome() {
           <Logo size={64} />
           <b>Bàn Toán</b>
         </div>
-        <h1>{t(lang, "Chạm vào toán, rồi tự tay kiểm lại.", "Touch the maths, then check it yourself.")}</h1>
+        <h1>{t(lang, "Mười bốn chuyên đề, có số để kiểm.", "Fourteen topics, with a number you can check.")}</h1>
         <p className="lead">
           {t(
             lang,
-            "Kéo tham số, đọc số vừa tính, làm câu có lời giải. Mười bốn chuyên đề đi từ Cơ bản, qua Chuẩn thi, tới một lớp Sáng tạo ngắn.",
-            "Drag a parameter, read the number you just computed, then work a question with a solution. Fourteen topics move from a plain start to the exam layer and a short creative layer.",
+            "Kéo tham số, đọc số vừa ra, rồi làm câu có lời giải. Mỗi tờ có Cơ bản, Chuẩn thi, và một câu khó hơn.",
+            "Drag a parameter, read the number, then work a question with a solution. Each sheet has a basic layer, an exam layer, and one harder question.",
           )}
         </p>
         <svg className="hero-stroke" viewBox="0 0 280 72" aria-hidden="true">
@@ -32,15 +32,15 @@ export function Welcome() {
       <section className="tier-row" aria-label={t(lang, "Ba mức học", "Three levels")}>
         <article>
           <b>{t(lang, "Học", "Study")}</b>
-          <span>{t(lang, "Cơ bản: một ý và một ví dụ nhỏ.", "Basics: one idea and one small example.")}</span>
+          <span>{t(lang, "Định nghĩa và một số cụ thể.", "A definition and one concrete number.")}</span>
         </article>
         <article>
           <b>{t(lang, "Làm việc", "Work")}</b>
-          <span>{t(lang, "Chuẩn thi: định nghĩa, ví dụ, lỗi hay gặp.", "Exam layer: definition, example, common mistake.")}</span>
+          <span>{t(lang, "Công thức, ví dụ tính tay, lỗi hay gặp.", "A formula, a hand calculation, a common mistake.")}</span>
         </article>
         <article>
           <b>{t(lang, "Sáng tạo", "Create")}</b>
-          <span>{t(lang, "Nâng cao: một hướng khó hơn, có lời giải từng bước.", "A harder line, with a worked solution.")}</span>
+          <span>{t(lang, "Một câu khó, lời giải có lý do từng bước.", "One harder question, with a reason at each step.")}</span>
         </article>
       </section>
       <div className="home-tools">

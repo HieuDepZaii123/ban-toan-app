@@ -192,7 +192,7 @@ export function StudyPlayer() {
   const repeatLabel = repeat === "one" ? "Lặp một bài" : repeat === "all" ? "Lặp cả danh sách" : "Không lặp";
 
   return (
-    <section className="study-player" aria-label="Nhạc học">
+    <section className="study-player" id="nhac-hoc" aria-label="Nhạc học">
       <div className="study-frame" aria-hidden="true"><div ref={host} /></div>
       <label>
         Thể loại
@@ -212,7 +212,7 @@ export function StudyPlayer() {
         </select>
       </label>
       <button type="button" className="text-btn" aria-label="Bài trước" onClick={() => go(-1)}>Trước</button>
-      <button type="button" className="text-btn" aria-pressed={playing} disabled={!readyUi} onClick={toggle}>{readyUi ? (playing ? "Tạm dừng" : "Phát") : "Đang tải"}</button>
+      <button type="button" id="nhac-phat" className="text-btn" aria-pressed={playing} disabled={!readyUi} onClick={toggle}>{readyUi ? (playing ? "Tạm dừng" : "Phát") : "Đang tải"}</button>
       <button type="button" className="text-btn" aria-label="Bài sau" onClick={() => go(1)}>Sau</button>
       <button type="button" className="text-btn" aria-pressed={shuffle} aria-label="Phát ngẫu nhiên" onClick={() => setShuffle((value) => !value)}>Ngẫu nhiên</button>
       <button type="button" className="text-btn" aria-pressed={repeat !== "off"} aria-label={repeatLabel} onClick={() => setRepeat((mode) => nextRepeat(mode))}>{repeatLabel}</button>

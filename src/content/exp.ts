@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const expLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Mũ là nhân lặp; logarit hỏi phải nhân mấy lần.`, en: R`An exponent is repeated multiplication; a log asks how many times.` },
-    { k: "vd", vi: R`$2^3=8$, nên $\log_2 8=3$.`, en: R`$2^3=8$, so $\log_2 8=3$.` },
+    { k: "mo", vi: R`$a^n$ ($n$ nguyên dương) là $a$ nhân $n$ lần. $\log_a b$ là số mũ $x$ sao cho $a^x=b$.`, en: R`$a^n$ (positive integer $n$) is $a$ multiplied $n$ times. $\log_a b$ is the exponent $x$ with $a^x=b$.` },
+    { k: "dinh", vi: R`$a>0$, $a\neq 1$: $\log_a(bc)=\log_a b+\log_a c$ và $\log_a(b^k)=k\log_a b$.`, en: R`$a>0$, $a\neq 1$: $\log_a(bc)=\log_a b+\log_a c$ and $\log_a(b^k)=k\log_a b$.` },
+    { k: "vd", vi: R`$2^3=8$ nên $\log_2 8=3$. Vốn $10(1{,}08)^5\approx 14{,}69$, không phải $10+0{,}8\cdot 5=14$.`, en: R`$2^3=8$ so $\log_2 8=3$. Principal $10(1{,}08)^5\approx 14{,}69$, not $10+0{,}8\cdot 5=14$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Với $a>0$, $a\neq1$, ta có $\log(ab)=\log a+\log b$.`, en: R`For $a>0$, $a\neq1$, $\log(ab)=\log a+\log b$.` },
-    { k: "vd", vi: R`Lãi $10(1{,}08)^5\approx14{,}69$.`, en: R`Interest $10(1{,}08)^5\approx14{,}69$.` },
-    { k: "loi", vi: R`Đừng viết $\log(a+b)=\log a+\log b$.`, en: R`Do not write $\log(a+b)=\log a+\log b$.` },
-    { k: "kiem", vi: R`Còn lại $80\cdot\left(\dfrac12\right)^2=20$.`, en: R`What remains is $80\cdot\left(\dfrac12\right)^2=20$.` },
+    { k: "dinh", vi: R`Gấp đôi với lãi $r$: $(1+r)^t=2$, nên $t=\dfrac{\ln 2}{\ln(1+r)}$.`, en: R`Doubling at rate $r$: $(1+r)^t=2$, so $t=\dfrac{\ln 2}{\ln(1+r)}$.` },
+    { k: "vd", vi: R`$r=0{,}08$: $t=\dfrac{\ln 2}{\ln 1{,}08}\approx 9{,}01$. Quy tắc $\dfrac{72}{8}=9$ chỉ là xấp xỉ.`, en: R`$r=0{,}08$: $t=\dfrac{\ln 2}{\ln 1{,}08}\approx 9{,}01$. The rule $\dfrac{72}{8}=9$ is only an approximation.` },
+    { k: "loi", vi: R`$\log(a+b)\neq\log a+\log b$. Lãi đơn $14$ không phải lãi kép $14{,}69$.`, en: R`$\log(a+b)\neq\log a+\log b$. Simple interest $14$ is not compound interest $14{,}69$.` },
+    { k: "kiem", vi: R`Bán rã $10$ năm, khối lượng $80$ g. Sau $20$ năm: $80\cdot\left(\dfrac12\right)^2=20$ g.`, en: R`Half-life $10$ years, mass $80$ g. After $20$ years: $80\cdot\left(\dfrac12\right)^2=20$ g.` },
   ],
 };
 
@@ -23,8 +24,8 @@ export const expQuestions: Question[] = [
     choices: [R`$8$`, R`$6$`, R`$9$`, R`$5$`],
     choicesEn: [R`$8$`, R`$6$`, R`$9$`, R`$5$`],
     answer: 0,
-    hint: "Mũ là nhân lặp, không phải cộng và không phải đổi chỗ hai số.",
-    hintEn: "An exponent is repeated multiplication, not addition and not swapping the two numbers.",
+    hint: R`$a^n$: nhân $a$ đúng $n$ lần.`,
+    hintEn: R`$a^n$: multiply $a$ exactly $n$ times.`,
     steps: [
       R`$2^3 = 2 \times 2 \times 2$.`,
       R`Đó là $8$.`,
@@ -43,8 +44,8 @@ export const expQuestions: Question[] = [
     choices: [R`$3$`, R`$8$`, R`$2$`, R`$4$`],
     choicesEn: [R`$3$`, R`$8$`, R`$2$`, R`$4$`],
     answer: 0,
-    hint: "Hỏi mũ: 2 mũ mấy thì ra 8.",
-    hintEn: "Ask for the exponent: which power of 2 gives 8.",
+    hint: R`Giải $2^x=8$.`,
+    hintEn: R`Solve $2^x=8$.`,
     steps: [
       R`$2^3 = 8$, nên logarit cơ số $2$ của $8$ là $3$.`,
       R`Logarit trả về số mũ, không trả về chính số $8$.`,
@@ -63,8 +64,8 @@ export const expQuestions: Question[] = [
     choices: [R`$\log 6$`, R`$\log 5$`, R`$\log 2 \cdot \log 3$`, R`$5$`],
     choicesEn: [R`$\log 6$`, R`$\log 5$`, R`$\log 2 \cdot \log 3$`, R`$5$`],
     answer: 0,
-    hint: "Tổng hai log cùng cơ số là log của tích, không phải log của tổng.",
-    hintEn: "A sum of logarithms with the same base is the log of the product, not the log of the sum.",
+    hint: R`Cùng cơ số: $\log(ab)=\log a+\log b$.`,
+    hintEn: R`Same base: $\log(ab)=\log a+\log b$.`,
     steps: [
       R`$\log a + \log b = \log(ab)$.`,
       R`$2 \times 3 = 6$, nên tổng bằng $\log 6$.`,
@@ -83,8 +84,8 @@ export const expQuestions: Question[] = [
     choices: ["Khoảng 14,69 triệu", "14 triệu", "18 triệu", "40 triệu"],
     choicesEn: ["About 14.69 triệu", "14 triệu", "18 triệu", "40 triệu"],
     answer: 0,
-    hint: "Nhân (1,08) năm lần. Đừng cộng 8% của vốn gốc mỗi năm.",
-    hintEn: "Multiply by 1.08, five times. Do not add 8% of the original principal each year.",
+    hint: R`Nhân $1{,}08$ năm lần, không cộng $0{,}8$ mỗi năm.`,
+    hintEn: R`Multiply by $1{,}08$ five times, do not add $0{,}8$ each year.`,
     steps: [
       R`Lãi kép: $10 \times (1{,}08)^5$.`,
       R`$(1{,}08)^5 \approx 1{,}4693$, nên kết quả khoảng $14{,}69$ triệu.`,
@@ -103,8 +104,8 @@ export const expQuestions: Question[] = [
     choices: ["Khoảng 9 năm", "8 năm", "12,5 năm", "5 năm"],
     choicesEn: ["About 9 years", "8 years", "12.5 years", "5 years"],
     answer: 0,
-    hint: "Giải (1,08)^t = 2. Lấy logarit, đừng lấy 100 chia cho 8.",
-    hintEn: "Solve (1.08)^t = 2. Take a logarithm. Do not divide 100 by 8.",
+    hint: R`$(1{,}08)^t=2$. Lấy $\ln$, không lấy $100/8$.`,
+    hintEn: R`$(1{,}08)^t=2$. Take $\ln$, not $100/8$.`,
     steps: [
       R`$(1{,}08)^t = 2$, nên $t = \ln 2 / \ln(1{,}08)$.`,
       R`Giá trị đó khoảng $9{,}01$ năm, tức khoảng $9$ năm.`,
@@ -123,8 +124,8 @@ export const expQuestions: Question[] = [
     choices: ["20 g", "40 g", "0 g", "60 g"],
     choicesEn: ["20 g", "40 g", "0 g", "60 g"],
     answer: 0,
-    hint: "20 năm là hai lần bán rã. Mỗi lần còn một nửa.",
-    hintEn: "20 years is two half-lives. Each one leaves a half.",
+    hint: R`Hai lần bán rã: nhân $\left(\dfrac12\right)^2$.`,
+    hintEn: R`Two half-lives: multiply by $\left(\dfrac12\right)^2$.`,
     steps: [
       R`Sau $10$ năm còn $40$ g. Sau thêm $10$ năm còn một nửa của $40$ g.`,
       R`Đó là $20$ g, cũng là $80 \times (1/2)^{20/10}$.`,

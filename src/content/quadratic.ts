@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const quadraticLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Parabol là đường cong chữ U: $a>0$ miệng lên, $a<0$ miệng xuống.`, en: R`A parabola is a U: $a>0$ opens up, $a<0$ opens down.` },
-    { k: "vd", vi: R`Rào $40$ m, $S=x(40-2x)$; $x=10$ thì $S=200$.`, en: R`A $40$ m fence, $S=x(40-2x)$; at $x=10$, $S=200$.` },
+    { k: "mo", vi: R`Parabol $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: miệng lên, có cực tiểu. $a<0$: miệng xuống, có cực đại.`, en: R`The parabola $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: opens up, a minimum. $a<0$: opens down, a maximum.` },
+    { k: "dinh", vi: R`Đỉnh $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, với $\Delta=b^2-4ac$.`, en: R`Vertex $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, where $\Delta=b^2-4ac$.` },
+    { k: "vd", vi: R`Chuồng $S=x(40-2x)=-2x^2+40x$. $S'=-4x+40=0$ tại $x=10$, $S(10)=200$.`, en: R`Pen $S=x(40-2x)=-2x^2+40x$. $S'=-4x+40=0$ at $x=10$, $S(10)=200$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$y=ax^2+bx+c$ ($a\neq0$) có đỉnh $x=-\dfrac{b}{2a}$ và $\Delta=b^2-4ac$.`, en: R`$y=ax^2+bx+c$ ($a\neq0$) has vertex $x=-\dfrac{b}{2a}$ and $\Delta=b^2-4ac$.` },
-    { k: "vd", vi: R`$y=x^2-2x-3$: đỉnh $(1;-4)$, nghiệm $-1$ và $3$.`, en: R`$y=x^2-2x-3$: vertex $(1;-4)$, roots $-1$ and $3$.` },
-    { k: "loi", vi: R`$\Delta$ không cho hoành độ đỉnh.`, en: R`$\Delta$ does not give the vertex $x$-coordinate.` },
-    { k: "kiem", vi: R`$y=x^2-4x$ có đỉnh $(2;-4)$.`, en: R`$y=x^2-4x$ has vertex $(2;-4)$.` },
+    { k: "dinh", vi: R`$y=a(x-h)^2+k$ có đỉnh $(h;k)$ đứng yên khi đổi $a$. Dạng $ax^2+bx+c$: đổi $a$ thì đỉnh chạy.`, en: R`$y=a(x-h)^2+k$ has vertex $(h;k)$, fixed when $a$ changes. In $ax^2+bx+c$, changing $a$ moves the vertex.` },
+    { k: "vd", vi: R`$y=x^2-2x-3=(x-1)^2-4$. Đỉnh $(1;-4)$. $\Delta=16$, nghiệm $x=-1$ và $x=3$.`, en: R`$y=x^2-2x-3=(x-1)^2-4$. Vertex $(1;-4)$. $\Delta=16$, roots $x=-1$ and $x=3$.` },
+    { k: "loi", vi: R`$\Delta=0$ chỉ nói tiếp xúc Ox. Hoành độ đỉnh vẫn là $-\dfrac{b}{2a}$.`, en: R`$\Delta=0$ only says the graph touches the $x$-axis. The vertex $x$-coordinate is still $-\dfrac{b}{2a}$.` },
+    { k: "kiem", vi: R`$y=x^2-4x=(x-2)^2-4$. Đỉnh $(2;-4)$.`, en: R`$y=x^2-4x=(x-2)^2-4$. Vertex $(2;-4)$.` },
   ],
 };
 

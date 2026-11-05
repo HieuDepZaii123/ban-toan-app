@@ -19,7 +19,7 @@ export function DangHoc({ topicId }: { topicId: string }) {
   return (
     <section className="dang-hoc" aria-label="Dạng bài">
       <h2>Dạng bài</h2>
-      <p className="lecture-note">Mỗi bước có lý do. Điều kiện chỉ là cần thì phải thử lại. Kết luận trả lời đúng câu hỏi.</p>
+      <p className="lecture-note">Mỗi bước có lý do. Điều kiện cần thì phải thử lại.</p>
       {pack.dang.map((dang) => (
         <article key={dang.name} className="tool-card">
           <h3>{dang.name}</h3>

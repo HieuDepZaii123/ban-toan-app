@@ -22,7 +22,7 @@ function currentArea(path: string): string {
   if (path === "/so-cong-thuc") return "formula";
   if (path === "/danh-gia") return "assess";
   if (path === "/gioi-thieu") return "refer";
-  if (path === "/nang-cap") return "";
+  if (path === "/nang-cap" || path === "/nghien-cuu") return "";
   return "math";
 }
 

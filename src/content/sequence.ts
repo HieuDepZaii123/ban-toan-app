@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const sequenceLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Cấp số cộng thêm một số cố định mỗi bước.`, en: R`An arithmetic sequence adds a fixed number each step.` },
-    { k: "vd", vi: R`$3,7,11,15$ có công sai $4$.`, en: R`$3,7,11,15$ has common difference $4$.` },
+    { k: "mo", vi: R`Cấp số cộng: mỗi bước cộng $d$. Cấp số nhân: mỗi bước nhân $q$.`, en: R`An arithmetic sequence adds $d$ each step. A geometric sequence multiplies by $q$.` },
+    { k: "dinh", vi: R`$u_n=u_1+(n-1)d$. Nếu $q\neq 1$ thì $S_n=u_1\dfrac{1-q^n}{1-q}$.`, en: R`$u_n=u_1+(n-1)d$. If $q\neq 1$ then $S_n=u_1\dfrac{1-q^n}{1-q}$.` },
+    { k: "vd", vi: R`$3,7,11,15$ có $d=4$. $u_{10}=3+9\cdot 4=39$. $S_{10}=\dfrac{10}{2}(3+39)=210$.`, en: R`$3,7,11,15$ has $d=4$. $u_{10}=3+9\cdot 4=39$. $S_{10}=\dfrac{10}{2}(3+39)=210$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$u_n=u_1+(n-1)d$ và $S_n=\dfrac{n}{2}(u_1+u_n)$.`, en: R`$u_n=u_1+(n-1)d$ and $S_n=\dfrac{n}{2}(u_1+u_n)$.` },
-    { k: "vd", vi: R`Với $u_1=3$, $d=4$: $u_{10}=39$ và $S_{10}=210$.`, en: R`With $u_1=3$, $d=4$: $u_{10}=39$ and $S_{10}=210$.` },
-    { k: "loi", vi: R`Lấy $10d$ thay vì $9d$ thì $u_{10}=43$.`, en: R`Using $10d$ instead of $9d$ gives $u_{10}=43$.` },
-    { k: "kiem", vi: R`Tổng $1+\cdots+12=78$.`, en: R`The sum $1+\cdots+12=78$.` },
+    { k: "dinh", vi: R`$|q|<1$ thì tổng vô hạn $S=\dfrac{u_1}{1-q}$. Số hạng dần về $0$, tổng thì không.`, en: R`If $|q|<1$ the infinite sum is $S=\dfrac{u_1}{1-q}$. Terms tend to $0$; the sum does not.` },
+    { k: "vd", vi: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. Phần dư sau $n$ hạng là $16\left(\dfrac12\right)^n$.`, en: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. The remainder after $n$ terms is $16\left(\dfrac12\right)^n$.` },
+    { k: "loi", vi: R`$u_{10}=u_1+10d$ thừa một bước. Với $u_1=3$, $d=4$ thì ra $43$, đúng là $39$.`, en: R`$u_{10}=u_1+10d$ takes one extra step. With $u_1=3$, $d=4$ that gives $43$; the term is $39$.` },
+    { k: "kiem", vi: R`Tổng $1+\cdots+12=\dfrac{12\cdot 13}{2}=78$.`, en: R`The sum $1+\cdots+12=\dfrac{12\cdot 13}{2}=78$.` },
   ],
 };
 

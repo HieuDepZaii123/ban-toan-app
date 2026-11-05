@@ -4,14 +4,15 @@ const R = String.raw;
 
 export const trigLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Trên đường tròn bán kính $1$, cạnh ngang là cos, cạnh đứng là sin.`, en: R`On the circle of radius $1$, the horizontal side is cos and the vertical side is sin.` },
-    { k: "vd", vi: R`Góc $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$.`, en: R`At $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$.` },
+    { k: "mo", vi: R`Trên đường tròn bán kính $1$, hoành độ là $\cos$, tung độ là $\sin$.`, en: R`On the circle of radius $1$, the $x$-coordinate is $\cos$ and the $y$-coordinate is $\sin$.` },
+    { k: "dinh", vi: R`Hệ thức $\sin^2\alpha+\cos^2\alpha=1$. $\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}$ khi $\cos\alpha\neq 0$.`, en: R`Identity $\sin^2\alpha+\cos^2\alpha=1$. $\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}$ when $\cos\alpha\neq 0$.` },
+    { k: "vd", vi: R`Góc $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$. Góc $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.`, en: R`Angle $30^\circ$: $\sin=\dfrac12$, $\cos=\dfrac{\sqrt3}{2}$. Angle $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$\sin^2\alpha+\cos^2\alpha=1$; góc bù giữ sin và đổi dấu cos.`, en: R`$\sin^2\alpha+\cos^2\alpha=1$; a supplementary angle keeps sin and flips cos.` },
-    { k: "vd", vi: R`Góc $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.`, en: R`At $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.` },
-    { k: "loi", vi: R`$\sin+\cos$ không đạt $2$; lớn nhất là $\sqrt2$.`, en: R`$\sin+\cos$ does not reach $2$; the maximum is $\sqrt2$.` },
-    { k: "kiem", vi: R`Cây $20$ m, góc $30^\circ$, mắt $1{,}5$ m: cao $\dfrac{20\sqrt3}{3}+1{,}5$.`, en: R`Tree $20$ m, angle $30^\circ$, eye $1{,}5$ m: height $\dfrac{20\sqrt3}{3}+1{,}5$.` },
+    { k: "dinh", vi: R`$\sin\alpha+\cos\alpha=\sqrt2\sin(\alpha+45^\circ)$, nên lớn nhất là $\sqrt2$.`, en: R`$\sin\alpha+\cos\alpha=\sqrt2\sin(\alpha+45^\circ)$, so the maximum is $\sqrt2$.` },
+    { k: "vd", vi: R`Cách $20$ m, góc $30^\circ$, mắt $1{,}5$ m: cao $20\tan 30^\circ+1{,}5=\dfrac{20\sqrt3}{3}+1{,}5$.`, en: R`Distance $20$ m, angle $30^\circ$, eye $1{,}5$ m: height $20\tan 30^\circ+1{,}5=\dfrac{20\sqrt3}{3}+1{,}5$.` },
+    { k: "loi", vi: R`Lấy $\cos 150^\circ=\cos 30^\circ$ là bỏ dấu âm. $\sin+\cos=2$ không đạt được.`, en: R`Taking $\cos 150^\circ=\cos 30^\circ$ drops the minus sign. $\sin+\cos=2$ is not attained.` },
+    { k: "kiem", vi: R`$\alpha=90^\circ$: điểm $(0;1)$. $\sin^2+\cos^2=0+1=1$.`, en: R`$\alpha=90^\circ$: the point $(0;1)$. $\sin^2+\cos^2=0+1=1$.` },
   ],
 };
 
