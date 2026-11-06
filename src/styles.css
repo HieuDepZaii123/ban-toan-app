@@ -787,6 +787,7 @@ html[data-lamp="on"] body::before {
   display: inline-flex;
   align-items: center;
   padding: 0 12px;
+  white-space: nowrap;
   border-radius: 999px;
   text-decoration: none;
   border: 1px solid var(--line);
@@ -794,6 +795,7 @@ html[data-lamp="on"] body::before {
 .area-nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
 .lang-switch { display: inline-flex; margin-left: auto; }
 .lang-switch button, .menu-lang .lang-switch button {
+  white-space: nowrap;
   min-height: 40px;
   padding: 0 12px;
   border: 1px solid var(--line);
@@ -928,6 +930,9 @@ html[data-lamp="on"] body::before {
 .study-vol { flex: 1 1 180px; }
 .study-vol input { width: 100%; min-height: 44px; accent-color: var(--accent); }
 .study-fallback { flex: 1 1 100%; margin: 0; color: var(--accent); font-size: 0.9rem; }
+.study-queue { flex: 1 1 100%; list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.study-queue li { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; }
+.study-queue .text-btn { min-height: 44px; }
 .study-frame {
   position: fixed;
   width: 200px;
@@ -975,6 +980,10 @@ html[data-lamp="on"] body::before {
 .tool-card textarea { min-height: 88px; }
 .tool-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .tool-card li { display: flex; justify-content: space-between; gap: 8px; }
+.method-guide { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.tool-card .method-guide li { display: grid; justify-content: stretch; gap: 4px; }
+.method-steps { margin: 0; padding-left: 1.2rem; display: grid; gap: 8px; }
+.tool-card .method-steps li { display: list-item; }
 .curve { width: 100%; height: 78px; }
 .curve polyline { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .peek-stage { display: none; gap: 6px; }

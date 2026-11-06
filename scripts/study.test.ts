@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { FALLBACK_MESSAGE, STUDY_CATEGORIES } from "../src/study/catalog.ts";
-import { buttonIndex, clampVolume, nextRepeat, readPrefs, shuffledIndex, stepIndex, STUDY_PREFS_KEY, writePrefs } from "../src/study/logic.ts";
+import { afterDelete, buttonIndex, clampVolume, hideTrack, nextRepeat, readHidden, readPrefs, restoreCategory, shuffledIndex, stepIndex, STUDY_HIDDEN_KEY, STUDY_PREFS_KEY, undoHide, visibleTracks, writeHidden, writePrefs, emptyHidden } from "../src/study/logic.ts";
+import { categoryById } from "../src/study/catalog.ts";
 
 const titles = ["Lo-fi", "Piano", "Nhạc cổ điển", "Tiếng mưa / ồn trắng", "Jazz", "Nhạc không lời Việt"];
 assert.deepEqual(STUDY_CATEGORIES.map((item) => item.title), titles);
@@ -58,4 +59,27 @@ const repaired = readPrefs();
 assert.equal(repaired.categoryId, "lofi");
 assert.equal(repaired.trackId, "lofi-radio");
 assert.equal(repaired.volume, 100);
+
+const lofi = categoryById("lofi");
+const hidden = hideTrack(emptyHidden(), "lofi", "lofi-1am");
+assert.deepEqual(visibleTracks(lofi, hidden.ids).map((item) => item.id), ["lofi-radio", "lofi-chillhop", "lofi-beats"]);
+assert.equal(lofi.tracks.length, 4);
+const active = afterDelete(lofi.tracks.map((item) => item.id), "lofi-1am", "lofi-1am");
+assert.equal(active.nextId, "lofi-chillhop");
+assert.equal(active.stop, false);
+const other = afterDelete(lofi.tracks.map((item) => item.id), "lofi-radio", "lofi-beats");
+assert.equal(other.nextId, "lofi-radio");
+const last = afterDelete(["lofi-radio"], "lofi-radio", "lofi-radio");
+assert.equal(last.stop, true);
+assert.equal(last.nextId, "");
+const back = undoHide(hidden);
+assert.deepEqual(back.ids, []);
+writeHidden(hidden);
+writePrefs({ categoryId: "lofi", trackId: "lofi-radio", volume: 55, shuffle: false, repeat: "off" });
+assert.equal(readPrefs().volume, 55);
+assert.deepEqual(readHidden().ids, ["lofi-1am"]);
+assert.equal(restoreCategory(readHidden(), lofi).ids.length, 0);
+assert.equal(stepIndex(visibleTracks(lofi, ["lofi-1am"]).length, 2, 1, "all").index, 0);
+localStorage.setItem(STUDY_HIDDEN_KEY, "{");
+assert.deepEqual(readHidden().ids, []);
 console.log("study ok");

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { FALLBACK_MESSAGE, STUDY_CATEGORIES, categoryById, trackIn } from "./catalog.ts";
-import { buttonIndex, nextRepeat, readPrefs, shuffledIndex, writePrefs, type RepeatMode } from "./logic.ts";
+import { t } from "../lib/text.ts";
+import { useLang } from "../ui/useLang.ts";
+import { FALLBACK_MESSAGE, STUDY_CATEGORIES, categoryById } from "./catalog.ts";
+import { afterDelete, buttonIndex, hideTrack, nextRepeat, readHidden, readPrefs, restoreCategory, shuffledIndex, undoHide, visibleTracks, writeHidden, writePrefs, type HiddenBook, type RepeatMode } from "./logic.ts";
 
 type YtPlayer = {
   playVideo: () => void;
@@ -51,9 +53,12 @@ function youtubeReady(): Promise<void> {
 }
 
 export function StudyPlayer() {
+  const lang = useLang();
   const [seed] = useState(readPrefs);
+  const [book, setBook] = useState<HiddenBook>(readHidden);
   const [categoryId, setCategoryId] = useState(seed.categoryId);
-  const [trackId, setTrackId] = useState(seed.trackId);
+  const opening = visibleTracks(categoryById(seed.categoryId), book.ids);
+  const [trackId, setTrackId] = useState(opening.some((item) => item.id === seed.trackId) ? seed.trackId : (opening[0]?.id ?? ""));
   const [volume, setVolume] = useState(seed.volume);
   const [shuffle, setShuffle] = useState(seed.shuffle);
   const [repeat, setRepeat] = useState<RepeatMode>(seed.repeat);
@@ -66,25 +71,34 @@ export function StudyPlayer() {
   const playingRef = useRef(false);
   const volumeRef = useRef(seed.volume);
   const trackRef = useRef(seed.trackId);
+  const hiddenRef = useRef(book.ids);
   const controls = useRef({ shuffle: seed.shuffle, repeat: seed.repeat, categoryId: seed.categoryId, trackId: seed.trackId });
   const advanceRef = useRef<(delta: 1 | -1) => void>(() => {});
   const goRef = useRef<(delta: 1 | -1) => void>(() => {});
 
   const category = categoryById(categoryId);
-  const track = trackIn(category, trackId);
+  const playlist = visibleTracks(category, book.ids);
+  const track = playlist.find((item) => item.id === trackId) ?? playlist[0] ?? null;
 
   useEffect(() => {
-    writePrefs({ categoryId: category.id, trackId: track.id, volume, shuffle, repeat });
-  }, [category.id, track.id, volume, shuffle, repeat]);
+    writePrefs({ categoryId: category.id, trackId: track?.id || seed.trackId, volume, shuffle, repeat });
+    writeHidden(book);
+  }, [book, category.id, seed.trackId, track?.id, volume, shuffle, repeat]);
 
   useEffect(() => {
     playingRef.current = playing;
     volumeRef.current = volume;
-    trackRef.current = track.id;
-    controls.current = { shuffle, repeat, categoryId: category.id, trackId: track.id };
+    hiddenRef.current = book.ids;
+    trackRef.current = track?.id ?? "";
+    controls.current = { shuffle, repeat, categoryId: category.id, trackId: track?.id ?? "" };
     const go = (delta: 1 | -1) => {
       const live = controls.current;
-      const list = categoryById(live.categoryId).tracks;
+      const list = visibleTracks(categoryById(live.categoryId), book.ids);
+      if (list.length === 0) {
+        setPlaying(false);
+        player.current?.pauseVideo();
+        return;
+      }
       const at = Math.max(0, list.findIndex((item) => item.id === live.trackId));
       if (delta > 0 && live.shuffle) {
         const pick = list[shuffledIndex(list.length, at, Math.random)];
@@ -109,18 +123,22 @@ export function StudyPlayer() {
       }
       go(delta);
     };
-  }, [category.id, playing, repeat, shuffle, track.id, volume]);
+  }, [book.ids, category.id, playing, repeat, shuffle, track?.id, volume]);
 
   useEffect(() => {
     let cancelled = false;
-    const mountedId = () => trackIn(categoryById(controls.current.categoryId), trackRef.current).youtubeId;
+    const mountedId = () => {
+      const list = visibleTracks(categoryById(controls.current.categoryId), hiddenRef.current);
+      return list.find((item) => item.id === trackRef.current)?.youtubeId ?? list[0]?.youtubeId ?? "";
+    };
     void youtubeReady().then(() => {
       if (cancelled || player.current) return;
       if (!host.current || !window.YT?.Player) {
         setBroken(true);
         return;
       }
-      const initialId = mountedId();
+      const initialId = mountedId() || categoryById(controls.current.categoryId).tracks[0]?.youtubeId || "";
+      if (!initialId) return;
       player.current = new window.YT.Player(host.current, {
         videoId: initialId,
         width: "200",
@@ -161,11 +179,11 @@ export function StudyPlayer() {
 
   useEffect(() => {
     const current = player.current;
-    if (!ready.current || !current) return;
+    if (!ready.current || !current || !track) return;
     setBroken(false);
     if (playingRef.current) current.loadVideoById(track.youtubeId);
     else current.cueVideoById(track.youtubeId);
-  }, [track.youtubeId]);
+  }, [track?.youtubeId]);
 
   useEffect(() => {
     if (!ready.current) return;
@@ -174,6 +192,21 @@ export function StudyPlayer() {
 
   function go(delta: 1 | -1) {
     goRef.current(delta);
+  }
+
+  function removeTrack(id: string) {
+    const wasActive = track?.id === id;
+    const wasPlaying = playing;
+    const nextBook = hideTrack(book, category.id, id);
+    const moved = afterDelete(playlist.map((item) => item.id), track?.id ?? "", id);
+    setBook(nextBook);
+    if (wasActive) {
+      setTrackId(moved.nextId);
+      if (moved.stop) {
+        setPlaying(false);
+        player.current?.pauseVideo();
+      } else if (wasPlaying) setPlaying(true);
+    }
   }
 
   function toggle() {
@@ -198,8 +231,9 @@ export function StudyPlayer() {
         Thể loại
         <select aria-label="Thể loại nhạc" value={category.id} onChange={(event) => {
           const next = categoryById(event.target.value);
+          const first = visibleTracks(next, book.ids)[0];
           setCategoryId(next.id);
-          setTrackId(trackIn(next, "").id);
+          setTrackId(first?.id ?? "");
           setBroken(false);
         }}>
           {STUDY_CATEGORIES.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
@@ -207,12 +241,35 @@ export function StudyPlayer() {
       </label>
       <label>
         Bài
-        <select aria-label="Bài đang chọn" value={track.id} onChange={(event) => { setTrackId(event.target.value); setBroken(false); }}>
-          {category.tracks.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
+        <select aria-label="Bài đang chọn" value={track?.id ?? ""} disabled={playlist.length === 0} onChange={(event) => { setTrackId(event.target.value); setBroken(false); }}>
+          {playlist.length === 0 ? <option value="">{t(lang, "Danh sách trống", "Playlist empty")}</option> : null}
+          {playlist.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
         </select>
       </label>
+      <ul className="study-queue">
+        {playlist.map((item) => (
+          <li key={item.id}>
+            <span>{item.title}</span>
+            <button
+              type="button"
+              className="text-btn"
+              aria-label={t(lang, `Xóa ${item.title}`, `Delete ${item.title}`)}
+              onClick={() => removeTrack(item.id)}
+            >
+              {t(lang, "Xóa", "Delete")}
+            </button>
+          </li>
+        ))}
+      </ul>
+      {playlist.length === 0 ? <p className="study-fallback" role="status">{t(lang, "Danh sách trống. Bài gốc vẫn còn, bấm khôi phục để hiện lại.", "This playlist is empty. The original tracks are still there. Restore them to show the list again.")}</p> : null}
+      {book.undo && book.undo.categoryId === category.id && book.ids.includes(book.undo.trackId) ? (
+        <button type="button" className="text-btn" onClick={() => { setBook(undoHide(book)); }}>{t(lang, "Hoàn tác", "Undo")}</button>
+      ) : null}
+      {playlist.length < category.tracks.length ? (
+        <button type="button" className="text-btn" onClick={() => setBook(restoreCategory(book, category))}>{t(lang, "Khôi phục danh sách", "Restore list")}</button>
+      ) : null}
       <button type="button" className="text-btn" aria-label="Bài trước" onClick={() => go(-1)}>Trước</button>
-      <button type="button" id="nhac-phat" className="text-btn" aria-pressed={playing} disabled={!readyUi} onClick={toggle}>{readyUi ? (playing ? "Tạm dừng" : "Phát") : "Đang tải"}</button>
+      <button type="button" id="nhac-phat" className="text-btn" aria-pressed={playing} disabled={!readyUi || !track} onClick={toggle}>{readyUi ? (playing ? "Tạm dừng" : "Phát") : "Đang tải"}</button>
       <button type="button" className="text-btn" aria-label="Bài sau" onClick={() => go(1)}>Sau</button>
       <button type="button" className="text-btn" aria-pressed={shuffle} aria-label="Phát ngẫu nhiên" onClick={() => setShuffle((value) => !value)}>Ngẫu nhiên</button>
       <button type="button" className="text-btn" aria-pressed={repeat !== "off"} aria-label={repeatLabel} onClick={() => setRepeat((mode) => nextRepeat(mode))}>{repeatLabel}</button>

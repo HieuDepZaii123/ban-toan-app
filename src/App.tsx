@@ -24,6 +24,8 @@ const MissPage = lazy(() => import("./pages/MissPage.tsx").then((mod) => ({ defa
 const ReferPage = lazy(() => import("./pages/ReferPage.tsx").then((mod) => ({ default: mod.ReferPage })));
 const ResearchIdeasPage = lazy(() => import("./pages/ResearchIdeasPage.tsx").then((mod) => ({ default: mod.ResearchIdeasPage })));
 const DocPage = lazy(() => import("./pages/DocPage.tsx").then((mod) => ({ default: mod.DocPage })));
+const MethodsPage = lazy(() => import("./pages/MethodsPage.tsx").then((mod) => ({ default: mod.MethodsPage })));
+const GradePracticePage = lazy(() => import("./pages/GradePracticePage.tsx").then((mod) => ({ default: mod.GradePracticePage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -76,6 +78,8 @@ function Shell() {
   if (path === "/gioi-thieu") return <ReferPage />;
   if (path === "/nghien-cuu") return <ResearchIdeasPage />;
   if (path === "/soan-tai-lieu") return <DocPage />;
+  if (path === "/phuong-phap" || path.startsWith("/phuong-phap/")) return <MethodsPage path={path} />;
+  if (path === "/luyen-lop" || path.startsWith("/luyen-lop/")) return <GradePracticePage path={path} />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return <GradeDesk />;
   return <HomeDesk />;

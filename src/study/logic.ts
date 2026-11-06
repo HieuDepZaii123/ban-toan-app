@@ -1,4 +1,4 @@
-import { categoryById, trackIn, type StudyCategory } from "./catalog.ts";
+import { categoryById, trackIn, type StudyCategory, type StudyTrack } from "./catalog.ts";
 
 export type RepeatMode = "off" | "all" | "one";
 
@@ -11,6 +11,68 @@ export type StudyPrefs = {
 };
 
 export const STUDY_PREFS_KEY = "bt-study-player";
+export const STUDY_HIDDEN_KEY = "bt-study-hidden";
+
+export type HiddenBook = { ids: string[]; undo: { categoryId: string; trackId: string } | null };
+
+export function visibleTracks(category: StudyCategory, hidden: readonly string[]): StudyTrack[] {
+  const blocked = new Set(hidden);
+  return category.tracks.filter((track) => !blocked.has(track.id));
+}
+
+export function hideTrack(book: HiddenBook, categoryId: string, trackId: string): HiddenBook {
+  if (book.ids.includes(trackId)) return { ...book, undo: { categoryId, trackId } };
+  return { ids: [...book.ids, trackId], undo: { categoryId, trackId } };
+}
+
+export function undoHide(book: HiddenBook): HiddenBook {
+  if (!book.undo) return book;
+  return { ids: book.ids.filter((id) => id !== book.undo?.trackId), undo: null };
+}
+
+export function restoreCategory(book: HiddenBook, category: StudyCategory): HiddenBook {
+  const own = new Set(category.tracks.map((track) => track.id));
+  return {
+    ids: book.ids.filter((id) => !own.has(id)),
+    undo: book.undo && own.has(book.undo.trackId) ? null : book.undo,
+  };
+}
+
+/** Bài đang phát bị xóa thì sang bài kế, hoặc bài trước nếu đó là bài cuối. Hết danh sách thì dừng. */
+export function afterDelete(visibleIds: readonly string[], activeId: string, removedId: string): { nextId: string; stop: boolean } {
+  if (activeId !== removedId) return { nextId: activeId, stop: false };
+  const remain = visibleIds.filter((id) => id !== removedId);
+  if (remain.length === 0) return { nextId: "", stop: true };
+  const at = Math.max(0, visibleIds.indexOf(removedId));
+  return { nextId: remain[Math.min(at, remain.length - 1)] ?? remain[0] ?? "", stop: false };
+}
+
+export function emptyHidden(): HiddenBook {
+  return { ids: [], undo: null };
+}
+
+export function readHidden(): HiddenBook {
+  try {
+    const raw = localStorage.getItem(STUDY_HIDDEN_KEY);
+    if (!raw) return emptyHidden();
+    const data = JSON.parse(raw) as Partial<HiddenBook>;
+    const ids = Array.isArray(data.ids) ? data.ids.filter((id): id is string => typeof id === "string") : [];
+    const undo = data.undo && typeof data.undo.categoryId === "string" && typeof data.undo.trackId === "string"
+      ? { categoryId: data.undo.categoryId, trackId: data.undo.trackId }
+      : null;
+    return { ids, undo };
+  } catch {
+    return emptyHidden();
+  }
+}
+
+export function writeHidden(book: HiddenBook): void {
+  try {
+    localStorage.setItem(STUDY_HIDDEN_KEY, JSON.stringify(book));
+  } catch {
+    /* Bộ nhớ trình duyệt có thể bị chặn. */
+  }
+}
 
 export function clampVolume(value: number): number {
   if (!Number.isFinite(value)) return 40;

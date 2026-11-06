@@ -6,7 +6,7 @@ import { sciences } from "../src/science/catalog.ts";
 import { scienceLessons } from "../src/science/lessons.ts";
 import { foot, midpoint } from "../src/workshop/plane.ts";
 
-assert.ok(sharedDrill.length >= 26 && sharedDrill.length <= 30);
+assert.equal(sharedDrill.length, 36);
 assert.equal(sharedDrill[0]?.answer, 2);
 assert.equal(isSharedCorrect(0, 2), true);
 assert.equal(isSharedCorrect(0, 0), false);
