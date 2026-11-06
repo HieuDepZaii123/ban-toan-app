@@ -930,6 +930,9 @@ html[data-lamp="on"] body::before {
 .study-vol { flex: 1 1 180px; }
 .study-vol input { width: 100%; min-height: 44px; accent-color: var(--accent); }
 .study-fallback { flex: 1 1 100%; margin: 0; color: var(--accent); font-size: 0.9rem; }
+.study-queue { flex: 1 1 100%; list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.study-queue li { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; }
+.study-queue .text-btn { min-height: 44px; }
 .study-frame {
   position: fixed;
   width: 200px;
