@@ -5,6 +5,7 @@ export const MENU_LINKS = [
   { href: "/soan-tai-lieu", id: "soan", label: "Soạn tài liệu", en: "Documents" },
   { href: "/xuong-hinh", id: "workshop", label: "Xưởng hình", en: "Workshop" },
   { href: "/luyen", id: "drill", label: "Luyện", en: "Practice" },
+  { href: "/phuong-phap", id: "methods", label: "Phương pháp giải", en: "Methods" },
   { href: "/so-loi", id: "miss", label: "Sổ lỗi", en: "Miss book" },
   { href: "/danh-gia", id: "assess", label: "Đánh giá", en: "Assess" },
   { href: "/so-cong-thuc", id: "formula", label: "Công thức", en: "Formulas" },
@@ -22,6 +23,7 @@ export function menuArea(path: string): MenuLinkId | "music" | "" {
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return "science";
   if (path === "/xuong-hinh") return "workshop";
   if (path === "/luyen") return "drill";
+  if (path === "/phuong-phap" || path.startsWith("/phuong-phap/")) return "methods";
   if (path === "/so-loi") return "miss";
   if (path === "/so-cong-thuc") return "formula";
   if (path === "/danh-gia") return "assess";

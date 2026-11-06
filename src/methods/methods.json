@@ -1,0 +1,390 @@
+{
+  "title": "Phương pháp giải",
+  "titleEn": "Solving methods",
+  "lead": "Bốn cách thường gặp ở THPT. Nhận dạng trước, rồi mới tính. Mỗi ví dụ có đủ bước và một phép kiểm.",
+  "leadEn": "Four high-school methods. Recognize the shape first, then compute. Each example has every step and a check.",
+  "guide": [
+    {
+      "when": "Có $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ hoặc $\\sqrt{x^2-a^2}$, và không thấy sẵn đạo hàm của phần trong căn.",
+      "methodId": "luong-giac",
+      "topicHref": "/t/trig",
+      "topicLabel": "Lượng giác"
+    },
+    {
+      "when": "Một mảnh lặp lại: $\\sqrt{x}$, $x+\\dfrac{1}{x}$, $a^x+a^{-x}$. Đặt tên cho mảnh đó, không dựng tam giác.",
+      "methodId": "an-phu",
+      "topicHref": "/t/exp",
+      "topicLabel": "Mũ và logarit"
+    },
+    {
+      "when": "Thừa số ngoài đúng là đạo hàm của biểu thức trong, hoặc tích phân xác định có hai cận rõ.",
+      "methodId": "doi-bien",
+      "topicHref": "/t/integral",
+      "topicLabel": "Tích phân"
+    },
+    {
+      "when": "Tích của đa thức với $e^{kx}$, $\\sin$, $\\cos$ hoặc $\\ln$. Cần số hạng biên $[uv]$.",
+      "methodId": "tung-phan",
+      "topicHref": "/t/derivative",
+      "topicLabel": "Đạo hàm"
+    }
+  ],
+  "methods": [
+    {
+      "id": "luong-giac",
+      "title": "Lượng giác hóa",
+      "titleEn": "Trigonometric substitution",
+      "blurb": "Đổi căn của bình phương thành một hàm lượng giác, rồi đổi cận.",
+      "spot": [
+        "Dùng khi căn bậc hai có dạng hiệu hoặc tổng của một bình phương và $x^2$.",
+        "Không dùng cho mọi dấu căn. Nếu ngoài căn đã có đúng đạo hàm của phần trong, đó là đặt ẩn phụ hoặc đổi biến, không cần góc."
+      ],
+      "thinking": [
+        "Chọn phép thế để căn còn một hàm lượng giác. Vẽ tam giác vuông chỉ để nhớ cạnh, không thay cho điều kiện của góc.",
+        "Với tích phân xác định, đổi cận sang góc rồi tính đến cùng. Không thế ngược về $x$ nếu đề chỉ hỏi số.",
+        "Với tích phân không xác định, thế ngược bằng hàm ngược đúng miền đã chọn, và nhớ hằng số $C$."
+      ],
+      "care": [
+        "$x=a\\sin\\theta$ chỉ khi $x\\in[-a,a]$ và $\\theta\\in\\left[-\\dfrac{\\pi}{2},\\dfrac{\\pi}{2}\\right]$. Khi đó $\\cos\\theta\\ge 0$, nên $\\sqrt{a^2-x^2}=a\\cos\\theta$.",
+        "$x=a\\tan\\theta$ với $\\theta\\in\\left(-\\dfrac{\\pi}{2},\\dfrac{\\pi}{2}\\right)$. Khi đó $\\sec\\theta>0$, nên $\\sqrt{a^2+x^2}=a\\sec\\theta$.",
+        "Bỏ trị tuyệt đối ngoài miền này sẽ đổi dấu. Cận $\\theta$ phải là giá trị của hàm ngược, không phải một góc bất kỳ có cùng sin hay tan."
+      ],
+      "formulas": [
+        "$x=a\\sin\\theta,\\quad dx=a\\cos\\theta\\,d\\theta,\\quad \\sqrt{a^2-x^2}=a\\cos\\theta.$",
+        "$x=a\\tan\\theta,\\quad dx=a\\sec^2\\theta\\,d\\theta,\\quad \\sqrt{a^2+x^2}=a\\sec\\theta.$"
+      ],
+      "examples": [
+        {
+          "id": "lg-1",
+          "title": "Căn của hiệu hai bình phương",
+          "prompt": "Tính $\\displaystyle\\int_0^1 \\dfrac{1}{\\sqrt{4-x^2}}\\,dx$.",
+          "steps": [
+            "Đặt $x=2\\sin\\theta$, $\\theta\\in\\left[0,\\dfrac{\\pi}{2}\\right]$. Khi $x=0$ thì $\\theta=0$. Khi $x=1$ thì $\\sin\\theta=\\dfrac{1}{2}$, nên $\\theta=\\dfrac{\\pi}{6}$.",
+            "$dx=2\\cos\\theta\\,d\\theta$ và $\\sqrt{4-x^2}=\\sqrt{4\\cos^2\\theta}=2\\cos\\theta$, vì $\\cos\\theta\\ge 0$ trên đoạn này.",
+            "Tích phân thành $\\displaystyle\\int_0^{\\pi/6} \\dfrac{2\\cos\\theta}{2\\cos\\theta}\\,d\\theta=\\int_0^{\\pi/6} 1\\,d\\theta=\\dfrac{\\pi}{6}$.",
+            "Kiểm: nguyên hàm $\\arcsin\\dfrac{x}{2}$. Từ $0$ đến $1$ là $\\arcsin\\dfrac{1}{2}-\\arcsin 0=\\dfrac{\\pi}{6}$."
+          ],
+          "result": "$\\dfrac{\\pi}{6}$"
+        },
+        {
+          "id": "lg-2",
+          "title": "Căn của tổng hai bình phương",
+          "prompt": "Tính $\\displaystyle\\int_0^2 \\dfrac{1}{\\sqrt{x^2+4}}\\,dx$.",
+          "steps": [
+            "Đặt $x=2\\tan\\theta$, $\\theta\\in\\left(0,\\dfrac{\\pi}{2}\\right)$. Cận: $x=0\\Rightarrow\\theta=0$, $x=2\\Rightarrow\\theta=\\dfrac{\\pi}{4}$.",
+            "$dx=2\\sec^2\\theta\\,d\\theta$ và $\\sqrt{x^2+4}=2\\sec\\theta$. Hệ số $\\sec\\theta$ dương đúng trên khoảng đã chọn.",
+            "Còn $\\displaystyle\\int_0^{\\pi/4}\\sec\\theta\\,d\\theta=\\big[\\ln|\\sec\\theta+\\tan\\theta|\\big]_0^{\\pi/4}$.",
+            "Tại $\\dfrac{\\pi}{4}$: $\\sec+\\tan=\\sqrt{2}+1$. Tại $0$: bằng $1$. Hiệu là $\\ln(1+\\sqrt{2})$.",
+            "Kiểm bằng thế ngược: $\\ln\\!\\left(\\dfrac{x}{2}+\\sqrt{\\left(\\dfrac{x}{2}\\right)^2+1}\\right)$ từ $0$ đến $2$ cũng ra $\\ln(1+\\sqrt{2})$."
+          ],
+          "result": "$\\ln(1+\\sqrt{2})$"
+        }
+      ],
+      "mistakes": [
+        "Thấy căn là đặt $t=\\sqrt{\\cdots}$ dù ngoài căn không có đạo hàm của phần trong. Với $\\sqrt{a^2-x^2}$ thì $t$ không làm mất căn.",
+        "Viết $\\sqrt{\\cos^2\\theta}=\\cos\\theta$ khi $\\theta$ đã ra ngoài $\\left[-\\dfrac{\\pi}{2},\\dfrac{\\pi}{2}\\right]$.",
+        "Tích phân xác định vẫn thế $\\theta$ ngược về $x$, rồi tính sai cận cũ."
+      ],
+      "practice": [
+        {
+          "id": "lg-p1",
+          "prompt": "Tính $\\displaystyle\\int_0^2 \\dfrac{1}{\\sqrt{16-x^2}}\\,dx$.",
+          "answer": "$\\dfrac{\\pi}{6}$",
+          "steps": [
+            "$x=4\\sin\\theta$, $\\theta$ từ $0$ đến $\\dfrac{\\pi}{6}$.",
+            "$\\sqrt{16-x^2}=4\\cos\\theta$, $dx=4\\cos\\theta\\,d\\theta$, tỉ số còn $1$.",
+            "Tích phân theo $\\theta$ là $\\dfrac{\\pi}{6}$. Nguyên hàm $\\arcsin\\dfrac{x}{4}$ cho cùng kết quả."
+          ]
+        },
+        {
+          "id": "lg-p2",
+          "prompt": "Tính $\\displaystyle\\int_0^3 \\dfrac{1}{\\sqrt{x^2+9}}\\,dx$.",
+          "answer": "$\\ln(1+\\sqrt{2})$",
+          "steps": [
+            "$x=3\\tan\\theta$, $\\theta$ từ $0$ đến $\\dfrac{\\pi}{4}$, $\\sec\\theta>0$.",
+            "Rút còn $\\displaystyle\\int_0^{\\pi/4}\\sec\\theta\\,d\\theta=\\ln(\\sqrt{2}+1)$.",
+            "Đó chính là $\\ln(1+\\sqrt{2})$."
+          ]
+        }
+      ],
+      "links": [
+        { "href": "/t/trig", "label": "Lượng giác" },
+        { "href": "/t/integral", "label": "Tích phân" },
+        { "href": "/phuong-phap/an-phu", "label": "Khác với đặt ẩn phụ" }
+      ],
+      "verify": [
+        { "where": "lg-1", "lhs": "integrate(1/sqrt(4-x**2),(x,0,1))", "rhs": "pi/6" },
+        { "where": "lg-2", "lhs": "integrate(1/sqrt(x**2+4),(x,0,2))", "rhs": "log(1+sqrt(2))" },
+        { "where": "lg-p1", "lhs": "integrate(1/sqrt(16-x**2),(x,0,2))", "rhs": "pi/6" },
+        { "where": "lg-p2", "lhs": "integrate(1/sqrt(x**2+9),(x,0,3))", "rhs": "log(1+sqrt(2))" }
+      ]
+    },
+    {
+      "id": "an-phu",
+      "title": "Đặt ẩn phụ",
+      "titleEn": "Auxiliary substitution",
+      "blurb": "Đặt tên cho mảnh đại số lặp lại. Không dựng góc.",
+      "spot": [
+        "Một khối đại số lặp lại, hoặc ngoài căn đã có đúng đạo hàm của phần trong.",
+        "Khác lượng giác hóa: ẩn mới là một biểu thức của $x$, không phải một góc. Không có $\\sin,\\cos,\\sec$."
+      ],
+      "thinking": [
+        "Gọi tên mảnh lặp. Viết mọi thứ còn lại theo ẩn mới, kể cả $dx$ hoặc điều kiện $t>0$.",
+        "Giải xong thì đổi về biến cũ. Với phương trình, mỗi nghiệm $t$ còn phải thử điều kiện của phép đặt.",
+        "Nếu chỉ muốn số của tích phân xác định, đổi cả hai cận và dừng ở biến mới."
+      ],
+      "care": [
+        "$t=\\sqrt{x}$ buộc $x\\ge 0$ và $t\\ge 0$. Trên khoảng có $t=0$, không được rút $t$ ở tử và mẫu nếu chưa xét riêng điểm đó.",
+        "$t=a^x$ buộc $t>0$. Cả hai nghiệm dương của phương trình theo $t$ đều có thể hợp lệ.",
+        "$t=x^2+1$ luôn $\\ge 1$. Viết $\\sqrt{t^2}$ thì phải biết $t\\ge 0$ mới bỏ được trị tuyệt đối."
+      ],
+      "formulas": [
+        "$t=g(x),\\quad dt=g'(x)\\,dx.$ Chỉ đổi biến khi biểu thức còn lại viết được theo $t$.",
+        "Với $t=a^x>0$: $a^x+a^{-x}=t+\\dfrac{1}{t}$."
+      ],
+      "examples": [
+        {
+          "id": "ap-1",
+          "title": "Đạo hàm của phần trong đã đứng sẵn",
+          "prompt": "Tính $\\displaystyle\\int x\\sqrt{x^2+1}\\,dx$.",
+          "steps": [
+            "Phần trong căn là $x^2+1$, đạo hàm $2x$ gần với thừa số $x$ ngoài căn. Đặt $t=x^2+1\\ge 1$, $dt=2x\\,dx$.",
+            "Tích phân thành $\\dfrac{1}{2}\\displaystyle\\int \\sqrt{t}\\,dt=\\dfrac{1}{2}\\cdot\\dfrac{2}{3}t^{3/2}+C=\\dfrac{1}{3}t^{3/2}+C$.",
+            "Vì $t\\ge 1>0$, $\\sqrt{t^2}=t$ không làm phát sinh trị tuyệt đối khi thế ngược.",
+            "Đáp án $\\dfrac{1}{3}(x^2+1)^{3/2}+C$. Đạo hàm lại ra đúng $x\\sqrt{x^2+1}$."
+          ],
+          "result": "$\\dfrac{1}{3}(x^2+1)^{3/2}+C$"
+        },
+        {
+          "id": "ap-2",
+          "title": "Ẩn phụ cho mũ đối xứng",
+          "prompt": "Giải $2^x+2^{-x}=3$.",
+          "steps": [
+            "Đặt $t=2^x$. Hàm mũ dương nên $t>0$, và $2^{-x}=\\dfrac{1}{t}$.",
+            "Phương trình thành $t+\\dfrac{1}{t}=3$. Nhân $t$: $t^2-3t+1=0$.",
+            "Nghiệm $t=\\dfrac{3\\pm\\sqrt{5}}{2}$. Cả hai đều dương, nên cả hai đều nhận.",
+            "Vậy $x=\\log_2\\dfrac{3+\\sqrt{5}}{2}$ hoặc $x=\\log_2\\dfrac{3-\\sqrt{5}}{2}$. Thử lại: mỗi $t$ thỏa $t+\\dfrac{1}{t}=3$."
+          ],
+          "result": "$x=\\log_2\\dfrac{3\\pm\\sqrt{5}}{2}$"
+        }
+      ],
+      "mistakes": [
+        "Đặt góc cho $\\sqrt{x^2+1}$ trong tích phân $\\int x\\sqrt{x^2+1}\\,dx$. Thừa số $x\\,dx$ đã đủ để đặt $t=x^2+1$.",
+        "Quên $t=2^x>0$ rồi nhận nghiệm $t$ âm.",
+        "Rút $t$ ở $\\dfrac{2t}{t(t+1)}$ trên một khoảng chứa $t=0$."
+      ],
+      "practice": [
+        {
+          "id": "ap-p1",
+          "prompt": "Tính $\\displaystyle\\int_1^4 \\dfrac{1}{x+\\sqrt{x}}\\,dx$.",
+          "answer": "$2\\ln\\dfrac{3}{2}$",
+          "steps": [
+            "$t=\\sqrt{x}\\ge 0$, $x=t^2$, $dx=2t\\,dt$. Cận $x=1,4$ thành $t=1,2$.",
+            "$\\displaystyle\\int_1^2 \\dfrac{2t}{t^2+t}\\,dt=\\int_1^2 \\dfrac{2}{t+1}\\,dt$, được phép rút $t$ vì $t\\ge 1$.",
+            "$2\\ln(t+1)$ từ $1$ đến $2$ bằng $2\\ln 3-2\\ln 2=2\\ln\\dfrac{3}{2}$."
+          ]
+        },
+        {
+          "id": "ap-p2",
+          "prompt": "Biết $x>0$ và $x+\\dfrac{1}{x}=3$. Tính $x^2+\\dfrac{1}{x^2}$.",
+          "answer": "$7$",
+          "steps": [
+            "Bình phương phép đặt đã cho: $\\left(x+\\dfrac{1}{x}\\right)^2=x^2+2+\\dfrac{1}{x^2}=9$.",
+            "Suy ra $x^2+\\dfrac{1}{x^2}=7$.",
+            "Không cần tìm $x$. Điều kiện $x>0$ chỉ để loại nghiệm âm của phương trình gốc, không đổi bình phương này."
+          ]
+        }
+      ],
+      "links": [
+        { "href": "/t/exp", "label": "Mũ và logarit" },
+        { "href": "/t/integral", "label": "Tích phân" },
+        { "href": "/phuong-phap/luong-giac", "label": "Khi nào phải lượng giác hóa" }
+      ],
+      "verify": [
+        { "where": "ap-1", "lhs": "diff((x**2+1)**(Rational(3,2))/3, x)", "rhs": "x*sqrt(x**2+1)" },
+        { "where": "ap-2-plus", "lhs": "(3+sqrt(5))/2 + 2/(3+sqrt(5))", "rhs": "3" },
+        { "where": "ap-2-minus", "lhs": "(3-sqrt(5))/2 + 2/(3-sqrt(5))", "rhs": "3" },
+        { "where": "ap-p1", "lhs": "integrate(1/(x+sqrt(x)),(x,1,4))", "rhs": "2*log(Rational(3,2))" },
+        { "where": "ap-p2", "lhs": "((x+1/x)**2 - 2).subs(x, (3+sqrt(5))/2)", "rhs": "7" }
+      ]
+    },
+    {
+      "id": "doi-bien",
+      "title": "Đổi biến trong tích phân",
+      "titleEn": "Substitution in integrals",
+      "blurb": "Đổi biến, đổi cả hai cận, và giữ hệ số của vi phân.",
+      "spot": [
+        "Dùng khi $du$ khớp thừa số còn lại, hoặc khi đổi biến làm cận mới đơn giản hơn cận cũ.",
+        "Khác đặt ẩn phụ ở chỗ bắt buộc xử lý $dx$ và, nếu có hai cận, cả hai cận. Hệ số $\\varphi'(u)$ là Jacobian một biến."
+      ],
+      "thinking": [
+        "Chọn $u=g(x)$ sao cho $g'(x)\\,dx$ đứng sẵn. Viết lại cận: $u(a)$ và $u(b)$, theo đúng thứ tự.",
+        "Nếu giải $x=\\varphi(u)$ thì $dx=\\varphi'(u)\\,du$. Đảo cận thì dấu trừ của $\\varphi'$ thường bị nuốt. Đừng đảo một lần nữa.",
+        "Hết biến cũ trước khi lấy nguyên hàm. Trả lời của tích phân xác định là một số, không còn $u$."
+      ],
+      "care": [
+        "Quên $\\dfrac{1}{2}$ khi $du=2\\,dx$ làm đáp số gấp đôi.",
+        "Giữ cận $x$ sau khi đã đổi sang $u$ là sai miền.",
+        "$u=\\cos x$ trên $\\left[0,\\dfrac{\\pi}{2}\\right]$ đi từ $1$ xuống $0$. Dấu của $du=-\\sin x\\,dx$ và cận ngược nhau cùng cho một kết quả dương."
+      ],
+      "formulas": [
+        "$\\displaystyle\\int_a^b f(g(x))g'(x)\\,dx=\\int_{g(a)}^{g(b)} f(u)\\,du.$",
+        "Nếu $x=\\varphi(u)$ thì $dx=\\varphi'(u)\\,du$. Cận theo $u$, không nhân thêm trị tuyệt đối khi đã giữ dấu của $\\varphi'(u)$."
+      ],
+      "examples": [
+        {
+          "id": "db-1",
+          "title": "Thừa số ngoài khớp đạo hàm",
+          "prompt": "Tính $\\displaystyle\\int_0^1 2x\\,e^{x^2}\\,dx$.",
+          "steps": [
+            "Đặt $u=x^2$. $du=2x\\,dx$, đúng thừa số ngoài. Cận $x=0\\Rightarrow u=0$, $x=1\\Rightarrow u=1$.",
+            "$\\displaystyle\\int_0^1 e^u\\,du=e-1$.",
+            "Đi đường ngược $x=\\sqrt{u}$ trên $[0,1]$: $dx=\\dfrac{du}{2\\sqrt{u}}$, thừa số $2x=2\\sqrt{u}$ triệt tiêu mẫu. Cùng ra $e-1$.",
+            "Kiểm bằng đạo hàm: $(e^{x^2})'=2xe^{x^2}$."
+          ],
+          "result": "$e-1$"
+        },
+        {
+          "id": "db-2",
+          "title": "Cận đổi chiều",
+          "prompt": "Tính $\\displaystyle\\int_0^{\\pi/2} \\sin x\\cos x\\,dx$.",
+          "steps": [
+            "Đặt $u=\\cos x$. $du=-\\sin x\\,dx$. Cận $x=0\\Rightarrow u=1$, $x=\\dfrac{\\pi}{2}\\Rightarrow u=0$.",
+            "$\\displaystyle\\int_1^0 -u\\,du=\\int_0^1 u\\,du=\\dfrac{1}{2}$. Đảo cận một lần đã ăn dấu trừ. Không đảo thêm.",
+            "Đường khác: $u=\\sin x$ đi từ $0$ đến $1$, $du=\\cos x\\,dx$, cùng ra $\\dfrac{1}{2}$.",
+            "Nguyên hàm $\\dfrac{1}{2}\\sin^2 x$ từ $0$ đến $\\dfrac{\\pi}{2}$ cũng bằng $\\dfrac{1}{2}$."
+          ],
+          "result": "$\\dfrac{1}{2}$"
+        }
+      ],
+      "mistakes": [
+        "Đổi $u=2x+1$ nhưng vẫn lấy cận $0$ và $2$.",
+        "Viết $dx=du$ khi $du=2\\,dx$. Jacobian $\\dfrac{1}{2}$ bị bỏ.",
+        "Thấy cận đi ngược nên đổi dấu hai lần."
+      ],
+      "practice": [
+        {
+          "id": "db-p1",
+          "prompt": "Tính $\\displaystyle\\int_0^2 (2x+1)^3\\,dx$.",
+          "answer": "$78$",
+          "steps": [
+            "$u=2x+1$, $dx=\\dfrac{du}{2}$. Cận $1$ và $5$.",
+            "$\\dfrac{1}{2}\\displaystyle\\int_1^5 u^3\\,du=\\dfrac{1}{8}(5^4-1^4)=\\dfrac{624}{8}=78$.",
+            "Bỏ $\\dfrac{1}{2}$ sẽ ra $156$, gấp đôi."
+          ]
+        },
+        {
+          "id": "db-p2",
+          "prompt": "Tính $\\displaystyle\\int_0^{\\pi/2} \\cos x\\, e^{\\sin x}\\,dx$.",
+          "answer": "$e-1$",
+          "steps": [
+            "$u=\\sin x$, $du=\\cos x\\,dx$, cận từ $0$ đến $1$.",
+            "$\\displaystyle\\int_0^1 e^u\\,du=e-1$.",
+            "Nguyên hàm $e^{\\sin x}$ cho cùng hiệu $e-1$."
+          ]
+        }
+      ],
+      "links": [
+        { "href": "/t/integral", "label": "Tích phân" },
+        { "href": "/t/derivative", "label": "Đạo hàm" },
+        { "href": "/phuong-phap/tung-phan", "label": "Khi tích không có sẵn đạo hàm" }
+      ],
+      "verify": [
+        { "where": "db-1", "lhs": "integrate(2*x*exp(x**2),(x,0,1))", "rhs": "exp(1)-1" },
+        { "where": "db-1-diff", "lhs": "diff(exp(x**2), x)", "rhs": "2*x*exp(x**2)" },
+        { "where": "db-2", "lhs": "integrate(sin(x)*cos(x),(x,0,pi/2))", "rhs": "Rational(1,2)" },
+        { "where": "db-p1", "lhs": "integrate((2*x+1)**3,(x,0,2))", "rhs": "78" },
+        { "where": "db-p2", "lhs": "integrate(cos(x)*exp(sin(x)),(x,0,pi/2))", "rhs": "exp(1)-1" }
+      ]
+    },
+    {
+      "id": "tung-phan",
+      "title": "Tích phân từng phần",
+      "titleEn": "Integration by parts",
+      "blurb": "Tách tích thành hai phần, rồi giữ số hạng ở hai cận.",
+      "spot": [
+        "Tích của hai loại hàm khác nhau, thường là đa thức với mũ hoặc lượng giác, hoặc có $\\ln$.",
+        "Không dùng khi một thừa số đã là đạo hàm của thừa số kia. Lúc đó đổi biến ngắn hơn."
+      ],
+      "thinking": [
+        "Chọn $u$ là phần đơn giản đi khi đạo hàm: đa thức giảm bậc, $\\ln$ thành phân thức. Phần còn lại là $dv$.",
+        "Với tích phân xác định, viết số hạng biên $[uv]_a^b$ trước, rồi mới trừ tích phân mới.",
+        "Nếu tích phân mới khó hơn tích ban đầu, đổi cách chọn $u$."
+      ],
+      "care": [
+        "Công thức xác định là $\\displaystyle\\int_a^b u\\,dv=[uv]_a^b-\\int_a^b v\\,du$. Bỏ $[uv]_a^b$ thì mất cả phần biên.",
+        "$v$ là một nguyên hàm của $dv$, không cộng $C$ vào $v$. Hằng số sẽ bị trừ hai lần.",
+        "Cận của số hạng biên và của tích phân còn lại phải cùng một đoạn $[a,b]$."
+      ],
+      "formulas": [
+        "$\\displaystyle\\int u\\,dv=uv-\\int v\\,du.$",
+        "$\\displaystyle\\int_a^b u\\,dv=\\big[uv\\big]_a^b-\\int_a^b v\\,du.$"
+      ],
+      "examples": [
+        {
+          "id": "tp-1",
+          "title": "Đa thức với mũ",
+          "prompt": "Tính $\\displaystyle\\int_0^1 x e^x\\,dx$.",
+          "steps": [
+            "Chọn $u=x$, $dv=e^x\\,dx$. Khi đó $du=dx$, $v=e^x$.",
+            "Số hạng biên $\\big[xe^x\\big]_0^1=e-0=e$.",
+            "Trừ $\\displaystyle\\int_0^1 e^x\\,dx=e-1$. Hiệu $e-(e-1)=1$.",
+            "Nếu chọn $u=e^x$ thì $du$ vẫn là mũ, đa thức được tích phân thành bậc cao hơn. Hướng đó dài hơn."
+          ],
+          "result": "$1$"
+        },
+        {
+          "id": "tp-2",
+          "title": "Đa thức với cosin",
+          "prompt": "Tính $\\displaystyle\\int_0^{\\pi/2} x\\cos x\\,dx$.",
+          "steps": [
+            "$u=x$, $dv=\\cos x\\,dx$, nên $du=dx$, $v=\\sin x$.",
+            "Biên $\\big[x\\sin x\\big]_0^{\\pi/2}=\\dfrac{\\pi}{2}\\cdot 1-0=\\dfrac{\\pi}{2}$.",
+            "Trừ $\\displaystyle\\int_0^{\\pi/2}\\sin x\\,dx=\\big[-\\cos x\\big]_0^{\\pi/2}=0-(-1)=1$.",
+            "Kết quả $\\dfrac{\\pi}{2}-1$. Dấu của nguyên hàm $-\\cos x$ nằm trong số hạng này, không được bỏ."
+          ],
+          "result": "$\\dfrac{\\pi}{2}-1$"
+        }
+      ],
+      "mistakes": [
+        "Quên $[uv]_a^b$ và chỉ tính $-\\int v\\,du$.",
+        "Lấy $v=\\sin x+C$ rồi mang $C$ vào biên.",
+        "Đổi biến $\\int x\\cos x\\,dx$ dù không có đạo hàm của $x$ đứng cạnh $\\cos x$ theo cách khớp $du$."
+      ],
+      "practice": [
+        {
+          "id": "tp-p1",
+          "prompt": "Tính $\\displaystyle\\int_0^1 x e^{2x}\\,dx$.",
+          "answer": "$\\dfrac{e^2+1}{4}$",
+          "steps": [
+            "$u=x$, $dv=e^{2x}\\,dx$, $v=\\dfrac{1}{2}e^{2x}$.",
+            "Biên $\\dfrac{1}{2}e^2$. Trừ $\\displaystyle\\int_0^1 \\dfrac{1}{2}e^{2x}\\,dx=\\dfrac{1}{4}(e^2-1)$.",
+            "Hiệu $\\dfrac{e^2}{2}-\\dfrac{e^2}{4}+\\dfrac{1}{4}=\\dfrac{e^2+1}{4}$."
+          ]
+        },
+        {
+          "id": "tp-p2",
+          "prompt": "Tính $\\displaystyle\\int_0^1 \\ln(x+1)\\,dx$.",
+          "answer": "$2\\ln 2-1$",
+          "steps": [
+            "$u=\\ln(x+1)$, $dv=dx$, $du=\\dfrac{dx}{x+1}$, $v=x$.",
+            "Biên $\\big[x\\ln(x+1)\\big]_0^1=\\ln 2$.",
+            "Trừ $\\displaystyle\\int_0^1 \\dfrac{x}{x+1}\\,dx=\\int_0^1\\left(1-\\dfrac{1}{x+1}\\right)dx=1-\\ln 2$.",
+            "Hiệu $\\ln 2-(1-\\ln 2)=2\\ln 2-1$."
+          ]
+        }
+      ],
+      "links": [
+        { "href": "/t/integral", "label": "Tích phân" },
+        { "href": "/t/derivative", "label": "Đạo hàm" },
+        { "href": "/phuong-phap/doi-bien", "label": "Đổi biến khi có sẵn đạo hàm" }
+      ],
+      "verify": [
+        { "where": "tp-1", "lhs": "integrate(x*exp(x),(x,0,1))", "rhs": "1" },
+        { "where": "tp-2", "lhs": "integrate(x*cos(x),(x,0,pi/2))", "rhs": "pi/2-1" },
+        { "where": "tp-p1", "lhs": "integrate(x*exp(2*x),(x,0,1))", "rhs": "(exp(2)+1)/4" },
+        { "where": "tp-p2", "lhs": "integrate(log(x+1),(x,0,1))", "rhs": "2*log(2)-1" }
+      ]
+    }
+  ]
+}
