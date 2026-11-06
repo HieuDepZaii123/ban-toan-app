@@ -85,6 +85,7 @@ function GradeHome() {
       title={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")}
       lead={t(lang, "Tiểu học lớp 1–5, THCS lớp 6–9, THPT lớp 10–12. Mỗi bài có ví dụ tính được và bài luyện.", "Primary grades 1–5, lower secondary 6–9, upper secondary 10–12. Each lesson has a worked example and practice.")}
     >
+      <p><A href="/luyen-lop">{t(lang, "Luyện nhanh lớp 1–9", "Quick practice, grades 1–9")}</A></p>
       {bands.map((band) => (
         <section key={band.id} className="stream">
           <h2>{band.title}</h2>
@@ -115,7 +116,7 @@ function GradeIndex({ book }: { book: GradeBook }) {
   const ids = lessonsOf(book).map((item) => item.lesson.id);
   return (
     <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={book.title}>
-      <p><A href="/kien-thuc">{t(lang, "Tất cả các lớp", "All grades")}</A></p>
+      <p><A href="/kien-thuc">{t(lang, "Tất cả các lớp", "All grades")}</A>{" · "}{book.grade <= 9 ? <A href={`/luyen-lop/${book.grade}`}>{t(lang, "Luyện nhanh lớp này", "Quick practice")}</A> : null}</p>
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
       {book.chapters.map((chapter) => (
         <section key={chapter.id} className="stream">

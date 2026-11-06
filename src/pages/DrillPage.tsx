@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { isSharedCorrect, sharedDrill } from "../content/sharedDrill.ts";
+import { DRILL_AT, DRILL_ID, resolveDrillIndex } from "../lib/drillPlace.ts";
 import { loadMisses, loadPicks, savePicks, withPick, writeMisses } from "../lib/missBook.ts";
 import { mirrorDrill } from "../lib/supabase.ts";
 import { A } from "../lib/route.tsx";
@@ -8,15 +9,14 @@ import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
 import { useLang } from "../ui/useLang.ts";
 
-const DRILL_AT = "ban-toan-drill-at";
-
 export function DrillPage() {
-  const [index, setIndex] = useState(() => {
-    const saved = Number(localStorage.getItem(DRILL_AT));
-    return Number.isInteger(saved) && saved >= 0 && saved < sharedDrill.length ? saved : 0;
-  });
+  const ids = sharedDrill.map((item) => item.id);
+  const [index, setIndex] = useState(() => resolveDrillIndex(ids, localStorage.getItem(DRILL_AT), localStorage.getItem(DRILL_ID)));
   useEffect(() => {
-    try { localStorage.setItem(DRILL_AT, String(index)); } catch { /* ignore */ }
+    try {
+      localStorage.setItem(DRILL_AT, String(index));
+      localStorage.setItem(DRILL_ID, sharedDrill[index]?.id ?? "");
+    } catch { /* ignore */ }
   }, [index]);
   const [picks, setPicks] = useState(loadPicks);
   const [onlyWrong, setOnlyWrong] = useState(false);
@@ -88,7 +88,7 @@ export function DrillPage() {
           <button type="button" onClick={() => move(1)}>{t(lang, "Câu sau", "Next")}</button>
         </div>
       </article>
-      <p><A href="/so-loi">{t(lang, "Mở sổ lỗi gộp", "Open the miss book")}</A></p>
+      <p><A href="/so-loi">{t(lang, "Mở sổ lỗi gộp", "Open the miss book")}</A>{" · "}<A href="/luyen-lop">{t(lang, "Luyện lớp 1–9", "Grades 1–9 practice")}</A></p>
     </PageFrame>
   );
 }
