@@ -1,12 +1,13 @@
 /**
- * Math tutor: demo replies, off-topic refusal, and rate / daily limits.
+ * Math tutor: bilingual demo replies, open chat, and rate / daily limits.
  * Run with: tsx scripts/chat.test.ts
  */
 import { cards } from "../src/content/cards.ts";
 import { isYoutubeId, lectures } from "../src/content/lectures.ts";
 import { handleChat, type ChatEnv, type ChatTurn } from "../server/chat/handlers.ts";
 import { createQuota } from "../server/chat/limit.ts";
-import { REFUSAL } from "../server/chat/policy.ts";
+import { sanitizeSvg } from "../src/chat/diagram.ts";
+import { demoReply, replyLanguage, TUTOR_INSTRUCTIONS } from "../server/chat/policy.ts";
 import { tutorTopics } from "../server/chat/topics.ts";
 
 const fails: string[] = [];
@@ -48,12 +49,32 @@ function ask(text: string): { messages: ChatTurn[] } {
   return { messages: [{ role: "user", content: text }] };
 }
 
-const off = await post(env({ mode: "live" }), ask("Thời tiết Hà Nội hôm nay thế nào?"));
-assert(off.status === 200 && off.json.reply === REFUSAL, `off-topic ${JSON.stringify(off.json)}`);
-assert(calls === 0, "off-topic must not call the model");
+let seen = "";
+const off = await post(env({
+  mode: "live",
+  complete: async (instructions) => {
+    calls += 1;
+    seen = instructions;
+    return "A calm note about the weather, then one question.";
+  },
+}), ask("What is the weather in Hanoi?"));
+assert(off.status === 200, `open chat ${off.status}`);
+assert(calls === 1, "free chat still calls the model");
+assert(seen.includes("Tư duy giải") && seen.includes("Solution thinking"), "bilingual instructions");
+assert(!/dí dỏm/.test(seen), "no crude tease label");
+assert(!/từ chối|I refuse|out of scope/i.test(String(off.json.reply)), "model reply is not a refusal");
 
 const cook = await post(env(), ask("Cho tôi công thức nấu phở bò"));
-assert(cook.json.reply === REFUSAL, "recipe refused");
+assert(calls === 1, "demo cook does not call the model");
+assert(!/từ chối|chỉ hỗ trợ|ngoài phạm vi|I refuse/i.test(String(cook.json.reply)), "recipe is answered");
+assert(/phở/i.test(String(cook.json.reply)), "recipe mentions pho");
+assert(replyLanguage("Hello") === "en" && replyLanguage("Xin chào") === "vi", "language detect");
+const helloEn = demoReply("Hello");
+assert(/solution thinking/i.test(helloEn), "english greeting");
+assert(TUTOR_INSTRUCTIONS.includes("mermaid") && TUTOR_INSTRUCTIONS.includes("Phép chia này đang đùa anh đấy"), "prompt tone");
+const dirty = `<svg onload="alert(1)"><script>alert(1)</script><circle /></svg>`;
+const clean = sanitizeSvg(dirty);
+assert(!/script|onload/i.test(clean) && clean.includes("<circle"), "svg sanitized");
 
 const hello = await post(env(), ask("Xin chào"));
 assert(String(hello.json.reply).includes("từng bước"), "greeting stays a tutor");
@@ -70,6 +91,7 @@ for (const topic of tutorTopics) {
 const math = await post(env(), ask("Giải thích đỉnh của parabol bậc hai"));
 const reply = String(math.json.reply);
 assert(reply.includes("/t/quadratic"), `topic link ${reply}`);
+assert(reply.includes("Tư duy giải"), "solution thinking");
 assert(reply.includes("không chốt đáp án"), "steps, not a bare answer");
 assert(reply.toLowerCase().includes("kiểm"), "asks the student to verify");
 

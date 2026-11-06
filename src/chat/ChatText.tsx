@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from "react";
 import { A } from "../lib/route.tsx";
 import { MathText } from "../ui/MathText.tsx";
+import { diagramBlocks, sanitizeSvg } from "./diagram.ts";
 
 type Piece =
   | { kind: "text"; text: string }
@@ -25,10 +27,10 @@ function pieces(text: string): Piece[] {
   return out;
 }
 
-export function ChatText({ text }: { text: string }) {
+function Prose({ text }: { text: string }) {
   const lines = text.split("\n").filter((line) => line.length > 0);
   return (
-    <div className="chat-copy">
+    <>
       {lines.map((line, index) => (
         <p key={index}>
           {pieces(line).map((piece, pieceIndex) => piece.kind === "link"
@@ -36,6 +38,48 @@ export function ChatText({ text }: { text: string }) {
             : <MathText key={pieceIndex} text={piece.text} />)}
         </p>
       ))}
+    </>
+  );
+}
+
+function MermaidBlock({ source }: { source: string }) {
+  const host = useRef<HTMLDivElement>(null);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    let cancel = false;
+    const id = `mmd-${Math.random().toString(36).slice(2)}`;
+    void (async () => {
+      try {
+        const mermaid = (await import("mermaid")).default;
+        mermaid.initialize({ startOnLoad: false, securityLevel: "antiscript", fontFamily: "inherit" });
+        const drawn = await mermaid.render(id, source);
+        const clean = sanitizeSvg(drawn.svg);
+        if (!cancel && host.current) host.current.innerHTML = clean;
+        if (!clean && !cancel) setFailed(true);
+      } catch {
+        if (!cancel) setFailed(true);
+      }
+    })();
+    return () => { cancel = true; };
+  }, [source]);
+  if (failed) return <pre className="chat-ascii">{source}</pre>;
+  return <div className="chat-diagram" ref={host} />;
+}
+
+export function ChatText({ text }: { text: string }) {
+  return (
+    <div className="chat-copy">
+      {diagramBlocks(text).map((block, index) => {
+        if (block.kind === "mermaid") return <MermaidBlock key={index} source={block.text} />;
+        if (block.kind === "svg") {
+          const clean = sanitizeSvg(block.text);
+          return clean
+            ? <div key={index} className="chat-diagram" dangerouslySetInnerHTML={{ __html: clean }} />
+            : <pre key={index} className="chat-ascii">{block.text}</pre>;
+        }
+        if (block.kind === "ascii") return <pre key={index} className="chat-ascii">{block.text}</pre>;
+        return <Prose key={index} text={block.text} />;
+      })}
     </div>
   );
 }

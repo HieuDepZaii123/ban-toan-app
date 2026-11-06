@@ -1,12 +1,16 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { A } from "../lib/route.tsx";
+import { t } from "../lib/text.ts";
 import { useRoute } from "../lib/useRoute.ts";
+import { LangSwitch } from "./LangSwitch.tsx";
 import { MENU_LINKS, menuArea } from "./navLinks.ts";
+import { useLang } from "./useLang.ts";
 
 const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
 
 export function RightMenu() {
   const { path } = useRoute();
+  const lang = useLang();
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLElement>(null);
   const openerRef = useRef<HTMLButtonElement>(null);
@@ -72,12 +76,12 @@ export function RightMenu() {
           aria-controls="side-menu"
           onClick={() => setOpen(true)}
         >
-          Mục lục
+          {t(lang, "Mục lục", "Menu")}
         </button>
       )}
       {open ? (
         <div className="menu-layer">
-          <button type="button" className="menu-backdrop" aria-label="Đóng menu" onClick={close} />
+          <button type="button" className="menu-backdrop" aria-label={t(lang, "Đóng menu", "Close menu")} onClick={close} />
           <nav
             ref={panelRef}
             id="side-menu"
@@ -87,8 +91,11 @@ export function RightMenu() {
             aria-labelledby={titleId}
           >
             <div className="menu-head">
-              <b id={titleId}>Mục lục</b>
-              <button type="button" className="text-btn" onClick={close}>Đóng</button>
+              <b id={titleId}>{t(lang, "Mục lục", "Menu")}</b>
+              <button type="button" className="text-btn" onClick={close}>{t(lang, "Đóng", "Close")}</button>
+            </div>
+            <div className="menu-lang">
+              <LangSwitch />
             </div>
             <ul>
               {MENU_LINKS.map((item) => (
@@ -98,12 +105,12 @@ export function RightMenu() {
                     aria-current={current === item.id ? "page" : undefined}
                     onClick={close}
                   >
-                    {item.label}
+                    {t(lang, item.label, item.en)}
                   </A>
                 </li>
               ))}
               <li>
-                <button type="button" onClick={openMusic}>Nhạc học</button>
+                <button type="button" onClick={openMusic}>{t(lang, "Nhạc học", "Study music")}</button>
               </li>
             </ul>
           </nav>

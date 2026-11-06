@@ -3,34 +3,32 @@ import { cards } from "../content/cards.ts";
 import { gradeBooks, lessonAt, lessonsOf } from "../content/grades/index.ts";
 import type { GradeAsk, GradeBook, GradeDrill, GradeExample } from "../content/grades/types.ts";
 import { A } from "../lib/route.tsx";
+import { t } from "../lib/text.ts";
 import { useRoute } from "../lib/useRoute.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
+import { useLang } from "../ui/useLang.ts";
 import { GradeFigure } from "./GradeFigure.tsx";
 import { GradeWidgetView } from "./GradeWidgets.tsx";
 import { doneCount, markDone, readDone } from "./progress.ts";
 
-const BAND = [
-  { id: "tieu-hoc", title: "Tiểu học 1–5" },
-  { id: "thcs", title: "THCS 6–9" },
-  { id: "thpt", title: "THPT 10–12" },
-] as const;
-
 export function GradeDesk() {
+  const lang = useLang();
   const { path } = useRoute();
   const parsed = parseGradePath(path);
   useEffect(() => {
     const book = parsed.grade ? gradeBooks.find((item) => item.grade === parsed.grade) : undefined;
     const found = parsed.grade && parsed.lesson ? lessonAt(parsed.grade, parsed.lesson) : undefined;
-    document.title = found ? `${found.lesson.title} · Lớp ${parsed.grade}` : book ? `Lớp ${book.grade}` : "Kiến thức lớp 1–12";
-  }, [parsed.grade, parsed.lesson]);
+    const gradeWord = lang === "en" ? "Grade" : "Lớp";
+    document.title = found ? `${found.lesson.title} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
+  }, [parsed.grade, parsed.lesson, lang]);
 
   if (!parsed.grade) return <GradeHome />;
   const book = gradeBooks.find((item) => item.grade === parsed.grade);
   if (!book) {
     return (
-      <PageFrame kicker="Chương trình 2018" title="Không thấy lớp này" lead="Chọn một lớp từ 1 đến 12.">
-        <A href="/kien-thuc">Về danh sách lớp</A>
+      <PageFrame kicker={t(lang, "Chương trình 2018", "2018 curriculum")} title={t(lang, "Không thấy lớp này", "This grade is missing")} lead={t(lang, "Chọn một lớp từ 1 đến 12.", "Choose a grade from 1 to 12.")}>
+        <A href="/kien-thuc">{t(lang, "Về danh sách lớp", "Back to grades")}</A>
       </PageFrame>
     );
   }
@@ -38,8 +36,8 @@ export function GradeDesk() {
   const found = lessonAt(book.grade, parsed.lesson);
   if (!found) {
     return (
-      <PageFrame kicker={`Lớp ${book.grade}`} title="Không thấy bài này" lead="Bài không nằm trong danh sách của lớp.">
-        <A href={`/kien-thuc/${book.grade}`}>Về các bài lớp {book.grade}</A>
+      <PageFrame kicker={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} title={t(lang, "Không thấy bài này", "This lesson is missing")} lead={t(lang, "Bài không nằm trong danh sách của lớp.", "This lesson is not in the grade list.")}>
+        <A href={`/kien-thuc/${book.grade}`}>{t(lang, `Về các bài lớp ${book.grade}`, `Back to grade ${book.grade}`)}</A>
       </PageFrame>
     );
   }
@@ -61,26 +59,33 @@ function useDone(): string[] {
 }
 
 function ProgressBar({ done, total, label }: { done: number; total: number; label: string }) {
+  const lang = useLang();
   const ratio = total === 0 ? 0 : done / total;
   return (
     <div className="grade-progress-wrap">
       <div className="grade-progress" role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={total} aria-valuenow={done}>
         <span style={{ width: `${Math.round(ratio * 100)}%` }} />
       </div>
-      <p className="lecture-note">{done}/{total} bài đã xong</p>
+      <p className="lecture-note">{t(lang, `${done}/${total} bài đã xong`, `${done}/${total} lessons done`)}</p>
     </div>
   );
 }
 
 function GradeHome() {
+  const lang = useLang();
   const done = useDone();
+  const bands = [
+    { id: "tieu-hoc", title: t(lang, "Tiểu học 1–5", "Primary 1–5") },
+    { id: "thcs", title: t(lang, "THCS 6–9", "Lower secondary 6–9") },
+    { id: "thpt", title: t(lang, "THPT 10–12", "Upper secondary 10–12") },
+  ] as const;
   return (
     <PageFrame
-      kicker="Chương trình GDPT 2018"
-      title="Kiến thức lớp 1–12"
-      lead="Tiểu học lớp 1–5, THCS lớp 6–9, THPT lớp 10–12. Mỗi bài có ví dụ tính được và bài luyện."
+      kicker={t(lang, "Chương trình GDPT 2018", "2018 curriculum")}
+      title={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")}
+      lead={t(lang, "Tiểu học lớp 1–5, THCS lớp 6–9, THPT lớp 10–12. Mỗi bài có ví dụ tính được và bài luyện.", "Primary grades 1–5, lower secondary 6–9, upper secondary 10–12. Each lesson has a worked example and practice.")}
     >
-      {BAND.map((band) => (
+      {bands.map((band) => (
         <section key={band.id} className="stream">
           <h2>{band.title}</h2>
           <div className="grade-grid">
@@ -90,9 +95,9 @@ function GradeHome() {
               return (
                 <A key={book.grade} className="study-card" href={`/kien-thuc/${book.grade}`}>
                   <span>
-                    <strong>Lớp {book.grade}</strong>
+                    <strong>{t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)}</strong>
                     <small className="lecture-note">{book.title}</small>
-                    <ProgressBar done={count} total={ids.length} label={`Tiến độ lớp ${book.grade}`} />
+                    <ProgressBar done={count} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
                   </span>
                 </A>
               );
@@ -105,12 +110,13 @@ function GradeHome() {
 }
 
 function GradeIndex({ book }: { book: GradeBook }) {
+  const lang = useLang();
   const done = useDone();
   const ids = lessonsOf(book).map((item) => item.lesson.id);
   return (
-    <PageFrame kicker="Kiến thức lớp 1–12" title={`Lớp ${book.grade}`} lead={book.title}>
-      <p><A href="/kien-thuc">Tất cả các lớp</A></p>
-      <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={`Tiến độ lớp ${book.grade}`} />
+    <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={book.title}>
+      <p><A href="/kien-thuc">{t(lang, "Tất cả các lớp", "All grades")}</A></p>
+      <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
       {book.chapters.map((chapter) => (
         <section key={chapter.id} className="stream">
           <h2>{chapter.title}</h2>
@@ -121,9 +127,9 @@ function GradeIndex({ book }: { book: GradeBook }) {
                 <A key={lesson.id} className="study-card" href={`/kien-thuc/${book.grade}/${lesson.id}`}>
                   <span>
                     <strong>{lesson.title}</strong>
-                    {lesson.topicId ? <small className="lecture-note">Nối sang chuyên đề đã có</small> : null}
+                    {lesson.topicId ? <small className="lecture-note">{t(lang, "Nối sang chuyên đề đã có", "Links to an existing topic")}</small> : null}
                   </span>
-                  {ready ? <span aria-label="Đã xong">✓</span> : null}
+                  {ready ? <span aria-label={t(lang, "Đã xong", "Done")}>✓</span> : null}
                 </A>
               );
             })}
@@ -168,6 +174,7 @@ function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTi
       ))}
       <article className="tool-card">
         <h2>Tự luyện</h2>
+        <p className="lecture-note">Điểm {correct.filter(Boolean).length}/{lesson.drills.length}</p>
         {lesson.drills.map((drill, index) => (
           <DrillBlock
             key={drill.prompt}

@@ -1,4 +1,4 @@
-import { demoReply, isOffTopic, REFUSAL, TUTOR_INSTRUCTIONS } from "./policy.ts";
+import { demoReply, TUTOR_INSTRUCTIONS } from "./policy.ts";
 import { tutorTopics } from "./topics.ts";
 import type { Quota } from "./limit.ts";
 
@@ -84,9 +84,6 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
   env.quota.add(`win:${ip}`, env.now());
   env.quota.add(`day:${ip}`, env.now());
   const remaining = dailyLimit - usedToday - 1;
-  if (isOffTopic(last.content)) {
-    return json(200, { reply: REFUSAL, mode: env.mode, remaining, limit: dailyLimit, premium });
-  }
   try {
     const note = topicId ? `\nHọc sinh đang mở tờ /t/${topicId}.` : "";
     const reply = env.mode === "demo"

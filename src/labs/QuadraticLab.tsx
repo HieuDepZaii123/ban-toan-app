@@ -201,25 +201,50 @@ function drawParabola(
   mark: number | null,
   colors: PlotColors,
 ) {
-  const pad = 32;
-  const x0 = -6;
-  const x1 = 6;
-  const y0 = -8;
-  const y1 = 8;
+  const pad = 36;
+  const study = quadStudy(a, b, c);
+  let x0 = -5;
+  let x1 = 5;
+  if (!study.linear && study.vertex) {
+    x0 = Math.min(x0, study.vertex.x - 3);
+    x1 = Math.max(x1, study.vertex.x + 3);
+  }
+  for (const root of study.roots) {
+    x0 = Math.min(x0, root - 1);
+    x1 = Math.max(x1, root + 1);
+  }
+  x0 = Math.max(-12, x0);
+  x1 = Math.min(12, x1);
+  const f = (x: number) => a * x * x + b * x + c;
+  let yLo = 0;
+  let yHi = 0;
+  for (let i = 0; i <= 48; i += 1) {
+    const y = f(x0 + ((x1 - x0) * i) / 48);
+    if (Number.isFinite(y)) {
+      yLo = Math.min(yLo, y);
+      yHi = Math.max(yHi, y);
+    }
+  }
+  if (yHi - yLo > 28) {
+    const mid = study.vertex ? study.vertex.y : 0;
+    yLo = Math.min(-4, mid - 8);
+    yHi = Math.max(4, mid + 8);
+  }
+  const yPad = Math.max(1.5, (yHi - yLo) * 0.12);
+  const y0 = yLo - yPad;
+  const y1 = yHi + yPad;
   const map = makeMap(width, height, pad, x0, x1, y0, y1);
   paintBase(ctx, width, height, colors);
   drawGrid(ctx, map, x0, x1, y0, y1, colors);
   drawAxes(ctx, map, x0, x1, y0, y1, colors, "x", "y", width, pad);
-  const f = (x: number) => a * x * x + b * x + c;
   strokeFn(ctx, map, width, height, pad, x0, x1, f, colors.curve);
-  if (Math.abs(a) < 1e-9) {
-    halo(ctx, "a = 0", width / 2, pad + 28, colors.alt, colors.bg);
+  if (study.linear) {
+    halo(ctx, "a = 0: không có hai nghiệm", width / 2, pad + 8, colors.alt, colors.bg);
     return;
   }
   const vx = -b / (2 * a);
   const vy = f(vx);
   if (vx > x0 && vx < x1) dashed(ctx, map.x(vx), map.y(y0), map.x(vx), map.y(y1), colors.soft);
-  const study = quadStudy(a, b, c);
   for (const root of study.roots) {
     if (root < x0 || root > x1) continue;
     dot(ctx, map.x(root), map.y(0), colors.bg, colors.ink, 4);

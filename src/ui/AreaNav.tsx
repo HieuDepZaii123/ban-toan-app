@@ -1,17 +1,20 @@
 import { A } from "../lib/route.tsx";
+import { t } from "../lib/text.ts";
 import { useRoute } from "../lib/useRoute.ts";
+import { LangSwitch } from "./LangSwitch.tsx";
+import { useLang } from "./useLang.ts";
 
 const LINKS = [
-  { href: "/", id: "math", label: "Toán" },
-  { href: "/kien-thuc", id: "grades", label: "Lớp 1–12" },
-  { href: "/soan-tai-lieu", id: "soan", label: "Soạn tài liệu" },
-  { href: "/khoa-hoc", id: "science", label: "Khoa học" },
-  { href: "/xuong-hinh", id: "workshop", label: "Xưởng" },
-  { href: "/luyen", id: "drill", label: "Luyện" },
-  { href: "/so-loi", id: "miss", label: "Sổ lỗi" },
-  { href: "/so-cong-thuc", id: "formula", label: "Công thức" },
-  { href: "/danh-gia", id: "assess", label: "Đánh giá" },
-  { href: "/gioi-thieu", id: "refer", label: "Giới thiệu" },
+  { href: "/", id: "math", vi: "Toán", en: "Maths" },
+  { href: "/kien-thuc", id: "grades", vi: "Lớp 1–12", en: "Grades 1–12" },
+  { href: "/soan-tai-lieu", id: "soan", vi: "Soạn tài liệu", en: "Documents" },
+  { href: "/khoa-hoc", id: "science", vi: "Khoa học", en: "Science" },
+  { href: "/xuong-hinh", id: "workshop", vi: "Xưởng", en: "Workshop" },
+  { href: "/luyen", id: "drill", vi: "Luyện", en: "Practice" },
+  { href: "/so-loi", id: "miss", vi: "Sổ lỗi", en: "Miss book" },
+  { href: "/so-cong-thuc", id: "formula", vi: "Công thức", en: "Formulas" },
+  { href: "/danh-gia", id: "assess", vi: "Đánh giá", en: "Assess" },
+  { href: "/gioi-thieu", id: "refer", vi: "Giới thiệu", en: "Refer" },
 ] as const;
 
 function currentArea(path: string): string {
@@ -30,12 +33,14 @@ function currentArea(path: string): string {
 
 export function AreaNav() {
   const { path } = useRoute();
+  const lang = useLang();
   const current = currentArea(path);
   return (
-    <nav className="area-nav" aria-label="Khu vực">
+    <nav className="area-nav" aria-label={t(lang, "Khu vực", "Sections")}>
       {LINKS.map((item) => (
-        <A key={item.id} href={item.href} aria-current={current === item.id ? "page" : undefined}>{item.label}</A>
+        <A key={item.id} href={item.href} aria-current={current === item.id ? "page" : undefined}>{t(lang, item.vi, item.en)}</A>
       ))}
+      <LangSwitch />
     </nav>
   );
 }

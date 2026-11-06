@@ -141,11 +141,163 @@ export function topicById(id: string): TutorTopic | undefined {
   return tutorTopics.find((item) => item.id === id);
 }
 
-export function tutorAnswer(text: string, preferId?: string): string {
+const EN_SHEETS: Record<TutorTopic["id"], Sheet> = {
+  quadratic: {
+    lead: R`Example $y=x^2-2x-3$: $\Delta=16$, vertex $(1;-4)$.`,
+    steps: [
+      R`Compute $\Delta=b^2-4ac$. For $1,-2,-3$: $\Delta=4+12=16$.`,
+      R`Vertex $x=-\dfrac{b}{2a}=1$.`,
+      R`At $x=1$, $y=-4$. Check $y(3)=0$.`,
+    ],
+  },
+  ineq: {
+    lead: R`For $4$ and $9$: arithmetic mean $6{,}5$, geometric mean $6$.`,
+    steps: [
+      R`$\dfrac{4+9}{2}=6{,}5$.`,
+      R`$\sqrt{4\cdot 9}=6$.`,
+      R`Since $4\neq 9$, the arithmetic mean is larger. Try $5$ and $5$.`,
+    ],
+  },
+  exp: {
+    lead: R`$2^3=8$, so $\log_2 8=3$.`,
+    steps: [
+      R`$2$ multiplied three times is $8$.`,
+      R`$\log_2 8$ is that exponent, so it equals $3$.`,
+      R`Do not write $\log_2(4+4)=\log_2 4+\log_2 4$: the left side is $3$, the right side is $4$.`,
+    ],
+  },
+  sequence: {
+    lead: R`The sequence $3,7,11,15$ has common difference $4$, so $u_{10}=39$.`,
+    steps: [
+      R`Common difference $d=7-3=4$.`,
+      R`From term $1$ to term $10$ there are $9$ steps.`,
+      R`$u_{10}=3+9\cdot 4=39$. Check $u_2=7$.`,
+    ],
+  },
+  trig: {
+    lead: R`At $150^\circ$: $\sin=\dfrac12$, $\cos=-\dfrac{\sqrt3}{2}$.`,
+    steps: [
+      R`On the unit circle, $0^\circ$ is $(1;0)$ and $90^\circ$ is $(0;1)$.`,
+      R`$150^\circ=180^\circ-30^\circ$, so sine stays $\dfrac12$.`,
+      R`Cosine changes sign: $-\dfrac{\sqrt3}{2}$. Check $\sin^2+\cos^2=1$.`,
+    ],
+  },
+  limit: {
+    lead: R`$\dfrac{x^2-1}{x-1}$ approaches $2$ as $x$ approaches $1$, even though the denominator is $0$ at $x=1$.`,
+    steps: [
+      R`For $x\neq 1$, cancel $x-1$ and keep $x+1$.`,
+      R`As $x$ approaches $1$, $x+1$ approaches $2$.`,
+      R`Setting $f(1)=5$ does not change the limit. Try $x=1.01$.`,
+    ],
+  },
+  derivative: {
+    lead: R`If $f(x)=x^2$, then $f'(2)=4$.`,
+    steps: [
+      R`The secant from $2$ to $2+h$ is $\dfrac{(2+h)^2-4}{h}=4+h$.`,
+      R`Let $h\to 0$ to get $f'(2)=4$.`,
+      R`Tangent: $y=4(x-2)+4$. The slope at $x=1$ is $2$.`,
+    ],
+  },
+  survey: {
+    lead: R`$y=x^3-3x$: local max $2$ at $x=-1$, local min $-2$ at $x=1$.`,
+    steps: [
+      R`$y'=3x^2-3=3(x-1)(x+1)$.`,
+      R`$y'=0$ at $x=\pm 1$, and $y'$ changes sign at both.`,
+      R`$y(-1)=2$, $y(1)=-2$. For $y=x^3$, $y'(0)=0$ but the sign does not change.`,
+    ],
+  },
+  integral: {
+    lead: R`$\int_0^2(2x-x^2)\,dx=\dfrac43$.`,
+    steps: [
+      R`Antiderivative $F=x^2-\dfrac{x^3}{3}$.`,
+      R`$F(2)-F(0)=4-\dfrac83=\dfrac43$.`,
+      R`Below the axis the integral is negative. Also $\int_0^1(x-x^2)\,dx=\dfrac16$.`,
+    ],
+  },
+  vector: {
+    lead: R`$|(2;1;2)|=\sqrt{4+1+4}=3$.`,
+    steps: [
+      R`Length is the square root of the sum of squares, not the sum $2+1+2$.`,
+      R`$\sqrt{9}=3$.`,
+      R`$(1;2;-1)\cdot(2;-1;0)=0$, so the vectors are perpendicular.`,
+    ],
+  },
+  analytic: {
+    lead: R`The point $(3;1)$ is $\sqrt2$ from the line $x+y-2=0$.`,
+    steps: [
+      R`The normal $(1;1)$ has length $\sqrt2$.`,
+      R`Numerator $|3+1-2|=2$.`,
+      R`Divide: $\dfrac{2}{\sqrt2}=\sqrt2$. Stopping at $2$ skips the division.`,
+    ],
+  },
+  triangle: {
+    lead: R`Base $6$, height $4$: area $\dfrac{6\cdot 4}{2}=12$.`,
+    steps: [
+      R`A triangle uses half of base times height.`,
+      R`Dropping $\dfrac12$ gives $24$, which is wrong.`,
+      R`A pyramid with the same square base of side $6$ and height $4$: $V=\dfrac13\cdot 36\cdot 4=48$.`,
+    ],
+  },
+  combo: {
+    lead: R`$C(8,3)=56$, while $A(8,3)=336$.`,
+    steps: [
+      R`Order matters: $A(8,3)=8\cdot 7\cdot 6=336$.`,
+      R`Without order, divide by $3!$: $\dfrac{336}{6}=56$.`,
+      R`$C(8,3)=C(8,5)$. Check $C(5,2)=10$.`,
+    ],
+  },
+  probability: {
+    lead: R`Two dice, given at least one $6$: the probability both are $6$ is $\dfrac{1}{11}$.`,
+    steps: [
+      R`There are $36$ pairs at the start. Pairs with no $6$: $25$.`,
+      R`That leaves $36-25=11$ pairs.`,
+      R`Only $(6;6)$ works, so $\dfrac{1}{11}$. Dividing by $36$ is the wrong sample.`,
+    ],
+  },
+};
+
+const EN_TITLE: Record<TutorTopic["id"], string> = {
+  quadratic: "Quadratic functions",
+  ineq: "Inequalities",
+  exp: "Exponents and logarithms",
+  sequence: "Sequences",
+  trig: "Trigonometry",
+  limit: "Limits",
+  derivative: "Derivatives",
+  survey: "Curve sketching",
+  integral: "Integrals",
+  vector: "Vectors",
+  analytic: "Analytic geometry",
+  triangle: "Plane and solid geometry",
+  combo: "Combinatorics",
+  probability: "Probability",
+};
+
+function thinkingVi(title: string): string {
+  return [
+    `Tư duy giải: đọc đề thuộc ${title}.`,
+    "Hướng tiếp cận: đi từ định nghĩa, mỗi kết luận có một dẫn chứng.",
+    "Vì sao cách này, không phải thế số trước: thế số sớm dễ mất điều kiện.",
+    "Lộ trình: (1) dữ kiện, (2) một phép có chứng minh, (3) kiểm lại.",
+  ].join("\n");
+}
+
+function thinkingEn(title: string): string {
+  return [
+    `Solution thinking: read this as a question on ${title}.`,
+    "Approach: start from the definition, and cite a reason for each claim.",
+    "Why this and not plugging in first: an early substitution can drop a condition.",
+    "Route: (1) the data, (2) one proved move, (3) a check.",
+  ].join("\n");
+}
+
+export function tutorAnswer(text: string, preferId?: string, lang: "vi" | "en" = "vi"): string {
   const matched = matchTopic(text);
   const topic = matched ?? (preferId ? topicById(preferId) : undefined) ?? null;
+  if (lang === "en") return answerEn(topic);
   if (!topic) {
     return [
+      "Tư duy giải: đọc câu hỏi, chọn một hướng, nói vì sao không chọn hướng kia, rồi mới tính.",
       "Cùng đi từng bước. Mình không chốt đáp án hộ.",
       "1) Ghi giả thiết và điều cần tìm.",
       R`2) Viết một công thức trong dấu $. Ví dụ $\dfrac{4+9}{2}=6{,}5$.`,
@@ -155,11 +307,36 @@ export function tutorAnswer(text: string, preferId?: string): string {
   }
   const sheet = SHEETS[topic.id];
   return [
+    thinkingVi(topic.title),
     sheet.lead,
     `1) ${sheet.steps[0]}`,
     `2) ${sheet.steps[1]}`,
     `3) ${sheet.steps[2]}`,
     `Xem [${topic.title}](/t/${topic.id}).`,
     "Mình không chốt đáp án hộ. Hãy tự kiểm chứng bước cuối.",
+  ].join("\n");
+}
+
+function answerEn(topic: TutorTopic | null): string {
+  if (!topic) {
+    return [
+      "Solution thinking: read the question, choose one approach, say why the other is weaker, then compute.",
+      "I will hint the steps and leave the last check with you.",
+      "1) Write the given data and the goal.",
+      R`2) Put one formula inside dollar signs. For example $\dfrac{4+9}{2}=6.5$.`,
+      "3) Do one justified step, then substitute back.",
+      "Check the last step yourself.",
+    ].join("\n");
+  }
+  const sheet = EN_SHEETS[topic.id];
+  const title = EN_TITLE[topic.id];
+  return [
+    thinkingEn(title),
+    sheet.lead,
+    `1) ${sheet.steps[0]}`,
+    `2) ${sheet.steps[1]}`,
+    `3) ${sheet.steps[2]}`,
+    `Open [${title}](/t/${topic.id}).`,
+    "I will not lock the answer. Check the last step yourself.",
   ].join("\n");
 }

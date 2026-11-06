@@ -108,7 +108,7 @@ export function ShapeLab() {
     if (scene === 0) hit.current = drawTriangle(ctx, width, height, base, tall, area, colors);
     else if (scene === 1) hit.current = drawBox(ctx, width, height, len, wid, ht, volume, baseArea, colors);
     else if (scene === 2) hit.current = drawPyramid(ctx, width, height, side, ph, pyr, pyrBase, colors);
-    else hit.current = drawTetra(ctx, width, height, verts, edgeLens, tet, edgesEqual, colors);
+    else hit.current = drawTetra(ctx, width, height, verts, edge, tet, edgesEqual, colors);
   };
 
   const pointOf = (event: PointerEvent<HTMLDivElement>) => {
@@ -395,7 +395,7 @@ function drawPyramid(
   const sideTip = at(side, 0, 0);
   dot(ctx, top.x, top.y, colors.alt, colors.bg);
   dot(ctx, sideTip.x, sideTip.y, colors.curve, colors.bg);
-  stamp(ctx, `V = ${fmt(volume)}`, `đáy ${fmt(baseArea)}`, colors);
+  stamp(ctx, `V = ${fmt(volume)}`, `S đáy = ${fmt(baseArea)} · cao ${fmt(ph)}`, colors);
   return {
     handles: [
       { id: "ph", x: top.x, y: top.y },
@@ -409,7 +409,7 @@ function drawTetra(
   width: number,
   height: number,
   verts: readonly (readonly [number, number, number])[],
-  lengths: readonly number[],
+  edge: number,
   volume: number,
   equal: boolean,
   colors: PlotColors,
@@ -436,15 +436,14 @@ function drawTetra(
     if (!from || !to) return;
     const a = at(...from);
     const b = at(...to);
-    const shown = lengths[index] ?? 0;
-    halo(ctx, equal ? fmt(shown) : "lệch", (a.x + b.x) / 2, (a.y + b.y) / 2 - 10, colors.ink, colors.bg);
+    halo(ctx, equal ? `a=${fmt(edge)}` : "lệch", (a.x + b.x) / 2, (a.y + b.y) / 2 - 12 - index * 4, colors.ink, colors.bg);
   };
   labelPair(0);
   labelPair(2);
   labelPair(5);
   const tip = verts[1] ? at(...verts[1]) : { x: width / 2, y: height / 2 };
   dot(ctx, tip.x, tip.y, colors.alt, colors.bg);
-  stamp(ctx, `V = ${showExact(volume)}`, equal ? `cạnh ${fmt(lengths[0] ?? 0)}` : "cạnh lệch", colors);
+  stamp(ctx, `V = ${showExact(volume)}`, equal ? `sáu cạnh a = ${fmt(edge)}` : "cạnh lệch", colors);
   return { handles: [{ id: "edge", x: tip.x, y: tip.y }] };
 }
 

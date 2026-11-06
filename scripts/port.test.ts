@@ -26,7 +26,9 @@ const html = katex.renderToString(tex || "x", { throwOnError: false, displayMode
 assert.equal(html.includes("katex"), true);
 assert.equal(html.includes("\\Delta"), false);
 
-assert.equal(mockTutor("thời tiết hôm nay").includes("toán THPT"), true);
+const weather = mockTutor("thời tiết hôm nay");
+assert.equal(/từ chối|chỉ hỗ trợ/i.test(weather), false);
+assert.equal(/thời tiết/.test(weather), true);
 assert.equal(/1\)/.test(mockTutor("đạo hàm của x^2")), true);
 
 for (const card of cards) assert.ok(advanced[card.id], card.id);
