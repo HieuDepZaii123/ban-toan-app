@@ -26,10 +26,12 @@ for (const sample of docSamples) {
   }
 }
 
-const html = renderDoc("# Tiêu đề\n\nMột câu **đậm** và *nghiêng*.\n\n$$\\frac{1}{2}+\\frac{1}{4}=\\frac{3}{4}$$");
+const html = renderDoc("# Tiêu đề\n\nMột câu **đậm** và *nghiêng*.\n\n- mục một\n- mục **hai**\n\n1. bước một\n2. bước hai\n\n$$\\frac{1}{2}+\\frac{1}{4}=\\frac{3}{4}$$");
 assert.match(html, /<h1>Tiêu đề<\/h1>/);
 assert.match(html, /<strong>đậm<\/strong>/);
 assert.match(html, /<em>nghiêng<\/em>/);
+assert.match(html, /<ul><li>mục một<\/li><li>mục <strong>hai<\/strong><\/li><\/ul>/);
+assert.match(html, /<ol><li>bước một<\/li><li>bước hai<\/li><\/ol>/);
 assert.match(html, /katex/);
 
 const quad = docSamples.find((item) => item.id === "de-ham-bac-hai");
