@@ -6,7 +6,7 @@ Khóa chỉ để trên server. Trình duyệt không thấy khóa.
 
 ## Cấu hình
 
-Trong `.env` (không commit):
+Trong `.env` (không commit). `npm run dev` và `npm run preview` nạp tệp này cho `/api/chat`; trên Vercel đặt cùng các biến trong phần Environment Variables.
 
 ```bash
 # Cách ưu tiên: một khóa cho AI Gateway của Vercel.

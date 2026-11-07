@@ -4,13 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.13"
   },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
     "lint": "oxlint",
-    "test": "tsx scripts/check-math.ts && tsx scripts/golden.ts && tsx scripts/store.test.ts && tsx scripts/vary.test.ts && tsx scripts/concept.test.ts && tsx scripts/dss.test.ts && tsx scripts/research.test.ts && tsx scripts/pay.test.ts && tsx scripts/crypto.test.ts && tsx scripts/chat.test.ts && tsx scripts/lectures.test.ts && tsx scripts/port.test.ts && tsx scripts/gap.test.ts && tsx scripts/dang.test.ts && tsx scripts/grade.test.ts && tsx scripts/study.test.ts && tsx scripts/affiliate.test.ts && tsx scripts/ideas.test.ts && tsx scripts/docs.test.ts && tsx scripts/docs-export.test.ts && tsx scripts/methods.test.ts && tsx scripts/practice.test.ts && tsx scripts/thpt.test.ts && tsx scripts/workshop.test.ts && tsx scripts/supabase.test.ts && tsx scripts/free-llm.test.ts",
+    "test": "npm run test:server && npm run test:content",
+    "test:server": "tsx scripts/pay.test.ts && tsx scripts/crypto.test.ts && tsx scripts/chat.test.ts && tsx scripts/affiliate.test.ts && tsx scripts/free-llm.test.ts && tsx scripts/bridge.test.ts",
+    "test:content": "tsx scripts/check-math.ts && tsx scripts/golden.ts && tsx scripts/store.test.ts && tsx scripts/vary.test.ts && tsx scripts/concept.test.ts && tsx scripts/dss.test.ts && tsx scripts/research.test.ts && tsx scripts/lectures.test.ts && tsx scripts/port.test.ts && tsx scripts/gap.test.ts && tsx scripts/dang.test.ts && tsx scripts/grade.test.ts && tsx scripts/study.test.ts && tsx scripts/ideas.test.ts && tsx scripts/docs.test.ts && tsx scripts/docs-export.test.ts && tsx scripts/methods.test.ts && tsx scripts/practice.test.ts && tsx scripts/thpt.test.ts && tsx scripts/workshop.test.ts && tsx scripts/supabase.test.ts",
+    "check": "npm run lint && npm test && npm run build",
     "preview": "vite preview",
     "free-llm:sync": "tsx scripts/sync-free-llm.ts"
   },

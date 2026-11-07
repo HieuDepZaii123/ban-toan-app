@@ -120,7 +120,7 @@ npm test
 npm run dev
 ```
 
-Mở [http://127.0.0.1:43123/nang-cap](http://127.0.0.1:43123/nang-cap). Vite gắn `/api/premium` ngay trên cổng 43123. Không cần khóa MoMo riêng: thiếu biến thì server dùng bộ sandbox công khai trong `.env.example`.
+Mở [http://127.0.0.1:43123/nang-cap](http://127.0.0.1:43123/nang-cap). Vite gắn `/api/premium` ngay trên cổng 43123 (và trên cổng 43991 khi `npm run preview`). Plugin nạp `.env` cho server, nên `ADMIN_TOKEN` và `BANK_WEBHOOK_SECRET` chép từ `.env.example` là giá trị mà hai lệnh `curl` dưới đây dùng. Biến đặt trong shell thắng `.env`. Không cần khóa MoMo riêng: thiếu biến thì server dùng bộ sandbox công khai trong `.env.example`.
 
 Đơn ví và QR gọi MoMo. Đơn chuyển khoản không gọi MoMo. Webhook thử:
 
@@ -171,7 +171,9 @@ curl -X POST "$PUBLIC_BASE_URL/api/premium/affiliate-admin" \
 
 ## Deploy
 
-Repo đã có `vercel.json`: build `npm run build`, thư mục `dist`, rewrite SPA trừ `/api/`. Mỗi file trong `api/premium/` là một hàm Node.
+Repo đã có `vercel.json`: build `npm run build`, thư mục `dist`, rewrite SPA trừ `/api/`. Mỗi file trong `api/premium/` là một hàm Node. Chọn Node 22 trở lên cho dự án (`engines` trong `package.json` là `>=22.13`), vì kho đơn dùng `node:sqlite`.
+
+Lỗi trong hàm trả JSON 500 không kèm chi tiết. Log của hàm có dòng `[pay] <method> <đường> <x-request-id>`; mã đó cũng nằm trong header `x-request-id` của phản hồi, nên có thể dò từ trình duyệt tới log.
 
 Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `AFFILIATE_RATE_BPS`, `CRYPTO_*`, `PREMIUM_DB_PATH` hoặc adapter Postgres. `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy. Không đặt khóa riêng của ví.
 
