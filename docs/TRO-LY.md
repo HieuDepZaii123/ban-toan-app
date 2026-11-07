@@ -16,7 +16,33 @@ OPENAI_API_KEY=
 AI_MODEL=openai/gpt-5.4-mini
 ```
 
-Thiếu cả hai khóa thì `/api/chat` trả lời **chế độ mẫu**: vẫn từ chối câu ngoài Toán, vẫn gợi ý bước, không gọi model.
+### Nhà cung cấp miễn phí
+
+Danh sách lấy từ [mnfst/awesome-free-llm-apis](https://github.com/mnfst/awesome-free-llm-apis) (CC0), chép nguyên `data.json` vào `vendor/awesome-free-llm-apis/`. Trợ lý chỉ dùng những nhà có gói miễn phí lâu dài, cần khóa thật và nói API kiểu OpenAI:
+
+| id | Biến khóa | Model mặc định | Lấy khóa |
+| --- | --- | --- | --- |
+| `groq` | `GROQ_API_KEY` | `openai/gpt-oss-120b` | console.groq.com |
+| `gemini` | `GEMINI_API_KEY` | `gemini-3.6-flash` | aistudio.google.com |
+| `openrouter` | `OPENROUTER_API_KEY` | `google/gemma-4-31b-it:free` | openrouter.ai |
+| `mistral` | `MISTRAL_API_KEY` | `mistral-small-2603` | console.mistral.ai |
+| `nvidia` | `NVIDIA_API_KEY` | `nvidia/nemotron-3-ultra-550b-a55b` | build.nvidia.com |
+| `zai` | `ZAI_API_KEY` | `glm-4.7-flash` | z.ai (cổng quốc tế) |
+
+```bash
+GROQ_API_KEY=
+GEMINI_API_KEY=
+FREE_LLM_ORDER=groq,gemini,openrouter,mistral,nvidia,zai
+GROQ_MODEL=          # để trống thì dùng model mặc định
+```
+
+Thứ tự gọi: khóa trả phí (gateway / OpenAI) nếu có, rồi từng nhà miễn phí có khóa theo `FREE_LLM_ORDER`. Nhà nào lỗi, hết lượt hoặc trả rỗng thì chuyển nhà kế tiếp. Mỗi lượt chờ tối đa 20 giây, cả chuỗi tối đa 25 giây.
+
+Lưu ý: gói miễn phí có giới hạn thấp (OpenRouter 50 lượt/ngày, Groq 1.000 lượt/ngày) và nhiều nhà có thể dùng câu hỏi để huấn luyện model. Điều khoản Gemini yêu cầu dùng gói trả phí khi phục vụ người dùng ở EEA, Thụy Sĩ hoặc Anh. Đọc ghi chú trong `vendor/awesome-free-llm-apis/data.json` trước khi bật cho học sinh.
+
+Cập nhật danh sách: thay `vendor/awesome-free-llm-apis/data.json` bằng bản mới, chạy `npm run free-llm:sync` để sinh lại `server/chat/freeCatalog.ts`, rồi `npm test`. Test báo lỗi nếu model mặc định không còn trong danh sách.
+
+Thiếu mọi khóa thì `/api/chat` trả lời **chế độ mẫu**: vẫn từ chối câu ngoài Toán, vẫn gợi ý bước, không gọi model.
 
 Lượt: 10 tin mỗi 10 phút theo IP, 8 tin miễn phí mỗi ngày, 40 tin nếu mã Premium trong `localStorage` (`ban-toan-license`) còn hạn. Đếm trong bộ nhớ của instance. Trên serverless, mỗi instance đếm riêng.
 
