@@ -173,7 +173,7 @@ export function CalcPage() {
             <button key={token} type="button" onClick={() => place(token)}>{label}</button>
           ))}
           <button type="button" onClick={() => { setExpr(""); setShown(""); setError(""); }}>{t(lang, "Xóa", "Clear")}</button>
-          <button type="button" aria-label={t(lang, "Xóa một ký tự", "Delete one character")} onClick={backspace}>⌫</button>
+          <button type="button" aria-label={t(lang, "Xóa một ký tự", "Delete one character")} onClick={backspace}>←</button>
           <button type="button" className="calc-eq" onClick={run}>=</button>
         </div>
         <div className="calc-history">

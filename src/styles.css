@@ -153,6 +153,9 @@ h3 { letter-spacing: -0.01em; line-height: 1.35; }
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 12px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 12px 16px 10px;
   background: color-mix(in srgb, var(--bg) 90%, transparent);
   backdrop-filter: blur(12px);
@@ -779,7 +782,7 @@ html[data-lamp="on"] body::before {
 .lecture-poster:disabled { opacity: 0.8; }
 .lecture-poster small, .lecture-note { color: var(--ink-soft); }
 .lecture-note { display: block; margin: 0; font-size: 0.82rem; font-weight: 400; }
-.area-nav { display: flex; gap: 6px; flex: 1 0 100%; }
+.area-nav { display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 100%; min-width: 0; max-width: 100%; }
 .science-list { display: grid; gap: 8px; margin: 10px 0 20px; }
 @media (min-width: 840px) { .science-list { grid-template-columns: 1fr 1fr; } }
 .area-nav a {
@@ -902,6 +905,8 @@ html[data-lamp="on"] body::before {
   flex-wrap: wrap;
   align-items: flex-end;
   gap: 8px;
+  max-width: 100%;
+  overflow-x: clip;
   padding: 8px 148px calc(8px + env(safe-area-inset-bottom)) 12px;
   background: color-mix(in srgb, var(--sheet) 96%, transparent);
   border-top: 1px solid var(--line);
@@ -1043,16 +1048,16 @@ html[data-lamp="on"] body::before {
 .doc-sheet p { margin: 0; }
 .doc-sheet ul, .doc-sheet ol { margin: 0; padding-left: 1.25rem; }
 .doc-tools .text-btn, .doc-export summary { min-height: 40px; }
-.calc { display: grid; gap: 10px; max-width: 420px; }
+.calc { display: grid; gap: 10px; width: min(100%, 420px); max-width: 100%; }
 .calc-screen { display: grid; gap: 4px; padding: 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--sheet); }
 .calc-screen input { text-align: right; font-size: 1.25rem; }
-.calc-result { margin: 0; min-height: 1.6em; text-align: right; font-size: 1.5rem; font-weight: 650; }
+.calc-result { margin: 0; min-height: 1.6em; text-align: right; font-size: 1.5rem; font-weight: 650; padding-right: 36px; }
 .calc-result.is-error { text-align: left; font-size: 0.95rem; font-weight: 500; color: var(--accent); }
 .calc-mode, .calc-fns, .calc-keys { display: grid; gap: 8px; }
 .calc-mode { grid-template-columns: 1fr 1fr; }
 .calc-fns { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .calc-keys { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.calc-keys button, .calc-fns button, .calc-mode button { min-height: 48px; }
+.calc-keys button, .calc-fns button, .calc-mode button { min-height: 44px; min-width: 0; font-size: 1.05rem; padding: 8px 4px; }
 .calc-keys button { border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); color: var(--ink); font: inherit; font-size: 1.05rem; }
 .calc-eq { grid-column: span 2; background: var(--accent) !important; color: #fff !important; border-color: transparent !important; }
 .calc-history ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
