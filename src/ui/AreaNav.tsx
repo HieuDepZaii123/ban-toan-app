@@ -16,6 +16,7 @@ const LINKS = [
   { href: "/phuong-phap", id: "methods", vi: "Cách giải", en: "Methods" },
   { href: "/so-loi", id: "miss", vi: "Sổ lỗi", en: "Miss book" },
   { href: "/so-cong-thuc", id: "formula", vi: "Công thức", en: "Formulas" },
+  { href: "/may-tinh", id: "calc", vi: "Máy tính", en: "Calculator" },
   { href: "/danh-gia", id: "assess", vi: "Đánh giá", en: "Assess" },
   { href: "/gioi-thieu", id: "refer", vi: "Giới thiệu", en: "Refer" },
 ] as const;
@@ -31,6 +32,7 @@ function currentArea(path: string): string {
   if (path === "/phuong-phap" || path.startsWith("/phuong-phap/")) return "methods";
   if (path === "/so-loi") return "miss";
   if (path === "/so-cong-thuc") return "formula";
+  if (path === "/may-tinh") return "calc";
   if (path === "/danh-gia") return "assess";
   if (path === "/gioi-thieu") return "refer";
   if (path === "/nang-cap" || path === "/nghien-cuu") return "";
