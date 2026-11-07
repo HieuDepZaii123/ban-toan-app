@@ -5,7 +5,8 @@ export const MENU_LINKS = [
   { href: "/soan-tai-lieu", id: "soan", label: "Soạn tài liệu", en: "Documents" },
   { href: "/xuong-hinh", id: "workshop", label: "Xưởng hình", en: "Workshop" },
   { href: "/luyen", id: "drill", label: "Luyện", en: "Practice" },
-  { href: "/luyen-lop", id: "lop", label: "Luyện lớp 1–12", en: "Grades 1–12 practice" },
+  { href: "/luyen-lop", id: "lop", label: "Luyện lớp 1–9", en: "Grades 1–9 practice" },
+  { href: "/luyen-thpt", id: "thpt", label: "Luyện THPT", en: "Grades 10–12 practice" },
   { href: "/phuong-phap", id: "methods", label: "Phương pháp giải", en: "Methods" },
   { href: "/so-loi", id: "miss", label: "Sổ lỗi", en: "Miss book" },
   { href: "/danh-gia", id: "assess", label: "Đánh giá", en: "Assess" },
@@ -25,6 +26,7 @@ export function menuArea(path: string): MenuLinkId | "music" | "" {
   if (path === "/xuong-hinh") return "workshop";
   if (path === "/luyen") return "drill";
   if (path === "/luyen-lop" || path.startsWith("/luyen-lop/")) return "lop";
+  if (path === "/luyen-thpt") return "thpt";
   if (path === "/phuong-phap" || path.startsWith("/phuong-phap/")) return "methods";
   if (path === "/so-loi") return "miss";
   if (path === "/so-cong-thuc") return "formula";

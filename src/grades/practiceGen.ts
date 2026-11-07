@@ -943,11 +943,202 @@ const grade12: Template[] = [
   } },
 ];
 
+/* ---------- THPT: phủ thêm chương trình lớp 10–12 ---------- */
+
+const xPow = (k: number) => (k === 1 ? "x" : `x^${k}`);
+
+const trigTable: Record<string, Record<number, [string, string]>> = {
+  sin: { 30: ["\\dfrac{1}{2}", "Rational(1,2)"], 45: ["\\dfrac{\\sqrt{2}}{2}", "sqrt(2)/2"], 60: ["\\dfrac{\\sqrt{3}}{2}", "sqrt(3)/2"], 120: ["\\dfrac{\\sqrt{3}}{2}", "sqrt(3)/2"], 135: ["\\dfrac{\\sqrt{2}}{2}", "sqrt(2)/2"], 150: ["\\dfrac{1}{2}", "Rational(1,2)"] },
+  cos: { 30: ["\\dfrac{\\sqrt{3}}{2}", "sqrt(3)/2"], 45: ["\\dfrac{\\sqrt{2}}{2}", "sqrt(2)/2"], 60: ["\\dfrac{1}{2}", "Rational(1,2)"], 120: ["-\\dfrac{1}{2}", "-Rational(1,2)"], 135: ["-\\dfrac{\\sqrt{2}}{2}", "-sqrt(2)/2"], 150: ["-\\dfrac{\\sqrt{3}}{2}", "-sqrt(3)/2"] },
+  tan: { 30: ["\\dfrac{\\sqrt{3}}{3}", "sqrt(3)/3"], 45: ["1", "1"], 60: ["\\sqrt{3}", "sqrt(3)"], 120: ["-\\sqrt{3}", "-sqrt(3)"], 135: ["-1", "-1"], 150: ["-\\dfrac{\\sqrt{3}}{3}", "-sqrt(3)/3"] },
+};
+const trigValues = ["\\dfrac{1}{2}", "-\\dfrac{1}{2}", "\\dfrac{\\sqrt{2}}{2}", "-\\dfrac{\\sqrt{2}}{2}", "\\dfrac{\\sqrt{3}}{2}", "-\\dfrac{\\sqrt{3}}{2}", "\\dfrac{\\sqrt{3}}{3}", "-\\dfrac{\\sqrt{3}}{3}", "\\sqrt{3}", "-\\sqrt{3}", "1", "-1"];
+const flipSign = (tex: string) => (tex.startsWith("-") ? tex.slice(1) : `-${tex}`);
+
+const grade10More: Template[] = [
+  { key: "taphop", make: (r) => {
+    const both = r.int(2, 12), a = r.int(3, 20) + both, b = r.int(3, 20) + both, v = a + b - both;
+    const [s1, s2] = r.pick([["môn Toán", "môn Văn"], ["bóng đá", "cầu lông"], ["vẽ", "hát"], ["tiếng Anh", "tin học"]] as const);
+    return made(`Lớp có $${a}$ bạn thích ${s1}, $${b}$ bạn thích ${s2}, trong đó $${both}$ bạn thích cả hai. Mỗi bạn thích ít nhất một trong hai. Lớp có bao nhiêu bạn?`,
+      nums(v, [a + b, v - both, a + b + both], m, 1),
+      [`Gọi $A$, $B$ là tập các bạn thích ${s1} và ${s2}; cả lớp là $A\\cup B$.`, `$|A\\cup B|=|A|+|B|-|A\\cap B|=${a}+${b}-${both}$.`, `Lớp có $${v}$ bạn. Cộng thẳng $${a}+${b}$ thì đếm trùng $${both}$ bạn.`], `${a}+${b}-${both}`, String(v));
+  } },
+  { key: "bpt", make: (r) => {
+    const a = r.nz(-4, 4), b = r.nz(-4, 4), c = r.int(-8, 8);
+    const value = (p: [number, number]) => a * p[0] + b * p[1];
+    let good: [number, number] | null = null;
+    const bad: [number, number][] = [];
+    for (let guard = 0; guard < 200 && (!good || bad.length < 3); guard += 1) {
+      const p: [number, number] = [r.int(-4, 4), r.int(-4, 4)];
+      if (value(p) < c) { if (!good) good = p; } else if (!bad.some((q) => q[0] === p[0] && q[1] === p[1])) bad.push(p);
+    }
+    if (!good || bad.length < 3) return grade10More[1]!.make(r);
+    const pt = (p: [number, number]) => `$(${p[0]};${p[1]})$`;
+    return made(`Điểm nào sau đây thuộc miền nghiệm của bất phương trình bậc nhất hai ẩn $${lin([[a, "x"], [b, "y"]])}<${c}$?`, { right: pt(good), wrong: bad.slice(0, 3).map(pt) },
+      ["Thay tọa độ từng điểm vào vế trái rồi so sánh với vế phải.", `Tại $(${good[0]};${good[1]})$: $${a}\\cdot ${par(good[0])}+${par(b)}\\cdot ${par(good[1])}=${value(good)}<${c}$, thỏa mãn.`, `Ba điểm còn lại cho vế trái không nhỏ hơn $${c}$ nên không thuộc miền nghiệm.`],
+      `(1 if ${a}*(${good[0]})+(${b})*(${good[1]}) < ${c} else 0)`, "1");
+  } },
+  { key: "luonggiac", make: (r) => {
+    const fn = r.pick(["sin", "cos", "tan"] as const), deg = r.pick([30, 45, 60, 120, 135, 150]);
+    const [val, sym] = trigTable[fn]![deg]!;
+    const others = trigValues.filter((v) => v !== val && v !== flipSign(val));
+    const wrong = [flipSign(val)];
+    while (wrong.length < 4) {
+      const pick = r.pick(others);
+      if (!wrong.includes(pick)) wrong.push(pick);
+    }
+    const name = fn === "sin" ? "sin" : fn === "cos" ? "côsin" : "tang";
+    return made(`Giá trị của $\\${fn} ${deg}^\\circ$ là`, { right: m(val), wrong: wrong.map(m) },
+      [deg > 90 ? `Dùng góc bù: $${deg}^\\circ=180^\\circ-${180 - deg}^\\circ$.` : `$${deg}^\\circ$ là góc đặc biệt.`,
+        deg > 90 ? (fn === "sin" ? "Hai góc bù nhau có sin bằng nhau." : `Hai góc bù nhau có ${name} đối nhau.`) : "Dùng bảng giá trị lượng giác của các góc đặc biệt.",
+        `$\\${fn} ${deg}^\\circ=${val}$.`], `${fn}(pi*${deg}/180)`, sym);
+  } },
+  { key: "phuongsai", make: (r) => {
+    const mean = r.int(5, 20), a = r.int(1, 4), b = r.int(0, 4);
+    const base = [mean - a, mean + a, mean - b, mean + b, mean], shift = r.int(0, 4);
+    const data = [...base.slice(shift), ...base.slice(0, shift)];
+    const ss = 2 * a * a + 2 * b * b, res = F(ss, 5);
+    return made(`Phương sai của mẫu số liệu $${data.join(";\\ ")}$ là`, fracs(res, [F(ss, 4), F(ss), F(2 * a + 2 * b, 5)]),
+      [`Số trung bình $\\bar x=\\dfrac{${data.reduce((s, v) => s + v, 0)}}{5}=${mean}$.`, `Tổng bình phương độ lệch: $${data.map((v) => `${par(v - mean)}^2`).join("+")}=${ss}$.`, `Phương sai $s^2=\\dfrac{${ss}}{5}${res.d === 5 ? "" : `=${res.tex()}`}$.`],
+      `(${data.map((v) => `(${v}-Rational(${data.reduce((s, x) => s + x, 0)},5))**2`).join("+")})/5`, res.sym());
+  } },
+  { key: "nhithuc", make: (r) => {
+    const n = r.int(4, 6), a = r.pick([1, 2, 3, -1, -2]), k = r.int(1, n - 1), c = choose(n, k), v = c * a ** (n - k);
+    return made(`Hệ số của $${xPow(k)}$ trong khai triển $(x${sgn(a)})^${n}$ là`, nums(v, [c, -v, c * a ** k]),
+      [`Theo nhị thức Newton, số hạng chứa $x^i$ là $C_{${n}}^{i}x^{i}\\cdot ${par(a)}^{${n}-i}$.`, `Lấy $i=${k}$: $C_{${n}}^{${k}}\\cdot ${par(a)}^{${n - k}}=${c}\\cdot ${par(a ** (n - k))}$.`, `Hệ số bằng $${v}$.`],
+      `expand((x+(${a}))**${n}).coeff(x, ${k})`, String(v));
+  } },
+];
+
+const grade11More: Template[] = [
+  { key: "ptlg", make: (r) => {
+    const n = r.int(1, 8);
+    const [eq, gen, sym, count] = r.pick([
+      ["\\sin x=0", "x=k\\pi", "sin(x)", n + 1],
+      ["\\cos x=0", "x=\\dfrac{\\pi}{2}+k\\pi", "cos(x)", n],
+      ["\\cos x=1", "x=k2\\pi", "cos(x)-1", Math.floor(n / 2) + 1],
+      ["\\sin x=1", "x=\\dfrac{\\pi}{2}+k2\\pi", "sin(x)-1", Math.floor((2 * n - 1) / 4) + 1],
+    ] as const);
+    const ks = count === 1 ? "k=0" : `k\\in\\{0;1;\\dots;${count - 1}\\}`;
+    return made(`Số nghiệm của phương trình $${eq}$ trên đoạn $[0;${n === 1 ? "" : n}\\pi]$ là`, nums(count, [count + 1, count - 1, 2 * count], m, 0),
+      [`Nghiệm tổng quát: $${gen}$, $k\\in\\mathbb Z$.`, `Điều kiện nằm trong đoạn $[0;${n === 1 ? "" : n}\\pi]$ cho $${ks}$.`, `Phương trình có $${count}$ nghiệm trên đoạn đó.`],
+      `len(solveset(${sym}, x, Interval(0, ${n}*pi)))`, String(count));
+  } },
+  { key: "lientuc", make: (r) => {
+    const a = r.nz(-6, 6), c = r.int(-5, 5), v = 2 * a - c;
+    return made(`Tìm $m$ để hàm số $f(x)=\\begin{cases}\\dfrac{x^2-${a * a}}{x${sgn(-a)}} & \\text{khi } x\\ne ${a}\\\\ m${c ? sgn(c) : ""} & \\text{khi } x=${a}\\end{cases}$ liên tục tại $x=${a}$.`,
+      nums(v, [2 * a, 2 * a + c, -v]),
+      [`$\\lim\\limits_{x\\to ${a}}\\dfrac{x^2-${a * a}}{x${sgn(-a)}}=\\lim\\limits_{x\\to ${a}}(x${sgn(a)})=${2 * a}$.`, `Liên tục khi $f(${a})$ bằng giới hạn: $m${c ? sgn(c) : ""}=${2 * a}$.`, `$m=${v}$.`],
+      `limit((x**2-${a * a})/(x-(${a})), x, ${a})-(${c})`, String(v));
+  } },
+  { key: "xscodien", make: (r) => {
+    const red = r.int(3, 7), blue = r.int(2, 6), total = red + blue, mixed = r.int(0, 1) === 1;
+    const all = choose(total, 2), res = mixed ? F(red * blue, all) : F(choose(red, 2), all);
+    const other = mixed ? F(choose(red, 2), all) : F(red * blue, all);
+    return made(`Hộp có $${red}$ bi đỏ và $${blue}$ bi xanh. Lấy ngẫu nhiên $2$ bi. Xác suất để ${mixed ? "được một bi đỏ và một bi xanh" : "được hai bi đỏ"} là`,
+      fracs(res, [other, F(red, total), F(red * red, total * total)]),
+      [`Số cách lấy $2$ bi: $C_{${total}}^{2}=${all}$.`, mixed ? `Số cách lấy một đỏ, một xanh: $${red}\\cdot ${blue}=${red * blue}$.` : `Số cách lấy hai bi đỏ: $C_{${red}}^{2}=${choose(red, 2)}$.`, `Xác suất bằng $${reduceTex(mixed ? red * blue : choose(red, 2), all, res)}$.`],
+      mixed ? `${red}*${blue}/binomial(${total},2)` : `binomial(${red},2)/binomial(${total},2)`, res.sym());
+  } },
+  { key: "loghieu", make: (r) => {
+    if (r.int(0, 1) === 0) {
+      const a = r.pick([2, 3, 5]), k = r.int(1, a === 2 ? 4 : 2), mm = r.pick([3, 5, 6, 7, 10, 11, 12].filter((v) => v % a !== 0)), big = mm * a ** k;
+      return made(`Tính $\\log_{${a}} ${big}-\\log_{${a}} ${mm}$.`, nums(k, [a ** k, k + 1, big - mm], m, 0),
+        [`Hiệu hai logarit cùng cơ số: $\\log_a b-\\log_a c=\\log_a\\dfrac{b}{c}$.`, `$\\dfrac{${big}}{${mm}}=${a ** k}=${a}^{${k}}$.`, `$\\log_{${a}} ${a}^{${k}}=${k}$.`],
+        `expand_log(log(${big}, ${a})-log(${mm}, ${a}), force=True)`, String(k));
+    }
+    const [a, b, c, k] = r.pick([[6, 2, 3, 1], [6, 4, 9, 2], [10, 2, 5, 1], [10, 4, 25, 2], [10, 20, 5, 2], [10, 8, 125, 3], [12, 3, 4, 1], [12, 9, 16, 2], [15, 3, 5, 1], [15, 9, 25, 2], [6, 12, 3, 2], [10, 50, 2, 2]] as const);
+    return made(`Tính $\\log_{${a}} ${b}+\\log_{${a}} ${c}$.`, nums(k, [b + c, k + 1, b * c], m, 0),
+      [`Tổng hai logarit cùng cơ số: $\\log_a b+\\log_a c=\\log_a(bc)$.`, `$${b}\\cdot ${c}=${b * c}=${a}^{${k}}$.`, `$\\log_{${a}} ${a}^{${k}}=${k}$.`],
+      `expand_log(log(${b}, ${a})+log(${c}, ${a}), force=True)`, String(k));
+  } },
+  { key: "daohamhop", make: (r) => {
+    const a = r.nz(-3, 3), b = r.int(-4, 4), n = r.int(2, 4), k = r.int(-2, 2), inner = a * k + b, v = n * a * inner ** (n - 1);
+    return made(`Cho $f(x)=(${lin([[a, "x"], [b, ""]])})^${n}$. Giá trị $f'(${k})$ là`, nums(v, [n * inner ** (n - 1), a * inner ** n, n * a * inner ** n]),
+      [`Đạo hàm hàm hợp: $f'(x)=${n}(${lin([[a, "x"], [b, ""]])})^{${n - 1}}\\cdot ${par(a)}$.`, `Tại $x=${k}$: $${a}\\cdot ${par(k)}${b ? sgn(b) : ""}=${inner}$.`, `$f'(${k})=${n}\\cdot ${par(inner)}^{${n - 1}}\\cdot ${par(a)}=${v}$.`],
+      `diff((${a}*x+(${b}))**${n}, x).subs(x, ${k})`, String(v));
+  } },
+];
+
+const grade12More: Template[] = [
+  { key: "dongbien", make: (r) => {
+    const k = r.int(1, 6), c = r.int(-9, 9), down = r.int(0, 1) === 1, co = [1, 0, -3 * k * k, c];
+    const inside = `(-${k};${k})`, right = `(${k};+\\infty)`, left = `(-\\infty;-${k})`, all = "(-\\infty;+\\infty)";
+    const set = down ? { right: m(inside), wrong: [right, left, all].map(m) } : { right: m(r.int(0, 1) ? right : left), wrong: [inside, all, `(-${2 * k};0)`].map(m) };
+    return made(`Hàm số $y=${poly(co)}$ ${down ? "nghịch" : "đồng"} biến trên khoảng nào sau đây?`, set,
+      [`$y'=3x^2-${3 * k * k}=3(x-${k})(x+${k})$.`, `$y'<0$ khi $-${k}<x<${k}$; $y'>0$ khi $x<-${k}$ hoặc $x>${k}$.`, down ? `Hàm số nghịch biến trên $${inside}$.` : `Hàm số đồng biến trên $${left}$ và trên $${right}$.`],
+      `Max(*solve(diff(${polySym(co)}, x), x))`, String(k));
+  } },
+  { key: "gtln", make: (r) => {
+    const h = r.int(-4, 4), c = r.int(-8, 8), p = r.int(1, 4), q = r.int(1, 4), co = [-1, 2 * h, c], v = h * h + c;
+    return made(`Giá trị lớn nhất của hàm số $y=${poly(co)}$ trên đoạn $[${h - p};${h + q}]$ là`, nums(v, [h * h - p * p + c, h * h - q * q + c, c, h]),
+      [`$y'=${poly([-2, 2 * h])}=0\\iff x=${h}$, thuộc đoạn đã cho.`, `$y(${h - p})=${polyAt(co, h - p)}$, $y(${h})=${v}$, $y(${h + q})=${polyAt(co, h + q)}$.`, `Giá trị lớn nhất là $${v}$, đạt tại $x=${h}$.`],
+      `maximum(${polySym(co)}, x, Interval(${h - p}, ${h + q}))`, String(v));
+  } },
+  { key: "nguyenham", make: (r) => {
+    if (r.int(0, 1) === 0) {
+      const a = r.nz(-6, 6), n = r.int(1, 4);
+      const tex = (c: Frac, p: number) => `${coefTex(c, p === 0 ? "" : p === 1 ? "x" : `x^{${p}}`) || "1"}+C`;
+      return made(`Họ nguyên hàm của $f(x)=${coefTex(F(a), xPow(n))}$ là`, { right: m(tex(F(a, n + 1), n + 1)), wrong: [m(tex(F(a * n), n - 1)), m(tex(F(a, n), n + 1)), m(tex(F(a), n + 1)), m(tex(F(a, n + 1), n))] },
+        ["$\\displaystyle\\int x^n\\,dx=\\dfrac{x^{n+1}}{n+1}+C$ với $n\\ne -1$.", `Tăng số mũ lên $${n + 1}$ rồi chia cho $${n + 1}$.`, `Kết quả là $${tex(F(a, n + 1), n + 1)}$. Lấy đạo hàm lại được $f(x)$.`],
+        `integrate(${a}*x**${n}, x)`, `Rational(${a},${n + 1})*x**${n + 1}`);
+    }
+    const a = r.nz(-6, 6), k = r.int(1, 5), useCos = r.int(0, 1) === 1;
+    const arg = k === 1 ? "x" : `${k}x`, f = useCos ? "\\cos" : "\\sin", g = useCos ? "\\sin" : "\\cos";
+    const res = useCos ? F(a, k) : F(-a, k);
+    const tex = (c: Frac, fn: string) => `${coefTex(c, `${fn} ${arg}`)}+C`;
+    return made(`Họ nguyên hàm của $f(x)=${coefTex(F(a), `${f} ${arg}`)}$ là`, { right: m(tex(res, g)), wrong: [m(tex(res.mul(F(-1)), g)), m(tex(F(useCos ? a * k : -a * k), g)), m(tex(res, f))] },
+      [useCos ? "$\\displaystyle\\int\\cos kx\\,dx=\\dfrac{1}{k}\\sin kx+C$." : "$\\displaystyle\\int\\sin kx\\,dx=-\\dfrac{1}{k}\\cos kx+C$.", `Ở đây $k=${k}$, nhân thêm hệ số $${a}$.`, `Kết quả là $${tex(res, g)}$.`],
+      `integrate(${a}*${useCos ? "cos" : "sin"}(${k}*x), x)`, `${res.sym()}*${useCos ? "sin" : "cos"}(${k}*x)`);
+  } },
+  { key: "vuonggoc", make: (r) => {
+    const a = r.nz(-4, 4), b = r.int(-4, 4), c = r.nz(-4, 4), d = r.int(-4, 4), e = r.pick([1, -1, 2, -2]);
+    const top = -(a * c + b * d);
+    if (top % e !== 0) return grade12More[3]!.make(r);
+    const v = top / e;
+    return made(`Trong không gian $Oxyz$, tìm $m$ để $\\vec u=(${a};${b};m)$ vuông góc với $\\vec v=(${c};${d};${e})$.`, nums(v, [-v, a * c + b * d, v + e]),
+      ["Hai vectơ vuông góc khi tích vô hướng bằng $0$.", `$${par(a)}\\cdot ${par(c)}+${par(b)}\\cdot ${par(d)}+m\\cdot ${par(e)}=0$, tức $${lin([[a * c + b * d, ""], [e, "m"]])}=0$.`, `$m=${v}$.`],
+      `solve(${a}*(${c})+(${b})*(${d})+x*(${e}), x)[0]`, String(v));
+  } },
+  { key: "ptmp", make: (r) => {
+    const [a, b, c] = [r.nz(-4, 4), r.int(-4, 4), r.nz(-4, 4)], M = [r.int(-5, 5), r.int(-5, 5), r.int(-5, 5)] as const;
+    const d = -(a * M[0] + b * M[1] + c * M[2]);
+    return made(`Mặt phẳng đi qua $M(${M.join(";")})$ và có vectơ pháp tuyến $\\vec n=(${a};${b};${c})$ có phương trình $${lin([[a, "x"], [b, "y"], [c, "z"]])}+d=0$. Giá trị của $d$ là`,
+      nums(d, [-d, M[0] + M[1] + M[2], d + a]),
+      ["Phương trình mặt phẳng: $a(x-x_0)+b(y-y_0)+c(z-z_0)=0$.", `Thay $M$ vào: $${a}\\cdot ${par(M[0])}+${par(b)}\\cdot ${par(M[1])}+${par(c)}\\cdot ${par(M[2])}+d=0$.`, `$d=${d}$.`],
+      `solve(${a}*(${M[0]})+(${b})*(${M[1]})+(${c})*(${M[2]})+x, x)[0]`, String(d));
+  } },
+];
+
+/** Chủ đề THPT theo chương; mỗi mẫu lớp 10–12 thuộc đúng một chủ đề. */
+export const thptTopics: { id: string; grade: number; vi: string; en: string; keys: string[] }[] = [
+  { id: "g10-tap-hop", grade: 10, vi: "Mệnh đề và tập hợp", en: "Sets", keys: ["taphop"] },
+  { id: "g10-bpt", grade: 10, vi: "Bất phương trình bậc nhất hai ẩn", en: "Linear inequalities in two variables", keys: ["bpt"] },
+  { id: "g10-bac-hai", grade: 10, vi: "Hàm số bậc hai", en: "Quadratic functions", keys: ["dinh", "gtnn"] },
+  { id: "g10-tam-giac", grade: 10, vi: "Hệ thức lượng trong tam giác", en: "Triangle trigonometry", keys: ["cosin", "luonggiac"] },
+  { id: "g10-vecto", grade: 10, vi: "Vectơ", en: "Vectors", keys: ["dodai", "vohuong"] },
+  { id: "g10-toa-do", grade: 10, vi: "Tọa độ trong mặt phẳng", en: "Plane coordinates", keys: ["khoangcach", "bankinh"] },
+  { id: "g10-to-hop", grade: 10, vi: "Đại số tổ hợp", en: "Combinatorics", keys: ["chinhhop", "tohop", "nhithuc"] },
+  { id: "g10-thong-ke", grade: 10, vi: "Thống kê", en: "Statistics", keys: ["trungbinh", "phuongsai"] },
+  { id: "g11-luong-giac", grade: 11, vi: "Phương trình lượng giác", en: "Trigonometric equations", keys: ["ptlg"] },
+  { id: "g11-cap-so", grade: 11, vi: "Dãy số và cấp số", en: "Sequences", keys: ["cscun", "cscsn", "csnun"] },
+  { id: "g11-gioi-han", grade: 11, vi: "Giới hạn và liên tục", en: "Limits and continuity", keys: ["limvc", "lim00", "luivc", "lientuc"] },
+  { id: "g11-mu-log", grade: 11, vi: "Mũ và logarit", en: "Exponents and logarithms", keys: ["log", "mu", "loghieu"] },
+  { id: "g11-dao-ham", grade: 11, vi: "Đạo hàm", en: "Derivatives", keys: ["daoham", "daohamhop"] },
+  { id: "g11-xac-suat", grade: 11, vi: "Xác suất", en: "Probability", keys: ["xsdoclap", "xscodien"] },
+  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln"] },
+  { id: "g12-tiem-can", grade: 12, vi: "Tiệm cận", en: "Asymptotes", keys: ["tcngang", "tcdung"] },
+  { id: "g12-tich-phan", grade: 12, vi: "Nguyên hàm và tích phân", en: "Antiderivatives and integrals", keys: ["nguyenham", "tp1", "tp2", "dientich"] },
+  { id: "g12-khong-gian", grade: 12, vi: "Tọa độ trong không gian", en: "Space coordinates", keys: ["kc3d", "kcmp", "matcau", "vuonggoc", "ptmp"] },
+  { id: "g12-xac-suat", grade: 12, vi: "Xác suất có điều kiện", en: "Conditional probability", keys: ["dieukien"] },
+];
+
 /* ---------- lắp ráp ---------- */
 
 export const gradeTemplates: Record<number, Template[]> = {
   1: grade1, 2: grade2, 3: grade3, 4: grade4, 5: grade5, 6: grade6,
-  7: grade7, 8: grade8, 9: grade9, 10: grade10, 11: grade11, 12: grade12,
+  7: grade7, 8: grade8, 9: grade9,
+  10: [...grade10, ...grade10More], 11: [...grade11, ...grade11More], 12: [...grade12, ...grade12More],
 };
 
 function build(grade: number, taken: Set<string>): GradeQuestion[] {
@@ -987,10 +1178,13 @@ function build(grade: number, taken: Set<string>): GradeQuestion[] {
   return out;
 }
 
-/** 100 câu cho mỗi lớp; bỏ qua đề trùng với câu viết tay `existing` cùng lớp. */
-export function generatePractice(existing: readonly GradeQuestion[]): GradeQuestion[] {
-  return Array.from({ length: 12 }, (_, i) => {
-    const grade = i + 1;
-    return build(grade, new Set(existing.filter((item) => item.grade === grade).map((item) => item.prompt)));
-  }).flat();
+/** Câu sinh cho các lớp `grades`; bỏ qua đề trùng với câu viết tay `existing` cùng lớp.
+ * Lớp 1–9 có 10 mẫu (100 câu), lớp 10–12 có 15 mẫu (150 câu). */
+export function generatePractice(existing: readonly GradeQuestion[], grades: readonly number[]): GradeQuestion[] {
+  return grades.flatMap((grade) => build(grade, new Set(existing.filter((item) => item.grade === grade).map((item) => item.prompt))));
+}
+
+/** Mẫu sinh ra câu `id`, ví dụ `l10-dinh-3` → `dinh`. */
+export function templateKeyOf(id: string): string {
+  return /^l\d+-(.+)-\d+$/.exec(id)?.[1] ?? "";
 }

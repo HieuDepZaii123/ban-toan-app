@@ -30,6 +30,12 @@ ns = {
     "binomial": sp.binomial,
     "factorial": sp.factorial,
     "Min": sp.Min,
+    "tan": sp.tan,
+    "len": len,
+    "solveset": sp.solveset,
+    "Interval": sp.Interval,
+    "expand_log": sp.expand_log,
+    "maximum": sp.maximum,
     "Max": sp.Max,
     "sum": sum,
 }

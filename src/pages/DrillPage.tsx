@@ -88,7 +88,7 @@ export function DrillPage() {
           <button type="button" onClick={() => move(1)}>{t(lang, "Câu sau", "Next")}</button>
         </div>
       </article>
-      <p><A href="/so-loi">{t(lang, "Mở sổ lỗi gộp", "Open the miss book")}</A>{" · "}<A href="/luyen-lop">{t(lang, "Luyện lớp 1–12", "Grades 1–12 practice")}</A></p>
+      <p><A href="/so-loi">{t(lang, "Mở sổ lỗi gộp", "Open the miss book")}</A>{" · "}<A href="/luyen-lop">{t(lang, "Luyện lớp 1–9", "Grades 1–9 practice")}</A>{" · "}<A href="/luyen-thpt">{t(lang, "Luyện THPT", "Grades 10–12 practice")}</A></p>
     </PageFrame>
   );
 }

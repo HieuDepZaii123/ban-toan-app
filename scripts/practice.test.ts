@@ -1,14 +1,14 @@
 /**
- * Đề THPT mới và luyện lớp 1–12: id ổn định, đáp số sympy.
+ * Đề luyện chung và luyện nhanh lớp 1–9: id ổn định, đáp số sympy.
  * Run with: tsx scripts/practice.test.ts
  */
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import katex from "katex";
 import { sharedDrill } from "../src/content/sharedDrill.ts";
 import { gradePractice, handPractice, questionsForGrade } from "../src/grades/practiceBank.ts";
 import { answerGrade, emptyGradeBag, gradeIndex, gradePickKey, parseGradeBag, rememberGrade } from "../src/grades/practiceStore.ts";
 import { resolveDrillIndex } from "../src/lib/drillPlace.ts";
+import { checkMarked, checkShape, sympyRows } from "./questionCheck.ts";
 
 const OLD = ["rao", "bayes", "cuc-tri", "sin3", "cheo", "tiep", "tich", "csc", "lai", "log", "chop", "kc", "nu", "cos", "tich0", "doan", "c52", "sinpi", "cau36", "bp1", "tb99", "lne", "hop3", "tru20", "tan45", "bac1"];
 const ADDED = ["hs-gtln", "hs-tong", "lg-hai-mu", "lg-max", "tp-dien-tich", "tp-tung-phan", "hh-cau-v", "hh-duong", "xs-tong7", "tk-trung-vi"];
@@ -25,61 +25,17 @@ const HAND = ["l1-cong", "l1-tru", "l1-qua", "l1-lon"];
 assert.deepEqual(handPractice.slice(0, 4).map((item) => item.id), HAND);
 assert.equal(handPractice.length, 36);
 assert.deepEqual(gradePractice.slice(0, 36), handPractice);
-assert.equal(gradePractice.length, 36 + 12 * 100);
-const VOCATIVE = /(^|[^\p{L}\p{N}_])em(?=[^\p{L}\p{N}_]|$)/iu;
-for (let grade = 1; grade <= 12; grade += 1) {
+assert.equal(gradePractice.length, 36 + 9 * 100);
+for (let grade = 1; grade <= 9; grade += 1) {
   const rows = questionsForGrade(grade);
-  const hand = handPractice.filter((item) => item.grade === grade).length;
-  assert.equal(hand, grade <= 9 ? 4 : 0, `lớp ${grade} câu viết tay`);
-  assert.equal(rows.length - hand, 100, `lớp ${grade} cần thêm 100 câu`);
-  assert.equal(new Set(rows.map((item) => item.prompt)).size, rows.length, `lớp ${grade} trùng đề`);
-  const spots = new Set<number>();
-  for (const item of rows) {
-    assert.equal(item.grade, grade, item.id);
-    assert.equal(new Set(item.choices).size, 4, item.id);
-    assert.equal(item.steps.length, 3, item.id);
-    assert.ok(item.answer >= 0 && item.answer <= 3, item.id);
-    spots.add(item.answer);
-    const blob = [item.prompt, ...item.choices, ...item.steps].join(" ");
-    assert.ok(!VOCATIVE.test(blob) && !/undefined|NaN|Infinity/.test(blob), `${item.id}: ${blob}`);
-    assert.equal((blob.match(/\$/g) ?? []).length % 2, 0, `${item.id} lệch dấu $`);
-    for (const tex of blob.match(/\$[^$]+\$/g) ?? []) katex.renderToString(tex.slice(1, -1), { throwOnError: true, strict: "error" });
-  }
-  assert.equal(spots.size, 4, `lớp ${grade} đáp án đúng nên rải đủ A–D`);
+  assert.equal(handPractice.filter((item) => item.grade === grade).length, 4, `lớp ${grade} câu viết tay`);
+  assert.equal(rows.length, 104, `lớp ${grade} cần 4 câu viết tay và 100 câu sinh`);
+  assert.ok(rows.every((item) => item.grade === grade), `lớp ${grade} lẫn lớp khác`);
+  checkShape(rows, `lớp ${grade}`);
 }
+for (const grade of [10, 11, 12]) assert.equal(questionsForGrade(grade).length, 0, `lớp ${grade} thuộc luyện THPT riêng`);
 assert.equal(new Set(gradePractice.map((item) => item.id)).size, gradePractice.length);
-
-/** Đáp án được đánh dấu phải hiện đúng giá trị `expect` (với đáp số là số hoặc phân số). */
-function valueOfTex(text: string): [number, number] | null {
-  const tex = /\$([^$]+)\$/.exec(text)?.[1]?.replace(/(\^\\circ|\\%)$/, "").trim();
-  if (!tex) return null;
-  let found = /^(-?)\\dfrac\{(\d+)\}\{(\d+)\}$/.exec(tex);
-  if (found) return [(found[1] ? -1 : 1) * Number(found[2]), Number(found[3])];
-  found = /^(-?\d+)\{,\}(\d+)$/.exec(tex);
-  if (found) {
-    const scale = 10 ** found[2]!.length;
-    const whole = Number(found[1]);
-    return [whole * scale + (tex.startsWith("-") ? -1 : 1) * Number(found[2]), scale];
-  }
-  return /^-?\d+$/.test(tex) ? [Number(tex), 1] : null;
-}
-function valueOfSym(text: string): [number, number] | null {
-  const found = /^Rational\((-?\d+),(\d+)\)$/.exec(text);
-  if (found) return [Number(found[1]), Number(found[2])];
-  return /^-?\d+$/.test(text) ? [Number(text), 1] : null;
-}
-let compared = 0;
-for (const item of generatedOnly()) {
-  const shown = valueOfTex(item.choices[item.answer]);
-  const want = valueOfSym(item.expect);
-  if (!shown || !want) continue;
-  compared += 1;
-  assert.equal(shown[0] * want[1], want[0] * shown[1], `${item.id}: đáp án ${item.choices[item.answer]} khác ${item.expect}`);
-}
-assert.ok(compared >= 900, `chỉ so được ${compared} đáp án`);
-function generatedOnly() {
-  return gradePractice.slice(handPractice.length);
-}
+assert.ok(checkMarked(gradePractice.slice(handPractice.length)) >= 800, "so được quá ít đáp án");
 
 const ids = sharedDrill.map((item) => item.id);
 assert.equal(resolveDrillIndex(ids, "5", null), 5);
@@ -108,7 +64,7 @@ const thpt = [
 ];
 const rows = [
   ...thpt,
-  ...gradePractice.map((item) => ({ where: item.id, lhs: item.check, rhs: item.expect })),
+  ...sympyRows(gradePractice),
 ];
 execFileSync("python3", ["scripts/practice_sympy.py"], { input: JSON.stringify(rows), stdio: ["pipe", "inherit", "inherit"] });
 console.log("practice bank ok");
