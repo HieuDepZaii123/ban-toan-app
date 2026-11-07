@@ -41,11 +41,11 @@ function Picker({ missing = false }: { missing?: boolean }) {
     <PageFrame
       kicker={t(lang, "Luyện theo lớp", "Practice by grade")}
       title={missing ? t(lang, "Không thấy lớp này", "This grade is missing") : t(lang, "Luyện lớp 1–9", "Practice, grades 1–9")}
-      lead={t(lang, "Tiểu học và THCS, mỗi lớp bốn câu. Bài học đầy đủ vẫn ở Kiến thức lớp 1–12.", "Primary and lower secondary, four questions each. The full lessons stay in Grades 1–12.")}
+      lead={t(lang, "Tiểu học và THCS, mỗi lớp hơn một trăm câu trắc nghiệm có lời giải. Lớp 10–12 có phần Luyện THPT riêng.", "Primary and lower secondary, over a hundred worked multiple-choice questions per grade. Grades 10–12 have their own upper-secondary practice.")}
     >
       <Band title={t(lang, "Tiểu học 1–5", "Primary 1–5")} grades={PRIMARY} />
       <Band title={t(lang, "THCS 6–9", "Lower secondary 6–9")} grades={LOWER} />
-      <p><A href="/kien-thuc">{t(lang, "Mở bài học lớp 1–12", "Open the grade lessons")}</A></p>
+      <p><A href="/luyen-thpt">{t(lang, "Luyện THPT lớp 10–12", "Upper-secondary practice, grades 10–12")}</A>{" · "}<A href="/kien-thuc">{t(lang, "Mở bài học lớp 1–12", "Open the grade lessons")}</A></p>
     </PageFrame>
   );
 }
@@ -101,7 +101,7 @@ function GradeRun({ grade }: { grade: number }) {
     <PageFrame
       kicker={t(lang, grade <= 5 ? "Tiểu học" : "THCS", grade <= 5 ? "Primary" : "Lower secondary")}
       title={t(lang, `Luyện lớp ${grade}`, `Grade ${grade} practice`)}
-      lead={t(lang, "Bốn câu của riêng lớp này. Điểm được giữ trên máy, tách khỏi đề THPT.", "Four questions for this grade. The score stays on this device, apart from the upper-secondary set.")}
+      lead={t(lang, `${items.length} câu của riêng lớp này. Điểm được giữ trên máy, tách khỏi đề luyện chung.`, `${items.length} questions for this grade. The score stays on this device, apart from the shared drill.`)}
     >
       <p><A href="/luyen-lop">{t(lang, "Chọn lớp khác", "Choose another grade")}</A>{" · "}<A href={`/kien-thuc/${grade}`}>{t(lang, "Bài học lớp này", "This grade's lessons")}</A></p>
       <p className="lecture-note">{t(lang, `Đúng ${right}/${items.length} · Sai ${wrongAt.length} · Chưa làm ${items.length - answered} · Câu ${index + 1}/${items.length}`, `Right ${right}/${items.length} · Wrong ${wrongAt.length} · Left ${items.length - answered} · Item ${index + 1}/${items.length}`)}</p>

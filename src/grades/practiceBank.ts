@@ -1,4 +1,5 @@
-/** Luyện nhanh lớp 1–9. Tách khỏi bài học trong /kien-thuc và khỏi đề THPT. */
+/** Luyện nhanh lớp 1–9. Tách khỏi bài học trong /kien-thuc và khỏi luyện THPT (src/thpt). */
+import { generatePractice } from "./practiceGen.ts";
 
 export type GradeQuestion = {
   id: string;
@@ -24,7 +25,8 @@ function q(
   return { id, grade, prompt, choices, answer, steps, check, expect };
 }
 
-export const gradePractice: GradeQuestion[] = [
+/** Bốn câu viết tay đầu tiên của lớp 1–9; giữ nguyên id để không mất tiến độ đã lưu. */
+export const handPractice: GradeQuestion[] = [
   q("l1-cong", 1, "Tính $4+3$.", ["$7$", "$6$", "$8$", "$5$"], 0,
     ["Gộp nhóm $4$ với nhóm $3$.", "Đếm tiếp: $5, 6, 7$.", "Tổng là $7$."], "4+3", "7"),
   q("l1-tru", 1, "Tính $9-2$.", ["$7$", "$11$", "$6$", "$8$"], 0,
@@ -106,6 +108,9 @@ export const gradePractice: GradeQuestion[] = [
   q("l9-xs", 9, "Hộp có $2$ bi đỏ và $1$ bi xanh. Lấy ngẫu nhiên $1$ bi. Xác suất được bi đỏ là", ["$\\dfrac{2}{3}$", "$\\dfrac{1}{2}$", "$\\dfrac{1}{3}$", "$\\dfrac{3}{2}$"], 0,
     ["Có $3$ bi, mỗi bi một khả năng như nhau.", "Bi đỏ có $2$ viên.", "$P=\\dfrac{2}{3}$. Bi xanh mới là $\\dfrac{1}{3}$."], "Rational(2,3)", "Rational(2,3)"),
 ];
+
+/** Câu viết tay đứng trước, rồi 100 câu sinh từ mẫu cho mỗi lớp 1–9. */
+export const gradePractice: GradeQuestion[] = [...handPractice, ...generatePractice(handPractice, [1, 2, 3, 4, 5, 6, 7, 8, 9])];
 
 export function questionsForGrade(grade: number): GradeQuestion[] {
   return gradePractice.filter((item) => item.grade === grade);
