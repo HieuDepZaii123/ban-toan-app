@@ -11,7 +11,7 @@ const LINKS = [
   { href: "/khoa-hoc", id: "science", vi: "Khoa học", en: "Science" },
   { href: "/xuong-hinh", id: "workshop", vi: "Xưởng", en: "Workshop" },
   { href: "/luyen", id: "drill", vi: "Luyện", en: "Practice" },
-  { href: "/luyen-lop", id: "lop", vi: "Luyện 1–9", en: "Grades 1–9" },
+  { href: "/luyen-lop", id: "lop", vi: "Luyện 1–12", en: "Grades 1–12" },
   { href: "/phuong-phap", id: "methods", vi: "Cách giải", en: "Methods" },
   { href: "/so-loi", id: "miss", vi: "Sổ lỗi", en: "Miss book" },
   { href: "/so-cong-thuc", id: "formula", vi: "Công thức", en: "Formulas" },

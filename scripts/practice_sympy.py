@@ -4,7 +4,7 @@ import sys
 
 import sympy as sp
 
-x = sp.symbols("x")
+x, y = sp.symbols("x y")
 ns = {
     "integrate": sp.integrate,
     "diff": sp.diff,
@@ -19,6 +19,17 @@ ns = {
     "pi": sp.pi,
     "Rational": sp.Rational,
     "x": x,
+    "y": y,
+    "expand": sp.expand,
+    "limit": sp.limit,
+    "oo": sp.oo,
+    "floor": sp.floor,
+    "Mod": sp.Mod,
+    "gcd": sp.gcd,
+    "lcm": sp.lcm,
+    "binomial": sp.binomial,
+    "factorial": sp.factorial,
+    "Min": sp.Min,
     "Max": sp.Max,
     "sum": sum,
 }

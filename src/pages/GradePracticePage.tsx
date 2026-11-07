@@ -17,6 +17,7 @@ import { useLang } from "../ui/useLang.ts";
 
 const PRIMARY = [1, 2, 3, 4, 5];
 const LOWER = [6, 7, 8, 9];
+const UPPER = [10, 11, 12];
 
 function loadBag(): GradePracticeBag {
   try { return parseGradeBag(localStorage.getItem(GRADE_PRACTICE_KEY)); } catch { return parseGradeBag(null); }
@@ -29,7 +30,7 @@ function saveBag(bag: GradePracticeBag) {
 export function GradePracticePage({ path }: { path: string }) {
   const grade = Number(path.slice("/luyen-lop/".length));
   if (path === "/luyen-lop") return <Picker />;
-  if (!Number.isInteger(grade) || grade < 1 || grade > 9) {
+  if (!Number.isInteger(grade) || grade < 1 || grade > 12) {
     return <Picker missing />;
   }
   return <GradeRun grade={grade} />;
@@ -40,11 +41,12 @@ function Picker({ missing = false }: { missing?: boolean }) {
   return (
     <PageFrame
       kicker={t(lang, "Luyện theo lớp", "Practice by grade")}
-      title={missing ? t(lang, "Không thấy lớp này", "This grade is missing") : t(lang, "Luyện lớp 1–9", "Practice, grades 1–9")}
-      lead={t(lang, "Tiểu học và THCS, mỗi lớp bốn câu. Bài học đầy đủ vẫn ở Kiến thức lớp 1–12.", "Primary and lower secondary, four questions each. The full lessons stay in Grades 1–12.")}
+      title={missing ? t(lang, "Không thấy lớp này", "This grade is missing") : t(lang, "Luyện lớp 1–12", "Practice, grades 1–12")}
+      lead={t(lang, "Từ tiểu học đến THPT, mỗi lớp hơn một trăm câu trắc nghiệm có lời giải. Bài học đầy đủ vẫn ở Kiến thức lớp 1–12.", "Primary through upper secondary, over a hundred worked multiple-choice questions per grade. The full lessons stay in Grades 1–12.")}
     >
       <Band title={t(lang, "Tiểu học 1–5", "Primary 1–5")} grades={PRIMARY} />
       <Band title={t(lang, "THCS 6–9", "Lower secondary 6–9")} grades={LOWER} />
+      <Band title={t(lang, "THPT 10–12", "Upper secondary 10–12")} grades={UPPER} />
       <p><A href="/kien-thuc">{t(lang, "Mở bài học lớp 1–12", "Open the grade lessons")}</A></p>
     </PageFrame>
   );
@@ -99,9 +101,9 @@ function GradeRun({ grade }: { grade: number }) {
 
   return (
     <PageFrame
-      kicker={t(lang, grade <= 5 ? "Tiểu học" : "THCS", grade <= 5 ? "Primary" : "Lower secondary")}
+      kicker={t(lang, grade <= 5 ? "Tiểu học" : grade <= 9 ? "THCS" : "THPT", grade <= 5 ? "Primary" : grade <= 9 ? "Lower secondary" : "Upper secondary")}
       title={t(lang, `Luyện lớp ${grade}`, `Grade ${grade} practice`)}
-      lead={t(lang, "Bốn câu của riêng lớp này. Điểm được giữ trên máy, tách khỏi đề THPT.", "Four questions for this grade. The score stays on this device, apart from the upper-secondary set.")}
+      lead={t(lang, `${items.length} câu của riêng lớp này. Điểm được giữ trên máy, tách khỏi đề luyện chung.`, `${items.length} questions for this grade. The score stays on this device, apart from the shared drill.`)}
     >
       <p><A href="/luyen-lop">{t(lang, "Chọn lớp khác", "Choose another grade")}</A>{" · "}<A href={`/kien-thuc/${grade}`}>{t(lang, "Bài học lớp này", "This grade's lessons")}</A></p>
       <p className="lecture-note">{t(lang, `Đúng ${right}/${items.length} · Sai ${wrongAt.length} · Chưa làm ${items.length - answered} · Câu ${index + 1}/${items.length}`, `Right ${right}/${items.length} · Wrong ${wrongAt.length} · Left ${items.length - answered} · Item ${index + 1}/${items.length}`)}</p>

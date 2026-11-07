@@ -1,6 +1,6 @@
 import { resolveDrillIndex } from "../lib/drillPlace.ts";
 
-/** Tiến độ luyện lớp 1–9, tách khỏi đề THPT `ban-toan-shared-drill`. */
+/** Tiến độ luyện lớp 1–12, tách khỏi đề THPT `ban-toan-shared-drill`. */
 export const GRADE_PRACTICE_KEY = "ban-toan-lop-practice-v1";
 
 export type GradePracticeBag = {
