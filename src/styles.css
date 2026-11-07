@@ -1041,6 +1041,11 @@ html[data-lamp="on"] body::before {
 .doc-sheet { display: grid; gap: 8px; }
 .doc-sheet h1, .doc-sheet h2, .doc-sheet h3 { margin: 0; }
 .doc-sheet p { margin: 0; }
+.doc-sheet ul, .doc-sheet ol { margin: 0; padding-left: 1.25rem; }
+.doc-tools .text-btn, .doc-export summary { min-height: 40px; }
+.doc-export { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.doc-export summary { cursor: pointer; }
+.doc-confirm { display: inline-flex; gap: 8px; align-items: center; }
 @media print {
   .bar, .menu-tab, .menu-layer, .chat-fab, .chat-panel, .study-player, .atmosphere, .skip, .doc-tools, .doc-source, .kicker, .lead, main > h1, .doc-preview > b, .lecture-note { display: none !important; }
   .desk { padding: 0 !important; animation: none !important; background: #fff; }
