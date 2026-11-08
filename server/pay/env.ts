@@ -1,3 +1,4 @@
+import type { PayStore } from "./store.ts";
 import { SAMPLE_BSC_ADDRESS, SAMPLE_SOL_ADDRESS, SAMPLE_TRON_ADDRESS } from "./crypto.ts";
 
 export type PlanId = "month" | "year";
@@ -18,6 +19,10 @@ export type PayEnv = {
   webhookSecret: string;
   adminToken: string;
   dbPath: string;
+  /** Chuỗi kết nối Postgres. Có thì dùng Postgres thay SQLite. */
+  databaseUrl: string;
+  /** Kho dựng sẵn (test). Bỏ trống thì handler tự chọn theo databaseUrl / dbPath. */
+  store?: PayStore;
   sampleBank: boolean;
   lockContent: boolean;
   cryptoVndPerUsd: number;
@@ -80,6 +85,7 @@ export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => numbe
     webhookSecret: source.BANK_WEBHOOK_SECRET?.trim() || "",
     adminToken: source.ADMIN_TOKEN?.trim() || "",
     dbPath: source.PREMIUM_DB_PATH?.trim() || "data/premium.sqlite",
+    databaseUrl: source.DATABASE_URL?.trim() || source.POSTGRES_URL?.trim() || "",
     sampleBank: bankAccountNo === SAMPLE_ACCOUNT || bankAccountName === "NGUOI DUNG MAU",
     lockContent: source.PREMIUM_LOCK === "1" || source.VITE_PREMIUM_LOCK === "1",
     cryptoVndPerUsd: bounded(source.CRYPTO_VND_PER_USD, 25_000, 1000, 1_000_000),

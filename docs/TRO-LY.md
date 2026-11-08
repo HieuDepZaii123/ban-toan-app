@@ -6,7 +6,7 @@ Khóa chỉ để trên server. Trình duyệt không thấy khóa.
 
 ## Cấu hình
 
-Trong `.env` (không commit):
+Trong `.env` (không commit). `npm run dev` và `npm run preview` nạp tệp này cho `/api/chat`; trên Vercel đặt cùng các biến trong phần Environment Variables.
 
 ```bash
 # Cách ưu tiên: một khóa cho AI Gateway của Vercel.
@@ -44,7 +44,7 @@ Cập nhật danh sách: thay `vendor/awesome-free-llm-apis/data.json` bằng b�
 
 Thiếu mọi khóa thì `/api/chat` trả lời **chế độ mẫu**: vẫn từ chối câu ngoài Toán, vẫn gợi ý bước, không gọi model.
 
-Lượt: 10 tin mỗi 10 phút theo IP, 8 tin miễn phí mỗi ngày, 40 tin nếu mã Premium trong `localStorage` (`ban-toan-license`) còn hạn. Đếm trong bộ nhớ của instance. Trên serverless, mỗi instance đếm riêng.
+Lượt: 10 tin mỗi 10 phút theo IP, 8 tin miễn phí mỗi ngày, 40 tin nếu mã Premium trong `localStorage` (`ban-toan-license`) còn hạn. Có `DATABASE_URL` thì đếm trong bảng `chat_hits` của Postgres, mọi instance thấy cùng số lượt. Không có thì đếm trong bộ nhớ, và trên serverless mỗi instance đếm riêng.
 
 ## Video bài giảng
 
