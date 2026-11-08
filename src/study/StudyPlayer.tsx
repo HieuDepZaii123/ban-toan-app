@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { t } from "../lib/text.ts";
+import { OPEN_MUSIC_EVENT } from "../ui/events.ts";
 import { useLang } from "../ui/useLang.ts";
 import { FALLBACK_MESSAGE, STUDY_CATEGORIES, categoryById } from "./catalog.ts";
 import { afterDelete, buttonIndex, hideTrack, nextRepeat, readHidden, readPrefs, restoreCategory, shuffledIndex, undoHide, visibleTracks, writeHidden, writePrefs, type HiddenBook, type RepeatMode } from "./logic.ts";
@@ -52,8 +53,18 @@ function youtubeReady(): Promise<void> {
   return apiReady;
 }
 
+const OPEN_KEY = "bt-study-open";
+
 export function StudyPlayer() {
   const lang = useLang();
+  const panelId = useId();
+  const [open, setOpenState] = useState(() => {
+    try { return localStorage.getItem(OPEN_KEY) === "1"; } catch { return false; }
+  });
+  const setOpen = (next: boolean) => {
+    setOpenState(next);
+    try { localStorage.setItem(OPEN_KEY, next ? "1" : "0"); } catch { /* ignore */ }
+  };
   const [seed] = useState(readPrefs);
   const [book, setBook] = useState<HiddenBook>(readHidden);
   const [categoryId, setCategoryId] = useState(seed.categoryId);
@@ -190,6 +201,21 @@ export function StudyPlayer() {
     player.current?.setVolume(volume);
   }, [volume]);
 
+  useEffect(() => {
+    const show = () => setOpen(true);
+    window.addEventListener(OPEN_MUSIC_EVENT, show);
+    return () => window.removeEventListener(OPEN_MUSIC_EVENT, show);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
   function go(delta: 1 | -1) {
     goRef.current(delta);
   }
@@ -225,69 +251,90 @@ export function StudyPlayer() {
   const repeatLabel = repeat === "one" ? "Lặp một bài" : repeat === "all" ? "Lặp cả danh sách" : "Không lặp";
 
   return (
-    <section className="study-player" id="nhac-hoc" aria-label="Nhạc học">
+    <section className={`study-player${open ? " is-open" : ""}`} id="nhac-hoc" aria-label={t(lang, "Nhạc học", "Study music")}>
       <div className="study-frame" aria-hidden="true"><div ref={host} /></div>
-      <label>
-        Thể loại
-        <select aria-label="Thể loại nhạc" value={category.id} onChange={(event) => {
-          const next = categoryById(event.target.value);
-          const first = visibleTracks(next, book.ids)[0];
-          setCategoryId(next.id);
-          setTrackId(first?.id ?? "");
-          setBroken(false);
-        }}>
-          {STUDY_CATEGORIES.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
-        </select>
-      </label>
-      <label>
-        Bài
-        <select aria-label="Bài đang chọn" value={track?.id ?? ""} disabled={playlist.length === 0} onChange={(event) => { setTrackId(event.target.value); setBroken(false); }}>
-          {playlist.length === 0 ? <option value="">{t(lang, "Danh sách trống", "Playlist empty")}</option> : null}
-          {playlist.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
-        </select>
-      </label>
-      <ul className="study-queue">
-        {playlist.map((item) => (
-          <li key={item.id}>
-            <span>{item.title}</span>
-            <button
-              type="button"
-              className="text-btn"
-              aria-label={t(lang, `Xóa ${item.title}`, `Delete ${item.title}`)}
-              onClick={() => removeTrack(item.id)}
-            >
-              {t(lang, "Xóa", "Delete")}
-            </button>
-          </li>
-        ))}
-      </ul>
-      {playlist.length === 0 ? <p className="study-fallback" role="status">{t(lang, "Danh sách trống. Bài gốc vẫn còn, bấm khôi phục để hiện lại.", "This playlist is empty. The original tracks are still there. Restore them to show the list again.")}</p> : null}
-      {book.undo && book.undo.categoryId === category.id && book.ids.includes(book.undo.trackId) ? (
-        <button type="button" className="text-btn" onClick={() => { setBook(undoHide(book)); }}>{t(lang, "Hoàn tác", "Undo")}</button>
+      {open ? (
+        <div className="study-panel" id={panelId}>
+          <div className="study-panel-head">
+            <b>{t(lang, "Nhạc học", "Study music")}</b>
+            <button type="button" className="text-btn" onClick={() => setOpen(false)}>{t(lang, "Thu gọn", "Close")}</button>
+          </div>
+          <label>
+            {t(lang, "Thể loại", "Genre")}
+            <select aria-label={t(lang, "Thể loại nhạc", "Music genre")} value={category.id} onChange={(event) => {
+              const next = categoryById(event.target.value);
+              const first = visibleTracks(next, book.ids)[0];
+              setCategoryId(next.id);
+              setTrackId(first?.id ?? "");
+              setBroken(false);
+            }}>
+              {STUDY_CATEGORIES.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
+            </select>
+          </label>
+          <ul className="study-queue">
+            {playlist.map((item) => (
+              <li key={item.id} aria-current={item.id === track?.id ? "true" : undefined}>
+                <button type="button" className="study-pick" onClick={() => { setTrackId(item.id); setBroken(false); }}>{item.title}</button>
+                <button
+                  type="button"
+                  className="text-btn"
+                  aria-label={t(lang, `Xóa ${item.title}`, `Delete ${item.title}`)}
+                  onClick={() => removeTrack(item.id)}
+                >
+                  {t(lang, "Xóa", "Delete")}
+                </button>
+              </li>
+            ))}
+          </ul>
+          {playlist.length === 0 ? <p className="study-fallback" role="status">{t(lang, "Danh sách trống. Bài gốc vẫn còn, bấm khôi phục để hiện lại.", "This playlist is empty. The original tracks are still there. Restore them to show the list again.")}</p> : null}
+          <div className="study-row">
+            {book.undo && book.undo.categoryId === category.id && book.ids.includes(book.undo.trackId) ? (
+              <button type="button" className="text-btn" onClick={() => { setBook(undoHide(book)); }}>{t(lang, "Hoàn tác", "Undo")}</button>
+            ) : null}
+            {playlist.length < category.tracks.length ? (
+              <button type="button" className="text-btn" onClick={() => setBook(restoreCategory(book, category))}>{t(lang, "Khôi phục danh sách", "Restore list")}</button>
+            ) : null}
+            <button type="button" className="text-btn" aria-pressed={shuffle} onClick={() => setShuffle((value) => !value)}>{t(lang, "Ngẫu nhiên", "Shuffle")}</button>
+            <button type="button" className="text-btn" aria-pressed={repeat !== "off"} aria-label={repeatLabel} onClick={() => setRepeat((mode) => nextRepeat(mode))}>{repeatLabel}</button>
+          </div>
+          <label className="study-vol">
+            {t(lang, "Âm lượng", "Volume")}
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={volume}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={volume}
+              aria-label={t(lang, "Âm lượng nhạc học", "Study music volume")}
+              onChange={(event) => setVolume(Number(event.target.value))}
+            />
+          </label>
+        </div>
       ) : null}
-      {playlist.length < category.tracks.length ? (
-        <button type="button" className="text-btn" onClick={() => setBook(restoreCategory(book, category))}>{t(lang, "Khôi phục danh sách", "Restore list")}</button>
-      ) : null}
-      <button type="button" className="text-btn" aria-label="Bài trước" onClick={() => go(-1)}>Trước</button>
-      <button type="button" id="nhac-phat" className="text-btn" aria-pressed={playing} disabled={!readyUi || !track} onClick={toggle}>{readyUi ? (playing ? "Tạm dừng" : "Phát") : "Đang tải"}</button>
-      <button type="button" className="text-btn" aria-label="Bài sau" onClick={() => go(1)}>Sau</button>
-      <button type="button" className="text-btn" aria-pressed={shuffle} aria-label="Phát ngẫu nhiên" onClick={() => setShuffle((value) => !value)}>Ngẫu nhiên</button>
-      <button type="button" className="text-btn" aria-pressed={repeat !== "off"} aria-label={repeatLabel} onClick={() => setRepeat((mode) => nextRepeat(mode))}>{repeatLabel}</button>
-      <label className="study-vol">
-        Âm lượng
-        <input
-          type="range"
-          min={0}
-          max={100}
-          value={volume}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={volume}
-          aria-label="Âm lượng nhạc học"
-          onChange={(event) => setVolume(Number(event.target.value))}
-        />
-      </label>
-      {broken ? <p className="study-fallback" role="status">{FALLBACK_MESSAGE}</p> : null}
+      <div className="study-bar">
+        <button type="button" className="study-icon" aria-label={t(lang, "Bài trước", "Previous track")} onClick={() => go(-1)}>‹</button>
+        <button
+          type="button"
+          id="nhac-phat"
+          className="study-play"
+          aria-pressed={playing}
+          aria-label={readyUi ? (playing ? t(lang, "Tạm dừng nhạc", "Pause music") : t(lang, "Phát nhạc", "Play music")) : t(lang, "Nhạc đang tải", "Music loading")}
+          title={readyUi ? undefined : t(lang, "Nhạc đang tải", "Music loading")}
+          disabled={!readyUi || !track}
+          onClick={toggle}
+        >
+          <span aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
+        </button>
+        <button type="button" className="study-icon" aria-label={t(lang, "Bài sau", "Next track")} onClick={() => go(1)}>›</button>
+        <span className={`study-now${broken ? " is-broken" : ""}`} role={broken ? "status" : undefined}>
+          {broken ? FALLBACK_MESSAGE : track?.title ?? t(lang, "Danh sách trống", "Playlist empty")}
+        </span>
+        <button type="button" className="study-icon" aria-expanded={open} aria-controls={panelId} aria-label={open ? t(lang, "Thu gọn nhạc", "Close music") : t(lang, "Mở danh sách nhạc", "Open music list")} onClick={() => setOpen(!open)}>
+          {open ? "▾" : "▴"}
+        </button>
+      </div>
     </section>
   );
 }
