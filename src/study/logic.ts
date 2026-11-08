@@ -131,11 +131,11 @@ export function pickNext(
   if (delta > 0 && opts.shuffle) {
     index = shuffledIndex(ids.length, at, opts.rng ?? Math.random);
   } else {
-    const moved = opts.auto ? stepIndex(ids.length, at, delta, opts.repeat) : buttonIndex(ids.length, at, delta, opts.repeat);
-    if (moved.stop) return { id: ids[at] ?? "", stop: true, restart: false };
+    const moved = (opts.auto ? stepIndex : buttonIndex)(ids.length, at, delta, opts.repeat);
+    if (moved.stop) return { id: "", stop: true, restart: false };
     index = moved.index;
   }
-  const id = ids[index] ?? ids[0] ?? "";
+  const id = ids[index] ?? "";
   return { id, stop: false, restart: found >= 0 && id === currentId };
 }
 

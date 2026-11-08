@@ -70,10 +70,7 @@ export function StudyPlayer() {
   const ready = useRef(false);
   const playingRef = useRef(false);
   const volumeRef = useRef(seed.volume);
-  const trackRef = useRef(seed.trackId);
-  const hiddenRef = useRef(book.ids);
-  const controls = useRef({ shuffle: seed.shuffle, repeat: seed.repeat, categoryId: seed.categoryId, trackId: seed.trackId });
-  const advanceRef = useRef<(delta: 1 | -1, auto: boolean) => void>(() => {});
+  const controls = useRef({ shuffle: seed.shuffle, repeat: seed.repeat, categoryId: seed.categoryId, trackId: seed.trackId, hidden: book.ids });
 
   const category = categoryById(categoryId);
   const playlist = visibleTracks(category, book.ids);
@@ -87,34 +84,35 @@ export function StudyPlayer() {
   useEffect(() => {
     playingRef.current = playing;
     volumeRef.current = volume;
-    hiddenRef.current = book.ids;
-    trackRef.current = track?.id ?? "";
-    controls.current = { shuffle, repeat, categoryId: category.id, trackId: track?.id ?? "" };
-    advanceRef.current = (delta, auto) => {
-      const live = controls.current;
-      const list = visibleTracks(categoryById(live.categoryId), hiddenRef.current);
-      const pick = pickNext(list.map((item) => item.id), live.trackId, delta, { shuffle: live.shuffle, repeat: live.repeat, auto });
-      if (pick.stop) {
-        setPlaying(false);
-        player.current?.pauseVideo();
-        return;
-      }
-      if (pick.restart) {
-        // Cùng một bài: đổi id không tải lại video, nên tua về đầu.
-        player.current?.seekTo(0, true);
-        if (auto || playingRef.current) player.current?.playVideo();
-        return;
-      }
-      setBroken(false);
-      setTrackId(pick.id);
-    };
+    controls.current = { shuffle, repeat, categoryId: category.id, trackId: track?.id ?? "", hidden: book.ids };
   }, [book.ids, category.id, playing, repeat, shuffle, track?.id, volume]);
+
+  function stop() {
+    setPlaying(false);
+    player.current?.pauseVideo();
+  }
+
+  // Chỉ đọc ref và setter ổn định, nên bản tạo lúc mount vẫn đúng khi gọi từ onStateChange.
+  const advance = useRef((delta: 1 | -1, auto: boolean) => {
+    const live = controls.current;
+    const list = visibleTracks(categoryById(live.categoryId), live.hidden);
+    const pick = pickNext(list.map((item) => item.id), live.trackId, delta, { shuffle: live.shuffle, repeat: live.repeat, auto });
+    if (pick.stop) return stop();
+    if (pick.restart) {
+      // Cùng một bài: đổi id không tải lại video, nên tua về đầu.
+      player.current?.seekTo(0, true);
+      if (auto || playingRef.current) player.current?.playVideo();
+      return;
+    }
+    setTrackId(pick.id);
+  });
 
   useEffect(() => {
     let cancelled = false;
     const mountedId = () => {
-      const list = visibleTracks(categoryById(controls.current.categoryId), hiddenRef.current);
-      return list.find((item) => item.id === trackRef.current)?.youtubeId ?? list[0]?.youtubeId ?? "";
+      const live = controls.current;
+      const list = visibleTracks(categoryById(live.categoryId), live.hidden);
+      return list.find((item) => item.id === live.trackId)?.youtubeId ?? list[0]?.youtubeId ?? "";
     };
     void youtubeReady().then(() => {
       if (cancelled || player.current) return;
@@ -153,7 +151,7 @@ export function StudyPlayer() {
               setPlaying(true);
             }
             if (event.data === window.YT.PlayerState.PAUSED) setPlaying(false);
-            if (event.data === window.YT.PlayerState.ENDED) advanceRef.current(1, true);
+            if (event.data === window.YT.PlayerState.ENDED) advance.current(1, true);
           },
         },
       });
@@ -171,9 +169,8 @@ export function StudyPlayer() {
     const current = player.current;
     if (!ready.current || !current) return;
     if (!track) {
-      // Danh sách trống (ví dụ đổi sang thể loại đã xóa hết): đừng để bài cũ phát tiếp mà không tắt được.
-      current.pauseVideo();
-      setPlaying(false);
+      // Danh sách trống (đổi sang thể loại đã xóa hết, hoặc vừa xóa bài cuối): dừng hẳn bài cũ.
+      stop();
       return;
     }
     setBroken(false);
@@ -186,32 +183,15 @@ export function StudyPlayer() {
     player.current?.setVolume(volume);
   }, [volume]);
 
-  function go(delta: 1 | -1) {
-    advanceRef.current(delta, false);
-  }
-
   function removeTrack(id: string) {
-    const wasActive = track?.id === id;
-    const nextBook = hideTrack(book, category.id, id);
-    const moved = afterDelete(playlist.map((item) => item.id), track?.id ?? "", id);
-    setBook(nextBook);
-    if (wasActive) {
-      setTrackId(moved.nextId);
-      if (moved.stop) {
-        setPlaying(false);
-        player.current?.pauseVideo();
-      }
-    }
+    setBook(hideTrack(book, category.id, id));
+    if (track?.id === id) setTrackId(afterDelete(playlist.map((item) => item.id), id, id).nextId);
   }
 
   function toggle() {
     const current = player.current;
     if (!current || !ready.current) return;
-    if (playing) {
-      current.pauseVideo();
-      setPlaying(false);
-      return;
-    }
+    if (playing) return stop();
     setBroken(false);
     setPlaying(true);
     current.playVideo();
@@ -243,8 +223,8 @@ export function StudyPlayer() {
       </label>
       <ul className="study-queue">
         {playlist.map((item) => (
-          <li key={item.id} className={item.id === track?.id ? "is-current" : undefined} aria-current={item.id === track?.id ? "true" : undefined}>
-            <button type="button" className="study-pick" onClick={() => { setTrackId(item.id); setBroken(false); }}>{item.title}</button>
+          <li key={item.id} aria-current={item.id === track?.id ? "true" : undefined}>
+            <button type="button" className="study-pick" onClick={() => setTrackId(item.id)}>{item.title}</button>
             <button
               type="button"
               className="text-btn"
@@ -263,9 +243,9 @@ export function StudyPlayer() {
       {playlist.length < category.tracks.length ? (
         <button type="button" className="text-btn" onClick={() => setBook(restoreCategory(book, category))}>{t(lang, "Khôi phục danh sách", "Restore list")}</button>
       ) : null}
-      <button type="button" className="text-btn" aria-label="Bài trước" onClick={() => go(-1)}>Trước</button>
+      <button type="button" className="text-btn" aria-label="Bài trước" onClick={() => advance.current(-1, false)}>Trước</button>
       <button type="button" id="nhac-phat" className="text-btn" aria-pressed={playing} disabled={!readyUi || !track} onClick={toggle}>{readyUi ? (playing ? "Tạm dừng" : "Phát") : "Đang tải"}</button>
-      <button type="button" className="text-btn" aria-label="Bài sau" onClick={() => go(1)}>Sau</button>
+      <button type="button" className="text-btn" aria-label="Bài sau" onClick={() => advance.current(1, false)}>Sau</button>
       <button type="button" className="text-btn" aria-pressed={shuffle} aria-label="Phát ngẫu nhiên" onClick={() => setShuffle((value) => !value)}>Ngẫu nhiên</button>
       <button type="button" className="text-btn" aria-pressed={repeat !== "off"} aria-label={repeatLabel} onClick={() => setRepeat((mode) => nextRepeat(mode))}>{repeatLabel}</button>
       <label className="study-vol">

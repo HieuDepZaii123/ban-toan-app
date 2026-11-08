@@ -934,8 +934,8 @@ html[data-lamp="on"] body::before {
 .study-queue li { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; }
 .study-queue .text-btn { min-height: 44px; }
 .study-pick { flex: 1 1 auto; min-width: 0; min-height: 44px; padding: 0 8px; border: 0; border-radius: 8px; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.study-pick:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
-.study-queue li.is-current .study-pick { color: var(--accent); font-weight: 600; background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.study-pick:hover, .study-queue li[aria-current="true"] .study-pick { background: var(--accent-soft); }
+.study-queue li[aria-current="true"] .study-pick { color: var(--accent); font-weight: 600; }
 .study-frame {
   position: fixed;
   width: 200px;
