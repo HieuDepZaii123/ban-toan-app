@@ -45,9 +45,30 @@ export type PgOptions = {
   searchPath?: string;
 };
 
+const SSL_PARAMS = ["sslmode", "sslrootcert", "sslcert", "sslkey", "uselibpqcompat"];
+
+/**
+ * TLS for the connection string. Supabase / Vercel Postgres sign their certificates with their own
+ * CA, which is not in Node's store, so `pg` fails with SELF_SIGNED_CERT_IN_CHAIN. With
+ * DATABASE_CA_CERT (PEM; "\\n" allowed for newlines) the server is verified against that CA.
+ * The URL's sslmode is dropped then, because `pg` lets it override the `ssl` option.
+ */
+export function pgConnection(connectionString: string, caCert = ""): { connectionString: string; ssl?: { ca: string; rejectUnauthorized: true } } {
+  const ca = caCert.trim().replace(/\\n/g, "\n");
+  if (!ca) return { connectionString };
+  let url: URL;
+  try {
+    url = new URL(connectionString);
+  } catch {
+    return { connectionString };
+  }
+  for (const key of SSL_PARAMS) url.searchParams.delete(key);
+  return { connectionString: url.toString(), ssl: { ca, rejectUnauthorized: true } };
+}
+
 export function pgClient(connectionString: string, options: PgOptions = {}): SqlClient {
   const pool = new pg.Pool({
-    connectionString,
+    ...pgConnection(connectionString, process.env.DATABASE_CA_CERT ?? ""),
     max: options.max ?? 3,
     idleTimeoutMillis: options.idleTimeoutMillis ?? 10_000,
     ...(options.searchPath ? { options: `-c search_path=${options.searchPath}` } : {}),
