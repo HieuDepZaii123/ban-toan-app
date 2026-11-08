@@ -96,9 +96,9 @@ export function stepIndex(length: number, index: number, delta: 1 | -1, repeat: 
   return { index, stop: true };
 }
 
-/** Nút trước/sau luôn đổi bài. Lặp một bài chỉ có tác dụng khi bài tự kết thúc. */
+/** Nút trước/sau luôn đổi bài. Khi lặp một bài, bấm sau ở bài cuối thì quay về bài đầu. */
 export function buttonIndex(length: number, index: number, delta: 1 | -1, repeat: RepeatMode): { index: number; stop: boolean } {
-  return stepIndex(length, index, delta, repeat === "one" ? "off" : repeat);
+  return stepIndex(length, index, delta, repeat === "one" ? "all" : repeat);
 }
 
 export function shuffledIndex(length: number, index: number, rng: () => number): number {
