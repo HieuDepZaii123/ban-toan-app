@@ -2,11 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { cards, QUESTION_TOTAL, streamName, streams } from "../content/cards.ts";
 import { A } from "../lib/route.tsx";
 import { sciences } from "../science/catalog.ts";
-import { AreaNav } from "../ui/AreaNav.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
-import { Logo } from "../ui/Logo.tsx";
-import { Prefs } from "../ui/Prefs.tsx";
+import { SiteHeader } from "../ui/SiteHeader.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
@@ -47,11 +45,7 @@ export function HomeDesk() {
   return (
     <div className="desk">
       <a className="skip" href="#content">{t(lang, "Vào nội dung", "Skip to content")}</a>
-      <header className="bar">
-        <A className="brand" href="/"><Logo /> Bàn Toán</A>
-        <AreaNav />
-        <Prefs />
-      </header>
+      <SiteHeader />
       <main id="content">
         <Welcome />
         <Room />

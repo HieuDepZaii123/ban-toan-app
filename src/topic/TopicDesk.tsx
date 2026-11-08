@@ -9,7 +9,7 @@ import { useRoute } from "../lib/useRoute.ts";
 import { setLast, toggleThink, useSlice, EMPTY_THINK } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
-import { Prefs } from "../ui/Prefs.tsx";
+import { SiteHeader } from "../ui/SiteHeader.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { captionFor } from "../motion/captions.ts";
 import { Motion } from "../motion/Motion.tsx";
@@ -119,42 +119,42 @@ export function TopicDesk({ id }: { id: string }) {
     <div className={`desk${focus ? " is-focus" : ""}`}>
       <a className="skip" href="#content">{t(lang, "Vào nội dung", "Skip to content")}</a>
       {focus ? <FocusBar onExit={() => setFocus(false)} /> : null}
-      <header className="bar">
-        <div className="bar-row">
-          <A className="back" href="/">{t(lang, "Bàn", "Desk")}</A>
-          <div className="bar-title">
-            <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
-            <span>{streamName(topic.stream, lang)} · {t(lang, "Lớp", "Grade")} {topic.grade}</span>
+      <SiteHeader
+        sub={
+          <div className="topic-bar">
+            <div className="topic-title">
+              <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
+              <span>{streamName(topic.stream, lang)} · {t(lang, "Lớp", "Grade")} {topic.grade}</span>
+            </div>
+            <nav className="tabs" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>
+              {(["hoc", "lam", "so", "nc"] as const).map((item) => (
+                <a
+                  key={item}
+                  aria-current={tab === item ? "page" : undefined}
+                  className="tab"
+                  href={`/t/${topic.id}?tab=${item}`}
+                  onClick={(event) => {
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                    event.preventDefault();
+                    go(`/t/${topic.id}?tab=${item}`);
+                  }}
+                >
+                  {item === "hoc"
+                    ? t(lang, "Học", "Study")
+                    : item === "lam"
+                      ? t(lang, "Làm", "Practice")
+                      : item === "so"
+                        ? t(lang, "Sổ", "Notebook")
+                        : t(lang, "Nghiên cứu", "Research")}
+                </a>
+              ))}
+            </nav>
+            <button type="button" className="text-btn topic-focus" onClick={() => { setFocus(true); go(`/t/${topic.id}?tab=hoc`); }}>
+              {t(lang, "Tập trung", "Focus")}
+            </button>
           </div>
-          <button type="button" className="text-btn" onClick={() => { setFocus(true); go(`/t/${topic.id}?tab=hoc`); }}>
-            {t(lang, "Tập trung", "Focus")}
-          </button>
-          <Prefs />
-        </div>
-        <nav className="tabs" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>
-          {(["hoc", "lam", "so", "nc"] as const).map((item) => (
-            <a
-              key={item}
-              aria-current={tab === item ? "page" : undefined}
-              className="tab"
-              href={`/t/${topic.id}?tab=${item}`}
-              onClick={(event) => {
-                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                event.preventDefault();
-                go(`/t/${topic.id}?tab=${item}`);
-              }}
-            >
-              {item === "hoc"
-                ? t(lang, "Học", "Study")
-                : item === "lam"
-                  ? t(lang, "Làm", "Practice")
-                  : item === "so"
-                    ? t(lang, "Sổ", "Notebook")
-                    : t(lang, "Nghiên cứu", "Research")}
-            </a>
-          ))}
-        </nav>
-      </header>
+        }
+      />
       <main id="content">
         {tab === "hoc" ? (
           <div className="hoc">

@@ -1246,3 +1246,23 @@ html[data-lamp="on"] body::before {
   .area-nav { margin: 0 -6px; }
   .area-nav a { padding: 0 10px; }
 }
+
+/* Tờ chuyên đề: hàng thứ hai của đầu trang chung là tên tờ, các tab của tờ và nút Tập trung. */
+.bar > .topic-bar { grid-area: sub; }
+.topic-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; min-width: 0; }
+.topic-title { flex: 1 1 220px; min-width: 0; display: flex; align-items: baseline; gap: 10px; }
+.topic-title strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.topic-title span { flex: none; color: var(--muted); font-size: 0.8rem; white-space: nowrap; }
+.topic-bar .tabs { flex: 0 1 auto; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.topic-bar .tabs::-webkit-scrollbar { display: none; }
+.topic-bar .tab { flex: none; padding: 0 12px; }
+.topic-bar .topic-focus { min-height: 36px; }
+@media (max-width: 640px) {
+  .topic-bar { gap: 0 8px; }
+  .topic-title { flex: 1 1 0; }
+  .topic-bar .tabs { order: 3; flex: 1 1 100%; margin: 0 -4px; }
+  .topic-bar .tab { flex: 1 0 auto; padding: 0 8px; }
+  /* Trên điện thoại, tờ chuyên đề giữ chỗ đọc: bỏ hàng nhóm (vẫn có trong Mục lục, logo về trang chủ). */
+  .bar:has(> .topic-bar) { grid-template-areas: "brand tools" "sub sub"; }
+  .bar:has(> .topic-bar) > .area-nav { display: none; }
+}
