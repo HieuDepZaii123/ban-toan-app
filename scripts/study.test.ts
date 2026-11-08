@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { FALLBACK_MESSAGE, STUDY_CATEGORIES } from "../src/study/catalog.ts";
-import { afterDelete, buttonIndex, clampVolume, hideTrack, nextRepeat, readHidden, readPrefs, restoreCategory, shuffledIndex, stepIndex, STUDY_HIDDEN_KEY, STUDY_PREFS_KEY, undoHide, visibleTracks, writeHidden, writePrefs, emptyHidden } from "../src/study/logic.ts";
+import { afterDelete, buttonIndex, pickNext, clampVolume, hideTrack, nextRepeat, readHidden, readPrefs, restoreCategory, shuffledIndex, stepIndex, STUDY_HIDDEN_KEY, STUDY_PREFS_KEY, undoHide, visibleTracks, writeHidden, writePrefs, emptyHidden } from "../src/study/logic.ts";
 import { categoryById } from "../src/study/catalog.ts";
 
 const titles = ["Lo-fi", "Piano", "Nhạc cổ điển", "Tiếng mưa / ồn trắng", "Jazz", "Nhạc không lời Việt"];
@@ -82,4 +82,17 @@ assert.equal(restoreCategory(readHidden(), lofi).ids.length, 0);
 assert.equal(stepIndex(visibleTracks(lofi, ["lofi-1am"]).length, 2, 1, "all").index, 0);
 localStorage.setItem(STUDY_HIDDEN_KEY, "{");
 assert.deepEqual(readHidden().ids, []);
+// pickNext: danh sách một bài vẫn phát lại khi lặp cả danh sách hoặc ngẫu nhiên.
+const one = ["a"];
+assert.deepEqual(pickNext(one, "a", 1, { shuffle: false, repeat: "all", auto: true }), { id: "a", stop: false, restart: true });
+assert.deepEqual(pickNext(one, "a", 1, { shuffle: true, repeat: "off", auto: true }), { id: "a", stop: false, restart: true });
+assert.equal(pickNext(one, "a", 1, { shuffle: false, repeat: "off", auto: true }).stop, true);
+const four = ["a", "b", "c", "d"];
+assert.deepEqual(pickNext(four, "b", 1, { shuffle: false, repeat: "one", auto: true }), { id: "b", stop: false, restart: true });
+assert.deepEqual(pickNext(four, "b", 1, { shuffle: false, repeat: "one", auto: false }), { id: "c", stop: false, restart: false });
+assert.equal(pickNext(four, "d", 1, { shuffle: false, repeat: "off", auto: true }).stop, true);
+assert.equal(pickNext(four, "d", 1, { shuffle: false, repeat: "all", auto: true }).id, "a");
+assert.equal(pickNext(four, "a", -1, { shuffle: true, repeat: "off", auto: false }).id, "d");
+assert.equal(pickNext(four, "a", 1, { shuffle: true, repeat: "off", auto: false, rng: () => 0.6 }).id, "c");
+assert.equal(pickNext([], "a", 1, { shuffle: false, repeat: "all", auto: false }).stop, true);
 console.log("study ok");

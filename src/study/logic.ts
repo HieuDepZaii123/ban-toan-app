@@ -110,6 +110,35 @@ export function shuffledIndex(length: number, index: number, rng: () => number):
   return pick === index ? (index + 1) % length : pick;
 }
 
+export type NextPick = { id: string; stop: boolean; restart: boolean };
+
+/**
+ * Chọn bài kế tiếp cho nút trước/sau (auto = false) hoặc khi bài tự kết thúc (auto = true).
+ * restart = true khi bài được chọn trùng bài đang phát (danh sách một bài, lặp một bài),
+ * vì đổi sang cùng một id sẽ không tải lại video.
+ */
+export function pickNext(
+  ids: readonly string[],
+  currentId: string,
+  delta: 1 | -1,
+  opts: { shuffle: boolean; repeat: RepeatMode; auto: boolean; rng?: () => number },
+): NextPick {
+  if (ids.length === 0) return { id: "", stop: true, restart: false };
+  const found = ids.indexOf(currentId);
+  const at = found >= 0 ? found : 0;
+  if (opts.auto && opts.repeat === "one") return { id: ids[at] ?? "", stop: false, restart: true };
+  let index: number;
+  if (delta > 0 && opts.shuffle) {
+    index = shuffledIndex(ids.length, at, opts.rng ?? Math.random);
+  } else {
+    const moved = opts.auto ? stepIndex(ids.length, at, delta, opts.repeat) : buttonIndex(ids.length, at, delta, opts.repeat);
+    if (moved.stop) return { id: ids[at] ?? "", stop: true, restart: false };
+    index = moved.index;
+  }
+  const id = ids[index] ?? ids[0] ?? "";
+  return { id, stop: false, restart: found >= 0 && id === currentId };
+}
+
 export function nextRepeat(mode: RepeatMode): RepeatMode {
   if (mode === "off") return "all";
   if (mode === "all") return "one";
