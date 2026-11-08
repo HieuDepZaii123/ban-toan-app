@@ -21,7 +21,7 @@ Mở http://127.0.0.1:43123
 
 ```bash
 npm test               # cả hai bộ dưới đây
-npm run test:server    # API: thanh toán, trợ lý, cầu nối HTTP (vài giây, không cần Python)
+npm run test:server    # API trên SQLite và Postgres (PGlite): thanh toán, trợ lý, cầu nối HTTP; không cần Python
 npm run test:content   # đối chiếu số trong lời giải với hàm tính và sympy
 npm run typecheck
 npm run lint
@@ -37,11 +37,12 @@ Cần Node 22.13 trở lên (xem `.nvmrc`): kho đơn hàng dùng `node:sqlite`,
 `/api/premium/*` (thanh toán, xem `docs/THANH-TOAN.md`) và `/api/chat` (trợ lý, xem `docs/TRO-LY.md`) viết theo kiểu Fetch (`Request` → `Response`) trong `server/`. Trên Vercel mỗi tệp trong `api/` là một hàm Node; khi chạy `npm run dev` hoặc `npm run preview`, plugin Vite gắn cùng các handler đó lên cổng của trang. Cả hai đường đi qua `server/http/bridge.ts`, nên ở mọi nơi:
 
 - Biến trong `.env` được nạp cho server khi chạy dev và preview. Biến đặt trong shell thắng `.env`.
+- Dữ liệu: có `DATABASE_URL` thì đơn hàng, giới thiệu và bộ đếm trợ lý nằm ở Postgres (`npm run db:migrate`, `db:status`, `db:copy-sqlite`); không có thì đơn hàng nằm trong SQLite local. Chi tiết ở `docs/THANH-TOAN.md`.
 - Thân request quá lớn bị trả 413 (chat 64 KB, thanh toán 256 KB).
 - Lỗi bất ngờ trả JSON 500 không kèm chi tiết; chi tiết chỉ ghi vào log máy chủ.
 - Mỗi phản hồi có header `x-request-id` (giữ mã proxy gửi tới, hoặc tự sinh), và dòng log lỗi có cùng mã để dò.
 
-CI (`.github/workflows/ci.yml`) chạy trên mỗi pull request và mỗi lần đẩy lên `main`: một job chạy `test:server`, một job chạy lint, `test:content` và build.
+CI (`.github/workflows/ci.yml`) chạy trên mỗi pull request và mỗi lần đẩy lên `main`: một job chạy `test:server` (SQLite và PGlite), một job chạy các bộ test thanh toán trên máy chủ `postgres:16`, một job chạy lint, `test:content` và build.
 
 ## Triển khai
 

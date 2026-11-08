@@ -26,6 +26,39 @@ jobs:
       - run: npm ci
       - run: npm run test:server
 
+  postgres:
+    name: API on Postgres server
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: bantoan
+          POSTGRES_PASSWORD: bantoan
+          POSTGRES_DB: bantoan
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U bantoan"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://bantoan:bantoan@localhost:5432/bantoan
+      TEST_DATABASE_URL: postgres://bantoan:bantoan@localhost:5432/bantoan
+      PAY_TEST_STORE: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run db:migrate
+      - run: npm run db:status
+      - run: npm run test:postgres
+
   web:
     name: Lint, content tests, build
     runs-on: ubuntu-latest

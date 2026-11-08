@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { commissionOf, sameReferrer } from "../server/pay/affiliate.ts";
 import { payEnv, type PayEnv } from "../server/pay/env.ts";
 import { handlePremium } from "../server/pay/handlers.ts";
+import { withTestStore } from "./testDb.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
@@ -19,7 +20,7 @@ assert(sameReferrer(null, "bb", "khac@example.com", "hoc@example.com") === false
 
 const dir = mkdtempSync(join(tmpdir(), "ban-toan-aff-"));
 let clock = 1_700_000_000_000;
-const env: PayEnv = payEnv({
+const env: PayEnv = withTestStore(payEnv({
   PREMIUM_PRICE_MONTH: "49000",
   PREMIUM_PRICE_YEAR: "399000",
   PUBLIC_BASE_URL: "http://pay.local",
@@ -29,7 +30,7 @@ const env: PayEnv = payEnv({
   BANK_WEBHOOK_SECRET: "hook",
 }, () => clock, async () => {
   throw new Error("offline");
-});
+}));
 
 async function post(path: string, body: unknown, headers: Record<string, string> = {}): Promise<{ status: number; json: Record<string, unknown> }> {
   const res = await handlePremium(new Request(`http://pay.local${path}`, {
