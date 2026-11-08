@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    // Vercel compiles api/ with this file. Our imports end in .ts; rewrite them to .js on emit,
+    // or the functions crash with ERR_MODULE_NOT_FOUND.
+    "rewriteRelativeImportExtensions": true
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
