@@ -42,7 +42,7 @@ Lưu ý: gói miễn phí có giới hạn thấp (OpenRouter 50 lượt/ngày, 
 
 Cập nhật danh sách: thay `vendor/awesome-free-llm-apis/data.json` bằng bản mới, chạy `npm run free-llm:sync` để sinh lại `server/chat/freeCatalog.ts`, rồi `npm test`. Test báo lỗi nếu model mặc định không còn trong danh sách.
 
-Thiếu mọi khóa thì `/api/chat` trả lời **chế độ mẫu**: vẫn từ chối câu ngoài Toán, vẫn gợi ý bước, không gọi model.
+Thiếu mọi khóa thì `/api/chat` trả lời **chế độ mẫu**: câu ngoài Toán được kéo nhẹ về bài học, vẫn gợi ý bước, không gọi model.
 
 Lượt: 10 tin mỗi 10 phút theo IP, 8 tin miễn phí mỗi ngày, 40 tin nếu mã Premium trong `localStorage` (`ban-toan-license`) còn hạn. Có `DATABASE_URL` thì đếm trong bảng `chat_hits` của Postgres, mọi instance thấy cùng số lượt. Không có thì đếm trong bộ nhớ, và trên serverless mỗi instance đếm riêng.
 

@@ -47,6 +47,19 @@ function sessionId(): string {
   return next;
 }
 
+/** Stable per-browser id so the free allowance is per learner, not per shared school network. */
+function deviceId(): string {
+  try {
+    const saved = localStorage.getItem("ban-toan-device");
+    if (saved && /^[A-Za-z0-9-]{8,64}$/.test(saved)) return saved;
+    const next = crypto.randomUUID();
+    localStorage.setItem("ban-toan-device", next);
+    return next;
+  } catch {
+    return "";
+  }
+}
+
 function dayKey(): string {
   const now = new Date();
   return `bt-ask-${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
@@ -148,7 +161,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "content-type": "application/json", "x-ban-toan-session": sessionId() },
-          body: JSON.stringify({ messages: next, license, topic: studying?.id ?? "" }),
+          body: JSON.stringify({ messages: next, license, topic: studying?.id ?? "", device: deviceId() }),
         });
         const body = await res.json() as ChatState;
         setMeta(body);
