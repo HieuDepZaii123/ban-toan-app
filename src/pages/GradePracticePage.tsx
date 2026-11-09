@@ -10,6 +10,7 @@ import {
   type GradePracticeBag,
 } from "../grades/practiceStore.ts";
 import { A } from "../lib/route.tsx";
+import { displayOrder } from "../lib/prng.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
@@ -125,11 +126,12 @@ function QuestionCard({ question, picked, onChoose }: { question: GradeQuestion;
     <article className="tool-card">
       <h2><MathText text={question.prompt} /></h2>
       <div className="choices" role="group" aria-label={t(lang, "Các lựa chọn", "Choices")}>
-        {question.choices.map((choice, choiceIndex) => {
+        {displayOrder(question.id, question.choices.length).map((choiceIndex, shownAt) => {
+          const choice = question.choices[choiceIndex] ?? "";
           const state = picked === undefined ? "" : choiceIndex === question.answer ? " is-right" : picked === choiceIndex ? " is-wrong" : "";
           return (
             <button key={choice} type="button" className={`choice${state}`} disabled={picked !== undefined} onClick={() => onChoose(choiceIndex)}>
-              <span className="key">{String.fromCharCode(65 + choiceIndex)}</span>
+              <span className="key">{String.fromCharCode(65 + shownAt)}</span>
               <span className="choice-body"><MathText text={choice} /></span>
             </button>
           );

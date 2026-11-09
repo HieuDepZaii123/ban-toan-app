@@ -42,7 +42,7 @@ export const lop04: GradeBook = {
           [{ expr: "2450000-2399000", expect: "51000" }],
         )],
         [
-          luyen(R`Số nào lớn hơn, $5\,000\,000$ hay $4\,999\,999$?`, R`Số $5\,000\,000$ lớn hơn.`, [{ expr: "5000000-4999999", expect: "1" }], "Năm triệu đứng ngay sau số lớn nhất của lớp nghìn."),
+          luyen(R`Số nào lớn hơn, $5\,000\,000$ hay $4\,999\,999$?`, R`Số $5\,000\,000$ lớn hơn.`, [{ expr: "5000000-4999999", expect: "1" }], "Năm triệu đứng ngay sau $4\\,999\\,999$, nên lớn hơn đúng $1$."),
           luyen(R`So sánh $1\,200\,000$ và $1\,200\,500$.`, R`Số $1\,200\,500$ lớn hơn.`, [{ expr: "1200500-1200000", expect: "500" }], "Hai lớp triệu và lớp nghìn giống nhau. Lớp đơn vị $500$ lớn hơn $0$."),
           luyen(R`Sắp $30\,000$ và $3\,000\,000$. Số nhỏ hơn là số nào?`, R`Số nhỏ hơn là $30\,000$.`, [{ expr: "3000000/30000", expect: "100" }], "Ba mươi nghìn thuộc lớp nghìn. Ba triệu thuộc lớp triệu và lớn hơn đúng một trăm lần."),
         ],

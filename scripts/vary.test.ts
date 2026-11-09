@@ -62,7 +62,7 @@ import { surveyDssQuestions, surveyDssVary } from "../src/content/vary/dss/surve
 import { triangleDssQuestions, triangleDssVary } from "../src/content/vary/dss/triangle.ts";
 import { trigDssQuestions, trigDssVary } from "../src/content/vary/dss/trig.ts";
 import { vectorDssQuestions, vectorDssVary } from "../src/content/vary/dss/vector.ts";
-import { mulberry32, nextPos } from "../src/lib/prng.ts";
+import { mulberry32, nextPos, slotRng } from "../src/lib/prng.ts";
 import { sessionQuestions } from "../src/topic/show.ts";
 import { expectCorrect } from "./oracle.ts";
 
@@ -204,6 +204,27 @@ for (const bank of banks) {
       assert(prompts.size > 1, `${spec.id} never changed its numbers`);
     }
   }
+}
+
+// The answer slot must not be predictable from the question's numbers (both come from one seed).
+{
+  let leaky = 0;
+  let checked = 0;
+  for (const bank of banks) {
+    for (const spec of bank.vary) {
+      if (spec.fixed || spec.kind) continue;
+      const slots = new Map<string, Set<number>>();
+      for (let seed = 1; seed <= 600; seed += 1) {
+        const key = JSON.stringify(spec.draw(mulberry32(seed)).params);
+        const set = slots.get(key) ?? new Set<number>();
+        set.add(nextPos(undefined, slotRng(seed)));
+        slots.set(key, set);
+      }
+      checked += 1;
+      if ([...slots.values()].every((set) => set.size === 1)) leaky += 1;
+    }
+  }
+  assert(checked > 20 && leaky === 0, `${leaky} of ${checked} generators let the numbers reveal the answer slot`);
 }
 
 const posRng = mulberry32(20260323);

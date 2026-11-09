@@ -170,7 +170,13 @@ export function vertexForm(a: number, h: number, k: number): string {
  * they produce `$a = $b$$`, which shows raw TeX. Join such a piece back into one formula.
  */
 export function joinMath(text: string): string {
-  return text.replace(/\$([^$]*)\$([^$]+)\$\$/g, (_, head: string, piece: string) => `$${head}${piece}$`);
+  const joined = text.replace(/\$([^$]*)\$([^$]+)\$\$/g, (_, head: string, piece: string) => `$${head}${piece}$`);
+  return joined.replace(/\$([^$]*)\$/g, (_, math: string) => `$${signs(math)}$`);
+}
+
+/** A negative parameter dropped after an operator: x-(-1) is x+1, x+(-1) is x-1. */
+function signs(math: string): string {
+  return math.replace(/-\s*-/g, "+").replace(/\+\s*-/g, "-").replace(/-\s*\+/g, "-");
 }
 
 const tidy = <T extends string[]>(list: T): T => list.map(joinMath) as T;

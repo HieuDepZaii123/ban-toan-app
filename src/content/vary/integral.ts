@@ -64,15 +64,17 @@ function signStem(question: Question, params: Record<string, number>) {
     [value, frac(6 * a - 8, 3), frac(0, 1), frac(-2 * a, 1)],
     [value, frac(6 * a - 8, 3), frac(0, 1), frac(-2 * a, 1)],
     [
-      `Đây là đúng miền vừa rồi, nhưng đường nằm dưới Ox.`,
-      `Tích phân giữ dấu, nên bằng ${value}.`,
+      `Nguyên hàm $F(x)=\\dfrac{x^3}{3}-\\dfrac{${a}x^2}{2}$, và $F(2)-F(0)=\\dfrac{8}{3}-${2 * a}$.`,
+      `Trên $(0; 2)$ thì $x^2<${a}x$, đường nằm dưới Ox. Tích phân giữ dấu, nên bằng ${value}.`,
       `Bỏ dấu âm thì ra giá trị dương. $0$ coi như diện tích triệt tiêu. ${frac(-2 * a, 1)} chỉ lấy hạng bậc nhất.`,
     ],
     [
-      `This is the same region, but the curve lies under the x-axis.`,
-      `The integral keeps the sign, so it equals ${value}.`,
+      `An antiderivative is $F(x)=\\dfrac{x^3}{3}-\\dfrac{${a}x^2}{2}$, and $F(2)-F(0)=\\dfrac{8}{3}-${2 * a}$.`,
+      `On $(0; 2)$ we have $x^2<${a}x$, so the curve is under the x-axis. The integral keeps the sign, so it equals ${value}.`,
       `Dropping the minus gives the positive value. $0$ pretends the areas cancel. ${frac(-2 * a, 1)} keeps only the linear term.`,
     ],
+    "Tìm nguyên hàm rồi thế cận. Tích phân giữ dấu, khác với diện tích hình học.",
+    "Find an antiderivative and substitute the bounds. An integral keeps its sign, unlike a geometric area.",
   );
 }
 

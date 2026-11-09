@@ -49,12 +49,12 @@ export const integralQuestions: Question[] = [
     steps: [
       R`$x^2 - 2x = -(2x - x^2)$. Nguyên hàm là $\dfrac{x^3}{3} - x^2$.`,
       R`Tại $2$: $\dfrac{8}{3} - 4 = -\dfrac{4}{3}$.`,
-      R`Số $\dfrac{4}{3}$ là diện tích hình học, đã bỏ dấu trừ. Cả miền đều nằm dưới Ox, nên không triệt tiêu về $0$. Số $-4$ là quên chia $3$.`,
+      R`Số $\dfrac{4}{3}$ là diện tích hình học, đã bỏ dấu trừ. Cả miền đều nằm dưới Ox, nên không triệt tiêu về $0$. Số $-4$ là bỏ hẳn số hạng $\dfrac{x^3}{3}$, chỉ còn $0 - 4$.`,
     ],
     stepsEn: [
       R`$x^2 - 2x = -(2x - x^2)$. An antiderivative is $\dfrac{x^3}{3} - x^2$.`,
       R`At $2$: $\dfrac{8}{3} - 4 = -\dfrac{4}{3}$.`,
-      R`The number $\dfrac{4}{3}$ is the geometric area, with the minus dropped. The whole region is below the x-axis, so it does not cancel to $0$. The number $-4$ forgets to divide by $3$.`,
+      R`The number $\dfrac{4}{3}$ is the geometric area, with the minus dropped. The whole region is below the x-axis, so it does not cancel to $0$. The number $-4$ drops the $\dfrac{x^3}{3}$ term entirely, leaving $0 - 4$.`,
     ],
   },
   {

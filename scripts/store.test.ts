@@ -51,8 +51,12 @@ assert(!("ineq:ineq-am" in getData().right), "a miss is not marked right");
 recordAnswer("ineq", "ineq-am", 1, false);
 assert(getData().wrong["ineq:ineq-am"] === 1, "the same miss is not duplicated");
 recordAnswer("ineq", "ineq-am", 0, true);
+assert(!getData().right["ineq:ineq-am"] && getData().wrong["ineq:ineq-am"] === 1, "after a miss the same draw is locked: clicking the revealed answer scores nothing");
+resetAttempt("ineq:ineq-am");
+assert(getData().wrong["ineq:ineq-am"] === 1, "a new draw keeps the miss in the notebook");
+recordAnswer("ineq", "ineq-am", 0, true);
 assert(getData().right["ineq:ineq-am"] === true, "the correct choice is stored");
-assert(!("ineq:ineq-am" in getData().wrong), "a correct answer clears the miss");
+assert(!("ineq:ineq-am" in getData().wrong), "a correct answer on a new draw clears the miss");
 
 resetStore(load(JSON.stringify({ v: 1, notes: { a: "local" } })));
 applyStorageEvent("other", JSON.stringify({ v: 1, notes: { a: "remote" } }));

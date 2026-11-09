@@ -112,12 +112,12 @@ function cauchyStem(question: Question, params: Record<string, number>) {
     [
       `$(${a}^2+${b}^2)(${c}^2+${d}^2)=${left}$.`,
       `$(${a}\\cdot${c}+${b}\\cdot${d})^2=${dot}^2=${right}$, nên $${left}\\ge ${right}$.`,
-      `$\\le$ đảo chiều. ${sums} và ${dot} bỏ bình phương. ${root} và ${ends} lấy căn.`,
+      `$\\le$ đảo chiều. ${sums} chỉ là $${c}^2+${d}^2$, còn ${dot} chưa bình phương. ${root} và ${ends} là $\\sqrt{${c}^2+${d}^2}$ và $${c}+${d}$, không phải hai vế của bất đẳng thức.`,
     ],
     [
       `$(${a}^2+${b}^2)(${c}^2+${d}^2)=${left}$.`,
       `$(${a}\\cdot${c}+${b}\\cdot${d})^2=${dot}^2=${right}$, so $${left}\\ge ${right}$.`,
-      `$\\le$ flips the inequality. ${sums} and ${dot} drop the square. ${root} and ${ends} take square roots.`,
+      `$\\le$ flips the inequality. ${sums} is only $${c}^2+${d}^2$, and ${dot} is left unsquared. ${root} and ${ends} are $\\sqrt{${c}^2+${d}^2}$ and $${c}+${d}$, not the two sides.`,
     ],
   );
 }

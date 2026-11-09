@@ -1,4 +1,4 @@
-import { eq, gt, lt, mul, neg, never, num, par, sq, sub, wr } from "./expr.ts";
+import { eq, gt, ne, lt, mul, neg, never, num, par, sq, sub, wr } from "./expr.ts";
 import { fact, publishAll, varyAll, type DssItem } from "./item.ts";
 
 const R = String.raw;
@@ -41,8 +41,8 @@ const cubic: DssItem = {
     fact("surv-d-cubic:high", "dung",
       R`Giá trị cực đại thì dương.`,
       R`The local maximum value is positive.`,
-      (p) => R`Cực đại tại $x=-${p.root}$: $y=-(-${p.root})^3+3\cdot ${p.m}\cdot ${p.root}=2\cdot ${p.m}\cdot ${p.root}>0$.`,
-      (p) => R`The maximum is at $x=-${p.root}$: $y=-(-${p.root})^3+3\cdot ${p.m}\cdot ${p.root}=2\cdot ${p.m}\cdot ${p.root}>0$.`,
+      (p) => R`Cực đại tại $x=-${p.root}$: $y=(-${p.root})^3-3\cdot ${p.m}\cdot(-${p.root})=-${p.root}^3+3\cdot ${p.m}\cdot ${p.root}=2\cdot ${p.m}\cdot ${p.root}>0$ (vì ${p.root}^2=${p.m}).`,
+      (p) => R`The maximum is at $x=-${p.root}$: $y=(-${p.root})^3-3\cdot ${p.m}\cdot(-${p.root})=-${p.root}^3+3\cdot ${p.m}\cdot ${p.root}=2\cdot ${p.m}\cdot ${p.root}>0$ (vì ${p.root}^2=${p.m}).`,
       eq(num(1), num(1))),
     fact("surv-d-cubic:miss", "sai",
       R`Đồ thị không cắt trục Ox.`,
@@ -106,12 +106,13 @@ const slant: DssItem = {
       (p) => R`Khi $k+a^2\neq 0$, mẫu $x-${p.a}$ triệt tiêu còn tử thì không.`,
       (p) => R`When $k+a^2\neq 0$, the factor $x-${p.a}$ vanishes and the numerator does not.`,
       eq(num(1), num(1))),
-    fact("surv-d-slant:line", "dung",
-      R`Tiệm cận xiên là $y=x+a$.`,
-      R`The slant asymptote is $y=x+a$.`,
-      (p) => R`$x^2+k=(x-${p.a})(x+${p.a})+${(p.a ?? 0) ** 2}+k$, nên thương là $x+${p.a}$.`,
-      (p) => R`$x^2+k=(x-${p.a})(x+${p.a})+${(p.a ?? 0) ** 2}+k$, so the quotient is $x+${p.a}$.`,
-      eq(num(1), num(1))),
+    fact("surv-d-slant:line", "thieu",
+      R`Đồ thị có tiệm cận xiên $y=x+a$.`,
+      R`The graph has the slant asymptote $y=x+a$.`,
+      (p) => R`$k=0$: phần dư $${(p.a ?? 0) ** 2}\neq 0$, có tiệm cận xiên $y=x+${p.a}$. $k=${-((p.a ?? 0) ** 2)}$: đồ thị là đường thẳng $y=x+${p.a}$ bỏ một điểm, không có tiệm cận.`,
+      (p) => R`$k=0$: remainder $${(p.a ?? 0) ** 2}\neq 0$, so $y=x+${p.a}$ is a slant asymptote. $k=${-((p.a ?? 0) ** 2)}$: the graph is the line $y=x+${p.a}$ with a hole, so there is no asymptote.`,
+      ne(wr("k"), neg(sq(par("a")))),
+      { yes: () => ({ k: 0 }), no: (p) => ({ k: -((p.a ?? 0) ** 2) }) }),
     fact("surv-d-slant:hole", "dung",
       R`Hàm không xác định tại $x=a$.`,
       R`The function is not defined at $x=a$.`,

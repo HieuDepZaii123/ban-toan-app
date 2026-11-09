@@ -466,8 +466,13 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 }
 .choice .key { color: var(--muted); font-variant-numeric: tabular-nums; width: 1.2rem; flex: none; }
 .choice-body { min-width: 0; overflow-x: auto; }
-.choice.is-right { border-color: var(--ok); background: var(--ok-soft); }
-.choice.is-wrong { border-color: var(--clay); background: var(--clay-soft); }
+/* Answer feedback must win over [aria-pressed] and must not rely on colour alone. */
+.choice:disabled { color: inherit; cursor: default; opacity: 1; }
+.choice.is-right, .choice.is-right[aria-pressed="true"] { border: 2px solid var(--ok); background: var(--ok-soft); padding: 11px; }
+.choice.is-wrong, .choice.is-wrong[aria-pressed="true"] { border: 2px dashed var(--clay); background: var(--clay-soft); padding: 11px; }
+.choice.is-right::after, .choice.is-wrong::after { margin-left: auto; flex: none; font-weight: 700; line-height: 1.4; }
+.choice.is-right::after { content: "✓"; color: var(--ok); }
+.choice.is-wrong::after { content: "✗"; color: var(--clay); }
 .dss-list { display: grid; gap: 14px; }
 .dss-item { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
 .dss-stmt { margin: 0; }
@@ -485,8 +490,10 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 }
 .dss-opt input { width: 1.15rem; height: 1.15rem; margin: 0; }
 .dss-opt:has(input:disabled) { cursor: default; }
-.dss-opt.is-right { border-color: var(--ok); background: var(--ok-soft); }
-.dss-opt.is-wrong { border-color: var(--clay); background: var(--clay-soft); }
+.dss-opt.is-right { border-color: var(--ok); border-style: solid; background: var(--ok-soft); }
+.dss-opt.is-wrong { border-color: var(--clay); border-style: dashed; background: var(--clay-soft); }
+.dss-opt.is-right::after { content: " ✓"; color: var(--ok); font-weight: 700; }
+.dss-opt.is-wrong::after { content: " ✗"; color: var(--clay); font-weight: 700; }
 .dss-reason { margin: 0; color: var(--ink-soft); }
 .practice-nav { display: flex; flex-wrap: wrap; gap: 8px; }
 .hint, .solution { background: var(--sheet); border-radius: 12px; padding: 12px 14px; }
@@ -684,8 +691,10 @@ html[data-lamp="on"] body::before {
   background: var(--sheet);
 }
 .guess input { width: 1.15rem; height: 1.15rem; margin-top: 3px; }
-.guess.is-right { border-color: var(--ok); background: var(--ok-soft); }
-.guess.is-wrong { border-color: var(--clay); background: var(--clay-soft); }
+.guess.is-right { border-color: var(--ok); border-style: solid; background: var(--ok-soft); }
+.guess.is-wrong { border-color: var(--clay); border-style: dashed; background: var(--clay-soft); }
+.guess.is-right::after { content: " ✓"; color: var(--ok); font-weight: 700; }
+.guess.is-wrong::after { content: " ✗"; color: var(--clay); font-weight: 700; }
 .study-write { display: grid; gap: 6px; }
 .study-write textarea { min-height: 72px; resize: vertical; }
 .study-ghi {

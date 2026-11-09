@@ -30,7 +30,7 @@ export function textProblems(text: string): string[] {
   if (outside.includes("{,}")) out.push('"{,}" outside math');
   if (/\\(?:frac|dfrac|sqrt|times|cdot|neq|infty|le|ge)\b/.test(outside)) out.push("TeX command outside $…$");
   for (const math of inMath(text)) {
-    if (/(^|[^\\a-z])(?:-\s*\+|\+\s*-|-\s*-)(?!\s*>)/.test(math.replace(/\\[a-zA-Z]+/g, "a"))) out.push(`sign glitch in "${math.slice(0, 40)}"`);
+    if (/(?:-\s*\+|\+\s*-|-\s*-)(?!\s*>)/.test(math.replace(/\\[a-zA-Z]+/g, "a"))) out.push(`sign glitch in "${math.slice(0, 40)}"`);
   }
   return out;
 }
