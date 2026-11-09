@@ -184,9 +184,15 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     }
   }
 
-  const quota = typeof meta.remaining === "number" && typeof meta.limit === "number"
-    ? t(lang, meta.premium ? `Premium: còn ${meta.remaining}/${meta.limit} tin hôm nay.` : `Máy chủ: còn ${meta.remaining}/${meta.limit} tin hôm nay.`, `Server: ${meta.remaining}/${meta.limit} left today.`)
-    : t(lang, "Máy chủ: 8 tin miễn phí mỗi ngày, Premium 40.", "Server: 8 free messages a day, Premium 40.");
+  const known = typeof meta.remaining === "number" && typeof meta.limit === "number";
+  const outOfQuestions = known && meta.remaining === 0 && !meta.premium;
+  const quota = known
+    ? meta.premium
+      ? t(lang, `Premium: còn ${meta.remaining} câu hỏi hôm nay.`, `Premium: ${meta.remaining} questions left today.`)
+      : outOfQuestions
+        ? t(lang, "Hết 8 câu hỏi miễn phí hôm nay. Mai hỏi tiếp, hoặc Premium được 40 câu mỗi ngày.", "Your 8 free questions for today are used. Come back tomorrow, or Premium gives 40 a day.")
+        : t(lang, `Còn ${meta.remaining} câu hỏi miễn phí hôm nay.`, `${meta.remaining} free questions left today.`)
+    : t(lang, "8 câu hỏi miễn phí mỗi ngày, Premium 40.", "8 free questions a day, Premium 40.");
 
   return (
     <section className="chat-panel" role="dialog" aria-label={t(lang, "Trợ lý toán", "Math tutor")}>
@@ -197,7 +203,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       <p className="chat-quota">
         {quota}{" "}
         {mock || url.trim() ? <span>{t(lang, `Mẫu trên máy: còn ${localLeft}/${LOCAL_LIMIT}.`, `On this device: ${localLeft}/${LOCAL_LIMIT} left.`)} </span> : null}
-        {meta.premium ? null : <A href="/nang-cap">{t(lang, "Nâng cấp", "Upgrade")}</A>}
+        {meta.premium ? null : <A href="/nang-cap" className={outOfQuestions ? "pay-btn" : undefined}>{outOfQuestions ? t(lang, "Xem Premium", "See Premium") : t(lang, "Nâng cấp", "Upgrade")}</A>}
       </p>
       {studying ? <p className="chat-context">{t(lang, `Đang học: ${studying.title}`, `Studying: ${studying.title}`)}</p> : null}
       <div className="chat-log" ref={scroller} aria-live="polite">
