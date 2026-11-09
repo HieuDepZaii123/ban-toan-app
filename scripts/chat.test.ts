@@ -26,7 +26,7 @@ function env(over: Partial<ChatEnv> = {}): ChatEnv {
       calls += 1;
       return "bước 1 rồi kiểm chứng";
     },
-    premium: (license) => license === "bt_premium",
+    premium: async (license) => license === "bt_premium",
     quota: createQuota(),
     freeDaily: 8,
     premiumDaily: 40,

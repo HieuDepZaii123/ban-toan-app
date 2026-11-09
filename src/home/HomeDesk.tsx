@@ -50,7 +50,14 @@ export function HomeDesk() {
       <header className="bar">
         <A className="brand" href="/"><Logo /> Bàn Toán</A>
         <AreaNav />
-        <form className="search" role="search" onSubmit={(event) => event.preventDefault()}>
+        <Prefs />
+      </header>
+      <main id="content">
+        <Welcome />
+        <Room />
+        <ProgressLine />
+        {folded ? null : <Continue />}
+        <form className="search home-search" role="search" onSubmit={(event) => event.preventDefault()}>
           <input
             id="search"
             ref={searchRef}
@@ -61,13 +68,6 @@ export function HomeDesk() {
             autoComplete="off"
           />
         </form>
-        <Prefs />
-      </header>
-      <main id="content">
-        <Welcome />
-        <Room />
-        <ProgressLine />
-        {folded ? null : <Continue />}
         {visible.length === 0 ? (
           <p className="empty">{t(lang, `Không thấy tờ nào với “${query.trim()}”.`, `No sheet matches “${query.trim()}”.`)}</p>
         ) : (

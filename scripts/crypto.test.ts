@@ -18,6 +18,7 @@ import {
 } from "../server/pay/crypto.ts";
 import { payEnv, type PayEnv } from "../server/pay/env.ts";
 import { handlePremium } from "../server/pay/handlers.ts";
+import { withTestStore } from "./testDb.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
@@ -104,7 +105,7 @@ async function fakeFetch(url: string | URL | Request, init?: RequestInit): Promi
 }
 
 function envFor(name: string, rateUrl = ""): PayEnv {
-  return payEnv({
+  return withTestStore(payEnv({
     PREMIUM_PRICE_MONTH: "49000",
     PREMIUM_PRICE_YEAR: "399000",
     PUBLIC_BASE_URL: "http://pay.local",
@@ -118,7 +119,7 @@ function envFor(name: string, rateUrl = ""): PayEnv {
     CRYPTO_SOL_RPC: "http://sol.test/rpc",
     CRYPTO_BSC_CONFIRMATIONS: "15",
     CRYPTO_TRON_CONFIRMATIONS: "19",
-  }, () => clock, fakeFetch);
+  }, () => clock, fakeFetch));
 }
 
 const env = envFor("main");

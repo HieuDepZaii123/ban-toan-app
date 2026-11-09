@@ -1,0 +1,2 @@
+# Python dùng cho npm run test:content (đối chiếu đáp số bằng sympy).
+sympy==1.14.0

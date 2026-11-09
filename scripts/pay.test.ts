@@ -9,6 +9,7 @@ import { payEnv, type PayEnv } from "../server/pay/env.ts";
 import { handlePremium } from "../server/pay/handlers.ts";
 import { CREATE_FIELDS, CREATE_RESPONSE_FIELDS, IPN_FIELDS, hmacSha256, rawSignature, signFields } from "../server/pay/sign.ts";
 import { buildVietQr, crc16CcittFalse, decodeVietQr, verifyVietQr } from "../server/pay/vietqr.ts";
+import { withTestStore } from "./testDb.ts";
 
 const SECRET = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
 const ACCESS = "F8BBA842ECF85";
@@ -111,7 +112,7 @@ async function fakeFetch(_url: string | URL | Request, init?: RequestInit): Prom
   });
 }
 
-const env: PayEnv = payEnv({
+const env: PayEnv = withTestStore(payEnv({
   MOMO_PARTNER_CODE: "MOMO",
   MOMO_ACCESS_KEY: ACCESS,
   MOMO_SECRET_KEY: SECRET,
@@ -125,7 +126,7 @@ const env: PayEnv = payEnv({
   BANK_WEBHOOK_SECRET: "hook-secret",
   ADMIN_TOKEN: "admin-secret",
   PREMIUM_DB_PATH: join(dir, "pay.sqlite"),
-}, () => clock, fakeFetch);
+}, () => clock, fakeFetch));
 
 async function post(path: string, body: unknown, headers: Record<string, string> = {}): Promise<{ status: number; json: Record<string, unknown> }> {
   const res = await handlePremium(new Request(`http://pay.local${path}`, {

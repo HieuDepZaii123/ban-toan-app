@@ -12,7 +12,7 @@ export type ChatEnv = {
   now: () => number;
   mode: "live" | "demo";
   complete: (instructions: string, messages: ChatTurn[]) => Promise<string>;
-  premium: (license: string) => boolean;
+  premium: (license: string) => Promise<boolean>;
   quota: Quota;
   freeDaily: number;
   premiumDaily: number;
@@ -58,9 +58,9 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
   const license = typeof body.license === "string" ? body.license.trim() : "";
   const askedTopic = typeof body.topic === "string" ? body.topic : "";
   const topicId = tutorTopics.some((item) => item.id === askedTopic) ? askedTopic : "";
-  const premium = license ? env.premium(license) : false;
+  const premium = license ? await env.premium(license) : false;
   const dailyLimit = premium ? env.premiumDaily : env.freeDaily;
-  if (env.quota.used(`win:${ip}`, env.now(), env.windowMs) >= env.windowLimit) {
+  if ((await env.quota.used(`win:${ip}`, env.now(), env.windowMs)) >= env.windowLimit) {
     return json(429, {
       error: "rate",
       message: "Bạn hỏi hơi nhanh. Đợi một lát rồi thử lại.",
@@ -69,7 +69,7 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
       remaining: 0,
     });
   }
-  const usedToday = env.quota.used(`day:${ip}`, env.now(), DAY_MS);
+  const usedToday = await env.quota.used(`day:${ip}`, env.now(), DAY_MS);
   if (usedToday >= dailyLimit) {
     return json(429, {
       error: "quota",
@@ -81,8 +81,8 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
       remaining: 0,
     });
   }
-  env.quota.add(`win:${ip}`, env.now());
-  env.quota.add(`day:${ip}`, env.now());
+  await env.quota.add(`win:${ip}`, env.now());
+  await env.quota.add(`day:${ip}`, env.now());
   const remaining = dailyLimit - usedToday - 1;
   try {
     const note = topicId ? `\nHọc sinh đang mở tờ /t/${topicId}.` : "";
