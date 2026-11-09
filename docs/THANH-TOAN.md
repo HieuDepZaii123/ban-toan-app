@@ -32,6 +32,7 @@ api/premium/*.ts            hàm Vercel, mỗi đường một file
 | `GET /api/premium/status` | Theo `orderId` hoặc `license` |
 | `POST /api/premium/bank` | Webhook biến động số dư. Khớp nội dung CK và số tiền, idempotent theo mã giao dịch |
 | `POST /api/premium/confirm` | Duyệt tay mọi cách trả, kể cả crypto. Header `Authorization: Bearer ADMIN_TOKEN` |
+| `POST /api/premium/refund` | Admin ghi nhận đã hoàn tiền: đơn thành `refunded`, mã Premium ngừng chạy, hoa hồng chưa chi bị hủy. Header `Authorization: Bearer ADMIN_TOKEN` |
 | `POST /api/premium/affiliate` | Mã giới thiệu, đếm lượt, xem thống kê của chính mình |
 | `POST /api/premium/affiliate-admin` | Admin xem danh sách và duyệt chi. Không chuyển tiền |
 | `POST /api/premium/crypto` | Đổi mạng khi đơn còn chờ, dán mã giao dịch để đối soát on-chain, hoặc `{ "watch": true }` để worker rà các đơn đã có mã |
@@ -47,6 +48,10 @@ Chữ ký IPN:
 `accessKey` không có trong body IPN. Server tự ghép từ biến môi trường.
 
 VietQR: tag `38` chứa GUID `A000000727`, BIN, số tài khoản và dịch vụ `QRIBFTTA`. Tag `63` là CRC-16/CCITT-FALSE trên cả chuỗi kể cả `6304`. Giá trị kiểm của thuật toán với `123456789` là `29B1`.
+
+Premium mở: đề thi thử chuẩn THPT 2025 không giới hạn ở `/thi-thu` (đề đầu tiên miễn phí), bảng điểm theo phần và chủ đề, trợ lý 40 câu mỗi ngày tính theo mã, và nhập mã trên máy khác ở `/nang-cap`. Trình duyệt kiểm mã qua `/api/premium/status?license=` mỗi lần mở trang (`src/premium/license.ts`) và nhớ kết quả tới hết hạn để dùng khi mất mạng. Chính sách và điều kiện hoàn tiền ở `/chinh-sach` (`REFUND_DAYS` trong `src/premium/terms.ts`, email liên hệ qua `VITE_SUPPORT_EMAIL`).
+
+Khi chạy production (`VERCEL_ENV=production`, `NODE_ENV=production` hoặc `PAY_LIVE=1`), server không nhận IPN MoMo và không tạo đơn ví/QR nếu chỉ có khóa sandbox, và bỏ qua `ADMIN_TOKEN` / `BANK_WEBHOOK_SECRET` mẫu hoặc ngắn hơn 16 ký tự. Chuyển khoản đã xác nhận (webhook, IPN, admin) đến sau khi đơn hết 15 phút vẫn được cấp quyền; crypto giữ hạn chặt vì tỷ giá đã khóa.
 
 Cờ `PREMIUM_LOCK` / `VITE_PREMIUM_LOCK` mặc định tắt. Không tờ nào đọc cờ này để giấu bài. Bật `1` chỉ để một lớp sau này khóa phần mới, không đụng công thức hay câu hỏi đã có.
 
