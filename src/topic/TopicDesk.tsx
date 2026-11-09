@@ -10,6 +10,7 @@ import { setLast, toggleThink, useSlice, EMPTY_THINK } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { SiteHeader } from "../ui/SiteHeader.tsx";
+import { SiteFooter } from "../ui/SiteFooter.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { captionFor } from "../motion/captions.ts";
 import { Motion } from "../motion/Motion.tsx";
@@ -214,6 +215,7 @@ export function TopicDesk({ id }: { id: string }) {
           )
         ) : null}
       </main>
+      <SiteFooter />
     </div>
   );
 }
