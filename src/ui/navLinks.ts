@@ -46,6 +46,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/luyen", id: "drill", label: "Đề luyện", en: "Mixed drill" },
       { href: "/luyen-lop", id: "lop", label: "Lớp 1–9", en: "Grades 1–9", nested: true },
       { href: "/luyen-thpt", id: "thpt", label: "THPT 10–12", en: "Grades 10–12" },
+      { href: "/thi-thu", id: "exam2025", label: "Thi thử 2025", en: "2025 mock exam" },
       { href: "/so-loi", id: "miss", label: "Sổ lỗi", en: "Miss book" },
       { href: "/danh-gia", id: "assess", label: "Đánh giá", en: "Assess" },
     ],

@@ -761,6 +761,26 @@ html[data-lamp="on"] body::before {
 .pay-benefits h2 { font-size: 1.1rem; margin: 0 0 6px; }
 .pay-benefits li { margin: 6px 0; line-height: 1.55; }
 .license-box { margin: 12px 0; }
+.exam-intro ul, .exam-losses { line-height: 1.6; }
+.exam-free { color: var(--muted); }
+.exam-bar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; padding: 8px 12px; margin: 0 0 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); font-variant-numeric: tabular-nums; }
+.exam-part h2 { margin-top: 28px; }
+.exam-q { margin: 16px 0 20px; }
+.exam-q h3, .exam-q h4 { font-size: 1rem; font-weight: 500; line-height: 1.6; margin: 0 0 8px; }
+.exam-no { font-weight: 700; }
+.exam-tf { padding-left: 1.4rem; display: grid; gap: 8px; }
+.exam-tf li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.exam-tf-text { flex: 1 1 260px; min-width: 0; }
+.exam-tf-pick { display: flex; gap: 6px; }
+.exam-tf-pick button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.exam-short { display: flex; gap: 8px; align-items: center; }
+.exam-short input { min-height: 44px; width: 8rem; font: inherit; font-variant-numeric: tabular-nums; padding: 0 10px; border: 1px solid var(--muted); border-radius: 10px; background: var(--sheet); color: var(--ink); }
+.exam-result { border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; background: var(--sheet); margin: 0 0 16px; }
+.exam-review summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; }
+.exam-review .exam-q.is-right h4 { color: var(--ok); }
+.exam-review .exam-q.is-wrong h4 { color: var(--clay); }
+.exam-history table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.exam-history th, .exam-history td { padding: 6px 12px; border-bottom: 1px solid var(--line); text-align: left; }
 .license-box label { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .license-box input { min-height: 40px; min-width: 16rem; font-family: ui-monospace, monospace; }
 .policy h2 { font-size: 1.15rem; margin: 28px 0 8px; }

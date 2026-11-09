@@ -162,8 +162,8 @@ const cubic: DssItem = {
 
 const ball: DssItem = {
   id: "deriv-d-ball",
-  context: (p) => R`Độ cao $h(t)=${p.v}t-5t^2$ với $t\ge 0$. Thời điểm $s\ge 0$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Height $h(t)=${p.v}t-5t^2$ for $t\ge 0$. A time $s\ge 0$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Độ cao $h(t)=vt-5t^2$ với $v=${p.v}$ và $t\ge 0$. Thời điểm $s\ge 0$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
+  contextEn: (p) => R`Height $h(t)=vt-5t^2$ with $v=${p.v}$, for $t\ge 0$. A time $s\ge 0$ is unknown. Mark each statement true, false, or not enough.`,
   hint: R`$h'(t)=v-10t$. Cao nhất khi $h'=0$, chạm đất lần nữa khi $h=0$ và $t>0$.`,
   hintEn: R`$h'(t)=v-10t$. The top is where $h'=0$, and the later landing is where $h=0$ with $t>0$.`,
   rows: [{ v: 10 }, { v: 20 }, { v: 30 }, { v: 40 }],

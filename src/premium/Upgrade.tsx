@@ -481,7 +481,7 @@ function LicenseBox() {
         <b>{t(lang, "Premium đang bật trên máy này", "Premium is on for this device")}</b>
         <span>{t(lang, `đến ${new Date(premium.until).toLocaleDateString("vi-VN")}.`, `until ${new Date(premium.until).toLocaleDateString("en-GB")}.`)}</span>
         {" "}
-        <A href="/luyen-thpt?de=2025">{t(lang, "Làm đề thi thử 2025", "Take a 2025 mock exam")}</A>
+        <A href="/thi-thu">{t(lang, "Làm đề thi thử 2025", "Take a 2025 mock exam")}</A>
       </p>
     );
   }

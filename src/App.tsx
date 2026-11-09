@@ -15,6 +15,7 @@ import { useLang } from "./ui/useLang.ts";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ default: mod.Upgrade })));
+const ExamPage = lazy(() => import("./pages/ExamPage.tsx").then((mod) => ({ default: mod.ExamPage })));
 const PolicyPage = lazy(() => import("./pages/PolicyPage.tsx").then((mod) => ({ default: mod.PolicyPage })));
 const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
 const GradeDesk = lazy(() => import("./grades/GradeDesk.tsx").then((mod) => ({ default: mod.GradeDesk })));
@@ -74,6 +75,7 @@ function Shell() {
   if (path.startsWith("/t/")) return <TopicDesk id={topicId(path)} />;
   if (path === "/nang-cap") return <Upgrade />;
   if (path === "/chinh-sach") return <PolicyPage />;
+  if (path === "/thi-thu") return <ExamPage />;
   if (path === "/so-cong-thuc") return <FormulaPage />;
   if (path === "/danh-gia") return <AssessPage />;
   if (path === "/xuong-hinh") return <WorkshopPage />;
