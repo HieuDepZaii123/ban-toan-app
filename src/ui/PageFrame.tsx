@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "./SiteHeader.tsx";
+import { SiteFooter } from "./SiteFooter.tsx";
 
 export function PageFrame({ kicker, title, lead, children }: { kicker: string; title: string; lead?: string; children: ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export function PageFrame({ kicker, title, lead, children }: { kicker: string; t
         {lead ? <p className="lead">{lead}</p> : null}
         {children}
       </main>
+      <SiteFooter />
     </div>
   );
 }

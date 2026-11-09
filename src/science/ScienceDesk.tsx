@@ -3,6 +3,7 @@ import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { LectureVideos } from "../topic/LectureVideos.tsx";
 import { SiteHeader } from "../ui/SiteHeader.tsx";
+import { SiteFooter } from "../ui/SiteFooter.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { scienceById, sciences, type ScienceId } from "./catalog.ts";
 import { ScienceStudy } from "./ScienceStudy.tsx";
@@ -30,6 +31,7 @@ export function ScienceDesk({ path }: { path: string }) {
           </p>
         )}
       </main>
+      <SiteFooter />
     </div>
   );
 }

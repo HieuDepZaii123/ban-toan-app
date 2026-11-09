@@ -5,6 +5,7 @@ import { sciences } from "../science/catalog.ts";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
 import { SiteHeader } from "../ui/SiteHeader.tsx";
+import { SiteFooter } from "../ui/SiteFooter.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
@@ -96,12 +97,8 @@ export function HomeDesk() {
             ))}
           </div>
         </section>
-        <p className="foot">
-          {t(lang, "Số liệu nằm trên máy này. Sau lần mở đầu, bàn vẫn dùng được khi mất mạng.", "Numbers stay on this device. After the first load, the desk works offline.")}
-          {" "}
-          <A href="/nang-cap">{t(lang, "Nâng cấp Premium", "Upgrade to Premium")}</A>
-        </p>
       </main>
+      <SiteFooter />
     </div>
   );
 }
