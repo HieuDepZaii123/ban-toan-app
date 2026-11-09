@@ -7,7 +7,7 @@ function escapeHtml(value: string): string {
 
 function renderInlines(inlines: readonly Inline[]): string {
   return inlines.map((part) => {
-    if (part.kind === "math") return katex.renderToString(part.tex, { throwOnError: false, displayMode: part.display, output: "html" });
+    if (part.kind === "math") return katex.renderToString(part.tex, { throwOnError: false, displayMode: part.display, output: "htmlAndMathml" });
     const text = escapeHtml(part.text);
     if (part.kind === "bold") return `<strong>${text}</strong>`;
     if (part.kind === "italic") return `<em>${text}</em>`;

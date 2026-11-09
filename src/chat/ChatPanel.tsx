@@ -25,6 +25,8 @@ const SESSION = "ban-toan-chat-session";
 const LICENSE = "ban-toan-license";
 const URL_KEY = "bt-ask-url";
 const MOCK_KEY = "bt-ask-mock";
+/** The server-connection panel (sample mode, custom API URL) is a developer tool, not for students. */
+const DEV_TOOLS = import.meta.env.DEV;
 const LOCAL_LIMIT = 8;
 
 const QUICK = ["Đạo hàm của x mũ 2", "Đỉnh của parabol?", "giới hạn dạng 0/0"];
@@ -101,9 +103,11 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   const [note, setNote] = useState("");
   const [meta, setMeta] = useState<ChatState>({});
   const [url, setUrl] = useState(() => {
+    if (!DEV_TOOLS) return "";
     try { return localStorage.getItem(URL_KEY) || ""; } catch { return ""; }
   });
   const [mock, setMock] = useState(() => {
+    if (!DEV_TOOLS) return false;
     try { return localStorage.getItem(MOCK_KEY) === "1"; } catch { return false; }
   });
   const [localLeft, setLocalLeft] = useState(() => Math.max(0, LOCAL_LIMIT - usedToday()));
@@ -239,7 +243,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       {draft.includes("$") ? (
         <p className="chat-preview" aria-label={t(lang, "Xem công thức", "Formula preview")}><MathText text={draft} /></p>
       ) : null}
-      <details className="chat-config">
+      {DEV_TOOLS ? <details className="chat-config">
         <summary>{t(lang, "Kết nối máy chủ", "Server connection")}</summary>
         <label className="chat-check">
           <input
@@ -265,7 +269,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
           />
         </label>
         <p className="lecture-note">{t(lang, "Khóa API để ở máy chủ. Ô này chỉ nhận địa chỉ.", "The API key stays on the server. This field is only an address.")}</p>
-      </details>
+      </details> : null}
     </section>
   );
 }

@@ -32,6 +32,8 @@
 }
 
 :root {
+  /* Text on an accent-filled control: white on teal by day, dark on gold at night (white on gold was 1.9:1). */
+  --on-accent: #fff;
   --study-h: 72px;
   --logo-accent: #e0a84a;
   --bg: #e7e0d2;
@@ -57,6 +59,7 @@
 }
 
 :root[data-theme="night"] {
+  --on-accent: #1c140c;
   --bg: #1c1612;
   --sheet: #2a211b;
   --ink: #f6ead7;
@@ -702,7 +705,7 @@ html[data-lamp="on"] body::before {
   border: 0;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   padding: 0 18px;
   font: inherit;
 }
@@ -757,7 +760,7 @@ html[data-lamp="on"] body::before {
   border: 0;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   padding: 0 18px;
   font: inherit;
 }
@@ -800,7 +803,7 @@ html[data-lamp="on"] body::before {
   color: var(--ink);
   font: inherit;
 }
-.lang-switch button[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: transparent; }
+.lang-switch button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: transparent; }
 .menu-lang { margin: 4px 0 10px; }
 .chat-diagram { overflow: auto; max-width: 100%; }
 .chat-diagram svg { max-width: 100%; height: auto; }
@@ -827,7 +830,7 @@ html[data-lamp="on"] body::before {
   border: 0;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   padding: 0 16px;
   font: inherit;
   box-shadow: 0 8px 24px rgb(0 0 0 / 16%);
@@ -932,7 +935,7 @@ html[data-lamp="on"] body::before {
   border: 0;
   border-radius: 999px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   white-space: nowrap;
 }
 .study-play[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
@@ -1260,7 +1263,7 @@ html[data-lamp="on"] body::before {
 .bar > .topic-bar { grid-area: sub; }
 .topic-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; min-width: 0; }
 .topic-title { flex: 1 1 220px; min-width: 0; display: flex; align-items: baseline; gap: 10px; }
-.topic-title strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.topic-title h1 { font: inherit; font-weight: 700; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .topic-title span { flex: none; color: var(--muted); font-size: 0.8rem; white-space: nowrap; }
 .topic-bar .tabs { flex: 0 1 auto; gap: 2px; overflow-x: auto; scrollbar-width: none; }
 .topic-bar .tabs::-webkit-scrollbar { display: none; }

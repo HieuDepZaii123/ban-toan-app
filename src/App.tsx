@@ -3,6 +3,7 @@ import { ChatEntry } from "./chat/ChatEntry.tsx";
 import { HomeDesk } from "./home/HomeDesk.tsx";
 import { captureReferral } from "./lib/referral.ts";
 import { A, RouteProvider } from "./lib/route.tsx";
+import { PageFrame } from "./ui/PageFrame.tsx";
 import { useRoute } from "./lib/useRoute.ts";
 import { setTheme, useSlice } from "./lib/store.ts";
 import { t } from "./lib/text.ts";
@@ -84,7 +85,25 @@ function Shell() {
   if (path === "/luyen-thpt") return <ThptPracticePage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return <GradeDesk />;
-  return <HomeDesk />;
+  if (path === "/" || path === "") return <HomeDesk />;
+  return <NotFound />;
+}
+
+function NotFound() {
+  const lang = useLang();
+  useEffect(() => {
+    document.title = t(lang, "Không có trang này · Bàn Toán", "Page not found · Bàn Toán");
+  }, [lang]);
+  return (
+    <PageFrame kicker="404" title={t(lang, "Không có trang này", "There is no page here")}>
+      <p>{t(lang, "Đường dẫn có thể đã đổi hoặc gõ nhầm.", "The link may have changed or been mistyped.")}</p>
+      <p>
+        <A href="/">{t(lang, "Về bàn", "Back to the desk")}</A>
+        {" · "}
+        <A href="/kien-thuc">{t(lang, "Kiến thức lớp 1–12", "Lessons for grades 1–12")}</A>
+      </p>
+    </PageFrame>
+  );
 }
 
 function Broken() {
