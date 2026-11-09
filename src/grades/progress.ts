@@ -14,7 +14,11 @@ export function readDone(): string[] {
 export function markDone(grade: number, lessonId: string): string[] {
   const id = `${grade}/${lessonId}`;
   const next = Array.from(new Set([...readDone(), id]));
-  window.localStorage.setItem(KEY, JSON.stringify(next));
+  try {
+    window.localStorage.setItem(KEY, JSON.stringify(next));
+  } catch {
+    /* Storage full or blocked: the lesson still counts for this visit. */
+  }
   window.dispatchEvent(new Event("grade-progress"));
   return next;
 }

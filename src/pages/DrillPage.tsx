@@ -11,7 +11,13 @@ import { useLang } from "../ui/useLang.ts";
 
 export function DrillPage() {
   const ids = sharedDrill.map((item) => item.id);
-  const [index, setIndex] = useState(() => resolveDrillIndex(ids, localStorage.getItem(DRILL_AT), localStorage.getItem(DRILL_ID)));
+  const [index, setIndex] = useState(() => {
+    try {
+      return resolveDrillIndex(ids, localStorage.getItem(DRILL_AT), localStorage.getItem(DRILL_ID));
+    } catch {
+      return resolveDrillIndex(ids, null, null);
+    }
+  });
   useEffect(() => {
     try {
       localStorage.setItem(DRILL_AT, String(index));

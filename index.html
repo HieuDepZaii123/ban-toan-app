@@ -10,6 +10,33 @@
     <link rel="apple-touch-icon" href="/icon-192.png" />
     <title>Bàn Toán</title>
     <script>
+      // Some browsers (private modes, school-managed profiles) throw on any storage access.
+      // Swap in an in-memory store first, so the app still runs; progress just is not kept.
+      (function () {
+        function memory() {
+          var data = {};
+          return {
+            getItem: function (k) { return Object.prototype.hasOwnProperty.call(data, k) ? data[k] : null; },
+            setItem: function (k, v) { data[k] = String(v); },
+            removeItem: function (k) { delete data[k]; },
+            clear: function () { data = {}; },
+            key: function (i) { return Object.keys(data)[i] || null; },
+            get length() { return Object.keys(data).length; },
+          };
+        }
+        ["localStorage", "sessionStorage"].forEach(function (name) {
+          try {
+            var store = window[name];
+            var probe = "__bt_probe__";
+            store.setItem(probe, "1");
+            store.removeItem(probe);
+          } catch (e) {
+            try { Object.defineProperty(window, name, { value: memory(), configurable: true }); } catch (e2) {}
+          }
+        });
+      })();
+    </script>
+    <script>
       try {
         var saved = JSON.parse(localStorage.getItem("ban-toan") || "null");
         var mode = localStorage.getItem("bt-theme");
