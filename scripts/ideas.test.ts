@@ -14,6 +14,7 @@ const ROUTES = new Set([
   "/",
   "/kien-thuc",
   "/soan-tai-lieu",
+  "/chinh-sach",
   "/xuong-hinh",
   "/luyen",
   "/luyen-lop",

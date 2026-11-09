@@ -202,7 +202,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       {studying ? <p className="chat-context">{t(lang, `Đang học: ${studying.title}`, `Studying: ${studying.title}`)}</p> : null}
       <div className="chat-log" ref={scroller} aria-live="polite">
         {turns.length === 0 ? (
-          <p className="chat-note">{t(lang, "Cứ nói chuyện. Gặp bài thì mình nêu tư duy giải, rồi gợi ý từng bước.", "Talk freely. On a problem I show the solution thinking, then hint the steps.")}</p>
+          <p className="chat-note">{t(lang, "Đưa bài toán, mình nêu tư duy giải rồi gợi ý từng bước. Câu hỏi được gửi tới nhà cung cấp AI bên ngoài, nên đừng ghi tên, địa chỉ hay số điện thoại. ", "Send a maths problem and I will show the solution thinking, then hint the steps. Questions go to an outside AI provider, so do not include names, addresses or phone numbers. ")}<A href="/chinh-sach">{t(lang, "Chính sách", "Policy")}</A></p>
         ) : null}
         {turns.map((turn, index) => (
           <article key={`${turn.role}-${index}`} className={`chat-turn is-${turn.role}`}>

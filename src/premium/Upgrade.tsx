@@ -72,6 +72,7 @@ export function Upgrade() {
   const [plans, setPlans] = useState<Plans | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [email, setEmail] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const [plan, setPlan] = useState<PlanId>("month");
   const [method, setMethod] = useState<PayMethod>("wallet");
   const [chain, setChain] = useState<CryptoChainId>("tron-usdt");
@@ -209,6 +210,14 @@ export function Upgrade() {
                 aria-label={t(lang, "Email nhận quyền Premium", "Email for the Premium license")}
               />
             </label>
+            <label className="pay-consent">
+              <input type="checkbox" required checked={agreed} onChange={(event) => setAgreed(event.target.checked)} />
+              <span>
+                {t(lang, "Tôi đã đọc ", "I have read the ")}
+                <A href="/chinh-sach">{t(lang, "chính sách và điều kiện hoàn tiền", "policy and refund terms")}</A>
+                {t(lang, ". Nếu tôi dưới 16 tuổi, cha mẹ hoặc người giám hộ đã đồng ý.", ". If I am under 16, a parent or guardian has agreed.")}
+              </span>
+            </label>
             <div className="pay-grid methods" role="radiogroup" aria-label={t(lang, "Cách thanh toán", "Payment method")}>
               <MethodCard
                 id="wallet"
@@ -253,7 +262,7 @@ export function Upgrade() {
               </>
             ) : null}
             {formError ? <p className="pay-warn" role="alert">{formError}</p> : null}
-            <button className="pay-btn" type="submit" disabled={busy || !plans}>
+            <button className="pay-btn" type="submit" disabled={busy || !plans || !agreed}>
               {busy ? t(lang, "Đang tạo đơn…", "Creating the order…") : t(lang, "Tạo đơn thanh toán", "Create the payment")}
             </button>
           </form>
