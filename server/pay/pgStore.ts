@@ -159,7 +159,7 @@ export function pgStore(client: SqlClient): PayStore {
       return row?.order_id ?? null;
     },
 
-    async markPaid(orderId, now, amount, transId, eventKind, eventId): Promise<MarkPaid> {
+    async markPaid(orderId, now, amount, transId, eventKind, eventId, allowLate = false): Promise<MarkPaid> {
       await ready();
       return client.transaction(async (tx): Promise<MarkPaid> => {
         const current = await one(tx, "SELECT * FROM orders WHERE order_id = $1 FOR UPDATE", [orderId]);
@@ -169,11 +169,14 @@ export function pgStore(client: SqlClient): PayStore {
         if (order.status === "paid" && order.licenseKey) {
           return { ok: true, applied: false, licenseKey: order.licenseKey, expiresAt: (order.paidAt ?? now) + termMs(order) };
         }
-        if (order.status === "expired" || now > order.expiresAt) {
+        if (allowLate) {
+          if (current.status === "expired") {
+            await tx.query("UPDATE orders SET status = 'pending' WHERE order_id = $1 AND status = 'expired'", [orderId]);
+          } else if (current.status !== "pending") return { ok: false, error: "duplicate" };
+        } else if (order.status === "expired" || now > order.expiresAt) {
           await tx.query("UPDATE orders SET status = 'expired' WHERE order_id = $1 AND status = 'pending'", [orderId]);
           return { ok: false, error: "expired" };
-        }
-        if (current.status !== "pending") return { ok: false, error: "duplicate" };
+        } else if (current.status !== "pending") return { ok: false, error: "duplicate" };
         const event = await tx.query(
           "INSERT INTO payment_events (event_kind, event_id, order_id) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
           [eventKind, eventId, orderId],

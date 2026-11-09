@@ -93,7 +93,11 @@ type SyncStore = {
   setCryptoTx(orderId: string, tx: string): void;
   listPendingCrypto(now: number): OrderRow[];
   eventOrder(kind: string, id: string): string | null;
-  markPaid(orderId: string, now: number, amount: number, transId: string | null, eventKind: string, eventId: string): MarkPaid;
+  /**
+   * allowLate: the provider has confirmed the money arrived (bank webhook, MoMo IPN, admin check),
+   * so a late payment still issues the license instead of being dropped as "expired".
+   */
+  markPaid(orderId: string, now: number, amount: number, transId: string | null, eventKind: string, eventId: string, allowLate?: boolean): MarkPaid;
   ensureAffiliate(ownerHash: string, email: string | null, now: number): { code: string };
   affiliateOfCode(code: string): { code: string; ownerHash: string; email: string | null } | null;
   recordVisit(code: string, visitorHash: string, now: number): boolean;
@@ -271,6 +275,7 @@ function openSqlite(dbPath: string): SyncStore {
   const byTransfer = db.prepare("SELECT * FROM orders WHERE transfer_code = ?");
   const byLicense = db.prepare("SELECT * FROM orders WHERE license_hash = ? AND status = 'paid'");
   const expire = db.prepare("UPDATE orders SET status = 'expired' WHERE order_id = ? AND status = 'pending'");
+  const reopen = db.prepare("UPDATE orders SET status = 'pending' WHERE order_id = ? AND status = 'expired'");
   const insertEvent = db.prepare("INSERT INTO payment_events (event_kind, event_id, order_id) VALUES (?, ?, ?)");
   const setMomo = db.prepare("UPDATE orders SET pay_url = ?, deeplink = ?, qr_code_url = ? WHERE order_id = ?");
   const taken = db.prepare(`
@@ -400,7 +405,7 @@ function openSqlite(dbPath: string): SyncStore {
       const row = eventOf.get(kind, id) as { order_id: string } | undefined;
       return row?.order_id ?? null;
     },
-    markPaid(orderId, now, amount, transId, eventKind, eventId) {
+    markPaid(orderId, now, amount, transId, eventKind, eventId, allowLate = false) {
       db.exec("BEGIN IMMEDIATE");
       try {
         const current = byId.get(orderId) as SqlOrder | undefined;
@@ -418,7 +423,8 @@ function openSqlite(dbPath: string): SyncStore {
           const term = order.plan === "year" ? 365 : 30;
           return { ok: true, applied: false, licenseKey: order.licenseKey, expiresAt: (order.paidAt ?? now) + term * 86_400_000 };
         }
-        if (order.status === "expired" || now > order.expiresAt) {
+        if (allowLate && current.status === "expired") reopen.run(orderId);
+        else if (!allowLate && (order.status === "expired" || now > order.expiresAt)) {
           expire.run(orderId);
           db.exec("COMMIT");
           return { ok: false, error: "expired" };

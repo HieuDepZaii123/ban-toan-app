@@ -221,7 +221,7 @@ const fresh = await post("/api/premium/create", { email: "hieu@example.com", pla
 const freshId = String(fresh.json.orderId);
 clock = anchor + 16 * 60 * 1000;
 const late = await post("/api/premium/confirm", { orderId: freshId }, { authorization: "Bearer admin-secret" });
-assert(late.status === 409, `expired confirm ${late.status}`);
+assert(late.status === 200 && late.json.applied === true, `late bank order still confirms ${late.status}`);
 const noAdmin = await post("/api/premium/confirm", { orderId: freshId });
 assert(noAdmin.status === 401, "admin token required");
 
@@ -235,6 +235,19 @@ assert(allowedAgain.json.applied === false, "admin confirm is idempotent");
 const ret = await handlePremium(new Request("http://pay.local/api/premium/return?orderId=BTDEMO&resultCode=0"), env);
 assert(ret.status === 302, "return redirects");
 assert(ret.headers.get("location") === "http://pay.local/nang-cap?orderId=BTDEMO", "return keeps order id and drops resultCode");
+
+// A production deploy must never fall back to MoMo's public sandbox secret or the .env.example placeholders.
+const prod = withTestStore(payEnv({ VERCEL_ENV: "production", ADMIN_TOKEN: "doi-token-admin", BANK_WEBHOOK_SECRET: "short" }, () => clock));
+assert(prod.live && !prod.momoReady, "live deploy without MoMo secret is not MoMo-ready");
+assert(prod.adminToken === "" && prod.webhookSecret === "", "placeholder or short secrets are refused when live");
+const forged = await handlePremium(new Request("http://pay.local/api/premium/ipn", { method: "POST", body: "{}" }), prod);
+assert(forged.status === 503, `ipn refused without a real MoMo secret ${forged.status}`);
+const walletProd = await handlePremium(new Request("http://pay.local/api/premium/create", { method: "POST", body: JSON.stringify({ email: "a@b.vn", plan: "month", method: "wallet" }) }), prod);
+assert(walletProd.status === 503, "wallet order refused without MoMo");
+const bankProd = await handlePremium(new Request("http://pay.local/api/premium/create", { method: "POST", body: JSON.stringify({ email: "a@b.vn", plan: "month", method: "bank" }) }), prod);
+assert(bankProd.status === 200, `bank transfer still works without MoMo ${bankProd.status}`);
+const dev = payEnv({ ADMIN_TOKEN: "doi-token-admin" });
+assert(!dev.live && dev.momoReady && dev.adminToken === "", "sandbox works locally, placeholders never do");
 
 if (fails.length > 0) {
   console.error(fails.join("\n"));
