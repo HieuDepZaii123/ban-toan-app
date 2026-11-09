@@ -76,6 +76,8 @@ export function StudyPlayer() {
   const [playing, setPlaying] = useState(false);
   const [broken, setBroken] = useState(false);
   const [readyUi, setReadyUi] = useState(false);
+  // YouTube is contacted only after the learner presses Play (no third-party script on page load).
+  const [enabled, setEnabled] = useState(false);
   const host = useRef<HTMLDivElement>(null);
   const player = useRef<YtPlayer | null>(null);
   const ready = useRef(false);
@@ -119,6 +121,7 @@ export function StudyPlayer() {
   });
 
   useEffect(() => {
+    if (!enabled) return;
     let cancelled = false;
     const mountedId = () => {
       const live = controls.current;
@@ -174,7 +177,7 @@ export function StudyPlayer() {
       player.current?.destroy();
       player.current = null;
     };
-  }, []);
+  }, [enabled]);
 
   useEffect(() => {
     const current = player.current;
@@ -215,6 +218,14 @@ export function StudyPlayer() {
   }
 
   function toggle() {
+    if (!enabled) {
+      // First press: load the player; onReady starts playback because playingRef is set.
+      playingRef.current = true;
+      setPlaying(true);
+      setBroken(false);
+      setEnabled(true);
+      return;
+    }
     const current = player.current;
     if (!current || !ready.current) return;
     if (playing) return stop();
@@ -295,9 +306,9 @@ export function StudyPlayer() {
           id="nhac-phat"
           className="study-play"
           aria-pressed={playing}
-          aria-label={readyUi ? (playing ? t(lang, "Tạm dừng nhạc", "Pause music") : t(lang, "Phát nhạc", "Play music")) : t(lang, "Nhạc đang tải", "Music loading")}
-          title={readyUi ? undefined : t(lang, "Nhạc đang tải", "Music loading")}
-          disabled={!readyUi || !track}
+          aria-label={readyUi || !enabled ? (playing && readyUi ? t(lang, "Tạm dừng nhạc", "Pause music") : t(lang, "Phát nhạc", "Play music")) : t(lang, "Nhạc đang tải", "Music loading")}
+          title={readyUi || !enabled ? undefined : t(lang, "Nhạc đang tải", "Music loading")}
+          disabled={(enabled && !readyUi) || !track}
           onClick={toggle}
         >
           <span aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
