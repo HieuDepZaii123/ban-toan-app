@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { LectureVideos } from "../topic/LectureVideos.tsx";
-import { AreaNav } from "../ui/AreaNav.tsx";
-import { Prefs } from "../ui/Prefs.tsx";
+import { SiteHeader } from "../ui/SiteHeader.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { scienceById, sciences, type ScienceId } from "./catalog.ts";
 import { ScienceStudy } from "./ScienceStudy.tsx";
@@ -20,11 +19,7 @@ export function ScienceDesk({ path }: { path: string }) {
   return (
     <div className="desk">
       <a className="skip" href="#content">{t(lang, "Vào nội dung", "Skip to content")}</a>
-      <header className="bar">
-        <A className="brand" href="/">Bàn Toán</A>
-        <AreaNav />
-        <Prefs />
-      </header>
+      <SiteHeader />
       <main id="content">
         {!id ? <ScienceHome /> : topic ? (
           <ScienceTopic id={topic.id} title={topic.title} blurb={topic.blurb} />
