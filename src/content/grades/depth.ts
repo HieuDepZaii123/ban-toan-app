@@ -59,47 +59,38 @@ function assumed(chapterTitle: string, lesson: GradeLesson): string | undefined 
   return lesson.dataNote;
 }
 
-function harder(lesson: GradeLesson): GradeDrill | null {
-  const base = lesson.drills[0];
-  const check = base?.checks[0];
-  if (!base || !check) return null;
-  const value = numberOf(check.expect.trim());
-  if (value === null || !Number.isFinite(value)) {
-    return {
-      prompt: "Chọn kết luận khớp với ví dụ của bài.",
-      answer: lesson.examples[0]?.ket ?? base.answer,
-      why: "Đáp án là kết luận của ví dụ. Hai câu kia đổi phép hoặc đổi dấu.",
-      checks: [check],
-      stars: 2,
-      hints: [
-        "Đọc kết luận ở cuối ví dụ.",
-        "Bỏ câu đổi dấu hoặc đổi phép tính.",
-      ],
-      ask: {
-        kind: "choice",
-        correct: 0,
-        options: [
-          lesson.examples[0]?.ket ?? base.answer,
-          "Kết quả đổi dấu so với đáp án đúng.",
-          "Kết quả lớn hơn đáp án đúng vì đã nhân thêm một thừa số.",
-        ],
-      },
-    };
+/** How a number may appear in Vietnamese answer text: 15, -2, 0,25, 1/4. */
+function spellings(value: number, expect: string): string[] {
+  const out = new Set<string>([expect.replace(/^Rational\((-?\d+),(-?\d+)\)$/, "$1/$2")]);
+  if (Number.isFinite(value)) {
+    out.add(String(value));
+    out.add(String(Math.round(value * 1000) / 1000).replace(".", ","));
   }
-  const next = value + 1;
-  const shown = Number.isInteger(next) ? String(next) : String(Math.round(next * 1000) / 1000);
-  return {
-    prompt: "Làm đúng bài gốc, rồi cộng thêm 1. Kết quả mới bằng bao nhiêu?",
-    answer: `Kết quả mới bằng ${shown.replace(".", ",")}.`,
-    why: "Bài gốc cho một số. Bài nâng cao giữ nguyên số đó rồi cộng thêm đúng một đơn vị.",
-    checks: [{ expr: `(${check.expr})+1`, expect: `(${check.expect})+1` }],
-    stars: 3,
-    hints: [
-      "Tính xong bài gốc trước, chưa cộng thêm.",
-      "Cộng thêm đúng một đơn vị, không nhân đôi đáp số.",
-    ],
-    ask: { kind: "number", value: next, tolerance: 0.001 },
-  };
+  return [...out];
+}
+
+const YES_NO = /^kiểm tra|có thuộc|có phải|có là|đúng không|hay không|có\s.*\skhông\s*\?|có cắt|có song song|có vuông góc/i;
+const SEVERAL = /\bhoặc\b|;|\bvà\s*\$?x\s*=|x_1|x_2/i;
+
+/**
+ * Only offer a number box when the drill's stated answer really is that single number.
+ * checks[0].expect is a verification value; it is not always what the question asks for
+ * (a factor's constant, one of two roots, or a yes/no question).
+ */
+function numberAsk(drill: GradeDrill): number | null {
+  const expect = drill.checks[0]?.expect.trim() ?? "";
+  const value = numberOf(expect);
+  if (value === null) return null;
+  if (YES_NO.test(drill.prompt) || SEVERAL.test(drill.answer)) return null;
+  const answer = drill.answer.replace(/\\,|\s/g, "");
+  const said = spellings(value, expect).some((text) => {
+    const at = answer.indexOf(text);
+    if (at < 0) return false;
+    const before = answer[at - 1] ?? "";
+    const after = answer[at + text.length] ?? "";
+    return !/[\d,]/.test(before) && !/\d/.test(after) && !(after === "," && /\d/.test(answer[at + text.length + 1] ?? ""));
+  });
+  return said ? value : null;
 }
 
 export function deepen(book: GradeBook): GradeBook {
@@ -108,11 +99,10 @@ export function deepen(book: GradeBook): GradeBook {
     chapters: book.chapters.map((chapter) => ({
       ...chapter,
       lessons: chapter.lessons.map((lesson) => {
-        const extra = lesson.drills.some((drill) => (drill.stars ?? 0) >= 2) ? null : harder(lesson);
-        const drills = (extra ? [...lesson.drills, extra] : lesson.drills).map((drill, index, all) => {
+        const drills = lesson.drills.map((drill, index, all) => {
           const starred = index === all.length - 1 && (drill.stars ?? 0) < 2 ? { ...drill, stars: 2 } : drill;
           if (starred.ask) return starred;
-          const value = numberOf(starred.checks[0]?.expect.trim() ?? "");
+          const value = numberAsk(starred);
           if (value === null) return starred;
           return { ...starred, ask: { kind: "number" as const, value, tolerance: 0.001 } };
         });
