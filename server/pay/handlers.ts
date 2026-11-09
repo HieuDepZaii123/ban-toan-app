@@ -98,6 +98,7 @@ export async function handlePremium(request: Request, env: PayEnv): Promise<Resp
   if (path === "/api/premium/status" && request.method === "GET") return status(url, env, store);
   if (path === "/api/premium/bank" && request.method === "POST") return bankHook(request, env, store);
   if (path === "/api/premium/confirm" && request.method === "POST") return confirm(request, env, store);
+  if (path === "/api/premium/refund" && request.method === "POST") return refund(request, env, store);
   if (path === "/api/premium/crypto" && request.method === "POST") return cryptoRoute(request, env, store);
   if (path === "/api/premium/affiliate" && request.method === "POST") return affiliateRoute(request, env, store);
   if (path === "/api/premium/affiliate-admin" && request.method === "POST") return affiliateAdmin(request, env, store);
@@ -454,6 +455,16 @@ async function settleBank(env: PayEnv, store: PayStore, notice: BankNotice): Pro
     return json(marked.error === "expired" ? 409 : 400, { error: marked.error, applied: false });
   }
   return json(200, { ok: true, applied: marked.applied, orderId: order.orderId });
+}
+
+/** Admin: the money has been returned, so the licence stops working. */
+async function refund(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
+  const body = await readJson(request);
+  const orderId = typeof body.orderId === "string" ? body.orderId : "";
+  if (!orderId) return json(400, { error: "order" });
+  const done = await store.refundOrder(orderId);
+  return done ? json(200, { ok: true, orderId }) : json(404, { error: "not_paid" });
 }
 
 async function confirm(request: Request, env: PayEnv, store: PayStore): Promise<Response> {

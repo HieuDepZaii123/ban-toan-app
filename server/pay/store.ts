@@ -8,7 +8,7 @@ import { newAffiliateCode } from "./affiliate.ts";
 import { pgStore } from "./pgStore.ts";
 import type { PayMethod, PlanId } from "./env.ts";
 
-export type OrderStatus = "pending" | "paid" | "expired";
+export type OrderStatus = "pending" | "paid" | "expired" | "refunded";
 
 export type OrderRow = {
   orderId: string;
@@ -104,6 +104,8 @@ type SyncStore = {
   affiliateStats(code: string, now: number): AffiliateStats;
   listAffiliates(now: number): AffiliateAdminRow[];
   approveAffiliate(code: string, now: number): { count: number; amount: number };
+  /** Refund a paid order: its licence stops working and an unpaid referral commission is voided. */
+  refundOrder(orderId: string): boolean;
 };
 
 /**
@@ -160,7 +162,7 @@ export function fromSql(row: SqlOrder, now: number): OrderRow {
     method: storedMethod(row.method),
     amount: row.amount,
     transferCode: row.transfer_code,
-    status: row.status === "paid" ? "paid" : expired || row.status === "expired" ? "expired" : "pending",
+    status: row.status === "paid" ? "paid" : row.status === "refunded" ? "refunded" : expired || row.status === "expired" ? "expired" : "pending",
     createdAt: row.created_at,
     expiresAt: row.expires_at,
     paidAt: row.paid_at,
@@ -274,6 +276,8 @@ function openSqlite(dbPath: string): SyncStore {
   const byId = db.prepare("SELECT * FROM orders WHERE order_id = ?");
   const byTransfer = db.prepare("SELECT * FROM orders WHERE transfer_code = ?");
   const byLicense = db.prepare("SELECT * FROM orders WHERE license_hash = ? AND status = 'paid'");
+  const refund = db.prepare("UPDATE orders SET status = 'refunded' WHERE order_id = ? AND status = 'paid'");
+  const voidCommission = db.prepare("UPDATE affiliate_commissions SET status = 'void' WHERE order_id = ? AND status = 'accrued'");
   const expire = db.prepare("UPDATE orders SET status = 'expired' WHERE order_id = ? AND status = 'pending'");
   const reopen = db.prepare("UPDATE orders SET status = 'pending' WHERE order_id = ? AND status = 'expired'");
   const insertEvent = db.prepare("INSERT INTO payment_events (event_kind, event_id, order_id) VALUES (?, ?, ?)");
@@ -404,6 +408,18 @@ function openSqlite(dbPath: string): SyncStore {
     eventOrder(kind, id) {
       const row = eventOf.get(kind, id) as { order_id: string } | undefined;
       return row?.order_id ?? null;
+    },
+    refundOrder(orderId) {
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        const changed = refund.run(orderId) as { changes: number };
+        if (changed.changes) voidCommission.run(orderId);
+        db.exec("COMMIT");
+        return changed.changes > 0;
+      } catch (error) {
+        db.exec("ROLLBACK");
+        throw error;
+      }
     },
     markPaid(orderId, now, amount, transId, eventKind, eventId, allowLate = false) {
       db.exec("BEGIN IMMEDIATE");

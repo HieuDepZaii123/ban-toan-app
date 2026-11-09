@@ -236,6 +236,24 @@ const ret = await handlePremium(new Request("http://pay.local/api/premium/return
 assert(ret.status === 302, "return redirects");
 assert(ret.headers.get("location") === "http://pay.local/nang-cap?orderId=BTDEMO", "return keeps order id and drops resultCode");
 
+// Refund: the licence stops working and the order reads as refunded.
+{
+  const order = await post("/api/premium/create", { email: "refund@example.com", plan: "month", method: "bank" });
+  const id = String(order.json.orderId);
+  const paid = await post("/api/premium/confirm", { orderId: id }, { authorization: "Bearer admin-secret" });
+  assert(paid.status === 200, "refund setup: paid");
+  const view = await handlePremium(new Request(`http://pay.local/api/premium/status?orderId=${id}`), env);
+  const key = String(((await view.json()) as Record<string, unknown>).licenseKey ?? "");
+  const before = await handlePremium(new Request(`http://pay.local/api/premium/status?license=${key}`), env);
+  assert(((await before.json()) as Record<string, unknown>).active === true, "licence active before refund");
+  assert((await post("/api/premium/refund", { orderId: id })).status === 401, "refund needs admin");
+  const done = await post("/api/premium/refund", { orderId: id }, { authorization: "Bearer admin-secret" });
+  assert(done.status === 200, `refund ${done.status}`);
+  const after = await handlePremium(new Request(`http://pay.local/api/premium/status?license=${key}`), env);
+  assert(((await after.json()) as Record<string, unknown>).active === false, "licence inactive after refund");
+  assert((await post("/api/premium/refund", { orderId: id }, { authorization: "Bearer admin-secret" })).status === 404, "refund is not repeated");
+}
+
 // A production deploy must never fall back to MoMo's public sandbox secret or the .env.example placeholders.
 const prod = withTestStore(payEnv({ VERCEL_ENV: "production", ADMIN_TOKEN: "doi-token-admin", BANK_WEBHOOK_SECRET: "short" }, () => clock));
 assert(prod.live && !prod.momoReady, "live deploy without MoMo secret is not MoMo-ready");

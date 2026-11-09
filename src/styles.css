@@ -757,6 +757,12 @@ html[data-lamp="on"] body::before {
 .pay-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 0.92rem; line-height: 1.5; margin: 8px 0; }
 .pay-consent input { width: 22px; height: 22px; flex: none; margin-top: 2px; accent-color: var(--accent); }
 .policy { max-width: 68ch; }
+.pay-benefits { border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; background: var(--sheet); margin: 12px 0; }
+.pay-benefits h2 { font-size: 1.1rem; margin: 0 0 6px; }
+.pay-benefits li { margin: 6px 0; line-height: 1.55; }
+.license-box { margin: 12px 0; }
+.license-box label { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.license-box input { min-height: 40px; min-width: 16rem; font-family: ui-monospace, monospace; }
 .policy h2 { font-size: 1.15rem; margin: 28px 0 8px; }
 .policy li { margin: 6px 0; line-height: 1.6; }
 .pay-row input[type="email"] { flex: 1 1 220px; }

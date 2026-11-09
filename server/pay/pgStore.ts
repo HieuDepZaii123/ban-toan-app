@@ -200,6 +200,16 @@ export function pgStore(client: SqlClient): PayStore {
       });
     },
 
+    async refundOrder(orderId) {
+      await ready();
+      return client.transaction(async (tx) => {
+        const done = await tx.query("UPDATE orders SET status = 'refunded' WHERE order_id = $1 AND status = 'paid'", [orderId]);
+        if (!done.rowCount) return false;
+        await tx.query("UPDATE affiliate_commissions SET status = 'void' WHERE order_id = $1 AND status = 'accrued'", [orderId]);
+        return true;
+      });
+    },
+
     async ensureAffiliate(ownerHash, email, now) {
       await ready();
       const byOwner = async () => (await client.query<{ code: string }>("SELECT code FROM affiliates WHERE owner_hash = $1", [ownerHash])).rows[0];

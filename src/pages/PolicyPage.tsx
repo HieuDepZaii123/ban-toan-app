@@ -3,12 +3,7 @@ import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { PageFrame } from "../ui/PageFrame.tsx";
 import { useLang } from "../ui/useLang.ts";
-
-/** Where buyers and parents can reach the owner. Set VITE_SUPPORT_EMAIL at build time. */
-export const SUPPORT_EMAIL = (import.meta.env.VITE_SUPPORT_EMAIL as string | undefined)?.trim() ?? "";
-
-/** Days after payment in which a refund can be requested. Change here and the page follows. */
-export const REFUND_DAYS = 7;
+import { REFUND_DAYS, SUPPORT_EMAIL } from "../premium/terms.ts";
 
 /** AI providers the tutor may forward a question to (server/chat/free.ts). */
 const AI_PROVIDERS = "Groq, Google Gemini, OpenRouter, Mistral AI, NVIDIA, Z.ai";
