@@ -1006,15 +1006,11 @@ html[data-lamp="on"] body::before {
 .study-queue li[aria-current="true"] { background: var(--accent-soft); }
 .study-pick { flex: 1; min-height: 44px; text-align: left; border: 0; background: none; color: var(--ink); font: inherit; padding: 0 8px; }
 .study-queue li[aria-current="true"] .study-pick { color: var(--accent); font-weight: 600; }
-.study-frame {
-  position: fixed;
-  width: 200px;
-  height: 113px;
-  left: -240px;
-  bottom: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
+/* Self-hosted study video: visible at the top of the open panel; stays mounted (and playing) when closed. */
+.study-screen { display: grid; gap: 4px; padding: 8px; border: 1px solid var(--line); border-radius: 16px; background: var(--sheet); box-shadow: 0 12px 32px rgb(0 0 0 / 14%); }
+.study-screen[hidden] { display: none; }
+.study-screen video { width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; background: var(--line); }
+.study-credit { color: var(--muted); font-size: 0.75rem; }
 .sky-layer, .rain-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
 .day-orb {
   position: absolute; width: 42vw; height: 42vw; left: -8vw; top: -12vw; border-radius: 50%;
