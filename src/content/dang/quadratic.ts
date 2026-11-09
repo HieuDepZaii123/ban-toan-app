@@ -14,7 +14,7 @@ export const quadraticDang: TopicDang = {
         prompt: R`Giải $x^2-5x+6=0$.`,
         steps: [
           { claim: R`Hệ số $a=1$ khác $0$, và $\Delta=25-24=1>0$.`, why: "Phải xác nhận đúng bậc hai trước khi dùng biệt thức. Biệt thức dương là điều kiện cần và đủ để có hai nghiệm thực phân biệt." },
-          { claim: R`Hai nghiệm là $x=\frac{5\pm 1}{2}$, tức $x=3$ và $x=2$.`, why: "Công thức nghiệm dùng được vì $a\neq 0$ và $\\Delta\\ge 0$. Không có điều kiện phụ nên cả hai nghiệm được nhận." },
+          { claim: R`Hai nghiệm là $x=\frac{5\pm 1}{2}$, tức $x=3$ và $x=2$.`, why: "Công thức nghiệm dùng được vì $a\\neq 0$ và $\\Delta\\ge 0$. Không có điều kiện phụ nên cả hai nghiệm được nhận." },
         ],
         ket: R`Nghiệm là $x=2$ và $x=3$.`,
         checks: [

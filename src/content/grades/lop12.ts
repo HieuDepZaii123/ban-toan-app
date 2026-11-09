@@ -60,7 +60,7 @@ export const lop12: GradeBook = {
         )],
         [
           luyen(R`Tiệm cận ngang của $y=\frac{3x+1}{x}$ khi $x$ ra dương vô cực là đường nào?`, R`Tiệm cận ngang là $y=3$.`, [{ expr: "limit((3*x+1)/x, x, oo)", expect: "3" }], "Tách thành $3+\\frac{1}{x}$. Phần phân số tiến tới $0$."),
-          luyen(R`Giới hạn bên phải của $\frac{2x^2+1}{x^2-1}$ tại $1$ bằng $+\infty$ hay $-\infty$?`, R`Giới hạn bên phải bằng $+\infty$, vì tử tiến tới $3$ và mẫu tiến tới $0^+$.`, [{ expr: "sign(limit((2*x**2+1)/(x**2-1), x, 1, dir='+'))", expect: "1" }], "Dấu dương của giới hạn một bên này là dấu của $+\infty$. Mẫu $(x-1)(x+1)$ mang dấu của $x-1$ khi $x$ gần $1$."),
+          luyen(R`Giới hạn bên phải của $\frac{2x^2+1}{x^2-1}$ tại $1$ bằng $+\infty$ hay $-\infty$?`, R`Giới hạn bên phải bằng $+\infty$, vì tử tiến tới $3$ và mẫu tiến tới $0^+$.`, [{ expr: "sign(limit((2*x**2+1)/(x**2-1), x, 1, dir='+'))", expect: "1" }], "Dấu dương của giới hạn một bên này là dấu của $+\\infty$. Mẫu $(x-1)(x+1)$ mang dấu của $x-1$ khi $x$ gần $1$."),
           luyen(R`Giới hạn bên trái của cùng hàm tại $-1$ bằng bao nhiêu, và hai tiệm cận đứng là gì?`, R`Giới hạn bên trái bằng $+\infty$. Hai tiệm cận đứng là $x=-1$ và $x=1$.`, [{ expr: "sign(limit((2*x**2+1)/(x**2-1), x, -1, dir='-'))", expect: "1" }], "Phía bên trái của $-1$, mẫu tiến tới $0^+$. Cả $x=-1$ và $x=1$ đều có giới hạn một bên vô cực."),
         ],
         { topicId: "survey" }),

@@ -140,12 +140,12 @@ function lpStem(question: Question, params: Record<string, number>) {
     [
       `Đỉnh: $(0;0),\\ (8;0),\\ (6;4),\\ (0;10)$.`,
       `$P=0,${at80},${at64},${at10}$. $\\max=${at64}$ tại $(6;4)$.`,
-      `${at80} và ${at10} là đỉnh kia. ${swapped}=${q}\\cdot6+${p}\\cdot4$: đảo hệ số.`,
+      `${at80} và ${at10} là đỉnh kia. $${swapped}=${q}\\cdot6+${p}\\cdot4$: đảo hệ số.`,
     ],
     [
       `Vertices: $(0;0),\\ (8;0),\\ (6;4),\\ (0;10)$.`,
       `$P=0,${at80},${at64},${at10}$. $\\max=${at64}$ at $(6;4)$.`,
-      `${at80} and ${at10} are the other vertices. ${swapped}=${q}\\cdot6+${p}\\cdot4$: swapped coefficients.`,
+      `${at80} and ${at10} are the other vertices. $${swapped}=${q}\\cdot6+${p}\\cdot4$: swapped coefficients.`,
     ],
   );
 }

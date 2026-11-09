@@ -87,7 +87,7 @@ export const ineqPools: Pool[] = [
         R`$a=2$, $b=2$, $c=1$, $d=1$ làm hai vế khác nhau.`,
         R`$a=2$, $b=2$, $c=1$, $d=1$ makes the two sides differ.`,
         R`Nhầm: $(4+4)(1+1)=16$ và $(2+2)^2=16$, vì $(2; 2)=2(1; 1)$.`,
-        R`Miss: $(4+4)(1+1)=16$ and $(2+2)^2=16$, since $(2, 2)=2(1, 1).`),
+        R`Miss: $(4+4)(1+1)=16$ and $(2+2)^2=16$, since $(2, 2)=2(1, 1)$.`),
       claim("ineq-c-counter:zero", false,
         R`$a=0$, $b=0$, $c=1$, $d=1$ làm hai vế khác nhau.`,
         R`$a=0$, $b=0$, $c=1$, $d=1$ makes the two sides differ.`,

@@ -23,7 +23,7 @@ export const lop04: GradeBook = {
           [{ expr: "2*1000000+345*1000+678", expect: "2345678" }],
         )],
         [
-          luyen(R`Bốn triệu bằng bao nhiêu?`, R`Bốn triệu bằng $4\,000\,000$.`, [{ expr: "4*1000000", expect: "4000000" }], "Mỗi triệu là $1\,000\,000$. Bốn lần số đó nằm trong lớp triệu."),
+          luyen(R`Bốn triệu bằng bao nhiêu?`, R`Bốn triệu bằng $4\,000\,000$.`, [{ expr: "4*1000000", expect: "4000000" }], "Mỗi triệu là $1\\,000\\,000$. Bốn lần số đó nằm trong lớp triệu."),
           luyen(R`Số nào lớn hơn, $3\,000\,000$ hay $999\,999$?`, R`Số $3\,000\,000$ lớn hơn.`, [{ expr: "3000000-999999", expect: "2000001" }], "Số có lớp triệu lớn hơn số chỉ tới lớp nghìn."),
           luyen(R`Tính $1\,000\,000+20\,000$.`, R`Tổng bằng $1\,020\,000$.`, [{ expr: "1000000+20000", expect: "1020000" }], "Một triệu thêm hai mươi nghìn. Hàng triệu vẫn là $1$."),
         ],

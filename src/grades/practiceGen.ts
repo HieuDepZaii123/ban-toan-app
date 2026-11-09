@@ -70,6 +70,7 @@ class Frac {
 const F = (n: number, d = 1) => new Frac(n, d);
 /** Hệ số phân số trước một đơn thức: 1 và -1 không viết ra. */
 function coefTex(c: Frac, mono: string): string {
+  if (mono === "") return c.tex();
   if (c.n === c.d) return mono;
   if (c.n === -c.d) return `-${mono}`;
   return `${c.tex()}${mono}`;
@@ -1087,7 +1088,7 @@ const grade12More: Template[] = [
     const arg = k === 1 ? "x" : `${k}x`, f = useCos ? "\\cos" : "\\sin", g = useCos ? "\\sin" : "\\cos";
     const res = useCos ? F(a, k) : F(-a, k);
     const tex = (c: Frac, fn: string) => `${coefTex(c, `${fn} ${arg}`)}+C`;
-    return made(`Họ nguyên hàm của $f(x)=${coefTex(F(a), `${f} ${arg}`)}$ là`, { right: m(tex(res, g)), wrong: [m(tex(res.mul(F(-1)), g)), m(tex(F(useCos ? a * k : -a * k), g)), m(tex(res, f))] },
+    return made(`Họ nguyên hàm của $f(x)=${coefTex(F(a), `${f} ${arg}`)}$ là`, { right: m(tex(res, g)), wrong: [m(tex(res.mul(F(-1)), g)), m(tex(k === 1 ? res.mul(F(2)) : F(useCos ? a * k : -a * k), g)), m(tex(res, f))] },
       [useCos ? "$\\displaystyle\\int\\cos kx\\,dx=\\dfrac{1}{k}\\sin kx+C$." : "$\\displaystyle\\int\\sin kx\\,dx=-\\dfrac{1}{k}\\cos kx+C$.", `Ở đây $k=${k}$, nhân thêm hệ số $${a}$.`, `Kết quả là $${tex(res, g)}$.`],
       `integrate(${a}*${useCos ? "cos" : "sin"}(${k}*x), x)`, `${res.sym()}*${useCos ? "sin" : "cos"}(${k}*x)`);
   } },
