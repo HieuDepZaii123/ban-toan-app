@@ -15,7 +15,14 @@ type Generate = (options: {
   messages: { role: ChatTurn["role"]; content: string }[];
   maxOutputTokens: number;
   timeout: { totalMs: number };
-}) => Promise<{ text: string }>;
+}) => Promise<{ text: string; finishReason?: string }>;
+
+/** One line per failed provider so Vercel logs show why. No keys or prompts. */
+function logFailure(id: string, detail: unknown): void {
+  const message = detail instanceof Error ? `${detail.name}: ${detail.message}` : String(detail);
+  const status = (detail as { statusCode?: unknown } | null)?.statusCode;
+  console.error(`[chat] model ${id} failed${typeof status === "number" ? ` (HTTP ${status})` : ""}: ${message.slice(0, 300)}`);
+}
 
 export function hasLiveKey(source: NodeJS.ProcessEnv = process.env): boolean {
   return hasPaidKey(source) || hasFreeKey(source);
@@ -50,7 +57,7 @@ export async function completeLive(
     const left = deadline - now();
     if (left <= 1_000) break;
     try {
-      const { text } = await generate({
+      const { text, finishReason } = await generate({
         model: candidate.model,
         instructions,
         messages: messages.map((turn) => ({ role: turn.role, content: turn.content })),
@@ -58,9 +65,11 @@ export async function completeLive(
         timeout: { totalMs: Math.min(ATTEMPT_MS, left) },
       });
       if (text.trim()) return text;
-      lastError = new Error(`${candidate.id}: empty reply`);
+      lastError = new Error(`${candidate.id}: empty reply (finish: ${finishReason ?? "unknown"})`);
+      logFailure(candidate.id, lastError);
     } catch (error) {
       lastError = error;
+      logFailure(candidate.id, error);
     }
   }
   throw lastError;
