@@ -1361,3 +1361,41 @@ html[data-lamp="on"] body::before {
 @media (max-width: 720px) {
   .home-start { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Trang luyện: một thanh tiến độ chung và nút chuyển câu ở chân thẻ. */
+.practice-bar { display: grid; gap: 8px; margin: 16px 0 12px; }
+.practice-meter { display: flex; height: 6px; border-radius: 999px; overflow: hidden; background: color-mix(in srgb, var(--line) 70%, transparent); }
+.practice-meter span { display: block; height: 100%; transition: width .3s ease; }
+.practice-meter .is-right { background: var(--ok); }
+.practice-meter .is-wrong { background: var(--clay); }
+.practice-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.practice-count { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-size: 0.9rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.practice-count b { color: var(--ink); }
+.practice-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.practice-actions button, .card-nav button {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+}
+.practice-actions button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.practice-actions button:disabled { opacity: 0.5; }
+.practice-link { display: inline-flex; align-items: center; min-height: 40px; padding: 0 4px; color: var(--accent); }
+.card-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
+.card-nav .is-next { margin-left: auto; background: var(--accent); color: #fff; border-color: transparent; }
+.fold { margin-top: 8px; }
+.fold > summary { cursor: pointer; min-height: 40px; display: flex; align-items: center; gap: 8px; color: var(--ink-soft); list-style: none; }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::before { content: "▸"; color: var(--accent); transition: transform .2s ease; }
+.fold[open] > summary::before { transform: rotate(90deg); }
+.exam-2025 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 10px; }
+.exam-2025 a { font-weight: 600; color: var(--accent); }
+.exam-2025 span { color: var(--ink-soft); font-size: 0.9rem; }
+.miss-empty { display: grid; gap: 4px; justify-items: start; margin-top: 16px; padding: 16px; border: 1px dashed var(--line); border-radius: 14px; color: var(--ink-soft); }
+.miss-empty p { margin: 0; }
+.miss-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.miss-topic { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.miss-topic p { margin: 0; }
