@@ -2,54 +2,37 @@ import { useState } from "react";
 import { QUESTION_TOTAL } from "../content/cards.ts";
 import { countRight, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
-import { Logo } from "../ui/Logo.tsx";
 import { useLang } from "../ui/useLang.ts";
 
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
+/** Đầu trang chủ: một câu nói bàn này là gì. Logo đã có trên thanh đầu trang. */
 export function Welcome() {
   const lang = useLang();
   return (
-    <>
-      <section className="hero-welcome">
-        <div className="bt-home-logo">
-          <Logo size={64} />
-          <b>Bàn Toán</b>
-        </div>
-        <h1>{t(lang, "Mười bốn chuyên đề, có số để tự kiểm.", "Fourteen topics, with a number you can check.")}</h1>
-        <p className="lead">
-          {t(
-            lang,
-            "Kéo một tham số, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
-            "Drag one parameter, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
-          )}
-        </p>
-        <svg className="hero-stroke" viewBox="0 0 280 72" aria-hidden="true">
-          <path d="M8 64 Q70 64 100 28 T200 20 T272 58" />
-        </svg>
-      </section>
-      <section className="tier-row" aria-label={t(lang, "Ba mức học", "Three levels")}>
-        <article>
-          <b>{t(lang, "Học", "Study")}</b>
-          <span>{t(lang, "Một định nghĩa, kèm một số cụ thể.", "One definition, with one concrete number.")}</span>
-        </article>
-        <article>
-          <b>{t(lang, "Làm việc", "Work")}</b>
-          <span>{t(lang, "Công thức, một phép tính, và lỗi hay gặp.", "A formula, one calculation, and a common mistake.")}</span>
-        </article>
-        <article>
-          <b>{t(lang, "Sáng tạo", "Create")}</b>
-          <span>{t(lang, "Một câu khó, lời giải đi từng bước.", "One harder question, solved step by step.")}</span>
-        </article>
-      </section>
-      <div className="home-tools">
-        <ProgressCurve />
-        <FormulaPeek />
-        <NotePad />
-        <Circle />
-      </div>
-    </>
+    <section className="hero-welcome">
+      <h1>{t(lang, "Mười bốn chuyên đề, có số để tự kiểm.", "Fourteen topics, with a number you can check.")}</h1>
+      <p className="lead">
+        {t(
+          lang,
+          "Kéo một tham số, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
+          "Drag one parameter, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
+        )}
+      </p>
+    </section>
+  );
+}
+
+/** Các tiện ích nhỏ của góc bàn: đường tiến độ, tiếp tuyến, sổ tay, bàn bên cạnh. */
+export function DeskTools() {
+  return (
+    <div className="home-tools">
+      <ProgressCurve />
+      <FormulaPeek />
+      <NotePad />
+      <Circle />
+    </div>
   );
 }
 
