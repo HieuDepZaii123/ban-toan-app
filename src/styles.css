@@ -779,6 +779,17 @@ html[data-lamp="on"] body::before {
 .exam-review summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; }
 .exam-review .exam-q.is-right h4 { color: var(--ok); }
 .exam-review .exam-q.is-wrong h4 { color: var(--clay); }
+.review-plan { list-style: none; padding: 0; margin: 0 0 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.review-plan li { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); text-align: center; }
+.review-plan b { font-size: 1.4rem; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.review-plan span { color: var(--ink-soft); font-size: 0.85rem; }
+.review-card { border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; background: var(--sheet); margin: 0 0 20px; }
+.review-prompt { font-size: 1.05rem; font-weight: 500; line-height: 1.6; margin: 4px 0 12px; }
+.review-verdict { margin-top: 14px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); }
+.review-verdict.is-right { border-color: var(--ok); background: var(--ok-soft); }
+.review-verdict.is-wrong { border-color: var(--clay); background: var(--clay-soft); }
+.review-verdict p { margin: 0 0 8px; }
+.review-verdict .steps { margin: 0 0 12px; }
 .exam-history table { border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .exam-history th, .exam-history td { padding: 6px 12px; border-bottom: 1px solid var(--line); text-align: left; }
 .license-box label { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }

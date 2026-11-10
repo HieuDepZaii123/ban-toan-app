@@ -457,6 +457,11 @@ function PremiumBenefits() {
           {t(lang, ": sau mỗi đề biết mình mất điểm ở phần nào, chủ đề nào, và ôn ngay câu sai.", ": after each paper, see which part and topic cost points, then redo the missed questions.")}
         </li>
         <li>
+          <b>{t(lang, "Kế hoạch ôn lỗi sai", "Mistake review plan")}</b>
+          {t(lang, ": câu sai trong đề thi thử tự quay lại sau 1, 3, 7 và 14 ngày, kèm danh sách chủ đề mất điểm nhiều nhất.", ": questions you miss in mock exams come back after 1, 3, 7 and 14 days, with the topics that cost you the most points.")}
+          {" "}<A href="/on-loi-sai">{t(lang, "Mở kế hoạch", "Open the plan")}</A>
+        </li>
+        <li>
           <b>{t(lang, "Lời giải đầy đủ", "Full worked solutions")}</b>
           {t(lang, ": sau khi tự thử, xin trợ lý giải trọn từng bước, có đáp số và bước thử lại. Bản miễn phí chỉ gợi ý.", ": after trying, ask the tutor for every step with the final answer and a check. The free tutor gives hints only.")}
         </li>
