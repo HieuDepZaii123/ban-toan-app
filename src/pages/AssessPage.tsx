@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { assessBanks, gradeNumber, type AssessQuestion } from "../content/assessBank.ts";
+import { assessBanks, gradeNumber, shownLetter, type AssessQuestion } from "../content/assessBank.ts";
 import { displayOrder } from "../lib/prng.ts";
+import { t } from "../lib/text.ts";
 import { PageFrame } from "../ui/PageFrame.tsx";
+import { CardNav, PracticeBar } from "../ui/PracticeBar.tsx";
+import { useLang } from "../ui/useLang.ts";
 
 const KEY = "banToan.danhGia.v1";
 
@@ -23,12 +26,15 @@ function load(): Saved {
 }
 
 export function AssessPage() {
+  const lang = useLang();
   const [state, setState] = useState<Saved>(load);
   const bank = assessBanks.find((item) => item.id === state.bank) ?? assessBanks[0]!;
   const index = clamp(state.pos[bank.id] ?? 0, bank.questions.length);
   const question = bank.questions[index]!;
   const record = state.ans[bank.id]?.[String(index)];
-  const score = Object.values(state.ans[bank.id] ?? {}).filter((item) => item.ok).length;
+  const marked = Object.values(state.ans[bank.id] ?? {});
+  const score = marked.filter((item) => item.ok).length;
+  const go = (delta: 1 | -1) => save({ ...state, pos: { ...state.pos, [bank.id]: (index + delta + bank.questions.length) % bank.questions.length } });
 
   const save = (next: Saved) => {
     setState(next);
@@ -42,11 +48,11 @@ export function AssessPage() {
 
   return (
     <PageFrame
-      kicker="Đánh giá năng lực"
-      title="Ba bộ tự chấm"
-      lead="Tư duy, tổng hợp, đội tuyển. Lời giải mở sau khi chấm. Điểm nằm trên máy này."
+      kicker={t(lang, "Đánh giá năng lực", "Self-assessment")}
+      title={t(lang, "Ba bộ tự chấm", "Three self-marked sets")}
+      lead={t(lang, "Tư duy, tổng hợp, đội tuyển. Lời giải mở sau khi chấm.", "Reasoning, mixed, and olympiad sets. Solutions open after marking.")}
     >
-      <div className="read-switch" role="tablist" aria-label="Bộ đánh giá">
+      <div className="read-switch" role="tablist" aria-label={t(lang, "Bộ đánh giá", "Assessment set")}>
         {assessBanks.map((item) => {
           const got = Object.values(state.ans[item.id] ?? {}).filter((row) => row.ok).length;
           return (
@@ -56,22 +62,26 @@ export function AssessPage() {
           );
         })}
       </div>
+      <PracticeBar
+        total={bank.questions.length}
+        right={score}
+        wrong={marked.length - score}
+        index={index}
+        actions={<button type="button" onClick={() => save({ ...state, pos: { ...state.pos, [bank.id]: 0 }, ans: { ...state.ans, [bank.id]: {} } })}>{t(lang, "Làm lại bộ này", "Restart this set")}</button>}
+      />
       <article className="tool-card">
-        <p className="lecture-note">{bank.desc} · Câu {index + 1}/{bank.questions.length} · Điểm {score}/{bank.questions.length}</p>
+        <p className="kicker">{bank.desc}</p>
         <h2>{question.t}</h2>
         <Choices key={`${bank.id}-${index}`} question={question} record={record} onPick={mark} />
         {record ? <Explain question={question} ok={record.ok} /> : null}
-        <div className="read-switch">
-          <button type="button" onClick={() => save({ ...state, pos: { ...state.pos, [bank.id]: (index - 1 + bank.questions.length) % bank.questions.length } })}>Câu trước</button>
-          <button type="button" onClick={() => save({ ...state, pos: { ...state.pos, [bank.id]: (index + 1) % bank.questions.length } })}>Câu sau</button>
-          <button type="button" onClick={() => save({ ...state, pos: { ...state.pos, [bank.id]: 0 }, ans: { ...state.ans, [bank.id]: {} } })}>Làm lại bộ này</button>
-        </div>
+        <CardNav onMove={go} />
       </article>
     </PageFrame>
   );
 }
 
 function Choices({ question, record, onPick }: { question: AssessQuestion; record?: { ok: boolean; v: string }; onPick: (ok: boolean, value: string) => void }) {
+  const lang = useLang();
   const [draft, setDraft] = useState("");
   if (question.choices && question.answer !== undefined) {
     return (
@@ -96,19 +106,20 @@ function Choices({ question, record, onPick }: { question: AssessQuestion; recor
       if (!Number.isFinite(value) || question.numeric === undefined) return;
       onPick(gradeNumber(value, question.numeric, question.tol ?? 1e-9), draft.trim());
     }}>
-      <input value={record?.v ?? draft} disabled={!!record} inputMode="decimal" aria-label="Đáp số" placeholder="Nhập số" onChange={(event) => setDraft(event.target.value)} />
-      <button className="pay-btn" type="submit" disabled={!!record}>Chấm</button>
+      <input value={record?.v ?? draft} disabled={!!record} inputMode="decimal" aria-label={t(lang, "Đáp số", "Answer")} placeholder={t(lang, "Nhập số", "Enter a number")} onChange={(event) => setDraft(event.target.value)} />
+      <button className="pay-btn" type="submit" disabled={!!record}>{t(lang, "Chấm", "Mark")}</button>
     </form>
   );
 }
 
 function Explain({ question, ok }: { question: AssessQuestion; ok: boolean }) {
+  const lang = useLang();
   const right = question.choices && question.answer !== undefined
-    ? `${String.fromCharCode(65 + question.answer)}. ${question.choices[question.answer]}`
+    ? `${shownLetter(question)}. ${question.choices[question.answer]}`
     : String(question.numeric).replace(".", ",");
   return (
     <div className="solution">
-      <p><b>{ok ? "Chính xác." : "Chưa đúng."}</b> Đáp án: {right}</p>
+      <p><b>{ok ? t(lang, "Chính xác.", "Correct.") : t(lang, "Chưa đúng.", "Not yet.")}</b> {t(lang, "Đáp án:", "Answer:")} {right}</p>
       <ol className="steps">{question.steps.map((step) => <li key={step}>{step}</li>)}</ol>
     </div>
   );
