@@ -457,6 +457,11 @@ function PremiumBenefits() {
           {t(lang, ": sau mỗi đề biết mình mất điểm ở phần nào, chủ đề nào, và ôn ngay câu sai.", ": after each paper, see which part and topic cost points, then redo the missed questions.")}
         </li>
         <li>
+          <b>{t(lang, "Tài liệu ôn tập 14 chuyên đề", "Study notes for 14 topics")}</b>
+          {t(lang, ": bài giảng viết, lỗi hay gặp, ví dụ giải từng bước và đề tự luyện có đáp án, đọc trên trang hoặc tải PDF, Word để in.", ": written lecture notes, common mistakes, examples solved step by step and a self-test with answers, to read here or download as PDF or Word.")}
+          {" "}<A href="/tai-lieu">{t(lang, "Xem tài liệu", "See the notes")}</A>
+        </li>
+        <li>
           <b>{t(lang, "Kế hoạch ôn lỗi sai", "Mistake review plan")}</b>
           {t(lang, ": câu sai trong đề thi thử tự quay lại sau 1, 3, 7 và 14 ngày, kèm danh sách chủ đề mất điểm nhiều nhất.", ": questions you miss in mock exams come back after 1, 3, 7 and 14 days, with the topics that cost you the most points.")}
           {" "}<A href="/on-loi-sai">{t(lang, "Mở kế hoạch", "Open the plan")}</A>

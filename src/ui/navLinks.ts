@@ -33,6 +33,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/kien-thuc", id: "grades", label: "Lớp 1–12", en: "Grades 1–12", nested: true },
       { href: "/so-cong-thuc", id: "formula", label: "Công thức", en: "Formulas" },
       { href: "/phuong-phap", id: "methods", label: "Phương pháp giải", en: "Methods", nested: true },
+      { href: "/tai-lieu", id: "packs", label: "Tài liệu ôn tập", en: "Study notes", nested: true },
       { href: "/khoa-hoc", id: "science", label: "Khoa học", en: "Science", nested: true },
       { href: "/nghien-cuu", id: "research", label: "Nghiên cứu", en: "Research" },
     ],

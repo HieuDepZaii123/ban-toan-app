@@ -60,4 +60,6 @@ Với phương trình bậc nhất, bậc hai có trong tin nhắn, server tự 
 
 Mỗi chủ đề có hai chỗ video trong `src/content/lectures.ts`: `basic` (Cơ bản) và `exam` (Chuẩn thi). `youtubeId` đang là chuỗi mẫu dài hơn 11 ký tự, nên trang không nhúng iframe.
 
+Video «Cơ bản» xem miễn phí. Video «Chuẩn thi» chỉ mở cho mã Premium còn hạn; người chưa có Premium thấy một thẻ mời nâng cấp. Trang chỉ hiện mục video khi có ít nhất một id thật, nên trước đó không ai thấy ô trống. Video cũng hiện ở cuối mỗi bộ tài liệu `/tai-lieu/<tờ>`.
+
 Khi có video thật, thay bằng id YouTube đúng 11 ký tự, ví dụ `dQw4w9WgXcQ`. Không commit file mp4. Iframe chỉ tải sau khi bấm **Xem video**, không tự phát.
