@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import katex from "katex";
-import { gradeNumber } from "../src/content/assessBank.ts";
+import { assessBanks, gradeNumber, shownLetter } from "../src/content/assessBank.ts";
+import { displayOrder } from "../src/lib/prng.ts";
 import { searchFormulas } from "../src/content/formulaBook.ts";
 import { mockTutor } from "../src/chat/mock.ts";
 import { effectiveTheme } from "../src/ui/themeMode.ts";
@@ -33,4 +34,16 @@ assert.equal(/1\)/.test(mockTutor("đạo hàm của x^2")), true);
 
 for (const card of cards) assert.ok(advanced[card.id], card.id);
 
+// Đánh giá: lời giải gọi đáp án bằng chữ cái đang hiện, không phải vị trí gốc trước khi xáo.
+let moved = 0;
+for (const bank of assessBanks) {
+  for (const question of bank.questions) {
+    if (!question.choices || question.answer === undefined) continue;
+    const order = displayOrder(question.t, question.choices.length);
+    const letter = shownLetter(question);
+    assert.equal(order[letter.charCodeAt(0) - 65], question.answer, question.t);
+    if (letter !== String.fromCharCode(65 + question.answer)) moved += 1;
+  }
+}
+assert.ok(moved > 0, "có câu mà chữ cái gốc khác chữ cái đang hiện");
 console.log("port ok");
