@@ -785,6 +785,10 @@ html[data-lamp="on"] body::before {
 .license-box input { min-height: 40px; min-width: 16rem; font-family: ui-monospace, monospace; }
 .policy h2 { font-size: 1.15rem; margin: 28px 0 8px; }
 .policy li { margin: 6px 0; line-height: 1.6; }
+.policy h3 { font-size: 1rem; margin: 18px 0 6px; }
+.policy-table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+.policy-table th, .policy-table td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+@media (max-width: 560px) { .policy-table { font-size: 0.85rem; } .policy-table th, .policy-table td { padding: 6px; } }
 .pay-row input[type="email"] { flex: 1 1 220px; }
 .pay-btn {
   min-height: 44px;
