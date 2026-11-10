@@ -91,7 +91,7 @@ export function ExamPage() {
     save(next);
   };
   useEffect(() => {
-    document.title = t(lang, "Đề thi thử THPT 2025 · Bàn Toán", "2025 THPT mock exam · Bàn Toán");
+    document.title = t(lang, "Đề thi thử THPT · Bàn Toán", "THPT mock exam · Bàn Toán");
   }, [lang]);
 
   const freeLeft = saved.history.length === 0 && saved.last === null;
@@ -123,13 +123,20 @@ export function ExamPage() {
   return (
     <PageFrame
       kicker={t(lang, "Premium · Luyện THPT", "Premium · THPT practice")}
-      title={t(lang, "Đề thi thử THPT 2025", "2025 THPT mock exam")}
+      title={t(lang, "Đề thi thử THPT", "THPT mock exam")}
       lead={t(
         lang,
-        "Cấu trúc như đề thật: 12 câu trắc nghiệm, 4 câu Đúng/Sai, 6 câu trả lời ngắn, 90 phút, chấm theo thang 10 điểm của Bộ. Mỗi lần bắt đầu là một đề mới.",
-        "Built like the real paper: 12 multiple choice, 4 true/false, 6 short answer, 90 minutes, scored out of 10 on the Ministry's scale. Every start draws a new paper.",
+        "Cấu trúc như đề thi tốt nghiệp THPT môn Toán: 12 câu trắc nghiệm, 4 câu Đúng/Sai, 6 câu trả lời ngắn, 90 phút, chấm trên thang 10. Mỗi lần bắt đầu là một đề mới.",
+        "Built like the THPT graduation maths paper: 12 multiple choice, 4 true/false, 6 short answer, 90 minutes, scored out of 10. Every start draws a new paper.",
       )}
     >
+      <p className="lecture-note exam-source">
+        {t(
+          lang,
+          "Căn cứ: cấu trúc định dạng đề thi tốt nghiệp THPT áp dụng từ kỳ thi năm 2025 (Quyết định 764/QĐ-BGDĐT ngày 8/3/2024 của Bộ Giáo dục và Đào tạo). Đây là đề luyện do Bàn Toán soạn và rút ngẫu nhiên từ ngân hàng câu của Bàn Toán, không phải đề của Bộ; điểm ở đây chỉ để tự ước lượng.",
+          "Basis: the THPT graduation exam format in force since the 2025 exam (Decision 764/QĐ-BGDĐT of 8 March 2024, Ministry of Education and Training). These are practice papers written by Bàn Toán and drawn at random from its own question bank, not Ministry papers; the score is only an estimate for yourself.",
+        )}
+      </p>
       {saved.last ? <Result finished={saved.last} /> : null}
       <section className="exam-intro" aria-labelledby="exam-how">
         <h2 id="exam-how">{t(lang, "Cách chấm", "Scoring")}</h2>
@@ -208,7 +215,7 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
   }
 
   return (
-    <PageFrame kicker={t(lang, "Đề thi thử THPT 2025", "2025 THPT mock exam")} title={t(lang, "Đang làm bài", "Paper in progress")}>
+    <PageFrame kicker={t(lang, "Đề thi thử THPT", "THPT mock exam")} title={t(lang, "Đang làm bài", "Paper in progress")}>
       <div className="exam-bar" role="timer" aria-live="off">
         <span>{t(lang, "Còn", "Left")} <b>{clock(left)}</b></span>
         <span>{t(lang, `Đã làm ${done}/${total}`, `Answered ${done}/${total}`)}</span>

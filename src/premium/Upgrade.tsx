@@ -447,10 +447,10 @@ function PremiumBenefits() {
       <h2 id="benefits-title">{t(lang, "Premium gồm", "Premium includes")}</h2>
       <ul>
         <li>
-          <b>{t(lang, "Đề thi thử chuẩn THPT 2025", "2025 THPT mock exams")}</b>
+          <b>{t(lang, "Đề thi thử theo cấu trúc thi tốt nghiệp THPT hiện hành", "Mock exams in the current THPT exam format")}</b>
           {t(lang,
-            ": ba phần như đề thật (12 câu trắc nghiệm, 4 câu Đúng/Sai, 6 câu trả lời ngắn), 90 phút, chấm theo thang điểm của Bộ, xem lại từng câu kèm lời giải. Mỗi đề rút mới từ ngân hàng, làm bao nhiêu đề cũng được.",
-            ": the three parts of the real paper (12 multiple choice, 4 true/false, 6 short answer), 90 minutes, scored on the Ministry's scale, with every question reviewable with its solution. Each paper is drawn fresh from the bank, as many as you like.")}
+            " (áp dụng từ kỳ thi 2025): ba phần gồm 12 câu trắc nghiệm, 4 câu Đúng/Sai và 6 câu trả lời ngắn, 90 phút, chấm trên thang 10, xem lại từng câu kèm lời giải. Mỗi đề rút mới từ ngân hàng câu của Bàn Toán, làm bao nhiêu đề cũng được. Đây là đề luyện, không phải đề của Bộ.",
+            " (in force since the 2025 exam): three parts with 12 multiple choice, 4 true/false and 6 short answer questions, 90 minutes, scored out of 10, with every question reviewable with its solution. Each paper is drawn fresh from Bàn Toán's own bank, as many as you like. These are practice papers, not Ministry papers.")}
         </li>
         <li>
           <b>{t(lang, "Bảng điểm theo phần và chủ đề", "Scores by part and topic")}</b>
@@ -481,7 +481,7 @@ function LicenseBox() {
         <b>{t(lang, "Premium đang bật trên máy này", "Premium is on for this device")}</b>
         <span>{t(lang, `đến ${new Date(premium.until).toLocaleDateString("vi-VN")}.`, `until ${new Date(premium.until).toLocaleDateString("en-GB")}.`)}</span>
         {" "}
-        <A href="/thi-thu">{t(lang, "Làm đề thi thử 2025", "Take a 2025 mock exam")}</A>
+        <A href="/thi-thu">{t(lang, "Làm đề thi thử THPT", "Take a THPT mock exam")}</A>
       </p>
     );
   }

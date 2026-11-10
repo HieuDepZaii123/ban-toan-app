@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="theme-color" content="#e7e0d2" />
-    <meta name="description" content="Bàn làm việc toán THPT: kéo tham số, nhìn đồ thị đổi, rồi luyện có lời giải." />
+    <meta name="description" content="Bàn Toán: toán lớp 1–12 với bài học có hình kéo, ví dụ từng bước và bài luyện có gợi ý, lời giải." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Bàn Toán" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icon-192.png" />
     <title>Bàn Toán</title>
@@ -41,9 +45,23 @@
         var saved = JSON.parse(localStorage.getItem("ban-toan") || "null");
         var mode = localStorage.getItem("bt-theme");
         var hour = new Date().getHours();
-        var night = mode === "night" || (mode === "auto" && (hour >= 21 || hour < 5));
-        if (mode !== "day" && mode !== "night" && mode !== "auto") night = saved && saved.theme === "night";
-        document.documentElement.dataset.theme = night ? "night" : "paper";
+        var dark = false;
+        try { dark = window.matchMedia("(prefers-color-scheme: dark)").matches; } catch (e1) {}
+        var night = mode === "night" || (mode === "auto" && (hour >= 21 || hour < 5)) || (mode === "system" && dark);
+        if (mode !== "day" && mode !== "night" && mode !== "auto" && mode !== "system") night = (saved && saved.theme === "night") || dark;
+        var root = document.documentElement;
+        root.dataset.theme = night ? "night" : "paper";
+        var font = localStorage.getItem("bt-font");
+        root.dataset.font = font === "s" || font === "l" || font === "xl" ? font : "m";
+        if (localStorage.getItem("bt-read") === "on") root.dataset.read = "on";
+        if (localStorage.getItem("bt-contrast") === "on") root.dataset.contrast = "on";
+        if (localStorage.getItem("bt-motion") === "less") root.dataset.motion = "less";
+        // Lần mở đầu tiên: trình duyệt không đặt tiếng Việt thì mở bản tiếng Anh (App đọc cờ này một lần).
+        if (!saved && !localStorage.getItem("bt-lang-auto")) {
+          var first = /^vi\b/i.test(navigator.language || "vi") ? "vi" : "en";
+          localStorage.setItem("bt-lang-auto", first);
+          if (first === "en") document.documentElement.lang = "en";
+        }
         if (saved && saved.lang === "en") document.documentElement.lang = "en";
         if (location.pathname === "/" || location.pathname === "") {
           var room = JSON.parse(localStorage.getItem("ban-toan-room") || "null");

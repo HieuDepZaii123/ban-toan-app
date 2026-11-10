@@ -5,12 +5,14 @@ import { captureReferral } from "./lib/referral.ts";
 import { A, RouteProvider } from "./lib/route.tsx";
 import { PageFrame } from "./ui/PageFrame.tsx";
 import { useRoute } from "./lib/useRoute.ts";
-import { setTheme, useSlice } from "./lib/store.ts";
+import { setLang, setTheme, useSlice } from "./lib/store.ts";
 import { t } from "./lib/text.ts";
 import { StudyPlayer } from "./study/StudyPlayer.tsx";
 import { Atmosphere } from "./ui/Atmosphere.tsx";
+import { Dock } from "./ui/Dock.tsx";
+import { applyPrefs } from "./ui/prefs.ts";
 import { RightMenu } from "./ui/RightMenu.tsx";
-import { effectiveTheme, readThemeMode } from "./ui/themeMode.ts";
+import { effectiveTheme, hasThemeMode, readThemeMode, writeThemeMode } from "./ui/themeMode.ts";
 import { useLang } from "./ui/useLang.ts";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
@@ -36,6 +38,16 @@ const CHUNK_RELOAD = "ban-toan-chunk-reload";
 export default function App() {
   useEffect(() => {
     captureReferral();
+    applyPrefs();
+    try {
+      // index.html ghi "en" ở lần mở đầu tiên trên trình duyệt không đặt tiếng Việt.
+      if (localStorage.getItem("bt-lang-auto") === "en") {
+        localStorage.setItem("bt-lang-auto", "done");
+        setLang("en");
+      }
+    } catch {
+      /* giữ tiếng Việt */
+    }
     const id = window.setTimeout(() => sessionStorage.removeItem(CHUNK_RELOAD), 4000);
     return () => window.clearTimeout(id);
   }, []);
@@ -44,6 +56,7 @@ export default function App() {
       <Atmosphere />
       <ThemeBridge />
       <Guarded />
+      <Dock />
       <StudyPlayer />
       <ChatEntry />
       <RightMenu />
@@ -126,7 +139,10 @@ function ThemeBridge() {
   const lang = useSlice((data) => data.lang);
   useEffect(() => {
     const apply = () => {
-      const next = effectiveTheme(readThemeMode(theme));
+      const mode = readThemeMode(theme);
+      // Ghi chế độ một lần, để "theo máy" không bị hiểu thành "luôn đêm" sau khi máy chuyển tối.
+      if (!hasThemeMode()) writeThemeMode(mode);
+      const next = effectiveTheme(mode);
       document.documentElement.dataset.theme = next;
       document.documentElement.lang = lang === "en" ? "en" : "vi";
       document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "night" ? "#1c1612" : "#e7e0d2");
@@ -135,7 +151,12 @@ function ThemeBridge() {
     };
     apply();
     const id = window.setInterval(apply, 60_000);
-    return () => window.clearInterval(id);
+    const dark = typeof window.matchMedia === "function" ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+    dark?.addEventListener?.("change", apply);
+    return () => {
+      window.clearInterval(id);
+      dark?.removeEventListener?.("change", apply);
+    };
   }, [theme, lang]);
   return null;
 }

@@ -4,7 +4,7 @@ import { t } from "../lib/text.ts";
 import { useRoute } from "../lib/useRoute.ts";
 import { LangSwitch } from "./LangSwitch.tsx";
 import { NAV_GROUPS, menuArea } from "./navLinks.ts";
-import { OPEN_MENU_EVENT, OPEN_MUSIC_EVENT } from "./events.ts";
+import { OPEN_MENU_EVENT, openMusic as showMusic } from "./events.ts";
 import { useLang } from "./useLang.ts";
 
 const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
@@ -65,7 +65,7 @@ export function RightMenu() {
 
   const openMusic = () => {
     setOpen(false);
-    window.dispatchEvent(new Event(OPEN_MUSIC_EVENT));
+    showMusic();
     window.setTimeout(() => document.getElementById("nhac-phat")?.focus(), 0);
   };
 
