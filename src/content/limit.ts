@@ -29,12 +29,12 @@ export const limitQuestions: Question[] = [
     steps: [
       R`$x^2 - 1 = (x-1)(x+1)$. Với $x \neq 1$, biểu thức bằng $x+1$.`,
       R`Cho $x \to 1$ thì $x+1 \to 2$.`,
-      R`Thế thẳng $x = 1$ thì mẫu bằng $0$, nên không ra số $0$. Không tồn tại chỉ đúng khi hai phía khác nhau. Số $1$ là giá trị của $x+1$ tại $x = 0$, không phải tại $1$.`,
+      R`Thế thẳng $x = 1$ cho dạng $\dfrac{0}{0}$, chưa kết luận được gì, nên không phải số $0$. Không tồn tại khi hai phía khác nhau, hoặc khi một phía không có giới hạn (dao động, tiến ra vô cực); ở đây hai phía cùng về một số. Số $1$ là giá trị của $x+1$ tại $x = 0$, không phải tại $1$.`,
     ],
     stepsEn: [
       R`$x^2 - 1 = (x-1)(x+1)$. For $x \neq 1$ the expression equals $x+1$.`,
       R`As $x \to 1$, $x+1 \to 2$.`,
-      R`Substituting $x = 1$ makes the denominator $0$, so the answer is not $0$. “Does not exist” needs the two sides to differ. The number $1$ is $x+1$ at $x = 0$, not at $1$.`,
+      R`Substituting $x = 1$ gives the form $\dfrac{0}{0}$, which decides nothing, so the answer is not $0$. “Does not exist” happens when the two sides differ, or when a side has no limit (oscillation, blowing up); here both sides approach the same number. The number $1$ is $x+1$ at $x = 0$, not at $1$.`,
     ],
   },
   {
@@ -138,13 +138,13 @@ export const limitQuestions: Question[] = [
     hintEn: "At x = 0 the denominator is 0, but both sides approach the same number.",
     steps: [
       R`Biểu thức không xác định tại $0$. Giới hạn không cần giá trị tại đúng điểm đó.`,
-      R`Khi $x \to 0$, $\sin x$ và $x$ cùng nhỏ, tỉ số tiến về $1$.`,
-      R`Số $0$ là thay $x = 0$ một cách máy móc. Không tồn tại chỉ đúng nếu hai phía khác nhau.`,
+      R`Gần $0$, $\sin x \approx x$ (kẹp: $\cos x \le \dfrac{\sin x}{x} \le 1$), nên tỉ số tiến về $1$. Chỉ “cùng nhỏ” thì chưa đủ: $\dfrac{x^2}{x} \to 0$.`,
+      R`Số $0$ là thay $x = 0$ một cách máy móc. Không tồn tại khi hai phía khác nhau, hoặc khi một phía không có giới hạn (dao động, tiến ra vô cực); ở đây hai phía cùng về một số.`,
     ],
     stepsEn: [
       R`The expression is undefined at $0$. The limit does not need a value at that single point.`,
-      R`As $x \to 0$, $\sin x$ and $x$ are both small, and the ratio approaches $1$.`,
-      R`The number $0$ comes from substituting $x = 0$ blindly. “Does not exist” needs the two sides to differ.`,
+      R`Near $0$, $\sin x \approx x$ (squeeze: $\cos x \le \dfrac{\sin x}{x} \le 1$), so the ratio approaches $1$. Being “both small” is not enough: $\dfrac{x^2}{x} \to 0$.`,
+      R`The number $0$ comes from substituting $x = 0$ blindly. “Does not exist” happens when the two sides differ, or when a side has no limit (oscillation, blowing up); here both sides approach the same number.`,
     ],
   },
 ];

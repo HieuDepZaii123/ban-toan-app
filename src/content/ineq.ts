@@ -89,12 +89,12 @@ export const ineqQuestions: Question[] = [
     steps: [
       R`$(1^2+2^2)(3^2+4^2)=5\cdot25=125$.`,
       R`$(1\cdot3+2\cdot4)^2=11^2=121$, nên $125\ge121$.`,
-      R`$\le$ đảo. $25\ge11$: bỏ bình phương. $5\ge7$: lấy căn.`,
+      R`$\le$ đảo chiều. $25\ge11$: chỉ lấy $3^2+4^2$ và quên bình phương $1\cdot3+2\cdot4$. $5\ge7$: so $\sqrt{3^2+4^2}$ với $3+4$, không phải bất đẳng thức này.`,
     ],
     stepsEn: [
       R`$(1^2+2^2)(3^2+4^2)=5\cdot25=125$.`,
       R`$(1\cdot3+2\cdot4)^2=11^2=121$, so $125\ge121$.`,
-      R`$\le$ flips it. $25\ge11$: dropped the square. $5\ge7$: took square roots.`,
+      R`$\le$ flips it. $25\ge11$: keeps only $3^2+4^2$ and leaves $1\cdot3+2\cdot4$ unsquared. $5\ge7$: compares $\sqrt{3^2+4^2}$ with $3+4$, which is a different statement.`,
     ],
   },
   {

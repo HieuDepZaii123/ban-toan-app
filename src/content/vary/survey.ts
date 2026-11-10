@@ -79,12 +79,12 @@ function rootsStem(question: Question, params: Record<string, number>) {
     [
       `$y = x(x^2 - ${3 * read(params, "p")})$.`,
       `Nghiệm $x = 0$ và $x = \\pm ${radFrac(s, 3, 1).slice(1, -1)}$.`,
-      `${critical} là điểm dừng của đạo hàm. $\\pm ${s}$ chỉ hai trong ba nghiệm nếu bỏ căn, hoặc chỉ các điểm dừng.`,
+      `${critical} lấy $\\pm ${s}$ (nghiệm của $y'$, tức điểm dừng của hàm số) rồi thêm $0$, nên chưa phải nghiệm của $y$. $\\pm ${s}$ chỉ là các điểm dừng.`,
     ],
     [
       `$y = x(x^2 - ${3 * read(params, "p")})$.`,
       `The roots are $x = 0$ and $x = \\pm ${radFrac(s, 3, 1).slice(1, -1)}$.`,
-      `${critical} is where the derivative stops. $\\pm ${s}$ keeps the stationary points, or drops the square root.`,
+      `${critical} takes $\\pm ${s}$ (roots of $y'$, the stationary points of the function) and adds $0$, so these are not roots of $y$. $\\pm ${s}$ alone are only the stationary points.`,
     ],
     `Đặt y = 0 và phân tích $x(x^2 - ${3 * read(params, "p")})$. Đừng lấy nghiệm của đạo hàm.`,
     `Set y = 0 and factor $x(x^2 - ${3 * read(params, "p")})$. Do not take the roots of the derivative.`,

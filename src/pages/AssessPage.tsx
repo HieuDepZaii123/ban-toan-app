@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { assessBanks, gradeNumber, type AssessQuestion } from "../content/assessBank.ts";
+import { displayOrder } from "../lib/prng.ts";
 import { PageFrame } from "../ui/PageFrame.tsx";
 
 const KEY = "banToan.danhGia.v1";
@@ -75,11 +76,12 @@ function Choices({ question, record, onPick }: { question: AssessQuestion; recor
   if (question.choices && question.answer !== undefined) {
     return (
       <div className="choices" role="group">
-        {question.choices.map((choice, index) => {
+        {displayOrder(question.t, question.choices.length).map((index, shownAt) => {
+          const choice = question.choices?.[index] ?? "";
           const state = !record ? "" : index === question.answer ? " is-right" : record.v === String(index) ? " is-wrong" : "";
           return (
             <button key={choice} type="button" className={`choice${state}`} disabled={!!record} onClick={() => onPick(index === question.answer, String(index))}>
-              <span className="key">{String.fromCharCode(65 + index)}</span>
+              <span className="key">{String.fromCharCode(65 + shownAt)}</span>
               <span className="choice-body">{choice}</span>
             </button>
           );

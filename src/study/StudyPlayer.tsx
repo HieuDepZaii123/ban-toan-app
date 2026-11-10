@@ -2,56 +2,8 @@ import { useEffect, useId, useRef, useState } from "react";
 import { t } from "../lib/text.ts";
 import { OPEN_MUSIC_EVENT } from "../ui/events.ts";
 import { useLang } from "../ui/useLang.ts";
-import { FALLBACK_MESSAGE, STUDY_CATEGORIES, categoryById } from "./catalog.ts";
+import { FALLBACK_MESSAGE, FALLBACK_MESSAGE_EN, STUDY_CATEGORIES, categoryById } from "./catalog.ts";
 import { afterDelete, hideTrack, nextRepeat, pickNext, readHidden, readPrefs, restoreCategory, undoHide, visibleTracks, writeHidden, writePrefs, type HiddenBook, type RepeatMode } from "./logic.ts";
-
-type YtPlayer = {
-  playVideo: () => void;
-  pauseVideo: () => void;
-  loadVideoById: (id: string) => void;
-  cueVideoById: (id: string) => void;
-  setVolume: (volume: number) => void;
-  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
-  destroy: () => void;
-};
-
-type YtNamespace = {
-  Player: new (element: HTMLElement, options: object) => YtPlayer;
-  PlayerState: { ENDED: number; PLAYING: number; PAUSED: number };
-};
-
-declare global {
-  interface Window {
-    YT?: YtNamespace;
-    onYouTubeIframeAPIReady?: () => void;
-  }
-}
-
-let apiReady: Promise<void> | null = null;
-
-function youtubeReady(): Promise<void> {
-  if (window.YT?.Player) return Promise.resolve();
-  if (apiReady) return apiReady;
-  apiReady = new Promise((resolve) => {
-    const previous = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => {
-      previous?.();
-      resolve();
-    };
-    if (!document.querySelector("script[data-study-yt]")) {
-      const script = document.createElement("script");
-      script.src = "https://www.youtube.com/iframe_api";
-      script.async = true;
-      script.dataset.studyYt = "1";
-      script.onerror = () => {
-        apiReady = null;
-        resolve();
-      };
-      document.head.appendChild(script);
-    }
-  });
-  return apiReady;
-}
 
 const OPEN_KEY = "bt-study-open";
 
@@ -75,12 +27,8 @@ export function StudyPlayer() {
   const [repeat, setRepeat] = useState<RepeatMode>(seed.repeat);
   const [playing, setPlaying] = useState(false);
   const [broken, setBroken] = useState(false);
-  const [readyUi, setReadyUi] = useState(false);
-  const host = useRef<HTMLDivElement>(null);
-  const player = useRef<YtPlayer | null>(null);
-  const ready = useRef(false);
+  const video = useRef<HTMLVideoElement>(null);
   const playingRef = useRef(false);
-  const volumeRef = useRef(seed.volume);
   const controls = useRef({ shuffle: seed.shuffle, repeat: seed.repeat, categoryId: seed.categoryId, trackId: seed.trackId, hidden: book.ids });
 
   const category = categoryById(categoryId);
@@ -94,13 +42,19 @@ export function StudyPlayer() {
 
   useEffect(() => {
     playingRef.current = playing;
-    volumeRef.current = volume;
     controls.current = { shuffle, repeat, categoryId: category.id, trackId: track?.id ?? "", hidden: book.ids };
   }, [book.ids, category.id, playing, repeat, shuffle, track?.id, volume]);
 
   function stop() {
     setPlaying(false);
-    player.current?.pauseVideo();
+    video.current?.pause();
+  }
+
+  function play() {
+    const el = video.current;
+    if (!el) return;
+    setBroken(false);
+    void el.play().catch(() => setPlaying(false));
   }
 
   // Chỉ đọc ref và setter ổn định, nên bản tạo lúc mount vẫn đúng khi gọi từ onStateChange.
@@ -110,88 +64,28 @@ export function StudyPlayer() {
     const pick = pickNext(list.map((item) => item.id), live.trackId, delta, { shuffle: live.shuffle, repeat: live.repeat, auto });
     if (pick.stop) return stop();
     if (pick.restart) {
-      // Cùng một bài: đổi id không tải lại video, nên tua về đầu.
-      player.current?.seekTo(0, true);
-      if (auto || playingRef.current) player.current?.playVideo();
+      // Cùng một bài: đổi id không tải lại tệp, nên tua về đầu.
+      const el = video.current;
+      if (el) el.currentTime = 0;
+      if (auto || playingRef.current) play();
       return;
     }
     setTrackId(pick.id);
   });
 
+  // A new track: the <video> src changes; keep playing if music was on.
   useEffect(() => {
-    let cancelled = false;
-    const mountedId = () => {
-      const live = controls.current;
-      const list = visibleTracks(categoryById(live.categoryId), live.hidden);
-      return list.find((item) => item.id === live.trackId)?.youtubeId ?? list[0]?.youtubeId ?? "";
-    };
-    void youtubeReady().then(() => {
-      if (cancelled || player.current) return;
-      if (!host.current || !window.YT?.Player) {
-        setBroken(true);
-        return;
-      }
-      const initialId = mountedId() || categoryById(controls.current.categoryId).tracks[0]?.youtubeId || "";
-      if (!initialId) return;
-      player.current = new window.YT.Player(host.current, {
-        videoId: initialId,
-        width: "200",
-        height: "120",
-        playerVars: { rel: 0, modestbranding: 1, playsinline: 1, origin: window.location.origin },
-        events: {
-          onReady: (event: { target: YtPlayer }) => {
-            ready.current = true;
-            setReadyUi(true);
-            event.target.setVolume(volumeRef.current);
-            const latestId = mountedId();
-            if (latestId !== initialId) {
-              if (playingRef.current) event.target.loadVideoById(latestId);
-              else event.target.cueVideoById(latestId);
-            } else if (playingRef.current) event.target.playVideo();
-          },
-          onError: () => {
-            setBroken(true);
-            setPlaying(false);
-            playingRef.current = false;
-          },
-          onStateChange: (event: { data: number }) => {
-            if (!window.YT) return;
-            // Giữ nút Phát/Tạm dừng khớp với trạng thái thật (trình duyệt có thể chặn tự phát).
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              setBroken(false);
-              setPlaying(true);
-            }
-            if (event.data === window.YT.PlayerState.PAUSED) setPlaying(false);
-            if (event.data === window.YT.PlayerState.ENDED) advance.current(1, true);
-          },
-        },
-      });
-    });
-    return () => {
-      cancelled = true;
-      ready.current = false;
-      setReadyUi(false);
-      player.current?.destroy();
-      player.current = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    const current = player.current;
-    if (!ready.current || !current) return;
     if (!track) {
       // Danh sách trống (đổi sang thể loại đã xóa hết, hoặc vừa xóa bài cuối): dừng hẳn bài cũ.
       stop();
       return;
     }
     setBroken(false);
-    if (playingRef.current) current.loadVideoById(track.youtubeId);
-    else current.cueVideoById(track.youtubeId);
-  }, [track?.youtubeId]);
+    if (playingRef.current) play();
+  }, [track?.id]);
 
   useEffect(() => {
-    if (!ready.current) return;
-    player.current?.setVolume(volume);
+    if (video.current) video.current.volume = Math.max(0, Math.min(1, volume / 100));
   }, [volume]);
 
   useEffect(() => {
@@ -215,19 +109,33 @@ export function StudyPlayer() {
   }
 
   function toggle() {
-    const current = player.current;
-    if (!current || !ready.current) return;
     if (playing) return stop();
-    setBroken(false);
-    setPlaying(true);
-    current.playVideo();
+    playingRef.current = true;
+    play();
   }
 
-  const repeatLabel = repeat === "one" ? "Lặp một bài" : repeat === "all" ? "Lặp cả danh sách" : "Không lặp";
+  const repeatLabel = repeat === "one" ? t(lang, "Lặp một bài", "Repeat one") : repeat === "all" ? t(lang, "Lặp cả danh sách", "Repeat all") : t(lang, "Không lặp", "No repeat");
 
   return (
     <section className={`study-player${open ? " is-open" : ""}`} id="nhac-hoc" aria-label={t(lang, "Nhạc học", "Study music")}>
-      <div className="study-frame" aria-hidden="true"><div ref={host} /></div>
+      <div className="study-screen" hidden={!open}>
+        <video
+          key={track?.id ?? "none"}
+          ref={video}
+          preload="none"
+          playsInline
+          onPlay={() => { playingRef.current = true; setPlaying(true); setBroken(false); }}
+          onPause={() => { playingRef.current = false; setPlaying(false); }}
+          onEnded={() => advance.current(1, true)}
+          onError={() => { if (track) { setBroken(true); setPlaying(false); playingRef.current = false; } }}
+          aria-label={track ? t(lang, track.title, track.titleEn) : undefined}
+        >
+          {track?.webm ? <source src={track.webm} type="video/webm" /> : null}
+          {/* With <source> children the video element never fires "error"; the last source does when all fail. */}
+          {track ? <source src={track.src} type="video/mp4" onError={() => { setBroken(true); setPlaying(false); playingRef.current = false; }} /> : null}
+        </video>
+        {track ? <small className="study-credit">{track.credit}</small> : null}
+      </div>
       {open ? (
         <div className="study-panel" id={panelId}>
           <div className="study-panel-head">
@@ -243,17 +151,17 @@ export function StudyPlayer() {
               setTrackId(first?.id ?? "");
               setBroken(false);
             }}>
-              {STUDY_CATEGORIES.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}
+              {STUDY_CATEGORIES.map((item) => <option key={item.id} value={item.id}>{t(lang, item.title, item.titleEn)}</option>)}
             </select>
           </label>
           <ul className="study-queue">
             {playlist.map((item) => (
               <li key={item.id} aria-current={item.id === track?.id ? "true" : undefined}>
-                <button type="button" className="study-pick" onClick={() => setTrackId(item.id)}>{item.title}</button>
+                <button type="button" className="study-pick" onClick={() => setTrackId(item.id)}>{t(lang, item.title, item.titleEn)}</button>
                 <button
                   type="button"
                   className="text-btn"
-                  aria-label={t(lang, `Xóa ${item.title}`, `Delete ${item.title}`)}
+                  aria-label={t(lang, `Xóa ${item.title}`, `Delete ${item.titleEn}`)}
                   onClick={() => removeTrack(item.id)}
                 >
                   {t(lang, "Xóa", "Delete")}
@@ -295,16 +203,15 @@ export function StudyPlayer() {
           id="nhac-phat"
           className="study-play"
           aria-pressed={playing}
-          aria-label={readyUi ? (playing ? t(lang, "Tạm dừng nhạc", "Pause music") : t(lang, "Phát nhạc", "Play music")) : t(lang, "Nhạc đang tải", "Music loading")}
-          title={readyUi ? undefined : t(lang, "Nhạc đang tải", "Music loading")}
-          disabled={!readyUi || !track}
+          aria-label={playing ? t(lang, "Tạm dừng nhạc", "Pause music") : t(lang, "Phát nhạc", "Play music")}
+          disabled={!track}
           onClick={toggle}
         >
           <span aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
         </button>
         <button type="button" className="study-icon" aria-label={t(lang, "Bài sau", "Next track")} onClick={() => advance.current(1, false)}>›</button>
         <span className={`study-now${broken ? " is-broken" : ""}`} role={broken ? "status" : undefined}>
-          {broken ? FALLBACK_MESSAGE : track?.title ?? t(lang, "Danh sách trống", "Playlist empty")}
+          {broken ? t(lang, FALLBACK_MESSAGE, FALLBACK_MESSAGE_EN) : track ? t(lang, track.title, track.titleEn) : t(lang, "Danh sách trống", "Playlist empty")}
         </span>
         <button type="button" className="study-icon" aria-expanded={open} aria-controls={panelId} aria-label={open ? t(lang, "Thu gọn nhạc", "Close music") : t(lang, "Mở danh sách nhạc", "Open music list")} onClick={() => setOpen(!open)}>
           {open ? "▾" : "▴"}

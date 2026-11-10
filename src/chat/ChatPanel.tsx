@@ -25,6 +25,8 @@ const SESSION = "ban-toan-chat-session";
 const LICENSE = "ban-toan-license";
 const URL_KEY = "bt-ask-url";
 const MOCK_KEY = "bt-ask-mock";
+/** The server-connection panel (sample mode, custom API URL) is a developer tool, not for students. */
+const DEV_TOOLS = import.meta.env.DEV;
 const LOCAL_LIMIT = 8;
 
 const QUICK = ["Đạo hàm của x mũ 2", "Đỉnh của parabol?", "giới hạn dạng 0/0"];
@@ -45,6 +47,19 @@ function sessionId(): string {
   const next = crypto.randomUUID();
   sessionStorage.setItem(SESSION, next);
   return next;
+}
+
+/** Stable per-browser id so the free allowance is per learner, not per shared school network. */
+function deviceId(): string {
+  try {
+    const saved = localStorage.getItem("ban-toan-device");
+    if (saved && /^[A-Za-z0-9-]{8,64}$/.test(saved)) return saved;
+    const next = crypto.randomUUID();
+    localStorage.setItem("ban-toan-device", next);
+    return next;
+  } catch {
+    return "";
+  }
 }
 
 function dayKey(): string {
@@ -88,9 +103,11 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   const [note, setNote] = useState("");
   const [meta, setMeta] = useState<ChatState>({});
   const [url, setUrl] = useState(() => {
+    if (!DEV_TOOLS) return "";
     try { return localStorage.getItem(URL_KEY) || ""; } catch { return ""; }
   });
   const [mock, setMock] = useState(() => {
+    if (!DEV_TOOLS) return false;
     try { return localStorage.getItem(MOCK_KEY) === "1"; } catch { return false; }
   });
   const [localLeft, setLocalLeft] = useState(() => Math.max(0, LOCAL_LIMIT - usedToday()));
@@ -148,7 +165,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "content-type": "application/json", "x-ban-toan-session": sessionId() },
-          body: JSON.stringify({ messages: next, license, topic: studying?.id ?? "" }),
+          body: JSON.stringify({ messages: next, license, topic: studying?.id ?? "", device: deviceId() }),
         });
         const body = await res.json() as ChatState;
         setMeta(body);
@@ -167,9 +184,15 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     }
   }
 
-  const quota = typeof meta.remaining === "number" && typeof meta.limit === "number"
-    ? t(lang, meta.premium ? `Premium: còn ${meta.remaining}/${meta.limit} tin hôm nay.` : `Máy chủ: còn ${meta.remaining}/${meta.limit} tin hôm nay.`, `Server: ${meta.remaining}/${meta.limit} left today.`)
-    : t(lang, "Máy chủ: 8 tin miễn phí mỗi ngày, Premium 40.", "Server: 8 free messages a day, Premium 40.");
+  const known = typeof meta.remaining === "number" && typeof meta.limit === "number";
+  const outOfQuestions = known && meta.remaining === 0 && !meta.premium;
+  const quota = known
+    ? meta.premium
+      ? t(lang, `Premium: còn ${meta.remaining} câu hỏi hôm nay.`, `Premium: ${meta.remaining} questions left today.`)
+      : outOfQuestions
+        ? t(lang, "Hết 8 câu hỏi miễn phí hôm nay. Mai hỏi tiếp, hoặc Premium được 40 câu mỗi ngày.", "Your 8 free questions for today are used. Come back tomorrow, or Premium gives 40 a day.")
+        : t(lang, `Còn ${meta.remaining} câu hỏi miễn phí hôm nay.`, `${meta.remaining} free questions left today.`)
+    : t(lang, "8 câu hỏi miễn phí mỗi ngày, Premium 40.", "8 free questions a day, Premium 40.");
 
   return (
     <section className="chat-panel" role="dialog" aria-label={t(lang, "Trợ lý toán", "Math tutor")}>
@@ -180,12 +203,12 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       <p className="chat-quota">
         {quota}{" "}
         {mock || url.trim() ? <span>{t(lang, `Mẫu trên máy: còn ${localLeft}/${LOCAL_LIMIT}.`, `On this device: ${localLeft}/${LOCAL_LIMIT} left.`)} </span> : null}
-        {meta.premium ? null : <A href="/nang-cap">{t(lang, "Nâng cấp", "Upgrade")}</A>}
+        {meta.premium ? null : <A href="/nang-cap" className={outOfQuestions ? "pay-btn" : undefined}>{outOfQuestions ? t(lang, "Xem Premium", "See Premium") : t(lang, "Nâng cấp", "Upgrade")}</A>}
       </p>
       {studying ? <p className="chat-context">{t(lang, `Đang học: ${studying.title}`, `Studying: ${studying.title}`)}</p> : null}
       <div className="chat-log" ref={scroller} aria-live="polite">
         {turns.length === 0 ? (
-          <p className="chat-note">{t(lang, "Cứ nói chuyện. Gặp bài thì mình nêu tư duy giải, rồi gợi ý từng bước.", "Talk freely. On a problem I show the solution thinking, then hint the steps.")}</p>
+          <p className="chat-note">{t(lang, "Đưa bài toán, mình nêu tư duy giải rồi gợi ý từng bước. Câu hỏi được gửi tới nhà cung cấp AI bên ngoài, nên đừng ghi tên, địa chỉ hay số điện thoại. ", "Send a maths problem and I will show the solution thinking, then hint the steps. Questions go to an outside AI provider, so do not include names, addresses or phone numbers. ")}<A href="/chinh-sach">{t(lang, "Chính sách", "Policy")}</A></p>
         ) : null}
         {turns.map((turn, index) => (
           <article key={`${turn.role}-${index}`} className={`chat-turn is-${turn.role}`}>
@@ -226,7 +249,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       {draft.includes("$") ? (
         <p className="chat-preview" aria-label={t(lang, "Xem công thức", "Formula preview")}><MathText text={draft} /></p>
       ) : null}
-      <details className="chat-config">
+      {DEV_TOOLS ? <details className="chat-config">
         <summary>{t(lang, "Kết nối máy chủ", "Server connection")}</summary>
         <label className="chat-check">
           <input
@@ -252,7 +275,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
           />
         </label>
         <p className="lecture-note">{t(lang, "Khóa API để ở máy chủ. Ô này chỉ nhận địa chỉ.", "The API key stays on the server. This field is only an address.")}</p>
-      </details>
+      </details> : null}
     </section>
   );
 }

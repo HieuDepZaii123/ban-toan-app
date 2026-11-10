@@ -29,12 +29,12 @@ export const derivativeQuestions: Question[] = [
     steps: [
       R`$f(x) = x^2$ có $f'(x) = 2x$.`,
       R`$f'(2) = 4$. Đó là hệ số góc của tiếp tuyến tại $x = 2$.`,
-      R`Số $2$ mới là hoành độ. $2x$ chưa thế. $f'(2) = 0$ chỉ đúng ở đỉnh $x = 0$, không phải tại $x = 2$.`,
+      R`Số $2$ mới là hoành độ. $2x$ chưa thế. $0$ là $f'(x)$ tại đỉnh $x = 0$, không phải tại $x = 2$.`,
     ],
     stepsEn: [
       R`$f(x) = x^2$ has $f'(x) = 2x$.`,
       R`$f'(2) = 4$. That is the slope of the tangent at $x = 2$.`,
-      R`The number $2$ is only the x-coordinate. $2x$ has not been evaluated. $f'(2) = 0$ would be the vertex at $x = 0$, not at $x = 2$.`,
+      R`The number $2$ is only the x-coordinate. $2x$ has not been evaluated. $0$ is $f'(x)$ at the vertex $x = 0$, not at $x = 2$.`,
     ],
   },
   {
@@ -44,8 +44,8 @@ export const derivativeQuestions: Question[] = [
     choices: [R`$2 + h$`, R`$2$`, R`$h$`, R`$2h$`],
     choicesEn: [R`$2 + h$`, R`$2$`, R`$h$`, R`$2h$`],
     answer: 0,
-    hint: R`Khai $(1+h)^2-1$, chia $h$, rồi cho $h\to 0$.`,
-    hintEn: R`Expand $(1+h)^2-1$, divide by $h$, then send $h\to 0$.`,
+    hint: R`Khai $(1+h)^2-1$ rồi chia cho $h$. Cát tuyến: không cho $h\to 0$.`,
+    hintEn: R`Expand $(1+h)^2-1$ and divide by $h$. This is the secant: do not let $h\to 0$.`,
     steps: [
       R`$(1+h)^2 - 1^2 = 1 + 2h + h^2 - 1 = 2h + h^2$.`,
       R`Chia cho $h \neq 0$: $\dfrac{2h + h^2}{h} = 2 + h$.`,

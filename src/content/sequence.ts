@@ -109,12 +109,12 @@ export const sequenceQuestions: Question[] = [
     steps: [
       R`Các đỉnh sau lần rơi đầu là $4 + 2 + 1 + \cdots = 4 / (1 - 1/2) = 8$ m.`,
       R`Mỗi đỉnh được đi lên và đi xuống, nên cộng $2 \times 8$. Thêm lần rơi $8$ m: tổng $24$ m.`,
-      R`$16$ m là $8 + 4 + 2 + \cdots$, mỗi đoạn chỉ tính một lần. $8$ m chỉ là lần thả. $12$ m chỉ cộng một nhịp nảy.`,
+      R`$16$ m là $8 + 4 + 2 + \cdots$, mỗi đoạn chỉ tính một lần. $8$ m chỉ là lần thả. $12$ m là $8 + 4$: lần rơi cộng một lần nảy lên, quên đoạn rơi xuống.`,
     ],
     stepsEn: [
       R`The apexes after the first drop are $4 + 2 + 1 + \cdots = 4 / (1 - 1/2) = 8$ m.`,
       R`Each apex is travelled up and down, so add $2 \times 8$. With the $8$ m drop the total is $24$ m.`,
-      R`$16$ m is $8 + 4 + 2 + \cdots$, counting each piece once. $8$ m is only the drop. $12$ m adds a single bounce.`,
+      R`$16$ m is $8 + 4 + 2 + \cdots$, counting each piece once. $8$ m is only the drop. $12$ m is $8 + 4$: the drop plus the first rise, without its fall.`,
     ],
   },
   {

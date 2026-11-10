@@ -9,12 +9,15 @@ export function LectureVideos({ topicId }: { topicId: string }) {
   const [playing, setPlaying] = useState<string | null>(null);
   const all = lecturesFor(topicId);
   if (all.length === 0) return null;
-  const list = all.filter((video) => video.level === level);
+  // Only real lectures are shown to students; empty and sample slots stay in the data until filled.
+  const ready = all.filter((video) => embedUrl(video.youtubeId) !== null && video.youtubeId !== SAMPLE_YOUTUBE_ID);
+  if (ready.length === 0) return null;
+  const list = ready.filter((video) => video.level === level);
   return (
     <section className="lectures" aria-labelledby="lecture-title">
       <h2 id="lecture-title">{t(lang, "Video bài giảng", "Lecture videos")}</h2>
       <p className="lecture-note">
-        {t(lang, "Bấm để mở. Video không tự phát. Id YouTube sửa trong dữ liệu bài giảng.", "Press to open. Videos do not autoplay. Edit the YouTube id in the lecture data.")}
+        {t(lang, "Bấm để mở. Video không tự phát.", "Press to open. Videos do not autoplay.")}
       </p>
       <div className="read-switch" role="tablist" aria-label={t(lang, "Mức video", "Video level")}>
         <button type="button" role="tab" aria-selected={level === "basic"} onClick={() => { setLevel("basic"); setPlaying(null); }}>
@@ -27,7 +30,6 @@ export function LectureVideos({ topicId }: { topicId: string }) {
       {list.map((video) => {
         const src = embedUrl(video.youtubeId);
         const open = playing === video.slot && src !== null;
-        const sample = video.youtubeId === SAMPLE_YOUTUBE_ID;
         return (
           <article key={video.slot} className="lecture">
             <h3>{video.title}</h3>
@@ -45,11 +47,7 @@ export function LectureVideos({ topicId }: { topicId: string }) {
               <button type="button" className="lecture-poster" disabled={src === null} onClick={() => setPlaying(video.slot)}>
                 <span>{src ? t(lang, "Xem video", "Play") : t(lang, "Sắp có", "Coming soon")}</span>
                 <small>
-                  {src
-                    ? sample
-                      ? t(lang, "Video mẫu — thay youtubeId khi có bài giảng", "Sample video — replace youtubeId when the lecture is ready")
-                      : t(lang, "YouTube", "YouTube")
-                    : t(lang, "Chưa có đường dẫn. Điền youtubeId trong dữ liệu.", "No link yet. Fill youtubeId in the data.")}
+                  {t(lang, "YouTube", "YouTube")}
                 </small>
               </button>
             )}

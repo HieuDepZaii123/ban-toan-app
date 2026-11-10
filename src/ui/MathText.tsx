@@ -11,7 +11,7 @@ function renderMixed(text: string): string {
     .split(/(\$[^$]+\$)/g)
     .map((part) => {
       if (part.startsWith("$") && part.endsWith("$") && part.length > 2) {
-        return katex.renderToString(part.slice(1, -1), { throwOnError: false, output: "html" });
+        return katex.renderToString(part.slice(1, -1), { throwOnError: false, output: "htmlAndMathml" });
       }
       return escapeHtml(part);
     })

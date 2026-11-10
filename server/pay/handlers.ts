@@ -98,6 +98,7 @@ export async function handlePremium(request: Request, env: PayEnv): Promise<Resp
   if (path === "/api/premium/status" && request.method === "GET") return status(url, env, store);
   if (path === "/api/premium/bank" && request.method === "POST") return bankHook(request, env, store);
   if (path === "/api/premium/confirm" && request.method === "POST") return confirm(request, env, store);
+  if (path === "/api/premium/refund" && request.method === "POST") return refund(request, env, store);
   if (path === "/api/premium/crypto" && request.method === "POST") return cryptoRoute(request, env, store);
   if (path === "/api/premium/affiliate" && request.method === "POST") return affiliateRoute(request, env, store);
   if (path === "/api/premium/affiliate-admin" && request.method === "POST") return affiliateAdmin(request, env, store);
@@ -138,6 +139,7 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
   const method = methodOf(body.method);
   if (!EMAIL.test(email) || email.length > 120) return json(400, { error: "email" });
   if (!plan || !method) return json(400, { error: "plan" });
+  if ((method === "wallet" || method === "qr") && !env.momoReady) return json(503, { error: "momo_not_configured" });
   const amount = priceOf(env, plan);
   const now = env.now();
   const referred = await acceptedRef(store, body, email, env.affiliateRateBps);
@@ -196,6 +198,8 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
     return json(200, await enrich(env, order));
   }
   await store.insertOrder(order);
+  // Bank transfer works on its own; only ask MoMo for a session when MoMo is really set up.
+  if (!env.momoReady) return json(200, await enrich(env, order));
   try {
     const session = await createMomoPayment(env, {
       orderId: order.orderId,
@@ -209,7 +213,9 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
     order.qrCodeUrl = session.qrCodeUrl;
     await store.setMomo(order.orderId, session.payUrl, session.deeplink, session.qrCodeUrl);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "MoMo error";
+    // Never forward the raw exception text to buyers; it is technical and untranslated.
+    void error;
+    const message = "MoMo chưa nhận đơn. Thử lại sau hoặc chọn chuyển khoản. / MoMo did not accept the order. Try again later or pay by bank transfer.";
     if (method === "wallet") return json(502, { error: "momo", message, orderId: order.orderId, amount });
     return json(200, { ...(await enrich(env, order)), momoError: message });
   }
@@ -242,6 +248,8 @@ async function enrich(env: PayEnv, order: OrderRow, cryptoCheck?: Json): Promise
 }
 
 async function ipn(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  // Live deploy without a real MoMo secret: the public sandbox key would let anyone forge an IPN.
+  if (!env.momoReady) return json(503, { error: "momo_not_configured" });
   const notice = readIpn(await readJson(request));
   if (!notice) return json(400, { error: "body" });
   if (!ipnSignatureOk(env, notice)) return json(401, { error: "bad_signature" });
@@ -257,6 +265,7 @@ async function ipn(request: Request, env: PayEnv, store: PayStore): Promise<Resp
     notice.transId || null,
     "momo",
     notice.transId || `${notice.orderId}:${notice.requestId}`,
+    true,
   );
   if (!marked.ok) return json(marked.error === "expired" ? 409 : 400, { error: marked.error, applied: false });
   return json(200, { ok: true, applied: marked.applied });
@@ -440,12 +449,22 @@ async function settleBank(env: PayEnv, store: PayStore, notice: BankNotice): Pro
   const order = await store.getByTransfer(code, env.now());
   if (!order) return json(404, { error: "not_found" });
   if (notice.amount !== order.amount) return json(400, { error: "amount" });
-  const marked = await store.markPaid(order.orderId, env.now(), order.amount, null, "bank", notice.transactionId);
+  const marked = await store.markPaid(order.orderId, env.now(), order.amount, null, "bank", notice.transactionId, true);
   if (!marked.ok) {
     if (marked.error === "duplicate") return json(200, { ok: true, applied: false });
     return json(marked.error === "expired" ? 409 : 400, { error: marked.error, applied: false });
   }
   return json(200, { ok: true, applied: marked.applied, orderId: order.orderId });
+}
+
+/** Admin: the money has been returned, so the licence stops working. */
+async function refund(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
+  const body = await readJson(request);
+  const orderId = typeof body.orderId === "string" ? body.orderId : "";
+  if (!orderId) return json(400, { error: "order" });
+  const done = await store.refundOrder(orderId);
+  return done ? json(200, { ok: true, orderId }) : json(404, { error: "not_paid" });
 }
 
 async function confirm(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
@@ -454,7 +473,7 @@ async function confirm(request: Request, env: PayEnv, store: PayStore): Promise<
   const orderId = typeof body.orderId === "string" ? body.orderId : "";
   const order = orderId ? await store.getOrder(orderId, env.now()) : null;
   if (!order) return json(404, { error: "not_found" });
-  const marked = await store.markPaid(order.orderId, env.now(), order.amount, null, "admin", order.orderId);
+  const marked = await store.markPaid(order.orderId, env.now(), order.amount, null, "admin", order.orderId, order.method !== "crypto");
   if (!marked.ok) return json(marked.error === "expired" ? 409 : 400, { error: marked.error, applied: false });
   return json(200, { ok: true, applied: marked.applied, orderId: order.orderId });
 }

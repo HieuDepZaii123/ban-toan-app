@@ -165,6 +165,22 @@ export function vertexForm(a: number, h: number, k: number): string {
   return `${aText}${inner}^2${lin(k, "")}`;
 }
 
+/**
+ * Helpers such as radFrac() return `$…$`. Dropped into a step that already opened `$`,
+ * they produce `$a = $b$$`, which shows raw TeX. Join such a piece back into one formula.
+ */
+export function joinMath(text: string): string {
+  const joined = text.replace(/\$([^$]*)\$([^$]+)\$\$/g, (_, head: string, piece: string) => `$${head}${piece}$`);
+  return joined.replace(/\$([^$]*)\$/g, (_, math: string) => `$${signs(math)}$`);
+}
+
+/** A negative parameter dropped after an operator: x-(-1) is x+1, x+(-1) is x-1. */
+function signs(math: string): string {
+  return math.replace(/-\s*-/g, "+").replace(/\+\s*-/g, "-").replace(/-\s*\+/g, "-");
+}
+
+const tidy = <T extends string[]>(list: T): T => list.map(joinMath) as T;
+
 export function made(
   question: Question,
   prompt: string,
@@ -178,13 +194,13 @@ export function made(
 ): Stem {
   return {
     id: question.id,
-    prompt,
-    promptEn,
-    choices,
-    choicesEn,
-    hint,
-    hintEn,
-    steps,
-    stepsEn,
+    prompt: joinMath(prompt),
+    promptEn: joinMath(promptEn),
+    choices: tidy(choices),
+    choicesEn: tidy(choicesEn),
+    hint: joinMath(hint),
+    hintEn: joinMath(hintEn),
+    steps: tidy(steps),
+    stepsEn: tidy(stepsEn),
   };
 }

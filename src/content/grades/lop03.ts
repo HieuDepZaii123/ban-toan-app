@@ -17,15 +17,15 @@ export const lop03: GradeBook = {
           R`Viết số gồm $4$ chục nghìn, $5$ nghìn, $3$ chục và $2$ đơn vị.`,
           [
             buoc(R`Bốn chục nghìn là $40\,000$, năm nghìn là $5\,000$.`, "Mỗi hàng có giá trị riêng. Hàng trăm không có chữ số thì viết $0$."),
-            buoc(R`Cộng $40\,000+5\,000+30+2=45\,032$.`, "Ghép các hàng được số nằm trong phạm vi $100\,000$."),
+            buoc(R`Cộng $40\,000+5\,000+30+2=45\,032$.`, "Ghép các hàng được số nằm trong phạm vi $100\\,000$."),
           ],
           R`Số cần viết là $45\,032$.`,
           [{ expr: "4*10000+5*1000+30+2", expect: "45032" }],
         )],
         [
-          luyen(R`Ba chục nghìn bằng bao nhiêu?`, R`Ba chục nghìn bằng $30\,000$.`, [{ expr: "3*10000", expect: "30000" }], "Mỗi chục nghìn là $10\,000$. Ba lần số đó là $30\,000$."),
+          luyen(R`Ba chục nghìn bằng bao nhiêu?`, R`Ba chục nghìn bằng $30\,000$.`, [{ expr: "3*10000", expect: "30000" }], "Mỗi chục nghìn là $10\\,000$. Ba lần số đó là $30\\,000$."),
           luyen(R`Tính $60\,000+4\,000$.`, R`Tổng bằng $64\,000$.`, [{ expr: "60000+4000", expect: "64000" }], "Sáu chục nghìn thêm bốn nghìn. Các hàng còn lại là $0$."),
-          luyen(R`Số $100\,000$ hơn $99\,999$ bao nhiêu đơn vị?`, R`Hơn $1$ đơn vị.`, [{ expr: "100000-99999", expect: "1" }], "Số đứng ngay sau $99\,999$ trong phạm vi đã học là $100\,000$."),
+          luyen(R`Số $100\,000$ hơn $99\,999$ bao nhiêu đơn vị?`, R`Hơn $1$ đơn vị.`, [{ expr: "100000-99999", expect: "1" }], "Số đứng ngay sau $99\\,999$ trong phạm vi đã học là $100\\,000$."),
         ],
         { figure: "segment" },
       ),
@@ -83,8 +83,8 @@ export const lop03: GradeBook = {
           [{ expr: "23*4", expect: "92" }],
         )],
         [
-          luyen(R`Tính $12\times 3$.`, R`Tích bằng $36$.`, [{ expr: "12*3", expect: "36" }], "Ba lần $12$ là $36$. Hàng đơn vị $2\times 3$ chưa cần nhớ."),
-          luyen(R`Tính $15\times 4$.`, R`Tích bằng $60$.`, [{ expr: "15*4", expect: "60" }], "Bốn lần $15$ bằng $60$. Có thể tính $10\times 4$ rồi cộng $5\times 4$."),
+          luyen(R`Tính $12\times 3$.`, R`Tích bằng $36$.`, [{ expr: "12*3", expect: "36" }], "Ba lần $12$ là $36$. Hàng đơn vị $2\\times 3$ chưa cần nhớ."),
+          luyen(R`Tính $15\times 4$.`, R`Tích bằng $60$.`, [{ expr: "15*4", expect: "60" }], "Bốn lần $15$ bằng $60$. Có thể tính $10\\times 4$ rồi cộng $5\\times 4$."),
           luyen(R`Tính $25\times 4$.`, R`Tích bằng $100$.`, [{ expr: "25*4", expect: "100" }], "Bốn lần $25$ bằng một trăm."),
         ],
       ),
@@ -96,7 +96,7 @@ export const lop03: GradeBook = {
           R`Tính $17:5$. Tìm thương và số dư.`,
           [
             buoc(R`Ta có $5\times 3=15$ và $5\times 4=20$ lớn hơn $17$.`, "Thương là số nguyên lớn nhất sao cho tích chưa vượt số bị chia."),
-            buoc(R`Vậy thương bằng $3$ và số dư bằng $17-15=2$.`, "Số dư phải nhỏ hơn số chia $5$. Kiểm tra lại: $5\times 3+2=17$."),
+            buoc(R`Vậy thương bằng $3$ và số dư bằng $17-15=2$.`, "Số dư phải nhỏ hơn số chia $5$. Kiểm tra lại: $5\\times 3+2=17$."),
           ],
           R`Thương bằng $3$ và số dư bằng $2$.`,
           [{ expr: "5*3+2", expect: "17" }],
