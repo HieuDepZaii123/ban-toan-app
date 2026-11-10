@@ -89,12 +89,12 @@ export const expQuestions: Question[] = [
     steps: [
       R`Lãi kép: $10 \times (1{,}08)^5$.`,
       R`$(1{,}08)^5 \approx 1{,}4693$, nên kết quả khoảng $14{,}69$ triệu.`,
-      R`$14$ triệu là lãi đơn $10(1 + 0{,}08 \times 5)$. $18$ triệu là $10 + 8$. $40$ triệu là $10 \times 1{,}08 \times 5$, nhân số năm thay vì lũy thừa.`,
+      R`$14$ triệu là lãi đơn $10(1 + 0{,}08 \times 5)$. $18$ triệu là $10 + 8$. $40$ triệu là $8 \times 5$: lấy số phần trăm nhân số năm, quên cả vốn gốc.`,
     ],
     stepsEn: [
       R`Compound interest: $10 \times (1{,}08)^5$.`,
       R`$(1{,}08)^5 \approx 1{,}4693$, so the result is about $14{,}69$ triệu.`,
-      R`$14$ triệu is simple interest $10(1 + 0{,}08 \times 5)$. $18$ triệu is $10 + 8$. $40$ triệu is $10 \times 1{,}08 \times 5$, multiplying by the years instead of raising to a power.`,
+      R`$14$ triệu is simple interest $10(1 + 0{,}08 \times 5)$. $18$ triệu is $10 + 8$. $40$ triệu is $8 \times 5$: the percent times the years, with the principal forgotten.`,
     ],
   },
   {

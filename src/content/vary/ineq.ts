@@ -112,12 +112,12 @@ function cauchyStem(question: Question, params: Record<string, number>) {
     [
       `$(${a}^2+${b}^2)(${c}^2+${d}^2)=${left}$.`,
       `$(${a}\\cdot${c}+${b}\\cdot${d})^2=${dot}^2=${right}$, nên $${left}\\ge ${right}$.`,
-      `$\\le$ đảo chiều. ${sums} và ${dot} bỏ bình phương. ${root} và ${ends} lấy căn.`,
+      `$\\le$ đảo chiều. ${sums} chỉ là $${c}^2+${d}^2$, còn ${dot} chưa bình phương. ${root} và ${ends} là $\\sqrt{${c}^2+${d}^2}$ và $${c}+${d}$, không phải hai vế của bất đẳng thức.`,
     ],
     [
       `$(${a}^2+${b}^2)(${c}^2+${d}^2)=${left}$.`,
       `$(${a}\\cdot${c}+${b}\\cdot${d})^2=${dot}^2=${right}$, so $${left}\\ge ${right}$.`,
-      `$\\le$ flips the inequality. ${sums} and ${dot} drop the square. ${root} and ${ends} take square roots.`,
+      `$\\le$ flips the inequality. ${sums} is only $${c}^2+${d}^2$, and ${dot} is left unsquared. ${root} and ${ends} are $\\sqrt{${c}^2+${d}^2}$ and $${c}+${d}$, not the two sides.`,
     ],
   );
 }
@@ -140,12 +140,12 @@ function lpStem(question: Question, params: Record<string, number>) {
     [
       `Đỉnh: $(0;0),\\ (8;0),\\ (6;4),\\ (0;10)$.`,
       `$P=0,${at80},${at64},${at10}$. $\\max=${at64}$ tại $(6;4)$.`,
-      `${at80} và ${at10} là đỉnh kia. ${swapped}=${q}\\cdot6+${p}\\cdot4$: đảo hệ số.`,
+      `${at80} và ${at10} là đỉnh kia. $${swapped}=${q}\\cdot6+${p}\\cdot4$: đảo hệ số.`,
     ],
     [
       `Vertices: $(0;0),\\ (8;0),\\ (6;4),\\ (0;10)$.`,
       `$P=0,${at80},${at64},${at10}$. $\\max=${at64}$ at $(6;4)$.`,
-      `${at80} and ${at10} are the other vertices. ${swapped}=${q}\\cdot6+${p}\\cdot4$: swapped coefficients.`,
+      `${at80} and ${at10} are the other vertices. $${swapped}=${q}\\cdot6+${p}\\cdot4$: swapped coefficients.`,
     ],
   );
 }

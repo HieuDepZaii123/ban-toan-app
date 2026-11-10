@@ -124,7 +124,7 @@ export function TopicDesk({ id }: { id: string }) {
         sub={
           <div className="topic-bar">
             <div className="topic-title">
-              <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
+              <h1>{lang === "en" ? topic.titleEn : topic.title}</h1>
               <span>{streamName(topic.stream, lang)} · {t(lang, "Lớp", "Grade")} {topic.grade}</span>
             </div>
             <nav className="tabs" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>

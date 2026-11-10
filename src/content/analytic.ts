@@ -29,12 +29,12 @@ export const analyticQuestions: Question[] = [
     steps: [
       R`$\dfrac{|3+1-2|}{\sqrt{1^2+1^2}}$.`,
       R`$\dfrac{2}{\sqrt{2}}=\sqrt{2}$.`,
-      R`$2$: dừng ở tử. $0$: điểm trên đường. $1$: một hệ số.`,
+      R`$2$: dừng ở tử. $0$: chỉ đúng nếu điểm nằm trên đường, nhưng $3+1-2=2\neq0$. $1$: chỉ lấy một hệ số ở mẫu.`,
     ],
     stepsEn: [
       R`$\dfrac{|3+1-2|}{\sqrt{1^2+1^2}}$.`,
       R`$\dfrac{2}{\sqrt{2}}=\sqrt{2}$.`,
-      R`$2$: stopped at the numerator. $0$: the point is on the line. $1$: one coefficient.`,
+      R`$2$: stopped at the numerator. $0$: only if the point were on the line, but $3+1-2=2\neq0$. $1$: only one coefficient under the root.`,
     ],
   },
   {
@@ -49,12 +49,12 @@ export const analyticQuestions: Question[] = [
     steps: [
       R`$t=\dfrac{3+1-2}{1^2+1^2}=1$.`,
       R`$(3;\ 1)-t(1;\ 1)=(2;\ 0)$. $2+0-2=0$.`,
-      R`$(1;\ 1),\ (2;\ 2)$ trên đường, nhưng không $\parallel(1;\ 1)$. $(3;\ 1)$ không trên đường.`,
+      R`$(1;\ 1)$ trên đường nhưng $(3;\ 1)-(1;\ 1)=(2;\ 0)\not\parallel(1;\ 1)$. $(2;\ 2)$ không trên đường: $2+2-2=2\neq0$. $(3;\ 1)$ là chính điểm đã cho.`,
     ],
     stepsEn: [
       R`$t=\dfrac{3+1-2}{1^2+1^2}=1$.`,
       R`$(3;\ 1)-t(1;\ 1)=(2;\ 0)$. $2+0-2=0$.`,
-      R`$(1;\ 1)$ and $(2;\ 2)$ lie on the line, but not $\parallel(1;\ 1)$. $(3;\ 1)$ is not on the line.`,
+      R`$(1;\ 1)$ is on the line, but $(3;\ 1)-(1;\ 1)=(2;\ 0)\not\parallel(1;\ 1)$. $(2;\ 2)$ is not on the line: $2+2-2=2\neq0$. $(3;\ 1)$ is the given point itself.`,
     ],
   },
   {
@@ -89,12 +89,12 @@ export const analyticQuestions: Question[] = [
     steps: [
       R`$ax+by+c=0\Rightarrow\vec d=(b;\ -a)$.`,
       R`$(1;\ -1)\cdot(1;\ 1)=0$.`,
-      R`$(1;\ 1)=\vec n$. $(2;\ 0)\cdot(1;\ 1)=2\neq0$.`,
+      R`$(1;\ 1)=\vec n$. $(2;\ 0)$ là một điểm trên đường, không phải vectơ chỉ phương: $(2;\ 0)\cdot(1;\ 1)=2\neq0$. $(0;\ 2)\cdot(1;\ 1)=2\neq0$.`,
     ],
     stepsEn: [
       R`$ax+by+c=0\Rightarrow\vec d=(b;\ -a)$.`,
       R`$(1;\ -1)\cdot(1;\ 1)=0$.`,
-      R`$(1;\ 1)=\vec n$. $(2;\ 0)\cdot(1;\ 1)=2\neq0$.`,
+      R`$(1;\ 1)=\vec n$. $(2;\ 0)$ is a point on the line, not a direction: $(2;\ 0)\cdot(1;\ 1)=2\neq0$. $(0;\ 2)\cdot(1;\ 1)=2\neq0$.`,
     ],
   },
   {

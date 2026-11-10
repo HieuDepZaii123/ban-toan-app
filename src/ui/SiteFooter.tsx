@@ -11,7 +11,7 @@ export function SiteFooter() {
     <footer className="site-foot">
       <p>
         <b>Bàn Toán</b>
-        <span>{t(lang, "Số liệu nằm trên máy này. Sau lần mở đầu, bàn vẫn dùng được khi mất mạng.", "Your data stays on this device. After the first load, the desk works offline.")}</span>
+        <span>{t(lang, "Tiến độ nằm trên máy này; câu hỏi gửi trợ lý thì rời máy. Sau lần mở đầu, bàn vẫn dùng được khi mất mạng.", "Progress stays on this device; questions sent to the tutor leave it. After the first load, the desk works offline.")}</span>
       </p>
       <nav aria-label={t(lang, "Trang khác", "More pages")}>
         {more.map((page) => (

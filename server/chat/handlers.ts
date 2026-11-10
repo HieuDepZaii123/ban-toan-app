@@ -1,5 +1,6 @@
 import { demoReply, TUTOR_INSTRUCTIONS } from "./policy.ts";
 import { tutorTopics } from "./topics.ts";
+import { createHash } from "node:crypto";
 import { normalizeMath } from "./format.ts";
 import type { Quota } from "./limit.ts";
 
@@ -19,7 +20,11 @@ export type ChatEnv = {
   premiumDaily: number;
   windowLimit: number;
   windowMs: number;
+  /** Free questions per network per day, so one shared school Wi-Fi is not capped at a single student's allowance. */
+  networkDaily?: number;
 };
+
+const DEVICE_ID = /^[A-Za-z0-9-]{8,64}$/;
 
 export type ChatJson = {
   reply?: string;
@@ -61,7 +66,13 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
   const topicId = tutorTopics.some((item) => item.id === askedTopic) ? askedTopic : "";
   const premium = license ? await env.premium(license) : false;
   const dailyLimit = premium ? env.premiumDaily : env.freeDaily;
-  if ((await env.quota.used(`win:${ip}`, env.now(), env.windowMs)) >= env.windowLimit) {
+  const device = typeof body.device === "string" && DEVICE_ID.test(body.device) ? body.device : "";
+  // Count per learner, not per IP: a paid license has its own allowance, a free learner is counted per device.
+  const who = premium
+    ? `lic:${createHash("sha256").update(license).digest("hex").slice(0, 32)}`
+    : device ? `dev:${device}` : `ip:${ip}`;
+  const networkDaily = env.networkDaily ?? env.freeDaily * 20;
+  if ((await env.quota.used(`win:${who}`, env.now(), env.windowMs)) >= env.windowLimit) {
     return json(429, {
       error: "rate",
       message: "Bạn hỏi hơi nhanh. Đợi một lát rồi thử lại.",
@@ -70,8 +81,10 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
       remaining: 0,
     });
   }
-  const usedToday = await env.quota.used(`day:${ip}`, env.now(), DAY_MS);
-  if (usedToday >= dailyLimit) {
+  const usedToday = await env.quota.used(`day:${who}`, env.now(), DAY_MS);
+  // Device ids are client-made, so free use also has a looser cap per network.
+  const networkFull = !premium && who !== `ip:${ip}` && (await env.quota.used(`net:${ip}`, env.now(), DAY_MS)) >= networkDaily;
+  if (usedToday >= dailyLimit || networkFull) {
     return json(429, {
       error: "quota",
       message: premium
@@ -82,8 +95,9 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
       remaining: 0,
     });
   }
-  await env.quota.add(`win:${ip}`, env.now());
-  await env.quota.add(`day:${ip}`, env.now());
+  await env.quota.add(`win:${who}`, env.now());
+  await env.quota.add(`day:${who}`, env.now());
+  if (!premium && who !== `ip:${ip}`) await env.quota.add(`net:${ip}`, env.now());
   const remaining = dailyLimit - usedToday - 1;
   try {
     const note = topicId ? `\nHọc sinh đang mở tờ /t/${topicId}.` : "";
@@ -112,8 +126,10 @@ function readMessages(value: unknown): ChatTurn[] {
   return turns.slice(-MAX_TURNS);
 }
 
+/** Prefer headers the platform sets itself (Vercel overwrites these), then the first forwarded hop. */
 function clientIp(request: Request): string {
+  const platform = request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip")?.trim();
+  if (platform) return platform;
   const forwarded = request.headers.get("x-forwarded-for") ?? "";
-  const first = forwarded.split(",")[0]?.trim();
-  return first || request.headers.get("x-real-ip")?.trim() || "local";
+  return forwarded.split(",")[0]?.trim() || "local";
 }

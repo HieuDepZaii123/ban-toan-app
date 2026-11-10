@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { freshSeed } from "../lib/prng.ts";
+import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import type { Lang } from "../lib/math.ts";
 import { THPT_GRADES, inScope, thptBank, thptById, thptTopics, topicById, type ThptQuestion } from "../thpt/bank.ts";
@@ -71,6 +72,11 @@ export function ThptPracticePage() {
       title={t(lang, "Luyện THPT", "Upper-secondary practice")}
       lead={t(lang, `${thptBank.length} câu trắc nghiệm có lời giải, chia theo lớp và chủ đề. Luyện từng chủ đề, ôn câu sai, hoặc thi thử có giờ. Tiến độ lưu riêng trên máy này.`, `${thptBank.length} worked multiple-choice questions by grade and topic. Practise a topic, review misses, or sit a timed mock exam. Progress is saved separately on this device.`)}
     >
+      <p className="pay-card">
+        <b>{t(lang, "Đề thi thử chuẩn 2025", "2025-format mock exam")}</b>
+        <span>{t(lang, " 12 trắc nghiệm, 4 Đúng/Sai, 6 trả lời ngắn, 90 phút, chấm như đề thật. ", " 12 multiple choice, 4 true/false, 6 short answer, 90 minutes, scored like the real paper. ")}</span>
+        <A href="/thi-thu">{t(lang, "Làm đề", "Take a paper")}</A>
+      </p>
       {body}
     </PageFrame>
   );

@@ -8,7 +8,7 @@ import { newAffiliateCode } from "./affiliate.ts";
 import { pgStore } from "./pgStore.ts";
 import type { PayMethod, PlanId } from "./env.ts";
 
-export type OrderStatus = "pending" | "paid" | "expired";
+export type OrderStatus = "pending" | "paid" | "expired" | "refunded";
 
 export type OrderRow = {
   orderId: string;
@@ -93,13 +93,19 @@ type SyncStore = {
   setCryptoTx(orderId: string, tx: string): void;
   listPendingCrypto(now: number): OrderRow[];
   eventOrder(kind: string, id: string): string | null;
-  markPaid(orderId: string, now: number, amount: number, transId: string | null, eventKind: string, eventId: string): MarkPaid;
+  /**
+   * allowLate: the provider has confirmed the money arrived (bank webhook, MoMo IPN, admin check),
+   * so a late payment still issues the license instead of being dropped as "expired".
+   */
+  markPaid(orderId: string, now: number, amount: number, transId: string | null, eventKind: string, eventId: string, allowLate?: boolean): MarkPaid;
   ensureAffiliate(ownerHash: string, email: string | null, now: number): { code: string };
   affiliateOfCode(code: string): { code: string; ownerHash: string; email: string | null } | null;
   recordVisit(code: string, visitorHash: string, now: number): boolean;
   affiliateStats(code: string, now: number): AffiliateStats;
   listAffiliates(now: number): AffiliateAdminRow[];
   approveAffiliate(code: string, now: number): { count: number; amount: number };
+  /** Refund a paid order: its licence stops working and an unpaid referral commission is voided. */
+  refundOrder(orderId: string): boolean;
 };
 
 /**
@@ -156,7 +162,7 @@ export function fromSql(row: SqlOrder, now: number): OrderRow {
     method: storedMethod(row.method),
     amount: row.amount,
     transferCode: row.transfer_code,
-    status: row.status === "paid" ? "paid" : expired || row.status === "expired" ? "expired" : "pending",
+    status: row.status === "paid" ? "paid" : row.status === "refunded" ? "refunded" : expired || row.status === "expired" ? "expired" : "pending",
     createdAt: row.created_at,
     expiresAt: row.expires_at,
     paidAt: row.paid_at,
@@ -270,7 +276,10 @@ function openSqlite(dbPath: string): SyncStore {
   const byId = db.prepare("SELECT * FROM orders WHERE order_id = ?");
   const byTransfer = db.prepare("SELECT * FROM orders WHERE transfer_code = ?");
   const byLicense = db.prepare("SELECT * FROM orders WHERE license_hash = ? AND status = 'paid'");
+  const refund = db.prepare("UPDATE orders SET status = 'refunded' WHERE order_id = ? AND status = 'paid'");
+  const voidCommission = db.prepare("UPDATE affiliate_commissions SET status = 'void' WHERE order_id = ? AND status = 'accrued'");
   const expire = db.prepare("UPDATE orders SET status = 'expired' WHERE order_id = ? AND status = 'pending'");
+  const reopen = db.prepare("UPDATE orders SET status = 'pending' WHERE order_id = ? AND status = 'expired'");
   const insertEvent = db.prepare("INSERT INTO payment_events (event_kind, event_id, order_id) VALUES (?, ?, ?)");
   const setMomo = db.prepare("UPDATE orders SET pay_url = ?, deeplink = ?, qr_code_url = ? WHERE order_id = ?");
   const taken = db.prepare(`
@@ -400,7 +409,19 @@ function openSqlite(dbPath: string): SyncStore {
       const row = eventOf.get(kind, id) as { order_id: string } | undefined;
       return row?.order_id ?? null;
     },
-    markPaid(orderId, now, amount, transId, eventKind, eventId) {
+    refundOrder(orderId) {
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        const changed = refund.run(orderId) as { changes: number };
+        if (changed.changes) voidCommission.run(orderId);
+        db.exec("COMMIT");
+        return changed.changes > 0;
+      } catch (error) {
+        db.exec("ROLLBACK");
+        throw error;
+      }
+    },
+    markPaid(orderId, now, amount, transId, eventKind, eventId, allowLate = false) {
       db.exec("BEGIN IMMEDIATE");
       try {
         const current = byId.get(orderId) as SqlOrder | undefined;
@@ -418,7 +439,8 @@ function openSqlite(dbPath: string): SyncStore {
           const term = order.plan === "year" ? 365 : 30;
           return { ok: true, applied: false, licenseKey: order.licenseKey, expiresAt: (order.paidAt ?? now) + term * 86_400_000 };
         }
-        if (order.status === "expired" || now > order.expiresAt) {
+        if (allowLate && current.status === "expired") reopen.run(orderId);
+        else if (!allowLate && (order.status === "expired" || now > order.expiresAt)) {
           expire.run(orderId);
           db.exec("COMMIT");
           return { ok: false, error: "expired" };

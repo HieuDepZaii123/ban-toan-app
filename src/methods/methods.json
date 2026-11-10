@@ -191,7 +191,7 @@
           "steps": [
             "Bình phương phép đặt đã cho: $\\left(x+\\dfrac{1}{x}\\right)^2=x^2+2+\\dfrac{1}{x^2}=9$.",
             "Suy ra $x^2+\\dfrac{1}{x^2}=7$.",
-            "Không cần tìm $x$. Điều kiện $x>0$ chỉ để loại nghiệm âm của phương trình gốc, không đổi bình phương này."
+            "Không cần tìm $x$. Hai nghiệm $\\dfrac{3\\pm\\sqrt5}{2}$ đều dương, nên điều kiện $x>0$ không loại nghiệm nào và không đổi kết quả."
           ]
         }
       ],
@@ -313,7 +313,7 @@
       ],
       "care": [
         "Công thức xác định là $\\displaystyle\\int_a^b u\\,dv=[uv]_a^b-\\int_a^b v\\,du$. Bỏ $[uv]_a^b$ thì mất cả phần biên.",
-        "$v$ là một nguyên hàm của $dv$, không cộng $C$ vào $v$. Hằng số sẽ bị trừ hai lần.",
+        "Chỉ cần một nguyên hàm $v$ của $dv$, nên thường lấy $C=0$. Nếu lỡ cộng $C$ thì $C[u]_a^b-C\\int_a^b du=0$: hằng số tự triệt tiêu, chỉ làm phép tính dài thêm.",
         "Cận của số hạng biên và của tích phân còn lại phải cùng một đoạn $[a,b]$."
       ],
       "formulas": [
@@ -348,7 +348,7 @@
       ],
       "mistakes": [
         "Quên $[uv]_a^b$ và chỉ tính $-\\int v\\,du$.",
-        "Lấy $v=\\sin x+C$ rồi mang $C$ vào biên.",
+        "Lấy $v=\\sin x+C$, mang $C$ vào số hạng biên nhưng quên nó cũng nằm trong $\\int v\\,du$, nên $C$ không còn triệt tiêu.",
         "Đổi biến $\\int x\\cos x\\,dx$ dù không có đạo hàm của $x$ đứng cạnh $\\cos x$ theo cách khớp $du$."
       ],
       "practice": [

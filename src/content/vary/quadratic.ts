@@ -131,16 +131,16 @@ function fenceStem(question: Question, params: Record<string, number>) {
     [metres2(best), metres2(square), metres2(quarter), metres2(near)],
     [
       `Hai cạnh vuông góc tường dài $x$ mét, cạnh song song tường dài $${p} - 2x$. $S = x(${p} - 2x)$, với $0 < x < ${p / 2}$.`,
-      `$S' = ${p} - 4x = 0$ tại $x = ${x}$. $S'' = -4 < 0$, nên đây là giá trị lớn nhất.`,
+      `$S = -2x^2 + ${p}x$ có $a = -2 < 0$. Đỉnh tại $x = -\\dfrac{${p}}{2\\cdot(-2)} = ${x}$ là giá trị lớn nhất.`,
       `$S(${x}) = ${best}$ m². $${square}$ quên mất một nửa. $${quarter}$ chia thừa. $${near}$ là $S(${x - 2})$, chưa phải đỉnh.`,
     ],
     [
       `The two sides perpendicular to the wall have length $x$; the side along the wall is $${p} - 2x$. $S = x(${p} - 2x)$, with $0 < x < ${p / 2}$.`,
-      `$S' = ${p} - 4x = 0$ at $x = ${x}$. $S'' = -4 < 0$, so this is a maximum.`,
+      `$S = -2x^2 + ${p}x$ has $a = -2 < 0$. The vertex $x = -\\dfrac{${p}}{2\\cdot(-2)} = ${x}$ gives the maximum.`,
       `$S(${x}) = ${best}$ m². $${square}$ drops the half. $${quarter}$ divides once too often. $${near}$ is $S(${x - 2})$, not the top.`,
     ],
-    `Gọi x là cạnh vuông góc với tường. Cạnh song song tường còn ${p} − 2x. Cho S′ = 0.`,
-    `Let x be the side perpendicular to the wall. The side along the wall is ${p} − 2x. Set S′ = 0.`,
+    `Gọi x là cạnh vuông góc với tường. Cạnh song song tường còn ${p} − 2x. Tìm đỉnh x = −b/(2a).`,
+    `Let x be the side perpendicular to the wall. The side along the wall is ${p} − 2x. Find the vertex x = −b/(2a).`,
   );
 }
 
@@ -161,16 +161,16 @@ function costStem(question: Question, params: Record<string, number>) {
     [atX(m, h, "vi"), atX(c, 0, "vi"), atX(forgot, h, "vi"), atX(m, 2 * h, "vi")],
     [atX(m, h, "en"), atX(c, 0, "en"), atX(forgot, h, "en"), atX(m, 2 * h, "en")],
     [
-      `$C'(x) = ${slope}x - ${intercept} = 0$ tại $x = ${h}$. Cũng là $x = -\\dfrac{b}{2a}$.`,
-      `$C'' = ${slope} > 0$, nên đây là giá trị nhỏ nhất.`,
+      `Đỉnh tại $x = -\\dfrac{b}{2a} = \\dfrac{${intercept}}{${slope}} = ${h}$.`,
+      `$a = ${slope / 2} > 0$, parabol quay lên, nên đỉnh cho giá trị nhỏ nhất.`,
       `$C(${h}) = ${m}$. Số ${c} là $C(0)$. Quên hạng $x^2$ thì ra ${forgot}. Lấy $x = -\\dfrac{b}{a} = ${2 * h}$ thì đặt ${m} nhầm chỗ.`,
     ],
     [
-      `$C'(x) = ${slope}x - ${intercept} = 0$ at $x = ${h}$. That is also $x = -\\dfrac{b}{2a}$.`,
-      `$C'' = ${slope} > 0$, so this is a minimum.`,
+      `The vertex is at $x = -\\dfrac{b}{2a} = \\dfrac{${intercept}}{${slope}} = ${h}$.`,
+      `$a = ${slope / 2} > 0$, so the parabola opens up and the vertex is the minimum.`,
       `$C(${h}) = ${m}$. The ${c} is $C(0)$. Dropping the $x^2$ term gives ${forgot}. Using $x = -\\dfrac{b}{a} = ${2 * h}$ puts ${m} in the wrong place.`,
     ],
-    `C′(x) = ${slope}x − ${intercept}. Đừng đọc hệ số tự do, và đừng quên số 2 ở mẫu của −b/(2a).`,
-    `C′(x) = ${slope}x − ${intercept}. Do not read off the constant term, and do not drop the 2 in −b/(2a).`,
+    `Đỉnh tại x = −b/(2a). Đừng đọc hệ số tự do, và đừng quên số 2 ở mẫu.`,
+    `The vertex is at x = −b/(2a). Do not read off the constant term, and do not drop the 2.`,
   );
 }

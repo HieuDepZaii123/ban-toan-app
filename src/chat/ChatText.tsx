@@ -51,7 +51,7 @@ function MermaidBlock({ source }: { source: string }) {
     void (async () => {
       try {
         const mermaid = (await import("mermaid")).default;
-        mermaid.initialize({ startOnLoad: false, securityLevel: "antiscript", fontFamily: "inherit" });
+        mermaid.initialize({ startOnLoad: false, securityLevel: "strict", fontFamily: "inherit", flowchart: { htmlLabels: false } });
         const drawn = await mermaid.render(id, source);
         const clean = sanitizeSvg(drawn.svg);
         if (!cancel && host.current) host.current.innerHTML = clean;

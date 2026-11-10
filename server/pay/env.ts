@@ -39,6 +39,10 @@ export type PayEnv = {
   cryptoSolFinalized: boolean;
   /** Hoa hồng theo phần vạn. 1000 = 10%. Chỉ áp vào đơn đã thanh toán. */
   affiliateRateBps: number;
+  /** Production deploy: sandbox/sample secrets are refused instead of silently used. */
+  live: boolean;
+  /** MoMo has a real merchant secret (never the public sandbox one when live). */
+  momoReady: boolean;
   now: () => number;
   fetchImpl: typeof fetch;
 };
@@ -52,6 +56,22 @@ export const MOMO_SANDBOX = {
 } as const;
 
 const SAMPLE_ACCOUNT = "0000000000";
+
+/** Placeholder values from .env.example. Never accepted as real secrets. */
+const SAMPLE_SECRETS = new Set(["doi-bi-mat-webhook", "doi-token-admin"]);
+
+/** A shared secret is only usable if it is not a placeholder (and, when live, long enough to guess-proof). */
+function secret(value: string | undefined, live: boolean): string {
+  const text = value?.trim() ?? "";
+  if (!text || SAMPLE_SECRETS.has(text)) return "";
+  if (live && text.length < 16) return "";
+  return text;
+}
+
+export function isLive(source: NodeJS.ProcessEnv): boolean {
+  if (source.PAY_LIVE === "0") return false;
+  return source.PAY_LIVE === "1" || source.VERCEL_ENV === "production" || source.NODE_ENV === "production";
+}
 
 function integer(value: string | undefined, fallback: number): number {
   if (value === undefined || value.trim() === "") return fallback;
@@ -70,11 +90,15 @@ function bounded(value: string | undefined, fallback: number, min: number, max: 
 export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => number = Date.now, fetchImpl: typeof fetch = fetch): PayEnv {
   const bankAccountNo = source.BANK_ACCOUNT_NO?.trim() || SAMPLE_ACCOUNT;
   const bankAccountName = source.BANK_ACCOUNT_NAME?.trim() || "NGUOI DUNG MAU";
+  const live = isLive(source);
+  const secretKey = source.MOMO_SECRET_KEY?.trim() || MOMO_SANDBOX.secretKey;
+  const endpoint = source.MOMO_ENDPOINT?.trim() || MOMO_SANDBOX.endpoint;
+  const sandbox = secretKey === MOMO_SANDBOX.secretKey || endpoint === MOMO_SANDBOX.endpoint;
   return {
     partnerCode: source.MOMO_PARTNER_CODE?.trim() || MOMO_SANDBOX.partnerCode,
     accessKey: source.MOMO_ACCESS_KEY?.trim() || MOMO_SANDBOX.accessKey,
-    secretKey: source.MOMO_SECRET_KEY?.trim() || MOMO_SANDBOX.secretKey,
-    endpoint: source.MOMO_ENDPOINT?.trim() || MOMO_SANDBOX.endpoint,
+    secretKey,
+    endpoint,
     priceMonth: integer(source.PREMIUM_PRICE_MONTH, 49000),
     priceYear: integer(source.PREMIUM_PRICE_YEAR, 399000),
     publicBaseUrl: (source.PUBLIC_BASE_URL?.trim() || "http://127.0.0.1:43123").replace(/\/$/, ""),
@@ -82,8 +106,8 @@ export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => numbe
     bankAccountNo,
     bankAccountName,
     bankName: source.BANK_NAME?.trim() || "Ngan hang mau",
-    webhookSecret: source.BANK_WEBHOOK_SECRET?.trim() || "",
-    adminToken: source.ADMIN_TOKEN?.trim() || "",
+    webhookSecret: secret(source.BANK_WEBHOOK_SECRET, live),
+    adminToken: secret(source.ADMIN_TOKEN, live),
     dbPath: source.PREMIUM_DB_PATH?.trim() || "data/premium.sqlite",
     databaseUrl: source.DATABASE_URL?.trim() || source.POSTGRES_URL?.trim() || "",
     sampleBank: bankAccountNo === SAMPLE_ACCOUNT || bankAccountName === "NGUOI DUNG MAU",
@@ -103,6 +127,8 @@ export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => numbe
     cryptoSolConfirmations: bounded(source.CRYPTO_SOL_CONFIRMATIONS, 32, 1, 200),
     cryptoSolFinalized: source.CRYPTO_SOL_REQUIRE_FINALIZED !== "0",
     affiliateRateBps: bounded(source.AFFILIATE_RATE_BPS, 1000, 0, 5000),
+    live,
+    momoReady: !(live && sandbox),
     now,
     fetchImpl,
   };

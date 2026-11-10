@@ -3,7 +3,7 @@ import type { Question } from "../content/types.ts";
 import type { Vary } from "../content/vary/types.ts";
 import { mulberry32 } from "../lib/prng.ts";
 import { useRoute } from "../lib/useRoute.ts";
-import { countRight, ensureAttempt, questionKey, recordAnswer, resetAttempt, useSlice } from "../lib/store.ts";
+import { answeredNow, countRight, ensureAttempt, getData, questionKey, recordAnswer, resetAttempt, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -22,7 +22,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
   const key = question ? questionKey(topicId, question.id) : "";
   const attempt = useSlice((data) => (key === "" ? undefined : data.attempts[key]));
   const picked = useSlice((data) => {
-    if (key === "") return -1;
+    if (key === "" || !answeredNow(data, key)) return -1;
     if (data.right[key]) return data.attempts[key]?.pos ?? -1;
     const wrong = data.wrong[key];
     return typeof wrong === "number" ? wrong : -1;
@@ -43,6 +43,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
       const target = event.target;
       if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) return;
       if (event.key < "1" || event.key > "4") return;
+      if (answeredNow(getData(), questionKey(topicId, question.id))) return;
       const display = Number(event.key) - 1;
       if (display < 0 || display > 3) return;
       event.preventDefault();
@@ -75,7 +76,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
     ? ""
     : picked === shown.answer
       ? t(lang, `Đúng. Đã chọn ${choiceNo}.`, `Correct. Chose ${choiceNo}.`)
-      : t(lang, `Chưa đúng. Đã chọn ${choiceNo}.`, `Not yet. Chose ${choiceNo}.`);
+      : t(lang, `Chưa đúng. Đã chọn ${choiceNo}. Đáp án đúng: ${shown.answer + 1}.`, `Not yet. Chose ${choiceNo}. The correct answer is ${shown.answer + 1}.`);
 
   return (
     <section className="practice" aria-labelledby="practice-title">
@@ -95,6 +96,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
               className={`choice${state}`}
               data-choice={displayIndex}
               aria-pressed={answered && displayIndex === picked}
+              disabled={answered}
               onClick={() => recordAnswer(topicId, question.id, displayIndex, displayIndex === shown.answer)}
             >
               <span className="key">{displayIndex + 1}</span>

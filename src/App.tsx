@@ -3,6 +3,7 @@ import { ChatEntry } from "./chat/ChatEntry.tsx";
 import { HomeDesk } from "./home/HomeDesk.tsx";
 import { captureReferral } from "./lib/referral.ts";
 import { A, RouteProvider } from "./lib/route.tsx";
+import { PageFrame } from "./ui/PageFrame.tsx";
 import { useRoute } from "./lib/useRoute.ts";
 import { setTheme, useSlice } from "./lib/store.ts";
 import { t } from "./lib/text.ts";
@@ -14,6 +15,8 @@ import { useLang } from "./ui/useLang.ts";
 
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ default: mod.Upgrade })));
+const ExamPage = lazy(() => import("./pages/ExamPage.tsx").then((mod) => ({ default: mod.ExamPage })));
+const PolicyPage = lazy(() => import("./pages/PolicyPage.tsx").then((mod) => ({ default: mod.PolicyPage })));
 const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
 const GradeDesk = lazy(() => import("./grades/GradeDesk.tsx").then((mod) => ({ default: mod.GradeDesk })));
 const FormulaPage = lazy(() => import("./pages/FormulaPage.tsx").then((mod) => ({ default: mod.FormulaPage })));
@@ -71,6 +74,8 @@ function Shell() {
   const { path } = useRoute();
   if (path.startsWith("/t/")) return <TopicDesk id={topicId(path)} />;
   if (path === "/nang-cap") return <Upgrade />;
+  if (path === "/chinh-sach") return <PolicyPage />;
+  if (path === "/thi-thu") return <ExamPage />;
   if (path === "/so-cong-thuc") return <FormulaPage />;
   if (path === "/danh-gia") return <AssessPage />;
   if (path === "/xuong-hinh") return <WorkshopPage />;
@@ -84,7 +89,25 @@ function Shell() {
   if (path === "/luyen-thpt") return <ThptPracticePage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
   if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return <GradeDesk />;
-  return <HomeDesk />;
+  if (path === "/" || path === "") return <HomeDesk />;
+  return <NotFound />;
+}
+
+function NotFound() {
+  const lang = useLang();
+  useEffect(() => {
+    document.title = t(lang, "Không có trang này · Bàn Toán", "Page not found · Bàn Toán");
+  }, [lang]);
+  return (
+    <PageFrame kicker="404" title={t(lang, "Không có trang này", "There is no page here")}>
+      <p>{t(lang, "Đường dẫn có thể đã đổi hoặc gõ nhầm.", "The link may have changed or been mistyped.")}</p>
+      <p>
+        <A href="/">{t(lang, "Về bàn", "Back to the desk")}</A>
+        {" · "}
+        <A href="/kien-thuc">{t(lang, "Kiến thức lớp 1–12", "Lessons for grades 1–12")}</A>
+      </p>
+    </PageFrame>
+  );
 }
 
 function Broken() {

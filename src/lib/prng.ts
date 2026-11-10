@@ -43,3 +43,24 @@ export function shuffleIds(ids: readonly string[], seed: number): string[] {
   }
   return order;
 }
+
+/** Answer-slot stream, independent of the stream that draws the question's numbers from the same seed. */
+export function slotRng(seed: number): () => number {
+  return mulberry32((seed ^ 0x9e3779b9) >>> 0);
+}
+
+/**
+ * A stable display order for a fixed question, so hand-written banks (stored with the key
+ * first) do not always show the answer as A. Same id, same order on every visit.
+ */
+export function displayOrder(id: string, count: number): number[] {
+  let hash = 2166136261;
+  for (let i = 0; i < id.length; i += 1) hash = Math.imul(hash ^ id.charCodeAt(i), 16777619);
+  const rng = mulberry32(hash >>> 0);
+  const order = Array.from({ length: count }, (_, i) => i);
+  for (let i = count - 1; i > 0; i -= 1) {
+    const j = Math.floor(rng() * (i + 1));
+    [order[i], order[j]] = [order[j] as number, order[i] as number];
+  }
+  return order;
+}

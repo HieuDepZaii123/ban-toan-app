@@ -1,73 +1,52 @@
 /**
- * Danh sách nhạc học.
- * Mỗi youtubeId có tiêu đề oEmbed, và trang nhúng báo playabilityStatus OK cùng playableInEmbed.
- * Luồng trực tiếp đã kết thúc (màn hình kết) không được giữ, dù oEmbed vẫn trả 200.
+ * Danh sách nhạc học: chỉ tệp đặt trên chính máy chủ (public/study-media), không nhúng dịch vụ ngoài.
+ *
+ * Thêm bài: chép tệp video (.mp4, H.264 + AAC) mà bạn có quyền phát vào public/study-media/,
+ * rồi thêm một dòng vào đúng thể loại bên dưới, ghi rõ nguồn và giấy phép ở `credit`.
+ * Các bài "on-nau", "mua", "song", "pad-*" do scripts/make-study-media.py tự tổng hợp, không có bản quyền bên thứ ba.
  */
 
-export type StudyTrack = { id: string; title: string; youtubeId: string };
+export type StudyTrack = {
+  id: string;
+  title: string;
+  titleEn: string;
+  /** Path under the site root, e.g. "/study-media/pad-do.mp4" (H.264 + AAC). */
+  src: string;
+  /** Optional WebM (VP9 + Opus) copy for browsers without H.264, e.g. open-source Chromium. */
+  webm?: string;
+  /** Who made it and under what licence; shown under the player. */
+  credit: string;
+};
 
-export type StudyCategory = { id: string; title: string; tracks: StudyTrack[] };
+export type StudyCategory = { id: string; title: string; titleEn: string; tracks: StudyTrack[] };
+
+const MADE_HERE = "Bàn Toán tự tổng hợp · Synthesised by Bàn Toán";
 
 export const STUDY_CATEGORIES: StudyCategory[] = [
   {
-    id: "lofi",
-    title: "Lo-fi",
+    id: "nen",
+    title: "Âm nền",
+    titleEn: "Background sound",
     tracks: [
-      { id: "lofi-radio", title: "Lo-fi radio để học", youtubeId: "rFZHOHl-L8A" },
-      { id: "lofi-1am", title: "Phiên học một giờ sáng", youtubeId: "lTRiuFIWV54" },
-      { id: "lofi-chillhop", title: "Chillhop radio", youtubeId: "5yx6BWlEVcY" },
-      { id: "lofi-beats", title: "Nhịp lo-fi để thư giãn", youtubeId: "7NOSDKb0HlU" },
+      { id: "on-nau", title: "Ồn nâu", titleEn: "Brown noise", src: "/study-media/on-nau.mp4", webm: "/study-media/on-nau.webm", credit: MADE_HERE },
+      { id: "mua", title: "Mưa nhẹ", titleEn: "Light rain", src: "/study-media/mua.mp4", webm: "/study-media/mua.webm", credit: MADE_HERE },
+      { id: "song", title: "Sóng biển", titleEn: "Sea waves", src: "/study-media/song.mp4", webm: "/study-media/song.webm", credit: MADE_HERE },
     ],
   },
   {
-    id: "piano",
-    title: "Piano",
+    id: "hoa-am",
+    title: "Hòa âm chậm",
+    titleEn: "Slow chords",
     tracks: [
-      { id: "piano-clair", title: "Clair de Lune", youtubeId: "WNcsUNKlAKw" },
-      { id: "piano-gym", title: "Gymnopédie số 1", youtubeId: "2WfaotSK3mI" },
-      { id: "piano-nocturne", title: "Nocturne cung Mi giáng", youtubeId: "9E6b3swbnWg" },
-    ],
-  },
-  {
-    id: "classical",
-    title: "Nhạc cổ điển",
-    tracks: [
-      { id: "class-moon", title: "Sonata ánh trăng", youtubeId: "4Tr0otuiQuU" },
-      { id: "class-seasons", title: "Bốn mùa của Vivaldi", youtubeId: "GRxofEmo3HA" },
-      { id: "class-best", title: "Tuyển tập Mozart, Beethoven, Bach", youtubeId: "jgpJVI3tDbY" },
-    ],
-  },
-  {
-    id: "rain",
-    title: "Tiếng mưa / ồn trắng",
-    tracks: [
-      { id: "rain-window", title: "Mưa trên cửa sổ", youtubeId: "mPZkdNFkNps" },
-      { id: "rain-night", title: "Mưa đêm nhẹ", youtubeId: "q76bMs-NwRk" },
-      { id: "rain-white", title: "Ồn trắng", youtubeId: "nMfPqeZjc2c" },
-      { id: "rain-long", title: "Mưa dài để tập trung", youtubeId: "8plwv25NYRo" },
-    ],
-  },
-  {
-    id: "jazz",
-    title: "Jazz",
-    tracks: [
-      { id: "jazz-cafe", title: "Jazz quán cà phê đêm", youtubeId: "BywDOO99Ia0" },
-      { id: "jazz-smooth", title: "Jazz êm để học", youtubeId: "SORD03t7nlo" },
-      { id: "jazz-coffee", title: "Jazz quán cà phê", youtubeId: "fEvM-OUbaKs" },
-    ],
-  },
-  {
-    id: "viet",
-    title: "Nhạc không lời Việt",
-    tracks: [
-      { id: "viet-bolero", title: "Hòa tấu bolero không lời", youtubeId: "oGJ4WUbSUUc" },
-      { id: "viet-rumba", title: "Nhạc không lời rumba", youtubeId: "sIJaYUkO4Vo" },
-      { id: "viet-xa", title: "Hòa tấu Kẻ ở miền xa", youtubeId: "hd5wbNcjIcA" },
+      { id: "pad-do", title: "Đô trưởng chậm", titleEn: "Slow C major", src: "/study-media/pad-do.mp4", webm: "/study-media/pad-do.webm", credit: MADE_HERE },
+      { id: "pad-la", title: "La thứ êm", titleEn: "Soft A minor", src: "/study-media/pad-la.mp4", webm: "/study-media/pad-la.webm", credit: MADE_HERE },
+      { id: "pad-vong", title: "Vòng hòa âm I–V–vi–IV", titleEn: "I–V–vi–IV loop", src: "/study-media/pad-vong.mp4", webm: "/study-media/pad-vong.webm", credit: MADE_HERE },
     ],
   },
 ];
 
-export const FALLBACK_MESSAGE = "Video này không phát được. Hãy chọn bài khác.";
+export const FALLBACK_MESSAGE = "Bài này không phát được. Hãy chọn bài khác.";
+export const FALLBACK_MESSAGE_EN = "This track could not play. Pick another one.";
 
 export function categoryById(id: string): StudyCategory {
   const found = STUDY_CATEGORIES.find((item) => item.id === id) ?? STUDY_CATEGORIES[0];

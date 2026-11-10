@@ -44,6 +44,7 @@ export function chatEnv(source: NodeJS.ProcessEnv = process.env, quota: Quota = 
     premiumDaily: integer(source.CHAT_PREMIUM_DAILY, 40),
     windowLimit: integer(source.CHAT_WINDOW_LIMIT, 10),
     windowMs: integer(source.CHAT_WINDOW_MS, 10 * 60 * 1000),
+    networkDaily: integer(source.CHAT_NETWORK_DAILY, 160),
   };
 }
 
