@@ -6,6 +6,8 @@ import { freeCandidates, hasFreeKey } from "./free.ts";
 const DEFAULT_MODEL = "openai/gpt-5.4-mini";
 const ATTEMPT_MS = 20_000;
 const TOTAL_MS = 25_000;
+/** Room for reasoning models (e.g. gpt-oss on Groq), which count hidden reasoning against this budget. */
+const MAX_OUTPUT_TOKENS = 1_500;
 
 export type LiveCandidate = { id: string; model: LanguageModel };
 
@@ -61,10 +63,10 @@ export async function completeLive(
         model: candidate.model,
         instructions,
         messages: messages.map((turn) => ({ role: turn.role, content: turn.content })),
-        maxOutputTokens: 700,
+        maxOutputTokens: MAX_OUTPUT_TOKENS,
         timeout: { totalMs: Math.min(ATTEMPT_MS, left) },
       });
-      if (text.trim()) return text;
+      if (text.trim()) return finishReason === "length" ? `${text.trimEnd()} …` : text;
       lastError = new Error(`${candidate.id}: empty reply (finish: ${finishReason ?? "unknown"})`);
       logFailure(candidate.id, lastError);
     } catch (error) {
