@@ -9,7 +9,7 @@ import { SiteFooter } from "../ui/SiteFooter.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
-import { Welcome } from "./Welcome.tsx";
+import { DeskTools, Welcome } from "./Welcome.tsx";
 
 export function HomeDesk() {
   const lang = useLang();
@@ -49,20 +49,23 @@ export function HomeDesk() {
       <SiteHeader />
       <main id="content">
         <Welcome />
-        <Room />
-        <ProgressLine />
-        {folded ? null : <Continue />}
-        <form className="search home-search" role="search" onSubmit={(event) => event.preventDefault()}>
-          <input
-            id="search"
-            ref={searchRef}
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={t(lang, "Tìm tờ, ví dụ đạo hàm", "Find a sheet, for example derivative")}
-            aria-label={t(lang, "Tìm chuyên đề", "Search topics")}
-            autoComplete="off"
-          />
-        </form>
+        <section className={`home-start${folded ? " is-searching" : ""}`} aria-label={t(lang, "Bắt đầu", "Start")}>
+          {folded ? null : <Continue />}
+          <div className="home-find">
+            <form className="search home-search" role="search" onSubmit={(event) => event.preventDefault()}>
+              <input
+                id="search"
+                ref={searchRef}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={t(lang, "Tìm tờ, ví dụ đạo hàm", "Find a sheet, for example derivative")}
+                aria-label={t(lang, "Tìm chuyên đề", "Search topics")}
+                autoComplete="off"
+              />
+            </form>
+            <ProgressLine />
+          </div>
+        </section>
         {visible.length === 0 ? (
           <p className="empty">{t(lang, `Không thấy tờ nào với “${query.trim()}”.`, `No sheet matches “${query.trim()}”.`)}</p>
         ) : (
@@ -97,9 +100,41 @@ export function HomeDesk() {
             ))}
           </div>
         </section>
+        <DeskCorner />
       </main>
       <SiteFooter />
     </div>
+  );
+}
+
+const CORNER_KEY = "bt-desk-corner";
+
+/**
+ * Góc bàn: đèn, cửa sổ, đồng hồ và các tiện ích nhỏ, gập lại mặc định để trang chủ bắt đầu bằng việc học.
+ * Vẫn được dựng khi gập (thẻ details), nên đèn bàn vẫn chiếu sáng trang như trước.
+ */
+function DeskCorner() {
+  const lang = useLang();
+  const [open, setOpen] = useState(() => {
+    try { return localStorage.getItem(CORNER_KEY) === "1"; } catch { return false; }
+  });
+  return (
+    <details
+      className="desk-corner"
+      open={open}
+      onToggle={(event) => {
+        const next = event.currentTarget.open;
+        setOpen(next);
+        try { localStorage.setItem(CORNER_KEY, next ? "1" : "0"); } catch { /* ignore */ }
+      }}
+    >
+      <summary>
+        <b>{t(lang, "Góc bàn", "Desk corner")}</b>
+        <span>{t(lang, "Đèn, cửa sổ, đồng hồ, sổ tay và đường tiến độ.", "Lamp, window, clocks, notepad and your progress curve.")}</span>
+      </summary>
+      <DeskTools />
+      <Room />
+    </details>
   );
 }
 
