@@ -1,6 +1,7 @@
 import { demoReply, TUTOR_INSTRUCTIONS } from "./policy.ts";
 import { tutorTopics } from "./topics.ts";
 import { createHash } from "node:crypto";
+import { normalizeMath } from "./format.ts";
 import type { Quota } from "./limit.ts";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -103,7 +104,7 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
     const reply = env.mode === "demo"
       ? demoReply(last.content, topicId)
       : await env.complete(TUTOR_INSTRUCTIONS + note, messages);
-    const text = reply.trim();
+    const text = normalizeMath(reply).trim();
     if (!text) return json(502, { error: "model", message: "Trợ lý chưa trả lời được. Thử lại sau.", premium, remaining, limit: dailyLimit });
     return json(200, { reply: text, mode: env.mode, remaining, limit: dailyLimit, premium });
   } catch {
