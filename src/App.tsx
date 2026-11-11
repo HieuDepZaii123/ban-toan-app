@@ -16,6 +16,8 @@ import { useLang } from "./ui/useLang.ts";
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ default: mod.Upgrade })));
 const ExamPage = lazy(() => import("./pages/ExamPage.tsx").then((mod) => ({ default: mod.ExamPage })));
+const ReviewPage = lazy(() => import("./pages/ReviewPage.tsx").then((mod) => ({ default: mod.ReviewPage })));
+const StudyPackPage = lazy(() => import("./pages/StudyPackPage.tsx").then((mod) => ({ default: mod.StudyPackPage })));
 const PolicyPage = lazy(() => import("./pages/PolicyPage.tsx").then((mod) => ({ default: mod.PolicyPage })));
 const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
 const GradeDesk = lazy(() => import("./grades/GradeDesk.tsx").then((mod) => ({ default: mod.GradeDesk })));
@@ -76,6 +78,8 @@ function Shell() {
   if (path === "/nang-cap") return <Upgrade />;
   if (path === "/chinh-sach") return <PolicyPage />;
   if (path === "/thi-thu") return <ExamPage />;
+  if (path === "/on-loi-sai") return <ReviewPage />;
+  if (path === "/tai-lieu" || path.startsWith("/tai-lieu/")) return <StudyPackPage path={path} />;
   if (path === "/so-cong-thuc") return <FormulaPage />;
   if (path === "/danh-gia") return <AssessPage />;
   if (path === "/xuong-hinh") return <WorkshopPage />;
