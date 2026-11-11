@@ -8,6 +8,7 @@ import { t } from "../lib/text.ts";
 import { useRoute } from "../lib/useRoute.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
+import { Speak } from "../ui/Speak.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { GradeFigure } from "./GradeFigure.tsx";
 import { GradeWidgetView } from "./GradeWidgets.tsx";
@@ -166,6 +167,7 @@ function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTi
       <div lang="vi" className="lesson-body">
         <article className="tool-card">
           <h2>{t(lang, "Tóm tắt", "Summary")}</h2>
+          <Speak text={[lesson.summary, lesson.whyTrue, lesson.pitfalls].filter(Boolean).join(". ")} />
           {lesson.dataNote ? <p className="lecture-note">{lesson.dataNote}</p> : null}
           <p><MathText text={lesson.summary} /></p>
           {lesson.whyTrue ? (
@@ -217,6 +219,7 @@ function ExampleBlock({ example, index, lang }: { example: GradeExample; index: 
     <article className="tool-card">
       <h2>{t(lang, `Ví dụ ${index + 1}`, `Example ${index + 1}`)}</h2>
       <p><MathText text={example.prompt} /></p>
+      <Speak text={[example.prompt, ...example.steps.slice(0, shown).map((step) => `${step.claim}. Lý do: ${step.why}`)].join(". ")} />
       <ol className="steps" aria-live="polite">
         {example.steps.slice(0, shown).map((step) => (
           <li key={step.claim}>
@@ -245,6 +248,7 @@ function DrillBlock({ drill, index, lang, correct, onCorrect }: { drill: GradeDr
         {drill.stars ? <span role="img" aria-label={t(lang, `Độ khó ${drill.stars} trên 3`, `Difficulty ${drill.stars} of 3`)}>{"★".repeat(drill.stars)} </span> : null}
         <MathText text={drill.prompt} />
       </p>
+      <Speak text={drill.prompt} />
       {drill.ask ? <AskForm ask={drill.ask} index={index} lang={lang} correct={correct} onCorrect={onCorrect} onNote={setNote} /> : null}
       {note ? <p role="status" className={correct ? "ask-ok" : "ask-miss"}>{note}</p> : null}
       {drill.hints && hints < drill.hints.length ? (

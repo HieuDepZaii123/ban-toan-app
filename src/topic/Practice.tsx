@@ -8,6 +8,7 @@ import { t } from "../lib/text.ts";
 import { openChat } from "../ui/events.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { readPref } from "../ui/prefs.ts";
+import { Speak } from "../ui/Speak.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { DssForm } from "./DssForm.tsx";
 import { arrange, sessionQuestions } from "./show.ts";
@@ -138,6 +139,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
         {t(lang, `Câu ${index + 1} / ${ordered.length} · Điểm ${Math.min(saved, ordered.length)}/${ordered.length}`, `Question ${index + 1} / ${ordered.length} · Score ${Math.min(saved, ordered.length)}/${ordered.length}`)}
       </p>
       <h2 id="practice-title" ref={heading} tabIndex={-1}><MathText text={prompt} /></h2>
+      {dss ? null : <Speak speech={lang} text={`${prompt}. ${choices.map((choice, order) => `${order + 1}: ${choice}`).join(". ")}`} />}
       {dss ? <DssForm key={`${question.id}:${attempt.seed}`} topicId={topicId} question={shown} /> : <div className="choices" role="group" aria-label={t(lang, "Đáp án", "Choices")}>
         {choices.map((choice, displayIndex) => {
           const missed = displayIndex === firstMiss?.choice || (answered && (displayIndex === picked || displayIndex === firstMiss?.second) && displayIndex !== shown.answer);

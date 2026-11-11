@@ -3,6 +3,7 @@ import { cards, QUESTION_TOTAL, streamName, streams } from "../content/cards.ts"
 import { A } from "../lib/route.tsx";
 import { sciences } from "../science/catalog.ts";
 import { countRight, useSlice } from "../lib/store.ts";
+import { streak } from "../lib/studyTime.ts";
 import { fold, t } from "../lib/text.ts";
 import { parseGrade, usePref, writePref, type Grade } from "../ui/prefs.ts";
 import { SiteHeader } from "../ui/SiteHeader.tsx";
@@ -165,7 +166,27 @@ function GradeHero({ grade, onChange }: { grade: number; onChange: () => void })
           {t(lang, `Đã xong ${next.done}/${next.total} bài lớp ${grade}. Tiến độ lưu trên máy này.`, `${next.done}/${next.total} grade ${grade} lessons done. Progress is saved on this device.`)}
         </p>
       ) : null}
+      <Habit />
     </section>
+  );
+}
+
+/** Chuỗi ngày học và số câu đang chờ ôn lại trong Sổ: hai con số nhỏ để biết hôm nay nên làm gì. */
+function Habit() {
+  const lang = useLang();
+  const [days] = useState(() => streak());
+  const waiting = useSlice((data) => Object.keys(data.wrong).length);
+  if (days === 0 && waiting === 0) return null;
+  return (
+    <p className="progress-line">
+      {days > 0 ? t(lang, `Chuỗi ngày học: ${days} ngày liên tiếp. `, `Study streak: ${days} day${days === 1 ? "" : "s"} in a row. `) : null}
+      {waiting > 0 ? (
+        <>
+          {t(lang, `Sổ lỗi có ${waiting} câu chờ ôn lại: `, `${waiting} question${waiting === 1 ? "" : "s"} waiting in the miss book: `)}
+          <A href="/so-loi">{t(lang, "ôn ngay", "review now")}</A>
+        </>
+      ) : null}
+    </p>
   );
 }
 

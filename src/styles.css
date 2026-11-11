@@ -1586,3 +1586,5 @@ html[data-motion="less"] *, html[data-motion="less"] *::before, html[data-motion
 .site-foot nav { flex-wrap: wrap; }
 .site-foot nav a { white-space: nowrap; }
 .report-card ul, .data-card ul:not(.data-list), .chat-consent ul { list-style: disc; padding-left: 1.2rem; display: grid; gap: 6px; }
+.speak-btn { min-height: 36px; font-size: 0.9rem; justify-self: start; }
+.practice .speak-btn { margin-top: -4px; }
