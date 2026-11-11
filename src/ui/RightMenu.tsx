@@ -3,7 +3,8 @@ import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { useRoute } from "../lib/useRoute.ts";
 import { LangSwitch } from "./LangSwitch.tsx";
-import { MENU_LINKS, menuArea } from "./navLinks.ts";
+import { NAV_GROUPS, menuArea } from "./navLinks.ts";
+import { OPEN_MENU_EVENT, OPEN_MUSIC_EVENT } from "./events.ts";
 import { useLang } from "./useLang.ts";
 
 const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
@@ -16,6 +17,12 @@ export function RightMenu() {
   const openerRef = useRef<HTMLButtonElement>(null);
   const titleId = useId();
   const current = menuArea(path);
+
+  useEffect(() => {
+    const show = () => setOpen(true);
+    window.addEventListener(OPEN_MENU_EVENT, show);
+    return () => window.removeEventListener(OPEN_MENU_EVENT, show);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -58,11 +65,8 @@ export function RightMenu() {
 
   const openMusic = () => {
     setOpen(false);
-    window.setTimeout(() => {
-      const player = document.getElementById("nhac-hoc");
-      player?.scrollIntoView({ block: "nearest" });
-      document.getElementById("nhac-phat")?.focus();
-    }, 0);
+    window.dispatchEvent(new Event(OPEN_MUSIC_EVENT));
+    window.setTimeout(() => document.getElementById("nhac-phat")?.focus(), 0);
   };
 
   return (
@@ -97,22 +101,25 @@ export function RightMenu() {
             <div className="menu-lang">
               <LangSwitch />
             </div>
-            <ul>
-              {MENU_LINKS.map((item) => (
-                <li key={item.id}>
-                  <A
-                    href={item.href}
-                    aria-current={current === item.id ? "page" : undefined}
-                    onClick={close}
-                  >
-                    {t(lang, item.label, item.en)}
-                  </A>
-                </li>
-              ))}
-              <li>
-                <button type="button" onClick={openMusic}>{t(lang, "Nhạc học", "Study music")}</button>
-              </li>
-            </ul>
+            {NAV_GROUPS.map((group) => (
+              <section key={group.id} className="menu-group" aria-label={t(lang, group.label, group.en)}>
+                <h2>{t(lang, group.label, group.en)}</h2>
+                <ul>
+                  {group.pages.map((item) => (
+                    <li key={item.id}>
+                      <A href={item.href} aria-current={current === item.id ? "page" : undefined} onClick={close}>
+                        {t(lang, item.label, item.en)}
+                      </A>
+                    </li>
+                  ))}
+                  {group.id === "more" ? (
+                    <li>
+                      <button type="button" onClick={openMusic}>{t(lang, "Nhạc học", "Study music")}</button>
+                    </li>
+                  ) : null}
+                </ul>
+              </section>
+            ))}
           </nav>
         </div>
       ) : null}

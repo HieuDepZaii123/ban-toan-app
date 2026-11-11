@@ -3,6 +3,9 @@ import { pick } from "../../lib/prng.ts";
 import { made, point3, questionById, read, texInt } from "./stem.ts";
 import { fixedVary, parametric, type Vary } from "./types.ts";
 
+/** A negative number written after an operator needs parentheses. */
+const par = (n: number): string => (n < 0 ? `(${n})` : String(n));
+
 const LENGTHS = [
   { x: 2, y: 1, z: 2 }, { x: 1, y: 2, z: 2 }, { x: 2, y: 2, z: 1 }, { x: 4, y: 2, z: 4 },
   { x: 2, y: 4, z: 4 }, { x: 4, y: 4, z: 2 }, { x: 6, y: 3, z: 6 }, { x: 1, y: 4, z: 8 },
@@ -107,12 +110,12 @@ function dotStem(question: Question, params: Record<string, number>) {
     [texInt(dot), texInt(dropped), texInt(abs), texInt(-dot)],
     [texInt(dot), texInt(dropped), texInt(abs), texInt(-dot)],
     [
-      `$${x1}\\cdot${x2} + ${y1}\\cdot${y2} + ${z1}\\cdot${z2}$.`,
+      `$${x1}\\cdot${par(x2)} + ${par(y1)}\\cdot${par(y2)} + ${par(z1)}\\cdot${par(z2)}$.`,
       `Bằng ${dot}.`,
       `${dropped} bỏ hạng cuối. ${abs} lấy trị tuyệt đối từng tích. ${-dot} đổi dấu cả tích.`,
     ],
     [
-      `$${x1}\\cdot${x2} + ${y1}\\cdot${y2} + ${z1}\\cdot${z2}$.`,
+      `$${x1}\\cdot${par(x2)} + ${par(y1)}\\cdot${par(y2)} + ${par(z1)}\\cdot${par(z2)}$.`,
       `That is ${dot}.`,
       `${dropped} drops the last term. ${abs} takes each product's absolute value. ${-dot} flips the whole sign.`,
     ],
@@ -143,12 +146,12 @@ function sumStem(question: Question, params: Record<string, number>) {
       point3(x2 - x1, y2, z2),
     ],
     [
-      `Cộng từng tọa độ: $(${x1}+${x2};\\ ${y1}+(${y2});\\ ${z1}+${z2})$.`,
+      `Cộng từng tọa độ: $(${x1}+${par(x2)};\\ ${y1}+${par(y2)};\\ ${z1}+${par(z2)})$.`,
       point3(x1 + x2, y1 + y2, z1 + z2) + `.`,
       `Sai $z$, đổi dấu tung độ, hoặc lấy một hiệu, ra các vectơ còn lại.`,
     ],
     [
-      `Add coordinate by coordinate: $(${x1}+${x2};\\ ${y1}+(${y2});\\ ${z1}+${z2})$.`,
+      `Add coordinate by coordinate: $(${x1}+${par(x2)};\\ ${y1}+${par(y2)};\\ ${z1}+${par(z2)})$.`,
       point3(x1 + x2, y1 + y2, z1 + z2) + `.`,
       `A wrong $z$, a flipped middle sign, or a difference, produces the other vectors.`,
     ],

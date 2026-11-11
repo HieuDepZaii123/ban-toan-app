@@ -4,15 +4,23 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.13"
   },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
     "lint": "oxlint",
-    "test": "tsx scripts/check-math.ts && tsx scripts/golden.ts && tsx scripts/store.test.ts && tsx scripts/vary.test.ts && tsx scripts/concept.test.ts && tsx scripts/dss.test.ts && tsx scripts/research.test.ts && tsx scripts/pay.test.ts && tsx scripts/crypto.test.ts && tsx scripts/chat.test.ts && tsx scripts/lectures.test.ts && tsx scripts/port.test.ts && tsx scripts/gap.test.ts && tsx scripts/dang.test.ts && tsx scripts/grade.test.ts && tsx scripts/study.test.ts && tsx scripts/affiliate.test.ts && tsx scripts/ideas.test.ts && tsx scripts/docs.test.ts && tsx scripts/docs-export.test.ts && tsx scripts/calc.test.ts && tsx scripts/methods.test.ts && tsx scripts/practice.test.ts && tsx scripts/thpt.test.ts && tsx scripts/workshop.test.ts && tsx scripts/supabase.test.ts && tsx scripts/free-llm.test.ts",
+    "test": "npm run test:server && npm run test:content",
+    "test:server": "tsx scripts/pay.test.ts && tsx scripts/crypto.test.ts && tsx scripts/chat.test.ts && tsx scripts/chat-format.test.ts && tsx scripts/facts.test.ts && tsx scripts/tutor-modes.test.ts && tsx scripts/affiliate.test.ts && tsx scripts/free-llm.test.ts && tsx scripts/bridge.test.ts && tsx scripts/db.test.ts && tsx scripts/pg-ssl.test.ts && tsx scripts/pgSuites.ts",
+    "test:postgres": "tsx scripts/pgSuites.ts",
+    "test:content": "tsx scripts/check-math.ts && tsx scripts/text.test.ts && tsx scripts/golden.ts && tsx scripts/store.test.ts && tsx scripts/vary.test.ts && tsx scripts/concept.test.ts && tsx scripts/dss.test.ts && tsx scripts/research.test.ts && tsx scripts/lectures.test.ts && tsx scripts/port.test.ts && tsx scripts/gap.test.ts && tsx scripts/dang.test.ts && tsx scripts/grade.test.ts && tsx scripts/study.test.ts && tsx scripts/ideas.test.ts && tsx scripts/docs.test.ts && tsx scripts/docs-export.test.ts && tsx scripts/calc.test.ts && tsx scripts/methods.test.ts && tsx scripts/practice.test.ts && tsx scripts/thpt.test.ts && tsx scripts/exam2025.test.ts && tsx scripts/workshop.test.ts && tsx scripts/supabase.test.ts && tsx scripts/review.test.ts && tsx scripts/study-pack.test.ts",
+    "check": "npm run lint && npm test && npm run build",
     "preview": "vite preview",
-    "free-llm:sync": "tsx scripts/sync-free-llm.ts"
+    "free-llm:sync": "tsx scripts/sync-free-llm.ts",
+    "db:migrate": "tsx scripts/db.ts migrate",
+    "db:status": "tsx scripts/db.ts status",
+    "db:copy-sqlite": "tsx scripts/db.ts copy-sqlite"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.104",
@@ -22,12 +30,15 @@
     "katex": "^0.19.0",
     "mermaid": "^12.3.0",
     "pdf-lib": "^1.17.1",
+    "pg": "^8.23.1",
     "qrcode": "^1.5.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.15",
     "@types/node": "^24.13.3",
+    "@types/pg": "^8.23.1",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",

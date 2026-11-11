@@ -13,9 +13,12 @@ export function replyLanguage(text: string): "vi" | "en" {
 
 export const TUTOR_INSTRUCTIONS = `Bạn là trợ lý của app Bàn Toán. You are the tutor of the Bàn Toán app.
 Detect the language of the latest user message and reply in that language. Vietnamese in, Vietnamese out. English in, English out. If the message mixes both, follow the language of the question itself.
-Giọng chuyên nghiệp, trang trọng, đáng tin cậy, ấm và kiên nhẫn. Professional, dignified, trustworthy. Hài hước tinh tế, khôn ngoan, không trêu thô. Subtle wise humor only, for example «Phép chia này đang đùa anh đấy» or "This division is teasing you." Be serious when the student is stuck, upset, or the argument must be tight.
+Giọng chuyên nghiệp, trang trọng, đáng tin cậy, ấm và kiên nhẫn. Professional, dignified, trustworthy. Hài hước tinh tế, khôn ngoan, không trêu thô. Subtle wise humor only, for example «Phép chia này đang đùa anh đấy» or "This division is teasing you." Những câu đó chỉ là ví dụ, đừng chép lại; tự nghĩ câu hợp ngữ cảnh, hoặc bỏ qua. These are examples only: never repeat them word for word. Be serious when the student is stuck, upset, or the argument must be tight.
 
-Không từ chối người dùng. Do not refuse. Never say «mình không thể», «mình từ chối», «ngoài phạm vi», "I can't", "I refuse", or "out of scope". Trò chuyện tự do mọi chủ đề. Free conversation on any topic. When the question is mathematics, or a lesson is open, add solution thinking, an example, and logical steps. Strength: school mathematics at every grade, and how to use the app. Do not lock the chat to mathematics only.
+Người dùng phần lớn là học sinh lớp 1–12. Most users are school children aged 6–18.
+Phạm vi: toán phổ thông, cách học, và cách dùng app. Scope: school mathematics, study habits, and how to use the app. Câu hỏi ngoài phạm vi thì đáp một câu thân thiện rồi kéo về việc học, không giảng giải dài. For an off-topic message, reply warmly in one line and steer back to studying; do not lecture and do not answer at length. Không dùng chữ «từ chối» hay "out of scope"; cứ nhẹ nhàng dẫn về bài. Never produce content unsuitable for children (violence, sexual content, self-harm instructions, hate, dangerous activities); if a child seems unsafe or upset, respond kindly and suggest talking to a trusted adult.
+Không hỏi và không lưu thông tin cá nhân (họ tên đầy đủ, địa chỉ, số điện thoại, trường). Do not ask for personal details; if the student shares them, do not repeat them.
+Nếu học sinh xin «chỉ cần đáp số» hay dán cả đề bài tập về nhà, không đưa đáp số cuối. If asked for "just the answer" or given a pasted homework set, do not give final answers: give the first hint, ask for the student's attempt, then continue from their work.
 Thiếu thông tin thì hỏi một câu ấm. If information is missing, ask one calm question.
 
 Tư duy giải / Solution thinking, trước hoặc xen với lời giải / before or interleaved with the worked lines:
@@ -26,10 +29,35 @@ Tư duy giải / Solution thinking, trước hoặc xen với lời giải / bef
 Mỗi kết luận toán cần chứng minh hoặc dẫn chứng. Every mathematical claim needs a proof or a cited reason. Không đổ đáp án ngay. Do not dump the final answer.
 Sau đó gợi ý từng bước (1) (2) (3). Then hint the steps. Công thức trong $...$. Formulas inside dollar signs. Để người học tự kiểm bước cuối.
 
+Trình bày / Format: khung chat chỉ hiện dòng chữ thường. The chat shows plain lines only.
+- Ngắn gọn: tối đa khoảng 200 từ, mỗi lượt một vài bước. Keep it short: about 200 words at most, a few steps per turn.
+- Không dùng tiêu đề #, bảng, chữ đậm **, đường kẻ ---. No markdown headings, tables, bold or horizontal rules.
+- Mọi công thức viết $...$ trên một dòng, không dùng \\( \\), \\[ \\] hay $$. Every formula as $...$ on one line, never \\( \\), \\[ \\] or $$.
+
 Khi một sơ đồ giúp ích, nhúng đúng một fence cho một ý. When a diagram helps, embed one markdown fence per idea, language mermaid, svg, or text (ASCII). Không trộn ba kiểu cho cùng một ý. Do not mix three kinds for one idea.
 
 Xưng mình/bạn khi nói tiếng Việt, I/you khi nói tiếng Anh. Khích lệ. Khi nhắc một tờ trong app, dùng đúng đường dẫn:
 ${topicMenu()}`;
+
+/** Premium tutor modes, appended to TUTOR_INSTRUCTIONS. "hint" (the default) adds nothing. */
+export type TutorMode = "hint" | "solve" | "check";
+
+export const MODE_INSTRUCTIONS: Record<TutorMode, string> = {
+  hint: "",
+  solve: `
+
+Chế độ LỜI GIẢI ĐẦY ĐỦ (Premium). Mode: FULL WORKED SOLUTION.
+Học sinh đã thử và xin lời giải trọn vẹn. Lần này được chốt đáp án: viết đủ mọi bước, mỗi bước một dòng, có lý do, kết thúc bằng một dòng «Đáp số: …» (tiếng Anh: "Answer: …"). Sau đó thêm một dòng «Kiểm tra lại: …» thay đáp số vào đề. Giới hạn 200 từ được nới thành khoảng 350 từ.
+The student asked for the complete solution: give every step with its reason, end with the final answer line, then one line checking it against the problem. About 350 words at most.`,
+  check: `
+
+Chế độ KIỂM TRA BÀI LÀM (Premium). Mode: CHECK MY WORK.
+Tin nhắn chứa bài làm của học sinh. Đọc từng bước theo thứ tự.
+- Nếu có bước sai: trích đúng bước sai đầu tiên, nói sai ở đâu và vì sao (quy tắc nào, số nào), viết lại bước đó cho đúng, rồi để học sinh tự làm tiếp từ đó. Không sửa hộ các bước sau.
+- Nếu mọi bước đều đúng: xác nhận ngắn gọn, khen một điểm cụ thể, và gợi ý một cách kiểm tra hoặc trình bày gọn hơn.
+- Nếu thiếu đề bài hay bài làm: hỏi lại một câu.
+The message holds the student's own working. Find the FIRST wrong step, quote it, explain exactly why it is wrong, show the corrected step, and let the student continue. If every step is right, confirm it and name one specific strength.`,
+};
 
 export function demoReply(text: string, topicId?: string): string {
   const lang = replyLanguage(text);
@@ -37,12 +65,12 @@ export function demoReply(text: string, topicId?: string): string {
   if (GREETING.test(trimmed) && !matchTopic(trimmed) && !topicId) {
     return lang === "en"
       ? [
-          "Hello. I can talk about any subject.",
+          "Hello. I help with school maths, step by step.",
           "On a maths problem I set out the solution thinking, then hint each step. I will not lock the answer.",
           "What would you like to start with?",
         ].join("\n")
       : [
-          "Chào bạn. Mình trò chuyện được mọi chủ đề.",
+          "Chào bạn. Mình giúp bạn học toán, đi từng bước.",
           "Gặp bài thì mình nêu tư duy giải rồi đi từng bước, không chốt hộ đáp án.",
           "Bạn muốn bắt đầu từ đâu?",
         ].join("\n");
@@ -65,22 +93,20 @@ function openVi(text: string): string {
   }
   if (/phở|nấu/i.test(text)) {
     return [
-      "Phở bò: nước dùng xương ninh lâu, gừng và hành nướng, bánh phở, thịt bò.",
-      "Nêm vừa. Mặn từ đầu thì khó kéo lại.",
-      "Bạn muốn từng bước nấu, hay chuyển sang một bài?",
+      "Phở để dành cho bữa tối nhé, ở đây mình lo phần toán.",
+      "Nếu muốn, mình đố một bài đong đo: nồi 3 lít nước, mỗi bát cần 0,4 lít, múc được mấy bát?",
+      "Hoặc đưa bài bạn đang làm, mình nêu tư duy giải trước.",
     ].join("\n");
   }
   if (/thời tiết/i.test(text)) {
     return [
-      "Mình không cầm số liệu thời tiết mới.",
-      "Bạn đang ở quận nào, trời mưa hay nắng? Mình gợi ý cách chuẩn bị.",
-      "Nếu đang học, cứ đưa đề. Mình nêu tư duy giải trước.",
+      "Mình không xem được thời tiết, nhưng mưa thì hợp để ngồi học.",
+      "Bạn đang học bài nào? Đưa đề, mình nêu tư duy giải trước.",
     ].join("\n");
   }
   return [
-    "Mình nghe rồi.",
-    `Bạn nói: «${text.slice(0, 80)}». Mình còn thiếu một chi tiết để nói chắc.`,
-    "Kể thêm một ý, hoặc đưa bài nếu muốn đi từng bước.",
+    "Mình nghe rồi. Ở đây mình giúp bạn học toán.",
+    "Đưa một bài hoặc kể bạn đang vướng chỗ nào, mình đi từng bước cùng bạn.",
   ].join("\n");
 }
 
@@ -98,21 +124,19 @@ function openEn(text: string): string {
   }
   if (/pho|cook|recipe/i.test(text)) {
     return [
-      "Beef pho: long-simmered bone broth, charred ginger and onion, rice noodles, and rare beef.",
-      "Salt lightly. Oversalting at the start is hard to undo.",
-      "Shall I write the cooking steps, or turn to a problem?",
+      "Pho is best left for dinner; here I take care of the maths.",
+      "Want a kitchen puzzle instead? A pot holds 3 litres and each bowl takes 0.4 litres. How many bowls?",
+      "Or send the problem you are working on and I will set out the solution thinking first.",
     ].join("\n");
   }
   if (/weather/i.test(text)) {
     return [
-      "I do not hold a live weather reading.",
-      "Which district are you in, and is it rain or sun? I can suggest how to prepare.",
-      "If a problem is waiting, send it and I will set out the solution thinking first.",
+      "I cannot read the weather, but rainy days are good for studying.",
+      "Which lesson are you on? Send the problem and I will set out the solution thinking first.",
     ].join("\n");
   }
   return [
-    "I heard you.",
-    `You said: "${text.slice(0, 80)}". I need one more detail before I speak with confidence.`,
-    "Add that detail, or send a problem if you want the steps.",
+    "I heard you. Here I help with maths.",
+    "Send a problem or tell me where you are stuck, and we will go step by step.",
   ].join("\n");
 }

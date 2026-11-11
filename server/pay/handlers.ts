@@ -18,7 +18,7 @@ import {
 import { commissionOf, normalizeCode, sameReferrer, secretHash } from "./affiliate.ts";
 import { priceOf, type PayEnv, type PayMethod, type PlanId } from "./env.ts";
 import { createMomoPayment, ipnSignatureOk, readIpn } from "./momo.ts";
-import { licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
+import { CryptoAmountTaken, licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
 import { buildVietQr, emvName } from "./vietqr.ts";
 
 const ORDER_TTL_MS = 15 * 60 * 1000;
@@ -90,23 +90,19 @@ function publicOrder(env: PayEnv, order: OrderRow, extras: Json = {}): Json {
 export async function handlePremium(request: Request, env: PayEnv): Promise<Response> {
   const url = new URL(request.url);
   const path = url.pathname.replace(/\/$/, "") || "/";
-  const store = storeFor(env.dbPath);
-  try {
-    if (path === "/api/premium/plans" && request.method === "GET") return plans(env);
-    if (path === "/api/premium/create" && request.method === "POST") return create(request, env, store);
-    if (path === "/api/premium/ipn" && request.method === "POST") return ipn(request, env, store);
-    if (path === "/api/premium/return" && request.method === "GET") return bounce(url, env);
-    if (path === "/api/premium/status" && request.method === "GET") return status(url, env, store);
-    if (path === "/api/premium/bank" && request.method === "POST") return bankHook(request, env, store);
-    if (path === "/api/premium/confirm" && request.method === "POST") return confirm(request, env, store);
-    if (path === "/api/premium/crypto" && request.method === "POST") return cryptoRoute(request, env, store);
-    if (path === "/api/premium/affiliate" && request.method === "POST") return affiliateRoute(request, env, store);
-    if (path === "/api/premium/affiliate-admin" && request.method === "POST") return affiliateAdmin(request, env, store);
-    return json(404, { error: "not_found" });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "error";
-    return json(500, { error: "server", message });
-  }
+  const store = env.store ?? storeFor(env);
+  if (path === "/api/premium/plans" && request.method === "GET") return plans(env);
+  if (path === "/api/premium/create" && request.method === "POST") return create(request, env, store);
+  if (path === "/api/premium/ipn" && request.method === "POST") return ipn(request, env, store);
+  if (path === "/api/premium/return" && request.method === "GET") return bounce(url, env);
+  if (path === "/api/premium/status" && request.method === "GET") return status(url, env, store);
+  if (path === "/api/premium/bank" && request.method === "POST") return bankHook(request, env, store);
+  if (path === "/api/premium/confirm" && request.method === "POST") return confirm(request, env, store);
+  if (path === "/api/premium/refund" && request.method === "POST") return refund(request, env, store);
+  if (path === "/api/premium/crypto" && request.method === "POST") return cryptoRoute(request, env, store);
+  if (path === "/api/premium/affiliate" && request.method === "POST") return affiliateRoute(request, env, store);
+  if (path === "/api/premium/affiliate-admin" && request.method === "POST") return affiliateAdmin(request, env, store);
+  return json(404, { error: "not_found" });
 }
 
 function plans(env: PayEnv): Response {
@@ -143,9 +139,10 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
   const method = methodOf(body.method);
   if (!EMAIL.test(email) || email.length > 120) return json(400, { error: "email" });
   if (!plan || !method) return json(400, { error: "plan" });
+  if ((method === "wallet" || method === "qr") && !env.momoReady) return json(503, { error: "momo_not_configured" });
   const amount = priceOf(env, plan);
   const now = env.now();
-  const referred = acceptedRef(store, body, email, env.affiliateRateBps);
+  const referred = await acceptedRef(store, body, email, env.affiliateRateBps);
   const order: OrderRow = {
     orderId: `BT${idPart(8)}`,
     requestId: `RQ${idPart(8)}`,
@@ -177,22 +174,32 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
   if (method === "crypto") {
     if (!isCryptoChain(body.chain)) return json(400, { error: "chain" });
     const chain = body.chain;
-    try {
-      const quote = await quoteCrypto(env, chain, amount, (units) => store.cryptoTaken(chain, CHAINS[chain].asset, units, ""));
-      order.cryptoChain = quote.chain;
-      order.cryptoAsset = quote.asset;
-      order.cryptoUnits = quote.units;
-      order.cryptoRate = quote.rate;
-      order.cryptoSuffix = quote.suffix;
-      order.cryptoSource = quote.rateSource;
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "quote";
-      return json(400, { error: "quote", message });
+    // Hai request song song có thể cùng chọn một số token; Postgres chặn bằng chỉ mục UNIQUE, ta báo giá lại.
+    for (let attempt = 0; ; attempt += 1) {
+      try {
+        const quote = await quoteCrypto(env, chain, amount, (units) => store.cryptoTaken(chain, CHAINS[chain].asset, units, ""));
+        order.cryptoChain = quote.chain;
+        order.cryptoAsset = quote.asset;
+        order.cryptoUnits = quote.units;
+        order.cryptoRate = quote.rate;
+        order.cryptoSuffix = quote.suffix;
+        order.cryptoSource = quote.rateSource;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "quote";
+        return json(400, { error: "quote", message });
+      }
+      try {
+        await store.insertOrder(order);
+        break;
+      } catch (error) {
+        if (!(error instanceof CryptoAmountTaken) || attempt >= 2) throw error;
+      }
     }
-    store.insertOrder(order);
     return json(200, await enrich(env, order));
   }
-  store.insertOrder(order);
+  await store.insertOrder(order);
+  // Bank transfer works on its own; only ask MoMo for a session when MoMo is really set up.
+  if (!env.momoReady) return json(200, await enrich(env, order));
   try {
     const session = await createMomoPayment(env, {
       orderId: order.orderId,
@@ -204,9 +211,11 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
     order.payUrl = session.payUrl;
     order.deeplink = session.deeplink;
     order.qrCodeUrl = session.qrCodeUrl;
-    store.setMomo(order.orderId, session.payUrl, session.deeplink, session.qrCodeUrl);
+    await store.setMomo(order.orderId, session.payUrl, session.deeplink, session.qrCodeUrl);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "MoMo error";
+    // Never forward the raw exception text to buyers; it is technical and untranslated.
+    void error;
+    const message = "MoMo chưa nhận đơn. Thử lại sau hoặc chọn chuyển khoản. / MoMo did not accept the order. Try again later or pay by bank transfer.";
     if (method === "wallet") return json(502, { error: "momo", message, orderId: order.orderId, amount });
     return json(200, { ...(await enrich(env, order)), momoError: message });
   }
@@ -239,21 +248,24 @@ async function enrich(env: PayEnv, order: OrderRow, cryptoCheck?: Json): Promise
 }
 
 async function ipn(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  // Live deploy without a real MoMo secret: the public sandbox key would let anyone forge an IPN.
+  if (!env.momoReady) return json(503, { error: "momo_not_configured" });
   const notice = readIpn(await readJson(request));
   if (!notice) return json(400, { error: "body" });
   if (!ipnSignatureOk(env, notice)) return json(401, { error: "bad_signature" });
   if (notice.partnerCode && notice.partnerCode !== env.partnerCode) return json(401, { error: "partner" });
   if (notice.resultCode !== 0) return json(200, { ok: true, applied: false, resultCode: notice.resultCode });
-  const order = store.getOrder(notice.orderId, env.now());
+  const order = await store.getOrder(notice.orderId, env.now());
   if (!order) return json(404, { error: "not_found" });
   if (notice.amount !== order.amount) return json(400, { error: "amount" });
-  const marked = store.markPaid(
+  const marked = await store.markPaid(
     order.orderId,
     env.now(),
     order.amount,
     notice.transId || null,
     "momo",
     notice.transId || `${notice.orderId}:${notice.requestId}`,
+    true,
   );
   if (!marked.ok) return json(marked.error === "expired" ? 409 : 400, { error: marked.error, applied: false });
   return json(200, { ok: true, applied: marked.applied });
@@ -269,13 +281,13 @@ function bounce(url: URL, env: PayEnv): Response {
 async function status(url: URL, env: PayEnv, store: PayStore): Promise<Response> {
   const license = url.searchParams.get("license");
   if (license) {
-    const order = store.getByLicense(licenseHash(license));
+    const order = await store.getByLicense(licenseHash(license));
     if (!order || !order.paidAt) return json(200, { active: false });
     const until = order.paidAt + termMs(order.plan);
     return json(200, { active: env.now() < until, premiumUntil: until, plan: order.plan, email: order.email });
   }
   const orderId = url.searchParams.get("orderId") ?? "";
-  const order = orderId ? store.getOrder(orderId, env.now()) : null;
+  const order = orderId ? await store.getOrder(orderId, env.now()) : null;
   if (!order) return json(404, { error: "not_found" });
   return json(200, await enrich(env, order));
 }
@@ -320,7 +332,7 @@ async function cryptoRoute(request: Request, env: PayEnv, store: PayStore): Prom
   const body = await readJson(request);
   if (body.watch === true) return watchCrypto(request, env, store);
   const orderId = typeof body.orderId === "string" ? body.orderId : "";
-  const order = orderId ? store.getOrder(orderId, env.now()) : null;
+  const order = orderId ? await store.getOrder(orderId, env.now()) : null;
   if (!order) return json(404, { error: "not_found" });
   if (order.method !== "crypto") return json(400, { error: "method" });
   if (typeof body.chain === "string" && (typeof body.txHash !== "string" || body.txHash.trim() === "")) {
@@ -343,7 +355,7 @@ async function rebindCrypto(env: PayEnv, store: PayStore, order: OrderRow, chain
     const message = error instanceof Error ? error.message : "quote";
     return json(400, { error: "quote", message });
   }
-  const saved = store.setCryptoQuote(order.orderId, {
+  const saved = await store.setCryptoQuote(order.orderId, {
     chain: quote.chain,
     asset: quote.asset,
     units: quote.units,
@@ -352,14 +364,14 @@ async function rebindCrypto(env: PayEnv, store: PayStore, order: OrderRow, chain
     source: quote.rateSource,
   });
   if (!saved) return json(409, { error: "order" });
-  const fresh = store.getOrder(order.orderId, env.now());
+  const fresh = await store.getOrder(order.orderId, env.now());
   if (!fresh) return json(404, { error: "not_found" });
   return json(200, await enrich(env, fresh));
 }
 
 async function watchCrypto(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
   if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
-  const rows = store.listPendingCrypto(env.now());
+  const rows = await store.listPendingCrypto(env.now());
   let checked = 0;
   let applied = 0;
   for (const order of rows) {
@@ -379,10 +391,10 @@ async function settleCrypto(env: PayEnv, store: PayStore, order: OrderRow, txRaw
   if (!isCryptoChain(order.cryptoChain) || !order.cryptoUnits) return { error: "chain" };
   const tx = normalizeTx(order.cryptoChain, txRaw);
   if (!tx) return { error: "tx" };
-  const owner = store.eventOrder("crypto", tx);
+  const owner = await store.eventOrder("crypto", tx);
   if (owner && owner !== order.orderId) return { error: "reuse" };
   if (owner === order.orderId) return { applied: false };
-  store.setCryptoTx(order.orderId, tx);
+  await store.setCryptoTx(order.orderId, tx);
   let smallest: bigint;
   try {
     smallest = BigInt(order.cryptoUnits);
@@ -393,10 +405,10 @@ async function settleCrypto(env: PayEnv, store: PayStore, order: OrderRow, txRaw
   if (!checked.ok) {
     return { error: checked.error, field: checked.field, have: checked.have, need: checked.need };
   }
-  const marked = store.markPaid(order.orderId, env.now(), order.amount, tx, "crypto", tx);
+  const marked = await store.markPaid(order.orderId, env.now(), order.amount, tx, "crypto", tx);
   if (!marked.ok) {
     if (marked.error === "duplicate") {
-      const who = store.eventOrder("crypto", tx);
+      const who = await store.eventOrder("crypto", tx);
       if (who && who !== order.orderId) return { error: "reuse" };
       return { applied: false };
     }
@@ -413,7 +425,7 @@ async function cryptoResult(env: PayEnv, store: PayStore, order: OrderRow, resul
   if (result.error === "mismatch" || result.error === "failed" || result.error === "tx" || result.error === "amount" || result.error === "chain") {
     return json(400, { error: result.error, field: result.field });
   }
-  const fresh = store.getOrder(order.orderId, env.now()) ?? order;
+  const fresh = await store.getOrder(order.orderId, env.now()) ?? order;
   return json(200, await enrich(env, fresh, result));
 }
 
@@ -434,10 +446,10 @@ async function bankHook(request: Request, env: PayEnv, store: PayStore): Promise
 async function settleBank(env: PayEnv, store: PayStore, notice: BankNotice): Promise<Response> {
   const code = transferCodeIn(notice.content);
   if (!code) return json(404, { error: "content" });
-  const order = store.getByTransfer(code, env.now());
+  const order = await store.getByTransfer(code, env.now());
   if (!order) return json(404, { error: "not_found" });
   if (notice.amount !== order.amount) return json(400, { error: "amount" });
-  const marked = store.markPaid(order.orderId, env.now(), order.amount, null, "bank", notice.transactionId);
+  const marked = await store.markPaid(order.orderId, env.now(), order.amount, null, "bank", notice.transactionId, true);
   if (!marked.ok) {
     if (marked.error === "duplicate") return json(200, { ok: true, applied: false });
     return json(marked.error === "expired" ? 409 : 400, { error: marked.error, applied: false });
@@ -445,13 +457,23 @@ async function settleBank(env: PayEnv, store: PayStore, notice: BankNotice): Pro
   return json(200, { ok: true, applied: marked.applied, orderId: order.orderId });
 }
 
+/** Admin: the money has been returned, so the licence stops working. */
+async function refund(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
+  const body = await readJson(request);
+  const orderId = typeof body.orderId === "string" ? body.orderId : "";
+  if (!orderId) return json(400, { error: "order" });
+  const done = await store.refundOrder(orderId);
+  return done ? json(200, { ok: true, orderId }) : json(404, { error: "not_paid" });
+}
+
 async function confirm(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
   if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
   const body = await readJson(request);
   const orderId = typeof body.orderId === "string" ? body.orderId : "";
-  const order = orderId ? store.getOrder(orderId, env.now()) : null;
+  const order = orderId ? await store.getOrder(orderId, env.now()) : null;
   if (!order) return json(404, { error: "not_found" });
-  const marked = store.markPaid(order.orderId, env.now(), order.amount, null, "admin", order.orderId);
+  const marked = await store.markPaid(order.orderId, env.now(), order.amount, null, "admin", order.orderId, order.method !== "crypto");
   if (!marked.ok) return json(marked.error === "expired" ? 409 : 400, { error: marked.error, applied: false });
   return json(200, { ok: true, applied: marked.applied, orderId: order.orderId });
 }
@@ -480,10 +502,10 @@ function transferCodeIn(content: string): string | null {
   return match ? match[0] : null;
 }
 
-function acceptedRef(store: PayStore, body: Record<string, unknown>, email: string, rateBps: number): { code: string | null; bps: number | null } {
+async function acceptedRef(store: PayStore, body: Record<string, unknown>, email: string, rateBps: number): Promise<{ code: string | null; bps: number | null }> {
   const code = normalizeCode(body.ref);
   if (!code) return { code: null, bps: null };
-  const affiliate = store.affiliateOfCode(code);
+  const affiliate = await store.affiliateOfCode(code);
   if (!affiliate) return { code: null, bps: null };
   if (sameReferrer(secretHash(body.ownerSecret), affiliate.ownerHash, email, affiliate.email)) return { code: null, bps: null };
   return { code, bps: rateBps };
@@ -501,7 +523,7 @@ async function affiliateRoute(request: Request, env: PayEnv, store: PayStore): P
   if (action === "open") {
     const owner = secretHash(body.ownerSecret);
     if (!owner) return json(400, { error: "secret" });
-    const row = store.ensureAffiliate(owner, optionalEmail(body.email), env.now());
+    const row = await store.ensureAffiliate(owner, optionalEmail(body.email), env.now());
     return json(200, {
       code: row.code,
       rateBps: env.affiliateRateBps,
@@ -512,19 +534,19 @@ async function affiliateRoute(request: Request, env: PayEnv, store: PayStore): P
     const code = normalizeCode(body.code);
     const visitor = secretHash(body.visitorId);
     if (!code || !visitor) return json(200, { ok: true, recorded: false });
-    const affiliate = store.affiliateOfCode(code);
+    const affiliate = await store.affiliateOfCode(code);
     if (!affiliate) return json(200, { ok: true, recorded: false });
     if (sameReferrer(secretHash(body.ownerSecret), affiliate.ownerHash, "", affiliate.email)) {
       return json(200, { ok: true, recorded: false });
     }
-    return json(200, { ok: true, recorded: store.recordVisit(code, visitor, env.now()) });
+    return json(200, { ok: true, recorded: await store.recordVisit(code, visitor, env.now()) });
   }
   if (action === "stats") {
     const owner = secretHash(body.ownerSecret);
     if (!owner) return json(400, { error: "secret" });
-    const row = store.ensureAffiliate(owner, optionalEmail(body.email), env.now());
-    const affiliate = store.affiliateOfCode(row.code);
-    const stats = store.affiliateStats(row.code, env.now());
+    const row = await store.ensureAffiliate(owner, optionalEmail(body.email), env.now());
+    const affiliate = await store.affiliateOfCode(row.code);
+    const stats = await store.affiliateStats(row.code, env.now());
     return json(200, {
       code: row.code,
       rateBps: env.affiliateRateBps,
@@ -540,12 +562,12 @@ async function affiliateAdmin(request: Request, env: PayEnv, store: PayStore): P
   if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
   const body = await readJson(request);
   if (body.action === "list") {
-    return json(200, { rateBps: env.affiliateRateBps, affiliates: store.listAffiliates(env.now()) });
+    return json(200, { rateBps: env.affiliateRateBps, affiliates: await store.listAffiliates(env.now()) });
   }
   if (body.action === "approve") {
     const code = normalizeCode(body.code);
-    if (!code || !store.affiliateOfCode(code)) return json(404, { error: "not_found" });
-    const result = store.approveAffiliate(code, env.now());
+    if (!code || !await store.affiliateOfCode(code)) return json(404, { error: "not_found" });
+    const result = await store.approveAffiliate(code, env.now());
     return json(200, { ok: true, code, ...result, transferred: false });
   }
   return json(400, { error: "action" });

@@ -265,7 +265,7 @@ export async function quoteCrypto(
   env: PayEnv,
   chainId: CryptoChainId,
   vnd: number,
-  taken: (units: string) => boolean,
+  taken: (units: string) => boolean | Promise<boolean>,
 ): Promise<CryptoQuote> {
   const spec = CHAINS[chainId];
   const address = receiveAddress(env, chainId);
@@ -277,7 +277,7 @@ export async function quoteCrypto(
     const quoted = quoteUnits(vnd, rate, suffix);
     const smallest = toSmallest(quoted.units6, spec.decimals);
     const units = smallest.toString();
-    if (taken(units)) continue;
+    if (await taken(units)) continue;
     return {
       chain: chainId,
       asset: spec.asset,

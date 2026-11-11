@@ -1,11 +1,14 @@
 import { createHash, randomBytes } from "node:crypto";
 import { mkdirSync } from "node:fs";
 import { dirname } from "node:path";
-import { DatabaseSync } from "node:sqlite";
+import { createRequire } from "node:module";
+import type { DatabaseSync as SqliteDatabase } from "node:sqlite";
+import { sharedClient } from "../db/sql.ts";
 import { newAffiliateCode } from "./affiliate.ts";
+import { pgStore } from "./pgStore.ts";
 import type { PayMethod, PlanId } from "./env.ts";
 
-export type OrderStatus = "pending" | "paid" | "expired";
+export type OrderStatus = "pending" | "paid" | "expired" | "refunded";
 
 export type OrderRow = {
   orderId: string;
@@ -49,7 +52,7 @@ export type MarkPaid =
   | { ok: true; applied: boolean; licenseKey: string; expiresAt: number }
   | { ok: false; error: "not_found" | "expired" | "amount" | "duplicate" };
 
-type SqlOrder = {
+export type SqlOrder = {
   order_id: string;
   request_id: string;
   email: string;
@@ -78,7 +81,8 @@ type SqlOrder = {
   ref_bps: number | null;
 };
 
-export type PayStore = {
+/** Kho đơn hàng đồng bộ (SQLite qua node:sqlite). */
+type SyncStore = {
   insertOrder(row: OrderRow): void;
   getOrder(orderId: string, now: number): OrderRow | null;
   getByTransfer(code: string, now: number): OrderRow | null;
@@ -89,14 +93,36 @@ export type PayStore = {
   setCryptoTx(orderId: string, tx: string): void;
   listPendingCrypto(now: number): OrderRow[];
   eventOrder(kind: string, id: string): string | null;
-  markPaid(orderId: string, now: number, amount: number, transId: string | null, eventKind: string, eventId: string): MarkPaid;
+  /**
+   * allowLate: the provider has confirmed the money arrived (bank webhook, MoMo IPN, admin check),
+   * so a late payment still issues the license instead of being dropped as "expired".
+   */
+  markPaid(orderId: string, now: number, amount: number, transId: string | null, eventKind: string, eventId: string, allowLate?: boolean): MarkPaid;
   ensureAffiliate(ownerHash: string, email: string | null, now: number): { code: string };
   affiliateOfCode(code: string): { code: string; ownerHash: string; email: string | null } | null;
   recordVisit(code: string, visitorHash: string, now: number): boolean;
   affiliateStats(code: string, now: number): AffiliateStats;
   listAffiliates(now: number): AffiliateAdminRow[];
   approveAffiliate(code: string, now: number): { count: number; amount: number };
+  /** Refund a paid order: its licence stops working and an unpaid referral commission is voided. */
+  refundOrder(orderId: string): boolean;
 };
+
+/**
+ * Kho đơn hàng mà handler dùng. Mọi phương thức trả Promise để SQLite (local) và Postgres (production)
+ * thay được cho nhau. `insertOrder` ném `CryptoAmountTaken` khi số token đã có đơn khác giữ.
+ */
+export type PayStore = { [K in keyof SyncStore]: (...args: Parameters<SyncStore[K]>) => Promise<ReturnType<SyncStore[K]>> } & {
+  readonly kind: "sqlite" | "postgres";
+};
+
+/** Hai đơn tiền mã hóa không được trùng số token; báo để handler báo giá lại. */
+export class CryptoAmountTaken extends Error {
+  constructor() {
+    super("crypto amount already taken");
+    this.name = "CryptoAmountTaken";
+  }
+}
 
 export type AffiliateStats = {
   visits: number;
@@ -108,7 +134,7 @@ export type AffiliateStats = {
 
 export type AffiliateAdminRow = AffiliateStats & { code: string; email: string | null; createdAt: number };
 
-function hashKey(key: string): string {
+export function hashKey(key: string): string {
   return createHash("sha256").update(key).digest("hex");
 }
 
@@ -126,7 +152,7 @@ function rateSource(value: string | null): "live" | "config" | null {
   return null;
 }
 
-function fromSql(row: SqlOrder, now: number): OrderRow {
+export function fromSql(row: SqlOrder, now: number): OrderRow {
   const expired = row.status === "pending" && now > row.expires_at;
   return {
     orderId: row.order_id,
@@ -136,7 +162,7 @@ function fromSql(row: SqlOrder, now: number): OrderRow {
     method: storedMethod(row.method),
     amount: row.amount,
     transferCode: row.transfer_code,
-    status: expired ? "expired" : row.status === "paid" ? "paid" : "pending",
+    status: row.status === "paid" ? "paid" : row.status === "refunded" ? "refunded" : expired || row.status === "expired" ? "expired" : "pending",
     createdAt: row.created_at,
     expiresAt: row.expires_at,
     paidAt: row.paid_at,
@@ -158,9 +184,24 @@ function fromSql(row: SqlOrder, now: number): OrderRow {
   };
 }
 
+/** Nạp node:sqlite khi thật sự cần, nên bản chạy Postgres không phụ thuộc (và không cảnh báo) SQLite. */
+function loadSqlite(): typeof SqliteDatabase {
+  const sqlite = createRequire(import.meta.url)("node:sqlite") as { DatabaseSync: typeof SqliteDatabase };
+  return sqlite.DatabaseSync;
+}
+
 export function openStore(dbPath: string): PayStore {
+  const sync = openSqlite(dbPath);
+  const wrapped = { kind: "sqlite" } as Record<string, unknown>;
+  for (const [name, method] of Object.entries(sync)) {
+    wrapped[name] = async (...args: unknown[]) => (method as (...input: unknown[]) => unknown)(...args);
+  }
+  return wrapped as PayStore;
+}
+
+function openSqlite(dbPath: string): SyncStore {
   mkdirSync(dirname(dbPath), { recursive: true });
-  const db = new DatabaseSync(dbPath);
+  const db = new (loadSqlite())(dbPath);
   db.exec(`
     CREATE TABLE IF NOT EXISTS orders (
       order_id TEXT PRIMARY KEY,
@@ -235,7 +276,10 @@ export function openStore(dbPath: string): PayStore {
   const byId = db.prepare("SELECT * FROM orders WHERE order_id = ?");
   const byTransfer = db.prepare("SELECT * FROM orders WHERE transfer_code = ?");
   const byLicense = db.prepare("SELECT * FROM orders WHERE license_hash = ? AND status = 'paid'");
+  const refund = db.prepare("UPDATE orders SET status = 'refunded' WHERE order_id = ? AND status = 'paid'");
+  const voidCommission = db.prepare("UPDATE affiliate_commissions SET status = 'void' WHERE order_id = ? AND status = 'accrued'");
   const expire = db.prepare("UPDATE orders SET status = 'expired' WHERE order_id = ? AND status = 'pending'");
+  const reopen = db.prepare("UPDATE orders SET status = 'pending' WHERE order_id = ? AND status = 'expired'");
   const insertEvent = db.prepare("INSERT INTO payment_events (event_kind, event_id, order_id) VALUES (?, ?, ?)");
   const setMomo = db.prepare("UPDATE orders SET pay_url = ?, deeplink = ?, qr_code_url = ? WHERE order_id = ?");
   const taken = db.prepare(`
@@ -365,7 +409,19 @@ export function openStore(dbPath: string): PayStore {
       const row = eventOf.get(kind, id) as { order_id: string } | undefined;
       return row?.order_id ?? null;
     },
-    markPaid(orderId, now, amount, transId, eventKind, eventId) {
+    refundOrder(orderId) {
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        const changed = refund.run(orderId) as { changes: number };
+        if (changed.changes) voidCommission.run(orderId);
+        db.exec("COMMIT");
+        return changed.changes > 0;
+      } catch (error) {
+        db.exec("ROLLBACK");
+        throw error;
+      }
+    },
+    markPaid(orderId, now, amount, transId, eventKind, eventId, allowLate = false) {
       db.exec("BEGIN IMMEDIATE");
       try {
         const current = byId.get(orderId) as SqlOrder | undefined;
@@ -383,7 +439,8 @@ export function openStore(dbPath: string): PayStore {
           const term = order.plan === "year" ? 365 : 30;
           return { ok: true, applied: false, licenseKey: order.licenseKey, expiresAt: (order.paidAt ?? now) + term * 86_400_000 };
         }
-        if (order.status === "expired" || now > order.expiresAt) {
+        if (allowLate && current.status === "expired") reopen.run(orderId);
+        else if (!allowLate && (order.status === "expired" || now > order.expiresAt)) {
           expire.run(orderId);
           db.exec("COMMIT");
           return { ok: false, error: "expired" };
@@ -476,13 +533,17 @@ export function openStore(dbPath: string): PayStore {
   }
 }
 
+export type StoreConfig = { databaseUrl: string; dbPath: string };
+
 const stores = new Map<string, PayStore>();
 
-export function storeFor(dbPath: string): PayStore {
-  const existing = stores.get(dbPath);
+/** Postgres khi có `databaseUrl`, ngược lại SQLite ở `dbPath`. Mỗi đích một kho trong tiến trình. */
+export function storeFor(config: StoreConfig): PayStore {
+  const key = config.databaseUrl ? `pg:${config.databaseUrl}` : `sqlite:${config.dbPath}`;
+  const existing = stores.get(key);
   if (existing) return existing;
-  const opened = openStore(dbPath);
-  stores.set(dbPath, opened);
+  const opened = config.databaseUrl ? pgStore(sharedClient(config.databaseUrl)) : openStore(config.dbPath);
+  stores.set(key, opened);
   return opened;
 }
 

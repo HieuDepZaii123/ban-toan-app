@@ -1,6 +1,7 @@
 import type { Question } from "../../types.ts";
 import type { Draw, Stem, Vary } from "../types.ts";
 import { holds, worldFits, type Claim, type Params, type Pred, type World } from "./expr.ts";
+import { joinMath } from "../stem.ts";
 
 export type Verdict = "dung" | "sai" | "thieu";
 
@@ -112,8 +113,8 @@ export function drawFacts(item: DssItem, rng: () => number): { params: Params; f
 }
 
 function stemFrom(item: DssItem, params: Params, facts: readonly [Fact, Fact, Fact, Fact]): Stem {
-  const reasons = facts.map((fact) => fact.reasonVi(params));
-  const reasonsEn = facts.map((fact) => fact.reasonEn(params));
+  const reasons = facts.map((fact) => joinMath(fact.reasonVi(params)));
+  const reasonsEn = facts.map((fact) => joinMath(fact.reasonEn(params)));
   const [r0, r1, r2, r3] = reasons;
   const [e0, e1, e2, e3] = reasonsEn;
   if (r0 === undefined || r1 === undefined || r2 === undefined || r3 === undefined) throw new Error(item.id);
@@ -121,8 +122,8 @@ function stemFrom(item: DssItem, params: Params, facts: readonly [Fact, Fact, Fa
   return {
     id: item.id,
     kind: "dss",
-    prompt: item.context(params),
-    promptEn: item.contextEn(params),
+    prompt: joinMath(item.context(params)),
+    promptEn: joinMath(item.contextEn(params)),
     choices: [facts[0].vi, facts[1].vi, facts[2].vi, facts[3].vi],
     choicesEn: [facts[0].en, facts[1].en, facts[2].en, facts[3].en],
     hint: item.hint,

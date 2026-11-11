@@ -6,6 +6,8 @@ import { A } from "../lib/route.tsx";
 import { useRoute } from "../lib/useRoute.ts";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
+import { activateLicense, LICENSE_KEY, usePremium } from "./license.ts";
+import { REFUND_DAYS } from "./terms.ts";
 
 type PlanId = "month" | "year";
 type PayMethod = "wallet" | "qr" | "bank" | "crypto";
@@ -50,7 +52,6 @@ type OrderView = {
   error?: string;
 };
 
-const LICENSE_KEY = "ban-toan-license";
 
 function vnd(amount: number): string {
   return `${amount.toLocaleString("vi-VN")} đ`;
@@ -72,6 +73,7 @@ export function Upgrade() {
   const [plans, setPlans] = useState<Plans | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [email, setEmail] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const [plan, setPlan] = useState<PlanId>("month");
   const [method, setMethod] = useState<PayMethod>("wallet");
   const [chain, setChain] = useState<CryptoChainId>("tron-usdt");
@@ -110,7 +112,10 @@ export function Upgrade() {
         if (!live || !res.ok) return;
         const next = await res.json() as OrderView;
         setOrder(next);
-        if (next.licenseKey) localStorage.setItem(LICENSE_KEY, next.licenseKey);
+        if (next.licenseKey) {
+          localStorage.setItem(LICENSE_KEY, next.licenseKey);
+          window.dispatchEvent(new Event("ban-toan-premium"));
+        }
       }).catch(() => undefined);
     };
     pull();
@@ -173,18 +178,19 @@ export function Upgrade() {
       <main id="content" className="pay">
         <p className="kicker">Premium</p>
         <h1>{t(lang, "Nâng cấp Premium", "Upgrade to Premium")}</h1>
+        <PremiumBenefits />
         <p className="pay-note">
           {t(
             lang,
-            "49.000đ mỗi tháng, 399.000đ mỗi năm. Trả bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Các tờ đang có vẫn mở.",
-            "49,000 VND a month, 399,000 VND a year. Pay with MoMo, VietQR, bank transfer, or USDT/USDC. The sheets already here stay open.",
+            "49.000đ cho 30 ngày, 399.000đ cho 365 ngày. Không tự gia hạn. Trả bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Mọi bài học, luyện tập và trợ lý 8 câu mỗi ngày vẫn miễn phí.",
+            "49,000 VND for 30 days, 399,000 VND for 365 days. Never renews automatically. Pay with MoMo, VietQR, bank transfer or USDT/USDC. All lessons, practice and 8 tutor questions a day stay free.",
           )}
           {" "}
+          <A href="/chinh-sach">{t(lang, `Hoàn tiền trong ${REFUND_DAYS} ngày`, `Refund within ${REFUND_DAYS} days`)}</A>
+          {" · "}
           <A href="/gioi-thieu">{t(lang, "Giới thiệu bạn bè", "Refer a friend")}</A>
-          {plans?.lockContent
-            ? t(lang, " Khóa nội dung đang bật.", " The content lock is on.")
-            : t(lang, " Khóa nội dung đang tắt.", " The content lock is off.")}
         </p>
+        <LicenseBox />
         {loadError ? <p className="empty">{t(lang, "Không tải được bảng giá.", "The price list did not load.")}</p> : null}
         {!orderId ? (
           <form
@@ -208,6 +214,14 @@ export function Upgrade() {
                 onChange={(event) => setEmail(event.target.value)}
                 aria-label={t(lang, "Email nhận quyền Premium", "Email for the Premium license")}
               />
+            </label>
+            <label className="pay-consent">
+              <input type="checkbox" required checked={agreed} onChange={(event) => setAgreed(event.target.checked)} />
+              <span>
+                {t(lang, "Tôi đã đọc ", "I have read the ")}
+                <A href="/chinh-sach">{t(lang, "chính sách và điều kiện hoàn tiền", "policy and refund terms")}</A>
+                {t(lang, ". Nếu tôi dưới 16 tuổi, cha mẹ hoặc người giám hộ đã đồng ý.", ". If I am under 16, a parent or guardian has agreed.")}
+              </span>
             </label>
             <div className="pay-grid methods" role="radiogroup" aria-label={t(lang, "Cách thanh toán", "Payment method")}>
               <MethodCard
@@ -253,7 +267,7 @@ export function Upgrade() {
               </>
             ) : null}
             {formError ? <p className="pay-warn" role="alert">{formError}</p> : null}
-            <button className="pay-btn" type="submit" disabled={busy || !plans}>
+            <button className="pay-btn" type="submit" disabled={busy || !plans || !agreed}>
               {busy ? t(lang, "Đang tạo đơn…", "Creating the order…") : t(lang, "Tạo đơn thanh toán", "Create the payment")}
             </button>
           </form>
@@ -327,7 +341,7 @@ function OrderPanel({
         <p className="pay-card">
           <b>{t(lang, "Mã kích hoạt", "License key")}</b>
           <code>{order.licenseKey}</code>
-          <small>{t(lang, "Giữ mã này trên máy. Email chỉ để ghi nhận đơn.", "Keep this key on this device. The email only labels the order.")}</small>
+          <small>{t(lang, "Chép mã này lại. Trên máy khác, nhập mã ở ô «Đã có mã Premium?» trên trang này.", "Copy this key. On another device, enter it in the “Already have a key?” box on this page.")}</small>
         </p>
       ) : null}
       {order.method === "wallet" ? <WalletBlock order={order} /> : null}
@@ -423,5 +437,97 @@ function BankBlock({
       ))}
       <small>{t(lang, "Nội dung chuyển khoản phải đúng từng ký tự. Webhook đối soát hoặc admin mới kích hoạt đơn.", "The transfer note must match exactly. A reconciliation webhook or an admin activates the order.")}</small>
     </section>
+  );
+}
+
+function PremiumBenefits() {
+  const lang = useLang();
+  return (
+    <section className="pay-benefits" aria-labelledby="benefits-title">
+      <h2 id="benefits-title">{t(lang, "Premium gồm", "Premium includes")}</h2>
+      <ul>
+        <li>
+          <b>{t(lang, "Đề thi thử chuẩn THPT 2025", "2025 THPT mock exams")}</b>
+          {t(lang,
+            ": ba phần như đề thật (12 câu trắc nghiệm, 4 câu Đúng/Sai, 6 câu trả lời ngắn), 90 phút, chấm theo thang điểm của Bộ, xem lại từng câu kèm lời giải. Mỗi đề rút mới từ ngân hàng, làm bao nhiêu đề cũng được.",
+            ": the three parts of the real paper (12 multiple choice, 4 true/false, 6 short answer), 90 minutes, scored on the Ministry's scale, with every question reviewable with its solution. Each paper is drawn fresh from the bank, as many as you like.")}
+        </li>
+        <li>
+          <b>{t(lang, "Bảng điểm theo phần và chủ đề", "Scores by part and topic")}</b>
+          {t(lang, ": sau mỗi đề biết mình mất điểm ở phần nào, chủ đề nào, và ôn ngay câu sai.", ": after each paper, see which part and topic cost points, then redo the missed questions.")}
+        </li>
+        <li>
+          <b>{t(lang, "Tài liệu ôn tập 14 chuyên đề", "Study notes for 14 topics")}</b>
+          {t(lang, ": bài giảng viết, lỗi hay gặp, ví dụ giải từng bước và đề tự luyện có đáp án, đọc trên trang hoặc tải PDF, Word để in.", ": written lecture notes, common mistakes, examples solved step by step and a self-test with answers, to read here or download as PDF or Word.")}
+          {" "}<A href="/tai-lieu">{t(lang, "Xem tài liệu", "See the notes")}</A>
+        </li>
+        <li>
+          <b>{t(lang, "Kế hoạch ôn lỗi sai", "Mistake review plan")}</b>
+          {t(lang, ": câu sai trong đề thi thử tự quay lại sau 1, 3, 7 và 14 ngày, kèm danh sách chủ đề mất điểm nhiều nhất.", ": questions you miss in mock exams come back after 1, 3, 7 and 14 days, with the topics that cost you the most points.")}
+          {" "}<A href="/on-loi-sai">{t(lang, "Mở kế hoạch", "Open the plan")}</A>
+        </li>
+        <li>
+          <b>{t(lang, "Lời giải đầy đủ", "Full worked solutions")}</b>
+          {t(lang, ": sau khi tự thử, xin trợ lý giải trọn từng bước, có đáp số và bước thử lại. Bản miễn phí chỉ gợi ý.", ": after trying, ask the tutor for every step with the final answer and a check. The free tutor gives hints only.")}
+        </li>
+        <li>
+          <b>{t(lang, "Kiểm tra bài làm", "Check my work")}</b>
+          {t(lang, ": dán bài giải của bạn, trợ lý chỉ ra đúng bước sai đầu tiên, vì sao sai và cách sửa.", ": paste your solution and the tutor points to the first wrong step, why it is wrong and how to fix it.")}
+        </li>
+        <li>
+          <b>{t(lang, "Chụp ảnh đề bài", "Photo of a problem")}</b>
+          {t(lang, ": chụp đề trong sách hay đề thi, trợ lý đọc ảnh rồi giúp bạn giải.", ": photograph a problem from a book or paper and the tutor reads it and helps.")}
+        </li>
+        <li>
+          <b>{t(lang, "Trợ lý toán 40 câu mỗi ngày", "40 tutor questions a day")}</b>
+          {t(lang, " thay vì 8, tính riêng cho mã của bạn.", " instead of 8, counted for your key alone.")}
+        </li>
+        <li>
+          <b>{t(lang, "Dùng trên mọi máy", "Use it on any device")}</b>
+          {t(lang, ": nhập mã Premium ở trang này trên máy khác.", ": enter the Premium key on this page on another device.")}
+        </li>
+      </ul>
+    </section>
+  );
+}
+
+function LicenseBox() {
+  const lang = useLang();
+  const premium = usePremium();
+  const [draft, setDraft] = useState("");
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  if (premium.kind === "active") {
+    return (
+      <p className="pay-card" role="status">
+        <b>{t(lang, "Premium đang bật trên máy này", "Premium is on for this device")}</b>
+        <span>{t(lang, `đến ${new Date(premium.until).toLocaleDateString("vi-VN")}.`, `until ${new Date(premium.until).toLocaleDateString("en-GB")}.`)}</span>
+        {" "}
+        <A href="/thi-thu">{t(lang, "Làm đề thi thử 2025", "Take a 2025 mock exam")}</A>
+      </p>
+    );
+  }
+  return (
+    <form
+      className="pay-row license-box"
+      onSubmit={(event) => {
+        event.preventDefault();
+        setBusy(true);
+        setNote("");
+        void activateLicense(draft).then((result) => {
+          setBusy(false);
+          if (result === "offline") setNote(t(lang, "Chưa kiểm được mã vì mất mạng. Thử lại khi có mạng.", "Could not check the key while offline. Try again online."));
+          else if (result === null) setNote(t(lang, "Mã không đúng, đã hết hạn hoặc đã hoàn tiền.", "The key is wrong, expired or refunded."));
+          else setDraft("");
+        });
+      }}
+    >
+      <label>
+        <span>{t(lang, "Đã có mã Premium?", "Already have a key?")}</span>
+        <input value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="bt_…" autoComplete="off" spellCheck={false} />
+      </label>
+      <button type="submit" className="text-btn" disabled={busy || draft.trim() === ""}>{t(lang, "Kích hoạt", "Activate")}</button>
+      {note ? <p className="chat-note" role="status">{note}</p> : null}
+    </form>
   );
 }

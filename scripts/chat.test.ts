@@ -26,7 +26,7 @@ function env(over: Partial<ChatEnv> = {}): ChatEnv {
       calls += 1;
       return "bước 1 rồi kiểm chứng";
     },
-    premium: (license) => license === "bt_premium",
+    premium: async (license) => license === "bt_premium",
     quota: createQuota(),
     freeDaily: 8,
     premiumDaily: 40,
@@ -67,7 +67,10 @@ assert(!/từ chối|I refuse|out of scope/i.test(String(off.json.reply)), "mode
 const cook = await post(env(), ask("Cho tôi công thức nấu phở bò"));
 assert(calls === 1, "demo cook does not call the model");
 assert(!/từ chối|chỉ hỗ trợ|ngoài phạm vi|I refuse/i.test(String(cook.json.reply)), "recipe is answered");
-assert(/phở/i.test(String(cook.json.reply)), "recipe mentions pho");
+assert(/phở/i.test(String(cook.json.reply)) && /toán|bài/i.test(String(cook.json.reply)), "off-topic is steered back to maths kindly");
+assert(!/nước dùng|ninh|nêm/i.test(String(cook.json.reply)), "off-topic is not answered at length");
+assert(!/any topic|Do not refuse|Không từ chối/i.test(TUTOR_INSTRUCTIONS), "tutor is not told to answer every topic");
+assert(/just the answer/i.test(TUTOR_INSTRUCTIONS) && /children/i.test(TUTOR_INSTRUCTIONS), "answer-dumping and child-safety rules present");
 assert(replyLanguage("Hello") === "en" && replyLanguage("Xin chào") === "vi", "language detect");
 const helloEn = demoReply("Hello");
 assert(/solution thinking/i.test(helloEn), "english greeting");
@@ -108,6 +111,19 @@ const stopped = await post(daily, ask("tích phân là gì"), "198.51.100.8");
 assert(stopped.status === 429 && stopped.json.error === "quota" && stopped.json.premium === false, `quota ${JSON.stringify(stopped.json)}`);
 const raised = await post(daily, { ...ask("tích phân là gì"), license: "bt_premium" }, "198.51.100.8");
 assert(raised.status === 200 && raised.json.premium === true && raised.json.limit === 40, `premium ${JSON.stringify(raised.json)}`);
+
+// Two students on one school network each get their own free allowance.
+const school = env({ windowLimit: 10, freeDaily: 1 });
+const lan = await post(school, { ...ask("tích phân là gì"), device: "device-lan-0001" }, "203.0.113.9");
+const minh = await post(school, { ...ask("tích phân là gì"), device: "device-minh-0001" }, "203.0.113.9");
+assert(lan.status === 200 && minh.status === 200, "per-device allowance on a shared network");
+const lanAgain = await post(school, { ...ask("tích phân là gì"), device: "device-lan-0001" }, "203.0.113.9");
+assert(lanAgain.status === 429, "each device still has its own daily cap");
+const tight = env({ windowLimit: 10, freeDaily: 5, networkDaily: 2 });
+await post(tight, { ...ask("tích phân"), device: "rotating-0001" }, "203.0.113.10");
+await post(tight, { ...ask("tích phân"), device: "rotating-0002" }, "203.0.113.10");
+const rotated = await post(tight, { ...ask("tích phân"), device: "rotating-0003" }, "203.0.113.10");
+assert(rotated.status === 429, "rotating device ids still hit the per-network cap");
 
 const broken = env({
   mode: "live",

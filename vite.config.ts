@@ -41,10 +41,34 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,webmanifest,woff2}"],
-        globIgnores: ["**/404.html", "**/KaTeX_*"],
+        // Precache the app and the KaTeX woff2 fonts (formulas must look right offline), but not the
+        // multi-megabyte libraries only used for chat diagrams (mermaid, elk, cytoscape) or PDF export.
+        // Those are cached at runtime the first time a learner actually uses them.
+        globIgnores: [
+          "**/404.html",
+          "**/KaTeX_*.{woff,ttf}",
+          "**/elk-*.js",
+          "**/pdf-*.js",
+          "**/cytoscape*.js",
+          "**/mermaid*.js",
+          "**/*Diagram*.js",
+          "**/*diagram*.js",
+          "**/swimlanes-*.js",
+          "**/cose-bilkent-*.js",
+          "**/chunk-[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]-*.js",
+        ],
         navigateFallback: "index.html",
         navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
+          {
+            urlPattern: /\/assets\/.*\.js$/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "on-demand-js",
+              expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 60 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
           {
             urlPattern: /\/assets\/KaTeX_.*\.(?:woff2|woff|ttf)$/i,
             handler: "CacheFirst",

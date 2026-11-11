@@ -32,6 +32,7 @@ api/premium/*.ts            hàm Vercel, mỗi đường một file
 | `GET /api/premium/status` | Theo `orderId` hoặc `license` |
 | `POST /api/premium/bank` | Webhook biến động số dư. Khớp nội dung CK và số tiền, idempotent theo mã giao dịch |
 | `POST /api/premium/confirm` | Duyệt tay mọi cách trả, kể cả crypto. Header `Authorization: Bearer ADMIN_TOKEN` |
+| `POST /api/premium/refund` | Admin ghi nhận đã hoàn tiền: đơn thành `refunded`, mã Premium ngừng chạy, hoa hồng chưa chi bị hủy. Header `Authorization: Bearer ADMIN_TOKEN` |
 | `POST /api/premium/affiliate` | Mã giới thiệu, đếm lượt, xem thống kê của chính mình |
 | `POST /api/premium/affiliate-admin` | Admin xem danh sách và duyệt chi. Không chuyển tiền |
 | `POST /api/premium/crypto` | Đổi mạng khi đơn còn chờ, dán mã giao dịch để đối soát on-chain, hoặc `{ "watch": true }` để worker rà các đơn đã có mã |
@@ -48,21 +49,53 @@ Chữ ký IPN:
 
 VietQR: tag `38` chứa GUID `A000000727`, BIN, số tài khoản và dịch vụ `QRIBFTTA`. Tag `63` là CRC-16/CCITT-FALSE trên cả chuỗi kể cả `6304`. Giá trị kiểm của thuật toán với `123456789` là `29B1`.
 
+Premium mở: đề thi thử chuẩn THPT 2025 không giới hạn ở `/thi-thu` (đề đầu tiên miễn phí), bảng điểm theo phần và chủ đề, trợ lý 40 câu mỗi ngày tính theo mã, ba chế độ Premium của trợ lý (lời giải đầy đủ, kiểm tra bài làm, ảnh đề bài; xem `docs/TRO-LY.md`), kế hoạch ôn lỗi sai ở `/on-loi-sai`, tài liệu ôn tập 14 chuyên đề ở `/tai-lieu`, và nhập mã trên máy khác ở `/nang-cap`. Trình duyệt kiểm mã qua `/api/premium/status?license=` mỗi lần mở trang (`src/premium/license.ts`) và nhớ kết quả tới hết hạn để dùng khi mất mạng. Kế hoạch ôn lỗi sai (`src/thpt/review.ts`, khóa `ban-toan-review-v1`): khi nộp một đề, câu trắc nghiệm và trả lời ngắn làm sai vào kế hoạch, quay lại sau 1, 3, 7, 14 ngày; sai thì về hộp đầu, đúng ở hộp cuối thì rời kế hoạch. Câu sai được ghi cho mọi người, ôn thì cần Premium. Tài liệu ôn tập (`src/premium/studyPack.ts`, trang `src/pages/StudyPackPage.tsx`): mỗi tờ một bộ, ghép từ nội dung đã kiểm của chính tờ đó (ý chính, bài giảng viết, bẫy, ba ví dụ có lời giải, đề tự luyện kèm đáp án và gợi ý), nên không có số liệu mới cần đối chiếu. Phần «Ý chính» đọc miễn phí; toàn bộ tài liệu và tệp PDF, Word (bộ xuất của `src/docs/`) cần Premium. Video bài giảng: ô «Cơ bản» xem miễn phí, ô «Chuẩn thi» cần Premium (`src/topic/LectureVideos.tsx`); hiện chưa ô nào có video thật, xem `docs/TRO-LY.md`. Chính sách và điều kiện hoàn tiền ở `/chinh-sach` (`REFUND_DAYS` trong `src/premium/terms.ts`, email liên hệ qua `VITE_SUPPORT_EMAIL`).
+
+Khi chạy production (`VERCEL_ENV=production`, `NODE_ENV=production` hoặc `PAY_LIVE=1`), server không nhận IPN MoMo và không tạo đơn ví/QR nếu chỉ có khóa sandbox, và bỏ qua `ADMIN_TOKEN` / `BANK_WEBHOOK_SECRET` mẫu hoặc ngắn hơn 16 ký tự. Chuyển khoản đã xác nhận (webhook, IPN, admin) đến sau khi đơn hết 15 phút vẫn được cấp quyền; crypto giữ hạn chặt vì tỷ giá đã khóa.
+
 Cờ `PREMIUM_LOCK` / `VITE_PREMIUM_LOCK` mặc định tắt. Không tờ nào đọc cờ này để giấu bài. Bật `1` chỉ để một lớp sau này khóa phần mới, không đụng công thức hay câu hỏi đã có.
 
 ## Kho dữ liệu
 
-Mặc định là SQLite qua `node:sqlite`, file `PREMIUM_DB_PATH` (dev: `data/premium.sqlite`).
+Có hai kho, cùng giao diện `PayStore` (`server/pay/store.ts`), chọn theo biến môi trường:
 
-Adapter là `PayStore` trong `server/pay/store.ts`: `insertOrder`, `getOrder`, `getByTransfer`, `getByLicense`, `markPaid`. `markPaid` chạy một transaction, chỉ cập nhật đơn `pending`, và ghi `payment_events` với khóa `(event_kind, event_id)`.
+| Biến | Kho | Dùng khi |
+| --- | --- | --- |
+| `DATABASE_URL` (hoặc `POSTGRES_URL`) có giá trị | Postgres (`server/pay/pgStore.ts`) | Production, và mọi chỗ có nhiều instance |
+| Không có | SQLite qua `node:sqlite`, tệp `PREMIUM_DB_PATH` (mặc định `data/premium.sqlite`) | Chạy local, không cần cài gì |
 
-Đổi sang Postgres hoặc KV khi deploy:
+Đừng dùng SQLite trên Vercel: đĩa chỉ ghi được ở `/tmp`, mất khi instance tắt, và IPN với trang trả về có thể rơi vào hai instance khác nhau.
 
-1. Viết một object cùng kiểu `PayStore`. `markPaid` phải giữ `UPDATE … WHERE status = 'pending'` và khóa duy nhất của sự kiện thanh toán.
-2. Trong `storeFor`, nếu `PREMIUM_STORE=postgres` thì mở adapter đó thay vì SQLite.
-3. Đừng dùng file SQLite trên Vercel: đĩa chỉ ghi được ở `/tmp` và mất khi instance tắt. Trang IPN có thể rơi vào instance khác.
+### Postgres
 
-Gợi ý cột Postgres: cùng tên với bảng `orders` và `payment_events` trong `openStore`. Đơn crypto thêm `crypto_chain`, `crypto_asset`, `crypto_units` (đơn vị nhỏ nhất của token, dạng chữ), `crypto_rate`, `crypto_suffix`, `crypto_source` (`live` hoặc `config`), `crypto_tx`.
+- Lược đồ nằm ở `server/db/schema.ts`, đánh số phiên bản. Lần đầu một instance chạm tới cơ sở dữ liệu, nó áp các phiên bản còn thiếu trong một transaction dưới advisory lock, nên nhiều instance khởi động cùng lúc không đua nhau. Muốn áp trước khi deploy thì chạy `npm run db:migrate`. Thêm thay đổi lược đồ bằng một phiên bản mới ở cuối `MIGRATIONS`, không sửa phiên bản cũ.
+- `markPaid` khóa dòng đơn (`SELECT … FOR UPDATE`), ghi `payment_events` với `ON CONFLICT DO NOTHING`, nên hai webhook cùng lúc chỉ cấp một mã và hoa hồng chỉ ghi một lần.
+- Số token của đơn tiền mã hóa có chỉ mục `UNIQUE`; hai đơn tạo cùng lúc mà trùng số thì đơn sau được báo giá lại.
+- Bộ đếm lượt hỏi trợ lý (`chat_hits`) cũng nằm ở Postgres khi có `DATABASE_URL`, nên mọi instance đếm chung. Không có Postgres thì mỗi instance đếm riêng trong bộ nhớ.
+- Thời gian lưu dạng mili giây (`BIGINT`), tiền lưu bằng đồng (`BIGINT`).
+- Kích thước pool mỗi instance: `PG_POOL_MAX` (mặc định 3). Trên serverless, dùng chuỗi kết nối qua pooler: Supabase dùng cổng 6543 (transaction mode), Neon dùng host `-pooler`.
+
+Lệnh:
+
+```bash
+npm run db:migrate                               # áp lược đồ còn thiếu
+npm run db:status                                # phiên bản đã áp, số dòng mỗi bảng
+npm run db:copy-sqlite -- data/premium.sqlite    # chép đơn, sự kiện, giới thiệu từ SQLite cũ
+```
+
+Các lệnh đọc `DATABASE_URL` từ shell hoặc `.env`. `db:copy-sqlite` chạy lại an toàn: dòng đã có thì bỏ qua, mã kích hoạt cũ vẫn dùng được.
+
+Chạy local trên Postgres: đặt `DATABASE_URL=postgres://…` trong `.env` rồi `npm run dev`. Bỏ dòng đó thì quay về SQLite.
+
+### Test
+
+`npm run test:server` chạy bộ test thanh toán trên SQLite, rồi chạy lại đúng các kịch bản đó trên Postgres thật bằng PGlite (Postgres biên dịch ra WASM, chạy trong tiến trình, không cần máy chủ). Để chạy trên máy chủ Postgres qua driver `pg` như production:
+
+```bash
+PAY_TEST_STORE=postgres TEST_DATABASE_URL=postgres://user:pass@127.0.0.1:5432/db npm run test:postgres
+```
+
+Mỗi lần chạy dùng một schema riêng rồi xóa đi. CI có một job làm đúng việc này với dịch vụ `postgres:16`.
 
 ## Tiền mã hóa
 
@@ -120,7 +153,7 @@ npm test
 npm run dev
 ```
 
-Mở [http://127.0.0.1:43123/nang-cap](http://127.0.0.1:43123/nang-cap). Vite gắn `/api/premium` ngay trên cổng 43123. Không cần khóa MoMo riêng: thiếu biến thì server dùng bộ sandbox công khai trong `.env.example`.
+Mở [http://127.0.0.1:43123/nang-cap](http://127.0.0.1:43123/nang-cap). Vite gắn `/api/premium` ngay trên cổng 43123 (và trên cổng 43991 khi `npm run preview`). Plugin nạp `.env` cho server, nên `ADMIN_TOKEN` và `BANK_WEBHOOK_SECRET` chép từ `.env.example` là giá trị mà hai lệnh `curl` dưới đây dùng. Biến đặt trong shell thắng `.env`. Không cần khóa MoMo riêng: thiếu biến thì server dùng bộ sandbox công khai trong `.env.example`.
 
 Đơn ví và QR gọi MoMo. Đơn chuyển khoản không gọi MoMo. Webhook thử:
 
@@ -171,9 +204,11 @@ curl -X POST "$PUBLIC_BASE_URL/api/premium/affiliate-admin" \
 
 ## Deploy
 
-Repo đã có `vercel.json`: build `npm run build`, thư mục `dist`, rewrite SPA trừ `/api/`. Mỗi file trong `api/premium/` là một hàm Node.
+Repo đã có `vercel.json`: build `npm run build`, thư mục `dist`, rewrite SPA trừ `/api/`. Mỗi file trong `api/premium/` là một hàm Node. Chọn Node 22 trở lên cho dự án (`engines` trong `package.json` là `>=22.13`), vì kho đơn dùng `node:sqlite`.
 
-Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `AFFILIATE_RATE_BPS`, `CRYPTO_*`, `PREMIUM_DB_PATH` hoặc adapter Postgres. `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy. Không đặt khóa riêng của ví.
+Lỗi trong hàm trả JSON 500 không kèm chi tiết. Log của hàm có dòng `[pay] <method> <đường> <x-request-id>`; mã đó cũng nằm trong header `x-request-id` của phản hồi, nên có thể dò từ trình duyệt tới log.
+
+Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `AFFILIATE_RATE_BPS`, `CRYPTO_*`, và `DATABASE_URL` trỏ tới Postgres (Vercel Postgres/Neon tự đặt `POSTGRES_URL`, cũng dùng được). `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy. Không đặt khóa riêng của ví.
 
 Service worker không nuốt `/api/` (`navigateFallbackDenylist`).
 
@@ -188,6 +223,6 @@ Service worker không nuốt `/api/` (`navigateFallbackDenylist`).
 - [ ] `CRYPTO_BSC_RPC`, `CRYPTO_TRON_API`, `CRYPTO_SOL_RPC` là nút của bạn, không phải RPC công khai mặc định, nếu bạn nhận nhiều đơn.
 - [ ] `CRYPTO_VND_PER_USD` là mức dự phòng bạn chấp nhận khi tỷ giá công khai hỏng.
 - [ ] `ADMIN_TOKEN` và `BANK_WEBHOOK_SECRET` dài, ngẫu nhiên, không dùng giá trị trong `.env.example`.
-- [ ] SQLite local không phải kho production. Đã có `PayStore` trên Postgres hoặc KV, và IPN với redirect rơi vào hai instance vẫn thấy cùng một đơn.
+- [ ] Đã đặt `DATABASE_URL` (hoặc `POSTGRES_URL`) trên môi trường deploy, đã chạy `npm run db:migrate`, và `npm run db:status` thấy đủ phiên bản. Nếu từng nhận đơn trên SQLite thì đã chạy `npm run db:copy-sqlite`.
 - [ ] Thử một thanh toán sandbox: sai chữ ký bị 401, trả hai lần không ra hai mã, số tiền lệch không cấp quyền.
 - [ ] `VITE_PREMIUM_LOCK` vẫn tắt trừ khi bạn cố ý khóa một phần mới. Không sửa công thức, câu hỏi, tờ lý thuyết.

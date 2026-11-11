@@ -205,15 +205,15 @@ export const lop05: GradeBook = {
           R`Trên bản đồ tỉ lệ $1:100\,000$, đoạn dài $3$ xentimét. Ngoài thực địa đoạn đó dài bao nhiêu kilômét?`,
           [
             buoc(R`Độ dài thực bằng $3\times 100\,000=300\,000$ xentimét.`, "Nhân độ dài trên bản đồ với mẫu tỉ lệ."),
-            buoc(R`Đổi ra kilômét: $300\,000:100\,000=3$ kilômét.`, "Một kilômét có $100\,000$ xentimét."),
+            buoc(R`Đổi ra kilômét: $300\,000:100\,000=3$ kilômét.`, "Một kilômét có $100\\,000$ xentimét."),
           ],
           R`Đoạn ngoài thực địa dài $3$ kilômét.`,
           [{ expr: "3*100000/100000", expect: "3" }],
         )],
         [
-          luyen(R`Bản đồ $1:50\,000$, đoạn trên bản đồ dài $2$ xentimét. Độ dài thực bằng bao nhiêu xentimét?`, R`Độ dài thực bằng $100\,000$ xentimét.`, [{ expr: "2*50000", expect: "100000" }], "Nhân độ dài trên bản đồ với $50\,000$."),
-          luyen(R`Đổi $100\,000$ xentimét ra kilômét thì được bao nhiêu?`, R`Bằng $1$ kilômét.`, [{ expr: "100000/100000", expect: "1" }], "Chia cho $100\,000$ vì đó là số xentimét trong một kilômét."),
-          luyen(R`Bản đồ $1:100\,000$, quãng đường thực $4$ kilômét. Trên bản đồ dài bao nhiêu xentimét?`, R`Dài $4$ xentimét.`, [{ expr: "4*100000/100000", expect: "4" }], "Bốn kilômét là $400\,000$ xentimét. Chia cho mẫu tỉ lệ $100\,000$ được $4$ xentimét."),
+          luyen(R`Bản đồ $1:50\,000$, đoạn trên bản đồ dài $2$ xentimét. Độ dài thực bằng bao nhiêu xentimét?`, R`Độ dài thực bằng $100\,000$ xentimét.`, [{ expr: "2*50000", expect: "100000" }], "Nhân độ dài trên bản đồ với $50\\,000$."),
+          luyen(R`Đổi $100\,000$ xentimét ra kilômét thì được bao nhiêu?`, R`Bằng $1$ kilômét.`, [{ expr: "100000/100000", expect: "1" }], "Chia cho $100\\,000$ vì đó là số xentimét trong một kilômét."),
+          luyen(R`Bản đồ $1:100\,000$, quãng đường thực $4$ kilômét. Trên bản đồ dài bao nhiêu xentimét?`, R`Dài $4$ xentimét.`, [{ expr: "4*100000/100000", expect: "4" }], "Bốn kilômét là $400\\,000$ xentimét. Chia cho mẫu tỉ lệ $100\\,000$ được $4$ xentimét."),
         ],
       ),
       bai(

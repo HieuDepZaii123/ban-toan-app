@@ -85,6 +85,8 @@ function rightStem(question: Question, params: Record<string, number>) {
       `$S=\\dfrac{${a}\\cdot${b}}{2}=${area}$.`,
       `${a * b} forgets $\\dfrac{1}{2}$. ${c} is the hypotenuse. ${a + b} adds the legs.`,
     ],
+    "Diện tích bằng nửa tích hai cạnh góc vuông. Cạnh huyền không dùng ở đây.",
+    "The area is half the product of the two legs. The hypotenuse is not used here.",
   );
 }
 
@@ -108,6 +110,8 @@ function boxStem(question: Question, params: Record<string, number>) {
       `Multiply all three dimensions.`,
       `${l * w} is only the base. ${2 * l * w} doubles the base. ${l * h} drops one edge.`,
     ],
+    "Nhân cả ba kích thước. Diện tích đáy chưa phải thể tích.",
+    "Multiply all three dimensions. The base area is not the volume.",
   );
 }
 
@@ -131,6 +135,8 @@ function pyrStem(question: Question, params: Record<string, number>) {
       `The base is $${s}^2$, then take one third.`,
       `${s * s} is the base area. ${s * s * h} forgets $\\dfrac{1}{3}$. ${s * h} is not the volume.`,
     ],
+    "$V=\\dfrac13\\cdot$ diện tích đáy $\\cdot$ chiều cao. Đừng quên $\\dfrac13$.",
+    "$V=\\dfrac13\\cdot$ base area $\\cdot$ height. Do not forget the $\\dfrac13$.",
   );
 }
 

@@ -2,15 +2,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { cards, QUESTION_TOTAL, streamName, streams } from "../content/cards.ts";
 import { A } from "../lib/route.tsx";
 import { sciences } from "../science/catalog.ts";
-import { AreaNav } from "../ui/AreaNav.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
-import { Logo } from "../ui/Logo.tsx";
-import { Prefs } from "../ui/Prefs.tsx";
+import { SiteHeader } from "../ui/SiteHeader.tsx";
+import { SiteFooter } from "../ui/SiteFooter.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
-import { Welcome } from "./Welcome.tsx";
+import { DeskTools, Welcome } from "./Welcome.tsx";
 
 export function HomeDesk() {
   const lang = useLang();
@@ -47,27 +46,26 @@ export function HomeDesk() {
   return (
     <div className="desk">
       <a className="skip" href="#content">{t(lang, "Vào nội dung", "Skip to content")}</a>
-      <header className="bar">
-        <A className="brand" href="/"><Logo /> Bàn Toán</A>
-        <AreaNav />
-        <form className="search" role="search" onSubmit={(event) => event.preventDefault()}>
-          <input
-            id="search"
-            ref={searchRef}
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={t(lang, "Tìm tờ, ví dụ đạo hàm", "Find a sheet, for example derivative")}
-            aria-label={t(lang, "Tìm chuyên đề", "Search topics")}
-            autoComplete="off"
-          />
-        </form>
-        <Prefs />
-      </header>
+      <SiteHeader />
       <main id="content">
         <Welcome />
-        <Room />
-        <ProgressLine />
-        {folded ? null : <Continue />}
+        <section className={`home-start${folded ? " is-searching" : ""}`} aria-label={t(lang, "Bắt đầu", "Start")}>
+          {folded ? null : <Continue />}
+          <div className="home-find">
+            <form className="search home-search" role="search" onSubmit={(event) => event.preventDefault()}>
+              <input
+                id="search"
+                ref={searchRef}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={t(lang, "Tìm tờ, ví dụ đạo hàm", "Find a sheet, for example derivative")}
+                aria-label={t(lang, "Tìm chuyên đề", "Search topics")}
+                autoComplete="off"
+              />
+            </form>
+            <ProgressLine />
+          </div>
+        </section>
         {visible.length === 0 ? (
           <p className="empty">{t(lang, `Không thấy tờ nào với “${query.trim()}”.`, `No sheet matches “${query.trim()}”.`)}</p>
         ) : (
@@ -102,13 +100,41 @@ export function HomeDesk() {
             ))}
           </div>
         </section>
-        <p className="foot">
-          {t(lang, "Số liệu nằm trên máy này. Sau lần mở đầu, bàn vẫn dùng được khi mất mạng.", "Numbers stay on this device. After the first load, the desk works offline.")}
-          {" "}
-          <A href="/nang-cap">{t(lang, "Nâng cấp Premium", "Upgrade to Premium")}</A>
-        </p>
+        <DeskCorner />
       </main>
+      <SiteFooter />
     </div>
+  );
+}
+
+const CORNER_KEY = "bt-desk-corner";
+
+/**
+ * Góc bàn: đèn, cửa sổ, đồng hồ và các tiện ích nhỏ, gập lại mặc định để trang chủ bắt đầu bằng việc học.
+ * Vẫn được dựng khi gập (thẻ details), nên đèn bàn vẫn chiếu sáng trang như trước.
+ */
+function DeskCorner() {
+  const lang = useLang();
+  const [open, setOpen] = useState(() => {
+    try { return localStorage.getItem(CORNER_KEY) === "1"; } catch { return false; }
+  });
+  return (
+    <details
+      className="desk-corner"
+      open={open}
+      onToggle={(event) => {
+        const next = event.currentTarget.open;
+        setOpen(next);
+        try { localStorage.setItem(CORNER_KEY, next ? "1" : "0"); } catch { /* ignore */ }
+      }}
+    >
+      <summary>
+        <b>{t(lang, "Góc bàn", "Desk corner")}</b>
+        <span>{t(lang, "Đèn, cửa sổ, đồng hồ, sổ tay và đường tiến độ.", "Lamp, window, clocks, notepad and your progress curve.")}</span>
+      </summary>
+      <DeskTools />
+      <Room />
+    </details>
   );
 }
 

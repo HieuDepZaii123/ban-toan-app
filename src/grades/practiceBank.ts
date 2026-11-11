@@ -61,7 +61,7 @@ export const handPractice: GradeQuestion[] = [
   q("l4-gio", 4, "$2$ giờ bằng bao nhiêu phút?", ["$120$ phút", "$60$ phút", "$100$ phút", "$200$ phút"], 0,
     ["Mỗi giờ có $60$ phút.", "$2\\times 60=120$.", "$2$ giờ bằng $120$ phút."], "2*60", "120"),
   q("l4-nhan", 4, "Tính $125\\times 8$.", ["$1000$", "$800$", "$100$", "$132$"], 0,
-    ["$125\\times 8=1000$ vì $8$ phần tám của $1000$ là $125$.", "Hoặc $100\\times 8+25\\times 8=800+200$.", "Tích bằng $1000$."], "125*8", "1000"),
+    ["$125\\times 8=1000$ vì một phần tám của $1000$ là $125$.", "Hoặc $100\\times 8+25\\times 8=800+200$.", "Tích bằng $1000$."], "125*8", "1000"),
 
   q("l5-thap-phan", 5, "Tính $2{,}5\\times 4$.", ["$10$", "$8$", "$6$", "$12$"], 0,
     ["$2\\times 4=8$ và $0{,}5\\times 4=2$.", "Cộng $8+2=10$.", "Tích bằng $10$."], "Rational(5,2)*4", "10"),

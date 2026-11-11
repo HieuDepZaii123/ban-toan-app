@@ -89,12 +89,12 @@ export const probabilityQuestions: Question[] = [
     steps: [
       R`$1\%$ của $10000$ là $100$ người bệnh. Dương thật: $0{,}99 \cdot 100 = 99$.`,
       R`$9900$ người khỏe, $5\%$ dương giả: $495$.`,
-      R`$\dfrac{99}{99+495} = \dfrac{99}{594} = \dfrac{1}{6}$. $99\%$ là độ nhạy, chưa dùng kết quả. $1\%$ là tỉ lệ gốc, trước khi xét nghiệm. $95\%$ là độ đặc hiệu, không phải xác suất bệnh khi đã dương.`,
+      R`$\dfrac{99}{99+495} = \dfrac{99}{594} = \dfrac{1}{6}$. $99\%$ là độ nhạy $P(+\mid B)$ (B: bị bệnh), nhầm với $P(B\mid +)$. $1\%$ là tỉ lệ gốc, trước khi xét nghiệm. $95\%$ là độ đặc hiệu, không phải xác suất bệnh khi đã dương.`,
     ],
     stepsEn: [
       R`$1\%$ of $10000$ is $100$ ill people. True positives: $0.99 \cdot 100 = 99$.`,
       R`Of $9900$ healthy people, $5\%$ are false positives: $495$.`,
-      R`$\dfrac{99}{99+495} = \dfrac{99}{594} = \dfrac{1}{6}$. $99\%$ is the sensitivity, before using the result. $1\%$ is the base rate, before the test. $95\%$ is the specificity, not the chance of illness after a positive result.`,
+      R`$\dfrac{99}{99+495} = \dfrac{99}{594} = \dfrac{1}{6}$. $99\%$ is the sensitivity $P(+\mid B)$ (B: ill), confused with $P(B\mid +)$. $1\%$ is the base rate, before the test. $95\%$ is the specificity, not the chance of illness after a positive result.`,
     ],
   },
   {
@@ -109,12 +109,12 @@ export const probabilityQuestions: Question[] = [
     steps: [
       R`Mỗi lần xác suất $\dfrac{1}{2}$, nên một dãy cụ thể có xác suất $\dfrac{1}{8}$.`,
       R`Đúng hai ngửa: NNS, NSN, SNN, tức $C(3,2) = 3$ dãy.`,
-      R`$\dfrac{3}{8}$. $\dfrac{1}{8}$ là chỉ một dãy. $\dfrac{1}{2}$ là xác suất một lần tung. $\dfrac{2}{3}$ là lấy $2/3$ mà quên mẫu $8$.`,
+      R`$\dfrac{3}{8}$. $\dfrac{1}{8}$ là chỉ một dãy. $\dfrac{1}{2}$ là xác suất một lần tung. $\dfrac{2}{3}$ là đếm “2 ngửa trong 3 lần” thành một phân số, không đếm các dãy.`,
     ],
     stepsEn: [
       R`Each toss has probability $\dfrac{1}{2}$, so one particular sequence has probability $\dfrac{1}{8}$.`,
       R`Exactly two heads: HHT, HTH, THH, that is $C(3,2) = 3$ sequences.`,
-      R`$\dfrac{3}{8}$. $\dfrac{1}{8}$ is a single sequence. $\dfrac{1}{2}$ is one toss. $\dfrac{2}{3}$ takes $2/3$ and forgets the sample of $8$.`,
+      R`$\dfrac{3}{8}$. $\dfrac{1}{8}$ is a single sequence. $\dfrac{1}{2}$ is one toss. $\dfrac{2}{3}$ reads “2 heads out of 3 tosses” as a fraction instead of counting sequences.`,
     ],
   },
   {

@@ -126,7 +126,7 @@ function compoundStem(question: Question, params: Record<string, number>) {
   const t = read(params, "t");
   const grown = p * (1 + r / 100) ** t;
   const simple = p * (1 + (r / 100) * t);
-  const rate = (r / 100).toFixed(2).replace(".", "{,}");
+  const rate = (r / 100).toFixed(2).replace(".", ",");
   const rateEn = (r / 100).toFixed(2);
   return made(
     question,
@@ -150,7 +150,7 @@ function compoundStem(question: Question, params: Record<string, number>) {
 }
 
 function moneyPlain(n: number, lang: "vi" | "en" = "vi"): string {
-  return (Math.round(n * 100) / 100).toFixed(2).replace(".", lang === "vi" ? "{,}" : ".");
+  return (Math.round(n * 100) / 100).toFixed(2).replace(".", lang === "vi" ? "," : ".");
 }
 
 function doubleStem(question: Question, params: Record<string, number>) {

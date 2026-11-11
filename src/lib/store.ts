@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { snap } from "./format.ts";
-import { mulberry32, nextPos } from "./prng.ts";
+import { nextPos, slotRng } from "./prng.ts";
 import type { Range } from "../content/params.ts";
 
 export type ThemeName = "paper" | "night";
@@ -8,7 +8,11 @@ export type LangName = "vi" | "en";
 
 export type ThinkFlags = { nhin: boolean; lam: boolean; ket: boolean };
 
-export type Attempt = { seed: number; pos: number };
+/**
+ * One draw of a question. `done` marks that this draw was answered; a miss stays in
+ * `wrong` across new draws until a later draw is answered correctly.
+ */
+export type Attempt = { seed: number; pos: number; done?: boolean };
 
 /** Four Đúng/Sai/Chưa đủ picks (0, 1, 2) and how many matched. */
 export type DssMark = { picks: [number, number, number, number]; score: number };
@@ -166,7 +170,7 @@ function attemptMap(value: unknown): Record<string, Attempt> {
     const pos = item.pos;
     if (typeof seed !== "number" || !Number.isFinite(seed)) continue;
     if (typeof pos !== "number" || !Number.isInteger(pos) || pos < 0 || pos > 3) continue;
-    out[key] = { seed: seed >>> 0, pos };
+    out[key] = item.done === true ? { seed: seed >>> 0, pos, done: true } : { seed: seed >>> 0, pos };
   }
   return out;
 }
@@ -572,7 +576,9 @@ function freshAttempt(prev: number | undefined): Attempt {
   const buf = new Uint32Array(1);
   crypto.getRandomValues(buf);
   const seed = buf[0] ?? 1;
-  const pos = nextPos(prev, mulberry32(seed));
+  // The question's numbers are drawn from mulberry32(seed); the answer slot must come from an
+  // independent stream, or the numbers would give away which letter is right.
+  const pos = nextPos(prev, slotRng(seed));
   return { seed, pos };
 }
 
@@ -592,27 +598,38 @@ export function ensureAttempt(key: string): void {
 export function resetAttempt(key: string): void {
   const prev = data.attempts[key]?.pos;
   const right = { ...data.right };
-  const wrong = { ...data.wrong };
   const scores = { ...data.scores };
   delete right[key];
-  delete wrong[key];
   delete scores[key];
-  commit({ ...data, right, wrong, scores, attempts: { ...data.attempts, [key]: freshAttempt(prev) } });
+  commit({ ...data, right, scores, attempts: { ...data.attempts, [key]: { ...freshAttempt(prev), done: false } } });
 }
 
+/** Has the current draw of this question been answered? Older saves have no `done` flag. */
+export function answeredNow(snapshot: Data, key: string): boolean {
+  const attempt = snapshot.attempts[key];
+  if (attempt?.done !== undefined) return attempt.done;
+  return Boolean(snapshot.right[key]) || key in snapshot.wrong;
+}
+
+/**
+ * One answer per draw: after the first pick the choices are locked, so clicking the revealed
+ * correct answer cannot turn a miss into a point. A miss is cleared only by a correct answer
+ * on a later draw ("Đề mới").
+ */
 export function recordAnswer(topicId: string, questionId: string, choice: number, correct: boolean): void {
   const key = questionKey(topicId, questionId);
+  if (answeredNow(data, key)) return;
+  const attempt = data.attempts[key];
+  const attempts = attempt ? { ...data.attempts, [key]: { ...attempt, done: true } } : data.attempts;
   if (correct) {
-    if (data.right[key] && !(key in data.wrong)) return;
     const wrong = { ...data.wrong };
     delete wrong[key];
-    commit({ ...data, right: { ...data.right, [key]: true }, wrong });
+    commit({ ...data, attempts, right: { ...data.right, [key]: true }, wrong });
     return;
   }
-  if (data.wrong[key] === choice && !(key in data.right)) return;
   const right = { ...data.right };
   delete right[key];
-  commit({ ...data, right, wrong: { ...data.wrong, [key]: choice } });
+  commit({ ...data, attempts, right, wrong: { ...data.wrong, [key]: choice } });
 }
 
 const VERDICT_CODE = { dung: 0, sai: 1, thieu: 2 } as const;
