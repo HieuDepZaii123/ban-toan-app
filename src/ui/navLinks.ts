@@ -61,6 +61,7 @@ export const NAV_GROUPS: NavGroup[] = [
     pages: [
       { href: "/soan-tai-lieu", id: "soan", label: "Soạn tài liệu", en: "Documents" },
       { href: "/xuong-hinh", id: "workshop", label: "Xưởng hình", en: "Workshop" },
+      { href: "/may-tinh", id: "calc", label: "Máy tính", en: "Calculator" },
     ],
   },
   {

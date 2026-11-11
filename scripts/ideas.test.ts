@@ -26,6 +26,7 @@ const ROUTES = new Set([
   "/so-loi",
   "/danh-gia",
   "/so-cong-thuc",
+  "/may-tinh",
   "/nghien-cuu",
   "/khoa-hoc",
   "/gioi-thieu",

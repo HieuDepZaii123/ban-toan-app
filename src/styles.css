@@ -156,6 +156,9 @@ h3 { letter-spacing: -0.01em; line-height: 1.35; }
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 12px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 12px 16px 10px;
   background: color-mix(in srgb, var(--bg) 90%, transparent);
   backdrop-filter: blur(12px);
@@ -1141,6 +1144,21 @@ html[data-lamp="on"] body::before {
 /* .tool-card li is a flex row for tool lists; a document list item is running text with formulas. */
 .doc-sheet li { display: list-item; }
 .doc-tools .text-btn, .doc-export summary { min-height: 40px; }
+.calc { display: grid; gap: 10px; width: min(100%, 420px); max-width: 100%; }
+.calc-screen { display: grid; gap: 4px; padding: 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--sheet); }
+.calc-screen input { text-align: right; font-size: 1.25rem; }
+.calc-result { margin: 0; min-height: 1.6em; text-align: right; font-size: 1.5rem; font-weight: 650; padding-right: 36px; }
+.calc-result.is-error { text-align: left; font-size: 0.95rem; font-weight: 500; color: var(--accent); }
+.calc-mode, .calc-fns, .calc-keys { display: grid; gap: 8px; }
+.calc-mode { grid-template-columns: 1fr 1fr; }
+.calc-fns { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.calc-keys { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.calc-keys button, .calc-fns button, .calc-mode button { min-height: 44px; min-width: 0; font-size: 1.05rem; padding: 8px 4px; }
+.calc-keys button { border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); color: var(--ink); font: inherit; font-size: 1.05rem; }
+.calc-eq { grid-column: span 2; background: var(--accent) !important; color: #fff !important; border-color: transparent !important; }
+.calc-history ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.calc-history li button { width: 100%; min-height: 44px; display: flex; justify-content: space-between; gap: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); color: var(--ink); font: inherit; padding: 8px 12px; }
+.calc-history-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .doc-export { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .doc-export summary { cursor: pointer; }
 .doc-confirm { display: inline-flex; gap: 8px; align-items: center; }
