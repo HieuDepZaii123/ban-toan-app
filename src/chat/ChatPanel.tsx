@@ -104,6 +104,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
+  const [premiumAsk, setPremiumAsk] = useState(false);
   const [meta, setMeta] = useState<ChatState>({});
   const [url, setUrl] = useState(() => {
     if (!DEV_TOOLS) return "";
@@ -140,7 +141,8 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   }, [turns, busy]);
 
   function premiumOnly(): void {
-    setNote(t(lang, "Đây là tính năng Premium. Mở trang Nâng cấp để xem.", "This is a Premium feature. See the Upgrade page."));
+    setPremiumAsk(true);
+    setNote("");
   }
 
   function pickMode(next: TutorMode): void {
@@ -260,6 +262,12 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         ))}
         {busy ? <p className="chat-typing">{t(lang, "Đang soạn…", "Typing…")}</p> : null}
         {note ? <p className="chat-note" role="status">{note}</p> : null}
+        {premiumAsk ? (
+          <p className="chat-note" role="status">
+            {t(lang, "Lời giải đầy đủ, kiểm tra bài làm và ảnh đề là Premium. ", "Full solutions, checking work and problem photos are Premium. ")}
+            <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
+          </p>
+        ) : null}
       </div>
       <div className="quick-row">
         {quick.map((item) => (

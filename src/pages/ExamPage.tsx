@@ -151,7 +151,7 @@ export function ExamPage() {
         ) : (
           <p className="pay-card">
             <b>{t(lang, "Bạn đã dùng đề miễn phí.", "You have used your free paper.")}</b>
-            <span>{premium.kind === "checking" ? t(lang, " Đang kiểm mã Premium…", " Checking your Premium key…") : t(lang, " Premium mở đề không giới hạn, kèm bảng điểm theo chủ đề.", " Premium unlocks unlimited papers with topic breakdowns.")}</span>
+            <span>{premium.kind === "checking" ? t(lang, " Đang kiểm mã Premium…", " Checking your Premium key…") : t(lang, " Premium mở thêm đề, không giới hạn. Bảng điểm đề đã làm vẫn xem được.", " Premium opens further papers, without a cap. The score table of a paper you sat stays visible.")}</span>
             {" "}
             <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
           </p>
@@ -304,6 +304,7 @@ function ReviewLink() {
 
 function Result({ finished }: { finished: Finished }) {
   const lang = useLang();
+  const premium = usePremium();
   const paper: Paper = useMemo(() => buildPaper(finished.seed), [finished.seed]);
   const score: PaperScore = useMemo(() => scorePaper(paper, finished.answers, topicName), [paper, finished.answers]);
   const { answers } = finished;
@@ -327,6 +328,13 @@ function Result({ finished }: { finished: Finished }) {
         </>
       ) : null}
       <ReviewLink />
+      {premium.kind !== "active" ? (
+        <aside className="pay-card exam-premium-card">
+          <b>{t(lang, "Làm thêm đề và ôn câu vừa sai", "Further papers and the questions you just missed")}</b>
+          <span>{t(lang, " Bảng điểm đề này xem được ngay. Premium mở đề tiếp theo và lịch ôn câu sai.", " This paper's score table is already visible. Premium opens the next paper and the review schedule.")}</span>{" "}
+          <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
+        </aside>
+      ) : null}
       <details className="exam-review">
         <summary>{t(lang, "Xem lại từng câu kèm lời giải", "Review every question with solutions")}</summary>
         <h3>{t(lang, "Phần I", "Part I")}</h3>
