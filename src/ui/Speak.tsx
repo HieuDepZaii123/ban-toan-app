@@ -39,7 +39,7 @@ export function Speak({ text, speech = "vi" }: { text: string; speech?: "vi" | "
         synth.speak(say);
       }}
     >
-      <span aria-hidden="true">{on ? "■ " : "▶ "}</span>
+      <span aria-hidden="true" className="speak-icon">{on ? "■" : "▶"}</span>
       {on ? t(lang, "Dừng đọc", "Stop reading") : t(lang, "Đọc to", "Read aloud")}
     </button>
   );

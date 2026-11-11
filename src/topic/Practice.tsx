@@ -100,7 +100,9 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
   useEffect(() => {
     if (!answered || !acted.current) return;
     acted.current = false;
-    status.current?.focus();
+    // Giữ nguyên chỗ đang nhìn: chỉ cuộn vừa đủ nếu dòng kết quả đang nằm ngoài màn hình.
+    status.current?.focus({ preventScroll: true });
+    status.current?.scrollIntoView({ block: "nearest" });
   }, [answered]);
 
   if (!question) {
