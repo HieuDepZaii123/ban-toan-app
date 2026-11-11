@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
+import { A } from "../lib/route.tsx";
 import { setLang, setTheme, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { openChat, openMenu, openMusic } from "./events.ts";
@@ -169,6 +170,10 @@ export function Prefs() {
               }}
             />
           </label>
+          <div className="prefs-row">
+            <span>{t(lang, "Hồ sơ, sao lưu, xóa dữ liệu", "Profiles, backup, delete data")}</span>
+            <A className="text-btn" href="/du-lieu" onClick={() => setOpen(false)}>{t(lang, "Mở", "Open")}</A>
+          </div>
           <div className="prefs-row">
             <span>{t(lang, "Nhạc học", "Study music")}</span>
             <button

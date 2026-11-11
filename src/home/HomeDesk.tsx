@@ -217,8 +217,8 @@ function Topics({ grade }: { grade: Grade }) {
     [folded],
   );
   const mine = typeof grade === "number" && grade >= 10 ? String(grade) : "";
-  const first = mine ? visible.filter((topic) => topic.grade === mine) : [];
-  const rest = mine ? visible.filter((topic) => topic.grade !== mine) : visible;
+  const first = mine ? visible.filter((topic) => inGrade(topic.grade, mine)) : [];
+  const rest = mine ? visible.filter((topic) => !inGrade(topic.grade, mine)) : visible;
 
   return (
     <>
@@ -270,13 +270,20 @@ function Topics({ grade }: { grade: Grade }) {
   );
 }
 
+/** Nhãn lớp của chuyên đề là một lớp ("11") hoặc một khoảng ("10–12"). */
+function inGrade(label: string, grade: string): boolean {
+  const [from, to] = label.split("–").map(Number);
+  const value = Number(grade);
+  return from !== undefined && value >= from && value <= (to ?? from);
+}
+
 function Sciences() {
   const lang = useLang();
   return (
     <section className="stream" aria-labelledby="science-home">
       <h2 id="science-home">{t(lang, "Khoa học", "Science")}</h2>
       <p className="lecture-note">
-        {t(lang, "Năm mảng sát toán, nằm ngoài chương trình môn Toán: lập trình, số liệu, đề chuyên, vật lý và hóa.", "Five areas beside the maths course: programming, data, specialised papers, physics and chemistry.")}
+        {t(lang, "Năm mảng gần với toán, nằm ngoài chương trình môn Toán: lập trình, số liệu, đề chuyên, vật lý và hóa.", "Five areas beside the maths course: programming, data, specialised papers, physics and chemistry.")}
       </p>
       <div className="science-list">
         {sciences.map((item) => (

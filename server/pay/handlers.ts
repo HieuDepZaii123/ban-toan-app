@@ -16,13 +16,15 @@ import {
   type CryptoQuote,
 } from "./crypto.ts";
 import { commissionOf, normalizeCode, sameReferrer, secretHash } from "./affiliate.ts";
-import { priceOf, type PayEnv, type PayMethod, type PlanId } from "./env.ts";
+import { isSelling, priceOf, type PayEnv, type PayMethod, type PlanId } from "./env.ts";
 import { createMomoPayment, ipnSignatureOk, readIpn } from "./momo.ts";
 import { CryptoAmountTaken, licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
 import { buildVietQr, emvName } from "./vietqr.ts";
 
 const ORDER_TTL_MS = 15 * 60 * 1000;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/** Mã Premium chỉ trả theo mã đơn trong một giờ sau khi thanh toán. Sau đó phải khôi phục bằng mã đơn và email. */
+const KEY_WINDOW_MS = 60 * 60 * 1000;
 
 export type Json = Record<string, unknown>;
 
@@ -69,6 +71,7 @@ function bankView(env: PayEnv, order: OrderRow, payload: string, image: string) 
 
 function publicOrder(env: PayEnv, order: OrderRow, extras: Json = {}): Json {
   const paid = order.status === "paid";
+  const fresh = paid && order.paidAt !== null && env.now() - order.paidAt <= KEY_WINDOW_MS;
   return {
     orderId: order.orderId,
     email: order.email,
@@ -79,7 +82,8 @@ function publicOrder(env: PayEnv, order: OrderRow, extras: Json = {}): Json {
     transferCode: order.transferCode,
     expiresAt: order.expiresAt,
     paidAt: order.paidAt,
-    licenseKey: paid ? order.licenseKey : null,
+    licenseKey: fresh ? order.licenseKey : null,
+    keyHidden: paid && !fresh,
     premiumUntil: paid && order.paidAt ? order.paidAt + termMs(order.plan) : null,
     samplePrices: true,
     sampleBank: env.sampleBank,
@@ -99,6 +103,7 @@ export async function handlePremium(request: Request, env: PayEnv): Promise<Resp
   if (path === "/api/premium/bank" && request.method === "POST") return bankHook(request, env, store);
   if (path === "/api/premium/confirm" && request.method === "POST") return confirm(request, env, store);
   if (path === "/api/premium/refund" && request.method === "POST") return refund(request, env, store);
+  if (path === "/api/premium/recover" && request.method === "POST") return recover(request, env, store);
   if (path === "/api/premium/crypto" && request.method === "POST") return cryptoRoute(request, env, store);
   if (path === "/api/premium/affiliate" && request.method === "POST") return affiliateRoute(request, env, store);
   if (path === "/api/premium/affiliate-admin" && request.method === "POST") return affiliateAdmin(request, env, store);
@@ -107,7 +112,9 @@ export async function handlePremium(request: Request, env: PayEnv): Promise<Resp
 
 function plans(env: PayEnv): Response {
   return json(200, {
-    sample: true,
+    sample: !isSelling(env),
+    selling: isSelling(env),
+    demo: env.demo && !isSelling(env),
     currency: "VND",
     lockContent: env.lockContent,
     plans: [
@@ -120,15 +127,17 @@ function plans(env: PayEnv): Response {
       bankName: env.bankName,
       accountName: emvName(env.bankAccountName),
     },
-    crypto: {
-      chains: CRYPTO_CHAIN_IDS.map((id) => ({
-        id,
-        asset: CHAINS[id].asset,
-        network: CHAINS[id].network,
-        standard: CHAINS[id].standard,
-        sample: chainSample(env, id),
-      })),
-    },
+    ...(env.cryptoEnabled ? {
+      crypto: {
+        chains: CRYPTO_CHAIN_IDS.map((id) => ({
+          id,
+          asset: CHAINS[id].asset,
+          network: CHAINS[id].network,
+          standard: CHAINS[id].standard,
+          sample: chainSample(env, id),
+        })),
+      },
+    } : {}),
   });
 }
 
@@ -140,6 +149,19 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
   if (!EMAIL.test(email) || email.length > 120) return json(400, { error: "email" });
   if (!plan || !method) return json(400, { error: "plan" });
   if ((method === "wallet" || method === "qr") && !env.momoReady) return json(503, { error: "momo_not_configured" });
+  // Người mua tự khai: từ 18 tuổi, hoặc 16–17 tuổi đã được cha mẹ đồng ý. Dưới 16 tuổi thì cha mẹ mua giúp.
+  if (body.buyer !== "adult" && body.buyer !== "teen") {
+    return json(403, {
+      error: "buyer",
+      message: "Người dưới 16 tuổi cần cha mẹ hoặc người giám hộ mua giúp. / Buyers under 16 need a parent or guardian to buy for them.",
+    });
+  }
+  if (method === "crypto" && body.buyer !== "adult") {
+    return json(403, { error: "buyer", message: "Tiền mã hóa chỉ dành cho người mua từ 18 tuổi. / Crypto is for buyers aged 18 or older only." });
+  }
+  if (method === "crypto" && !env.cryptoEnabled) {
+    return json(403, { error: "crypto_off", message: "Bàn Toán không nhận tiền mã hóa. / Crypto payments are not accepted." });
+  }
   const amount = priceOf(env, plan);
   const now = env.now();
   const referred = await acceptedRef(store, body, email, env.affiliateRateBps);
@@ -467,6 +489,18 @@ async function refund(request: Request, env: PayEnv, store: PayStore): Promise<R
   return done ? json(200, { ok: true, orderId }) : json(404, { error: "not_paid" });
 }
 
+/** Khôi phục mã Premium: phải khớp cả mã đơn lẫn email đã mua. Sai một trong hai đều trả cùng một lỗi. */
+async function recover(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
+  const body = await readJson(request);
+  const orderId = typeof body.orderId === "string" ? body.orderId.trim() : "";
+  const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+  const order = orderId && email ? await store.getOrder(orderId, env.now()) : null;
+  if (!order || order.status !== "paid" || !order.licenseKey || !order.paidAt || !safeText(email, order.email)) {
+    return json(404, { error: "not_found" });
+  }
+  return json(200, { licenseKey: order.licenseKey, premiumUntil: order.paidAt + termMs(order.plan), plan: order.plan });
+}
+
 async function confirm(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
   if (!env.adminToken || !bearerOk(request, env.adminToken)) return json(401, { error: "admin" });
   const body = await readJson(request);
@@ -520,6 +554,10 @@ function optionalEmail(value: unknown): string | null {
 async function affiliateRoute(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
   const body = await readJson(request);
   const action = body.action;
+  // Mở mã và xem hoa hồng chỉ dành cho người từ 18 tuổi (tự khai ở trang Giới thiệu). Đếm lượt khách thì không cần.
+  if ((action === "open" || action === "stats") && body.adult !== true) {
+    return json(403, { error: "adult_only", message: "Chương trình giới thiệu chỉ dành cho người từ 18 tuổi. / The referral programme is for adults (18+)." });
+  }
   if (action === "open") {
     const owner = secretHash(body.ownerSecret);
     if (!owner) return json(400, { error: "secret" });

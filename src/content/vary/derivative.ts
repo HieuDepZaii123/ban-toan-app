@@ -139,12 +139,12 @@ function cubicStem(question: Question, params: Record<string, number>) {
     [
       `$f'(x) = 3x^2 - ${3 * p} = 3(x^2 - ${p})$.`,
       `$x^2 = ${p}$, nên $x = ${-s}$ hoặc $x = ${s}$.`,
-      `$x = 0$ là nơi $f$ đổi từ âm, không phải nghiệm của đạo hàm. ${rootNeg} và ${root} là nghiệm của $f(x) = 0$.`,
+      `$x = 0$ là nghiệm của $f(x) = 0$ chứ không phải của $f'(x) = 0$, vì $f'(0) = -${3 * p}$, khác $0$. ${rootNeg} và ${root} cũng chỉ là nghiệm của $f(x) = 0$.`,
     ],
     [
       `$f'(x) = 3x^2 - ${3 * p} = 3(x^2 - ${p})$.`,
       `$x^2 = ${p}$, so $x = ${-s}$ or $x = ${s}$.`,
-      `$x = 0$ is where $f$ changes sign, not a root of the derivative. ${rootNeg} and ${root} solve $f(x) = 0$.`,
+      `$x = 0$ solves $f(x) = 0$, not $f'(x) = 0$, because $f'(0) = -${3 * p}$ is not $0$. ${rootNeg} and ${root} also only solve $f(x) = 0$.`,
     ],
     `Đạo hàm trước, rồi giải $3x^2 - ${3 * p} = 0$. Đừng giải $f(x) = 0$.`,
     `Differentiate first, then solve $3x^2 - ${3 * p} = 0$. Do not solve $f(x) = 0$.`,

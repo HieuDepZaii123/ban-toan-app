@@ -226,3 +226,11 @@ Service worker không nuốt `/api/` (`navigateFallbackDenylist`).
 - [ ] Đã đặt `DATABASE_URL` (hoặc `POSTGRES_URL`) trên môi trường deploy, đã chạy `npm run db:migrate`, và `npm run db:status` thấy đủ phiên bản. Nếu từng nhận đơn trên SQLite thì đã chạy `npm run db:copy-sqlite`.
 - [ ] Thử một thanh toán sandbox: sai chữ ký bị 401, trả hai lần không ra hai mã, số tiền lệch không cấp quyền.
 - [ ] `VITE_PREMIUM_LOCK` vẫn tắt trừ khi bạn cố ý khóa một phần mới. Không sửa công thức, câu hỏi, tờ lý thuyết.
+
+## Trạng thái bán, người mua và tiền mã hóa
+
+- `GET /api/premium/plans` trả `selling` (bản production có kênh nhận tiền thật: MoMo của chính chủ hoặc tài khoản ngân hàng thật) và `demo` (`PAY_DEMO=1`, chỉ khi chưa bán). Khi cả hai đều `false`, trang Nâng cấp ghi "Premium chưa mở bán", không bày quầy thanh toán, và đề thi thử không bị khóa sau Premium.
+- `POST /api/premium/create` cần `buyer`: `"adult"` (từ 18 tuổi) hoặc `"teen"` (16–17 tuổi, cha mẹ đã đồng ý). Thiếu hoặc khác đi thì trả 403 `buyer`: người dưới 16 tuổi nhờ cha mẹ mua giúp.
+- Tiền mã hóa tắt mặc định. `PAY_CRYPTO=1` mới bật; khi bật, `plans` mới có `crypto` và chỉ `buyer: "adult"` tạo được đơn.
+- `status?orderId=` chỉ trả `licenseKey` trong một giờ sau khi thanh toán (`keyHidden: true` sau đó). `POST /api/premium/recover` với `{ orderId, email }` trả lại mã khi cả hai khớp một đơn đã thanh toán.
+- `POST /api/premium/affiliate` với `action: "open"` hoặc `"stats"` cần `adult: true`: chương trình giới thiệu chỉ dành cho người từ 18 tuổi.

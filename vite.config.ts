@@ -2,6 +2,7 @@ import react from "@vitejs/plugin-react";
 import { copyFileSync, existsSync } from "node:fs";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { SECURITY_HEADERS } from "./server/http/headers.ts";
 import { payApi } from "./server/pay/vitePlugin.ts";
 
 function spa404(): Plugin {
@@ -83,7 +84,7 @@ export default defineConfig({
     }),
   ],
   server: { host: "127.0.0.1", port: 43123, strictPort: true },
-  preview: { host: "127.0.0.1", port: 43991, strictPort: true },
+  preview: { host: "127.0.0.1", port: 43991, strictPort: true, headers: SECURITY_HEADERS },
   build: {
     rollupOptions: {
       output: {

@@ -41,7 +41,7 @@ function ScienceHome() {
   return (
     <>
       <p className="kicker">{t(lang, "Khoa học", "Science")}</p>
-      <h1>{t(lang, "Năm mảng sát toán.", "Five areas beside the maths.")}</h1>
+      <h1>{t(lang, "Năm mảng gần với toán.", "Five areas beside the maths.")}</h1>
       <p className="lead">
         {t(
           lang,

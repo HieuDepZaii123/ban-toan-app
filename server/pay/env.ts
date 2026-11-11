@@ -37,6 +37,10 @@ export type PayEnv = {
   cryptoBscConfirmations: number;
   cryptoSolConfirmations: number;
   cryptoSolFinalized: boolean;
+  /** Tiền mã hóa chỉ nhận khi chủ app bật PAY_CRYPTO=1. Mặc định tắt: đây là app cho học sinh. */
+  cryptoEnabled: boolean;
+  /** PAY_DEMO=1: cho xem luồng thanh toán với tài khoản mẫu (chỉ để thử, không có tiền thật). */
+  demo: boolean;
   /** Hoa hồng theo phần vạn. 1000 = 10%. Chỉ áp vào đơn đã thanh toán. */
   affiliateRateBps: number;
   /** Production deploy: sandbox/sample secrets are refused instead of silently used. */
@@ -126,12 +130,20 @@ export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => numbe
     cryptoBscConfirmations: bounded(source.CRYPTO_BSC_CONFIRMATIONS, 15, 1, 200),
     cryptoSolConfirmations: bounded(source.CRYPTO_SOL_CONFIRMATIONS, 32, 1, 200),
     cryptoSolFinalized: source.CRYPTO_SOL_REQUIRE_FINALIZED !== "0",
+    cryptoEnabled: source.PAY_CRYPTO === "1",
+    demo: source.PAY_DEMO === "1",
     affiliateRateBps: bounded(source.AFFILIATE_RATE_BPS, 1000, 0, 5000),
     live,
     momoReady: !(live && sandbox),
     now,
     fetchImpl,
   };
+}
+
+/** Đang bán thật: bản production có ít nhất một kênh nhận tiền thật (MoMo của chính chủ hoặc tài khoản ngân hàng thật). */
+export function isSelling(env: PayEnv): boolean {
+  const realMomo = env.secretKey !== MOMO_SANDBOX.secretKey && env.endpoint !== MOMO_SANDBOX.endpoint;
+  return env.live && (realMomo || !env.sampleBank);
 }
 
 export function priceOf(env: PayEnv, plan: PlanId): number {

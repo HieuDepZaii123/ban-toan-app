@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { isSharedCorrect, sharedDrill } from "../content/sharedDrill.ts";
 import { DRILL_AT, DRILL_ID, resolveDrillIndex } from "../lib/drillPlace.ts";
 import { loadMisses, loadPicks, savePicks, withPick, writeMisses } from "../lib/missBook.ts";
-import { mirrorDrill } from "../lib/supabase.ts";
+import { mirrorDrill } from "../lib/drillSync.ts";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";

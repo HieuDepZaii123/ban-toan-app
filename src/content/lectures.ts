@@ -20,7 +20,7 @@ export const SAMPLE_YOUTUBE_ID = "M7lc1UVf-VE";
 
 export const lectures: Record<CardId, [LectureVideo, LectureVideo]> = {
   quadratic: [
-    { slot: "quadratic-basic", youtubeId: SAMPLE_YOUTUBE_ID, title: "Parabol là gì: miệng lên và miệng xuống", level: "basic" },
+    { slot: "quadratic-basic", youtubeId: SAMPLE_YOUTUBE_ID, title: "Parabol là gì: bề lõm hướng lên và hướng xuống", level: "basic" },
     { slot: "quadratic-exam", youtubeId: "", title: "Đỉnh và delta của hàm bậc hai", level: "exam" },
   ],
   ineq: [

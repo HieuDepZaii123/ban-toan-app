@@ -28,6 +28,7 @@ const DrillPage = lazy(() => import("./pages/DrillPage.tsx").then((mod) => ({ de
 const MissPage = lazy(() => import("./pages/MissPage.tsx").then((mod) => ({ default: mod.MissPage })));
 const ReferPage = lazy(() => import("./pages/ReferPage.tsx").then((mod) => ({ default: mod.ReferPage })));
 const ResearchIdeasPage = lazy(() => import("./pages/ResearchIdeasPage.tsx").then((mod) => ({ default: mod.ResearchIdeasPage })));
+const DataPage = lazy(() => import("./pages/DataPage.tsx").then((mod) => ({ default: mod.DataPage })));
 const DocPage = lazy(() => import("./pages/DocPage.tsx").then((mod) => ({ default: mod.DocPage })));
 const MethodsPage = lazy(() => import("./pages/MethodsPage.tsx").then((mod) => ({ default: mod.MethodsPage })));
 const ThptPracticePage = lazy(() => import("./pages/ThptPracticePage.tsx").then((mod) => ({ default: mod.ThptPracticePage })));
@@ -96,6 +97,7 @@ function Shell() {
   if (path === "/so-loi") return <MissPage />;
   if (path === "/gioi-thieu") return <ReferPage />;
   if (path === "/nghien-cuu") return <ResearchIdeasPage />;
+  if (path === "/du-lieu") return <DataPage />;
   if (path === "/soan-tai-lieu") return <DocPage />;
   if (path === "/phuong-phap" || path.startsWith("/phuong-phap/")) return <MethodsPage path={path} />;
   if (path === "/luyen-lop" || path.startsWith("/luyen-lop/")) return <GradePracticePage path={path} />;

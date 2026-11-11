@@ -109,3 +109,29 @@ export function usePremium(): PremiumState {
   }, []);
   return state;
 }
+
+let sellingKnown: boolean | null = null;
+let sellingAsk: Promise<boolean | null> | null = null;
+
+/**
+ * Bàn Toán có đang bán Premium không. null khi chưa biết (đang hỏi máy chủ hoặc ngoại tuyến).
+ * Khi chưa bán, các trang không khóa gì sau Premium.
+ */
+export function useSelling(): boolean | null {
+  const [value, setValue] = useState<boolean | null>(sellingKnown);
+  useEffect(() => {
+    if (sellingKnown !== null) return;
+    let live = true;
+    sellingAsk ??= fetch("/api/premium/plans", { headers: { accept: "application/json" } })
+      .then(async (res) => (res.ok ? ((await res.json()) as { selling?: unknown }).selling === true : null))
+      .catch(() => null);
+    void sellingAsk.then((next) => {
+      if (next !== null) sellingKnown = next;
+      if (live) setValue(next);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
+  return value;
+}

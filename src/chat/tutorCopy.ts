@@ -55,7 +55,7 @@ const SHEETS: Record<TutorTopic["id"], Sheet> = {
     ],
   },
   derivative: {
-    lead: R`$f(x)=x^2$ thì $f'(2)=4$.`,
+    lead: R`Quy tắc: $(x^2)'=2x$. Thử tại $x=2$: $f'(2)=4$.`,
     steps: [
       R`Cát tuyến từ $2$ đến $2+h$: $\dfrac{(2+h)^2-4}{h}=4+h$.`,
       R`Cho $h\to 0$ được $f'(2)=4$.`,
@@ -191,7 +191,7 @@ const EN_SHEETS: Record<TutorTopic["id"], Sheet> = {
     ],
   },
   derivative: {
-    lead: R`If $f(x)=x^2$, then $f'(2)=4$.`,
+    lead: R`Rule: $(x^2)'=2x$. Try $x=2$: $f'(2)=4$.`,
     steps: [
       R`The secant from $2$ to $2+h$ is $\dfrac{(2+h)^2-4}{h}=4+h$.`,
       R`Let $h\to 0$ to get $f'(2)=4$.`,
@@ -298,7 +298,7 @@ export function tutorAnswer(text: string, preferId?: string, lang: "vi" | "en" =
   if (!topic) {
     return [
       "Tư duy giải: đọc câu hỏi, chọn một hướng, nói vì sao không chọn hướng kia, rồi mới tính.",
-      "Cùng đi từng bước. Mình không chốt đáp án hộ.",
+      "Cùng đi từng bước: mình gợi ý, bước cuối bạn tự làm.",
       "1) Ghi giả thiết và điều cần tìm.",
       R`2) Viết một công thức trong dấu $. Ví dụ $\dfrac{4+9}{2}=6{,}5$.`,
       "3) Tính một bước, rồi thế lại.",
@@ -313,7 +313,7 @@ export function tutorAnswer(text: string, preferId?: string, lang: "vi" | "en" =
     `2) ${sheet.steps[1]}`,
     `3) ${sheet.steps[2]}`,
     `Xem [${topic.title}](/t/${topic.id}).`,
-    "Mình không chốt đáp án hộ. Hãy tự kiểm chứng bước cuối.",
+    "Trên đây là một ví dụ mẫu. Gửi bài của bạn và chỗ đang vướng, mình gợi ý từng bước chứ không làm hộ.",
   ].join("\n");
 }
 
@@ -337,6 +337,6 @@ function answerEn(topic: TutorTopic | null): string {
     `2) ${sheet.steps[1]}`,
     `3) ${sheet.steps[2]}`,
     `Open [${title}](/t/${topic.id}).`,
-    "I will not lock the answer. Check the last step yourself.",
+    "That was a worked example. Send your own problem and where you are stuck; I will hint the steps rather than do it for you.",
   ].join("\n");
 }

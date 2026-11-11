@@ -1,12 +1,14 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { loadEnv, type Connect, type Plugin } from "vite";
 import { adaptChat } from "../chat/nodeAdapter.ts";
+import { adaptHealth } from "../http/health.ts";
 import { adaptNode } from "./nodeAdapter.ts";
 
 type Route = { prefix: string; handle: (req: IncomingMessage, res: ServerResponse) => Promise<void> };
 
 const ROUTES: Route[] = [
   { prefix: "/api/chat", handle: adaptChat },
+  { prefix: "/api/health", handle: adaptHealth },
   { prefix: "/api/premium", handle: adaptNode },
 ];
 

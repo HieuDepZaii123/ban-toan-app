@@ -4,14 +4,14 @@ const R = String.raw;
 
 export const derivativeLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Đạo hàm tại $a$ là hệ số góc của tiếp tuyến, tức giới hạn của hệ số góc cát tuyến.`, en: R`The derivative at $a$ is the slope of the tangent, the limit of the secant slope.` },
+    { k: "mo", vi: R`Đạo hàm tại $a$ là giới hạn của hệ số góc cát tuyến khi hai điểm tiến sát nhau. Khi giới hạn đó là một số, nó là hệ số góc của tiếp tuyến tại $a$.`, en: R`The derivative at $a$ is the limit of the secant slope as the two points close in. When that limit is a number, it is the slope of the tangent at $a$.` },
     { k: "dinh", vi: R`$f'(a)=\lim_{h\to 0}\dfrac{f(a+h)-f(a)}{h}$, khi giới hạn đó tồn tại.`, en: R`$f'(a)=\lim_{h\to 0}\dfrac{f(a+h)-f(a)}{h}$, when that limit exists.` },
     { k: "vd", vi: R`$f(x)=x^2$ từ $1$ đến $1+h$: $\dfrac{(1+h)^2-1}{h}=2+h$. Cho $h\to 0$ được $f'(1)=2$.`, en: R`$f(x)=x^2$ from $1$ to $1+h$: $\dfrac{(1+h)^2-1}{h}=2+h$. Sending $h\to 0$ gives $f'(1)=2$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$(x^n)'=nx^{n-1}$. Trên đoạn đóng, giá trị lớn nhất nằm ở đầu mút hoặc tại điểm $f'$ đổi dấu.`, en: R`$(x^n)'=nx^{n-1}$. On a closed interval the maximum is at an endpoint or where $f'$ changes sign.` },
+    { k: "dinh", vi: R`$(x^n)'=nx^{n-1}$. Hàm liên tục trên đoạn $[a;b]$ đạt giá trị lớn nhất và nhỏ nhất tại đầu mút, tại điểm $f'=0$, hoặc tại điểm $f'$ không tồn tại: tính $f$ tại các điểm đó rồi so sánh.`, en: R`$(x^n)'=nx^{n-1}$. A continuous function on $[a;b]$ takes its largest and smallest values at an endpoint, where $f'=0$, or where $f'$ does not exist: evaluate $f$ at those points and compare.` },
     { k: "vd", vi: R`Ném lên: $h=20t-5t^2$, vận tốc $v=20-10t$. Đỉnh khi $v=0$, tức $t=2$, và $h(2)=20$.`, en: R`A throw: $h=20t-5t^2$, velocity $v=20-10t$. The top is where $v=0$, so $t=2$, and $h(2)=20$.` },
-    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$, nhưng $y(-1)=-1$ và $y(1)=1$: hàm vẫn tăng, không phải cực trị.`, en: R`$y=x^3$ has $y'(0)=0$, but $y(-1)=-1$ and $y(1)=1$: it still increases, so that is not an extremum.` },
+    { k: "loi", vi: R`$y=x^3$ có $y'(0)=0$, nhưng $y(-1)=-1$ và $y(1)=1$: hàm vẫn tăng, không phải cực trị. Ngược lại, có điểm không có đạo hàm: $y=|x-1|$ liên tục nhưng gãy góc tại $x=1$ (hệ số góc cát tuyến bên trái là $-1$, bên phải là $1$). Có đạo hàm tại $a$ thì liên tục tại $a$; chiều ngược lại không đúng.`, en: R`$y=x^3$ has $y'(0)=0$, but $y(-1)=-1$ and $y(1)=1$: it still increases, so that is not an extremum. And some points have no derivative: $y=|x-1|$ is continuous but has a corner at $x=1$ (secant slope $-1$ on the left, $1$ on the right). A derivative at $a$ implies continuity at $a$; the converse is false.` },
     { k: "kiem", vi: R`$y=x^3-3x$, $y'=3x^2-3=0$ tại $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.`, en: R`$y=x^3-3x$, $y'=3x^2-3=0$ at $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.` },
   ],
 };
@@ -148,12 +148,12 @@ export const derivativeQuestions: Question[] = [
     hintEn: R`Find $t$ when $v=0$, then compute $s$.`,
     steps: [
       R`Dừng khi $v = 0$: $20 - 4t = 0$, nên $t = 5$ s.`,
-      R`Nguyên hàm của vận tốc là $s(t) = 20t - 2t^2$. $s(5) = 100 - 50 = 50$ m. Cũng bằng vận tốc trung bình $\dfrac{20 + 0}{2} \cdot 5 = 50$ m.`,
+      R`Vận tốc giảm đều từ $20$ về $0$ trong $5$ s, nên quãng đường bằng vận tốc trung bình nhân thời gian: $\dfrac{20 + 0}{2} \cdot 5 = 50$ m. Kiểm bằng đạo hàm: $s(t) = 20t - 2t^2$ có $s'(t) = 20 - 4t = v(t)$ và $s(5) = 50$.`,
       R`$100$ m là $20 \cdot 5$, quên xe đang chậm lại. $80$ m là $20 \cdot 4$, lấy nhầm gia tốc $4$ làm số giây. $20$ m là vận tốc, không phải quãng đường.`,
     ],
     stepsEn: [
       R`The car stops when $v = 0$: $20 - 4t = 0$, so $t = 5$ s.`,
-      R`An antiderivative of velocity is $s(t) = 20t - 2t^2$. $s(5) = 100 - 50 = 50$ m. The same number is the average speed $\dfrac{20 + 0}{2} \cdot 5 = 50$ m.`,
+      R`The speed falls steadily from $20$ to $0$ over $5$ s, so the distance is the average speed times the time: $\dfrac{20 + 0}{2} \cdot 5 = 50$ m. Check with a derivative: $s(t) = 20t - 2t^2$ has $s'(t) = 20 - 4t = v(t)$ and $s(5) = 50$.`,
       R`$100$ m is $20 \cdot 5$, forgetting that the car is slowing. $80$ m is $20 \cdot 4$, using the acceleration $4$ as if it were the number of seconds. $20$ m is a speed, not a distance.`,
     ],
   },

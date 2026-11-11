@@ -23,13 +23,19 @@ export function matchTopic(text: string): TutorTopic | null {
   let best: TutorTopic | null = null;
   let score = 0;
   for (const topic of tutorTopics) {
-    const hits = topic.keys.reduce((sum, key) => sum + (hay.includes(key) ? key.length : 0), 0);
+    const hits = topic.keys.reduce((sum, key) => sum + (hasKey(hay, key) ? key.length : 0), 0);
     if (hits > score) {
       best = topic;
       score = hits;
     }
   }
   return best;
+}
+
+/** Từ khóa chữ Latin ngắn (sin, cos, tan) phải đứng riêng: "sinh nhật" không phải lượng giác. */
+function hasKey(hay: string, key: string): boolean {
+  if (/^[a-z]{2,4}$/.test(key)) return new RegExp(`(^|[^a-zà-ỹ])${key}([^a-zà-ỹ]|$)`).test(hay);
+  return hay.includes(key);
 }
 
 export function topicMenu(): string {

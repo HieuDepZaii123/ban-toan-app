@@ -163,7 +163,7 @@ export const scienceLessons: Record<ScienceId, ScienceLesson> = {
     exam: {
       bits: [
         "Pha loãng: khối lượng chất tan giữ nguyên, khối lượng dung dịch tăng.",
-        "Nồng độ phần trăm mới = chất tan / dung dịch mới.",
+        "Nồng độ phần trăm mới = (khối lượng chất tan / khối lượng dung dịch mới) × 100%.",
       ],
       drill: {
         q: "200 g dung dịch muối 10%. Thêm bao nhiêu gam nước để được dung dịch 8%?",

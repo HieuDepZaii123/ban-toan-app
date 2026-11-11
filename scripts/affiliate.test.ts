@@ -43,13 +43,13 @@ async function post(path: string, body: unknown, headers: Record<string, string>
 
 const owner = "owner-secret-0001";
 const buyer = "buyer-secret-0002";
-const opened = await post("/api/premium/affiliate", { action: "open", ownerSecret: owner, email: "ban@example.com" });
+const opened = await post("/api/premium/affiliate", { action: "open", adult: true, ownerSecret: owner, email: "ban@example.com" });
 assert(opened.status === 200, "open");
 const code = String(opened.json.code);
 assert(/^[A-Z0-9]{8}$/.test(code), "code shape");
 assert(opened.json.sampleMonth === 4900, "sample month commission");
 
-const again = await post("/api/premium/affiliate", { action: "open", ownerSecret: owner });
+const again = await post("/api/premium/affiliate", { action: "open", adult: true, ownerSecret: owner });
 assert(again.json.code === code, "same owner keeps the code");
 
 const visit = await post("/api/premium/affiliate", { action: "visit", code, visitorId: "visitor-000000000001" });
@@ -59,7 +59,7 @@ assert(repeat.json.recorded === false, "duplicate visit");
 const selfVisit = await post("/api/premium/affiliate", { action: "visit", code, visitorId: "visitor-000000000099", ownerSecret: owner });
 assert(selfVisit.json.recorded === false, "owner visit ignored");
 
-const selfOrder = await post("/api/premium/create", {
+const selfOrder = await post("/api/premium/create", { buyer: "adult",
   email: "ban@example.com",
   plan: "month",
   method: "bank",
@@ -69,7 +69,7 @@ const selfOrder = await post("/api/premium/create", {
 assert(selfOrder.status === 200, "self order created");
 await post("/api/premium/confirm", { orderId: selfOrder.json.orderId }, { authorization: "Bearer admin-secret" });
 
-const friend = await post("/api/premium/create", {
+const friend = await post("/api/premium/create", { buyer: "adult",
   email: "banbe@example.com",
   plan: "month",
   method: "bank",
@@ -77,7 +77,7 @@ const friend = await post("/api/premium/create", {
   ownerSecret: buyer,
 });
 assert(friend.status === 200, "friend order");
-const beforePay = await post("/api/premium/affiliate", { action: "stats", ownerSecret: owner });
+const beforePay = await post("/api/premium/affiliate", { action: "stats", adult: true, ownerSecret: owner });
 assert(beforePay.json.commissionAccrued === 0, "no commission before payment");
 assert(beforePay.json.ordersPending === 1, "one pending order");
 assert(beforePay.json.visits === 1, "one visit");
@@ -87,7 +87,7 @@ assert(paid.json.applied === true, "friend paid");
 const againPay = await post("/api/premium/confirm", { orderId: friend.json.orderId }, { authorization: "Bearer admin-secret" });
 assert(againPay.json.applied === false, "second confirm does not apply again");
 
-const after = await post("/api/premium/affiliate", { action: "stats", ownerSecret: owner });
+const after = await post("/api/premium/affiliate", { action: "stats", adult: true, ownerSecret: owner });
 assert(after.json.ordersPaid === 1, "one paid order");
 assert(after.json.commissionAccrued === 4900, "10% accrued once");
 assert(after.json.commissionApproved === 0, "not approved yet");
@@ -103,18 +103,25 @@ assert(!JSON.stringify(listed.json).includes(owner), "owner secret not in admin 
 const approved = await post("/api/premium/affiliate-admin", { action: "approve", code }, { authorization: "Bearer admin-secret" });
 assert(approved.json.transferred === false, "no automatic transfer");
 assert(approved.json.count === 1 && approved.json.amount === 4900, "approved the accrued row");
-const done = await post("/api/premium/affiliate", { action: "stats", ownerSecret: owner });
+const done = await post("/api/premium/affiliate", { action: "stats", adult: true, ownerSecret: owner });
 assert(done.json.commissionAccrued === 0 && done.json.commissionApproved === 4900, "moved to approved");
 const twice = await post("/api/premium/affiliate-admin", { action: "approve", code }, { authorization: "Bearer admin-secret" });
 assert(twice.json.count === 0 && twice.json.amount === 0, "second approval is empty");
 
-const stranger = await post("/api/premium/create", {
+const stranger = await post("/api/premium/create", { buyer: "adult",
   email: "la@example.com",
   plan: "month",
   method: "bank",
   ref: "KHONGTONTAI",
 });
 assert(stranger.status === 200, "unknown ref still creates the order");
+
+// Mở mã và xem hoa hồng chỉ dành cho người đã khai từ 18 tuổi.
+{
+  const body = { action: "stats" as const, ownerSecret: owner };
+  const minor = await post("/api/premium/affiliate", body);
+  assert(minor.status === 403 && minor.json.error === "adult_only", "referral stats need the adult declaration");
+}
 
 if (fails.length) {
   console.error(fails.join("\n"));

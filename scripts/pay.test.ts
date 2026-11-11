@@ -112,7 +112,7 @@ async function fakeFetch(_url: string | URL | Request, init?: RequestInit): Prom
   });
 }
 
-const env: PayEnv = withTestStore(payEnv({
+const env: PayEnv = withTestStore(payEnv({ PAY_CRYPTO: "1",
   MOMO_PARTNER_CODE: "MOMO",
   MOMO_ACCESS_KEY: ACCESS,
   MOMO_SECRET_KEY: SECRET,
@@ -166,7 +166,7 @@ assert(plans.status === 200, "plans status");
 assert(plans.json.lockContent === false, "content lock defaults off");
 assert((plans.json.plans as { amount: number }[])[0]?.amount === 49000, "month price is server config");
 
-const tampered = await post("/api/premium/create", { email: "hieu@example.com", plan: "month", method: "bank", amount: 1000 });
+const tampered = await post("/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "bank", amount: 1000 });
 assert(tampered.status === 200, "bank order created");
 assert(tampered.json.amount === 49000, "client amount was ignored");
 assert(typeof tampered.json.transferCode === "string", "transfer code");
@@ -175,7 +175,7 @@ assert(bankQr?.qrDataUrl?.startsWith("data:image/png;base64,") === true, "VietQR
 assert(bankQr?.accountNo === "0000000000", "sample account");
 assert(bankQr?.sample === true, "sample bank flag");
 
-const wallet = await post("/api/premium/create", { email: "hieu@example.com", plan: "month", method: "wallet" });
+const wallet = await post("/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "wallet" });
 assert(wallet.status === 200, `wallet create ${wallet.status} ${JSON.stringify(wallet.json)}`);
 assert(wallet.json.payUrl === "https://test-payment.momo.vn/pay/demo", "payUrl");
 assert(wallet.json.amount === 49000, "wallet amount");
@@ -217,7 +217,7 @@ const replay = await post("/api/premium/bank", { description: code, amount: 4900
 assert(replay.status === 200 && replay.json.applied === false, "bank replay does not grant twice");
 
 const anchor = clock;
-const fresh = await post("/api/premium/create", { email: "hieu@example.com", plan: "year", method: "bank" });
+const fresh = await post("/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "year", method: "bank" });
 const freshId = String(fresh.json.orderId);
 clock = anchor + 16 * 60 * 1000;
 const late = await post("/api/premium/confirm", { orderId: freshId }, { authorization: "Bearer admin-secret" });
@@ -226,7 +226,7 @@ const noAdmin = await post("/api/premium/confirm", { orderId: freshId });
 assert(noAdmin.status === 401, "admin token required");
 
 clock = anchor + 1000;
-const manual = await post("/api/premium/create", { email: "hieu@example.com", plan: "month", method: "bank" });
+const manual = await post("/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "bank" });
 const allowed = await post("/api/premium/confirm", { orderId: manual.json.orderId }, { authorization: "Bearer admin-secret" });
 assert(allowed.status === 200 && allowed.json.applied === true, "admin confirm");
 const allowedAgain = await post("/api/premium/confirm", { orderId: manual.json.orderId }, { authorization: "Bearer admin-secret" });
@@ -238,7 +238,7 @@ assert(ret.headers.get("location") === "http://pay.local/nang-cap?orderId=BTDEMO
 
 // Refund: the licence stops working and the order reads as refunded.
 {
-  const order = await post("/api/premium/create", { email: "refund@example.com", plan: "month", method: "bank" });
+  const order = await post("/api/premium/create", { buyer: "adult", email: "refund@example.com", plan: "month", method: "bank" });
   const id = String(order.json.orderId);
   const paid = await post("/api/premium/confirm", { orderId: id }, { authorization: "Bearer admin-secret" });
   assert(paid.status === 200, "refund setup: paid");
@@ -255,17 +255,59 @@ assert(ret.headers.get("location") === "http://pay.local/nang-cap?orderId=BTDEMO
 }
 
 // A production deploy must never fall back to MoMo's public sandbox secret or the .env.example placeholders.
-const prod = withTestStore(payEnv({ VERCEL_ENV: "production", ADMIN_TOKEN: "doi-token-admin", BANK_WEBHOOK_SECRET: "short" }, () => clock));
+const prod = withTestStore(payEnv({ PAY_CRYPTO: "1", VERCEL_ENV: "production", ADMIN_TOKEN: "doi-token-admin", BANK_WEBHOOK_SECRET: "short" }, () => clock));
 assert(prod.live && !prod.momoReady, "live deploy without MoMo secret is not MoMo-ready");
 assert(prod.adminToken === "" && prod.webhookSecret === "", "placeholder or short secrets are refused when live");
 const forged = await handlePremium(new Request("http://pay.local/api/premium/ipn", { method: "POST", body: "{}" }), prod);
 assert(forged.status === 503, `ipn refused without a real MoMo secret ${forged.status}`);
-const walletProd = await handlePremium(new Request("http://pay.local/api/premium/create", { method: "POST", body: JSON.stringify({ email: "a@b.vn", plan: "month", method: "wallet" }) }), prod);
+const walletProd = await handlePremium(new Request("http://pay.local/api/premium/create", { method: "POST", body: JSON.stringify({ buyer: "adult", email: "a@b.vn", plan: "month", method: "wallet" }) }), prod);
 assert(walletProd.status === 503, "wallet order refused without MoMo");
-const bankProd = await handlePremium(new Request("http://pay.local/api/premium/create", { method: "POST", body: JSON.stringify({ email: "a@b.vn", plan: "month", method: "bank" }) }), prod);
+const bankProd = await handlePremium(new Request("http://pay.local/api/premium/create", { method: "POST", body: JSON.stringify({ buyer: "adult", email: "a@b.vn", plan: "month", method: "bank" }) }), prod);
 assert(bankProd.status === 200, `bank transfer still works without MoMo ${bankProd.status}`);
-const dev = payEnv({ ADMIN_TOKEN: "doi-token-admin" });
+const dev = payEnv({ PAY_CRYPTO: "1", ADMIN_TOKEN: "doi-token-admin" });
 assert(!dev.live && dev.momoReady && dev.adminToken === "", "sandbox works locally, placeholders never do");
+
+// Người mua dưới 16 tuổi hoặc không khai thì không tạo được đơn; 16–17 tuổi có cha mẹ đồng ý thì được.
+for (const buyer of ["", "child"]) {
+  const body: Record<string, unknown> = { email: "tre@example.com", plan: "month", method: "bank" };
+  if (buyer) body.buyer = buyer;
+  const refused = await post("/api/premium/create", body);
+  assert(refused.status === 403 && refused.json.error === "buyer", `buyer "${buyer}" is refused`);
+}
+{
+  const body = { buyer: "teen", email: "teen@example.com", plan: "month", method: "bank" };
+  assert((await post("/api/premium/create", body)).status === 200, "a 16-17 year old with consent may buy");
+}
+
+// Tiền mã hóa tắt mặc định, và máy chủ chưa có tài khoản thật thì báo là chưa bán.
+{
+  const plain = withTestStore(payEnv({ PREMIUM_DB_PATH: join(dir, "plain.sqlite") }, () => clock, fakeFetch));
+  const listed = await (await handlePremium(new Request("http://pay.local/api/premium/plans"), plain)).json() as Record<string, unknown>;
+  assert(!("crypto" in listed), "crypto is not offered unless PAY_CRYPTO=1");
+  assert(listed.selling === false && listed.demo === false, "not selling without real accounts");
+  const coin = await handlePremium(new Request("http://pay.local/api/premium/create", {
+    method: "POST",
+    body: JSON.stringify({ buyer: "adult", email: "a@b.vn", plan: "month", method: "crypto", chain: "bsc-usdt" }),
+  }), plain);
+  assert(coin.status === 403, "a crypto order is refused when crypto is off");
+}
+
+// Mã Premium chỉ hiện theo mã đơn trong một giờ; sau đó khôi phục bằng mã đơn và email đã mua.
+{
+  const body = { buyer: "adult", email: "khoi@example.com", plan: "month", method: "wallet" };
+  const made = await post("/api/premium/create", body);
+  const madeId = String(made.json.orderId);
+  await post("/api/premium/ipn", signedIpn(madeId, 49000, 0, "9777"));
+  const fresh = await get(`/api/premium/status?orderId=${madeId}`);
+  const key = String(fresh.json.licenseKey);
+  assert(/^bt_/.test(key), "the key shows right after payment");
+  clock += 2 * 60 * 60 * 1000;
+  const later = await get(`/api/premium/status?orderId=${madeId}`);
+  assert(later.json.licenseKey === null && later.json.keyHidden === true, "the key is hidden from the order id after an hour");
+  assert((await post("/api/premium/recover", { orderId: madeId, email: "ai-do@example.com" })).status === 404, "recover needs the buyer's email");
+  const back = await post("/api/premium/recover", { orderId: madeId, email: "Khoi@Example.com" });
+  assert(back.status === 200 && back.json.licenseKey === key, "recover returns the key for order id and email");
+}
 
 if (fails.length > 0) {
   console.error(fails.join("\n"));

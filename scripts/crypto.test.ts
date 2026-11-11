@@ -105,7 +105,7 @@ async function fakeFetch(url: string | URL | Request, init?: RequestInit): Promi
 }
 
 function envFor(name: string, rateUrl = ""): PayEnv {
-  return withTestStore(payEnv({
+  return withTestStore(payEnv({ PAY_CRYPTO: "1",
     PREMIUM_PRICE_MONTH: "49000",
     PREMIUM_PRICE_YEAR: "399000",
     PUBLIC_BASE_URL: "http://pay.local",
@@ -171,7 +171,7 @@ const chainIds = ((plans.json.crypto as { chains: { id: string }[] }).chains).ma
 assert(plans.status === 200, "plans");
 assert(chainIds.join() === "tron-usdt,bsc-usdt,bsc-usdc,sol-usdc", `chains ${chainIds.join()}`);
 
-const created = await post(env, "/api/premium/create", {
+const created = await post(env, "/api/premium/create", { buyer: "adult",
   email: "hieu@example.com",
   plan: "month",
   method: "crypto",
@@ -189,7 +189,7 @@ assert(first.uri === paymentUri(bsc, first.address, first.display, BigInt(first.
 assert(first.qrDataUrl.startsWith("data:image/png;base64,"), "QR image");
 assert(first.uri.includes(`uint256=${first.smallest}`), "URI carries smallest unit");
 
-const second = cryptoOf((await post(env, "/api/premium/create", {
+const second = cryptoOf((await post(env, "/api/premium/create", { buyer: "adult",
   email: "hieu@example.com",
   plan: "month",
   method: "crypto",
@@ -227,11 +227,11 @@ const replay = await post(env, "/api/premium/crypto", { orderId, txHash: tx });
 assert(replay.status === 200 && (replay.json.cryptoCheck as { applied?: boolean }).applied === false, "same tx is idempotent");
 assert((await get(`/api/premium/status?orderId=${orderId}`)).json.licenseKey === license, "license unchanged");
 
-const other = await post(env, "/api/premium/create", { email: "hieu@example.com", plan: "year", method: "crypto", chain: "bsc-usdc" });
+const other = await post(env, "/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "year", method: "crypto", chain: "bsc-usdc" });
 const reused = await post(env, "/api/premium/crypto", { orderId: other.json.orderId, txHash: tx });
 assert(reused.status === 409 && reused.json.error === "reuse", `reuse ${JSON.stringify(reused.json)}`);
 
-const probe = await post(env, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "bsc-usdt" });
+const probe = await post(env, "/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "crypto", chain: "bsc-usdt" });
 const probeId = String(probe.json.orderId);
 const probeSmallest = BigInt(cryptoOf(probe.json).smallest);
 world.evmReceipt = {
@@ -286,7 +286,7 @@ assert(failed.status === 400 && failed.json.error === "failed", `failed tx ${JSO
 assert((await get(`/api/premium/status?orderId=${probeId}`)).json.status === "pending", "mismatch does not pay");
 
 const anchor = clock;
-const expiring = await post(env, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "bsc-usdt" });
+const expiring = await post(env, "/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "crypto", chain: "bsc-usdt" });
 const beforeFetch = world.fetches;
 clock = anchor + 16 * 60 * 1000;
 const late = await post(env, "/api/premium/crypto", { orderId: expiring.json.orderId, txHash: `0x${"44".repeat(32)}` });
@@ -296,14 +296,14 @@ const lateAdmin = await post(env, "/api/premium/confirm", { orderId: expiring.js
 assert(lateAdmin.status === 409, "admin cannot confirm an expired crypto order");
 
 clock = anchor + 1000;
-const manual = await post(env, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "tron-usdt" });
+const manual = await post(env, "/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "crypto", chain: "tron-usdt" });
 const allowed = await post(env, "/api/premium/confirm", { orderId: manual.json.orderId }, { authorization: "Bearer admin-secret" });
 assert(allowed.status === 200 && allowed.json.applied === true, "admin confirms crypto");
 const allowedAgain = await post(env, "/api/premium/confirm", { orderId: manual.json.orderId }, { authorization: "Bearer admin-secret" });
 assert(allowedAgain.json.applied === false, "admin confirm is idempotent");
 
 clock = anchor + 2000;
-const tronOrder = await post(env, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "tron-usdt" });
+const tronOrder = await post(env, "/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "crypto", chain: "tron-usdt" });
 const tronCrypto = cryptoOf(tronOrder.json);
 assert(tronCrypto.uri.startsWith(`tron:${SAMPLE_TRON_ADDRESS}?`), "tron payment uri");
 assert(tronCrypto.qrDataUrl.startsWith("data:image/png;base64,"), "tron QR");
@@ -328,7 +328,7 @@ world.block = 40;
 const tronPaid = await post(env, "/api/premium/crypto", { orderId: tronOrder.json.orderId, txHash: tronTx });
 assert(tronPaid.status === 200 && (await get(`/api/premium/status?orderId=${String(tronOrder.json.orderId)}`)).json.status === "paid", "tron payment");
 
-const rebound = await post(env, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "tron-usdt" });
+const rebound = await post(env, "/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "crypto", chain: "tron-usdt" });
 const switched = await post(env, "/api/premium/crypto", { orderId: rebound.json.orderId, chain: "sol-usdc" });
 const solCrypto = cryptoOf(switched.json);
 assert(switched.status === 200 && solCrypto.chain === "sol-usdc", "rebind chain");
@@ -363,10 +363,10 @@ assert(solOk.status === 200 && (await get(`/api/premium/status?orderId=${String(
 
 const liveEnv = envFor("live", "https://rate.test/vnd");
 world.rateBody = { rates: { VND: 26000.4 } };
-const live = cryptoOf((await post(liveEnv, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "bsc-usdt" })).json);
+const live = cryptoOf((await post(liveEnv, "/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "crypto", chain: "bsc-usdt" })).json);
 assert(live.rate === 26000 && live.rateSource === "live" && /^1\.88\d{4}$/.test(live.display), `live rate ${live.display} ${live.rate}`);
 world.rateThrows = true;
-const fell = cryptoOf((await post(liveEnv, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "bsc-usdc" })).json);
+const fell = cryptoOf((await post(liveEnv, "/api/premium/create", { buyer: "adult", email: "hieu@example.com", plan: "month", method: "crypto", chain: "bsc-usdc" })).json);
 assert(fell.rateSource === "config" && fell.rate === 25000 && /^1\.96\d{4}$/.test(fell.display), `rate fallback ${fell.display}`);
 
 if (fails.length > 0) {

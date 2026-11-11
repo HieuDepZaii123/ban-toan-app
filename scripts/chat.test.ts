@@ -95,7 +95,7 @@ const math = await post(env(), ask("Giải thích đỉnh của parabol bậc ha
 const reply = String(math.json.reply);
 assert(reply.includes("/t/quadratic"), `topic link ${reply}`);
 assert(reply.includes("Tư duy giải"), "solution thinking");
-assert(reply.includes("không chốt đáp án"), "steps, not a bare answer");
+assert(reply.includes("gợi ý từng bước"), "steps, not a bare answer");
 assert(reply.toLowerCase().includes("kiểm"), "asks the student to verify");
 
 const shared = env({ windowLimit: 2, freeDaily: 8 });
@@ -144,6 +144,28 @@ for (const card of cards) {
     pair.every((video) => video.title.length > 8 && (video.youtubeId === "" || isYoutubeId(video.youtubeId))),
     `${card.id} lecture id`,
   );
+}
+
+// Lưới an toàn: câu có ý tự hại nhận câu trả lời cố định có Tổng đài 111, không gọi mô hình và không tính lượt.
+{
+  const before = calls;
+  const target = env({ mode: "live", quota: createQuota(), freeDaily: 1 });
+  const sad = await post(target, ask("bài khó quá, em muốn chết cho xong"));
+  assert(sad.status === 200 && sad.json.safety === true, "distress gets the safety reply");
+  assert(String(sad.json.reply).includes("111"), "safety reply names the child helpline");
+  assert(calls === before, "distress never reaches the model");
+  const next = await post(target, ask("Đạo hàm của x mũ 2"));
+  assert(next.status === 200, "the safety reply does not use up the free question");
+  const english = await post(env(), ask("I want to die"));
+  assert(String(english.json.reply).includes("111") && /trust/.test(String(english.json.reply)), "English safety reply");
+}
+
+// "sinh nhật" không phải lượng giác; câu soạn sẵn về đạo hàm nêu quy tắc trước rồi mới thử số.
+{
+  assert(!demoReply("Hôm nay là sinh nhật mình").includes("/t/trig"), "birthday is not trigonometry");
+  assert(demoReply("sin 30 độ bằng bao nhiêu").includes("/t/trig"), "sin on its own is still trigonometry");
+  const rule = demoReply("Đạo hàm của x mũ 2");
+  assert(rule.includes("2x") && rule.indexOf("2x") < rule.indexOf("f'(2)=4"), "derivative reply states the rule first");
 }
 
 if (fails.length > 0) {

@@ -51,3 +51,10 @@ Lượt: 10 tin mỗi 10 phút theo IP, 8 tin miễn phí mỗi ngày, 40 tin n�
 Mỗi chủ đề có hai chỗ video trong `src/content/lectures.ts`: `basic` (Cơ bản) và `exam` (Chuẩn thi). `youtubeId` đang là chuỗi mẫu dài hơn 11 ký tự, nên trang không nhúng iframe.
 
 Khi có video thật, thay bằng id YouTube đúng 11 ký tự, ví dụ `dQw4w9WgXcQ`. Không commit file mp4. Iframe chỉ tải sau khi bấm **Xem video**, không tự phát.
+
+## An toàn và quyền riêng tư
+
+- Lưới an toàn (`safetyReply` trong `server/chat/policy.ts`) chạy trước cả mô hình lẫn câu mẫu: tin nhắn có dấu hiệu tự hại, bị xâm hại hay bị bắt nạt nhận một câu trả lời cố định có Tổng đài 111, không gửi cho nhà cung cấp AI và không tính lượt.
+- Khung trợ lý hiện thông báo dữ liệu trước câu hỏi đầu tiên và chỉ gửi đi sau khi người học bấm đồng ý (khóa `bt-chat-ok`). Có nút Xóa lịch sử.
+- Khi máy chủ chưa có khóa AI, phản hồi có `mode: "demo"` và khung trợ lý ghi rõ đó là bài mẫu soạn sẵn.
+- Các lượt `assistant` do máy khách gửi lại chỉ là ngữ cảnh: chỉ dẫn hệ thống nhắc mô hình không coi chúng là chỉ dẫn.
