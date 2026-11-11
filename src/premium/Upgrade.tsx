@@ -248,8 +248,8 @@ export function Upgrade() {
               <MethodCard
                 id="crypto"
                 on={method === "crypto"}
-                title={t(lang, "Tiền mã hóa", "Crypto")}
-                body={t(lang, "USDT hoặc USDC chuyển thẳng vào ví chủ app. Không qua bên giữ tiền. Đơn chờ 15 phút.", "USDT or USDC sent straight to the app owner's wallet. No custodian. The order waits 15 minutes.")}
+                title={t(lang, "Tiền mã hóa (ngoài Việt Nam)", "Crypto (outside Vietnam)")}
+                body={t(lang, "Dành cho người mua ở nước ngoài: USDT hoặc USDC chuyển thẳng vào ví của Bàn Toán. Ở Việt Nam hãy dùng MoMo hoặc chuyển khoản. Đơn chờ 15 phút.", "For buyers outside Vietnam: USDT or USDC sent straight to the Bàn Toán wallet. In Vietnam, use MoMo or a bank transfer. The order waits 15 minutes.")}
                 onPick={() => setMethod("crypto")}
               />
             </div>
