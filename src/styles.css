@@ -1542,3 +1542,47 @@ html[data-motion="less"] *, html[data-motion="less"] *::before, html[data-motion
 .formula-note { margin: 2px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
 .tex-block { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
 .fitem { min-width: 0; }
+
+/* Nhắc nghỉ mắt (thanh ngắn ở đầu trang, tự đóng được) và khóa hết giờ của phụ huynh. */
+.break-note {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 44;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 14px;
+  padding: calc(8px + env(safe-area-inset-top)) 14px 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.92rem;
+}
+.break-note .text-btn { background: var(--sheet); color: var(--ink); border-color: transparent; }
+.time-lock {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: var(--bg);
+}
+.time-lock-card { width: min(460px, 100%); display: grid; gap: 14px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--sheet); }
+.report-table td, .report-table th { text-align: center; white-space: nowrap; }
+.report-table tbody th { text-align: left; }
+.report-card ul, .data-card ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 6px; }
+.data-card textarea { width: 100%; font-family: ui-monospace, monospace; font-size: 0.83rem; }
+.data-card details > summary { cursor: pointer; min-height: 40px; display: flex; align-items: center; color: var(--ink-soft); }
+@media print {
+  .no-print, .dock, .break-note, .time-lock { display: none !important; }
+  .report-card, .data-card { border: 0; padding: 0; background: none; }
+}
+.data-card ol > li, .report-card ul > li, .data-card ul:not(.data-list) > li, .chat-consent li { display: list-item; }
+.week-table { width: auto; min-width: min(320px, 100%); }
+.week-table td { text-align: right; }
+.site-foot nav { flex-wrap: wrap; }
+.site-foot nav a { white-space: nowrap; }
+.report-card ul, .data-card ul:not(.data-list), .chat-consent ul { list-style: disc; padding-left: 1.2rem; display: grid; gap: 6px; }

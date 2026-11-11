@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 type Dot = { x: number; y: number; r: number; p: number; s: number; v: number; o: number };
 
 function reduced(): boolean {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.dataset.motion === "less";
 }
 
 function nightNow(): boolean {
@@ -128,10 +128,12 @@ export function Atmosphere() {
     start();
     window.addEventListener("resize", start);
     window.addEventListener("ban-toan-theme", start);
+    window.addEventListener("bt-prefs", start);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", start);
       window.removeEventListener("ban-toan-theme", start);
+      window.removeEventListener("bt-prefs", start);
     };
   }, []);
 

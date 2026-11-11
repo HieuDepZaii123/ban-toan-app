@@ -10,6 +10,7 @@ import { t } from "./lib/text.ts";
 import { StudyPlayer } from "./study/StudyPlayer.tsx";
 import { Atmosphere } from "./ui/Atmosphere.tsx";
 import { Dock } from "./ui/Dock.tsx";
+import { StudyClock } from "./ui/StudyClock.tsx";
 import { applyPrefs } from "./ui/prefs.ts";
 import { RightMenu } from "./ui/RightMenu.tsx";
 import { effectiveTheme, hasThemeMode, readThemeMode, writeThemeMode } from "./ui/themeMode.ts";
@@ -29,6 +30,7 @@ const MissPage = lazy(() => import("./pages/MissPage.tsx").then((mod) => ({ defa
 const ReferPage = lazy(() => import("./pages/ReferPage.tsx").then((mod) => ({ default: mod.ReferPage })));
 const ResearchIdeasPage = lazy(() => import("./pages/ResearchIdeasPage.tsx").then((mod) => ({ default: mod.ResearchIdeasPage })));
 const DataPage = lazy(() => import("./pages/DataPage.tsx").then((mod) => ({ default: mod.DataPage })));
+const ParentPage = lazy(() => import("./pages/ParentPage.tsx").then((mod) => ({ default: mod.ParentPage })));
 const DocPage = lazy(() => import("./pages/DocPage.tsx").then((mod) => ({ default: mod.DocPage })));
 const MethodsPage = lazy(() => import("./pages/MethodsPage.tsx").then((mod) => ({ default: mod.MethodsPage })));
 const ThptPracticePage = lazy(() => import("./pages/ThptPracticePage.tsx").then((mod) => ({ default: mod.ThptPracticePage })));
@@ -61,6 +63,7 @@ export default function App() {
       <StudyPlayer />
       <ChatEntry />
       <RightMenu />
+      <StudyClock />
     </RouteProvider>
   );
 }
@@ -98,6 +101,7 @@ function Shell() {
   if (path === "/gioi-thieu") return <ReferPage />;
   if (path === "/nghien-cuu") return <ResearchIdeasPage />;
   if (path === "/du-lieu") return <DataPage />;
+  if (path === "/phu-huynh") return <ParentPage />;
   if (path === "/soan-tai-lieu") return <DocPage />;
   if (path === "/phuong-phap" || path.startsWith("/phuong-phap/")) return <MethodsPage path={path} />;
   if (path === "/luyen-lop" || path.startsWith("/luyen-lop/")) return <GradePracticePage path={path} />;

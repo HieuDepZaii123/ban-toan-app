@@ -182,6 +182,7 @@ function AdultHero({ onChange }: { onChange: () => void }) {
         <button type="button" className="pay-btn" onClick={onChange}>{t(lang, "Chọn lớp của con", "Pick your child's grade")}</button>
         <A className="text-btn" href="/kien-thuc">{t(lang, "Kiến thức lớp 1–12", "Lessons for grades 1–12")}</A>
         <A className="text-btn" href="/so-cong-thuc">{t(lang, "Sổ công thức", "Formula book")}</A>
+        <A className="text-btn" href="/phu-huynh">{t(lang, "Báo cáo, nhắc nghỉ, giới hạn giờ học", "Reports, breaks and time limits")}</A>
         <A className="text-btn" href="/chinh-sach">{t(lang, "Dữ liệu và quyền riêng tư", "Data and privacy")}</A>
       </div>
     </section>

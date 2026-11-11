@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
  * Lựa chọn nhỏ của người học, mỗi thứ một khóa localStorage riêng (không nằm trong kho tiến độ `ban-toan`).
  * Ghi là phát sự kiện, nên mọi nơi đang đọc cùng khóa đều vẽ lại.
  */
-export type PrefKey = "bt-grade" | "bt-font" | "bt-read" | "bt-contrast" | "bt-motion" | "bt-keys";
+export type PrefKey = "bt-grade" | "bt-font" | "bt-read" | "bt-contrast" | "bt-motion" | "bt-keys" | "bt-break";
 
 const EVENT = "bt-prefs";
 
