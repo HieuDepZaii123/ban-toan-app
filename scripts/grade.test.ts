@@ -5,6 +5,7 @@
 import { execFileSync } from "node:child_process";
 import { collectGradeChecks, gradeBooks, lessonsOf } from "../src/content/grades/index.ts";
 import { cards } from "../src/content/cards.ts";
+import { noteKeys } from "../src/content/grades/notes/index.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
@@ -119,6 +120,11 @@ for (const book of gradeBooks) {
     }
   }
 }
+
+const lessonKeys = new Set(gradeBooks.flatMap((book) => lessonsOf(book).map((item) => `${book.grade}/${item.lesson.id}`)));
+for (const key of noteKeys()) assert(lessonKeys.has(key), `lời giải thích ${key} không ứng với bài nào`);
+const whys = gradeBooks.flatMap((book) => lessonsOf(book).map((item) => item.lesson.whyTrue ?? ""));
+assert(new Set(whys).size === whys.length, "có hai bài dùng chung một câu vì sao đúng");
 
 for (const card of cards) assert(linked.has(card.id), `chuyên đề ${card.id} chưa được nối từ lớp 10–12`);
 
