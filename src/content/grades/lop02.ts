@@ -6,7 +6,7 @@ const R = String.raw;
 export const lop02: GradeBook = {
   grade: 2,
   band: "tieu-hoc",
-  title: "Phép cộng, phép trừ trong phạm vi 100, bảng nhân, bảng chia và số đến 1000.",
+  title: "Cộng trừ có nhớ, bảng nhân và bảng chia 2 và 5, số đến 1000, đo lường, hình khối và biểu đồ tranh.",
   chapters: [
     chuong("cong-tru", "Cộng và trừ trong phạm vi 100", [
       bai(
@@ -88,6 +88,29 @@ export const lop02: GradeBook = {
           luyen(R`Tính $16:2$.`, R`Thương bằng $8$.`, [{ expr: "16/2", expect: "8" }], "Hai nhân $8$ bằng $16$. Thương của phép chia hết là $8$."),
         ],
       ),
+      bai(
+        "chia-2-5",
+        "Bảng chia $2$ và bảng chia $5$",
+        R`Bảng chia $2$ đọc ngược từ bảng nhân $2$: vì $2\times 7=14$ nên $14:2=7$. Bảng chia $5$ đọc ngược từ bảng nhân $5$.`,
+        [vd(
+          R`Có $35$ quyển vở xếp đều vào $5$ ngăn. Mỗi ngăn có bao nhiêu quyển?`,
+          [
+            buoc(R`Phép tính là $35:5$.`, R`Xếp đều vào $5$ ngăn nghĩa là chia thành $5$ phần bằng nhau.`),
+            buoc(R`Vì $5\times 7=35$ nên $35:5=7$.`, R`Tìm trong bảng nhân $5$ tích bằng $35$, thừa số còn lại là thương.`),
+          ],
+          R`Mỗi ngăn có $7$ quyển vở.`,
+          [{ expr: "35/5", expect: "7" }],
+        )],
+        [
+          luyen(R`Tính $14:2$.`, R`Thương bằng $7$.`, [{ expr: "14/2", expect: "7" }], R`Hai nhân $7$ bằng $14$, nên $14$ chia $2$ được $7$.`),
+          luyen(R`Tính $45:5$.`, R`Thương bằng $9$.`, [{ expr: "45/5", expect: "9" }], R`Năm nhân $9$ bằng $45$, nên $45$ chia $5$ được $9$.`),
+          luyen(R`Có $20$ chiếc đũa, ghép thành từng đôi. Được bao nhiêu đôi đũa?`, R`Được $10$ đôi đũa.`, [{ expr: "20/2", expect: "10" }], R`Mỗi đôi có $2$ chiếc, nên lấy $20$ chia cho $2$ và được $10$.`),
+        ],
+        {
+          whyTrue: R`Phép nhân và phép chia đi ngược nhau. Biết một phép nhân trong bảng là biết luôn hai phép chia tương ứng.`,
+          pitfalls: R`Đọc bảng nhân rồi lấy nhầm thừa số. Với $35:5$, thương là thừa số còn lại $7$, không phải $5$.`,
+        },
+      ),
     ]),
     chuong("den-1000", "Các số đến 1000", [
       bai(
@@ -129,6 +152,29 @@ export const lop02: GradeBook = {
           luyen(R`Số gồm $7$ trăm và $8$ đơn vị là số nào?`, R`Số đó là $708$.`, [{ expr: "7*100+8", expect: "708" }], "Không có chục thì chữ số hàng chục là $0$. Ghép $700$ với $8$ được $708$."),
         ],
       ),
+      bai(
+        "cong-tru-1000",
+        "Cộng và trừ trong phạm vi 1000",
+        R`Đặt tính thẳng cột: đơn vị dưới đơn vị, chục dưới chục, trăm dưới trăm. Tính từ phải sang trái, có nhớ thì nhớ sang hàng liền bên trái.`,
+        [vd(
+          R`Tính $358+127$.`,
+          [
+            buoc(R`Hàng đơn vị: $8+7=15$, viết $5$ và nhớ $1$.`, R`Mười đơn vị đổi thành một chục, nên nhớ $1$ sang hàng chục.`),
+            buoc(R`Hàng chục: $5+2+1=8$. Hàng trăm: $3+1=4$. Tổng là $485$.`, R`Số nhớ được cộng vào hàng chục, còn hàng trăm không phải nhớ.`),
+          ],
+          R`Tổng bằng $485$.`,
+          [{ expr: "358+127", expect: "485" }],
+        )],
+        [
+          luyen(R`Tính $245+132$.`, R`Tổng bằng $377$.`, [{ expr: "245+132", expect: "377" }], R`Không hàng nào vượt quá $9$, nên cộng từng hàng và được $377$.`),
+          luyen(R`Tính $562-238$.`, R`Hiệu bằng $324$.`, [{ expr: "562-238", expect: "324" }], R`Hàng đơn vị mượn một chục: $12-8=4$. Hàng chục còn $5-3=2$, hàng trăm $5-2=3$.`),
+          luyen(R`Một trường có $416$ bạn nam và $389$ bạn nữ. Trường có tất cả bao nhiêu bạn?`, R`Trường có $805$ bạn.`, [{ expr: "416+389", expect: "805" }], R`Hàng đơn vị $6+9=15$ nhớ $1$, hàng chục $1+8+1=10$ nhớ $1$, hàng trăm $4+3+1=8$.`),
+        ],
+        {
+          whyTrue: R`Số có ba chữ số vẫn chỉ gồm trăm, chục và đơn vị. Cộng hay trừ từng hàng, rồi đổi mười đơn vị thành một chục, mười chục thành một trăm khi cần.`,
+          pitfalls: R`Đặt số có hai chữ số lệch sang trái khi cộng với số có ba chữ số. Chữ số hàng đơn vị phải thẳng cột với hàng đơn vị.`,
+        },
+      ),
     ]),
     chuong("do-dai", "Độ dài đường gấp khúc", [
       bai(
@@ -169,6 +215,104 @@ export const lop02: GradeBook = {
           luyen(R`Đổi $400$ xentimét ra mét.`, R`Bằng $4$ mét.`, [{ expr: "400/100", expect: "4" }], "Chia số xentimét cho $100$. Bốn trăm xentimét là bốn mét."),
           luyen(R`Một đoạn $1$ mét nối với một đoạn $20$ xentimét. Cả đoạn dài bao nhiêu xentimét?`, R`Cả đoạn dài $120$ xentimét.`, [{ expr: "100+20", expect: "120" }], "Đổi mét ra xentimét trước khi cộng. Một mét là $100$ xentimét, thêm $20$ được $120$."),
         ],
+      ),
+    ]),
+    chuong("do-luong-2", "Khối lượng, dung tích và thời gian", [
+      bai(
+        "kg-lit",
+        "Kilôgam và lít",
+        R`Kilôgam đo độ nặng nhẹ của một vật. Lít đo lượng nước chứa trong bình. Chỉ cộng hoặc trừ các số đo có cùng đơn vị.`,
+        [vd(
+          R`Một túi gạo nặng $5$ kilôgam, một túi đường nặng $2$ kilôgam. Cả hai túi nặng bao nhiêu kilôgam?`,
+          [
+            buoc(R`Hai số đo cùng đơn vị kilôgam nên cộng được.`, R`Cùng đơn vị thì cộng các số đo như cộng hai số.`),
+            buoc(R`Ta có $5+2=7$ kilôgam.`, R`Đặt cả hai túi lên cân thì kim chỉ tổng của hai khối lượng.`),
+          ],
+          R`Cả hai túi nặng $7$ kilôgam.`,
+          [{ expr: "5+2", expect: "7" }],
+        )],
+        [
+          luyen(R`Can to chứa $10$ lít nước, can nhỏ chứa $4$ lít. Can to chứa nhiều hơn can nhỏ bao nhiêu lít?`, R`Nhiều hơn $6$ lít.`, [{ expr: "10-4", expect: "6" }], R`Tìm phần hơn thì lấy số lớn trừ số bé: $10-4=6$ lít.`),
+          luyen(R`Mỗi chai chứa $2$ lít nước. Năm chai như thế chứa bao nhiêu lít?`, R`Chứa $10$ lít.`, [{ expr: "2*5", expect: "10" }], R`Năm chai bằng nhau là năm lần $2$ lít, tức $10$ lít.`),
+          luyen(R`Bao gạo nặng $50$ kilôgam, đã dùng $18$ kilôgam. Còn lại bao nhiêu kilôgam?`, R`Còn lại $32$ kilôgam.`, [{ expr: "50-18", expect: "32" }], R`Lấy $50$ trừ $18$, mượn một chục ở hàng đơn vị, được $32$.`),
+        ],
+        {
+          whyTrue: R`Đơn vị đo là một lượng mẫu mọi người thống nhất dùng chung. Vật nặng mấy kilôgam nghĩa là nặng bằng ngần ấy quả cân một kilôgam.`,
+          pitfalls: R`Cộng số kilôgam với số lít. Hai đơn vị đo hai thứ khác nhau nên không cộng với nhau được.`,
+        },
+      ),
+      bai(
+        "gio-phut",
+        "Giờ, phút và ngày",
+        R`Một giờ có $60$ phút. Một ngày có $24$ giờ. Khi kim phút chỉ số $6$ là đã qua $30$ phút, gọi là giờ rưỡi. Khi kim phút chỉ số $3$ là đã qua $15$ phút.`,
+        [vd(
+          R`Kim giờ nằm giữa số $8$ và số $9$, kim phút chỉ số $6$. Đồng hồ chỉ mấy giờ? Còn bao nhiêu phút nữa thì đến $9$ giờ?`,
+          [
+            buoc(R`Đồng hồ chỉ $8$ giờ $30$ phút.`, R`Kim phút chỉ số $6$ là đi được nửa vòng, tức $30$ phút sau $8$ giờ.`),
+            buoc(R`Còn $60-30=30$ phút nữa thì đến $9$ giờ.`, R`Một giờ có $60$ phút, đã qua $30$ phút thì còn lại $30$ phút.`),
+          ],
+          R`Đồng hồ chỉ $8$ giờ $30$ phút, còn $30$ phút nữa thì đến $9$ giờ.`,
+          [{ expr: "60-30", expect: "30" }],
+        )],
+        [
+          luyen(R`Nửa giờ có bao nhiêu phút?`, R`Nửa giờ có $30$ phút.`, [{ expr: "60/2", expect: "30" }], R`Một giờ có $60$ phút, chia đôi thì được $30$ phút.`),
+          luyen(R`Bạn Lan học từ $7$ giờ đến $10$ giờ. Lan học trong mấy giờ?`, R`Lan học trong $3$ giờ.`, [{ expr: "10-7", expect: "3" }], R`Lấy giờ kết thúc trừ giờ bắt đầu: $10-7=3$ giờ.`),
+          luyen(R`Kim phút chỉ số $3$. Đã qua bao nhiêu phút kể từ giờ đúng?`, R`Đã qua $15$ phút.`, [{ expr: "3*5", expect: "15" }], R`Mỗi số trên mặt đồng hồ cách nhau $5$ phút, nên số $3$ ứng với $15$ phút.`),
+        ],
+        {
+          whyTrue: R`Kim phút đi hết một vòng mặt đồng hồ là $60$ phút, và mặt đồng hồ chia thành $12$ số. Từ số này sang số kế tiếp, kim phút đi $60:12=5$ phút.`,
+          pitfalls: R`Thấy kim phút chỉ số $6$ thì đọc là $6$ phút. Số $6$ trên mặt đồng hồ ứng với $30$ phút.`,
+        },
+      ),
+    ]),
+    chuong("hinh-so-lieu-2", "Hình khối và biểu đồ tranh", [
+      bai(
+        "hinh-khoi",
+        "Khối trụ, khối cầu và hình tứ giác",
+        R`Khối trụ có hai mặt đáy là hình tròn, như hộp sữa. Khối cầu tròn đều mọi phía, như quả bóng. Hình tứ giác có $4$ cạnh và $4$ đỉnh.`,
+        [vd(
+          R`Một hình tứ giác có $4$ cạnh. Ba hình tứ giác rời nhau có tất cả bao nhiêu cạnh?`,
+          [
+            buoc(R`Mỗi hình có $4$ cạnh, và có $3$ hình như thế.`, R`Các hình rời nhau nên không có cạnh nào dùng chung.`),
+            buoc(R`Ta có $4+4+4=12$ cạnh.`, R`Cộng số cạnh của từng hình, mỗi hình góp đúng bốn cạnh.`),
+          ],
+          R`Có tất cả $12$ cạnh.`,
+          [{ expr: "4*3", expect: "12" }],
+        )],
+        [
+          luyen(R`Hai hình tứ giác rời nhau có tất cả mấy đỉnh?`, R`Có tất cả $8$ đỉnh.`, [{ expr: "4*2", expect: "8" }], R`Mỗi hình tứ giác có $4$ đỉnh, hai hình là $4+4=8$ đỉnh.`),
+          luyen(R`Có $5$ hộp sữa dạng khối trụ và $3$ quả bóng dạng khối cầu. Có tất cả bao nhiêu khối?`, R`Có tất cả $8$ khối.`, [{ expr: "5+3", expect: "8" }], R`Gộp số khối trụ với số khối cầu: $5+3=8$ khối.`),
+          luyen(R`Một khối trụ có $2$ mặt đáy hình tròn. Bốn khối trụ có tất cả bao nhiêu mặt đáy?`, R`Có tất cả $8$ mặt đáy.`, [{ expr: "2*4", expect: "8" }], R`Bốn khối, mỗi khối $2$ mặt đáy, là bốn lần $2$, tức $8$.`),
+        ],
+        {
+          figure: "rect",
+          whyTrue: R`Tên gọi của hình và khối dựa trên đặc điểm đếm được và nhìn được: số cạnh, số đỉnh, mặt phẳng hay mặt cong. Xoay hình hay đổi kích thước không làm đổi các đặc điểm ấy.`,
+          pitfalls: R`Chỉ gọi hình vuông và hình chữ nhật là hình tứ giác. Mọi hình khép kín có bốn cạnh thẳng đều là hình tứ giác, kể cả khi méo.`,
+        },
+      ),
+      bai(
+        "bieu-do-tranh",
+        "Biểu đồ tranh",
+        R`Biểu đồ tranh dùng hình vẽ để ghi số lượng. Mỗi hình vẽ thay cho một đồ vật. Đếm số hình trong mỗi hàng để biết số lượng của hàng đó.`,
+        [vd(
+          R`Biểu đồ tranh có hàng táo vẽ $6$ quả và hàng cam vẽ $4$ quả. Loại nào nhiều hơn, và nhiều hơn mấy quả?`,
+          [
+            buoc(R`Hàng táo có $6$ hình, hàng cam có $4$ hình.`, R`Mỗi hình vẽ thay cho một quả, nên đếm hình là đếm quả.`),
+            buoc(R`Táo nhiều hơn cam $6-4=2$ quả.`, R`So sánh hai hàng bằng phép trừ số lớn cho số bé.`),
+          ],
+          R`Táo nhiều hơn cam $2$ quả.`,
+          [{ expr: "6-4", expect: "2" }],
+        )],
+        [
+          luyen(R`Hàng mèo vẽ $3$ con, hàng chó vẽ $5$ con. Có tất cả bao nhiêu con vật?`, R`Có tất cả $8$ con vật.`, [{ expr: "3+5", expect: "8" }], R`Gộp hai hàng lại: $3+5=8$ con vật.`),
+          luyen(R`Hàng bút vẽ $7$ chiếc, hàng thước vẽ $7$ chiếc. Hàng nào nhiều hơn?`, R`Hai hàng bằng nhau.`, [{ expr: "7-7", expect: "0" }], R`Hai hàng cùng có $7$ hình nên số lượng bằng nhau.`),
+          luyen(R`Ba hàng vẽ lần lượt $2$, $4$ và $6$ bông hoa. Hàng nhiều nhất hơn hàng ít nhất mấy bông?`, R`Hơn $4$ bông.`, [{ expr: "6-2", expect: "4" }], R`Hàng nhiều nhất có $6$ bông, hàng ít nhất có $2$ bông, hiệu là $4$.`),
+        ],
+        {
+          figure: "bar",
+          whyTrue: R`Mỗi hình vẽ ứng với đúng một đồ vật, nên hàng dài hơn là hàng có nhiều đồ vật hơn. Nhìn độ dài các hàng là so sánh được ngay, chưa cần đếm.`,
+          pitfalls: R`Vẽ các hình to nhỏ khác nhau hoặc không thẳng cột. Khi đó hàng dài hơn chưa chắc có nhiều hình hơn.`,
+        },
       ),
     ]),
   ],
