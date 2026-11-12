@@ -6,7 +6,7 @@ const R = String.raw;
 export const lop09: GradeBook = {
   grade: 9,
   band: "thcs",
-  title: "Căn bậc hai, hàm số bậc hai, bất phương trình, đường tròn và tần số tương đối.",
+  title: "Căn bậc hai và căn bậc ba, hàm số bậc hai, bất phương trình, đường tròn, tứ giác nội tiếp và xác suất.",
   chapters: [
     chuong("can", "Căn bậc hai", [
       bai(
@@ -46,6 +46,29 @@ export const lop09: GradeBook = {
           luyen(R`Tính $\sqrt{5}\cdot\sqrt{5}$.`, R`Tích bằng $5$.`, [{ expr: "sqrt(5)*sqrt(5)", expect: "5" }], "Tích hai căn cùng một số không âm bằng chính số đó."),
           luyen(R`Rút gọn $\sqrt{18}\cdot\sqrt{2}$.`, R`Tích bằng $6$.`, [{ expr: "sqrt(18)*sqrt(2)", expect: "6" }], "Tích trong căn bằng $36$. Căn số học bằng $6$."),
         ],
+      ),
+      bai(
+        "can-bac-ba",
+        "Căn bậc ba",
+        R`Căn bậc ba của số $a$ là số $x$ sao cho $x^3=a$. Mọi số thực đều có đúng một căn bậc ba. Căn bậc ba của số âm là số âm.`,
+        [vd(
+          R`Tính $\sqrt[3]{27}$ và $\sqrt[3]{-8}$.`,
+          [
+            buoc(R`Vì $3^3=27$ nên $\sqrt[3]{27}=3$.`, R`Tìm số có lập phương bằng số dưới dấu căn.`),
+            buoc(R`Vì $(-2)^3=-8$ nên $\sqrt[3]{-8}=-2$.`, R`Lập phương của một số âm là số âm, nên căn bậc ba của số âm tồn tại.`),
+          ],
+          R`Hai giá trị là $3$ và $-2$.`,
+          [{ expr: "real_root(27,3)", expect: "3" }, { expr: "real_root(-8,3)", expect: "-2" }],
+        )],
+        [
+          luyen(R`Tính $\sqrt[3]{64}$.`, R`Kết quả bằng $4$.`, [{ expr: "real_root(64,3)", expect: "4" }], R`Ta có $4^3=64$, nên căn bậc ba của $64$ là $4$.`),
+          luyen(R`Tính $\sqrt[3]{-125}$.`, R`Kết quả bằng $-5$.`, [{ expr: "real_root(-125,3)", expect: "-5" }], R`Ta có $(-5)^3=-125$, nên căn bậc ba là $-5$.`),
+          luyen(R`Một khối lập phương có thể tích $216$ xentimét khối. Cạnh của khối dài bao nhiêu xentimét?`, R`Cạnh dài $6$ xentimét.`, [{ expr: "real_root(216,3)", expect: "6" }], R`Thể tích bằng lập phương của cạnh, và $6^3=216$.`),
+        ],
+        {
+          whyTrue: R`Hàm số $y=x^3$ luôn tăng và nhận mọi giá trị thực. Vì thế với mỗi số $a$ có đúng một số $x$ thỏa $x^3=a$, kể cả khi $a$ âm.`,
+          pitfalls: R`Cho rằng số âm không có căn bậc ba, giống như căn bậc hai. Căn bậc ba của số âm tồn tại và là số âm.`,
+        },
       ),
     ]),
     chuong("ham-b2", "Hàm số $y=ax^2$", [
@@ -296,6 +319,54 @@ export const lop09: GradeBook = {
         ],
         { figure: "circle" },
       ),
+      bai(
+        "tu-giac-noi-tiep",
+        "Tứ giác nội tiếp",
+        R`Tứ giác nội tiếp là tứ giác có bốn đỉnh cùng nằm trên một đường tròn. Trong tứ giác nội tiếp, tổng hai góc đối bằng $180^\circ$.`,
+        [vd(
+          R`Tứ giác $ABCD$ nội tiếp đường tròn, góc $A$ bằng $70^\circ$ và góc $B$ bằng $95^\circ$. Tính góc $C$ và góc $D$.`,
+          [
+            buoc(R`Góc $C$ đối với góc $A$ nên bằng $180^\circ-70^\circ=110^\circ$.`, R`Tổng hai góc đối của tứ giác nội tiếp bằng $180^\circ$.`),
+            buoc(R`Góc $D$ đối với góc $B$ nên bằng $180^\circ-95^\circ=85^\circ$.`, R`Áp dụng cùng tính chất cho cặp góc đối còn lại.`),
+          ],
+          R`Góc $C$ bằng $110^\circ$ và góc $D$ bằng $85^\circ$.`,
+          [{ expr: "180-70", expect: "110" }, { expr: "180-95", expect: "85" }],
+        )],
+        [
+          luyen(R`Tứ giác nội tiếp có một góc $120^\circ$. Góc đối của nó bằng bao nhiêu độ?`, R`Góc đối bằng $60^\circ$.`, [{ expr: "180-120", expect: "60" }], R`Hai góc đối của tứ giác nội tiếp bù nhau.`),
+          luyen(R`Tứ giác có hai góc đối bằng $100^\circ$ và $70^\circ$. Tứ giác đó có nội tiếp được đường tròn không?`, R`Không, vì tổng hai góc đối khác $180^\circ$.`, [{ expr: "100+70", expect: "170" }], R`Tổng hai góc đối là $170^\circ$, không bằng $180^\circ$ nên tứ giác không nội tiếp.`),
+          luyen(R`Hình chữ nhật có nội tiếp được đường tròn không? Tổng hai góc đối của nó bằng bao nhiêu độ?`, R`Có, tổng hai góc đối bằng $180^\circ$.`, [{ expr: "90+90", expect: "180" }], R`Mỗi góc của hình chữ nhật bằng $90^\circ$, nên hai góc đối có tổng $180^\circ$.`),
+        ],
+        {
+          figure: "circle",
+          whyTrue: R`Hai góc đối của tứ giác nội tiếp là hai góc nội tiếp chắn hai cung ghép lại thành cả đường tròn $360^\circ$. Mỗi góc bằng nửa số đo cung bị chắn, nên tổng hai góc bằng $180^\circ$.`,
+          pitfalls: R`Cho rằng tứ giác nào cũng nội tiếp được. Hình bình hành không phải hình chữ nhật có hai góc đối bằng nhau và khác $90^\circ$, nên không nội tiếp.`,
+        },
+      ),
+      bai(
+        "do-dai-cung",
+        "Độ dài cung tròn và diện tích hình quạt",
+        R`Cung $n^\circ$ của đường tròn bán kính $R$ có độ dài $\frac{\pi Rn}{180}$. Hình quạt tròn ứng với cung đó có diện tích $\frac{\pi R^2n}{360}$.`,
+        [vd(
+          R`Đường tròn bán kính $6$. Tính độ dài cung $60^\circ$ và diện tích hình quạt tương ứng.`,
+          [
+            buoc(R`Độ dài cung là $\frac{\pi\cdot 6\cdot 60}{180}=2\pi$.`, R`Cung $60^\circ$ chiếm một phần sáu đường tròn có chu vi $12\pi$.`),
+            buoc(R`Diện tích hình quạt là $\frac{\pi\cdot 36\cdot 60}{360}=6\pi$.`, R`Hình quạt $60^\circ$ chiếm một phần sáu hình tròn có diện tích $36\pi$.`),
+          ],
+          R`Độ dài cung bằng $2\pi$ và diện tích hình quạt bằng $6\pi$.`,
+          [{ expr: "pi*6*60/180", expect: "2*pi" }, { expr: "pi*36*60/360", expect: "6*pi" }],
+        )],
+        [
+          luyen(R`Tính độ dài cung $90^\circ$ của đường tròn bán kính $4$.`, R`Độ dài cung bằng $2\pi$.`, [{ expr: "pi*4*90/180", expect: "2*pi" }], R`Cung $90^\circ$ là một phần tư đường tròn có chu vi $8\pi$.`),
+          luyen(R`Tính diện tích hình quạt $120^\circ$ của hình tròn bán kính $3$.`, R`Diện tích bằng $3\pi$.`, [{ expr: "pi*9*120/360", expect: "3*pi" }], R`Hình quạt $120^\circ$ chiếm một phần ba hình tròn có diện tích $9\pi$.`),
+          luyen(R`Một cung của đường tròn bán kính $9$ dài $3\pi$. Số đo cung bằng bao nhiêu độ?`, R`Số đo cung bằng $60^\circ$.`, [{ expr: "3*pi*180/(pi*9)", expect: "60" }], R`Từ $\frac{\pi\cdot 9\cdot n}{180}=3\pi$ suy ra $n=60$.`),
+        ],
+        {
+          figure: "circle",
+          whyTrue: R`Cả đường tròn ứng với $360^\circ$ và có chu vi $2\pi R$. Cung $n^\circ$ chiếm $\frac{n}{360}$ đường tròn, nên độ dài cung và diện tích hình quạt lần lượt bằng $\frac{n}{360}$ của chu vi và của diện tích hình tròn.`,
+          pitfalls: R`Dùng mẫu $360$ cho độ dài cung. Công thức độ dài cung đã rút gọn số $2$ nên có mẫu $180$, còn diện tích hình quạt có mẫu $360$.`,
+        },
+      ),
     ]),
     chuong("khoi", "Hình trụ, hình nón và hình cầu", [
       bai(
@@ -377,6 +448,29 @@ export const lop09: GradeBook = {
           luyen(R`Tần số $2$, $3$ và $5$ trên mẫu $10$. Tổng ba tần số tương đối bằng bao nhiêu?`, R`Tổng bằng $1$.`, [{ expr: "Rational(2,10)+Rational(3,10)+Rational(5,10)", expect: "1" }], "Cộng các tỉ số tần số trên cùng một cỡ mẫu. Tử cộng lại đúng bằng mẫu."),
           luyen(R`Trung bình của các giá trị đại diện $1, 2, 3$ với tần số $1, 1, 2$ bằng bao nhiêu?`, R`Trung bình bằng $\frac{9}{4}$.`, [{ expr: "Rational(1*1+2*1+3*2,1+1+2)", expect: "Rational(9,4)" }], "Nhân mỗi giá trị với tần số của nó, cộng lại rồi chia cho tổng tần số."),
         ],
+      ),
+      bai(
+        "khong-gian-mau-9",
+        "Không gian mẫu và xác suất",
+        R`Không gian mẫu là tập hợp mọi kết quả có thể của một phép thử. Khi các kết quả đồng khả năng, xác suất của biến cố bằng số kết quả thuận lợi chia cho số phần tử của không gian mẫu.`,
+        [vd(
+          R`Gieo hai đồng xu cân đối và phân biệt. Liệt kê không gian mẫu, rồi tính xác suất được đúng một mặt sấp.`,
+          [
+            buoc(R`Không gian mẫu gồm $4$ kết quả: SS, SN, NS và NN.`, R`Mỗi đồng xu có hai mặt, hai đồng xu phân biệt cho $2\cdot 2=4$ kết quả.`),
+            buoc(R`Biến cố đúng một mặt sấp gồm SN và NS, nên xác suất là $\frac{2}{4}=\frac{1}{2}$.`, R`Có hai kết quả thuận lợi trong bốn kết quả đồng khả năng.`),
+          ],
+          R`Xác suất bằng $\frac{1}{2}$.`,
+          [{ expr: "Rational(2,4)", expect: "Rational(1,2)" }],
+        )],
+        [
+          luyen(R`Gieo một con xúc xắc hai lần. Không gian mẫu có bao nhiêu phần tử?`, R`Không gian mẫu có $36$ phần tử.`, [{ expr: "6*6", expect: "36" }], R`Mỗi lần gieo có $6$ kết quả, hai lần gieo cho $6\cdot 6=36$ cặp.`),
+          luyen(R`Gieo một con xúc xắc hai lần. Xác suất để tổng số chấm bằng $7$ là bao nhiêu?`, R`Xác suất bằng $\frac{1}{6}$.`, [{ expr: "Rational(6,36)", expect: "Rational(1,6)" }], R`Có $6$ cặp cho tổng $7$ là $(1;6)$, $(2;5)$, $(3;4)$, $(4;3)$, $(5;2)$ và $(6;1)$.`),
+          luyen(R`Hộp có $2$ bi đỏ và $1$ bi xanh. Lấy lần lượt hai bi, không trả lại. Xác suất lấy được hai bi đỏ bằng bao nhiêu?`, R`Xác suất bằng $\frac{1}{3}$.`, [{ expr: "Rational(2*1,3*2)", expect: "Rational(1,3)" }], R`Có $3\cdot 2=6$ cách lấy có thứ tự, trong đó $2\cdot 1=2$ cách được hai bi đỏ.`),
+        ],
+        {
+          whyTrue: R`Liệt kê đầy đủ không gian mẫu bảo đảm không bỏ sót và không đếm trùng kết quả nào. Khi mọi kết quả đồng khả năng, chỉ cần đếm là tính được xác suất.`,
+          pitfalls: R`Coi SN và NS là một kết quả. Hai đồng xu phân biệt nên đó là hai kết quả khác nhau của không gian mẫu.`,
+        },
       ),
     ]),
   ],

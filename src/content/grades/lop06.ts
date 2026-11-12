@@ -6,7 +6,7 @@ const R = String.raw;
 export const lop06: GradeBook = {
   grade: 6,
   band: "thcs",
-  title: "Số tự nhiên, số nguyên tố, phân số âm, hỗn số, ước lượng và hình đều.",
+  title: "Số tự nhiên, số nguyên tố, phép tính phân số, hỗn số, ước lượng và hình đều.",
   chapters: [
     chuong("so-tu-nhien", "Số tự nhiên", [
       bai(
@@ -172,6 +172,52 @@ export const lop06: GradeBook = {
           luyen(R`Phân số $\frac{11}{4}$ viết thành hỗn số có phần nguyên nào?`, R`Phần nguyên là $2$, vì $\frac{11}{4}=2\frac{3}{4}$.`, [{ expr: "11//4", expect: "2" }], "Chia tử cho mẫu. Thương nguyên là phần nguyên của hỗn số, dư là tử của phần phân số."),
           luyen(R`Tính $3\frac{1}{2}+1\frac{1}{2}$.`, R`Tổng bằng $5$.`, [{ expr: "(3+Rational(1,2))+(1+Rational(1,2))", expect: "5" }], "Cộng phần nguyên với nhau và phần phân số với nhau. Một nửa cộng một nửa thành một đơn vị."),
         ],
+      ),
+      bai(
+        "cong-tru-phan-so-6",
+        "Cộng và trừ phân số",
+        R`Muốn cộng hai phân số khác mẫu, quy đồng mẫu rồi cộng các tử và giữ nguyên mẫu. Trừ một phân số là cộng với số đối của nó. Kết quả nên rút gọn về phân số tối giản.`,
+        [vd(
+          R`Tính $\frac{2}{3}+\frac{1}{4}$ và $\frac{1}{6}-\frac{1}{2}$.`,
+          [
+            buoc(R`Mẫu chung $12$: $\frac{2}{3}+\frac{1}{4}=\frac{8}{12}+\frac{3}{12}=\frac{11}{12}$.`, R`Bội chung nhỏ nhất của $3$ và $4$ là $12$, dùng làm mẫu chung.`),
+            buoc(R`Mẫu chung $6$: $\frac{1}{6}-\frac{1}{2}=\frac{1}{6}-\frac{3}{6}=-\frac{2}{6}=-\frac{1}{3}$.`, R`Tử $1-3$ âm nên hiệu là phân số âm, rồi rút gọn cho $2$.`),
+          ],
+          R`Tổng bằng $\frac{11}{12}$ và hiệu bằng $-\frac{1}{3}$.`,
+          [{ expr: "Rational(2,3)+Rational(1,4)", expect: "Rational(11,12)" }, { expr: "Rational(1,6)-Rational(1,2)", expect: "Rational(-1,3)" }],
+        )],
+        [
+          luyen(R`Tính $\frac{3}{8}+\frac{1}{8}$.`, R`Tổng bằng $\frac{1}{2}$.`, [{ expr: "Rational(3,8)+Rational(1,8)", expect: "Rational(1,2)" }], R`Cùng mẫu $8$, cộng tử được $\frac{4}{8}$, rút gọn thành $\frac{1}{2}$.`),
+          luyen(R`Tính $\frac{5}{6}-\frac{1}{4}$.`, R`Hiệu bằng $\frac{7}{12}$.`, [{ expr: "Rational(5,6)-Rational(1,4)", expect: "Rational(7,12)" }], R`Mẫu chung $12$: $\frac{10}{12}-\frac{3}{12}=\frac{7}{12}$.`),
+          luyen(R`Tính $-\frac{1}{3}+\frac{1}{2}$.`, R`Tổng bằng $\frac{1}{6}$.`, [{ expr: "Rational(-1,3)+Rational(1,2)", expect: "Rational(1,6)" }], R`Mẫu chung $6$: $-\frac{2}{6}+\frac{3}{6}=\frac{1}{6}$.`),
+        ],
+        {
+          whyTrue: R`Mẫu số cho biết đơn vị được chia thành mấy phần bằng nhau. Chỉ khi các phần to bằng nhau, tức cùng mẫu, thì cộng số phần mới có nghĩa.`,
+          pitfalls: R`Chọn mẫu chung quá lớn rồi quên rút gọn. Với hai mẫu $6$ và $4$, mẫu chung nhỏ nhất là $12$, không cần dùng $24$.`,
+        },
+      ),
+      bai(
+        "nhan-chia-phan-so-6",
+        "Nhân, chia phân số và phân số của một số",
+        R`Nhân hai phân số thì lấy tử nhân tử, mẫu nhân mẫu. Chia cho một phân số khác $0$ là nhân với phân số nghịch đảo. Muốn tìm $\frac{m}{n}$ của một số, lấy số đó nhân với $\frac{m}{n}$.`,
+        [vd(
+          R`Tính $\frac{2}{3}\cdot\frac{9}{4}$ và tìm $\frac{3}{4}$ của $20$.`,
+          [
+            buoc(R`Nhân: $\frac{2}{3}\cdot\frac{9}{4}=\frac{18}{12}=\frac{3}{2}$.`, R`Tử nhân tử, mẫu nhân mẫu, rồi rút gọn cho $6$.`),
+            buoc(R`Ba phần tư của $20$ là $20\cdot\frac{3}{4}=15$.`, R`Chia $20$ thành $4$ phần bằng nhau, mỗi phần $5$, rồi lấy $3$ phần.`),
+          ],
+          R`Tích bằng $\frac{3}{2}$, và $\frac{3}{4}$ của $20$ bằng $15$.`,
+          [{ expr: "Rational(2,3)*Rational(9,4)", expect: "Rational(3,2)" }, { expr: "20*Rational(3,4)", expect: "15" }],
+        )],
+        [
+          luyen(R`Tính $\frac{3}{5}:\frac{9}{10}$.`, R`Thương bằng $\frac{2}{3}$.`, [{ expr: "Rational(3,5)/Rational(9,10)", expect: "Rational(2,3)" }], R`Nhân với nghịch đảo: $\frac{3}{5}\cdot\frac{10}{9}=\frac{30}{45}=\frac{2}{3}$.`),
+          luyen(R`Tính $-\frac{1}{2}\cdot\frac{4}{7}$.`, R`Tích bằng $-\frac{2}{7}$.`, [{ expr: "Rational(-1,2)*Rational(4,7)", expect: "Rational(-2,7)" }], R`Hai thừa số khác dấu nên tích âm, và $\frac{4}{14}$ rút gọn thành $\frac{2}{7}$.`),
+          luyen(R`Lớp có $40$ bạn, $\frac{2}{5}$ số bạn tham gia câu lạc bộ. Có bao nhiêu bạn tham gia?`, R`Có $16$ bạn tham gia.`, [{ expr: "40*Rational(2,5)", expect: "16" }], R`Lấy $40$ nhân $\frac{2}{5}$: chia $40$ cho $5$ được $8$, rồi nhân $2$.`),
+        ],
+        {
+          whyTrue: R`Nhân với $\frac{1}{n}$ là chia thành $n$ phần bằng nhau rồi lấy một phần. Phép chia là phép ngược của phép nhân, nên chia cho $\frac{a}{b}$ là nhân với $\frac{b}{a}$, vì hai số này có tích bằng $1$.`,
+          pitfalls: R`Đảo ngược cả hai phân số khi chia. Chỉ đảo phân số đứng sau dấu chia.`,
+        },
       ),
     ]),
     chuong("thap-phan", "Số thập phân âm và ước lượng", [
