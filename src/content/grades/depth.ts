@@ -1,4 +1,5 @@
 import type { GradeBook, GradeDrill, GradeLesson, GradeWidget } from "./types.ts";
+import { noteFor } from "./notes/index.ts";
 
 const WIDGET: Record<string, GradeWidget> = {
   "phan-nho": "fraction",
@@ -106,10 +107,11 @@ export function deepen(book: GradeBook): GradeBook {
           if (value === null) return starred;
           return { ...starred, ask: { kind: "number" as const, value, tolerance: 0.001 } };
         });
+        const written = noteFor(book.grade, lesson.id);
         return {
           ...lesson,
-          whyTrue: lesson.whyTrue ?? whyTrue(lesson),
-          pitfalls: lesson.pitfalls ?? pitfall(lesson),
+          whyTrue: lesson.whyTrue ?? written?.why ?? whyTrue(lesson),
+          pitfalls: lesson.pitfalls ?? written?.pit ?? pitfall(lesson),
           dataNote: assumed(chapter.title, lesson),
           widget: lesson.widget ?? WIDGET[lesson.id],
           drills,
