@@ -6,7 +6,7 @@ export type TopicMeta = {
   id: string;
   n: string;
   stream: StreamId;
-  grade: "10" | "11" | "12";
+  grade: "10" | "11" | "12" | "10–11" | "10–12";
   status: "ready" | "stub";
   title: string;
   titleEn: string;

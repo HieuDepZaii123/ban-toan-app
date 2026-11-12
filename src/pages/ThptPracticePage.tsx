@@ -170,8 +170,8 @@ function Home({ bag, update, setView }: { bag: ThptBag; update: (bag: ThptBag) =
       <section className="stream">
         <h2>{t(lang, "Thi thử", "Mock exam")}</h2>
         <p className="exam-2025">
-          <A href="/thi-thu">{t(lang, "Đề chuẩn 2025", "2025-format paper")}</A>
-          <span>{t(lang, "12 trắc nghiệm, 4 Đúng/Sai, 6 trả lời ngắn, 90 phút, chấm như đề thật.", "12 multiple choice, 4 true/false, 6 short answer, 90 minutes, scored like the real paper.")}</span>
+          <A href="/thi-thu">{t(lang, "Đề thi thử THPT", "THPT mock exam")}</A>
+          <span>{t(lang, "12 trắc nghiệm, 4 Đúng/Sai, 6 trả lời ngắn, 90 phút, theo cấu trúc hiện hành. Đây là đề luyện, không phải đề của Bộ.", "12 multiple choice, 4 true/false, 6 short answer, 90 minutes, in the current format. A practice paper, not a Ministry paper.")}</span>
         </p>
         <p>{t(lang, "Đề lấy ngẫu nhiên trong phạm vi, rải đều các chủ đề. Chỉ chấm khi nộp bài.", "Questions are drawn at random from the scope, spread across topics. Marked only when you submit.")}</p>
         <p className="lecture-note">{t(lang, "Số câu", "Questions")}</p>

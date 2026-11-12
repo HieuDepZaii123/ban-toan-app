@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
-import { usePremium } from "../premium/license.ts";
+import { usePremium, useSelling } from "../premium/license.ts";
 import { thptById, topicById } from "../thpt/bank.ts";
 import {
   buildPaper,
@@ -92,11 +92,13 @@ export function ExamPage() {
     save(next);
   };
   useEffect(() => {
-    document.title = t(lang, "Đề thi thử THPT 2025 · Bàn Toán", "2025 THPT mock exam · Bàn Toán");
+    document.title = t(lang, "Đề thi thử THPT · Bàn Toán", "THPT mock exam · Bàn Toán");
   }, [lang]);
 
   const freeLeft = saved.history.length === 0 && saved.last === null;
-  const canStart = premium.kind === "active" || freeLeft;
+  const selling = useSelling();
+  // Chưa mở bán Premium thì không có gì để khóa: đề thi thử dùng tự do.
+  const canStart = premium.kind === "active" || freeLeft || selling === false;
 
   function start() {
     const buf = new Uint32Array(1);
@@ -125,28 +127,35 @@ export function ExamPage() {
 
   return (
     <PageFrame
-      kicker={t(lang, "Premium · Luyện THPT", "Premium · THPT practice")}
-      title={t(lang, "Đề thi thử THPT 2025", "2025 THPT mock exam")}
+      kicker={selling === false ? t(lang, "Luyện THPT", "THPT practice") : t(lang, "Premium · Luyện THPT", "Premium · THPT practice")}
+      title={t(lang, "Đề thi thử THPT", "THPT mock exam")}
       lead={t(
         lang,
-        "Cấu trúc như đề thật: 12 câu trắc nghiệm, 4 câu Đúng/Sai, 6 câu trả lời ngắn, 90 phút, chấm theo thang 10 điểm của Bộ. Mỗi lần bắt đầu là một đề mới.",
-        "Built like the real paper: 12 multiple choice, 4 true/false, 6 short answer, 90 minutes, scored out of 10 on the Ministry's scale. Every start draws a new paper.",
+        "Cấu trúc như đề thi tốt nghiệp THPT môn Toán: 12 câu trắc nghiệm, 4 câu Đúng/Sai, 6 câu trả lời ngắn, 90 phút, chấm trên thang 10. Mỗi lần bắt đầu là một đề mới.",
+        "Built like the THPT graduation maths paper: 12 multiple choice, 4 true/false, 6 short answer, 90 minutes, scored out of 10. Every start draws a new paper.",
       )}
     >
+      <p className="lecture-note exam-source">
+        {t(
+          lang,
+          "Căn cứ: cấu trúc định dạng đề thi tốt nghiệp THPT áp dụng từ kỳ thi năm 2025 (Quyết định 764/QĐ-BGDĐT ngày 8/3/2024 của Bộ Giáo dục và Đào tạo). Đây là đề luyện do Bàn Toán soạn và rút ngẫu nhiên từ ngân hàng câu của Bàn Toán, không phải đề của Bộ; điểm ở đây chỉ để tự ước lượng.",
+          "Basis: the THPT graduation exam format in force since the 2025 exam (Decision 764/QĐ-BGDĐT of 8 March 2024, Ministry of Education and Training). These are practice papers written by Bàn Toán and drawn at random from its own question bank, not Ministry papers; the score is only an estimate for yourself.",
+        )}
+      </p>
       {saved.last ? <Result finished={saved.last} /> : null}
       <section className="exam-intro" aria-labelledby="exam-how">
         <h2 id="exam-how">{t(lang, "Cách chấm", "Scoring")}</h2>
         <ul>
           <li>{t(lang, "Phần I: 12 câu × 0,25 điểm = 3 điểm.", "Part I: 12 questions × 0.25 = 3 points.")}</li>
           <li>{t(lang, "Phần II: 4 câu, mỗi câu 4 ý. Đúng 1 ý được 0,1; 2 ý 0,25; 3 ý 0,5; cả 4 ý 1 điểm. Tối đa 4 điểm.", "Part II: 4 questions of 4 statements. 1 right earns 0.1, 2 earn 0.25, 3 earn 0.5, all 4 earn 1 point. 4 points in all.")}</li>
-          <li>{t(lang, "Phần III: 6 câu × 0,5 điểm = 3 điểm. Ghi một số, dấu phẩy thập phân, tối đa 4 chữ số.", "Part III: 6 questions × 0.5 = 3 points. Write one number, at most 4 digits.")}</li>
+          <li>{t(lang, "Phần III: 6 câu × 0,5 điểm = 3 điểm. Ghi một số, dấu phẩy thập phân, tối đa 4 chữ số. Trên phiếu thi thật, mỗi đáp án tô tối đa 4 ký tự, tính cả dấu trừ và dấu phẩy.", "Part III: 6 questions × 0.5 = 3 points. Write one number, at most 4 digits. On the real answer sheet each answer takes at most 4 characters, counting the minus sign and the decimal comma.")}</li>
         </ul>
         {canStart ? (
           <p>
             <button type="button" className="pay-btn" onClick={start}>
               {saved.last ? t(lang, "Làm đề mới", "Start a new paper") : t(lang, "Bắt đầu làm bài (90 phút)", "Start the paper (90 minutes)")}
             </button>
-            {premium.kind !== "active" ? <small className="exam-free"> {t(lang, "Đề đầu tiên miễn phí.", "Your first paper is free.")}</small> : null}
+            {premium.kind !== "active" ? <small className="exam-free"> {selling === false ? t(lang, "Hiện mọi đề đều miễn phí.", "Every paper is free for now.") : t(lang, "Đề đầu tiên miễn phí.", "Your first paper is free.")}</small> : null}
           </p>
         ) : (
           <p className="pay-card">
@@ -211,7 +220,7 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
   }
 
   return (
-    <PageFrame kicker={t(lang, "Đề thi thử THPT 2025", "2025 THPT mock exam")} title={t(lang, "Đang làm bài", "Paper in progress")}>
+    <PageFrame kicker={t(lang, "Đề thi thử THPT", "THPT mock exam")} title={t(lang, "Đang làm bài", "Paper in progress")}>
       <div className="exam-bar" role="timer" aria-live="off">
         <span>{t(lang, "Còn", "Left")} <b>{clock(left)}</b></span>
         <span>{t(lang, `Đã làm ${done}/${total}`, `Answered ${done}/${total}`)}</span>

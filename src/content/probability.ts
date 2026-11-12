@@ -104,11 +104,11 @@ export const probabilityQuestions: Question[] = [
     choices: [R`$\dfrac{3}{8}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{1}{8}$`, R`$\dfrac{2}{3}$`],
     choicesEn: [R`$\dfrac{3}{8}$`, R`$\dfrac{1}{2}$`, R`$\dfrac{1}{8}$`, R`$\dfrac{2}{3}$`],
     answer: 0,
-    hint: R`Có $C(3,2)$ dãy, mỗi dãy xác suất $\dfrac18$.`,
+    hint: R`Có $C_3^2$ dãy, mỗi dãy xác suất $\dfrac18$.`,
     hintEn: "There are C(3, 2) sequences. Each sequence has probability 1/8.",
     steps: [
       R`Mỗi lần xác suất $\dfrac{1}{2}$, nên một dãy cụ thể có xác suất $\dfrac{1}{8}$.`,
-      R`Đúng hai ngửa: NNS, NSN, SNN, tức $C(3,2) = 3$ dãy.`,
+      R`Đúng hai ngửa: NNS, NSN, SNN, tức $C_3^2 = 3$ dãy.`,
       R`$\dfrac{3}{8}$. $\dfrac{1}{8}$ là chỉ một dãy. $\dfrac{1}{2}$ là xác suất một lần tung. $\dfrac{2}{3}$ là đếm “2 ngửa trong 3 lần” thành một phân số, không đếm các dãy.`,
     ],
     stepsEn: [

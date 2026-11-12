@@ -64,8 +64,8 @@ export const trigQuestions: Question[] = [
     choices: [R`$\sqrt{2}$`, R`$2$`, R`$1$`, R`$\sqrt{3}$`],
     choicesEn: [R`$\sqrt{2}$`, R`$2$`, R`$1$`, R`$\sqrt{3}$`],
     answer: 0,
-    hint: "Viết tổng thành √2 sin(α + 45°). Sin không vượt 1.",
-    hintEn: "Rewrite the sum as √2 sin(α + 45°). Sine never exceeds 1.",
+    hint: "Viết tổng thành $\\sqrt2\\sin(\\alpha + 45^\\circ)$. Sin không vượt quá $1$.",
+    hintEn: "Rewrite the sum as $\\sqrt2\\sin(\\alpha + 45^\\circ)$. Sine never exceeds $1$.",
     steps: [
       R`$\sin\alpha + \cos\alpha = \sqrt{2}\,\sin(\alpha + 45^\circ)$.`,
       R`$\sin$ lớn nhất bằng $1$, nên tổng lớn nhất bằng $\sqrt{2}$, đạt tại $\alpha = 45^\circ$.`,

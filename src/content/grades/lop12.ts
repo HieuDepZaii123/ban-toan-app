@@ -216,7 +216,7 @@ export const lop12: GradeBook = {
     chuong("tk-12", "Thống kê mẫu ghép nhóm", [
       bai("khoang-12", "Khoảng biến thiên và khoảng tứ phân vị của mẫu ghép nhóm",
         R`Mẫu ghép nhóm có các mút nhóm $a_1<a_2<\cdots<a_{k+1}$. Khoảng biến thiên là $R=a_{k+1}-a_1$. Tứ phân vị tính bằng nội suy trong nhóm chứa mốc: $Q_1=a+\frac{\frac{n}{4}-N}{n_i}h$ và $Q_3=a+\frac{\frac{3n}{4}-N}{n_i}h$, với $a$ là mút trái của nhóm, $N$ là tần số tích lũy trước nhóm, $n_i$ là tần số nhóm và $h$ là độ dài nhóm.`,
-        [vd(R`Ba nhóm $[0;10)$, $[10;20)$, $[20;30)$ có tần số $2, 3, 5$. Tính $R$, $Q_1$ và $Q_3$.`,
+        [vd(R`Ba nhóm $[0;10)$, $[10;20)$, $[20;30)$ có tần số $2;\ 3;\ 5$. Tính $R$, $Q_1$ và $Q_3$.`,
           [
             buoc(R`Khoảng biến thiên $R=a_{k+1}-a_1=30-0=30$.`, "Mút trái của nhóm đầu là $0$, mút phải của nhóm cuối là $30$. Hiệu này là khoảng biến thiên của mẫu ghép nhóm."),
             buoc(R`Cỡ mẫu $n=10$. Mốc $\frac{n}{4}=2{,}5$ rơi vào nhóm $[10;20)$, nên $Q_1=10+\frac{2{,}5-2}{3}\cdot 10=\frac{35}{3}$. Mốc $\frac{3n}{4}=7{,}5$ rơi vào nhóm $[20;30)$, nên $Q_3=20+\frac{7{,}5-5}{5}\cdot 10=25$.`, "Nội suy dùng tần số tích lũy trước nhóm và tần số của chính nhóm. Không lấy trung bình hai số của mẫu rời."),
@@ -236,7 +236,7 @@ export const lop12: GradeBook = {
         { topicId: "combo" }),
       bai("lech-chuan", "Phương sai và độ lệch chuẩn của mẫu ghép nhóm",
         R`Với giá trị đại diện $c_i$ và tần số $n_i$, số trung bình là $\bar x=\frac{1}{n}\sum n_i c_i$. Phương sai là $\frac{1}{n}\sum n_i(c_i-\bar x)^2$. Độ lệch chuẩn là căn không âm của phương sai.`,
-        [vd(R`Cùng ba nhóm $[0;10)$, $[10;20)$, $[20;30)$, tần số $2, 3, 5$ và giá trị đại diện $5, 15, 25$. Tính số trung bình, phương sai và độ lệch chuẩn.`,
+        [vd(R`Cùng ba nhóm $[0;10)$, $[10;20)$, $[20;30)$, tần số $2;\ 3;\ 5$ và giá trị đại diện $5;\ 15;\ 25$. Tính số trung bình, phương sai và độ lệch chuẩn.`,
           [
             buoc(R`Số trung bình bằng $\frac{2\cdot 5+3\cdot 15+5\cdot 25}{10}=18$.`, "Mỗi giá trị đại diện nhân với tần số của nhóm, rồi chia cho cỡ mẫu $n=10$."),
             buoc(R`Phương sai bằng $\frac{2(5-18)^2+3(15-18)^2+5(25-18)^2}{10}=61$. Độ lệch chuẩn bằng $\sqrt{61}$.`, "Độ lệch lấy theo giá trị đại diện, không theo từng số liệu gốc. Bình phương độ lệch rồi nhân với $n_i$."),

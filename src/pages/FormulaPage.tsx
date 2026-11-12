@@ -1,40 +1,50 @@
 import katex from "katex";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formulaGroups, searchFormulas } from "../content/formulaBook.ts";
+import { t } from "../lib/text.ts";
+import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
+import { useLang } from "../ui/useLang.ts";
 
 export function FormulaPage() {
+  const lang = useLang();
   const [query, setQuery] = useState("");
   const groups = searchFormulas(query);
+  const total = formulaGroups.reduce((sum, group) => sum + group.items.length, 0);
+  useEffect(() => {
+    document.title = t(lang, "Sổ công thức · Bàn Toán", "Formula book · Bàn Toán");
+  }, [lang]);
   return (
     <PageFrame
-      kicker="Sổ công thức"
-      title="Công thức cần nhớ"
-      lead="Công thức và điều kiện dùng. Cách tính ở từng tờ."
+      kicker={t(lang, "Sổ công thức", "Formula book")}
+      title={t(lang, "Công thức cần nhớ", "Formulas to remember")}
+      lead={t(lang, "Mỗi công thức đi kèm điều kiện dùng. Cách tính và ví dụ nằm ở từng chuyên đề.", "Each formula comes with the condition for using it. Worked methods and examples are in each topic.")}
     >
       <form className="search" role="search" onSubmit={(event) => event.preventDefault()}>
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Tìm, ví dụ Viète hoặc đạo hàm"
-          aria-label="Tìm công thức"
+          placeholder={t(lang, "Tìm, ví dụ Viète hoặc đạo hàm", "Search, for example Viète or đạo hàm")}
+          aria-label={t(lang, "Tìm công thức", "Search formulas")}
         />
       </form>
-      {groups.length === 0 ? <p className="empty">Không thấy công thức khớp «{query.trim()}».</p> : null}
-      <div className="panel">
+      {lang === "en" ? <p className="lecture-note vi-only-note">Formula names and conditions are written in Vietnamese.</p> : null}
+      {groups.length === 0 ? <p className="empty">{t(lang, `Không thấy công thức khớp «${query.trim()}».`, `No formula matches “${query.trim()}”.`)}</p> : null}
+      <div className="panel" lang="vi">
         {groups.map((group) => (
           <section key={group.title} className="tool-card">
             <h2>{group.title}</h2>
             {group.items.map((item) => (
               <article key={item.name} className="fitem">
-                <small>{item.name}</small>
+                <h3 className="formula-name">{item.name}</h3>
                 <Tex tex={item.tex} />
+                {item.note ? <p className="formula-note"><b>{t(lang, "Điều kiện. ", "Condition. ")}</b><MathText text={item.note} /></p> : null}
               </article>
             ))}
           </section>
         ))}
       </div>
-      <p className="lecture-note">{formulaGroups.reduce((sum, group) => sum + group.items.length, 0)} công thức, xếp theo chủ đề.</p>
+      <p className="lecture-note">{t(lang, `${total} công thức, xếp theo chủ đề.`, `${total} formulas, grouped by topic.`)}</p>
     </PageFrame>
   );
 }

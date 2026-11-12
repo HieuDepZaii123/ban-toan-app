@@ -79,3 +79,23 @@ jobs:
       - run: npm run lint
       - run: npm run test:content
       - run: npm run build
+
+  ui:
+    name: UI audit (Playwright, every page)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run test:ui:full -- --report ui-report.md
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: ui-report
+          path: ui-report.md

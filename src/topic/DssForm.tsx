@@ -95,11 +95,11 @@ export function DssForm({ topicId, question }: { topicId: string; question: Ques
       })}
       <p className="status" role="status" aria-live="polite">{status}</p>
       {locked ? null : (
-        <p className="note">{t(
-          lang,
-          "Mỗi mệnh đề chọn một trong ba: Đúng, Sai, hoặc Chưa đủ. Phím 1–3 khi đang ở nhóm đó. Đủ bốn mệnh đề thì hiện lý do và điểm x/4.",
-          "Mark each statement true, false, or not enough. Keys 1–3 work inside that group. After all four, the reason and the score x/4 appear.",
-        )}</p>
+        <p className="note">
+          {t(lang, "Mỗi mệnh đề chọn một trong ba: Đúng, Sai, hoặc Chưa đủ. ", "Mark each statement true, false, or not enough. ")}
+          <span className="kbd-only">{t(lang, "Phím 1–3 khi đang ở nhóm đó. ", "Keys 1–3 work inside that group. ")}</span>
+          {t(lang, "Đủ bốn mệnh đề thì hiện lý do và điểm x/4. Dạng ba lựa chọn này là bài luyện của Bàn Toán; đề thi thật chỉ có Đúng hoặc Sai.", "After all four, the reason and the score x/4 appear. This three-way form is Bàn Toán practice; the real exam offers only true or false.")}
+        </p>
       )}
     </div>
   );

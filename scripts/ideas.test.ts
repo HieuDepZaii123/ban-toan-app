@@ -10,7 +10,7 @@ import { MENU_LINKS } from "../src/ui/navLinks.ts";
 
 const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
 const BARE = /\b(khong|duoc|dinh|nghiem|phuong trinh|ham so)\b/i;
-const ROUTES = new Set([
+const ROUTES = new Set(["/du-lieu", "/phu-huynh", 
   "/",
   "/kien-thuc",
   "/soan-tai-lieu",

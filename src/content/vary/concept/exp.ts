@@ -145,7 +145,7 @@ export const expPools: Pool[] = [
     id: "exp-c-case",
     prompt: R`Gốc nhân $(1+r)$ mỗi năm, $r>0$. Thời gian để gấp đôi là công thức nào?`,
     promptEn: R`A principal is multiplied by $(1+r)$ each year, $r>0$. Which formula is the doubling time?`,
-    hint: R`Giải $(1+r)^t=2$, đừng đảo log và đừng lấy $100/r$.`,
+    hint: R`Giải $(1+r)^t=2$, đừng đảo log và đừng lấy $\dfrac{100}{r}$.`,
     hintEn: R`Solve $(1+r)^t=2$. Do not invert the log, and do not use $100/r$.`,
     lookVi: R`Gấp đôi là $(1+r)^t=2$, tức $t=\dfrac{\ln 2}{\ln(1+r)}$.`,
     lookEn: R`Doubling means $(1+r)^t=2$, so $t=\dfrac{\ln 2}{\ln(1+r)}$.`,

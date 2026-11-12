@@ -245,7 +245,7 @@ export const triangleDang: TopicDang = {
       answer: R`Điều kiện cần và đủ là góc xen giữa bằng $90^\circ$. Ví dụ các cạnh $3$, $4$ và $5$ thỏa $9+16=25$.`,
       steps: [
         { claim: R`Với $a,b>0$, số hạng $2ab\cos C$ bằng $0$ khi và chỉ khi $\cos C=0$.`, why: "Tích $2ab$ dương. Trong một góc trong của tam giác, côsin bằng $0$ đúng tại góc vuông." },
-        { claim: R`Khi đó $c^2=a^2+b^2$. Bộ $3,4,5$ cho $25=9+16$.`, why: "Đây là trường hợp đặc biệt của định lí côsin. Ví dụ số xác nhận đẳng thức Pythagore." },
+        { claim: R`Khi đó $c^2=a^2+b^2$. Bộ $3;\ 4;\ 5$ cho $25=9+16$.`, why: "Đây là trường hợp đặc biệt của định lí côsin. Ví dụ số xác nhận đẳng thức Pythagore." },
       ],
       checks: [{ expr: "3**2+4**2-5**2", expect: "0" }],
     },

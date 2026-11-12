@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const quadraticLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Parabol $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: miệng lên, có cực tiểu. $a<0$: miệng xuống, có cực đại.`, en: R`The parabola $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: opens up, a minimum. $a<0$: opens down, a maximum.` },
+    { k: "mo", vi: R`Parabol $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: bề lõm hướng lên, có giá trị nhỏ nhất tại đỉnh. $a<0$: bề lõm hướng xuống, có giá trị lớn nhất tại đỉnh.`, en: R`The parabola $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: opens up, a minimum. $a<0$: opens down, a maximum.` },
     { k: "dinh", vi: R`Đỉnh $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, với $\Delta=b^2-4ac$.`, en: R`Vertex $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, where $\Delta=b^2-4ac$.` },
     { k: "vd", vi: R`Chuồng $40$ m, một cạnh tựa tường: $S=x(40-2x)=-2x^2+40x$. Đỉnh tại $x=-\dfrac{40}{2\cdot(-2)}=10$, và $S(10)=200$.`, en: R`A $40$ m pen with one side against a wall: $S=x(40-2x)=-2x^2+40x$. $S'=0$ at $x=10$, and $S(10)=200$.` },
   ],

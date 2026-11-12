@@ -2,6 +2,7 @@ import react from "@vitejs/plugin-react";
 import { copyFileSync, existsSync } from "node:fs";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { SECURITY_HEADERS } from "./server/http/headers.ts";
 import { payApi } from "./server/pay/vitePlugin.ts";
 
 function spa404(): Plugin {
@@ -26,7 +27,7 @@ export default defineConfig({
       manifest: {
         name: "Bàn Toán",
         short_name: "Bàn Toán",
-        description: "Bàn làm việc toán THPT: kéo tham số, nhìn hình đổi, rồi luyện.",
+        description: "Toán lớp 1–12: bài học có hình kéo, ví dụ từng bước và bài luyện có lời giải.",
         lang: "vi",
         start_url: "/",
         scope: "/",
@@ -83,7 +84,7 @@ export default defineConfig({
     }),
   ],
   server: { host: "127.0.0.1", port: 43123, strictPort: true },
-  preview: { host: "127.0.0.1", port: 43991, strictPort: true },
+  preview: { host: "127.0.0.1", port: 43991, strictPort: true, headers: SECURITY_HEADERS },
   build: {
     rollupOptions: {
       output: {

@@ -400,7 +400,7 @@ export const expDang: TopicDang = {
       answer: R`Tổng bằng $3$. Trên các mốc này hàm tăng, vì đối số tăng thì giá trị logarit tăng.`,
       steps: [
         { claim: R`Ô $\log_2 4$ bằng $2$ và ô $\log_2 2$ bằng $1$, tổng bằng $3$.`, why: "Quy tắc cộng áp dụng được vì cả hai đối số dương và cùng cơ số hợp lệ." },
-        { claim: R`Dãy đối số $1,2,4,8$ tăng và dãy giá trị $0,1,2,3$ tăng.`, why: "Bảng cho một bằng chứng hữu hạn của chiều đồng biến. Với cơ số $2>1$, điều này khớp với tính đồng biến của hàm." },
+        { claim: R`Dãy đối số $1;\ 2;\ 4;\ 8$ tăng và dãy giá trị $0;\ 1;\ 2;\ 3$ tăng.`, why: "Bảng cho một bằng chứng hữu hạn của chiều đồng biến. Với cơ số $2>1$, điều này khớp với tính đồng biến của hàm." },
       ],
       checks: [
         { expr: "log(4,2)+log(2,2)", expect: "3" },

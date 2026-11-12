@@ -47,7 +47,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/luyen", id: "drill", label: "Đề luyện", en: "Mixed drill" },
       { href: "/luyen-lop", id: "lop", label: "Lớp 1–9", en: "Grades 1–9", nested: true },
       { href: "/luyen-thpt", id: "thpt", label: "THPT 10–12", en: "Grades 10–12" },
-      { href: "/thi-thu", id: "exam2025", label: "Thi thử 2025", en: "2025 mock exam" },
+      { href: "/thi-thu", id: "exam2025", label: "Thi thử THPT", en: "THPT mock exam" },
       { href: "/on-loi-sai", id: "review", label: "Ôn lỗi sai", en: "Mistake review" },
       { href: "/so-loi", id: "miss", label: "Sổ lỗi", en: "Miss book" },
       { href: "/danh-gia", id: "assess", label: "Đánh giá", en: "Assess" },
@@ -72,6 +72,8 @@ export const NAV_GROUPS: NavGroup[] = [
     pages: [
       { href: "/gioi-thieu", id: "refer", label: "Giới thiệu", en: "Refer" },
       { href: "/nang-cap", id: "premium", label: "Premium", en: "Premium" },
+      { href: "/phu-huynh", id: "parents", label: "Phụ huynh và thầy cô", en: "Parents and teachers" },
+      { href: "/du-lieu", id: "data", label: "Dữ liệu của tôi", en: "My data" },
       { href: "/chinh-sach", id: "policy", label: "Chính sách", en: "Policy" },
     ],
   },

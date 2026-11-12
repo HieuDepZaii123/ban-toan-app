@@ -7,13 +7,17 @@ import { useRoute } from "../lib/useRoute.ts";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 import { activateLicense, LICENSE_KEY, usePremium } from "./license.ts";
-import { REFUND_DAYS } from "./terms.ts";
+import { REFUND_DAYS, SUPPORT_EMAIL } from "./terms.ts";
 
 type PlanId = "month" | "year";
 type PayMethod = "wallet" | "qr" | "bank" | "crypto";
 
 type Plans = {
   sample: boolean;
+  /** Máy chủ có kênh nhận tiền thật. Chưa có thì trang không bán gì. */
+  selling?: boolean;
+  /** Chế độ thử của nhà phát triển: xem luồng thanh toán với tài khoản mẫu. */
+  demo?: boolean;
   lockContent: boolean;
   plans: { id: PlanId; amount: number; days: number }[];
   crypto?: { chains: { id: string; sample: boolean }[] };
@@ -74,6 +78,7 @@ export function Upgrade() {
   const [loadError, setLoadError] = useState(false);
   const [email, setEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
+  const [buyer, setBuyer] = useState<"" | "adult" | "teen" | "child">("");
   const [plan, setPlan] = useState<PlanId>("month");
   const [method, setMethod] = useState<PayMethod>("wallet");
   const [chain, setChain] = useState<CryptoChainId>("tron-usdt");
@@ -139,7 +144,7 @@ export function Upgrade() {
       const res = await fetch("/api/premium/create", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, plan, method, chain: method === "crypto" ? chain : undefined, ...checkoutRef() }),
+        body: JSON.stringify({ buyer, email, plan, method, chain: method === "crypto" ? chain : undefined, ...checkoutRef() }),
       });
       const body = await res.json() as OrderView & { message?: string };
       if (!res.ok || !body.orderId) {
@@ -167,6 +172,7 @@ export function Upgrade() {
   const month = plans?.plans.find((item) => item.id === "month");
   const year = plans?.plans.find((item) => item.id === "year");
   const waiting = order?.status === "pending";
+  const closed = !orderId && plans !== null && !plans.selling && !plans.demo;
 
   return (
     <div className="desk">
@@ -178,21 +184,32 @@ export function Upgrade() {
       <main id="content" className="pay">
         <p className="kicker">Premium</p>
         <h1>{t(lang, "Nâng cấp Premium", "Upgrade to Premium")}</h1>
+        {closed ? <Closed /> : null}
         <PremiumBenefits />
-        <p className="pay-note">
-          {t(
-            lang,
-            "49.000đ cho 30 ngày, 399.000đ cho 365 ngày. Không tự gia hạn. Trả bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Mọi bài học, luyện tập và trợ lý 8 câu mỗi ngày vẫn miễn phí.",
-            "49,000 VND for 30 days, 399,000 VND for 365 days. Never renews automatically. Pay with MoMo, VietQR, bank transfer or USDT/USDC. All lessons, practice and 8 tutor questions a day stay free.",
-          )}
-          {" "}
-          <A href="/chinh-sach">{t(lang, `Hoàn tiền trong ${REFUND_DAYS} ngày`, `Refund within ${REFUND_DAYS} days`)}</A>
-          {" · "}
-          <A href="/gioi-thieu">{t(lang, "Giới thiệu bạn bè", "Refer a friend")}</A>
-        </p>
+        {/* Chưa mở bán thì chưa nêu giá: giá và cách trả tiền chỉ hiện khi thật sự mua được. */}
+        {closed ? null : (
+          <p className="pay-note">
+            {t(
+              lang,
+              `${vnd(month?.amount ?? 49000)} cho 30 ngày, ${vnd(year?.amount ?? 399000)} cho 365 ngày (khoảng ${vnd(Math.round((year?.amount ?? 399000) / 12000) * 1000)} mỗi tháng). Mua một lần, không tự gia hạn. Mọi bài học, bài luyện và trợ lý 8 câu mỗi ngày vẫn miễn phí.`,
+              `${vnd(month?.amount ?? 49000)} for 30 days, ${vnd(year?.amount ?? 399000)} for 365 days (about ${vnd(Math.round((year?.amount ?? 399000) / 12000) * 1000)} a month). Bought once, never renews automatically. All lessons, practice and 8 tutor questions a day stay free.`,
+            )}
+            {" "}
+            <A href="/chinh-sach">{t(lang, `Hoàn tiền trong ${REFUND_DAYS} ngày`, `Refund within ${REFUND_DAYS} days`)}</A>
+            {" · "}
+            <A href="/gioi-thieu">{t(lang, "Giới thiệu bạn bè", "Refer a friend")}</A>
+          </p>
+        )}
         <LicenseBox />
+        <RecoverBox />
+        {SUPPORT_EMAIL ? (
+          <p className="pay-note">
+            {t(lang, "Hỗ trợ, hoàn tiền, xem hoặc xóa dữ liệu đơn hàng: ", "Support, refunds, seeing or deleting order data: ")}
+            <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+          </p>
+        ) : null}
         {loadError ? <p className="empty">{t(lang, "Không tải được bảng giá.", "The price list did not load.")}</p> : null}
-        {!orderId ? (
+        {!orderId ? (closed ? null : (
           <form
             className="pay"
             onSubmit={(event) => {
@@ -200,6 +217,11 @@ export function Upgrade() {
               void submit();
             }}
           >
+            {plans?.demo ? (
+              <p className="pay-warn" role="note">
+                {t(lang, "Chế độ thử của nhà phát triển: tài khoản nhận tiền là tài khoản mẫu, không có giao dịch thật.", "Developer demo mode: the receiving accounts are samples and no real payment is taken.")}
+              </p>
+            ) : null}
             <div className="pay-grid two" role="radiogroup" aria-label={t(lang, "Gói", "Plan")}>
               <PlanCard id="month" title={t(lang, "Một tháng", "One month")} days={month?.days ?? 30} amount={month?.amount ?? 49000} on={plan === "month"} onPick={() => setPlan("month")} />
               <PlanCard id="year" title={t(lang, "Một năm", "One year")} days={year?.days ?? 365} amount={year?.amount ?? 399000} on={plan === "year"} onPick={() => setPlan("year")} />
@@ -215,12 +237,33 @@ export function Upgrade() {
                 aria-label={t(lang, "Email nhận quyền Premium", "Email for the Premium license")}
               />
             </label>
+            <p className="pay-note">{t(lang, "Email chỉ dùng để tra cứu đơn và khôi phục mã Premium.", "The email is only used to look up the order and recover the Premium key.")}</p>
+            <fieldset className="pay-buyer">
+              <legend>{t(lang, "Ai đang mua?", "Who is buying?")}</legend>
+              <label>
+                <input type="radio" name="buyer" required checked={buyer === "adult"} onChange={() => setBuyer("adult")} />
+                <span>{t(lang, "Tôi từ 18 tuổi trở lên (mua cho mình hoặc cho con)", "I am 18 or older (buying for myself or for my child)")}</span>
+              </label>
+              <label>
+                <input type="radio" name="buyer" checked={buyer === "teen"} onChange={() => { setBuyer("teen"); if (method === "crypto") setMethod("wallet"); }} />
+                <span>{t(lang, "Tôi từ 16 đến dưới 18 tuổi, cha mẹ hoặc người giám hộ đã đồng ý", "I am 16 or 17 and a parent or guardian has agreed")}</span>
+              </label>
+              <label>
+                <input type="radio" name="buyer" checked={buyer === "child"} onChange={() => { setBuyer("child"); if (method === "crypto") setMethod("wallet"); }} />
+                <span>{t(lang, "Tôi dưới 16 tuổi", "I am under 16")}</span>
+              </label>
+              {buyer === "child" ? (
+                <p className="pay-warn" role="status">
+                  {t(lang, "Bạn chưa tự mua được. Hãy đưa máy cho cha mẹ hoặc người giám hộ để họ mua giúp, hoặc gửi họ địa chỉ trang này. Mọi bài học và bài luyện vẫn miễn phí.", "You cannot buy this yourself yet. Hand the device to a parent or guardian so they can buy it, or send them this page. All lessons and practice stay free.")}
+                </p>
+              ) : null}
+            </fieldset>
             <label className="pay-consent">
               <input type="checkbox" required checked={agreed} onChange={(event) => setAgreed(event.target.checked)} />
               <span>
                 {t(lang, "Tôi đã đọc ", "I have read the ")}
                 <A href="/chinh-sach">{t(lang, "chính sách và điều kiện hoàn tiền", "policy and refund terms")}</A>
-                {t(lang, ". Nếu tôi dưới 16 tuổi, cha mẹ hoặc người giám hộ đã đồng ý.", ". If I am under 16, a parent or guardian has agreed.")}
+                .
               </span>
             </label>
             <div className="pay-grid methods" role="radiogroup" aria-label={t(lang, "Cách thanh toán", "Payment method")}>
@@ -228,14 +271,14 @@ export function Upgrade() {
                 id="wallet"
                 on={method === "wallet"}
                 title={t(lang, "Ví MoMo", "MoMo wallet")}
-                body={t(lang, "Mở app MoMo hoặc trang thanh toán. Xác nhận tự động khi MoMo báo IPN.", "Open the MoMo app or the payment page. Access turns on when MoMo sends the IPN.")}
+                body={t(lang, "Mở app MoMo hoặc trang thanh toán. Quyền Premium bật tự động khi MoMo xác nhận.", "Open the MoMo app or the payment page. Premium turns on when MoMo confirms.")}
                 onPick={() => setMethod("wallet")}
               />
               <MethodCard
                 id="qr"
                 on={method === "qr"}
                 title={t(lang, "Quét QR", "Scan a QR")}
-                body={t(lang, "Mã QR MoMo ngay trên trang, kèm VietQR chuyển khoản vào tài khoản mẫu.", "A MoMo QR on this page, plus a VietQR for the sample bank account.")}
+                body={t(lang, "Quét mã QR MoMo bằng app MoMo, hoặc mã VietQR bằng app ngân hàng.", "Scan the MoMo QR with the MoMo app, or the VietQR with a banking app.")}
                 onPick={() => setMethod("qr")}
               />
               <MethodCard
@@ -245,13 +288,15 @@ export function Upgrade() {
                 body={t(lang, "Số tài khoản, số tiền và nội dung chuyển khoản riêng của đơn. Đơn chờ 15 phút.", "Account number, amount, and a transfer note unique to this order. The order waits 15 minutes.")}
                 onPick={() => setMethod("bank")}
               />
-              <MethodCard
-                id="crypto"
-                on={method === "crypto"}
-                title={t(lang, "Tiền mã hóa (ngoài Việt Nam)", "Crypto (outside Vietnam)")}
-                body={t(lang, "Dành cho người mua ở nước ngoài: USDT hoặc USDC chuyển thẳng vào ví của Bàn Toán. Ở Việt Nam hãy dùng MoMo hoặc chuyển khoản. Đơn chờ 15 phút.", "For buyers outside Vietnam: USDT or USDC sent straight to the Bàn Toán wallet. In Vietnam, use MoMo or a bank transfer. The order waits 15 minutes.")}
-                onPick={() => setMethod("crypto")}
-              />
+              {plans?.crypto && buyer === "adult" ? (
+                <MethodCard
+                  id="crypto"
+                  on={method === "crypto"}
+                  title={t(lang, "Tiền mã hóa (từ 18 tuổi, ngoài Việt Nam)", "Crypto (18+, outside Vietnam)")}
+                  body={t(lang, "Dành cho người mua từ 18 tuổi ở nước ngoài: USDT hoặc USDC chuyển thẳng vào ví của đơn vị vận hành. Ở Việt Nam hãy dùng MoMo hoặc chuyển khoản. Gửi nhầm mạng hoặc sai số tiền thì không lấy lại được. Đơn chờ 15 phút.", "For buyers aged 18 or older outside Vietnam: USDT or USDC sent straight to the operator's wallet. In Vietnam, use MoMo or a bank transfer. A transfer on the wrong network or for the wrong amount cannot be recovered. The order waits 15 minutes.")}
+                  onPick={() => setMethod("crypto")}
+                />
+              ) : null}
             </div>
             {method === "crypto" ? (
               <>
@@ -267,11 +312,11 @@ export function Upgrade() {
               </>
             ) : null}
             {formError ? <p className="pay-warn" role="alert">{formError}</p> : null}
-            <button className="pay-btn" type="submit" disabled={busy || !plans || !agreed}>
+            <button className="pay-btn" type="submit" disabled={busy || !plans || !agreed || (buyer !== "adult" && buyer !== "teen")}>
               {busy ? t(lang, "Đang tạo đơn…", "Creating the order…") : t(lang, "Tạo đơn thanh toán", "Create the payment")}
             </button>
           </form>
-        ) : (
+        )) : (
           order ? (
             <OrderPanel order={order} waiting={waiting} copied={copied} remain={left(order.expiresAt)} beat={tick} onCopy={copy} onReplace={setOrder} />
           ) : (
@@ -292,7 +337,7 @@ function PlanCard({ id, title, days, amount, on, onPick }: { id: PlanId; title: 
         <b>{title}</b>
       </span>
       <span className="pay-price">{amount === undefined ? "…" : vnd(amount)}</span>
-      <small>{t(lang, `${days} ngày · giá mẫu`, `${days} days · sample price`)}</small>
+      <small>{t(lang, `${days} ngày · mua một lần`, `${days} days · one-off purchase`)}</small>
     </label>
   );
 }
@@ -336,7 +381,7 @@ function OrderPanel({
             ? t(lang, "Đơn đã hết hạn sau 15 phút.", "The order expired after 15 minutes.")
             : t(lang, `Đang chờ thanh toán · còn ${remain}`, `Waiting for payment · ${remain} left`)}
       </p>
-      <p className="pay-note">{t(lang, `Số tiền ${vnd(order.amount)} do server tính. Mã đơn ${order.orderId}.`, `Amount ${vnd(order.amount)} was set by the server. Order ${order.orderId}.`)}</p>
+      <p className="pay-note">{t(lang, `Số tiền: ${vnd(order.amount)}. Mã đơn: ${order.orderId}. Hãy giữ mã đơn và email đã nhập: sau này cần hai thứ đó để khôi phục mã Premium.`, `Amount: ${vnd(order.amount)}. Order: ${order.orderId}. Keep the order id and the email you entered: both are needed later to recover the Premium key.`)}</p>
       {order.licenseKey ? (
         <p className="pay-card">
           <b>{t(lang, "Mã kích hoạt", "License key")}</b>
@@ -389,13 +434,13 @@ function QrBlock({ order }: { order: OrderView }) {
       {order.momoQrDataUrl ? (
         <p>
           <img className="pay-qr" src={order.momoQrDataUrl} alt={t(lang, "Mã QR MoMo", "MoMo QR code")} />
-          <small>{t(lang, "Quét bằng app MoMo. MoMo xác nhận qua IPN.", "Scan with the MoMo app. MoMo confirms through the IPN.")}</small>
+          <small>{t(lang, "Quét bằng app MoMo. Quyền Premium bật khi MoMo xác nhận.", "Scan with the MoMo app. Premium turns on when MoMo confirms.")}</small>
         </p>
       ) : null}
       {order.bank?.qrDataUrl ? (
         <p>
           <img className="pay-qr" src={order.bank.qrDataUrl} alt={t(lang, "Mã VietQR chuyển khoản", "VietQR transfer code")} />
-          <small>{t(lang, "VietQR mẫu, quét bằng app ngân hàng. Tiền vào tài khoản cấu hình trên server.", "Sample VietQR, scanned with a banking app. Money goes to the account configured on the server.")}</small>
+          <small>{t(lang, "Quét bằng app ngân hàng để chuyển khoản đúng số tiền và nội dung của đơn.", "Scan with a banking app to transfer the exact amount with this order's note.")}</small>
         </p>
       ) : null}
     </section>
@@ -435,7 +480,7 @@ function BankBlock({
           </button>
         </div>
       ))}
-      <small>{t(lang, "Nội dung chuyển khoản phải đúng từng ký tự. Webhook đối soát hoặc admin mới kích hoạt đơn.", "The transfer note must match exactly. A reconciliation webhook or an admin activates the order.")}</small>
+      <small>{t(lang, "Nội dung chuyển khoản phải đúng từng ký tự. Quyền Premium bật sau khi hệ thống đối chiếu được khoản tiền; nếu sau 24 giờ chưa thấy, hãy liên hệ kèm mã đơn.", "The transfer note must match exactly. Premium turns on once the transfer is matched; if nothing happens within 24 hours, contact us with the order id.")}</small>
     </section>
   );
 }
@@ -447,10 +492,10 @@ function PremiumBenefits() {
       <h2 id="benefits-title">{t(lang, "Premium gồm", "Premium includes")}</h2>
       <ul>
         <li>
-          <b>{t(lang, "Đề thi thử chuẩn THPT 2025", "2025 THPT mock exams")}</b>
+          <b>{t(lang, "Đề thi thử theo cấu trúc thi tốt nghiệp THPT hiện hành", "Mock exams in the current THPT exam format")}</b>
           {t(lang,
-            ": ba phần như đề thật (12 câu trắc nghiệm, 4 câu Đúng/Sai, 6 câu trả lời ngắn), 90 phút, chấm theo thang điểm của Bộ, xem lại từng câu kèm lời giải. Mỗi đề rút mới từ ngân hàng, làm bao nhiêu đề cũng được.",
-            ": the three parts of the real paper (12 multiple choice, 4 true/false, 6 short answer), 90 minutes, scored on the Ministry's scale, with every question reviewable with its solution. Each paper is drawn fresh from the bank, as many as you like.")}
+            " (áp dụng từ kỳ thi 2025): ba phần gồm 12 câu trắc nghiệm, 4 câu Đúng/Sai và 6 câu trả lời ngắn, 90 phút, chấm trên thang 10, xem lại từng câu kèm lời giải. Mỗi đề rút mới từ ngân hàng câu của Bàn Toán, làm bao nhiêu đề cũng được. Đây là đề luyện, không phải đề của Bộ.",
+            " (in force since the 2025 exam): three parts with 12 multiple choice, 4 true/false and 6 short answer questions, 90 minutes, scored out of 10, with every question reviewable with its solution. Each paper is drawn fresh from Bàn Toán's own bank, as many as you like. These are practice papers, not Ministry papers.")}
         </li>
         <li>
           <b>{t(lang, "Bảng điểm theo phần và chủ đề", "Scores by part and topic")}</b>
@@ -491,6 +536,72 @@ function PremiumBenefits() {
   );
 }
 
+/** Khi máy chủ chưa có kênh nhận tiền thật, trang không bày một quầy thanh toán giả. */
+function Closed() {
+  const lang = useLang();
+  return (
+    <section className="pay-card pay-closed" role="note" aria-label={t(lang, "Premium chưa mở bán", "Premium is not on sale yet")}>
+      <b>{t(lang, "Premium chưa mở bán", "Premium is not on sale yet")}</b>
+      <span>
+        {t(lang, "Bàn Toán chưa nhận thanh toán. Hiện giờ mọi bài học, bài luyện, đề thi thử và trợ lý (8 câu mỗi ngày) đều dùng miễn phí. Khi mở bán, giá và cách trả tiền sẽ hiện ở trang này.", "Bàn Toán is not taking payments yet. For now every lesson, practice set, mock exam and the tutor (8 questions a day) is free. When sales open, the price and the ways to pay will appear on this page.")}
+      </span>
+      <A href="/thi-thu">{t(lang, "Làm đề thi thử THPT", "Take a THPT mock exam")}</A>
+    </section>
+  );
+}
+
+/** Quên mã Premium: khôi phục bằng mã đơn và email đã mua. */
+function RecoverBox() {
+  const lang = useLang();
+  const premium = usePremium();
+  const [orderId, setOrderId] = useState("");
+  const [email, setEmail] = useState("");
+  const [note, setNote] = useState("");
+  const [key, setKey] = useState("");
+  const [busy, setBusy] = useState(false);
+  if (premium.kind === "active") return null;
+  return (
+    <details className="pay-recover">
+      <summary>{t(lang, "Quên mã Premium?", "Lost your Premium key?")}</summary>
+      <form
+        className="pay-row license-box"
+        onSubmit={(event) => {
+          event.preventDefault();
+          setBusy(true);
+          setNote("");
+          void fetch("/api/premium/recover", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ orderId: orderId.trim(), email: email.trim() }),
+          }).then(async (res) => {
+            const body = await res.json() as { licenseKey?: string };
+            if (!res.ok || !body.licenseKey) {
+              setNote(t(lang, "Không thấy đơn đã thanh toán nào khớp cả mã đơn lẫn email này.", "No paid order matches both this order id and this email."));
+              return;
+            }
+            setKey(body.licenseKey);
+            await activateLicense(body.licenseKey);
+          }).catch(() => {
+            setNote(t(lang, "Chưa nối được máy chủ. Thử lại khi có mạng.", "The server did not answer. Try again when you are online."));
+          }).finally(() => setBusy(false));
+        }}
+      >
+        <label>
+          <span>{t(lang, "Mã đơn (bắt đầu bằng BT)", "Order id (starts with BT)")}</span>
+          <input value={orderId} onChange={(event) => setOrderId(event.target.value)} autoComplete="off" spellCheck={false} required />
+        </label>
+        <label>
+          <span>{t(lang, "Email đã nhập khi mua", "Email used for the purchase")}</span>
+          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" required />
+        </label>
+        <button type="submit" className="text-btn" disabled={busy}>{t(lang, "Khôi phục mã", "Recover the key")}</button>
+        {note ? <p className="chat-note" role="status">{note}</p> : null}
+        {key ? <p className="chat-note" role="status">{t(lang, "Mã của bạn: ", "Your key: ")}<code>{key}</code></p> : null}
+      </form>
+    </details>
+  );
+}
+
 function LicenseBox() {
   const lang = useLang();
   const premium = usePremium();
@@ -503,7 +614,7 @@ function LicenseBox() {
         <b>{t(lang, "Premium đang bật trên máy này", "Premium is on for this device")}</b>
         <span>{t(lang, `đến ${new Date(premium.until).toLocaleDateString("vi-VN")}.`, `until ${new Date(premium.until).toLocaleDateString("en-GB")}.`)}</span>
         {" "}
-        <A href="/thi-thu">{t(lang, "Làm đề thi thử 2025", "Take a 2025 mock exam")}</A>
+        <A href="/thi-thu">{t(lang, "Làm đề thi thử THPT", "Take a THPT mock exam")}</A>
       </p>
     );
   }

@@ -117,12 +117,13 @@ export function Motion({ id, variant, label }: { id: string; variant: "card" | "
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onMotion = () => {
-      calm = motionQuery.matches;
+      calm = motionQuery.matches || document.documentElement.dataset.motion === "less";
       host.dataset.calm = calm ? "1" : "0";
       sync();
     };
     onMotion();
     motionQuery.addEventListener("change", onMotion);
+    window.addEventListener("bt-prefs", onMotion);
 
     const onTheme = () => {
       ink = readInk();
@@ -142,6 +143,7 @@ export function Motion({ id, variant, label }: { id: string; variant: "card" | "
       io.disconnect();
       resize.disconnect();
       motionQuery.removeEventListener("change", onMotion);
+      window.removeEventListener("bt-prefs", onMotion);
       window.removeEventListener("ban-toan-theme", onTheme);
       hoverTarget.removeEventListener("pointerenter", onEnter);
       hoverTarget.removeEventListener("pointerleave", onLeave);

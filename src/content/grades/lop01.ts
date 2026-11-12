@@ -12,7 +12,7 @@ export const lop01: GradeBook = {
       bai(
         "dem-10",
         "Đếm các số từ 1 đến 10",
-        R`Các số $1, 2, 3, 4, 5, 6, 7, 8, 9, 10$ đi liền nhau. Số đứng sau lớn hơn số đứng trước đúng $1$.`,
+        R`Các số $1;\ 2;\ 3;\ 4;\ 5;\ 6;\ 7;\ 8;\ 9;\ 10$ đi liền nhau. Số đứng sau lớn hơn số đứng trước đúng $1$.`,
         [vd(
           R`Có $4$ ngôi sao. Đếm thêm một ngôi. Hỏi được số mấy?`,
           [
@@ -47,6 +47,53 @@ export const lop01: GradeBook = {
           luyen(R`Số đứng ngay sau $3$ và số đứng ngay trước $5$ có phải cùng một số không?`, R`Có. Cả hai cách đều ra số $4$.`, [{ expr: "3+1", expect: "4" }, { expr: "5-1", expect: "4" }], "Số sau $3$ là $3$ thêm $1$. Số trước $5$ là $5$ bớt $1$. Hai kết quả cùng bằng $4$."),
           luyen(R`Số $1$ và số $10$, số nào bé hơn?`, R`Số $1$ bé hơn số $10$.`, [{ expr: "10-1", expect: "9" }], "Số $1$ đứng trước số $10$. Số đứng trước thì bé hơn."),
         ],
+      ),
+      bai(
+        "so-0",
+        "Số 0 và nhóm không có gì",
+        R`Số $0$ chỉ nhóm không có đồ vật nào. Số $0$ đứng trước số $1$ trên dãy đếm. Cộng thêm $0$ hay bớt đi $0$ thì số không đổi.`,
+        [vd(
+          R`Trên đĩa có $3$ quả táo. Bạn ăn hết cả $3$ quả. Trên đĩa còn mấy quả?`,
+          [
+            buoc(R`Bớt $3$ quả từ $3$ quả, viết $3-3$.`, R`Ăn đi là lấy bớt ra, nên dùng phép trừ.`),
+            buoc(R`Đĩa không còn quả nào, vậy $3-3=0$.`, R`Không còn đồ vật nào thì ghi bằng số không.`),
+          ],
+          R`Trên đĩa còn $0$ quả táo.`,
+          [{ expr: "3-3", expect: "0" }],
+        )],
+        [
+          luyen(R`Tính $5+0$.`, R`Tổng bằng $5$.`, [{ expr: "5+0", expect: "5" }], R`Thêm không quả nào thì số quả vẫn là $5$.`),
+          luyen(R`Tính $4-0$.`, R`Hiệu bằng $4$.`, [{ expr: "4-0", expect: "4" }], R`Không bớt quả nào thì vẫn còn đủ $4$ quả.`),
+          luyen(R`Tính $6-6$.`, R`Hiệu bằng $0$.`, [{ expr: "6-6", expect: "0" }], R`Bớt đi hết cả $6$ thì không còn lại gì, tức là $0$.`),
+        ],
+        {
+          whyTrue: R`Đếm số đồ vật trong một cái hộp rỗng thì không có gì để đếm, nên cần một số riêng cho trường hợp đó. Thêm một nhóm rỗng vào không làm nhóm kia nhiều lên.`,
+          pitfalls: R`Cho rằng $0$ không phải là một số. Số $0$ vẫn là một số, dùng để nói rằng không có gì.`,
+        },
+      ),
+      bai(
+        "tach-gop",
+        "Tách số và gộp số",
+        R`Một số có thể tách thành hai số nhỏ hơn. Số $5$ tách thành $4$ và $1$, hoặc $3$ và $2$. Gộp hai phần lại thì được số ban đầu.`,
+        [vd(
+          R`Có $6$ viên bi chia vào hai tay. Tay trái cầm $2$ viên. Tay phải cầm mấy viên?`,
+          [
+            buoc(R`Số $6$ tách thành $2$ và một số nữa.`, R`Hai tay gộp lại phải đủ $6$ viên bi.`),
+            buoc(R`Vì $2$ gộp với $4$ được $6$ nên tay phải cầm $4$ viên.`, R`Đếm tiếp từ $2$: ba, bốn, năm, sáu là thêm bốn viên.`),
+          ],
+          R`Tay phải cầm $4$ viên bi.`,
+          [{ expr: "6-2", expect: "4" }],
+        )],
+        [
+          luyen(R`Số $5$ tách thành $3$ và mấy?`, R`Tách thành $3$ và $2$.`, [{ expr: "5-3", expect: "2" }], R`Ba gộp với hai thì được năm, nên phần còn lại là hai.`),
+          luyen(R`Gộp $4$ và $4$ được số mấy?`, R`Được số $8$.`, [{ expr: "4+4", expect: "8" }], R`Đếm tiếp từ $4$ thêm bốn bước là đến $8$.`),
+          luyen(R`Số $10$ tách thành $7$ và mấy?`, R`Tách thành $7$ và $3$.`, [{ expr: "10-7", expect: "3" }], R`Bảy gộp với ba thì tròn mười.`),
+        ],
+        {
+          figure: "count",
+          whyTrue: R`Chia một nhóm đồ vật ra hai phần không làm mất đi vật nào. Vì thế hai phần gộp lại luôn bằng cả nhóm, và đây là gốc của cả phép cộng lẫn phép trừ.`,
+          pitfalls: R`Chỉ nhớ một cách tách. Số $5$ tách được thành $4$ và $1$, cũng tách được thành $3$ và $2$.`,
+        },
       ),
     ]),
     chuong("cong-tru", "Phép cộng và phép trừ trong phạm vi 10", [

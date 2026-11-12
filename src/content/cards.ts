@@ -27,7 +27,8 @@ export type Card = {
   id: string;
   n: string;
   stream: StreamId;
-  grade: "10" | "11" | "12";
+  /** Lớp (hoặc khoảng lớp) mà chương trình 2018 dạy nội dung này. */
+  grade: "10" | "11" | "12" | "10–11" | "10–12";
   status: "ready" | "stub";
   title: string;
   titleEn: string;
@@ -65,7 +66,7 @@ export const cards = [
     "id": "exp",
     "n": "03",
     "stream": "algebra",
-    "grade": "12",
+    "grade": "11",
     "status": "ready",
     "title": "Mũ và logarit",
     "titleEn": "Exponents and logarithms",
@@ -161,7 +162,7 @@ export const cards = [
     "id": "analytic",
     "n": "11",
     "stream": "geometry",
-    "grade": "10",
+    "grade": "10–12",
     "status": "ready",
     "title": "Hình giải tích",
     "titleEn": "Coordinate geometry",
@@ -173,7 +174,7 @@ export const cards = [
     "id": "triangle",
     "n": "12",
     "stream": "geometry",
-    "grade": "10",
+    "grade": "10–11",
     "status": "ready",
     "title": "Hình phẳng và không gian",
     "titleEn": "Plane and solid figures",
@@ -185,7 +186,7 @@ export const cards = [
     "id": "combo",
     "n": "13",
     "stream": "chance",
-    "grade": "11",
+    "grade": "10",
     "status": "ready",
     "title": "Tổ hợp và thống kê",
     "titleEn": "Combinatorics and statistics",
@@ -197,7 +198,7 @@ export const cards = [
     "id": "probability",
     "n": "14",
     "stream": "chance",
-    "grade": "12",
+    "grade": "10–12",
     "status": "ready",
     "title": "Xác suất",
     "titleEn": "Probability",

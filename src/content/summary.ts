@@ -140,8 +140,8 @@ function derivSummary(params: Record<string, number> | undefined, lang: Lang): s
   }
   const h = params?.h ?? derivInit.h;
   return lang === "en"
-    ? `Secant slope ${trim(secantSlope(1, h))} = 2 + h. Tangent slope 2.`
-    : `Cát tuyến ${trim(secantSlope(1, h))} = 2 + h. Tiếp tuyến có hệ số góc 2.`;
+    ? `Secant slope from 1 to 1 + h: 2 + h = ${trim(secantSlope(1, h))}. Tangent slope at x = 1: 2.`
+    : `Hệ số góc cát tuyến từ 1 đến 1 + h: 2 + h = ${trim(secantSlope(1, h))}. Tiếp tuyến tại x = 1 có hệ số góc 2.`;
 }
 
 function limitSummary(params: Record<string, number> | undefined, lang: Lang): string {

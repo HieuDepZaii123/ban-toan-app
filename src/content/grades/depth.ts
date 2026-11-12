@@ -1,4 +1,5 @@
 import type { GradeBook, GradeDrill, GradeLesson, GradeWidget } from "./types.ts";
+import { noteFor } from "./notes/index.ts";
 
 const WIDGET: Record<string, GradeWidget> = {
   "phan-nho": "fraction",
@@ -24,38 +25,12 @@ function numberOf(text: string): number | null {
   return null;
 }
 
-function pitfall(lesson: GradeLesson): string {
+/** Chỉ bài thống kê và xác suất mới dùng số liệu đặt ra; xét theo chính bài, không theo tên chương. */
+const DATA_LESSON = /thống kê|xác suất|tần số|biểu đồ|số trung bình|trung vị|phương sai|mẫu ghép|bảng số liệu|dữ liệu|biến cố|khả năng/;
+
+function assumed(lesson: GradeLesson): string | undefined {
   const blob = `${lesson.title} ${lesson.summary}`.toLowerCase();
-  if (blob.includes("giới hạn") || blob.includes("tiệm cận")) {
-    return "Rút gọn trước khi thế số. Nếu hai phía khác nhau thì dừng.";
-  }
-  if (blob.includes("đạo hàm") || blob.includes("cực trị") || blob.includes("khảo sát")) {
-    return "Đạo hàm đúng số mũ, rồi xét dấu hai bên điểm đạo hàm bằng không.";
-  }
-  if (blob.includes("xác suất") || blob.includes("biến cố")) {
-    return "Liệt kê lại không gian mẫu trước khi cộng hai xác suất.";
-  }
-  if (blob.includes("phân số") || blob.includes("một phần")) {
-    return "Đưa về cùng một cách chia, rồi mới cộng hoặc so sánh.";
-  }
-  if (blob.includes("trừ")) {
-    return "Trừ từng hàng. Hàng không đủ thì mượn, rồi kiểm bằng phép cộng.";
-  }
-  if (blob.includes("cộng") || blob.includes("nhân") || blob.includes("chia")) {
-    return "Tính từng hàng, rồi kiểm lại bằng phép ngược.";
-  }
-  return "Giữ đủ điều kiện của bài, rồi kiểm bằng phép tính ngược.";
-}
-
-function whyTrue(lesson: GradeLesson): string {
-  const reason = lesson.examples[0]?.steps.map((step) => step.why).sort((a, b) => b.length - a.length)[0]
-    ?? "Quy tắc trong tóm tắt khớp dữ kiện của bài.";
-  return reason.startsWith("$") ? `Vì ${reason}` : reason;
-}
-
-function assumed(chapterTitle: string, lesson: GradeLesson): string | undefined {
-  const blob = `${chapterTitle} ${lesson.title} ${lesson.summary}`.toLowerCase();
-  if (/thống kê|xác suất|tần số|biểu đồ|trung bình|mẫu/.test(blob)) return "Số liệu giả định.";
+  if (DATA_LESSON.test(blob) || /trung bình cộng/i.test(lesson.title)) return "Số liệu giả định.";
   return lesson.dataNote;
 }
 
@@ -106,11 +81,12 @@ export function deepen(book: GradeBook): GradeBook {
           if (value === null) return starred;
           return { ...starred, ask: { kind: "number" as const, value, tolerance: 0.001 } };
         });
+        const written = noteFor(book.grade, lesson.id);
         return {
           ...lesson,
-          whyTrue: lesson.whyTrue ?? whyTrue(lesson),
-          pitfalls: lesson.pitfalls ?? pitfall(lesson),
-          dataNote: assumed(chapter.title, lesson),
+          whyTrue: lesson.whyTrue ?? written?.why,
+          pitfalls: lesson.pitfalls ?? written?.pit,
+          dataNote: assumed(lesson),
           widget: lesson.widget ?? WIDGET[lesson.id],
           drills,
         };

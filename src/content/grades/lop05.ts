@@ -6,7 +6,7 @@ const R = String.raw;
 export const lop05: GradeBook = {
   grade: 5,
   band: "tieu-hoc",
-  title: "Số thập phân, phần trăm, diện tích tam giác, hình tròn và thể tích hình hộp.",
+  title: "Số thập phân, phần trăm, tổng và tỉ, diện tích tam giác, hình tròn và thể tích hình hộp.",
   chapters: [
     chuong("thap-phan", "Số thập phân", [
       bai(
@@ -46,6 +46,52 @@ export const lop05: GradeBook = {
           luyen(R`Làm tròn $4{,}13$ đến hàng phần mười.`, R`Kết quả là $4{,}1$.`, [{ expr: "round(Rational(413,100),1)", expect: "41/10" }], "Chữ số phần trăm là $3$, nhỏ hơn $5$, nên giữ chữ số phần mười."),
           luyen(R`Hiệu giữa $3{,}3$ và $3{,}26$ bằng bao nhiêu?`, R`Hiệu bằng $0{,}04$.`, [{ expr: "Rational(33,10)-Rational(326,100)", expect: "Rational(4,100)" }], "Số đã làm tròn lên lớn hơn số ban đầu. Hiệu là bốn phần trăm."),
         ],
+      ),
+      bai(
+        "cong-tru-thap-phan",
+        "Cộng và trừ số thập phân",
+        R`Đặt tính sao cho các dấu phẩy thẳng cột, rồi cộng hoặc trừ như số tự nhiên. Dấu phẩy của kết quả thẳng cột với các dấu phẩy ở trên. Thiếu chữ số ở phần thập phân thì coi như chữ số $0$.`,
+        [vd(
+          R`Tính $3{,}45+1{,}8$.`,
+          [
+            buoc(R`Viết $1{,}8$ thành $1{,}80$ để hai số cùng có hai chữ số thập phân.`, R`Thêm chữ số $0$ vào bên phải phần thập phân không làm đổi giá trị.`),
+            buoc(R`Cộng từng hàng: $3{,}45+1{,}80=5{,}25$.`, R`Phần trăm cộng với phần trăm, phần mười cộng với phần mười, có nhớ sang hàng đơn vị.`),
+          ],
+          R`Tổng bằng $5{,}25$.`,
+          [{ expr: "Rational(345,100)+Rational(18,10)", expect: "Rational(21,4)" }],
+        )],
+        [
+          luyen(R`Tính $2{,}5+0{,}75$.`, R`Tổng bằng $3{,}25$.`, [{ expr: "Rational(5,2)+Rational(3,4)", expect: "Rational(13,4)" }], R`Viết $2{,}5$ thành $2{,}50$, rồi cộng với $0{,}75$ được $3{,}25$.`),
+          luyen(R`Tính $5-1{,}3$.`, R`Hiệu bằng $3{,}7$.`, [{ expr: "5-Rational(13,10)", expect: "Rational(37,10)" }], R`Viết $5$ thành $5{,}0$, mượn một đơn vị để trừ ở hàng phần mười.`),
+          luyen(R`Một sợi dây dài $4{,}2$ mét, cắt đi $1{,}65$ mét. Còn lại bao nhiêu mét?`, R`Còn lại $2{,}55$ mét.`, [{ expr: "Rational(42,10)-Rational(165,100)", expect: "Rational(51,20)" }], R`Viết $4{,}2$ thành $4{,}20$, rồi trừ $1{,}65$ được $2{,}55$.`),
+        ],
+        {
+          whyTrue: R`Dấu phẩy thẳng cột bảo đảm đơn vị cộng với đơn vị, phần mười cộng với phần mười. Đó vẫn là quy tắc cộng từng hàng của số tự nhiên, mở rộng sang bên phải dấu phẩy.`,
+          pitfalls: R`Căn thẳng theo chữ số cuối cùng thay vì theo dấu phẩy. Khi đó $3{,}45+1{,}8$ bị tính thành $3{,}63$.`,
+        },
+      ),
+      bai(
+        "chia-thap-phan",
+        "Chia số thập phân",
+        R`Chia một số thập phân cho một số tự nhiên thì chia như thường và đặt dấu phẩy vào thương khi bắt đầu hạ chữ số ở phần thập phân. Chia cho một số thập phân thì nhân cả số bị chia và số chia với $10$ hoặc $100$ để số chia thành số tự nhiên.`,
+        [vd(
+          R`Tính $7{,}2:0{,}6$.`,
+          [
+            buoc(R`Nhân cả hai số với $10$: phép chia trở thành $72:6$.`, R`Nhân số bị chia và số chia với cùng một số khác $0$ thì thương không đổi.`),
+            buoc(R`Ta có $72:6=12$.`, R`Số chia đã là số tự nhiên nên chia như bình thường.`),
+          ],
+          R`Thương bằng $12$.`,
+          [{ expr: "Rational(72,10)/Rational(6,10)", expect: "12" }],
+        )],
+        [
+          luyen(R`Tính $8{,}4:4$.`, R`Thương bằng $2{,}1$.`, [{ expr: "Rational(84,10)/4", expect: "Rational(21,10)" }], R`Chia $8$ cho $4$ được $2$, đặt dấu phẩy, rồi chia $4$ phần mười cho $4$ được $1$.`),
+          luyen(R`Tính $1{,}5:0{,}5$.`, R`Thương bằng $3$.`, [{ expr: "Rational(3,2)/Rational(1,2)", expect: "3" }], R`Nhân cả hai số với $10$ được $15:5=3$.`),
+          luyen(R`Có $4{,}5$ lít dầu rót đều vào các chai, mỗi chai $0{,}75$ lít. Rót được bao nhiêu chai?`, R`Rót được $6$ chai.`, [{ expr: "Rational(45,10)/Rational(75,100)", expect: "6" }], R`Nhân cả hai số với $100$ được $450:75=6$.`),
+        ],
+        {
+          whyTrue: R`Thương cho biết số bị chia gấp mấy lần số chia. Gấp cả hai số lên cùng một số lần thì tỉ lệ giữa chúng không đổi, nên thương giữ nguyên.`,
+          pitfalls: R`Chỉ dời dấu phẩy của số chia mà quên dời ở số bị chia. Phải nhân cả hai số với cùng $10$ hoặc $100$.`,
+        },
       ),
     ]),
     chuong("phan-tram", "Phần trăm", [
@@ -315,6 +361,56 @@ export const lop05: GradeBook = {
           luyen(R`Nhóm $30$ bạn, quạt $120$ độ. Quạt đó có bao nhiêu bạn?`, R`Có $10$ bạn.`, [{ expr: "Rational(120,360)*30", expect: "10" }], "Phần $\\frac{120}{360}$ bằng $\\frac{1}{3}$. Một phần ba của $30$ là $10$."),
           luyen(R`Quạt $360$ độ của nhóm $15$ bạn có bao nhiêu bạn?`, R`Có $15$ bạn.`, [{ expr: "Rational(360,360)*15", expect: "15" }], "Cả hình tròn là cả nhóm."),
         ],
+      ),
+    ]),
+    chuong("giai-toan-5", "Tìm hai số theo tổng, hiệu và tỉ số", [
+      bai(
+        "tong-ti",
+        "Tìm hai số khi biết tổng và tỉ số",
+        R`Vẽ hai số thành các phần bằng nhau theo tỉ số. Lấy tổng chia cho tổng số phần để tìm giá trị một phần, rồi nhân với số phần của mỗi số.`,
+        [vd(
+          R`Hai số có tổng $40$ và tỉ số $\frac{3}{5}$. Tìm hai số đó.`,
+          [
+            buoc(R`Số bé gồm $3$ phần, số lớn gồm $5$ phần, tất cả là $8$ phần.`, R`Tỉ số $\frac{3}{5}$ nghĩa là chia số bé thành $3$ phần thì số lớn có $5$ phần như thế.`),
+            buoc(R`Một phần là $40:8=5$. Số bé là $5\times 3=15$, số lớn là $5\times 5=25$.`, R`Tổng hai số ứng với cả $8$ phần bằng nhau.`),
+          ],
+          R`Hai số cần tìm là $15$ và $25$.`,
+          [{ expr: "Rational(40,8)*3", expect: "15" }, { expr: "Rational(40,8)*5", expect: "25" }],
+        )],
+        [
+          luyen(R`Hai số có tổng $36$ và tỉ số $\frac{1}{2}$. Số bé bằng bao nhiêu?`, R`Số bé bằng $12$.`, [{ expr: "Rational(36,3)*1", expect: "12" }], R`Tổng số phần là $3$, một phần là $36:3=12$, và số bé gồm $1$ phần.`),
+          luyen(R`Hai số có tổng $63$ và tỉ số $\frac{2}{7}$. Số lớn bằng bao nhiêu?`, R`Số lớn bằng $49$.`, [{ expr: "Rational(63,9)*7", expect: "49" }], R`Tổng số phần là $9$, một phần là $7$, số lớn gồm $7$ phần nên bằng $49$.`),
+          luyen(R`Lớp có $32$ bạn, số bạn nam bằng $\frac{3}{5}$ số bạn nữ. Lớp có bao nhiêu bạn nữ?`, R`Lớp có $20$ bạn nữ.`, [{ expr: "Rational(32,8)*5", expect: "20" }], R`Nam $3$ phần, nữ $5$ phần, một phần là $32:8=4$, nên nữ có $20$ bạn.`),
+        ],
+        {
+          figure: "segment",
+          whyTrue: R`Tỉ số cho biết hai số được ghép từ những phần bằng nhau, số này mấy phần và số kia mấy phần. Tổng hai số chính là giá trị của tất cả các phần đó gộp lại.`,
+          pitfalls: R`Lấy tổng chia cho mẫu số của tỉ số. Phải chia cho tổng số phần, tức tử cộng mẫu.`,
+        },
+      ),
+      bai(
+        "hieu-ti",
+        "Tìm hai số khi biết hiệu và tỉ số",
+        R`Vẽ hai số thành các phần bằng nhau theo tỉ số. Lấy hiệu chia cho hiệu số phần để tìm giá trị một phần, rồi nhân với số phần của mỗi số.`,
+        [vd(
+          R`Hai số có hiệu $24$ và tỉ số $\frac{3}{5}$. Tìm hai số đó.`,
+          [
+            buoc(R`Số lớn hơn số bé $5-3=2$ phần, và $2$ phần ấy bằng $24$.`, R`Phần chênh lệch giữa hai số ứng với hiệu số phần.`),
+            buoc(R`Một phần là $24:2=12$. Số bé là $12\times 3=36$, số lớn là $12\times 5=60$.`, R`Biết một phần thì nhân với số phần của từng số.`),
+          ],
+          R`Hai số cần tìm là $36$ và $60$.`,
+          [{ expr: "Rational(24,2)*3", expect: "36" }, { expr: "Rational(24,2)*5", expect: "60" }],
+        )],
+        [
+          luyen(R`Hai số có hiệu $10$ và tỉ số $\frac{1}{3}$. Số bé bằng bao nhiêu?`, R`Số bé bằng $5$.`, [{ expr: "Rational(10,2)*1", expect: "5" }], R`Hiệu số phần là $2$, một phần là $10:2=5$, số bé gồm $1$ phần.`),
+          luyen(R`Hai số có hiệu $18$ và tỉ số $\frac{2}{5}$. Số lớn bằng bao nhiêu?`, R`Số lớn bằng $30$.`, [{ expr: "Rational(18,3)*5", expect: "30" }], R`Hiệu số phần là $3$, một phần là $6$, số lớn gồm $5$ phần nên bằng $30$.`),
+          luyen(R`Mẹ hơn con $28$ tuổi, tuổi con bằng $\frac{1}{5}$ tuổi mẹ. Mẹ bao nhiêu tuổi?`, R`Mẹ $35$ tuổi.`, [{ expr: "Rational(28,4)*5", expect: "35" }], R`Hiệu số phần là $4$, một phần là $28:4=7$, tuổi mẹ gồm $5$ phần nên là $35$.`),
+        ],
+        {
+          figure: "segment",
+          whyTrue: R`Hai số gồm các phần bằng nhau, nên phần hơn của số lớn cũng là một số nguyên phần. Hiệu hai số chính là giá trị của những phần hơn đó.`,
+          pitfalls: R`Chia hiệu cho tổng số phần như bài tổng và tỉ. Bài cho hiệu thì chia cho hiệu số phần.`,
+        },
       ),
     ]),
   ],

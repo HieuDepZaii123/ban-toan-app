@@ -7,31 +7,13 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ: một câu nói bàn này là gì. Logo đã có trên thanh đầu trang. */
-export function Welcome() {
-  const lang = useLang();
-  return (
-    <section className="hero-welcome">
-      <h1>{t(lang, "Mười bốn chuyên đề, có số để tự kiểm.", "Fourteen topics, with a number you can check.")}</h1>
-      <p className="lead">
-        {t(
-          lang,
-          "Kéo một tham số, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
-          "Drag one parameter, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
-        )}
-      </p>
-    </section>
-  );
-}
-
-/** Các tiện ích nhỏ của góc bàn: đường tiến độ, tiếp tuyến, sổ tay, bàn bên cạnh. */
+/** Các tiện ích nhỏ của góc bàn: đường tiến độ, tiếp tuyến, sổ tay. */
 export function DeskTools() {
   return (
     <div className="home-tools">
       <ProgressCurve />
       <FormulaPeek />
       <NotePad />
-      <Circle />
     </div>
   );
 }
@@ -137,28 +119,6 @@ function NotePad() {
           try { localStorage.setItem(NOTE_KEY, event.target.value); } catch { /* ignore */ }
         }}
       />
-    </section>
-  );
-}
-
-function Circle() {
-  const lang = useLang();
-  const done = useSlice((data) => countRight(data.right));
-  const friends = [
-    { name: "Lan", line: "Đạo hàm · 11 câu" },
-    { name: "Minh", line: "Xác suất · 8 câu" },
-    { name: "Hà", line: "Hình · 13 câu" },
-  ];
-  return (
-    <section className="tool-card" aria-label={t(lang, "Bảng trên máy này", "Scores on this device")}>
-      <b>{t(lang, "Bàn bên cạnh", "Nearby desk")}</b>
-      <p className="lecture-note">{t(lang, "Bảng giả lập, không có máy chủ.", "A local board, with no server.")}</p>
-      <ul>
-        <li><span>{t(lang, "Bạn", "You")}</span><b>{done}</b></li>
-        {friends.map((friend) => (
-          <li key={friend.name}><span>{friend.name}</span><small>{friend.line}</small></li>
-        ))}
-      </ul>
     </section>
   );
 }

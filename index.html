@@ -5,52 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="theme-color" content="#e7e0d2" />
-    <meta name="description" content="Bàn làm việc toán THPT: kéo tham số, nhìn đồ thị đổi, rồi luyện có lời giải." />
+    <meta name="description" content="Bàn Toán: toán lớp 1–12 với bài học có hình kéo, ví dụ từng bước và bài luyện có gợi ý, lời giải." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Bàn Toán" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icon-192.png" />
     <title>Bàn Toán</title>
-    <script>
-      // Some browsers (private modes, school-managed profiles) throw on any storage access.
-      // Swap in an in-memory store first, so the app still runs; progress just is not kept.
-      (function () {
-        function memory() {
-          var data = {};
-          return {
-            getItem: function (k) { return Object.prototype.hasOwnProperty.call(data, k) ? data[k] : null; },
-            setItem: function (k, v) { data[k] = String(v); },
-            removeItem: function (k) { delete data[k]; },
-            clear: function () { data = {}; },
-            key: function (i) { return Object.keys(data)[i] || null; },
-            get length() { return Object.keys(data).length; },
-          };
-        }
-        ["localStorage", "sessionStorage"].forEach(function (name) {
-          try {
-            var store = window[name];
-            var probe = "__bt_probe__";
-            store.setItem(probe, "1");
-            store.removeItem(probe);
-          } catch (e) {
-            try { Object.defineProperty(window, name, { value: memory(), configurable: true }); } catch (e2) {}
-          }
-        });
-      })();
-    </script>
-    <script>
-      try {
-        var saved = JSON.parse(localStorage.getItem("ban-toan") || "null");
-        var mode = localStorage.getItem("bt-theme");
-        var hour = new Date().getHours();
-        var night = mode === "night" || (mode === "auto" && (hour >= 21 || hour < 5));
-        if (mode !== "day" && mode !== "night" && mode !== "auto") night = saved && saved.theme === "night";
-        document.documentElement.dataset.theme = night ? "night" : "paper";
-        if (saved && saved.lang === "en") document.documentElement.lang = "en";
-        if (location.pathname === "/" || location.pathname === "") {
-          var room = JSON.parse(localStorage.getItem("ban-toan-room") || "null");
-          if (!room || room.lamp !== false) document.documentElement.dataset.lamp = "on";
-        }
-      } catch (e) {}
-    </script>
+    <script src="/boot.js"></script>
   </head>
   <body>
     <div id="root"></div>

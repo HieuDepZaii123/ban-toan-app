@@ -114,10 +114,19 @@ export function StudyPlayer() {
     play();
   }
 
+  // Thanh nhạc chỉ hiện khi đang phát hoặc đang mở danh sách; lúc đó trang chừa sẵn chỗ ở đáy cho nó.
+  const visible = open || playing;
+  useEffect(() => {
+    document.documentElement.dataset.music = visible ? "on" : "off";
+    return () => {
+      document.documentElement.dataset.music = "off";
+    };
+  }, [visible]);
+
   const repeatLabel = repeat === "one" ? t(lang, "Lặp một bài", "Repeat one") : repeat === "all" ? t(lang, "Lặp cả danh sách", "Repeat all") : t(lang, "Không lặp", "No repeat");
 
   return (
-    <section className={`study-player${open ? " is-open" : ""}`} id="nhac-hoc" aria-label={t(lang, "Nhạc học", "Study music")}>
+    <section className={`study-player${open ? " is-open" : ""}${visible ? "" : " is-idle"}`} id="nhac-hoc" aria-label={t(lang, "Nhạc học", "Study music")}>
       <div className="study-screen" hidden={!open}>
         <video
           key={track?.id ?? "none"}
@@ -215,6 +224,9 @@ export function StudyPlayer() {
         </span>
         <button type="button" className="study-icon" aria-expanded={open} aria-controls={panelId} aria-label={open ? t(lang, "Thu gọn nhạc", "Close music") : t(lang, "Mở danh sách nhạc", "Open music list")} onClick={() => setOpen(!open)}>
           {open ? "▾" : "▴"}
+        </button>
+        <button type="button" className="study-icon" aria-label={t(lang, "Tắt nhạc và ẩn thanh nhạc", "Stop music and hide the bar")} onClick={() => { stop(); setOpen(false); }}>
+          <span aria-hidden="true">✕</span>
         </button>
       </div>
     </section>

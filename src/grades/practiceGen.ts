@@ -246,8 +246,8 @@ const grade2: Template[] = [
   } },
   { key: "chia", make: (r) => {
     const k = r.pick([2, 5]), q = r.int(2, 10), a = k * q;
-    return made(`Tính $${a}\\div ${k}$.`, nums(q, [a - k, q + 1, q - 1], m, 1),
-      [`Tìm số nhân với $${k}$ được $${a}$.`, `Bảng nhân $${k}$: $${k}\\times ${q}=${a}$.`, `Vậy $${a}\\div ${k}=${q}$.`], `${a}/${k}`, String(q));
+    return made(`Tính $${a}:${k}$.`, nums(q, [a - k, q + 1, q - 1], m, 1),
+      [`Tìm số nhân với $${k}$ được $${a}$.`, `Bảng nhân $${k}$: $${k}\\times ${q}=${a}$.`, `Vậy $${a}:${k}=${q}$.`], `${a}/${k}`, String(q));
   } },
   { key: "nhom", make: (r) => {
     const [box, thing] = r.pick([["hộp", "cái bút"], ["đĩa", "quả cam"], ["bó", "bông hoa"], ["túi", "viên bi"], ["hàng", "bạn"]] as const);
@@ -295,12 +295,12 @@ const grade3: Template[] = [
   } },
   { key: "chia", make: (r) => {
     const d = r.int(2, 9), q = r.int(11, 199), a = d * q;
-    return made(`Tính $${a}\\div ${d}$.`, nums(q, [q + 1, q - 1, q + 10], m, 1),
+    return made(`Tính $${a}:${d}$.`, nums(q, [q + 1, q - 1, q + 10], m, 1),
       [`Tìm số nhân với $${d}$ được $${a}$.`, `Thử $${d}\\times ${q}=${a}$, đúng.`, `Thương là $${q}$.`], `${a}/${d}`, String(q));
   } },
   { key: "du", make: (r) => {
     const d = r.int(3, 9), q = r.int(3, 20), rem = r.int(1, d - 1), a = d * q + rem;
-    return made(`Phép chia $${a}\\div ${d}$ có số dư là`, nums(rem, [q, d - rem, rem + 1 < d ? rem + 1 : rem - 1], m, 0),
+    return made(`Phép chia $${a}:${d}$ có số dư là`, nums(rem, [q, d - rem, rem + 1 < d ? rem + 1 : rem - 1], m, 0),
       [`$${d}\\times ${q}=${d * q}$ là số lớn nhất không vượt quá $${a}$.`, `$${a}-${d * q}=${rem}$.`, `Số dư là $${rem}$, bé hơn số chia $${d}$.`], `Mod(${a},${d})`, String(rem));
   } },
   { key: "cvcn", make: (r) => {
@@ -322,7 +322,7 @@ const grade3: Template[] = [
     const n = r.int(2, 9), q = r.int(2, 12), total = n * q;
     const thing = r.pick(["quả cam", "cái kẹo", "quyển vở", "viên bi"]);
     return made(`Một phần ${word[n]} của $${total}$ ${thing} là bao nhiêu ${thing}?`, nums(q, [total * n, total - n, q + 1], unit(thing), 1),
-      [`Một phần ${word[n]} là chia đều thành $${n}$ phần, lấy một phần.`, `$${total}\\div ${n}=${q}$.`, `Một phần ${word[n]} là $${q}$ ${thing}.`], `${total}/${n}`, String(q));
+      [`Một phần ${word[n]} là chia đều thành $${n}$ phần, lấy một phần.`, `$${total}:${n}=${q}$.`, `Một phần ${word[n]} là $${q}$ ${thing}.`], `${total}/${n}`, String(q));
   } },
   { key: "gap", make: (r) => {
     const a = r.int(3, 30), k = r.int(2, 9), v = a * k;
@@ -332,7 +332,7 @@ const grade3: Template[] = [
   { key: "giam", make: (r) => {
     const k = r.int(2, 9), q = r.int(3, 30), a = k * q;
     return made(`Giảm $${a}$ đi $${k}$ lần được`, nums(q, [a - k, a * k, q + 1], m, 1),
-      ["Giảm một số đi nhiều lần thì lấy số đó chia cho số lần.", `$${a}\\div ${k}=${q}$.`, `Kết quả là $${q}$, không phải $${a}-${k}=${a - k}$.`], `${a}/${k}`, String(q));
+      ["Giảm một số đi nhiều lần thì lấy số đó chia cho số lần.", `$${a}:${k}=${q}$.`, `Kết quả là $${q}$, không phải $${a}-${k}=${a - k}$.`], `${a}/${k}`, String(q));
   } },
   { key: "thutu", make: (r) => {
     const a = r.int(2, 40), b = r.int(2, 9), c = r.int(2, 9), v = a + b * c;
@@ -349,12 +349,12 @@ const grade4: Template[] = [
     const vals = [mean - d1, mean + d2, mean + d1 - d2];
     const sum = 3 * mean;
     return made(`Trung bình cộng của ba số $${vals[0]}$, $${vals[1]}$ và $${vals[2]}$ là`, nums(mean, [sum, mean + 1, Math.round(sum / 2)], m, 0),
-      [`Tổng ba số: $${vals[0]}+${vals[1]}+${vals[2]}=${sum}$.`, `Chia tổng cho số các số hạng: $${sum}\\div 3=${mean}$.`, `Trung bình cộng là $${mean}$.`], `(${vals[0]}+${vals[1]}+${vals[2]})/3`, String(mean));
+      [`Tổng ba số: $${vals[0]}+${vals[1]}+${vals[2]}=${sum}$.`, `Chia tổng cho số các số hạng: $${sum}:3=${mean}$.`, `Trung bình cộng là $${mean}$.`], `(${vals[0]}+${vals[1]}+${vals[2]})/3`, String(mean));
   } },
   { key: "tonghieu", make: (r) => {
     const small = r.int(10, 200), d = r.int(2, 80), big = small + d, s = big + small;
     return made(`Hai số có tổng $${s}$ và hiệu $${d}$. Số lớn là`, nums(big, [small, s - d, big + d], m, 0),
-      ["Số lớn bằng tổng cộng hiệu rồi chia đôi.", `$(${s}+${d})\\div 2=${2 * big}\\div 2=${big}$.`, `Số bé là $${small}$; thử lại $${big}-${small}=${d}$.`], `(${s}+${d})/2`, String(big));
+      ["Số lớn bằng tổng cộng hiệu rồi chia đôi.", `$(${s}+${d}):2=${2 * big}:2=${big}$.`, `Số bé là $${small}$; thử lại $${big}-${small}=${d}$.`], `(${s}+${d})/2`, String(big));
   } },
   { key: "nhan2", make: (r) => {
     const a = r.int(12, 99), b = r.int(12, 99), p = a * b;
@@ -364,8 +364,8 @@ const grade4: Template[] = [
   } },
   { key: "chia2", make: (r) => {
     const d = r.int(12, 45), q = r.int(12, 99), a = d * q;
-    return made(`Tính $${a}\\div ${d}$.`, nums(q, [q + 1, q - 1, q + 10], m, 1),
-      [`Ước lượng: $${a}\\div ${d}$ khoảng $${q}$.`, `Thử $${d}\\times ${q}=${a}$, vừa đúng.`, `Thương là $${q}$.`], `${a}/${d}`, String(q));
+    return made(`Tính $${a}:${d}$.`, nums(q, [q + 1, q - 1, q + 10], m, 1),
+      [`Ước lượng: $${a}:${d}$ khoảng $${q}$.`, `Thử $${d}\\times ${q}=${a}$, vừa đúng.`, `Thương là $${q}$.`], `${a}/${d}`, String(q));
   } },
   { key: "pscong", make: (r) => {
     const d1 = r.int(2, 6), k = r.int(2, 3), d2 = d1 * k, a = coprime(r, 1, d1 - 1, d1), b = coprime(r, 1, d2 - 1, d2);
@@ -427,22 +427,22 @@ const grade5: Template[] = [
   { key: "ptcua", make: (r) => {
     const p = r.pick([10, 15, 20, 25, 30, 40, 50, 60, 75]), base = 100 / gcd(p, 100), n = base * r.int(1, 20), v = (n * p) / 100;
     return made(`$${p}\\%$ của $${n}$ bằng`, nums(v, [n - v, (n * p) / 10, p], m, 0),
-      [`$${p}\\%$ của $${n}$ là $${n}\\times ${p}\\div 100$.`, `$${n}\\times ${p}=${n * p}$, chia $100$ được $${v}$.`, `Kết quả là $${v}$.`], `Rational(${p},100)*${n}`, String(v));
+      [`$${p}\\%$ của $${n}$ là $${n}\\times ${p}:100$.`, `$${n}\\times ${p}=${n * p}$, chia $100$ được $${v}$.`, `Kết quả là $${v}$.`], `Rational(${p},100)*${n}`, String(v));
   } },
   { key: "ptla", make: (r) => {
     const b = r.pick([20, 25, 40, 50, 80, 200, 400]), p = r.pick([5, 10, 20, 25, 40, 50, 60, 75, 80].filter((v) => (b * v) % 100 === 0)), a = (b * p) / 100;
     return made(`$${a}$ là bao nhiêu phần trăm của $${b}$?`, nums(p, [100 - p, a, p + 10], (v) => `$${v}\\%$`, 1),
-      [`Tỉ số phần trăm là $${a}\\div ${b}\\times 100$.`, `$${a}\\div ${b}=${dec(p, 2)}$.`, `Nhân $100$ được $${p}\\%$.`], `Rational(${a},${b})*100`, String(p));
+      [`Tỉ số phần trăm là $${a}:${b}\\times 100$.`, `$${a}:${b}=${dec(p, 2)}$.`, `Nhân $100$ được $${p}\\%$.`], `Rational(${a},${b})*100`, String(p));
   } },
   { key: "tamgiac", make: (r) => {
     const b = r.int(3, 20), h = r.int(2, 15), v = b * h * 5;
     return made(`Tam giác có đáy $${b}$ cm, chiều cao $${h}$ cm. Diện tích bằng`, decs(v, [b * h * 10, (b + h) * 10, v + 10], 1, unit("cm²")),
-      ["Diện tích tam giác bằng đáy nhân chiều cao rồi chia $2$.", `$${b}\\times ${h}=${b * h}$.`, `$${b * h}\\div 2=${dec(v, 1)}$, diện tích bằng $${dec(v, 1)}$ cm².`], `Rational(${b}*${h},2)`, `Rational(${v},10)`);
+      ["Diện tích tam giác bằng đáy nhân chiều cao rồi chia $2$.", `$${b}\\times ${h}=${b * h}$.`, `$${b * h}:2=${dec(v, 1)}$, diện tích bằng $${dec(v, 1)}$ cm².`], `Rational(${b}*${h},2)`, `Rational(${v},10)`);
   } },
   { key: "thang", make: (r) => {
     const a = r.int(5, 20), b = r.int(2, a - 1), h = r.int(2, 12), v = (a + b) * h * 5;
     return made(`Hình thang có hai đáy $${a}$ cm và $${b}$ cm, chiều cao $${h}$ cm. Diện tích bằng`, decs(v, [(a + b) * h * 10, a * b * h * 5, v + 10], 1, unit("cm²")),
-      ["Diện tích hình thang bằng tổng hai đáy nhân chiều cao rồi chia $2$.", `$(${a}+${b})\\times ${h}=${(a + b) * h}$.`, `$${(a + b) * h}\\div 2=${dec(v, 1)}$, diện tích bằng $${dec(v, 1)}$ cm².`], `Rational((${a}+${b})*${h},2)`, `Rational(${v},10)`);
+      ["Diện tích hình thang bằng tổng hai đáy nhân chiều cao rồi chia $2$.", `$(${a}+${b})\\times ${h}=${(a + b) * h}$.`, `$${(a + b) * h}:2=${dec(v, 1)}$, diện tích bằng $${dec(v, 1)}$ cm².`], `Rational((${a}+${b})*${h},2)`, `Rational(${v},10)`);
   } },
   { key: "hop", make: (r) => {
     const a = r.int(3, 12), b = r.int(2, 10), c = r.int(2, 9), v = a * b * c;
@@ -488,14 +488,14 @@ const grade6: Template[] = [
   { key: "ucln", make: (r) => {
     const g = r.int(2, 15), pair = r.pick([[2, 3], [3, 4], [2, 5], [3, 5], [4, 5], [5, 6], [2, 7], [3, 7], [4, 7], [5, 7], [5, 8], [7, 8]] as const);
     const A = g * pair[0], B = g * pair[1];
-    return made(`ƯCLN$(${A}, ${B})$ bằng`, nums(g, [g * pair[0] * pair[1], A, B - A === g ? g + 1 : B - A], m, 1),
+    return made(`ƯCLN$(${A};${B})$ bằng`, nums(g, [g * pair[0] * pair[1], A, B - A === g ? g + 1 : B - A], m, 1),
       [`$${A}=${g}\\cdot ${pair[0]}$ và $${B}=${g}\\cdot ${pair[1]}$.`, `$${pair[0]}$ và $${pair[1]}$ không còn ước chung nào lớn hơn $1$.`, `Ước chung lớn nhất là $${g}$.`], `gcd(${A},${B})`, String(g));
   } },
   { key: "bcnn", make: (r) => {
     const A = r.int(4, 20), B = r.int(4, 24);
     const L = lcm(A, B);
-    return made(`BCNN$(${A}, ${B})$ bằng`, nums(L, [A * B, gcd(A, B), L * 2], m, 1),
-      [`ƯCLN của $${A}$ và $${B}$ là $${gcd(A, B)}$.`, `BCNN bằng tích chia ƯCLN: $${A * B}\\div ${gcd(A, B)}=${L}$.`, `Kết quả là $${L}$.`], `lcm(${A},${B})`, String(L));
+    return made(`BCNN$(${A};${B})$ bằng`, nums(L, [A * B, gcd(A, B), L * 2], m, 1),
+      [`ƯCLN của $${A}$ và $${B}$ là $${gcd(A, B)}$.`, `BCNN bằng tích chia ƯCLN: $${A * B}:${gcd(A, B)}=${L}$.`, `Kết quả là $${L}$.`], `lcm(${A},${B})`, String(L));
   } },
   { key: "luythua", make: (r) => {
     const a = r.int(2, 9), n = a <= 4 ? r.int(2, 5) : r.int(2, 3), v = a ** n;
@@ -574,9 +574,9 @@ const grade7: Template[] = [
   } },
   { key: "xucxac", make: (r) => {
     const events: [string, number, string][] = [
-      ["số chấm chẵn", 3, "$2, 4, 6$"], ["số chấm lẻ", 3, "$1, 3, 5$"], ["số chấm chia hết cho $3$", 2, "$3, 6$"], ["số chấm là số nguyên tố", 3, "$2, 3, 5$"],
-      ...[1, 2, 3, 4, 5].map((k): [string, number, string] => [`số chấm lớn hơn $${k}$`, 6 - k, `$${Array.from({ length: 6 - k }, (_, i) => k + 1 + i).join(", ")}$`]),
-      ...[2, 3, 4, 5, 6].map((k): [string, number, string] => [`số chấm nhỏ hơn $${k}$`, k - 1, `$${Array.from({ length: k - 1 }, (_, i) => i + 1).join(", ")}$`]),
+      ["số chấm chẵn", 3, "$2;\\ 4;\\ 6$"], ["số chấm lẻ", 3, "$1;\\ 3;\\ 5$"], ["số chấm chia hết cho $3$", 2, "$3;\\ 6$"], ["số chấm là số nguyên tố", 3, "$2;\\ 3;\\ 5$"],
+      ...[1, 2, 3, 4, 5].map((k): [string, number, string] => [`số chấm lớn hơn $${k}$`, 6 - k, `$${Array.from({ length: 6 - k }, (_, i) => k + 1 + i).join(";\\ ")}$`]),
+      ...[2, 3, 4, 5, 6].map((k): [string, number, string] => [`số chấm nhỏ hơn $${k}$`, k - 1, `$${Array.from({ length: k - 1 }, (_, i) => i + 1).join(";\\ ")}$`]),
     ];
     const [what, count, list] = r.pick(events), res = F(count, 6);
     return made(`Gieo một con xúc xắc cân đối. Xác suất xuất hiện mặt có ${what} là`, fracs(res, [F(6 - count, 6), F(1, 6), F(count, 5)]),
@@ -589,7 +589,7 @@ const grade7: Template[] = [
     if (c === a) c = divs[(divs.indexOf(a) + 1) % divs.length]!;
     const b = work / a, v = work / c;
     return made(`$${a}$ người làm xong một công việc trong $${b}$ ngày. Với cùng năng suất, $${c}$ người làm xong trong bao nhiêu ngày?`, nums(v, [(b * c) / a, b, v + 1], unit("ngày"), 1),
-      ["Số người và số ngày là hai đại lượng tỉ lệ nghịch.", `Tích không đổi: $${a}\\cdot ${b}=${work}$.`, `Số ngày là $${work}\\div ${c}=${v}$.`], `${a}*${b}/${c}`, String(v));
+      ["Số người và số ngày là hai đại lượng tỉ lệ nghịch.", `Tích không đổi: $${a}\\cdot ${b}=${work}$.`, `Số ngày là $${work}:${c}=${v}$.`], `${a}*${b}/${c}`, String(v));
   } },
 ];
 
@@ -647,11 +647,11 @@ const grade8: Template[] = [
     if (r.int(0, 1) === 0) {
       const a = 2 * r.int(3, 20), v = a / 2;
       return made(`Đường trung bình của tam giác song song với cạnh dài $${a}$ cm. Đường trung bình đó dài`, nums(v, [a, 2 * a, v + 1], unit("cm"), 1),
-        ["Đường trung bình của tam giác song song với cạnh thứ ba.", "Nó dài bằng nửa cạnh đó.", `$${a}\\div 2=${v}$ cm.`], `Rational(${a},2)`, String(v));
+        ["Đường trung bình của tam giác song song với cạnh thứ ba.", "Nó dài bằng nửa cạnh đó.", `$${a}:2=${v}$ cm.`], `Rational(${a},2)`, String(v));
     }
     const b = r.int(2, 15), a = b + 2 * r.int(1, 8), v = (a + b) / 2;
     return made(`Hình thang có hai đáy $${a}$ cm và $${b}$ cm. Đường trung bình dài`, nums(v, [a + b, a - b, (a - b) / 2], unit("cm"), 1),
-      ["Đường trung bình của hình thang bằng nửa tổng hai đáy.", `$(${a}+${b})\\div 2$.`, `Đường trung bình dài $${v}$ cm.`], `Rational(${a}+${b},2)`, String(v));
+      ["Đường trung bình của hình thang bằng nửa tổng hai đáy.", `$(${a}+${b}):2$.`, `Đường trung bình dài $${v}$ cm.`], `Rational(${a}+${b},2)`, String(v));
   } },
   { key: "phanthuc", make: (r) => {
     const a = r.int(2, 9);
@@ -727,7 +727,7 @@ const grade9: Template[] = [
   { key: "noitiep", make: (r) => {
     const a = r.int(15, 85), central = 2 * a;
     return made(`Góc ở tâm chắn cung $AB$ bằng $${central}^\\circ$. Góc nội tiếp chắn cung $AB$ đó bằng`, nums(a, [central, 2 * central, 180 - central], (v) => `$${v}^\\circ$`, 1),
-      ["Góc nội tiếp bằng nửa góc ở tâm cùng chắn một cung.", `$${central}^\\circ\\div 2=${a}^\\circ$.`, `Góc nội tiếp bằng $${a}^\\circ$.`], `Rational(${central},2)`, String(a));
+      ["Góc nội tiếp bằng nửa góc ở tâm cùng chắn một cung.", `$${central}^\\circ:2=${a}^\\circ$.`, `Góc nội tiếp bằng $${a}^\\circ$.`], `Rational(${central},2)`, String(a));
   } },
   { key: "parabol", make: (r) => {
     const a = r.nz(-3, 3), k = r.nz(-5, 5), v = a * k * k;

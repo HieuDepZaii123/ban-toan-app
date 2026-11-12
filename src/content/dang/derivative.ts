@@ -9,7 +9,7 @@ export const derivativeDang: TopicDang = {
     {
       name: "Tiếp tuyến tại một điểm",
       nhanDang: "Bài cho hàm số và một hoành độ, rồi hỏi phương trình tiếp tuyến tại điểm đó trên đồ thị.",
-      phuongPhap: R`Khi $f$ khả vi tại $x_0$, tiếp tuyến tại tiếp điểm $\bigl(x_0;f(x_0)\bigr)$ là $y=f'(x_0)(x-x_0)+f(x_0)$. Biết tiếp điểm rồi thì hệ số góc $f'(x_0)$ là điều kiện cần và đủ để viết đúng đường thẳng này. Phải tính cả tung độ tiếp điểm, vì chỉ có đạo hàm thì chưa có điểm đi qua.`,
+      phuongPhap: R`Khi $f$ khả vi tại $x_0$, tiếp tuyến tại tiếp điểm $\bigl(x_0;f(x_0)\bigr)$ là $y=f'(x_0)(x-x_0)+f(x_0)$. Tiếp tuyến được xác định bởi hai dữ kiện: tiếp điểm $\bigl(x_0;f(x_0)\bigr)$ và hệ số góc $f'(x_0)$. Phải tính cả tung độ tiếp điểm, vì chỉ có đạo hàm thì chưa có điểm đi qua.`,
       viDu: {
         prompt: R`Viết tiếp tuyến của $y=x^3-3x^2$ tại $x=1$.`,
         steps: [
@@ -47,7 +47,7 @@ export const derivativeDang: TopicDang = {
     {
       name: "Tiếp tuyến biết hệ số góc hoặc đi qua một điểm",
       nhanDang: "Bài cho hệ số góc, hoặc cho một điểm mà tiếp tuyến phải đi qua, chứ chưa cho sẵn tiếp điểm.",
-      phuongPhap: R`Nếu biết hệ số góc $k$, phương trình $f'(x_0)=k$ là điều kiện cần và đủ để $x_0$ là hoành độ tiếp điểm, với $f$ khả vi tại đó. Mỗi nghiệm cho một tiếp tuyến. Nếu biết điểm $M(x_M;y_M)$, hệ thức $y_M=f'(x_0)(x_M-x_0)+f(x_0)$ chỉ là điều kiện cần; mỗi nghiệm phải được thay lại vào phương trình tiếp tuyến trước khi kết luận.`,
+      phuongPhap: R`Nếu biết hệ số góc $k$, phương trình $f'(x_0)=k$ là điều kiện cần và đủ để $x_0$ là hoành độ tiếp điểm, với $f$ khả vi tại đó. Mỗi nghiệm cho một tiếp tuyến. Nếu biết điểm $M(x_M;y_M)$ mà tiếp tuyến đi qua, hệ thức $y_M=f'(x_0)(x_M-x_0)+f(x_0)$ là điều kiện cần và đủ để tiếp tuyến tại $x_0$ đi qua $M$. Mỗi nghiệm $x_0$ cho một tiếp tuyến; thay $M$ vào phương trình vừa viết để soát lỗi tính.`,
       viDu: {
         prompt: R`Viết các tiếp tuyến của $y=x^3$ có hệ số góc bằng $12$.`,
         steps: [
@@ -254,7 +254,7 @@ export const derivativeDang: TopicDang = {
           { claim: R`Đạo hàm là $y'=3x^2+m$.`, why: "Dấu của đạo hàm là dữ liệu để áp dụng điều kiện đủ, hoặc để tìm hai điểm phá đồng biến." },
           { claim: R`Nếu $m>0$ thì $y'\ge m>0$ với mọi $x$, nên hàm đồng biến ngặt trên $\mathbb{R}$.`, why: "Đạo hàm liên tục và luôn dương, nên điều kiện đủ được thỏa trên cả tập số thực." },
           { claim: R`Nếu $m=0$ thì $y'=3x^2\ge 0$ và bằng $0$ chỉ tại $x=0$.`, why: "Đạo hàm chỉ bằng không tại một điểm, không trên cả một đoạn. Điều kiện đủ của đồng biến ngặt vẫn được thỏa." },
-          { claim: R`Nếu $m<0$ thì $y'(0)=m<0$. Riêng $m=-3$ cho $y(1)-y(0)=-2<0$.`, why: "Đạo hàm liên tục và âm tại $0$, nên âm trên một khoảng quanh $0$. Trên khoảng đó hàm nghịch biến. Hiệu âm tại hai điểm $0<1$ kiểm lại trường hợp $m=-3$, và cùng lý do áp dụng cho mọi $m<0$." },
+          { claim: R`Nếu $m<0$, đặt $s=\sqrt{-\frac{m}{3}}>0$. Khi đó $y(s)-y(0)=s(s^2+m)=\frac{2m}{3}s<0$ dù $0<s$.`, why: "Hai điểm $0<s$ mà giá trị hàm lại giảm, nên hàm không đồng biến trên $\\mathbb{R}$ với mọi $m<0$. Riêng $m=-3$ cho $s=1$ và $y(1)-y(0)=-2$. Cũng thấy điều này từ $y'(0)=m<0$: đạo hàm liên tục nên âm trên một khoảng quanh $0$." },
         ],
         ket: R`Điều kiện cần và đủ là $m\ge 0$.`,
         checks: [

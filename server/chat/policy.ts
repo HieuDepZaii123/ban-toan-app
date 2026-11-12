@@ -1,7 +1,7 @@
 import { tutorAnswer } from "../../src/chat/tutorCopy.ts";
 import { matchTopic, topicMenu } from "./topics.ts";
 
-const ON_TOPIC = /toán|phương trình|bài học|bàn toán|premium|hàm|đạo hàm|tích phân|giới hạn|logarit|lượng giác|sin|cos|tan|vectơ|xác suất|tổ hợp|cấp số|parabol|bất đẳng|tam giác|đỉnh|nghiệm|ma trận|khảo sát|diện tích|thể tích|mũ\b|delta|định thức|derivative|integral|probability|vertex|equation/i;
+const ON_TOPIC = /toán|phương trình|bài học|bàn toán|premium|hàm|đạo hàm|tích phân|giới hạn|logarit|lượng giác|\\bsin\\b|\\bcos\\b|\\btan\\b|vectơ|xác suất|tổ hợp|cấp số|parabol|bất đẳng|tam giác|đỉnh|nghiệm|ma trận|khảo sát|diện tích|thể tích|mũ\b|delta|định thức|derivative|integral|probability|vertex|equation/i;
 const GREETING = /^(xin chào|chào|hello|hi|hey)\b/i;
 const VI_MARK = /[ăâêôơưđáàảãạấầẩẫậắằẳẵặéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]/i;
 
@@ -39,6 +39,30 @@ Khi một sơ đồ giúp ích, nhúng đúng một fence cho một ý. When a d
 Xưng mình/bạn khi nói tiếng Việt, I/you khi nói tiếng Anh. Khích lệ. Khi nhắc một tờ trong app, dùng đúng đường dẫn:
 ${topicMenu()}`;
 
+const DISTRESS = /tự tử|tự sát|tự vẫn|muốn chết|chết cho xong|chết đi cho|không muốn sống|chẳng muốn sống|kết liễu|tự hại|tự làm đau|rạch tay|cắt tay|bị xâm hại|bị lạm dụng|bị quấy rối|bị bạo hành|bị đánh đập|bị bắt nạt|suicid|kill myself|want to die|end my life|self[- ]?harm|hurt myself|cut myself|abus(e|ed|ing) me|molest|bullied/i;
+
+/**
+ * Lưới an toàn chạy trước cả mô hình lẫn câu mẫu: tin nhắn có dấu hiệu tự hại, bị xâm hại hay bị bắt nạt
+ * luôn nhận một câu trả lời cố định, có người lớn tin cậy và Tổng đài 111. Không gửi tin này cho bên ngoài.
+ */
+export function safetyReply(text: string): string | null {
+  if (!DISTRESS.test(text)) return null;
+  if (replyLanguage(text) === "en") {
+    return [
+      "I am really sorry you are going through this, and thank you for telling me. You do not have to carry it alone.",
+      "Please talk to an adult you trust right now: a parent, a teacher or a relative.",
+      "In Vietnam you can call 111, the National Child Protection Hotline. It is free and open day and night. If you are in danger right now, call 113 or 115.",
+      "I am only a maths tutor and cannot replace a real person, but I will be here to study with you whenever you are ready.",
+    ].join("\n");
+  }
+  return [
+    "Mình rất tiếc vì bạn đang phải chịu điều này, và cảm ơn bạn đã nói ra. Bạn không phải chịu một mình.",
+    "Hãy nói ngay với một người lớn bạn tin: cha mẹ, thầy cô hoặc người thân.",
+    "Bạn có thể gọi 111, Tổng đài Quốc gia Bảo vệ Trẻ em. Cuộc gọi miễn phí và có người trực suốt ngày đêm. Nếu đang gặp nguy hiểm ngay lúc này, hãy gọi 113 hoặc 115.",
+    "Mình chỉ là trợ lý học toán nên không thay được người thật, nhưng khi nào bạn sẵn sàng, mình vẫn ở đây học cùng bạn.",
+  ].join("\n");
+}
+
 /** Premium tutor modes, appended to TUTOR_INSTRUCTIONS. "hint" (the default) adds nothing. */
 export type TutorMode = "hint" | "solve" | "check";
 
@@ -66,12 +90,12 @@ export function demoReply(text: string, topicId?: string): string {
     return lang === "en"
       ? [
           "Hello. I help with school maths, step by step.",
-          "On a maths problem I set out the solution thinking, then hint each step. I will not lock the answer.",
+          "On a maths problem I set out the solution thinking, then hint each step. I will not do the problem for you.",
           "What would you like to start with?",
         ].join("\n")
       : [
           "Chào bạn. Mình giúp bạn học toán, đi từng bước.",
-          "Gặp bài thì mình nêu tư duy giải rồi đi từng bước, không chốt hộ đáp án.",
+          "Gặp bài thì mình nêu tư duy giải rồi gợi ý từng bước, không làm hộ bài.",
           "Bạn muốn bắt đầu từ đâu?",
         ].join("\n");
   }

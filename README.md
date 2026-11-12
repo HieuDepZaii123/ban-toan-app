@@ -4,7 +4,7 @@ Bàn làm việc cho toán THPT. Học sinh kéo tham số, nhìn đồ thị đ
 
 Mười bốn tờ đã mở: **Hàm số bậc hai**, **Bất đẳng thức**, **Mũ và logarit**, **Dãy số**, **Lượng giác**, **Giới hạn**, **Đạo hàm**, **Khảo sát hàm số**, **Tích phân**, **Vectơ và ma trận**, **Hình giải tích**, **Hình phẳng và không gian**, **Tổ hợp và thống kê**, **Xác suất**. Mỗi tờ có hình kéo, một ví dụ số, ba bước Nhìn / Làm / Kết, và câu luyện có gợi ý cùng lời giải. Số câu ghi trên từng thẻ (đạo hàm có mười bốn câu, các tờ còn lại mười ba). Mỗi tờ có bốn câu phân biệt lý thuyết: mỗi lần làm rút một mệnh đề đúng và ba mệnh đề sai từ kho của câu đó. Mỗi tờ cũng có ba câu Đúng/Sai/Chưa đủ: mỗi lần làm rút bốn mệnh đề từ kho, mỗi mệnh đề một điểm, điểm x/4 được lưu trong tiến độ.
 
-Giao diện tiếng Việt, có thể chuyển EN. Giấy / đêm. Trên trang chủ có đèn bàn, đồng hồ Hà Nội cùng Tokyo, London và New York, và cửa sổ đổi Sáng / Trưa / Chiều / Đêm theo giờ trên máy (chọn tay được). Cảnh ngoài cửa là SVG, tải khi cảnh đó được mở. Tiến độ, ghi chú và tham số nằm trong `localStorage` (khóa `ban-toan`); đèn và cảnh cửa sổ nằm ở `ban-toan-room`. Mỗi lần mở tab Làm, thứ tự câu trong tờ được xáo. Câu luyện rút số mới từ một hạt giống; câu lý thuyết rút một bộ mệnh đề mới; câu Đúng/Sai/Chưa đủ rút bốn mệnh đề, trong đó có một mệnh đề Chưa đủ. Hạt giống và vị trí đáp án đúng được giữ trong `ban-toan` cho đến khi trả lời hoặc bấm Đề mới, và vị trí đúng không trùng lần trước.
+Giao diện tiếng Việt, có thể chuyển EN. Giấy / đêm. Trang chủ hỏi lớp của người học rồi mở bài của lớp đó; trong Góc bàn có đèn bàn, đồng hồ Hà Nội cùng Tokyo, London và New York, và cửa sổ đổi Sáng / Trưa / Chiều / Đêm theo giờ trên máy (chọn tay được). Cảnh ngoài cửa là SVG, tải khi cảnh đó được mở. Tiến độ, ghi chú và tham số nằm trong `localStorage` (khóa `ban-toan`); đèn và cảnh cửa sổ nằm ở `ban-toan-room`. Mỗi lần mở tab Làm, thứ tự câu trong tờ được xáo. Câu luyện rút số mới từ một hạt giống; câu lý thuyết rút một bộ mệnh đề mới; câu Đúng/Sai/Chưa đủ rút bốn mệnh đề, trong đó có một mệnh đề Chưa đủ. Hạt giống và vị trí đáp án đúng được giữ trong `ban-toan` cho đến khi trả lời hoặc bấm Đề mới, và vị trí đúng không trùng lần trước.
 
 Mỗi tờ có tab thứ tư, **Nghiên cứu**: hai bài dẫn dắt. Học sinh nêu giả thuyết, kéo hình của tờ, bấm Ghi đủ năm dòng, xem đồ thị số liệu, rồi viết kết luận và đối chiếu với chứng minh. Giả thuyết, bảng số và kết luận nằm trong `ban-toan`, cùng cách gộp khi hai tab cùng sửa.
 
@@ -46,11 +46,26 @@ CI (`.github/workflows/ci.yml`) chạy trên mỗi pull request và mỗi lần 
 
 ## Triển khai
 
-`npm run build` ra thư mục `dist/`. Đây là một trang tĩnh: mọi đường `/t/...` phải trả về `index.html`. Bản build đã copy `dist/404.html` từ `index.html` để GitHub Pages không trả 404 khi vào thẳng một tờ.
+Bàn Toán gồm một trang tĩnh (`dist/`) và các hàm trong `api/` (`/api/chat`, `/api/premium/*`). Nơi triển khai được dự tính là **Vercel**. Gói Hobby chỉ nhận tối đa 12 hàm serverless, nên `GET /api/health` và `POST /api/premium/recover` không có tệp riêng: `vercel.json` rewrite chúng vào `/api/chat` và `/api/premium/status` (vẫn giữ đúng đường công khai). `vercel.json` cũng đặt lệnh build, đưa mọi đường không phải `/api/` về `index.html`, gửi header bảo mật (CSP, `nosniff`, `frame-ancestors`…) và cache dài cho tệp có mã băm trong `/assets/`.
 
-Ví dụ GitHub Pages: đẩy nội dung `dist/` lên nhánh `gh-pages` (base path đang là `/`, nên trang nên nằm ở domain gốc hoặc một miền riêng, không phải `user.github.io/repo` trừ khi sửa `base` trong `vite.config.ts`).
+- Đặt biến môi trường theo `.env.example`. Thiếu khóa AI thì trợ lý trả lời bằng bài mẫu và giao diện ghi rõ điều đó. Thiếu tài khoản nhận tiền thật thì trang Nâng cấp ghi "Premium chưa mở bán".
+- Production nên có `DATABASE_URL` (Postgres): không có thì đơn hàng nằm trong SQLite của từng instance và bộ đếm lượt hỏi không dùng chung. `GET /api/health` báo cảnh báo này.
+- `VITE_SUPPORT_EMAIL` là địa chỉ liên hệ hiện ở trang Chính sách và trang Nâng cấp. Hãy đặt trước khi mở cho người dùng.
 
-Service worker đăng ký sau khi trang đã hiện, chỉ ở bản production. Lần mở đầu cần mạng. Những lần sau bàn vẫn mở được khi mất mạng.
+Máy chủ tĩnh thuần (ví dụ GitHub Pages) chỉ chạy được phần học và luyện: trợ lý, thanh toán và `/api/health` cần các hàm trong `api/`. Bản build có `dist/404.html` chép từ `index.html` để vào thẳng một đường con không bị 404; base path là `/`.
+
+Service worker đăng ký sau khi trang đã hiện, chỉ ở bản production. Lần mở đầu cần mạng. Những lần sau các trang đã mở vẫn dùng được khi mất mạng; trợ lý, thanh toán và các thư viện nặng chỉ tải khi cần (sơ đồ, xuất PDF) thì cần mạng ở lần dùng đầu.
+
+## Đóng góp, bảo mật, giấy phép
+
+- Cách chạy, quy ước và sơ đồ thư mục: `CONTRIBUTING.md`.
+- Báo lỗ hổng: `SECURITY.md`.
+- Các vòng đánh giá bằng 100 vai mô phỏng: `docs/danh-gia/`.
+- Kho mã chưa có tệp `LICENSE`, nghĩa là chưa cấp quyền dùng lại mã nguồn; tác giả giữ mọi quyền cho đến khi thêm giấy phép.
+
+## In English
+
+Bàn Toán is a maths study desk for Vietnamese grades 1–12: lessons with draggable figures, step-by-step examples, practice with hints and worked solutions, a formula book with conditions, mock exams in the current THPT format, and an optional AI tutor. The interface is Vietnamese with an English switch; the 14 topic sheets are bilingual, while grade lessons and method notes are in Vietnamese. There are no accounts: progress stays in the browser, and the "My data" page handles backup, per-person profiles and deletion. Run it with `npm install && npm run dev`; `npm run check` runs lint, all tests and the build. See `CONTRIBUTING.md` (Vietnamese) for the layout and conventions.
 
 ## Thêm một tờ
 

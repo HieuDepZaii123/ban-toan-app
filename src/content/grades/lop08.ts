@@ -6,7 +6,7 @@ const R = String.raw;
 export const lop08: GradeBook = {
   grade: 8,
   band: "thcs",
-  title: "Hằng đẳng thức, phân thức, hàm số bậc nhất, Pythagore, tứ giác và hình chóp đều.",
+  title: "Hằng đẳng thức, phân thức, hàm số bậc nhất, định lí Thalès, Pythagore, hình chóp đều và xác suất.",
   chapters: [
     chuong("dang-thuc", "Hằng đẳng thức, phân tích đa thức và phân thức", [
       bai(
@@ -128,6 +128,29 @@ export const lop08: GradeBook = {
           luyen(R`Hai điểm trên đồ thị $y=2x$ có hoành độ $1$ và $4$. Hiệu tung độ bằng bao nhiêu?`, R`Hiệu tung độ bằng $6$.`, [{ expr: "2*4-2*1", expect: "6" }], "Hệ số góc $2$ nhân với hiệu hoành độ $3$ cũng ra hiệu tung độ $6$."),
         ],
       ),
+      bai(
+        "lap-pt",
+        "Giải bài toán bằng cách lập phương trình",
+        R`Chọn ẩn và đặt điều kiện cho ẩn. Biểu diễn các đại lượng chưa biết theo ẩn rồi lập phương trình từ mối quan hệ trong đề. Giải phương trình, đối chiếu điều kiện rồi trả lời.`,
+        [vd(
+          R`Một hình chữ nhật có chiều dài hơn chiều rộng $4$ mét và chu vi $32$ mét. Tìm chiều rộng.`,
+          [
+            buoc(R`Gọi chiều rộng là $x$ mét, với $x>0$. Chiều dài là $x+4$ mét.`, R`Chọn đại lượng cần tìm làm ẩn và biểu diễn đại lượng còn lại theo ẩn.`),
+            buoc(R`Chu vi cho phương trình $2(x+x+4)=32$, tức $4x+8=32$, nên $x=6$.`, R`Giá trị $6$ dương nên thỏa điều kiện của ẩn.`),
+          ],
+          R`Chiều rộng bằng $6$ mét.`,
+          [{ expr: "Rational(32-8,4)", expect: "6" }, { expr: "2*(6+6+4)", expect: "32" }],
+        )],
+        [
+          luyen(R`Hai số có tổng $45$, số thứ nhất gấp đôi số thứ hai. Tìm số thứ hai.`, R`Số thứ hai bằng $15$.`, [{ expr: "Rational(45,3)", expect: "15" }], R`Gọi số thứ hai là $x$ thì $2x+x=45$, nên $x=15$.`),
+          luyen(R`Một xe đi từ $A$ đến $B$ với vận tốc $40$ kilômét trên giờ và trở về với vận tốc $60$ kilômét trên giờ, tổng thời gian là $5$ giờ. Quãng đường $AB$ dài bao nhiêu kilômét?`, R`Quãng đường dài $120$ kilômét.`, [{ expr: "5/(Rational(1,40)+Rational(1,60))", expect: "120" }], R`Gọi quãng đường là $x$ thì $\frac{x}{40}+\frac{x}{60}=5$, tức $\frac{5x}{120}=5$, nên $x=120$.`),
+          luyen(R`Tuổi mẹ gấp $3$ lần tuổi con. Sau $10$ năm, tuổi mẹ gấp $2$ lần tuổi con. Hiện nay con bao nhiêu tuổi?`, R`Hiện nay con $10$ tuổi.`, [{ expr: "2*10-10", expect: "10" }, { expr: "3*10+10-2*(10+10)", expect: "0" }], R`Gọi tuổi con là $x$ thì $3x+10=2(x+10)$, suy ra $x=10$.`),
+        ],
+        {
+          whyTrue: R`Phương trình là câu văn của đề bài được viết lại bằng kí hiệu. Mỗi mối quan hệ như tổng, hiệu, gấp mấy lần trở thành một phép tính trên ẩn, nên giải phương trình là giải đề bài.`,
+          pitfalls: R`Giải xong phương trình rồi dừng. Còn phải đối chiếu điều kiện của ẩn và trả lời đúng đại lượng đề hỏi.`,
+        },
+      ),
     ]),
     chuong("tam-giac", "Tam giác đồng dạng và định lí Pythagore", [
       bai(
@@ -158,7 +181,7 @@ export const lop08: GradeBook = {
           R`Tam giác vuông có hai cạnh góc vuông $3$ và $4$. Tính cạnh huyền.`,
           [
             buoc(R`Tổng hai bình phương bằng $9+16=25$.`, "Định lí Pythagore cộng bình phương hai cạnh góc vuông, chưa lấy căn."),
-            buoc(R`Cạnh huyền bằng $\sqrt{25}=5$.`, "Độ dài là căn không âm của tổng vừa tính. Bộ $3, 4, 5$ là một tam giác vuông."),
+            buoc(R`Cạnh huyền bằng $\sqrt{25}=5$.`, "Độ dài là căn không âm của tổng vừa tính. Bộ $3;\\ 4;\\ 5$ là một tam giác vuông."),
           ],
           R`Cạnh huyền bằng $5$.`,
           [{ expr: "sqrt(3**2+4**2)", expect: "5" }],
@@ -166,7 +189,7 @@ export const lop08: GradeBook = {
         [
           luyen(R`Cạnh huyền bằng $13$, một cạnh góc vuông bằng $5$. Cạnh góc vuông còn lại bằng bao nhiêu?`, R`Cạnh còn lại bằng $12$.`, [{ expr: "sqrt(13**2-5**2)", expect: "12" }], "Từ định lí Pythagore, bình phương cạnh còn lại bằng hiệu hai bình phương. Căn không âm bằng $12$."),
           luyen(R`Tam giác vuông cân có cạnh góc vuông $1$. Cạnh huyền bằng bao nhiêu?`, R`Cạnh huyền bằng $\sqrt{2}$.`, [{ expr: "sqrt(1**2+1**2)", expect: "sqrt(2)" }], "Hai cạnh góc vuông bằng nhau. Tổng hai bình phương bằng $2$, căn không âm là $\\sqrt{2}$."),
-          luyen(R`Kiểm tra bộ độ dài $6, 8, 10$ có phải tam giác vuông không.`, R`Có, vì $6^2+8^2=10^2$.`, [{ expr: "6**2+8**2-10**2", expect: "0" }], "Đảo định lí Pythagore: nếu bình phương một cạnh bằng tổng bình phương hai cạnh kia thì tam giác vuông tại góc giữa hai cạnh đó."),
+          luyen(R`Kiểm tra bộ độ dài $6;\ 8;\ 10$ có phải tam giác vuông không.`, R`Có, vì $6^2+8^2=10^2$.`, [{ expr: "6**2+8**2-10**2", expect: "0" }], "Đảo định lí Pythagore: nếu bình phương một cạnh bằng tổng bình phương hai cạnh kia thì tam giác vuông tại góc giữa hai cạnh đó."),
         ],
         { figure: "triangle" },
       ),
@@ -210,6 +233,127 @@ export const lop08: GradeBook = {
           luyen(R`Đáy là tam giác đều có diện tích $12$, chiều cao chóp bằng $5$. Thể tích bằng bao nhiêu?`, R`Thể tích bằng $20$.`, [{ expr: "Rational(1,3)*12*5", expect: "20" }], "Đáy đa giác đều. Thể tích vẫn là một phần ba tích diện tích đáy với chiều cao."),
           luyen(R`Nếu thể tích hình chóp đều bằng $48$ và diện tích đáy bằng $36$, chiều cao bằng bao nhiêu?`, R`Chiều cao bằng $4$.`, [{ expr: "solve(Rational(1,3)*36*h-48, h)[0]", expect: "4" }], "Từ công thức thể tích, nhân $3$ rồi chia cho diện tích đáy khác $0$ để tìm chiều cao."),
         ],
+      ),
+    ]),
+    chuong("thales", "Định lí Thalès và đường trung bình", [
+      bai(
+        "thales",
+        "Định lí Thalès",
+        R`Nếu một đường thẳng song song với một cạnh của tam giác và cắt hai cạnh còn lại thì nó định ra trên hai cạnh đó những đoạn thẳng tương ứng tỉ lệ. Định lí đảo: nếu đường thẳng cắt hai cạnh và định ra các đoạn tương ứng tỉ lệ thì nó song song với cạnh còn lại.`,
+        [vd(
+          R`Trong tam giác $ABC$, đường thẳng song song với $BC$ cắt $AB$ tại $M$ và $AC$ tại $N$. Biết $AM=4$, $MB=6$ và $AN=6$. Tính $NC$.`,
+          [
+            buoc(R`Theo định lí Thalès, $\frac{AM}{MB}=\frac{AN}{NC}$.`, R`Đường thẳng $MN$ song song với $BC$ nên chia hai cạnh theo cùng một tỉ số.`),
+            buoc(R`Thay số: $\frac{4}{6}=\frac{6}{NC}$, suy ra $NC=\frac{6\cdot 6}{4}=9$.`, R`Dùng tích chéo của tỉ lệ thức để tìm số hạng chưa biết.`),
+          ],
+          R`Độ dài $NC$ bằng $9$.`,
+          [{ expr: "Rational(6*6,4)", expect: "9" }],
+        )],
+        [
+          luyen(R`Đường thẳng song song với $BC$ cắt $AB$, $AC$ tại $M$, $N$. Biết $AM=3$, $AB=9$ và $AC=12$. Tính $AN$.`, R`Độ dài $AN$ bằng $4$.`, [{ expr: "Rational(3,9)*12", expect: "4" }], R`Ta có $\frac{AM}{AB}=\frac{AN}{AC}$, nên $AN=\frac{3}{9}\cdot 12=4$.`),
+          luyen(R`Biết $AM=2$, $MB=4$, $AN=3$ và $NC=6$. Đường thẳng $MN$ có song song với $BC$ không?`, R`Có, vì hai tỉ số bằng nhau.`, [{ expr: "Rational(2,4)-Rational(3,6)", expect: "0" }], R`Ta có $\frac{2}{4}=\frac{3}{6}$, nên theo định lí Thalès đảo thì $MN$ song song với $BC$.`),
+          luyen(R`Bóng của một cây cột cao $2$ mét dài $3$ mét. Cùng lúc đó bóng của một cái cây dài $12$ mét. Cây cao bao nhiêu mét?`, R`Cây cao $8$ mét.`, [{ expr: "Rational(2,3)*12", expect: "8" }], R`Chiều cao và bóng tỉ lệ với nhau: $\frac{2}{3}=\frac{h}{12}$, nên $h=8$.`),
+        ],
+        {
+          figure: "triangle",
+          whyTrue: R`Chia cạnh $AB$ thành các đoạn bằng nhau rồi kẻ qua các điểm chia những đường thẳng song song với $BC$. Các đường này cũng chia cạnh $AC$ thành các đoạn bằng nhau, nên tỉ số số đoạn trên hai cạnh là như nhau.`,
+          pitfalls: R`Lập hai tỉ số lệch nhau: một bên lấy đoạn trên so với cả cạnh, bên kia lấy đoạn trên so với đoạn dưới. Hai tỉ số phải được lập theo cùng một cách.`,
+        },
+      ),
+      bai(
+        "duong-trung-binh",
+        "Đường trung bình của tam giác",
+        R`Đường trung bình của tam giác là đoạn thẳng nối trung điểm hai cạnh. Nó song song với cạnh thứ ba và dài bằng một nửa cạnh ấy.`,
+        [vd(
+          R`Tam giác $ABC$ có $BC=10$. Gọi $M$, $N$ là trung điểm của $AB$ và $AC$. Tính $MN$.`,
+          [
+            buoc(R`Đoạn $MN$ là đường trung bình của tam giác $ABC$.`, R`Hai điểm $M$ và $N$ là trung điểm của hai cạnh.`),
+            buoc(R`Vậy $MN=\frac{1}{2}BC=5$.`, R`Đường trung bình dài bằng một nửa cạnh thứ ba.`),
+          ],
+          R`Độ dài $MN$ bằng $5$.`,
+          [{ expr: "Rational(10,2)", expect: "5" }],
+        )],
+        [
+          luyen(R`Đường trung bình ứng với cạnh đáy dài $14$ thì dài bao nhiêu?`, R`Đường trung bình dài $7$.`, [{ expr: "Rational(14,2)", expect: "7" }], R`Đường trung bình bằng một nửa cạnh mà nó song song.`),
+          luyen(R`Đường trung bình dài $6$. Cạnh song song với nó dài bao nhiêu?`, R`Cạnh đó dài $12$.`, [{ expr: "6*2", expect: "12" }], R`Cạnh thứ ba dài gấp đôi đường trung bình.`),
+          luyen(R`Tam giác có ba cạnh $6$, $8$ và $10$. Tam giác tạo bởi ba đường trung bình có chu vi bằng bao nhiêu?`, R`Chu vi bằng $12$.`, [{ expr: "Rational(6+8+10,2)", expect: "12" }], R`Mỗi đường trung bình bằng nửa một cạnh, nên chu vi bằng nửa chu vi tam giác ban đầu.`),
+        ],
+        {
+          figure: "triangle",
+          whyTrue: R`Vì $\frac{AM}{AB}=\frac{AN}{AC}=\frac{1}{2}$ nên theo định lí Thalès đảo, $MN$ song song với $BC$. Tam giác $AMN$ đồng dạng với tam giác $ABC$ theo tỉ số $\frac{1}{2}$, nên $MN$ bằng nửa $BC$.`,
+          pitfalls: R`Nhầm đường trung bình với đường trung tuyến. Đường trung tuyến nối một đỉnh với trung điểm cạnh đối diện, đường trung bình nối hai trung điểm.`,
+        },
+      ),
+      bai(
+        "phan-giac",
+        "Tính chất đường phân giác của tam giác",
+        R`Trong tam giác, đường phân giác của một góc chia cạnh đối diện thành hai đoạn thẳng tỉ lệ với hai cạnh kề hai đoạn ấy.`,
+        [vd(
+          R`Tam giác $ABC$ có $AB=6$, $AC=9$ và $BC=10$. Đường phân giác của góc $A$ cắt $BC$ tại $D$. Tính $DB$ và $DC$.`,
+          [
+            buoc(R`Ta có $\frac{DB}{DC}=\frac{AB}{AC}=\frac{6}{9}=\frac{2}{3}$.`, R`Đường phân giác chia cạnh đối diện theo tỉ số hai cạnh kề.`),
+            buoc(R`Chia $BC=10$ thành $5$ phần bằng nhau: $DB=4$ và $DC=6$.`, R`Tổng hai đoạn là $10$ và tỉ số là $2:3$, nên mỗi phần dài $2$.`),
+          ],
+          R`Độ dài $DB$ bằng $4$ và $DC$ bằng $6$.`,
+          [{ expr: "Rational(10,5)*2", expect: "4" }, { expr: "Rational(10,5)*3", expect: "6" }],
+        )],
+        [
+          luyen(R`Tam giác có $AB=4$ và $AC=8$. Phân giác góc $A$ cắt $BC$ tại $D$ với $DB=3$. Tính $DC$.`, R`Độ dài $DC$ bằng $6$.`, [{ expr: "3*Rational(8,4)", expect: "6" }], R`Ta có $\frac{DB}{DC}=\frac{4}{8}$, nên $DC$ dài gấp đôi $DB$.`),
+          luyen(R`Tam giác có $AB=5$, $AC=5$ và $BC=8$. Phân giác góc $A$ cắt $BC$ tại $D$. Tính $DB$.`, R`Độ dài $DB$ bằng $4$.`, [{ expr: "Rational(8,2)", expect: "4" }], R`Hai cạnh kề bằng nhau nên $D$ là trung điểm của $BC$.`),
+          luyen(R`Tam giác có $AB=6$, $AC=12$ và $BC=15$. Phân giác góc $A$ cắt $BC$ tại $D$. Tính $DC$.`, R`Độ dài $DC$ bằng $10$.`, [{ expr: "Rational(15,3)*2", expect: "10" }], R`Tỉ số $DB:DC$ là $6:12$, tức $1:2$, nên $DC$ chiếm hai phần ba của $15$.`),
+        ],
+        {
+          whyTrue: R`Qua $B$ kẻ đường thẳng song song với $AD$, cắt đường thẳng $AC$ tại $E$. Tam giác $ABE$ cân tại $A$ nên $AE=AB$, và định lí Thalès cho $\frac{DB}{DC}=\frac{AE}{AC}=\frac{AB}{AC}$.`,
+          pitfalls: R`Ghép sai cặp cạnh. Đoạn $DB$ đi với cạnh $AB$, đoạn $DC$ đi với cạnh $AC$.`,
+        },
+      ),
+    ]),
+    chuong("xac-suat-8", "Xác suất", [
+      bai(
+        "xs-ti-so",
+        "Xác suất của biến cố bằng tỉ số",
+        R`Khi mọi kết quả của một phép thử có cùng khả năng xảy ra, xác suất của một biến cố bằng số kết quả thuận lợi chia cho tổng số kết quả có thể. Xác suất luôn nằm trong đoạn từ $0$ đến $1$.`,
+        [vd(
+          R`Gieo một con xúc xắc cân đối. Tính xác suất được mặt có số chấm chẵn.`,
+          [
+            buoc(R`Có $6$ kết quả có thể, cùng khả năng xảy ra.`, R`Xúc xắc cân đối nên sáu mặt có khả năng xuất hiện như nhau.`),
+            buoc(R`Các mặt chẵn là $2$, $4$ và $6$, nên xác suất là $\frac{3}{6}=\frac{1}{2}$.`, R`Có ba kết quả thuận lợi trong sáu kết quả có thể.`),
+          ],
+          R`Xác suất bằng $\frac{1}{2}$.`,
+          [{ expr: "Rational(3,6)", expect: "Rational(1,2)" }],
+        )],
+        [
+          luyen(R`Gieo một con xúc xắc cân đối. Xác suất được mặt có số chấm lớn hơn $4$ bằng bao nhiêu?`, R`Xác suất bằng $\frac{1}{3}$.`, [{ expr: "Rational(2,6)", expect: "Rational(1,3)" }], R`Các mặt lớn hơn $4$ là $5$ và $6$, tức hai kết quả thuận lợi trong sáu.`),
+          luyen(R`Hộp có $4$ thẻ ghi các số $1$, $2$, $3$, $4$. Rút ngẫu nhiên một thẻ. Xác suất rút được số lớn hơn $1$ bằng bao nhiêu?`, R`Xác suất bằng $\frac{3}{4}$.`, [{ expr: "Rational(4-1,4)", expect: "Rational(3,4)" }], R`Các số lớn hơn $1$ là $2$, $3$ và $4$, tức ba kết quả thuận lợi trong bốn.`),
+          luyen(R`Lớp có $18$ bạn nam và $22$ bạn nữ. Chọn ngẫu nhiên một bạn. Xác suất chọn được bạn nữ bằng bao nhiêu?`, R`Xác suất bằng $\frac{11}{20}$.`, [{ expr: "Rational(22,18+22)", expect: "Rational(11,20)" }], R`Có $22$ kết quả thuận lợi trong $40$ kết quả có thể, rút gọn được $\frac{11}{20}$.`),
+        ],
+        {
+          whyTrue: R`Các kết quả đồng khả năng chia đều toàn bộ khả năng, mỗi kết quả nhận một phần bằng nhau. Biến cố gồm bao nhiêu kết quả thì nhận bấy nhiêu phần.`,
+          pitfalls: R`Quên kiểm tra các kết quả có đồng khả năng không. Một con xúc xắc bị lệch thì không dùng được công thức này.`,
+        },
+      ),
+      bai(
+        "xs-thuc-nghiem-8",
+        "Xác suất thực nghiệm và xác suất lí thuyết",
+        R`Xác suất thực nghiệm bằng số lần biến cố xảy ra chia cho số lần thử. Khi số lần thử càng lớn, xác suất thực nghiệm càng gần xác suất tính theo tỉ số.`,
+        [vd(
+          R`Gieo một đồng xu cân đối $200$ lần, được $104$ lần mặt ngửa. Tính xác suất thực nghiệm của mặt ngửa và so với xác suất lí thuyết.`,
+          [
+            buoc(R`Xác suất thực nghiệm là $\frac{104}{200}=0{,}52$.`, R`Lấy số lần được mặt ngửa chia cho tổng số lần gieo.`),
+            buoc(R`Xác suất lí thuyết là $\frac{1}{2}=0{,}5$, hai số chênh nhau $0{,}02$.`, R`Đồng xu cân đối có hai mặt đồng khả năng.`),
+          ],
+          R`Xác suất thực nghiệm bằng $0{,}52$, gần với xác suất lí thuyết $0{,}5$.`,
+          [{ expr: "Rational(104,200)", expect: "Rational(13,25)" }],
+        )],
+        [
+          luyen(R`Gieo xúc xắc $60$ lần, được $12$ lần mặt $6$ chấm. Xác suất thực nghiệm của mặt $6$ chấm bằng bao nhiêu?`, R`Xác suất thực nghiệm bằng $\frac{1}{5}$.`, [{ expr: "Rational(12,60)", expect: "Rational(1,5)" }], R`Lấy $12$ chia $60$ rồi rút gọn thành $\frac{1}{5}$.`),
+          luyen(R`Kiểm tra $500$ sản phẩm thấy $15$ sản phẩm lỗi. Xác suất thực nghiệm của sản phẩm lỗi bằng bao nhiêu phần trăm?`, R`Bằng $3\%$.`, [{ expr: "Rational(15,500)*100", expect: "3" }], R`Ta có $\frac{15}{500}=0{,}03$, tức $3\%$.`),
+          luyen(R`Xác suất thực nghiệm của một biến cố là $0{,}3$ sau $200$ lần thử. Biến cố đã xảy ra bao nhiêu lần?`, R`Biến cố đã xảy ra $60$ lần.`, [{ expr: "Rational(3,10)*200", expect: "60" }], R`Số lần xảy ra bằng xác suất thực nghiệm nhân với số lần thử.`),
+        ],
+        {
+          whyTrue: R`Mỗi lần thử có kết quả ngẫu nhiên, nhưng qua rất nhiều lần thử thì tỉ lệ xuất hiện của một biến cố ổn định dần. Giá trị mà tỉ lệ ấy tiến gần tới chính là xác suất của biến cố.`,
+          pitfalls: R`Chờ đợi xác suất thực nghiệm bằng đúng xác suất lí thuyết. Hai số chỉ gần nhau, và gần hơn khi số lần thử lớn.`,
+        },
       ),
     ]),
   ],

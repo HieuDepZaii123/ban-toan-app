@@ -12,7 +12,7 @@ export const triangleLesson: Lesson = {
     { k: "dinh", vi: R`Phóng cạnh theo $k$ thì diện tích nhân $k^2$, thể tích nhân $k^3$.`, en: R`Scaling edges by $k$ multiplies area by $k^2$ and volume by $k^3$.` },
     { k: "vd", vi: R`Chóp đáy vuông cạnh $6$, cao $4$: $S=36$, $V=\dfrac13\cdot 36\cdot 4=48$.`, en: R`Pyramid with square base of side $6$ and height $4$: $S=36$, $V=\dfrac13\cdot 36\cdot 4=48$.` },
     { k: "loi", vi: R`Bỏ $\dfrac12$ thì đáy $6$, cao $4$ thành $24$. Diện tích đúng là $12$.`, en: R`Dropping $\dfrac12$ turns base $6$ and height $4$ into $24$. The area is $12$.` },
-    { k: "kiem", vi: R`Hộp $3\times 4\times 5$ có $V=60$. Cạnh gấp đôi thì diện tích đáy nhân $4$.`, en: R`A $3\times 4\times 5$ box has $V=60$. Doubling the edges multiplies the base area by $4$.` },
+    { k: "kiem", vi: R`Hộp $3\cdot 4\cdot 5$ có $V=60$. Cạnh gấp đôi thì diện tích đáy nhân $4$.`, en: R`A $3\times 4\times 5$ box has $V=60$. Doubling the edges multiplies the base area by $4$.` },
   ],
 };
 
@@ -59,7 +59,7 @@ export const triangleQuestions: Question[] = [
   },
   {
     id: "shp-box",
-    prompt: R`Hộp $3,4,5$. $V=?$`,
+    prompt: R`Hộp $3;\ 4;\ 5$. $V=?$`,
     promptEn: R`Box $3,4,5$. $V=?$`,
     choices: ["60", "12", "24", "15"],
     choicesEn: ["60", "12", "24", "15"],

@@ -340,7 +340,7 @@ export const lop11: GradeBook = {
     chuong("tk-11", "Thống kê mẫu ghép nhóm", [
       bai("tb-nhom", "Số trung bình và trung vị của mẫu ghép nhóm",
         R`Số trung bình của mẫu ghép nhóm dùng giá trị đại diện của mỗi nhóm nhân với tần số, rồi chia cho cỡ mẫu. Nhóm chứa trung vị là nhóm mà tần số tích lũy lần đầu đạt ít nhất một nửa cỡ mẫu.`,
-        [vd(R`Ba nhóm có giá trị đại diện $5, 15, 25$ và tần số $2, 3, 5$. Tính số trung bình và chỉ nhóm chứa trung vị.`,
+        [vd(R`Ba nhóm có giá trị đại diện $5;\ 15;\ 25$ và tần số $2;\ 3;\ 5$. Tính số trung bình và chỉ nhóm chứa trung vị.`,
           [
             buoc(R`Số trung bình bằng $\frac{2\cdot 5+3\cdot 15+5\cdot 25}{10}=18$.`, "Cỡ mẫu là $2+3+5=10$. Mỗi giá trị đại diện được nhân với tần số của nhóm."),
             buoc(R`Một nửa cỡ mẫu là $5$. Tần số tích lũy $2$ rồi $2+3=5$, nên nhóm chứa trung vị là nhóm thứ hai.`, "Tần số tích lũy lần đầu đạt $5$ tại nhóm có giá trị đại diện $15$."),
@@ -350,13 +350,13 @@ export const lop11: GradeBook = {
         )],
         [
           luyen(R`Với cùng bảng tần số, tần số tích lũy sau hai nhóm đầu bằng bao nhiêu?`, R`Tần số tích lũy bằng $5$.`, [{ expr: "2+3", expect: "5" }], "Cộng lần lượt các tần số. Mốc này vừa bằng một nửa cỡ mẫu."),
-          luyen(R`Cỡ mẫu của các tần số $2, 3, 5$ bằng bao nhiêu?`, R`Cỡ mẫu bằng $10$.`, [{ expr: "2+3+5", expect: "10" }], "Cỡ mẫu là tổng tần số, dùng làm mẫu số của số trung bình."),
+          luyen(R`Cỡ mẫu của các tần số $2;\ 3;\ 5$ bằng bao nhiêu?`, R`Cỡ mẫu bằng $10$.`, [{ expr: "2+3+5", expect: "10" }], "Cỡ mẫu là tổng tần số, dùng làm mẫu số của số trung bình."),
           luyen(R`Giá trị đại diện $25$ đóng góp bao nhiêu vào tử của số trung bình, với tần số $5$?`, R`Đóng góp bằng $125$.`, [{ expr: "5*25", expect: "125" }], "Mỗi nhóm đóng góp tích của giá trị đại diện với tần số."),
         ],
         { topicId: "combo", figure: "bar" }),
       bai("tu-phan-vi-11", "Tứ phân vị và mốt của mẫu ghép nhóm",
         R`Nhóm chứa mốt là nhóm có tần số lớn nhất. Nhóm chứa tứ phân vị thứ nhất là nhóm mà tần số tích lũy lần đầu đạt ít nhất một phần tư cỡ mẫu. Nhóm chứa tứ phân vị thứ ba ứng với ba phần tư cỡ mẫu.`,
-        [vd(R`Cỡ mẫu $10$, các tần số $2, 3, 5$. Nhóm nào chứa mốt, và tần số tích lũy nào chạm mốc một phần tư?`,
+        [vd(R`Cỡ mẫu $10$, các tần số $2;\ 3;\ 5$. Nhóm nào chứa mốt, và tần số tích lũy nào chạm mốc một phần tư?`,
           [
             buoc(R`Tần số lớn nhất là $5$, nên nhóm thứ ba chứa mốt.`, "Mốt của mẫu ghép nhóm nằm ở nhóm có tần số cao nhất. Có đúng một nhóm đạt tần số $5$."),
             buoc(R`Một phần tư của $10$ là $2{,}5$. Tần số tích lũy nhóm đầu bằng $2$, chưa đủ, nên mốc nằm ở nhóm thứ hai.`, "Tần số tích lũy phải đạt ít nhất $2{,}5$. Nhóm đầu chỉ mới $2$."),
@@ -367,7 +367,7 @@ export const lop11: GradeBook = {
         [
           luyen(R`Ba phần tư của cỡ mẫu $10$ bằng bao nhiêu?`, R`Mốc bằng $7{,}5$.`, [{ expr: "Rational(3,4)*10", expect: "Rational(15,2)" }], "Tứ phân vị thứ ba dùng mốc ba phần tư cỡ mẫu."),
           luyen(R`Tần số tích lũy $2+3+5$ có đạt mốc $7{,}5$ không?`, R`Có, vì tổng bằng $10$, lớn hơn $7{,}5$.`, [{ expr: "2+3+5", expect: "10" }], "Tần số tích lũy cuối cùng phải bằng cả cỡ mẫu."),
-          luyen(R`Trong các tần số $4, 4, 1$, có một nhóm tần số lớn nhất duy nhất không?`, R`Không, có hai nhóm cùng tần số $4$.`, [{ expr: "Max(4,4,1)", expect: "4" }], "Khi hai nhóm cùng tần số lớn nhất, không có một nhóm chứa mốt duy nhất."),
+          luyen(R`Trong các tần số $4;\ 4;\ 1$, có một nhóm tần số lớn nhất duy nhất không?`, R`Không, có hai nhóm cùng tần số $4$.`, [{ expr: "Max(4,4,1)", expect: "4" }], "Khi hai nhóm cùng tần số lớn nhất, không có một nhóm chứa mốt duy nhất."),
         ],
         { topicId: "combo" }),
     ]),

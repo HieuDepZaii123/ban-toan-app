@@ -30,8 +30,8 @@ export function PolicyPage() {
       <section className="policy" aria-labelledby="p-data">
         <h2 id="p-data">{t(lang, "1. Dữ liệu ở lại trên máy", "1. Data that stays on your device")}</h2>
         <p>{t(lang,
-          "Tiến độ, câu đã làm, ghi chú, lịch sử trò chuyện với trợ lý và mã Premium được lưu trong bộ nhớ trình duyệt (localStorage) của máy này. Bàn Toán không có tài khoản và không dùng công cụ phân tích hay quảng cáo. Xóa dữ liệu trang web trong trình duyệt là xóa hết những thứ này.",
-          "Progress, answers, notes, tutor chat history and the Premium key are kept in this browser's storage (localStorage). Bàn Toán has no accounts and uses no analytics or advertising tools. Clearing this site's data in the browser removes all of it.")}</p>
+          "Tiến độ, câu đã làm, ghi chú, lịch sử trò chuyện với trợ lý và mã Premium được lưu trong bộ nhớ trình duyệt (localStorage) của máy này. Bàn Toán không có tài khoản và không dùng công cụ phân tích hay quảng cáo. Trang Dữ liệu của tôi (/du-lieu) có nút tải tệp sao lưu để chuyển máy, tách hồ sơ cho từng người học chung một máy, xóa lịch sử trò chuyện và xóa toàn bộ dữ liệu trên máy. Xóa ở đó, hoặc xóa dữ liệu trang web trong trình duyệt, là xóa những gì nằm trên máy này; dữ liệu đã rời máy theo mục 2 thì xử lý theo mục đó.",
+          "Progress, answers, notes, tutor chat history and the Premium key are kept in this browser's storage (localStorage). Bàn Toán has no accounts and uses no analytics or advertising tools. The My data page (/du-lieu) lets you download a backup file to move devices, keep separate profiles for people sharing one device, delete chat history and delete everything on the device. Deleting there, or clearing this site's data in the browser, removes what is on this device; data that already left the device under section 2 is handled as that section says.")}</p>
         <p>{t(lang,
           "Trên máy dùng chung, hãy xóa dữ liệu trang khi dùng xong nếu không muốn người khác thấy ghi chú hay mã Premium.",
           "On a shared device, clear the site data when you finish if you do not want others to see your notes or Premium key.")}</p>
@@ -41,14 +41,14 @@ export function PolicyPage() {
         <h2 id="p-out">{t(lang, "2. Dữ liệu rời khỏi máy", "2. Data that leaves your device")}</h2>
         <ul>
           <li>{t(lang,
-            `Trợ lý toán: câu hỏi, ảnh đề bài nếu bạn gửi, và vài lượt trò chuyện gần nhất được gửi tới máy chủ Bàn Toán rồi chuyển cho một nhà cung cấp AI (${AI_PROVIDERS}). Gói miễn phí của các nhà cung cấp này có thể dùng nội dung để cải thiện mô hình. Đừng gửi họ tên, địa chỉ, số điện thoại hay ảnh có thông tin cá nhân.`,
-            `Maths tutor: your question, a photo of the problem if you send one, and the last few turns go to the Bàn Toán server and then to one AI provider (${AI_PROVIDERS}). These providers' free tiers may use content to improve their models. Do not send names, addresses, phone numbers or photos with personal details.`)}</li>
+            `Trợ lý toán: câu hỏi, ảnh đề bài nếu bạn gửi, và vài lượt trò chuyện gần nhất được gửi tới máy chủ Bàn Toán rồi chuyển cho một nhà cung cấp AI (${AI_PROVIDERS}). Gói miễn phí của các nhà cung cấp này có thể dùng nội dung để cải thiện mô hình. Đừng gửi họ tên, địa chỉ, số điện thoại hay ảnh có thông tin cá nhân. Khung trợ lý hiện thông báo này trước câu hỏi đầu tiên và chỉ gửi đi sau khi bạn bấm đồng ý; lịch sử trò chuyện xóa được bằng nút Xóa lịch sử. Tin nhắn có dấu hiệu nguy hiểm cho trẻ (tự hại, bị xâm hại, bị bắt nạt) được máy chủ Bàn Toán trả lời ngay bằng một lời nhắn cố định có Tổng đài 111, và không chuyển cho nhà cung cấp AI.`,
+            `Maths tutor: your question, a photo of the problem if you send one, and the last few turns go to the Bàn Toán server and then to one AI provider (${AI_PROVIDERS}). These providers' free tiers may use content to improve their models. Do not send names, addresses, phone numbers or photos with personal details. The tutor panel shows this notice before your first question and sends nothing until you agree; chat history can be removed with the Clear history button. A message that signals danger to a child (self-harm, abuse, bullying) is answered at once by the Bàn Toán server with a fixed message that names the 111 child helpline, and is not passed to an AI provider.`)}</li>
           <li>{t(lang,
             "Giới hạn lượt hỏi: máy chủ đếm lượt theo một mã ngẫu nhiên của trình duyệt (hoặc mã Premium đã băm) và địa chỉ mạng, giữ tối đa hai ngày rồi xóa.",
             "Question limits: the server counts questions by a random browser id (or a hashed Premium key) and network address, kept for at most two days and then deleted.")}</li>
           <li>{t(lang,
-            "Luyện chung (/luyen): lựa chọn đáp án được sao lưu kèm một mã thiết bị ngẫu nhiên, không kèm tên hay email.",
-            "Shared drill (/luyen): your answer choices are backed up with a random device id, with no name or email.")}</li>
+            "Luyện chung (/luyen): mặc định không gửi gì. Nếu bạn bật Sao lưu ẩn danh ở trang Dữ liệu của tôi, các đáp án bạn chọn được ghi lên dịch vụ cơ sở dữ liệu Supabase (bên xử lý dữ liệu thay cho Bàn Toán) kèm một mã thiết bị ngẫu nhiên, không kèm tên hay email. Tắt đi thì máy thôi gửi; muốn xóa bản đã gửi, hãy liên hệ kèm mã thiết bị.",
+            "Shared drill (/luyen): nothing is sent by default. If you turn on Anonymous backup on the My data page, the answers you pick are written to the Supabase database service (a processor acting for Bàn Toán) with a random device id, with no name or email. Turn it off and the device stops sending; to delete what was already sent, contact us with the device id.")}</li>
           <li>{t(lang,
             "Mua Premium: email, gói, số tiền, mã đơn và mã giao dịch được lưu để cấp và tra cứu quyền. Thanh toán do MoMo, ngân hàng của bạn, hoặc mạng blockchain (USDT/USDC, cho người mua ngoài Việt Nam) xử lý theo điều khoản của họ.",
             "Buying Premium: email, plan, amount, order id and transaction id are stored to issue and look up the licence. Payments are processed by MoMo, your bank, or the blockchain network (USDT/USDC, for buyers outside Vietnam) under their own terms.")}</li>
@@ -61,8 +61,8 @@ export function PolicyPage() {
       <section className="policy" aria-labelledby="p-kids">
         <h2 id="p-kids">{t(lang, "3. Học sinh dưới 16 tuổi", "3. Students under 16")}</h2>
         <p>{t(lang,
-          "Học sinh dưới 16 tuổi cần cha mẹ hoặc người giám hộ đồng ý trước khi mua Premium hoặc tham gia chương trình giới thiệu.",
-          "Students under 16 need a parent or guardian's consent before buying Premium or joining the referral programme.")}</p>
+          "Học sinh dưới 16 tuổi không tự mua Premium được: trang Nâng cấp hỏi ai đang mua và máy chủ từ chối đơn của người dưới 16 tuổi, nên cha mẹ hoặc người giám hộ mua giúp. Từ 16 đến dưới 18 tuổi cần cha mẹ hoặc người giám hộ đồng ý. Chương trình giới thiệu chỉ dành cho người từ 18 tuổi. Trước khi dùng trợ lý, học sinh dưới 16 tuổi nên hỏi cha mẹ.",
+          "Students under 16 cannot buy Premium themselves: the Upgrade page asks who is buying and the server refuses orders from buyers under 16, so a parent or guardian buys for them. Buyers aged 16 or 17 need a parent or guardian's consent. The referral programme is for adults aged 18 or older only. Students under 16 should ask a parent before using the tutor.")}</p>
         <p>{t(lang,
           `Nếu trẻ đã mua mà cha mẹ không biết, cha mẹ được hoàn đủ 100% trong ${PARENT_REFUND_DAYS} ngày kể từ lúc thanh toán, không tính vào giới hạn một lần ở mục 4.`,
           `If a child bought Premium without a parent knowing, the parent gets a full refund within ${PARENT_REFUND_DAYS} days of payment, separate from the one-refund limit in section 4.`)}</p>
@@ -80,14 +80,17 @@ export function PolicyPage() {
         <h3>{t(lang, "Khi nào được hoàn", "When you can get a refund")}</h3>
         <ul>
           <li>{t(lang,
-            `Trong ${REFUND_DAYS} ngày kể từ lúc thanh toán: hoàn đủ 100% vì bất kỳ lý do gì, không cần giải thích. Mỗi email được hoàn theo cách này một lần.`,
-            `Within ${REFUND_DAYS} days of payment: a full refund for any reason, no questions asked. Once per email address.`)}</li>
+            `Trong ${REFUND_DAYS} ngày kể từ lúc thanh toán: hoàn đủ 100% vì bất kỳ lý do gì, không cần giải thích. Mỗi email được hoàn theo cách này một lần. Mã Premium hiện ngay sau khi thanh toán; về sau khôi phục bằng mã đơn cùng email đã mua, ở trang Nâng cấp.`,
+            `Within ${REFUND_DAYS} days of payment: a full refund for any reason, no questions asked. Once per email address. The Premium key shows right after payment; later it is recovered with the order id and the purchase email, on the Upgrade page.`)}</li>
           <li>{t(lang,
             `Gói 365 ngày, sau ${REFUND_DAYS} ngày đầu: hoàn phần tháng chưa dùng, tính theo số tháng tròn còn lại nhân 1/12 giá gói. Ví dụ: mua 399.000đ, xin hoàn khi còn 8 tháng tròn → hoàn 266.000đ.`,
             `365-day plan after the first ${REFUND_DAYS} days: a refund for the unused whole months, at 1/12 of the price per month. Example: 399,000 VND with 8 whole months left returns 266,000 VND.`)}</li>
           <li>{t(lang,
             "Tiền đến sau khi đơn hết hạn 15 phút: nếu hệ thống đã nhận tiền, bạn vẫn được cấp Premium. Nếu sau 24 giờ vẫn chưa thấy, hãy liên hệ kèm mã đơn và chọn nhận Premium hoặc hoàn tiền.",
             "Payment that arrived after the 15-minute order window: Premium is still issued once the money is received. If nothing appears within 24 hours, contact us with the order id and choose Premium or a refund.")}</li>
+          <li>{t(lang,
+            "Tiền mã hóa mặc định không được nhận. Nếu đơn vị vận hành bật phương thức này, nó chỉ dành cho người mua từ 18 tuổi ở ngoài Việt Nam. Khi đó USDT/USDC được hoàn bằng cùng loại token về ví đã gửi, trừ phí mạng.",
+            "Crypto is not accepted by default. If the operator turns this method on, it is for buyers aged 18 or older outside Vietnam. In that case USDT/USDC is refunded in the same token to the sending wallet, minus network fees.")}</li>
           <li>{t(lang,
             "Bị trừ tiền hai lần cho cùng một đơn: lần thừa được hoàn đủ, không tính vào giới hạn một lần.",
             "Charged twice for one order: the extra payment is refunded in full and does not count as your one refund.")}</li>
@@ -152,8 +155,8 @@ export function PolicyPage() {
         <h2 id="p-use">{t(lang, "5. Điều khoản dùng", "5. Terms of use")}</h2>
         <ul>
           <li>{t(lang,
-            "Nội dung và lời giải được kiểm bằng máy nhưng vẫn có thể sai. Nếu thấy sai, hãy báo để sửa. Bàn Toán là công cụ học, không thay thế thầy cô hay đề chính thức.",
-            "Content and solutions are machine-checked but can still contain mistakes. Please report any you find. Bàn Toán is a study tool, not a substitute for teachers or official exams.")}</li>
+            "Nội dung và lời giải được kiểm bằng máy nhưng vẫn có thể sai. Nếu thấy sai, hãy báo để sửa. Bàn Toán là công cụ học, không thay thế thầy cô hay đề chính thức. Đề thi thử là đề luyện do Bàn Toán soạn theo cấu trúc đề thi tốt nghiệp THPT hiện hành, không phải đề của Bộ Giáo dục và Đào tạo.",
+            "Content and solutions are machine-checked but can still contain mistakes. Please report any you find. Bàn Toán is a study tool, not a substitute for teachers or official exams. Mock exams are practice papers written by Bàn Toán in the current THPT graduation format, not papers from the Ministry of Education and Training.")}</li>
           <li>{t(lang,
             "Trợ lý AI có thể nhầm. Hãy tự kiểm bước cuối, và đừng dùng nó để làm hộ bài kiểm tra.",
             "The AI tutor can be wrong. Check the last step yourself, and do not use it to do graded work for you.")}</li>

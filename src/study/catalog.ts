@@ -28,7 +28,7 @@ export const STUDY_CATEGORIES: StudyCategory[] = [
     title: "Âm nền",
     titleEn: "Background sound",
     tracks: [
-      { id: "on-nau", title: "Ồn nâu", titleEn: "Brown noise", src: "/study-media/on-nau.mp4", webm: "/study-media/on-nau.webm", credit: MADE_HERE },
+      { id: "on-nau", title: "Tiếng ồn nâu", titleEn: "Brown noise", src: "/study-media/on-nau.mp4", webm: "/study-media/on-nau.webm", credit: MADE_HERE },
       { id: "mua", title: "Mưa nhẹ", titleEn: "Light rain", src: "/study-media/mua.mp4", webm: "/study-media/mua.webm", credit: MADE_HERE },
       { id: "song", title: "Sóng biển", titleEn: "Sea waves", src: "/study-media/song.mp4", webm: "/study-media/song.webm", credit: MADE_HERE },
     ],

@@ -7,7 +7,7 @@ export const quadraticDang: TopicDang = {
   title: "Hàm số bậc hai",
   dang: [
     {
-      name: "Phương trình bậc hai và trường hợp a=0",
+      name: "Phương trình bậc hai và trường hợp $a=0$",
       nhanDang: R`Phương trình viết $ax^2+bx+c=0$, hỏi nghiệm thực. Phải xét hệ số $a$ trước khi gọi là bậc hai.`,
       phuongPhap: R`Nếu $a=0$ và $b\neq 0$ thì phương trình là bậc nhất, nghiệm duy nhất $x=-\frac{c}{b}$. Công thức $\Delta$ không áp dụng vì mẫu $2a$ bằng $0$. Nếu $a=b=0$ thì hoặc vô nghiệm khi $c\neq 0$, hoặc mọi $x$ đều là nghiệm khi $c=0$. Khi $a\neq 0$, đặt $\Delta=b^2-4ac$. Trong số thực, $\Delta>0$ tương đương hai nghiệm phân biệt, $\Delta=0$ tương đương nghiệm kép, $\Delta<0$ tương đương vô nghiệm.`,
       viDu: {
@@ -23,7 +23,7 @@ export const quadraticDang: TopicDang = {
           { expr: "3**2-5*3+6", expect: "0" },
         ],
       },
-      loi: "Dùng công thức nghiệm khi a=0, vì khi đó mẫu 2a bằng 0.",
+      loi: "Dùng công thức nghiệm khi $a=0$, trong khi mẫu $2a$ lúc đó bằng $0$.",
       luyen: {
         kind: "luyen",
         prompt: R`Giải $0\cdot x^2+2x-6=0$.`,
@@ -43,7 +43,7 @@ export const quadraticDang: TopicDang = {
       viDu: {
         prompt: R`Giải $\sqrt{x+1}=x-1$.`,
         steps: [
-          { claim: R`Điều kiện cần là $x+1\ge 0$ và $x-1\ge 0$, nên $x\ge 1$.`, why: "Căn bậc hai xác định khi biểu thức trong căn không âm, và bản thân căn thì không âm. Điều kiện chặt hơn là $x\\ge 1$." },
+          { claim: R`Điều kiện: $x+1\ge 0$ để căn xác định và $x-1\ge 0$ vì căn bậc hai không âm, nên $x\ge 1$.`, why: "Căn bậc hai xác định khi biểu thức trong căn không âm, và bản thân căn thì không âm. Điều kiện chặt hơn là $x\\ge 1$." },
           { claim: R`Bình phương hai vế được $x+1=(x-1)^2$, tức $x(x-3)=0$.`, why: "Bình phương bảo toàn đẳng thức nên là điều kiện cần. Hai ứng viên là $x=0$ và $x=3$." },
           { claim: R`Loại $x=0$ vì $0<1$. Giữ $x=3$.`, why: "Tại $x=0$, căn bằng $1$ còn vế phải bằng $-1$. Tại $x=3$, hai vế cùng bằng $2$. Chỉ nghiệm thứ hai thỏa phương trình ban đầu." },
         ],
@@ -60,7 +60,7 @@ export const quadraticDang: TopicDang = {
         think: "Viết điều kiện $x\\ge 2$ vì vế phải phải không âm. Bình phương, rồi loại nghiệm không thuộc điều kiện hoặc không thỏa phương trình gốc.",
         answer: R`Nghiệm duy nhất là $x=4$. Giá trị $x=1$ bị loại.`,
         steps: [
-          { claim: R`Điều kiện cần là $x\ge 2$. Hai ứng viên sau khi bình phương là $x=1$ và $x=4$.`, why: "Phương trình hệ quả là $x=(x-2)^2$, tức $x^2-5x+4=0$. Tích và tổng các nghiệm khớp đa thức này." },
+          { claim: R`Điều kiện để có nghiệm là $x\ge 2$. Hai ứng viên sau khi bình phương là $x=1$ và $x=4$.`, why: "Phương trình hệ quả là $x=(x-2)^2$, tức $x^2-5x+4=0$. Tích và tổng các nghiệm khớp đa thức này." },
           { claim: R`Loại $x=1$ vì $1<2$. Tại $x=4$, hai vế cùng bằng $2$.`, why: "Thay lại là bước đủ. Căn của $1$ bằng $1$, trong khi $1-2$ bằng $-1$, nên $x=1$ không phải nghiệm." },
         ],
         checks: [
@@ -232,12 +232,12 @@ export const quadraticDang: TopicDang = {
     {
       kind: "phan-bien",
       sao: 3,
-      prompt: R`Với phương trình $2x-6=0$, bạn A tính $\Delta=0-0=0$ rồi kết luận nghiệm kép $x=0$. Hãy phản biện.`,
+      prompt: R`Với phương trình $2x-6=0$, bạn A coi đây là phương trình bậc hai có $a=0$, $b=2$, $c=-6$, tính $\Delta=b^2-4ac=4>0$ rồi kết luận phương trình có hai nghiệm phân biệt. Hãy phản biện.`,
       think: "Hệ số của $x^2$ bằng $0$. Hãy chỉ ra mẫu của công thức nghiệm và giải trực tiếp phương trình bậc nhất.",
       answer: "Phương trình có nghiệm duy nhất $x=3$. Biệt thức không áp dụng vì hệ số bậc hai bằng $0$.",
       steps: [
         { claim: R`Phương trình đã cho là bậc nhất, hệ số của $x^2$ bằng $0$.`, why: "Không có hạng tử $x^2$ với hệ số khác $0$. Công thức hai nghiệm của tam thức không có đối tượng để áp dụng." },
-        { claim: R`Nghiệm đúng là $x=3$, vì $2\cdot 3-6=0$.`, why: "Cô lập ẩn của phương trình bậc nhất. Giá trị $x=0$ làm vế trái bằng $-6$, nên không phải nghiệm." },
+        { claim: R`Nghiệm đúng là $x=3$, vì $2\cdot 3-6=0$.`, why: "Cô lập ẩn của phương trình bậc nhất. Công thức nghiệm của tam thức có mẫu $2a$ bằng $0$ nên không dùng được, và phương trình bậc nhất chỉ có một nghiệm. Thử thêm $x=0$: vế trái bằng $-6$, không phải nghiệm." },
       ],
       checks: [
         { expr: "2*3-6", expect: "0" },

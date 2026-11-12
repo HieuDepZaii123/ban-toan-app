@@ -6,11 +6,11 @@ export const sequenceLesson: Lesson = {
   basic: [
     { k: "mo", vi: R`Cấp số cộng: mỗi bước cộng $d$. Cấp số nhân: mỗi bước nhân $q$.`, en: R`An arithmetic sequence adds $d$ each step. A geometric sequence multiplies by $q$.` },
     { k: "dinh", vi: R`$u_n=u_1+(n-1)d$. Nếu $q\neq 1$ thì $S_n=u_1\dfrac{1-q^n}{1-q}$.`, en: R`$u_n=u_1+(n-1)d$. If $q\neq 1$ then $S_n=u_1\dfrac{1-q^n}{1-q}$.` },
-    { k: "vd", vi: R`Dãy $3,7,11,15$ có công sai $d=4$. Số hạng thứ $10$ là $u_{10}=3+9\cdot 4=39$.`, en: R`The sequence $3,7,11,15$ has common difference $d=4$. The 10th term is $u_{10}=3+9\cdot 4=39$.` },
+    { k: "vd", vi: R`Dãy $3;\ 7;\ 11;\ 15$ có công sai $d=4$. Số hạng thứ $10$ là $u_{10}=3+9\cdot 4=39$.`, en: R`The sequence $3,7,11,15$ has common difference $d=4$. The 10th term is $u_{10}=3+9\cdot 4=39$.` },
   ],
   exam: [
     { k: "dinh", vi: R`$|q|<1$ thì tổng vô hạn $S=\dfrac{u_1}{1-q}$. Số hạng dần về $0$, tổng thì không.`, en: R`If $|q|<1$ the infinite sum is $S=\dfrac{u_1}{1-q}$. Terms tend to $0$; the sum does not.` },
-    { k: "vd", vi: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. Phần dư sau $n$ hạng là $16\left(\dfrac12\right)^n$.`, en: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. The remainder after $n$ terms is $16\left(\dfrac12\right)^n$.` },
+    { k: "vd", vi: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-\dfrac{1}{2}}=16$. Phần dư sau $n$ hạng là $16\left(\dfrac12\right)^n$.`, en: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. The remainder after $n$ terms is $16\left(\dfrac12\right)^n$.` },
     { k: "loi", vi: R`$u_{10}=u_1+10d$ thừa một bước. Với $u_1=3$, $d=4$ thì ra $43$, đúng là $39$.`, en: R`$u_{10}=u_1+10d$ takes one extra step. With $u_1=3$, $d=4$ that gives $43$; the term is $39$.` },
     { k: "kiem", vi: R`Tổng $1+\cdots+12=\dfrac{12\cdot 13}{2}=78$.`, en: R`The sum $1+\cdots+12=\dfrac{12\cdot 13}{2}=78$.` },
   ],
@@ -28,12 +28,12 @@ export const sequenceQuestions: Question[] = [
     hintEn: "From the first term to the 10th there are 9 steps, not 10.",
     steps: [
       R`$u_n = u_1 + (n-1)d$.`,
-      R`$u_{10} = 3 + 9 \times 4 = 39$.`,
-      R`$43$ là $3 + 10 \times 4$, đếm nhầm $n$ bước. $40$ là $10 \times 4$. $30$ là $3 \times 10$.`,
+      R`$u_{10} = 3 + 9\cdot 4 = 39$.`,
+      R`$43$ là $3 + 10\cdot 4$, đếm nhầm $n$ bước. $40$ là $10\cdot 4$. $30$ là $3\cdot 10$.`,
     ],
     stepsEn: [
       R`$u_n = u_1 + (n-1)d$.`,
-      R`$u_{10} = 3 + 9 \times 4 = 39$.`,
+      R`$u_{10} = 3 + 9\cdot 4 = 39$.`,
       R`$43$ is $3 + 10 \times 4$, counting $n$ steps. $40$ is $10 \times 4$. $30$ is $3 \times 10$.`,
     ],
   },
@@ -49,7 +49,7 @@ export const sequenceQuestions: Question[] = [
     steps: [
       R`Số cuối là $u_{10} = 39$.`,
       R`$S_{10} = \dfrac{10}{2}(3 + 39) = 210$.`,
-      R`$39$ chỉ là số hạng cuối. $390$ là $10 \times 39$, quên chia đôi. $43$ là số cuối bị đếm thừa một bước.`,
+      R`$39$ chỉ là số hạng cuối. $390$ là $10\cdot 39$, quên chia đôi. $43$ là số cuối bị đếm thừa một bước.`,
     ],
     stepsEn: [
       R`The last term is $u_{10} = 39$.`,
@@ -68,12 +68,12 @@ export const sequenceQuestions: Question[] = [
     hintEn: "Multiply by the ratio four times: from term 1 to term 5 there are 4 steps.",
     steps: [
       R`$u_n = u_1 \cdot q^{n-1}$.`,
-      R`$u_5 = 2 \times 3^4 = 2 \times 81 = 162$.`,
-      R`$81$ quên nhân $u_1$. $14$ là cấp số cộng $2 + 4 \times 3$. $243$ là $3^5$.`,
+      R`$u_5 = 2\cdot 3^4 = 2\cdot 81 = 162$.`,
+      R`$81$ quên nhân $u_1$. $14$ là cấp số cộng $2 + 4\cdot 3$. $243$ là $3^5$.`,
     ],
     stepsEn: [
       R`$u_n = u_1 \cdot q^{n-1}$.`,
-      R`$u_5 = 2 \times 3^4 = 2 \times 81 = 162$.`,
+      R`$u_5 = 2\cdot 3^4 = 2\cdot 81 = 162$.`,
       R`$81$ forgets to multiply by $u_1$. $14$ treats it as the arithmetic term $2 + 4 \times 3$. $243$ is $3^5$.`,
     ],
   },
@@ -87,13 +87,13 @@ export const sequenceQuestions: Question[] = [
     hint: R`Khi $|q|<1$, tổng là $S=\dfrac{u_1}{1-q}$.`,
     hintEn: "The ratio is 1/2, which is less than 1. The sum is the first term divided by 1 minus the ratio.",
     steps: [
-      R`$u_1 = 8$, $q = 1/2$, và $|q| < 1$.`,
-      R`$S = 8 / (1 - 1/2) = 16$.`,
+      R`$u_1 = 8$, $q = \dfrac{1}{2}$, và $|q| < 1$.`,
+      R`$S = \dfrac{8}{1 - \frac{1}{2}} = 16$.`,
       R`$0$ là giới hạn của số hạng, không phải tổng. Không số hạng nào bằng $0$. $8$ chỉ là số đầu. Tổng tồn tại vì $|q| < 1$.`,
     ],
     stepsEn: [
       R`$u_1 = 8$, $q = 1/2$, and $|q| < 1$.`,
-      R`$S = 8 / (1 - 1/2) = 16$.`,
+      R`$S = \dfrac{8}{1 - \frac{1}{2}} = 16$.`,
       R`$0$ is the limit of the terms, not the sum. No term equals $0$. $8$ is only the first term. The sum exists because $|q| < 1$.`,
     ],
   },
@@ -107,12 +107,12 @@ export const sequenceQuestions: Question[] = [
     hint: "Lần rơi đầu chỉ đi xuống. Mỗi lần nảy sau đi lên rồi xuống.",
     hintEn: "The first drop only goes down. Every later bounce goes up and then down.",
     steps: [
-      R`Các đỉnh sau lần rơi đầu là $4 + 2 + 1 + \cdots = 4 / (1 - 1/2) = 8$ m.`,
-      R`Mỗi đỉnh được đi lên và đi xuống, nên cộng $2 \times 8$. Thêm lần rơi $8$ m: tổng $24$ m.`,
+      R`Các đỉnh sau lần rơi đầu là $4 + 2 + 1 + \cdots = \dfrac{4}{1 - \frac{1}{2}} = 8$ m.`,
+      R`Mỗi đỉnh được đi lên và đi xuống, nên cộng $2\cdot 8$. Thêm lần rơi $8$ m: tổng $24$ m.`,
       R`$16$ m là $8 + 4 + 2 + \cdots$, mỗi đoạn chỉ tính một lần. $8$ m chỉ là lần thả. $12$ m là $8 + 4$: lần rơi cộng một lần nảy lên, quên đoạn rơi xuống.`,
     ],
     stepsEn: [
-      R`The apexes after the first drop are $4 + 2 + 1 + \cdots = 4 / (1 - 1/2) = 8$ m.`,
+      R`The apexes after the first drop are $4 + 2 + 1 + \cdots = \dfrac{4}{1 - \frac{1}{2}} = 8$ m.`,
       R`Each apex is travelled up and down, so add $2 \times 8$. With the $8$ m drop the total is $24$ m.`,
       R`$16$ m is $8 + 4 + 2 + \cdots$, counting each piece once. $8$ m is only the drop. $12$ m is $8 + 4$: the drop plus the first rise, without its fall.`,
     ],
@@ -127,13 +127,13 @@ export const sequenceQuestions: Question[] = [
     hint: R`Tổng $1+\cdots+12=\dfrac{12\cdot 13}{2}$.`,
     hintEn: "This is the sum 1 + 2 + … + 12. Multiply the number of months by the next integer, then halve.",
     steps: [
-      R`Các khoản là cấp số cộng $1, 2, \ldots, 12$.`,
-      R`$S = \dfrac{12 \times 13}{2} = 78$ triệu.`,
-      R`$12$ triệu chỉ là tháng cuối. $144$ triệu là $12 \times 12$. $66$ triệu là $\dfrac{12 \times 11}{2}$, thiếu một bước.`,
+      R`Các khoản là cấp số cộng $1;\ 2;\ \ldots;\ 12$.`,
+      R`$S = \dfrac{12\cdot 13}{2} = 78$ triệu.`,
+      R`$12$ triệu chỉ là tháng cuối. $144$ triệu là $12\cdot 12$. $66$ triệu là $\dfrac{12\cdot 11}{2}$, thiếu một bước.`,
     ],
     stepsEn: [
       R`The deposits are the arithmetic sequence $1, 2, \ldots, 12$.`,
-      R`$S = \dfrac{12 \times 13}{2} = 78$ triệu.`,
+      R`$S = \dfrac{12\cdot 13}{2} = 78$ triệu.`,
       R`$12$ triệu is only the last month. $144$ triệu is $12 \times 12$. $66$ triệu is $\dfrac{12 \times 11}{2}$, one step short.`,
     ],
   },

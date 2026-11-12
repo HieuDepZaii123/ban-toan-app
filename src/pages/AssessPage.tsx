@@ -2,6 +2,7 @@ import { useState } from "react";
 import { assessBanks, gradeNumber, shownLetter, type AssessQuestion } from "../content/assessBank.ts";
 import { displayOrder } from "../lib/prng.ts";
 import { t } from "../lib/text.ts";
+import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
 import { CardNav, PracticeBar } from "../ui/PracticeBar.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -71,7 +72,7 @@ export function AssessPage() {
       />
       <article className="tool-card">
         <p className="kicker">{bank.desc}</p>
-        <h2>{question.t}</h2>
+        <h2><MathText text={question.t} /></h2>
         <Choices key={`${bank.id}-${index}`} question={question} record={record} onPick={mark} />
         {record ? <Explain question={question} ok={record.ok} /> : null}
         <CardNav onMove={go} />
@@ -92,7 +93,7 @@ function Choices({ question, record, onPick }: { question: AssessQuestion; recor
           return (
             <button key={choice} type="button" className={`choice${state}`} disabled={!!record} onClick={() => onPick(index === question.answer, String(index))}>
               <span className="key">{String.fromCharCode(65 + shownAt)}</span>
-              <span className="choice-body">{choice}</span>
+              <span className="choice-body"><MathText text={choice} /></span>
             </button>
           );
         })}
@@ -116,11 +117,11 @@ function Explain({ question, ok }: { question: AssessQuestion; ok: boolean }) {
   const lang = useLang();
   const right = question.choices && question.answer !== undefined
     ? `${shownLetter(question)}. ${question.choices[question.answer]}`
-    : String(question.numeric).replace(".", ",");
+    : "$" + String(question.numeric).replace(".", "{,}") + "$";
   return (
     <div className="solution">
-      <p><b>{ok ? t(lang, "Chính xác.", "Correct.") : t(lang, "Chưa đúng.", "Not yet.")}</b> {t(lang, "Đáp án:", "Answer:")} {right}</p>
-      <ol className="steps">{question.steps.map((step) => <li key={step}>{step}</li>)}</ol>
+      <p><b>{ok ? t(lang, "Chính xác.", "Correct.") : t(lang, "Chưa đúng.", "Not yet.")}</b> {t(lang, "Đáp án:", "Answer:")} <MathText text={right} /></p>
+      <ol className="steps">{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>
     </div>
   );
 }

@@ -19,7 +19,7 @@ const sine: DssItem = {
   id: "trig-d-sin",
   context: (p) => R`Cho $\sin\alpha=${sinShow(p.s)}$ và $0^\circ<\alpha<180^\circ$. Chưa biết $\cos\alpha$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
   contextEn: (p) => R`Given $\sin\alpha=${sinShow(p.s)}$ and $0^\circ<\alpha<180^\circ$. $\cos\alpha$ is unknown. Mark each statement true, false, or not enough.`,
-  hint: R`Trong $(0^\circ,180^\circ)$, một giá trị $\sin$ dương ứng với hai góc bù nhau. $\cos$ của hai góc đó trái dấu.`,
+  hint: R`Trong $(0^\circ;180^\circ)$, một giá trị $\sin$ dương ứng với hai góc bù nhau. $\cos$ của hai góc đó trái dấu.`,
   hintEn: R`On $(0^\circ,180^\circ)$ one positive sine belongs to two supplementary angles. Their cosines have opposite signs.`,
   rows: [{ s: 0.5 }, { s: Math.SQRT2 / 2 }, { s: Math.sqrt(3) / 2 }, { s: 0.5 }],
   fixed: (p) => ({ s: p.s ?? 0 }),
