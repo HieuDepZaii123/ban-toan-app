@@ -15,6 +15,7 @@ import {
   type Paper,
   type PaperScore,
 } from "../thpt/exam2025.ts";
+import { addPaper, loadReview, saveReview, schedule } from "../thpt/review.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -110,6 +111,8 @@ export function ExamPage() {
     const paper = buildPaper(sitting.seed);
     const score = scorePaper(paper, sitting.answers, topicName);
     const finishedAt = Math.min(Date.now(), sitting.startedAt + LIMIT_MS);
+    // Missed questions go into the review plan (kept for everyone; reviewing them is Premium).
+    saveReview(addPaper(loadReview(), paper, sitting.answers, score.losses, Date.now()));
     update({
       active: null,
       last: { ...sitting, finishedAt },
@@ -295,6 +298,19 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
   );
 }
 
+/** Pointer from the result to the mistake review plan, with how many questions wait there today. */
+function ReviewLink() {
+  const lang = useLang();
+  const plan = useMemo(() => schedule(loadReview(), Date.now()), []);
+  if (plan.total === 0) return null;
+  return (
+    <p className="exam-2025">
+      <A href="/on-loi-sai">{t(lang, "Kế hoạch ôn lỗi sai", "Mistake review plan")}</A>
+      <span>{t(lang, `${plan.total} câu sai đang chờ, ${plan.today} câu ôn được hôm nay.`, `${plan.total} missed questions waiting, ${plan.today} ready today.`)}</span>
+    </p>
+  );
+}
+
 function Result({ finished }: { finished: Finished }) {
   const lang = useLang();
   const paper: Paper = useMemo(() => buildPaper(finished.seed), [finished.seed]);
@@ -319,6 +335,7 @@ function Result({ finished }: { finished: Finished }) {
           </ul>
         </>
       ) : null}
+      <ReviewLink />
       <details className="exam-review">
         <summary>{t(lang, "Xem lại từng câu kèm lời giải", "Review every question with solutions")}</summary>
         <h3>{t(lang, "Phần I", "Part I")}</h3>

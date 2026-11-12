@@ -3,6 +3,14 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/api/health",
+      "destination": "/api/chat?route=health"
+    },
+    {
+      "source": "/api/premium/recover",
+      "destination": "/api/premium/status?route=recover"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }

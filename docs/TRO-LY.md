@@ -46,9 +46,21 @@ Thiếu mọi khóa thì `/api/chat` trả lời **chế độ mẫu**: câu ngo
 
 Lượt: 10 tin mỗi 10 phút theo IP, 8 tin miễn phí mỗi ngày, 40 tin nếu mã Premium trong `localStorage` (`ban-toan-license`) còn hạn. Có `DATABASE_URL` thì đếm trong bảng `chat_hits` của Postgres, mọi instance thấy cùng số lượt. Không có thì đếm trong bộ nhớ, và trên serverless mỗi instance đếm riêng.
 
+## Premium trong trợ lý
+
+Ba tính năng chỉ mở khi mã Premium còn hạn. Server kiểm mã trước khi gọi model, nên sửa trang không mở được; yêu cầu bị từ chối không trừ lượt.
+
+- **Lời giải đầy đủ** (`mode: "solve"`): giải trọn từng bước, có dòng Đáp số và dòng thử lại.
+- **Kiểm tra bài làm** (`mode: "check"`): học sinh dán đề và bài làm; trợ lý trích bước sai đầu tiên, nói vì sao, viết lại bước đó, để học sinh làm tiếp.
+- **Ảnh đề bài** (`image`): trình duyệt thu ảnh về JPEG cạnh dài tối đa 1600 px (`src/chat/photo.ts`), server nhận JPG/PNG/WebP dưới khoảng 1,5 MB và gửi tới model đọc được ảnh của từng nhà (`visionModel` trong `server/chat/free.ts`, Groq là `qwen/qwen3.8-27b`; đổi bằng `GROQ_VISION_MODEL`, …). Ảnh không được lưu.
+
+Với phương trình bậc nhất, bậc hai có trong tin nhắn, server tự tính $\Delta$, $\Delta'$, nghiệm và Vi-ét (`server/chat/facts.ts`) rồi đưa cho model làm số đã kiểm, ở mọi chế độ.
+
 ## Video bài giảng
 
 Mỗi chủ đề có hai chỗ video trong `src/content/lectures.ts`: `basic` (Cơ bản) và `exam` (Chuẩn thi). `youtubeId` đang là chuỗi mẫu dài hơn 11 ký tự, nên trang không nhúng iframe.
+
+Video «Cơ bản» xem miễn phí. Video «Chuẩn thi» chỉ mở cho mã Premium còn hạn; người chưa có Premium thấy một thẻ mời nâng cấp. Trang chỉ hiện mục video khi có ít nhất một id thật, nên trước đó không ai thấy ô trống. Video cũng hiện ở cuối mỗi bộ tài liệu `/tai-lieu/<tờ>`.
 
 Khi có video thật, thay bằng id YouTube đúng 11 ký tự, ví dụ `dQw4w9WgXcQ`. Không commit file mp4. Iframe chỉ tải sau khi bấm **Xem video**, không tự phát.
 

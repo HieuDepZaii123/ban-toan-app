@@ -289,8 +289,8 @@ export function Upgrade() {
                 <MethodCard
                   id="crypto"
                   on={method === "crypto"}
-                  title={t(lang, "Tiền mã hóa (chỉ người mua từ 18 tuổi)", "Crypto (buyers aged 18+ only)")}
-                  body={t(lang, "USDT hoặc USDC chuyển thẳng vào ví của đơn vị vận hành; gửi nhầm mạng hoặc sai số tiền thì không lấy lại được. Ở Việt Nam tiền mã hóa không phải phương tiện thanh toán hợp pháp: chỉ chọn nếu bạn ở nơi được phép. Đơn chờ 15 phút.", "USDT or USDC sent straight to the operator's wallet; a transfer on the wrong network or for the wrong amount cannot be recovered. In Vietnam crypto is not a lawful means of payment: choose it only where it is allowed. The order waits 15 minutes.")}
+                  title={t(lang, "Tiền mã hóa (từ 18 tuổi, ngoài Việt Nam)", "Crypto (18+, outside Vietnam)")}
+                  body={t(lang, "Dành cho người mua từ 18 tuổi ở nước ngoài: USDT hoặc USDC chuyển thẳng vào ví của đơn vị vận hành. Ở Việt Nam hãy dùng MoMo hoặc chuyển khoản. Gửi nhầm mạng hoặc sai số tiền thì không lấy lại được. Đơn chờ 15 phút.", "For buyers aged 18 or older outside Vietnam: USDT or USDC sent straight to the operator's wallet. In Vietnam, use MoMo or a bank transfer. A transfer on the wrong network or for the wrong amount cannot be recovered. The order waits 15 minutes.")}
                   onPick={() => setMethod("crypto")}
                 />
               ) : null}
@@ -497,6 +497,28 @@ function PremiumBenefits() {
         <li>
           <b>{t(lang, "Bảng điểm theo phần và chủ đề", "Scores by part and topic")}</b>
           {t(lang, ": sau mỗi đề biết mình mất điểm ở phần nào, chủ đề nào, và ôn ngay câu sai.", ": after each paper, see which part and topic cost points, then redo the missed questions.")}
+        </li>
+        <li>
+          <b>{t(lang, "Tài liệu ôn tập 14 chuyên đề", "Study notes for 14 topics")}</b>
+          {t(lang, ": bài giảng viết, lỗi hay gặp, ví dụ giải từng bước và đề tự luyện có đáp án, đọc trên trang hoặc tải PDF, Word để in.", ": written lecture notes, common mistakes, examples solved step by step and a self-test with answers, to read here or download as PDF or Word.")}
+          {" "}<A href="/tai-lieu">{t(lang, "Xem tài liệu", "See the notes")}</A>
+        </li>
+        <li>
+          <b>{t(lang, "Kế hoạch ôn lỗi sai", "Mistake review plan")}</b>
+          {t(lang, ": câu sai trong đề thi thử tự quay lại sau 1, 3, 7 và 14 ngày, kèm danh sách chủ đề mất điểm nhiều nhất.", ": questions you miss in mock exams come back after 1, 3, 7 and 14 days, with the topics that cost you the most points.")}
+          {" "}<A href="/on-loi-sai">{t(lang, "Mở kế hoạch", "Open the plan")}</A>
+        </li>
+        <li>
+          <b>{t(lang, "Lời giải đầy đủ", "Full worked solutions")}</b>
+          {t(lang, ": sau khi tự thử, xin trợ lý giải trọn từng bước, có đáp số và bước thử lại. Bản miễn phí chỉ gợi ý.", ": after trying, ask the tutor for every step with the final answer and a check. The free tutor gives hints only.")}
+        </li>
+        <li>
+          <b>{t(lang, "Kiểm tra bài làm", "Check my work")}</b>
+          {t(lang, ": dán bài giải của bạn, trợ lý chỉ ra đúng bước sai đầu tiên, vì sao sai và cách sửa.", ": paste your solution and the tutor points to the first wrong step, why it is wrong and how to fix it.")}
+        </li>
+        <li>
+          <b>{t(lang, "Chụp ảnh đề bài", "Photo of a problem")}</b>
+          {t(lang, ": chụp đề trong sách hay đề thi, trợ lý đọc ảnh rồi giúp bạn giải.", ": photograph a problem from a book or paper and the tutor reads it and helps.")}
         </li>
         <li>
           <b>{t(lang, "Trợ lý toán 40 câu mỗi ngày", "40 tutor questions a day")}</b>

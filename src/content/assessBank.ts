@@ -1,3 +1,5 @@
+import { displayOrder } from "../lib/prng.ts";
+
 export type AssessQuestion = {
   t: string;
   choices?: string[];
@@ -64,4 +66,14 @@ export const assessBanks: AssessBank[] = [
 
 export function gradeNumber(value: number, answer: number, tol = 1e-9): boolean {
   return Number.isFinite(value) && Math.abs(value - answer) <= tol;
+}
+
+/**
+ * Chữ cái của đáp án như đang hiện trên màn hình. Trang xáo các lựa chọn theo `displayOrder(question.t)`,
+ * nên chữ cái theo vị trí gốc (`answer`) có thể chỉ nhầm sang lựa chọn khác.
+ */
+export function shownLetter(question: AssessQuestion): string {
+  if (!question.choices || question.answer === undefined) return "";
+  const at = displayOrder(question.t, question.choices.length).indexOf(question.answer);
+  return String.fromCharCode(65 + Math.max(0, at));
 }

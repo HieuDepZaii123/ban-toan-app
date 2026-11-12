@@ -25,7 +25,7 @@ Cần Node 22.13 trở lên. `npm run check` phải sạch trước khi mở pul
 | `src/chat/`, `server/chat/` | Khung trợ lý và API `/api/chat`. |
 | `src/premium/`, `server/pay/` | Trang Nâng cấp và API `/api/premium/*`. |
 | `server/http/` | Cầu nối Node ↔ Fetch, header bảo mật, `/api/health`. |
-| `api/` | Hàm Vercel: mỗi tệp gọi một handler trong `server/`. |
+| `api/` | Hàm Vercel: mỗi tệp là một hàm. Gói Hobby chỉ cho tối đa 12 hàm, nên đường mới gắn vào hàm có sẵn bằng rewrite trong `vercel.json` (`?route=`), không thêm tệp. |
 | `scripts/` | Các bộ test (`*.test.ts`) và công cụ; `*_sympy.py` đối chiếu đáp số bằng sympy. |
 | `docs/` | Tài liệu thanh toán, trợ lý, và các vòng đánh giá. |
 

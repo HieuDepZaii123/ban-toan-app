@@ -3,9 +3,12 @@ import { cards } from "../content/cards.ts";
 import { loadMisses, withoutMiss, writeMisses, type MissRow } from "../lib/missBook.ts";
 import { A } from "../lib/route.tsx";
 import { useSlice } from "../lib/store.ts";
+import { t } from "../lib/text.ts";
 import { PageFrame } from "../ui/PageFrame.tsx";
+import { useLang } from "../ui/useLang.ts";
 
 export function MissPage() {
+  const lang = useLang();
   const [rows, setRows] = useState<MissRow[]>(loadMisses);
   const wrong = useSlice((data) => data.wrong);
   const byTopic = new Map<string, number>();
@@ -14,6 +17,7 @@ export function MissPage() {
     if (!topic) continue;
     byTopic.set(topic, (byTopic.get(topic) ?? 0) + 1);
   }
+  const total = rows.length + [...byTopic.values()].reduce((sum, count) => sum + count, 0);
 
   const clear = (id: string) => {
     const next = withoutMiss(rows, id);
@@ -23,39 +27,51 @@ export function MissPage() {
 
   return (
     <PageFrame
-      kicker="Sổ lỗi"
-      title="Những câu còn sai"
-      lead="Câu sai của đề 14 câu. Sổ từng tờ vẫn để riêng."
+      kicker={t(lang, "Sổ lỗi", "Miss book")}
+      title={t(lang, "Những câu còn sai", "Questions still wrong")}
+      lead={t(lang, "Câu sai từ Đề luyện, và số câu sai trong từng tờ chuyên đề.", "Misses from the mixed drill, and the count of misses on each topic sheet.")}
     >
-      <h2>Đề dùng chung</h2>
-      {rows.length === 0 ? <p className="empty">Chưa có câu sai trong đề 14 câu.</p> : (
-        <ul className="misses">
-          {rows.map((row) => (
-            <li key={row.id} className="mistake">
-              <p><b>{row.topic}.</b> {row.prompt}</p>
-              <p className="miss-line">Đã chọn: {row.chosen}</p>
-              <p className="miss-line">Đáp án: {row.answer}</p>
-              <ol className="steps">{row.steps.map((step) => <li key={step}>{step}</li>)}</ol>
-              <A href={row.href}>Ôn trong tờ</A>{" "}
-              <button type="button" className="text-btn" onClick={() => clear(row.id)}>Đã hiểu</button>
-            </li>
-          ))}
-        </ul>
-      )}
-      <h2>Theo từng tờ</h2>
-      {byTopic.size === 0 ? <p className="empty">Chưa có câu sai trong các tờ.</p> : (
-        <ul className="misses">
-          {[...byTopic.entries()].map(([id, count]) => {
-            const card = cards.find((item) => item.id === id);
-            return (
-              <li key={id} className="mistake">
-                <p>{card?.title ?? id}: {count} câu</p>
-                <A href={`/t/${id}?tab=so`}>Mở sổ tờ này</A>
+      {total === 0 ? (
+        <div className="miss-empty">
+          <p>{t(lang, "Chưa có câu sai nào. Làm vài câu rồi quay lại đây.", "No misses yet. Answer a few questions, then come back here.")}</p>
+          <A className="practice-link" href="/luyen">{t(lang, "Mở Đề luyện", "Open the mixed drill")}</A>
+        </div>
+      ) : null}
+      {rows.length > 0 ? (
+        <section className="stream">
+          <h2>{t(lang, `Đề luyện (${rows.length})`, `Mixed drill (${rows.length})`)}</h2>
+          <ul className="misses">
+            {rows.map((row) => (
+              <li key={row.id} className="mistake">
+                <p><b>{row.topic}.</b> {row.prompt}</p>
+                <p className="miss-line">{t(lang, "Đã chọn:", "You chose:")} {row.chosen}</p>
+                <p className="miss-line">{t(lang, "Đáp án:", "Answer:")} {row.answer}</p>
+                <ol className="steps">{row.steps.map((step) => <li key={step}>{step}</li>)}</ol>
+                <div className="miss-actions">
+                  <A href={row.href}>{t(lang, "Ôn trong tờ", "Review on the sheet")}</A>
+                  <button type="button" className="text-btn" onClick={() => clear(row.id)}>{t(lang, "Đã hiểu", "Got it")}</button>
+                </div>
               </li>
-            );
-          })}
-        </ul>
-      )}
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {byTopic.size > 0 ? (
+        <section className="stream">
+          <h2>{t(lang, "Theo từng tờ", "By topic sheet")}</h2>
+          <ul className="misses">
+            {[...byTopic.entries()].map(([id, count]) => {
+              const card = cards.find((item) => item.id === id);
+              return (
+                <li key={id} className="mistake miss-topic">
+                  <p>{(lang === "en" ? card?.titleEn : card?.title) ?? id}: {t(lang, `${count} câu`, `${count} questions`)}</p>
+                  <A href={`/t/${id}?tab=so`}>{t(lang, "Mở sổ tờ này", "Open this sheet's notebook")}</A>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : null}
     </PageFrame>
   );
 }

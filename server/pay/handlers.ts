@@ -20,6 +20,7 @@ import { isSelling, priceOf, type PayEnv, type PayMethod, type PlanId } from "./
 import { createMomoPayment, ipnSignatureOk, readIpn } from "./momo.ts";
 import { CryptoAmountTaken, licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
 import { buildVietQr, emvName } from "./vietqr.ts";
+import { publicApiPath } from "../http/foldedRoutes.ts";
 
 const ORDER_TTL_MS = 15 * 60 * 1000;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -93,7 +94,8 @@ function publicOrder(env: PayEnv, order: OrderRow, extras: Json = {}): Json {
 
 export async function handlePremium(request: Request, env: PayEnv): Promise<Response> {
   const url = new URL(request.url);
-  const path = url.pathname.replace(/\/$/, "") || "/";
+  // Hobby plan: /api/premium/recover is rewritten onto the status function with ?route=recover.
+  const path = publicApiPath(url);
   const store = env.store ?? storeFor(env);
   if (path === "/api/premium/plans" && request.method === "GET") return plans(env);
   if (path === "/api/premium/create" && request.method === "POST") return create(request, env, store);
