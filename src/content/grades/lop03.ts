@@ -6,7 +6,7 @@ const R = String.raw;
 export const lop03: GradeBook = {
   grade: 3,
   band: "tieu-hoc",
-  title: "Số đến 100 000, nhân, một phần mấy, đo lường và hình tròn.",
+  title: "Số đến 100 000, bảng nhân và phép chia, một phần mấy, đo lường, diện tích và hình tròn.",
   chapters: [
     chuong("so-100000", "Các số đến 100 000", [
       bai(
@@ -106,6 +106,53 @@ export const lop03: GradeBook = {
           luyen(R`Tính $25:4$. Số dư bằng bao nhiêu?`, R`Thương bằng $6$ và số dư bằng $1$.`, [{ expr: "25-4*6", expect: "1" }], "Bốn nhân $6$ bằng $24$. Hiệu $25-24$ là số dư."),
           luyen(R`Tính $18:5$.`, R`Thương bằng $3$ và dư $3$, vì $5\times 3+3=18$.`, [{ expr: "5*3+3", expect: "18" }], "Số bị chia bằng thương nhân số chia, rồi cộng số dư."),
         ],
+      ),
+      bai(
+        "bang-nhan-3-9",
+        "Bảng nhân từ $3$ đến $9$",
+        R`Mỗi bảng nhân là một dãy đếm thêm đều: bảng nhân $6$ là $6, 12, 18, 24$ và cứ thế thêm $6$. Đổi chỗ hai thừa số thì tích không đổi, nên $7\times 8$ và $8\times 7$ đều bằng $56$.`,
+        [vd(
+          R`Mỗi hộp có $6$ cái bánh. Hỏi $7$ hộp có bao nhiêu cái bánh?`,
+          [
+            buoc(R`Bảy hộp là bảy lần số $6$, viết $6\times 7$.`, R`Các hộp có số bánh bằng nhau nên dùng phép nhân.`),
+            buoc(R`Ta có $6\times 7=42$.`, R`Từ $6\times 5=30$, thêm hai lần $6$ nữa là $42$.`),
+          ],
+          R`Bảy hộp có $42$ cái bánh.`,
+          [{ expr: "6*7", expect: "42" }],
+        )],
+        [
+          luyen(R`Tính $8\times 9$.`, R`Tích bằng $72$.`, [{ expr: "8*9", expect: "72" }], R`Từ $8\times 10=80$, bớt đi một lần $8$ thì còn $72$.`),
+          luyen(R`Tính $7\times 7$.`, R`Tích bằng $49$.`, [{ expr: "7*7", expect: "49" }], R`Từ $7\times 5=35$, thêm hai lần $7$ là $14$, được $49$.`),
+          luyen(R`Một tuần có $7$ ngày. Hỏi $4$ tuần có bao nhiêu ngày?`, R`Bốn tuần có $28$ ngày.`, [{ expr: "7*4", expect: "28" }], R`Bốn lần $7$ ngày là $28$ ngày.`),
+        ],
+        {
+          figure: "count",
+          whyTrue: R`Bảng nhân nào cũng dựng được từ phép cộng lặp. Không cần nhớ rời từng dòng: từ một tích đã biết, thêm hoặc bớt một lần thừa số là ra tích bên cạnh.`,
+          pitfalls: R`Nhầm $6\times 8$ với $7\times 8$ vì hai kết quả $48$ và $56$ đứng gần nhau. Kiểm tra bằng cách thêm một lần $8$ vào $48$.`,
+        },
+      ),
+      bai(
+        "chia-ba-chu",
+        "Chia số có ba chữ số cho số có một chữ số",
+        R`Chia lần lượt từ hàng trăm, đến hàng chục, rồi hàng đơn vị. Phần còn dư ở một hàng được đổi sang hàng liền sau và gộp vào để chia tiếp.`,
+        [vd(
+          R`Tính $936:4$.`,
+          [
+            buoc(R`Hàng trăm: $9$ chia $4$ được $2$, dư $1$. Gộp với hàng chục thành $13$.`, R`Một trăm còn dư đổi thành mười chục, cộng với $3$ chục là $13$ chục.`),
+            buoc(R`Tiếp tục: $13$ chia $4$ được $3$, dư $1$. Gộp thành $16$, chia $4$ được $4$. Thương là $234$.`, R`Một chục còn dư đổi thành mười đơn vị, cộng với $6$ đơn vị là $16$.`),
+          ],
+          R`Thương bằng $234$.`,
+          [{ expr: "936/4", expect: "234" }],
+        )],
+        [
+          luyen(R`Tính $848:4$.`, R`Thương bằng $212$.`, [{ expr: "848/4", expect: "212" }], R`Chia từng hàng: $8:4=2$, $4:4=1$, $8:4=2$.`),
+          luyen(R`Tính $375:5$.`, R`Thương bằng $75$.`, [{ expr: "375/5", expect: "75" }], R`Hàng trăm $3$ không đủ chia cho $5$, nên lấy $37$ chia $5$ được $7$ dư $2$, rồi $25$ chia $5$ được $5$.`),
+          luyen(R`Có $126$ quyển vở chia đều cho $3$ lớp. Mỗi lớp được bao nhiêu quyển?`, R`Mỗi lớp được $42$ quyển.`, [{ expr: "126/3", expect: "42" }], R`Lấy $12$ chia $3$ được $4$, rồi $6$ chia $3$ được $2$, thương là $42$.`),
+        ],
+        {
+          whyTrue: R`Số $936$ gồm $9$ trăm, $3$ chục và $6$ đơn vị. Chia đều từng loại, loại nào còn thừa thì đổi ra loại nhỏ hơn rồi chia tiếp, nên không bỏ sót phần nào.`,
+          pitfalls: R`Bỏ quên chữ số $0$ ở giữa thương. Với $612:6$, sau khi chia hàng trăm, hàng chục $1$ không đủ chia nên phải viết $0$ vào thương, kết quả là $102$.`,
+        },
       ),
     ]),
     chuong("mot-phan", "Một phần mấy", [
@@ -290,6 +337,55 @@ export const lop03: GradeBook = {
           luyen(R`Túi có $3$ bi đỏ và $3$ bi xanh. Hai việc rút đỏ và rút xanh có cùng khả năng không?`, R`Có, hai việc cùng khả năng.`, [{ expr: "3-3", expect: "0" }], "Hai màu có cùng số viên thì không màu nào dễ hơn."),
           luyen(R`Túi có $1$ bi đỏ và $8$ bi xanh. Hiệu số bi xanh trừ bi đỏ bằng bao nhiêu?`, R`Hiệu bằng $7$, nên bi xanh dễ được rút hơn.`, [{ expr: "8-1", expect: "7" }], "Hiệu dương cho biết màu đứng trước trong phép trừ ít hơn màu đứng sau."),
         ],
+      ),
+    ]),
+    chuong("dien-tich-khoi-luong-3", "Diện tích, khối lượng và dung tích", [
+      bai(
+        "dien-tich-3",
+        "Diện tích hình chữ nhật và hình vuông",
+        R`Xentimét vuông là diện tích của hình vuông cạnh $1$ xentimét. Diện tích hình chữ nhật bằng chiều dài nhân chiều rộng, cùng một đơn vị đo. Diện tích hình vuông bằng cạnh nhân cạnh.`,
+        [vd(
+          R`Hình chữ nhật dài $5$ xentimét và rộng $3$ xentimét. Diện tích bằng bao nhiêu xentimét vuông?`,
+          [
+            buoc(R`Chia hình thành $3$ hàng, mỗi hàng $5$ ô vuông cạnh $1$ xentimét.`, R`Mỗi ô vuông nhỏ có diện tích đúng một xentimét vuông.`),
+            buoc(R`Số ô là $5\times 3=15$.`, R`Các hàng có số ô bằng nhau nên đếm bằng phép nhân.`),
+          ],
+          R`Diện tích bằng $15$ xentimét vuông.`,
+          [{ expr: "5*3", expect: "15" }],
+        )],
+        [
+          luyen(R`Hình vuông cạnh $4$ xentimét có diện tích bao nhiêu xentimét vuông?`, R`Diện tích bằng $16$ xentimét vuông.`, [{ expr: "4*4", expect: "16" }], R`Hình vuông có $4$ hàng, mỗi hàng $4$ ô, tức $16$ ô.`),
+          luyen(R`Hình chữ nhật dài $8$ xentimét và rộng $2$ xentimét. Tính diện tích.`, R`Diện tích bằng $16$ xentimét vuông.`, [{ expr: "8*2", expect: "16" }], R`Lấy chiều dài nhân chiều rộng: $8\times 2=16$.`),
+          luyen(R`Hình chữ nhật có diện tích $24$ xentimét vuông và chiều rộng $4$ xentimét. Chiều dài bằng bao nhiêu xentimét?`, R`Chiều dài bằng $6$ xentimét.`, [{ expr: "24/4", expect: "6" }], R`Diện tích bằng dài nhân rộng, nên chiều dài bằng $24:4=6$.`),
+        ],
+        {
+          figure: "rect",
+          whyTrue: R`Diện tích đếm số ô vuông đơn vị phủ kín hình. Hình chữ nhật xếp được thành các hàng ô bằng nhau, nên số ô bằng số ô mỗi hàng nhân với số hàng.`,
+          pitfalls: R`Nhầm diện tích với chu vi. Chu vi đo đường viền bằng xentimét, diện tích đo phần bên trong bằng xentimét vuông.`,
+        },
+      ),
+      bai(
+        "gam-ml",
+        "Gam và mililít",
+        R`Một kilôgam bằng $1000$ gam. Một lít bằng $1000$ mililít. Gam dùng cho vật nhẹ, mililít dùng cho lượng chất lỏng nhỏ.`,
+        [vd(
+          R`Một gói đường nặng $500$ gam. Hai gói như thế nặng bao nhiêu gam, và bằng bao nhiêu kilôgam?`,
+          [
+            buoc(R`Hai gói nặng $500\times 2=1000$ gam.`, R`Hai gói bằng nhau nên lấy khối lượng một gói nhân với $2$.`),
+            buoc(R`Vì $1000$ gam bằng $1$ kilôgam nên hai gói nặng $1$ kilôgam.`, R`Cứ đủ $1000$ gam thì đổi được thành một kilôgam.`),
+          ],
+          R`Hai gói nặng $1000$ gam, tức $1$ kilôgam.`,
+          [{ expr: "500*2", expect: "1000" }],
+        )],
+        [
+          luyen(R`Đổi $3$ kilôgam ra gam.`, R`Bằng $3000$ gam.`, [{ expr: "3*1000", expect: "3000" }], R`Mỗi kilôgam là $1000$ gam, ba kilôgam là $3000$ gam.`),
+          luyen(R`Chai nước có $1000$ mililít, đã uống $250$ mililít. Còn lại bao nhiêu mililít?`, R`Còn lại $750$ mililít.`, [{ expr: "1000-250", expect: "750" }], R`Lấy lượng ban đầu trừ lượng đã uống: $1000-250=750$.`),
+          luyen(R`Mỗi cốc chứa $200$ mililít. Cần mấy cốc để rót hết $1$ lít nước?`, R`Cần $5$ cốc.`, [{ expr: "1000/200", expect: "5" }], R`Một lít là $1000$ mililít, và $1000:200=5$.`),
+        ],
+        {
+          whyTrue: R`Tiền tố kilô nghĩa là một nghìn và mili nghĩa là một phần nghìn. Vì thế kilôgam gấp gam $1000$ lần, còn lít gấp mililít $1000$ lần.`,
+          pitfalls: R`Đổi kilôgam ra gam bằng cách nhân với $100$. Bậc đổi ở đây là $1000$.`,
+        },
       ),
     ]),
   ],
