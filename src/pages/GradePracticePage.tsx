@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { gradePractice, questionsForGrade, type GradeQuestion } from "../grades/practiceBank.ts";
 import {
   GRADE_PRACTICE_KEY,
@@ -14,6 +14,7 @@ import { displayOrder } from "../lib/prng.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
+import { CardNav, PracticeBar } from "../ui/PracticeBar.tsx";
 import { useLang } from "../ui/useLang.ts";
 
 const PRIMARY = [1, 2, 3, 4, 5];
@@ -85,7 +86,6 @@ function GradeRun({ grade }: { grade: number }) {
     return choice !== undefined && choice !== item.answer ? [at] : [];
   });
   const right = items.filter((item) => bag.picks[gradePickKey(grade, item.id)] === item.answer).length;
-  const answered = items.filter((item) => bag.picks[gradePickKey(grade, item.id)] !== undefined).length;
 
   const choose = (choice: number) => {
     const next = answerGrade(bag, grade, question.id, choice);
@@ -102,25 +102,28 @@ function GradeRun({ grade }: { grade: number }) {
     <PageFrame
       kicker={t(lang, grade <= 5 ? "Tiểu học" : "THCS", grade <= 5 ? "Primary" : "Lower secondary")}
       title={t(lang, `Luyện lớp ${grade}`, `Grade ${grade} practice`)}
-      lead={t(lang, `${items.length} câu của riêng lớp này. Điểm được giữ trên máy, tách khỏi đề luyện chung.`, `${items.length} questions for this grade. The score stays on this device, apart from the shared drill.`)}
+      lead={t(lang, `${items.length} câu có lời giải. Điểm lưu trên máy này.`, `${items.length} worked questions. Your score stays on this device.`)}
     >
-      <p><A href="/luyen-lop">{t(lang, "Chọn lớp khác", "Choose another grade")}</A>{" · "}<A href={`/kien-thuc/${grade}`}>{t(lang, "Bài học lớp này", "This grade's lessons")}</A></p>
-      <p className="lecture-note">{t(lang, `Đúng ${right}/${items.length} · Sai ${wrongAt.length} · Chưa làm ${items.length - answered} · Câu ${index + 1}/${items.length}`, `Right ${right}/${items.length} · Wrong ${wrongAt.length} · Left ${items.length - answered} · Item ${index + 1}/${items.length}`)}</p>
-      <div className="read-switch">
-        <button type="button" aria-pressed={onlyWrong} disabled={wrongAt.length === 0} onClick={() => { setOnlyWrong((value) => !value); if (!onlyWrong && wrongAt[0] !== undefined) setIndex(wrongAt[0]); }}>
-          {t(lang, `Ôn câu sai (${wrongAt.length})`, `Review misses (${wrongAt.length})`)}
-        </button>
-      </div>
-      <QuestionCard question={question} picked={picked} onChoose={choose} />
-      <div className="read-switch">
-        <button type="button" onClick={() => move(-1)}>{t(lang, "Câu trước", "Previous")}</button>
-        <button type="button" onClick={() => move(1)}>{t(lang, "Câu sau", "Next")}</button>
-      </div>
+      <PracticeBar
+        total={items.length}
+        right={right}
+        wrong={wrongAt.length}
+        index={index}
+        actions={
+          <>
+            <button type="button" aria-pressed={onlyWrong} disabled={wrongAt.length === 0} onClick={() => { setOnlyWrong((value) => !value); if (!onlyWrong && wrongAt[0] !== undefined) setIndex(wrongAt[0]); }}>
+              {t(lang, `Ôn câu sai (${wrongAt.length})`, `Review misses (${wrongAt.length})`)}
+            </button>
+            <A className="practice-link" href={`/kien-thuc/${grade}`}>{t(lang, `Bài học lớp ${grade}`, `Grade ${grade} lessons`)}</A>
+          </>
+        }
+      />
+      <QuestionCard question={question} picked={picked} onChoose={choose} footer={<CardNav onMove={move} />} />
     </PageFrame>
   );
 }
 
-function QuestionCard({ question, picked, onChoose }: { question: GradeQuestion; picked: number | undefined; onChoose: (choice: number) => void }) {
+function QuestionCard({ question, picked, onChoose, footer }: { question: GradeQuestion; picked: number | undefined; onChoose: (choice: number) => void; footer?: ReactNode }) {
   const lang = useLang();
   return (
     <article className="tool-card">
@@ -143,6 +146,7 @@ function QuestionCard({ question, picked, onChoose }: { question: GradeQuestion;
           <ol className="method-steps">{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>
         </div>
       ) : null}
+      {footer}
     </article>
   );
 }

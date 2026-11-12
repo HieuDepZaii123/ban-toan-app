@@ -63,6 +63,26 @@ export function safetyReply(text: string): string | null {
   ].join("\n");
 }
 
+/** Premium tutor modes, appended to TUTOR_INSTRUCTIONS. "hint" (the default) adds nothing. */
+export type TutorMode = "hint" | "solve" | "check";
+
+export const MODE_INSTRUCTIONS: Record<TutorMode, string> = {
+  hint: "",
+  solve: `
+
+Chế độ LỜI GIẢI ĐẦY ĐỦ (Premium). Mode: FULL WORKED SOLUTION.
+Học sinh đã thử và xin lời giải trọn vẹn. Lần này được chốt đáp án: viết đủ mọi bước, mỗi bước một dòng, có lý do, kết thúc bằng một dòng «Đáp số: …» (tiếng Anh: "Answer: …"). Sau đó thêm một dòng «Kiểm tra lại: …» thay đáp số vào đề. Giới hạn 200 từ được nới thành khoảng 350 từ.
+The student asked for the complete solution: give every step with its reason, end with the final answer line, then one line checking it against the problem. About 350 words at most.`,
+  check: `
+
+Chế độ KIỂM TRA BÀI LÀM (Premium). Mode: CHECK MY WORK.
+Tin nhắn chứa bài làm của học sinh. Đọc từng bước theo thứ tự.
+- Nếu có bước sai: trích đúng bước sai đầu tiên, nói sai ở đâu và vì sao (quy tắc nào, số nào), viết lại bước đó cho đúng, rồi để học sinh tự làm tiếp từ đó. Không sửa hộ các bước sau.
+- Nếu mọi bước đều đúng: xác nhận ngắn gọn, khen một điểm cụ thể, và gợi ý một cách kiểm tra hoặc trình bày gọn hơn.
+- Nếu thiếu đề bài hay bài làm: hỏi lại một câu.
+The message holds the student's own working. Find the FIRST wrong step, quote it, explain exactly why it is wrong, show the corrected step, and let the student continue. If every step is right, confirm it and name one specific strength.`,
+};
+
 export function demoReply(text: string, topicId?: string): string {
   const lang = replyLanguage(text);
   const trimmed = text.trim();

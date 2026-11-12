@@ -36,7 +36,7 @@ export function chatEnv(source: NodeJS.ProcessEnv = process.env, quota: Quota = 
     now: Date.now,
     mode: live ? "live" : "demo",
     complete: live
-      ? (instructions, messages) => completeLive(instructions, messages, source)
+      ? (instructions, messages, image) => completeLive(instructions, messages, source, undefined, undefined, image)
       : (_instructions: string, messages: ChatTurn[]) => Promise.resolve(demoReply(messages.at(-1)?.content ?? "")),
     premium: (license) => premiumNow(license),
     quota,

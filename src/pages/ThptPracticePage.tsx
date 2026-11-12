@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { freshSeed } from "../lib/prng.ts";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
@@ -28,6 +28,7 @@ import {
 } from "../thpt/store.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
+import { CardNav, PracticeBar } from "../ui/PracticeBar.tsx";
 import { useLang } from "../ui/useLang.ts";
 
 type View = { kind: "home" } | { kind: "practice"; ids: string[]; title: string } | { kind: "exam" } | { kind: "result" };
@@ -70,13 +71,8 @@ export function ThptPracticePage() {
     <PageFrame
       kicker={t(lang, "THPT lớp 10–12", "Upper secondary, grades 10–12")}
       title={t(lang, "Luyện THPT", "Upper-secondary practice")}
-      lead={t(lang, `${thptBank.length} câu trắc nghiệm có lời giải, chia theo lớp và chủ đề. Luyện từng chủ đề, ôn câu sai, hoặc thi thử có giờ. Tiến độ lưu riêng trên máy này.`, `${thptBank.length} worked multiple-choice questions by grade and topic. Practise a topic, review misses, or sit a timed mock exam. Progress is saved separately on this device.`)}
+      lead={t(lang, `${thptBank.length} câu có lời giải, theo lớp và chủ đề. Luyện, ôn câu sai, hoặc thi thử có giờ.`, `${thptBank.length} worked questions by grade and topic. Practise, review misses, or sit a timed mock exam.`)}
     >
-      <p className="pay-card">
-        <b>{t(lang, "Đề thi thử theo cấu trúc hiện hành", "Mock exam in the current format")}</b>
-        <span>{t(lang, " 12 trắc nghiệm, 4 Đúng/Sai, 6 trả lời ngắn, 90 phút, chấm như đề thật. ", " 12 multiple choice, 4 true/false, 6 short answer, 90 minutes, scored like the real paper. ")}</span>
-        <A href="/thi-thu">{t(lang, "Làm đề", "Take a paper")}</A>
-      </p>
       {body}
     </PageFrame>
   );
@@ -118,9 +114,7 @@ function Home({ bag, update, setView }: { bag: ThptBag; update: (bag: ThptBag) =
 
   return (
     <>
-      <p className="lecture-note">
-        {t(lang, `Đã làm ${overall.done}/${overall.total} · Đúng ${overall.right} · Tỉ lệ đúng ${percent(overall)} · Đã thi ${bag.exams.length} lần`, `Done ${overall.done}/${overall.total} · Right ${overall.right} · Accuracy ${percent(overall)} · Exams ${bag.exams.length}`)}
-      </p>
+      <PracticeBar total={overall.total} right={overall.right} wrong={overall.done - overall.right} />
 
       {bag.active ? (
         <section className="stream tool-card">
@@ -140,19 +134,26 @@ function Home({ bag, update, setView }: { bag: ThptBag; update: (bag: ThptBag) =
             <button key={grade} type="button" aria-pressed={bag.grades.includes(grade)} onClick={() => toggleGrade(grade)}>{t(lang, `Lớp ${grade}`, `Grade ${grade}`)}</button>
           ))}
         </div>
-        {bag.grades.map((grade) => (
-          <div key={grade} className="thpt-topics">
-            <p className="lecture-note">{t(lang, `Chủ đề lớp ${grade}`, `Grade ${grade} topics`)}</p>
-            <div className="chips" role="group" aria-label={t(lang, `Chủ đề lớp ${grade}`, `Grade ${grade} topics`)}>
-              {gradeTopics.filter((topic) => topic.grade === grade).map((topic) => (
-                <button key={topic.id} type="button" aria-pressed={chosen.includes(topic.id)} onClick={() => toggleTopic(topic.id)}>{lang === "en" ? topic.en : topic.vi}</button>
-              ))}
+        <details className="fold" open={bag.topics.length > 0}>
+          <summary>
+            {bag.topics.length > 0
+              ? t(lang, `Chủ đề: ${chosen.length}/${gradeTopics.length} đang chọn`, `Topics: ${chosen.length}/${gradeTopics.length} chosen`)
+              : t(lang, `Chủ đề: tất cả ${gradeTopics.length}`, `Topics: all ${gradeTopics.length}`)}
+          </summary>
+          {bag.grades.map((grade) => (
+            <div key={grade} className="thpt-topics">
+              <p className="lecture-note">{t(lang, `Chủ đề lớp ${grade}`, `Grade ${grade} topics`)}</p>
+              <div className="chips" role="group" aria-label={t(lang, `Chủ đề lớp ${grade}`, `Grade ${grade} topics`)}>
+                {gradeTopics.filter((topic) => topic.grade === grade).map((topic) => (
+                  <button key={topic.id} type="button" aria-pressed={chosen.includes(topic.id)} onClick={() => toggleTopic(topic.id)}>{lang === "en" ? topic.en : topic.vi}</button>
+                ))}
+              </div>
             </div>
+          ))}
+          <div className="read-switch">
+            <button type="button" disabled={bag.topics.length === 0} onClick={() => update(setScope(bag, bag.grades, []))}>{t(lang, "Chọn mọi chủ đề", "All topics")}</button>
           </div>
-        ))}
-        <div className="read-switch">
-          <button type="button" disabled={bag.topics.length === 0} onClick={() => update(setScope(bag, bag.grades, []))}>{t(lang, "Chọn mọi chủ đề", "All topics")}</button>
-        </div>
+        </details>
         <p className="lecture-note">{t(lang, `Trong phạm vi: ${scope.length} câu · Chưa làm ${fresh.length} · Đang sai ${misses.length}`, `In scope: ${scope.length} · Not done ${fresh.length} · Wrong ${misses.length}`)}</p>
       </section>
 
@@ -168,6 +169,10 @@ function Home({ bag, update, setView }: { bag: ThptBag; update: (bag: ThptBag) =
 
       <section className="stream">
         <h2>{t(lang, "Thi thử", "Mock exam")}</h2>
+        <p className="exam-2025">
+          <A href="/thi-thu">{t(lang, "Đề thi thử THPT", "THPT mock exam")}</A>
+          <span>{t(lang, "12 trắc nghiệm, 4 Đúng/Sai, 6 trả lời ngắn, 90 phút, theo cấu trúc hiện hành. Đây là đề luyện, không phải đề của Bộ.", "12 multiple choice, 4 true/false, 6 short answer, 90 minutes, in the current format. A practice paper, not a Ministry paper.")}</span>
+        </p>
         <p>{t(lang, "Đề lấy ngẫu nhiên trong phạm vi, rải đều các chủ đề. Chỉ chấm khi nộp bài.", "Questions are drawn at random from the scope, spread across topics. Marked only when you submit.")}</p>
         <p className="lecture-note">{t(lang, "Số câu", "Questions")}</p>
         <div className="chips" role="group" aria-label={t(lang, "Số câu", "Questions")}>
@@ -187,7 +192,8 @@ function Home({ bag, update, setView }: { bag: ThptBag; update: (bag: ThptBag) =
       </section>
 
       <section className="stream">
-        <h2>{t(lang, "Tiến độ theo chủ đề", "Progress by topic")}</h2>
+        <details className="fold">
+          <summary>{t(lang, "Tiến độ theo chủ đề", "Progress by topic")}</summary>
         <div className="thpt-scroll">
           <table className="thpt-table">
             <thead>
@@ -228,6 +234,7 @@ function Home({ bag, update, setView }: { bag: ThptBag; update: (bag: ThptBag) =
             })}
           </table>
         </div>
+        </details>
       </section>
 
       <section className="stream">
@@ -294,18 +301,14 @@ function PracticeRun({ bag, update, ids, title, onExit }: { bag: ThptBag; update
     <>
       <p><button type="button" className="thpt-link" onClick={onExit}>{t(lang, "← Về bảng luyện", "← Back to the board")}</button></p>
       <h2>{title}</h2>
-      <p className="lecture-note">{t(lang, `Câu ${index + 1}/${items.length} · Đã làm ${run.done} · Đúng ${run.right} · Tỉ lệ ${percent(run)}`, `Item ${index + 1}/${items.length} · Done ${run.done} · Right ${run.right} · Rate ${percent(run)}`)}</p>
+      <PracticeBar total={items.length} right={run.right} wrong={run.done - run.right} index={index} />
       <QuestionCard
         question={question}
         picked={picked}
         reveal={picked !== undefined}
         onChoose={(choice) => { if (picked === undefined) update(answerPractice(bag, question.id, choice)); }}
+        footer={<CardNav onMove={move} extra={picked !== undefined ? <button type="button" onClick={retry}>{t(lang, "Làm lại câu này", "Try again")}</button> : null} />}
       />
-      <div className="read-switch">
-        <button type="button" onClick={() => move(-1)}>{t(lang, "Câu trước", "Previous")}</button>
-        <button type="button" onClick={() => move(1)}>{t(lang, "Câu sau", "Next")}</button>
-        {picked !== undefined ? <button type="button" onClick={retry}>{t(lang, "Làm lại câu này", "Try this again")}</button> : null}
-      </div>
     </>
   );
 }
@@ -409,7 +412,7 @@ function ExamResult({ bag, onExit }: { bag: ThptBag; onExit: () => void }) {
 
 /* ---------- câu hỏi ---------- */
 
-function QuestionCard({ question, picked, reveal, onChoose }: { question: ThptQuestion; picked: number | undefined; reveal: boolean; onChoose: (choice: number) => void }) {
+function QuestionCard({ question, picked, reveal, onChoose, footer }: { question: ThptQuestion; picked: number | undefined; reveal: boolean; onChoose: (choice: number) => void; footer?: ReactNode }) {
   const lang = useLang();
   return (
     <article className="tool-card">
@@ -432,6 +435,7 @@ function QuestionCard({ question, picked, reveal, onChoose }: { question: ThptQu
           <ol className="method-steps">{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>
         </div>
       ) : null}
+      {footer}
     </article>
   );
 }
