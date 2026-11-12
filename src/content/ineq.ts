@@ -41,8 +41,8 @@ export const ineqQuestions: Question[] = [
     id: "ineq-equal",
     prompt: R`$a,b>0$: $\dfrac{a+b}{2}=\sqrt{ab}$ khi nào?`,
     promptEn: R`$a,b>0$: when is $\dfrac{a+b}{2}=\sqrt{ab}$?`,
-    choices: ["Khi a = b", "Khi a + b = 1", "Khi a = 2b", "Khi cả hai âm"],
-    choicesEn: ["When a = b", "When a + b = 1", "When a = 2b", "When both are negative"],
+    choices: ["Khi $a = b$", "Khi $a + b = 1$", "Khi $a = 2b$", "Khi cả hai âm"],
+    choicesEn: ["When $a = b$", "When $a + b = 1$", "When $a = 2b$", "When both are negative"],
     answer: 0,
     hint: R`Bằng $\Leftrightarrow a=b$. Nếu $a\le0$ thì không dùng.`,
     hintEn: R`Equality $\Leftrightarrow a=b$. If $a\le0$, it does not apply.`,
@@ -108,7 +108,7 @@ export const ineqQuestions: Question[] = [
     hintEn: R`$P$ at a vertex. An interior point $\neq\max$.`,
     steps: [
       R`Đỉnh: $(0;0),\ (8;0),\ (6;4),\ (0;10)$.`,
-      R`$P=0,40,42,30$. $\max=42$ tại $(6;4)$.`,
+      R`$P=0;\ 40;\ 42;\ 30$. $\max=42$ tại $(6;4)$.`,
       R`$40$ và $30$ là đỉnh kia. $38=3\cdot6+5\cdot4$: đảo hệ số.`,
     ],
     stepsEn: [

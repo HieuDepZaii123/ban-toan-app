@@ -21,7 +21,7 @@ for (const item of sharedDrill) {
 
 const wrong = withPick([], sharedDrill[0]!, 0);
 assert.equal(wrong.length, 1);
-assert.equal(wrong[0]?.chosen, "81 m²");
+assert.equal(wrong[0]?.chosen, "$81$ m²");
 assert.equal(withPick(wrong, sharedDrill[0]!, 2).length, 0);
 assert.equal(withoutMiss(wrong, "rao").length, 0);
 const kept: MissRow[] = wrong;

@@ -181,7 +181,7 @@ export const lop04: GradeBook = {
         "Trung bình cộng",
         R`Trung bình cộng của vài số là tổng các số đó chia cho số các số. Mỗi số được cộng một lần.`,
         [vd(
-          R`Điểm bốn bài là $6, 7, 7, 8$. Trung bình cộng bằng bao nhiêu?`,
+          R`Điểm bốn bài là $6;\ 7;\ 7;\ 8$. Trung bình cộng bằng bao nhiêu?`,
           [
             buoc(R`Tổng bằng $6+7+7+8=28$.`, "Hai bài điểm $7$ đều được cộng."),
             buoc(R`Trung bình bằng $28:4=7$.`, "Chia tổng cho bốn bài, không chia cho số điểm khác nhau."),
@@ -190,7 +190,7 @@ export const lop04: GradeBook = {
           [{ expr: "Rational(6+7+7+8,4)", expect: "7" }],
         )],
         [
-          luyen(R`Trung bình cộng của $4, 6, 8$ bằng bao nhiêu?`, R`Trung bình bằng $6$.`, [{ expr: "Rational(4+6+8,3)", expect: "6" }], "Tổng ba số là $18$. Chia cho ba số được $6$."),
+          luyen(R`Trung bình cộng của $4;\ 6;\ 8$ bằng bao nhiêu?`, R`Trung bình bằng $6$.`, [{ expr: "Rational(4+6+8,3)", expect: "6" }], "Tổng ba số là $18$. Chia cho ba số được $6$."),
           luyen(R`Ba số có tổng $15$. Trung bình cộng bằng bao nhiêu?`, R`Trung bình bằng $5$.`, [{ expr: "Rational(15,3)", expect: "5" }], "Chia tổng cho số các số. Ở đây có đúng ba số."),
           luyen(R`Trung bình cộng của $2$ và $8$ bằng bao nhiêu?`, R`Trung bình bằng $5$.`, [{ expr: "Rational(2+8,2)", expect: "5" }], "Tổng hai số là $10$. Chia cho $2$ được $5$."),
         ],
@@ -209,9 +209,9 @@ export const lop04: GradeBook = {
           [{ expr: "Max(2,5,3)", expect: "5" }, { expr: "2+5+3", expect: "10" }],
         )],
         [
-          luyen(R`Biểu đồ có các cột $4, 4, 1$. Có một cột cao nhất duy nhất không?`, R`Không. Hai cột cùng cao $4$.`, [{ expr: "Max(4,4,1)", expect: "4" }], "Giá trị lớn nhất xuất hiện hai lần, nên không có một cột cao nhất duy nhất."),
+          luyen(R`Biểu đồ có các cột $4;\ 4;\ 1$. Có một cột cao nhất duy nhất không?`, R`Không. Hai cột cùng cao $4$.`, [{ expr: "Max(4,4,1)", expect: "4" }], "Giá trị lớn nhất xuất hiện hai lần, nên không có một cột cao nhất duy nhất."),
           luyen(R`Cột $8$ cao hơn cột $3$ bao nhiêu đơn vị?`, R`Cao hơn $5$ đơn vị.`, [{ expr: "8-3", expect: "5" }], "Hiệu hai độ cao là phần cột này nhô hơn cột kia."),
-          luyen(R`Ba cột $1, 2, 3$ có tổng bằng bao nhiêu?`, R`Tổng bằng $6$.`, [{ expr: "1+2+3", expect: "6" }], "Cộng các số đọc được trên biểu đồ cột."),
+          luyen(R`Ba cột $1;\ 2;\ 3$ có tổng bằng bao nhiêu?`, R`Tổng bằng $6$.`, [{ expr: "1+2+3", expect: "6" }], "Cộng các số đọc được trên biểu đồ cột."),
         ],
         { figure: "bar" },
       ),

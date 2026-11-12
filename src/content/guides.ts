@@ -56,8 +56,8 @@ export const guides = {
       "lam": "Match bases, or $\\log$ both sides. $\\log(ab)=\\log a+\\log b\\neq\\log(a+b)$.",
       "ket": "A solution, or a doubling time."
     },
-    "trap": "$\\log(a+b)\\neq\\log a+\\log b$. $10(1{,}08)^5\\approx14{,}69\\neq14$. $\\approx9{,}01\\neq8,\\neq12{,}5$.",
-    "trapEn": "$\\log(a+b)\\neq\\log a+\\log b$. $10(1{,}08)^5\\approx14{,}69\\neq14$. $\\approx9{,}01\\neq8,\\neq12{,}5$."
+    "trap": "$\\log(a+b)\\neq\\log a+\\log b$. $10(1{,}08)^5\\approx14{,}69\\neq14$. $\\approx9{,}01\\neq8;\\ \\neq12{,}5$.",
+    "trapEn": "$\\log(a+b)\\neq\\log a+\\log b$. $10(1{,}08)^5\\approx14{,}69\\neq14$. $\\approx9{,}01\\neq8;\\ \\neq12{,}5$."
   },
   "sequence": {
     "soon": "Cột uₙ, tổng Sₙ, và dãy hình học hội tụ khi |q| < 1.",
@@ -80,12 +80,12 @@ export const guides = {
     "soonEn": "Turn an angle on the circle, then measure a tree with tan.",
     "think": {
       "nhin": "Góc phần tư. Ngang $\\cos$, đứng $\\sin$.",
-      "lam": "Góc liên kết. $\\sin^2+\\cos^2=1$. $\\tan=\\sin/\\cos$.",
+      "lam": "Góc liên kết. $\\sin^2+\\cos^2=1$. $\\tan=\\dfrac{\\sin}{\\cos}$.",
       "ket": "Đúng dấu, hoặc $d\\tan\\theta+1{,}5$."
     },
     "thinkEn": {
       "nhin": "The quadrant. Horizontal $\\cos$, vertical $\\sin$.",
-      "lam": "A related angle. $\\sin^2+\\cos^2=1$. $\\tan=\\sin/\\cos$.",
+      "lam": "A related angle. $\\sin^2+\\cos^2=1$. $\\tan=\\dfrac{\\sin}{\\cos}$.",
       "ket": "The signed value, or $d\\tan\\theta+1{,}5$."
     },
     "trap": "$\\sin150^\\circ=\\sin30^\\circ$, nhưng $\\cos150^\\circ$ đổi dấu.",
@@ -136,7 +136,7 @@ export const guides = {
       "lam": "$y'=0$. $y''$ changes sign: inflection, even if $y'\\neq0$.",
       "ket": "Extrema, or none if $y'$ does not change sign. A cubic on $\\mathbb{R}$: no $\\max$."
     },
-    "trap": "$y=x^3$: $y'(0)=0$ không phải cực trị. $x^3-3x$: nghiệm $0,\\pm\\sqrt{3}\\neq\\pm1$. Giao tiệm cận không trên đồ thị.",
+    "trap": "$y=x^3$: $y'(0)=0$ không phải cực trị. $x^3-3x$: nghiệm $0;\\ \\pm\\sqrt{3}\\neq\\pm1$. Giao tiệm cận không trên đồ thị.",
     "trapEn": "$y=x^3$: $y'(0)=0$ is not an extremum. $x^3-3x$: roots $0,\\pm\\sqrt{3}\\neq\\pm1$. The asymptote crossing is not on the graph."
   },
   "integral": {
@@ -200,7 +200,7 @@ export const guides = {
       "lam": "$S=\\frac12 bh$. $V=abc$. Pyramid $\\frac13 Sh$. Tetrahedron $\\frac{a^3\\sqrt{2}}{12}$.",
       "ket": "$S$ or $V$. $k\\Rightarrow k^2$ for area."
     },
-    "trap": "Chóp $48\\neq36$. Hộp $60\\neq12$. $k=2\\Rightarrow S\\times4$.",
+    "trap": "Chóp $48\\neq36$. Hộp $60\\neq12$. $k=2\\Rightarrow S\\cdot 4$.",
     "trapEn": "Pyramid $48\\neq36$. Box $60\\neq12$. $k=2\\Rightarrow S\\times4$."
   },
   "combo": {
@@ -216,7 +216,7 @@ export const guides = {
       "lam": "$A=\\frac{n!}{(n-k)!}$, $C=\\frac{A}{k!}$. Median: the middle value.",
       "ket": "A count, or $\\bar x$ with the median."
     },
-    "trap": "$A(5,2)=20$, $C(5,2)=10$. $6\\to20$: $\\bar x=6{,}8$, trung vị $4$.",
+    "trap": "$A_5^2=20$, $C_5^2=10$. $6\\to20$: $\\bar x=6{,}8$, trung vị $4$.",
     "trapEn": "$A(5,2)=20$, $C(5,2)=10$. $6\\to20$: $\\bar x=6{,}8$, median $4$."
   },
   "probability": {
@@ -224,7 +224,7 @@ export const guides = {
     "soonEn": "A positive test, and two dice given that at least one face is 6: 11 outcomes remain, not 36.",
     "think": {
       "nhin": "Đã biết phần nào? Mẫu số là phần còn.",
-      "lam": "Đếm phần còn, rồi lấy tỉ. $C(n,k)p^k(1-p)^{n-k}$.",
+      "lam": "Đếm phần còn, rồi lấy tỉ. $C_n^kp^k(1-p)^{n-k}$.",
       "ket": "Một xác suất có điều kiện."
     },
     "thinkEn": {

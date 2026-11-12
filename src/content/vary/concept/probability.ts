@@ -20,7 +20,7 @@ export const probabilityPools: Pool[] = [
       claim("prob-c-true:dice", true,
         R`Hai xúc xắc, biết có ít nhất một mặt $6$, còn $11$ cặp.`,
         R`Two dice, given at least one face $6$, leave $11$ pairs.`,
-        R`$36-25=11$, vì $5\times 5$ cặp không có mặt $6$.`,
+        R`$36-25=11$, vì $5\cdot 5$ cặp không có mặt $6$.`,
         R`$36-25=11$, since $5\times 5$ pairs have no face $6$.`),
       claim("prob-c-true:cond", true,
         R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ khi $P(B)>0$.`,

@@ -181,7 +181,7 @@ export const lop08: GradeBook = {
           R`Tam giác vuông có hai cạnh góc vuông $3$ và $4$. Tính cạnh huyền.`,
           [
             buoc(R`Tổng hai bình phương bằng $9+16=25$.`, "Định lí Pythagore cộng bình phương hai cạnh góc vuông, chưa lấy căn."),
-            buoc(R`Cạnh huyền bằng $\sqrt{25}=5$.`, "Độ dài là căn không âm của tổng vừa tính. Bộ $3, 4, 5$ là một tam giác vuông."),
+            buoc(R`Cạnh huyền bằng $\sqrt{25}=5$.`, "Độ dài là căn không âm của tổng vừa tính. Bộ $3;\\ 4;\\ 5$ là một tam giác vuông."),
           ],
           R`Cạnh huyền bằng $5$.`,
           [{ expr: "sqrt(3**2+4**2)", expect: "5" }],
@@ -189,7 +189,7 @@ export const lop08: GradeBook = {
         [
           luyen(R`Cạnh huyền bằng $13$, một cạnh góc vuông bằng $5$. Cạnh góc vuông còn lại bằng bao nhiêu?`, R`Cạnh còn lại bằng $12$.`, [{ expr: "sqrt(13**2-5**2)", expect: "12" }], "Từ định lí Pythagore, bình phương cạnh còn lại bằng hiệu hai bình phương. Căn không âm bằng $12$."),
           luyen(R`Tam giác vuông cân có cạnh góc vuông $1$. Cạnh huyền bằng bao nhiêu?`, R`Cạnh huyền bằng $\sqrt{2}$.`, [{ expr: "sqrt(1**2+1**2)", expect: "sqrt(2)" }], "Hai cạnh góc vuông bằng nhau. Tổng hai bình phương bằng $2$, căn không âm là $\\sqrt{2}$."),
-          luyen(R`Kiểm tra bộ độ dài $6, 8, 10$ có phải tam giác vuông không.`, R`Có, vì $6^2+8^2=10^2$.`, [{ expr: "6**2+8**2-10**2", expect: "0" }], "Đảo định lí Pythagore: nếu bình phương một cạnh bằng tổng bình phương hai cạnh kia thì tam giác vuông tại góc giữa hai cạnh đó."),
+          luyen(R`Kiểm tra bộ độ dài $6;\ 8;\ 10$ có phải tam giác vuông không.`, R`Có, vì $6^2+8^2=10^2$.`, [{ expr: "6**2+8**2-10**2", expect: "0" }], "Đảo định lí Pythagore: nếu bình phương một cạnh bằng tổng bình phương hai cạnh kia thì tam giác vuông tại góc giữa hai cạnh đó."),
         ],
         { figure: "triangle" },
       ),

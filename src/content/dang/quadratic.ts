@@ -7,7 +7,7 @@ export const quadraticDang: TopicDang = {
   title: "Hàm số bậc hai",
   dang: [
     {
-      name: "Phương trình bậc hai và trường hợp a=0",
+      name: "Phương trình bậc hai và trường hợp $a=0$",
       nhanDang: R`Phương trình viết $ax^2+bx+c=0$, hỏi nghiệm thực. Phải xét hệ số $a$ trước khi gọi là bậc hai.`,
       phuongPhap: R`Nếu $a=0$ và $b\neq 0$ thì phương trình là bậc nhất, nghiệm duy nhất $x=-\frac{c}{b}$. Công thức $\Delta$ không áp dụng vì mẫu $2a$ bằng $0$. Nếu $a=b=0$ thì hoặc vô nghiệm khi $c\neq 0$, hoặc mọi $x$ đều là nghiệm khi $c=0$. Khi $a\neq 0$, đặt $\Delta=b^2-4ac$. Trong số thực, $\Delta>0$ tương đương hai nghiệm phân biệt, $\Delta=0$ tương đương nghiệm kép, $\Delta<0$ tương đương vô nghiệm.`,
       viDu: {
@@ -23,7 +23,7 @@ export const quadraticDang: TopicDang = {
           { expr: "3**2-5*3+6", expect: "0" },
         ],
       },
-      loi: "Dùng công thức nghiệm khi a=0, vì khi đó mẫu 2a bằng 0.",
+      loi: "Dùng công thức nghiệm khi $a=0$, trong khi mẫu $2a$ lúc đó bằng $0$.",
       luyen: {
         kind: "luyen",
         prompt: R`Giải $0\cdot x^2+2x-6=0$.`,

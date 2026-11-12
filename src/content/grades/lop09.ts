@@ -446,7 +446,7 @@ export const lop09: GradeBook = {
         [
           luyen(R`Ba tần số tương đối là $\frac{1}{2}$, $\frac{1}{5}$ và phần còn lại. Phần còn lại bằng bao nhiêu?`, R`Tần số tương đối còn lại bằng $\frac{3}{10}$.`, [{ expr: "1-Rational(1,2)-Rational(1,5)", expect: "Rational(3,10)" }], "Tổng cả bảng bằng $1$. Trừ lần lượt hai tần số tương đối đã biết."),
           luyen(R`Tần số $2$, $3$ và $5$ trên mẫu $10$. Tổng ba tần số tương đối bằng bao nhiêu?`, R`Tổng bằng $1$.`, [{ expr: "Rational(2,10)+Rational(3,10)+Rational(5,10)", expect: "1" }], "Cộng các tỉ số tần số trên cùng một cỡ mẫu. Tử cộng lại đúng bằng mẫu."),
-          luyen(R`Trung bình của các giá trị đại diện $1, 2, 3$ với tần số $1, 1, 2$ bằng bao nhiêu?`, R`Trung bình bằng $\frac{9}{4}$.`, [{ expr: "Rational(1*1+2*1+3*2,1+1+2)", expect: "Rational(9,4)" }], "Nhân mỗi giá trị với tần số của nó, cộng lại rồi chia cho tổng tần số."),
+          luyen(R`Trung bình của các giá trị đại diện $1;\ 2;\ 3$ với tần số $1;\ 1;\ 2$ bằng bao nhiêu?`, R`Trung bình bằng $\frac{9}{4}$.`, [{ expr: "Rational(1*1+2*1+3*2,1+1+2)", expect: "Rational(9,4)" }], "Nhân mỗi giá trị với tần số của nó, cộng lại rồi chia cho tổng tần số."),
         ],
       ),
       bai(

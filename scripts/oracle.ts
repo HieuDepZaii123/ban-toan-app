@@ -58,7 +58,7 @@ const FIXED: Record<string, Choice> = {
     vi: "Parabol tiếp xúc trục Ox tại đúng một điểm",
     en: "The parabola touches the x-axis at exactly one point",
   },
-  "ineq-equal": { vi: "Khi a = b", en: "When a = b" },
+  "ineq-equal": { vi: "Khi $a = b$", en: "When $a = b$" },
   "trig-max": { vi: String.raw`$\sqrt{2}$`, en: String.raw`$\sqrt{2}$` },
   "trig-id": { vi: String.raw`$1$`, en: String.raw`$1$` },
   "lim-sinc": { vi: String.raw`$1$`, en: String.raw`$1$` },
@@ -340,8 +340,8 @@ export function expectCorrect(id: string, params: Record<string, number>): Choic
     case "surv-cross": {
       const a = n("a");
       return {
-        vi: `Không, vì x = ${a} không thuộc tập xác định`,
-        en: `No, because x = ${a} is not in the domain`,
+        vi: `Không, vì $x = ${a}$ không thuộc tập xác định`,
+        en: `No, because $x = ${a}$ is not in the domain`,
       };
     }
     case "int-area":

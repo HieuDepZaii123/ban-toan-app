@@ -1,3 +1,4 @@
+import { MathText } from "../ui/MathText.tsx";
 import { useState } from "react";
 import { assessBanks, gradeNumber, type AssessQuestion } from "../content/assessBank.ts";
 import { displayOrder } from "../lib/prng.ts";
@@ -58,7 +59,7 @@ export function AssessPage() {
       </div>
       <article className="tool-card">
         <p className="lecture-note">{bank.desc} · Câu {index + 1}/{bank.questions.length} · Điểm {score}/{bank.questions.length}</p>
-        <h2>{question.t}</h2>
+        <h2><MathText text={question.t} /></h2>
         <Choices key={`${bank.id}-${index}`} question={question} record={record} onPick={mark} />
         {record ? <Explain question={question} ok={record.ok} /> : null}
         <div className="read-switch">
@@ -82,7 +83,7 @@ function Choices({ question, record, onPick }: { question: AssessQuestion; recor
           return (
             <button key={choice} type="button" className={`choice${state}`} disabled={!!record} onClick={() => onPick(index === question.answer, String(index))}>
               <span className="key">{String.fromCharCode(65 + shownAt)}</span>
-              <span className="choice-body">{choice}</span>
+              <span className="choice-body"><MathText text={choice} /></span>
             </button>
           );
         })}
@@ -103,13 +104,17 @@ function Choices({ question, record, onPick }: { question: AssessQuestion; recor
 }
 
 function Explain({ question, ok }: { question: AssessQuestion; ok: boolean }) {
+  // Chữ cái phải theo vị trí đang hiển thị, vì các phương án đã được xáo.
+  const shownAt = question.choices && question.answer !== undefined
+    ? displayOrder(question.t, question.choices.length).indexOf(question.answer)
+    : -1;
   const right = question.choices && question.answer !== undefined
-    ? `${String.fromCharCode(65 + question.answer)}. ${question.choices[question.answer]}`
-    : String(question.numeric).replace(".", ",");
+    ? `${String.fromCharCode(65 + shownAt)}. ${question.choices[question.answer]}`
+    : "$" + String(question.numeric).replace(".", "{,}") + "$";
   return (
     <div className="solution">
-      <p><b>{ok ? "Chính xác." : "Chưa đúng."}</b> Đáp án: {right}</p>
-      <ol className="steps">{question.steps.map((step) => <li key={step}>{step}</li>)}</ol>
+      <p><b>{ok ? "Chính xác." : "Chưa đúng."}</b> Đáp án: <MathText text={right} /></p>
+      <ol className="steps">{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>
     </div>
   );
 }

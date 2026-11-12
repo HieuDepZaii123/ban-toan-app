@@ -210,7 +210,7 @@ export const lop07: GradeBook = {
         [
           luyen(R`Từ $26^\circ\mathrm{C}$ xuống $23^\circ\mathrm{C}$, nhiệt độ giảm bao nhiêu độ?`, R`Nhiệt độ giảm $3$ độ.`, [{ expr: "26-23", expect: "3" }], "Hiệu của mốc trước trừ mốc sau là mức giảm. Đoạn thẳng tương ứng đi xuống."),
           luyen(R`Một đoạn thẳng trên biểu đồ nối mốc $4$ với mốc $9$. Mức tăng bằng bao nhiêu?`, R`Mức tăng bằng $5$.`, [{ expr: "9-4", expect: "5" }], "Đi từ trái sang phải theo thời gian. Mốc sau lớn hơn mốc trước nên đoạn đi lên."),
-          luyen(R`Ba mốc $2, 5, 5$. Đoạn thứ hai đi lên, đi xuống hay nằm ngang?`, R`Đoạn thứ hai nằm ngang.`, [{ expr: "5-5", expect: "0" }], "Hai mốc bằng nhau thì hiệu bằng $0$. Đoạn thẳng nằm ngang."),
+          luyen(R`Ba mốc $2;\ 5;\ 5$. Đoạn thứ hai đi lên, đi xuống hay nằm ngang?`, R`Đoạn thứ hai nằm ngang.`, [{ expr: "5-5", expect: "0" }], "Hai mốc bằng nhau thì hiệu bằng $0$. Đoạn thẳng nằm ngang."),
         ],
         { figure: "segment" },
       ),

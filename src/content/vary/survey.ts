@@ -124,13 +124,13 @@ function crossStem(question: Question, params: Record<string, number>) {
     `Điểm $(${a}; ${height})$ có thuộc đồ thị $y = \\dfrac{x^2}{x-${a}}$ không?`,
     `Does the point $(${a}; ${height})$ lie on the graph of $y = \\dfrac{x^2}{x-${a}}$?`,
     [
-      `Không, vì x = ${a} không thuộc tập xác định`,
+      `Không, vì $x = ${a}$ không thuộc tập xác định`,
       "Có, vì đó là giao của hai tiệm cận",
       `Có, y(${a}) = ${height}`,
       `Có, y(${a}) = 0`,
     ],
     [
-      `No, because x = ${a} is not in the domain`,
+      `No, because $x = ${a}$ is not in the domain`,
       "Yes, because the asymptotes cross there",
       `Yes, y(${a}) = ${height}`,
       `Yes, y(${a}) = 0`,

@@ -34,7 +34,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
     exam: {
       bits: [
         "Kiểm tra số nguyên tố: thử chia cho các số từ 2 đến $\\sqrt n$. Không số nào chia hết thì $n$ là số nguyên tố.",
-        "Ước chung lớn nhất bằng thuật toán Euclid: thay cặp $(a, b)$ bằng $(b, a \\bmod b)$ cho tới khi $b=0$.",
+        "Ước chung lớn nhất bằng thuật toán Euclid: thay cặp $(a;b)$ bằng $(b;a \\bmod b)$ cho tới khi $b=0$.",
         "Hàm giải phương trình bậc hai nên xét đủ ba trường hợp của $\\Delta$, và cả trường hợp $a=0$.",
       ],
       code: "def ucln(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a\n# ucln(48, 18) = 6",
@@ -63,13 +63,13 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
       drills: [
         {
           q: "Chia đôi đoạn $[1;2]$ để tìm $\\sqrt2$. Sau 10 bước, độ dài đoạn chứa nghiệm bằng bao nhiêu?",
-          answer: "$1/1024$",
-          steps: ["Mỗi bước giảm một nửa.", "$(2-1)/2^{10}=1/1024$."],
+          answer: "$\\dfrac{1}{1024}$",
+          steps: ["Mỗi bước giảm một nửa.", "$\\dfrac{2-1}{2^{10}}=\\dfrac{1}{1024}$."],
         },
         {
           q: "Với $f(x)=x^2$, $x=3$ và $h=0{,}1$, công thức đạo hàm số cho kết quả nào?",
           answer: "6",
-          steps: ["$f(3{,}1)=9{,}61$ và $f(2{,}9)=8{,}41$.", "$(9{,}61-8{,}41)/0{,}2=6$."],
+          steps: ["$f(3{,}1)=9{,}61$ và $f(2{,}9)=8{,}41$.", "$\\dfrac{9{,}61-8{,}41}{0{,}2}=6$."],
           num: 6,
           calc: () => (3.1 * 3.1 - 2.9 * 2.9) / 0.2,
         },
@@ -92,7 +92,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
         {
           q: "Trong 40 bạn có 14 bạn đi xe đạp. Tần số tương đối bằng bao nhiêu phần trăm?",
           answer: "35",
-          steps: ["$14/40=0{,}35$.", "Tức 35%."],
+          steps: ["$\\dfrac{14}{40}=0{,}35$.", "Tức 35%."],
           num: 35,
           calc: () => (14 / 40) * 100,
         },
@@ -113,7 +113,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
         {
           q: "Độ lệch chuẩn của dãy 2, 4, 4, 4, 5, 5, 7, 9, tính với mẫu số $n$.",
           answer: "2",
-          steps: ["Trung bình là 5.", "Tổng bình phương độ lệch là 32, phương sai $32/8=4$.", "Độ lệch chuẩn $\\sqrt4=2$."],
+          steps: ["Trung bình là 5.", "Tổng bình phương độ lệch là 32, phương sai $\\dfrac{32}{8}=4$.", "Độ lệch chuẩn $\\sqrt4=2$."],
           num: 2,
           calc: () => { const d = [2, 4, 4, 4, 5, 5, 7, 9]; const m = d.reduce((s, x) => s + x, 0) / d.length; return Math.sqrt(d.reduce((s, x) => s + (x - m) ** 2, 0) / d.length); },
         },
@@ -128,8 +128,8 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
       drills: [
         {
           q: "Điểm thường xuyên 8 (hệ số 1), giữa kỳ 7 (hệ số 2), cuối kỳ 9 (hệ số 3). Điểm trung bình môn bằng bao nhiêu?",
-          answer: "$49/6\\approx 8{,}2$",
-          steps: ["Tổng có trọng số: $8+14+27=49$.", "Tổng hệ số là 6.", "$49/6\\approx 8{,}2$."],
+          answer: "$\\dfrac{49}{6}\\approx 8{,}2$",
+          steps: ["Tổng có trọng số: $8+14+27=49$.", "Tổng hệ số là 6.", "$\\dfrac{49}{6}\\approx 8{,}2$."],
         },
         {
           q: "Lớp A có 30 bạn, điểm trung bình 7. Lớp B có 20 bạn, điểm trung bình 8. Điểm trung bình chung của hai lớp?",
@@ -221,7 +221,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
         {
           q: "Một xe chạy đều 54 km/h. Vận tốc đó bằng bao nhiêu m/s?",
           answer: "15",
-          steps: ["Chia số đo km/h cho 3,6.", "$54/3{,}6=15$."],
+          steps: ["Chia số đo km/h cho 3,6.", "$\\dfrac{54}{3{,}6}=15$."],
           num: 15,
           calc: () => 54 / 3.6,
         },
@@ -244,7 +244,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
         {
           q: "Lực 20 N tác dụng lên vật 4 kg trên mặt phẳng không ma sát. Gia tốc bằng bao nhiêu $\\mathrm{m/s^2}$?",
           answer: "5",
-          steps: ["$a=F/m$.", "$20/4=5$."],
+          steps: ["$a=\\dfrac{F}{m}$.", "$\\dfrac{20}{4}=5$."],
           num: 5,
           calc: () => 20 / 4,
         },
@@ -267,7 +267,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
         {
           q: "Hai điện trở 6 Ω và 3 Ω mắc song song. Điện trở tương đương bằng bao nhiêu ôm?",
           answer: "2",
-          steps: ["$1/R=1/6+1/3=1/2$.", "$R=2$."],
+          steps: ["$\\dfrac{1}{R}=\\dfrac{1}{6}+\\dfrac{1}{3}=\\dfrac{1}{2}$.", "$R=2$."],
           num: 2,
           calc: () => 1 / (1 / 6 + 1 / 3),
         },
@@ -281,7 +281,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
         {
           q: "Vật dao động theo $x=4\\cos(2\\pi t)$, với $x$ tính bằng cm và $t$ tính bằng giây. Chu kỳ bằng bao nhiêu giây?",
           answer: "1",
-          steps: ["Tần số góc $\\omega=2\\pi$.", "$T=2\\pi/\\omega=1$."],
+          steps: ["Tần số góc $\\omega=2\\pi$.", "$T=\\dfrac{2\\pi}{\\omega}=1$."],
           num: 1,
           calc: () => (2 * Math.PI) / (2 * Math.PI),
         },
@@ -297,7 +297,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
       ],
       drills: [
         {
-          q: "Khối lượng mol của $\\mathrm{H_2SO_4}$ bằng bao nhiêu g/mol? Cho H = 1, S = 32, O = 16.",
+          q: "Khối lượng mol của $\\mathrm{H_2SO_4}$ bằng bao nhiêu g/mol? Cho $\\mathrm{H}=1$, $\\mathrm{S}=32$, $\\mathrm{O}=16$.",
           answer: "98",
           steps: ["$2\\cdot 1+32+4\\cdot 16$.", "$2+32+64=98$."],
           num: 98,
@@ -306,7 +306,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
         {
           q: "22 g $\\mathrm{CO_2}$ là bao nhiêu mol?",
           answer: "0,5",
-          steps: ["$M=44$ g/mol.", "$n=22/44=0{,}5$."],
+          steps: ["$M=44$ g/mol.", "$n=\\dfrac{22}{44}=0{,}5$."],
           num: 0.5,
           calc: () => 22 / 44,
         },
@@ -320,16 +320,16 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
       ],
       drills: [
         {
-          q: "Đốt cháy hoàn toàn 4 g $\\mathrm{H_2}$ thu được bao nhiêu gam nước? Cho H = 1, O = 16.",
+          q: "Đốt cháy hoàn toàn 4 g $\\mathrm{H_2}$ thu được bao nhiêu gam nước? Cho $\\mathrm{H}=1$, $\\mathrm{O}=16$.",
           answer: "36",
-          steps: ["$n_{\\mathrm{H_2}}=4/2=2$ mol.", "Tỉ lệ hệ số 2 : 2 nên được 2 mol nước.", "$m=2\\cdot 18=36$ g."],
+          steps: ["$n_{\\mathrm{H_2}}=\\dfrac{4}{2}=2$ mol.", "Tỉ lệ hệ số 2 : 2 nên được 2 mol nước.", "$m=2\\cdot 18=36$ g."],
           num: 36,
           calc: () => (4 / 2) * 18,
         },
         {
           q: "Hòa tan 0,2 mol NaOH thành 500 mL dung dịch. Nồng độ mol bằng bao nhiêu mol/L?",
           answer: "0,4",
-          steps: ["Đổi 500 mL thành 0,5 L.", "$C_M=0{,}2/0{,}5=0{,}4$."],
+          steps: ["Đổi 500 mL thành 0,5 L.", "$C_M=\\dfrac{0{,}2}{0{,}5}=0{,}4$."],
           num: 0.4,
           calc: () => 0.2 / 0.5,
         },
@@ -352,7 +352,7 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
         {
           q: "Cần bao nhiêu mL dung dịch NaOH 0,1 mol/L để trung hòa 20 mL dung dịch HCl 0,2 mol/L?",
           answer: "40",
-          steps: ["Số mol $\\mathrm{H}^+$: $0{,}2\\cdot 0{,}02=0{,}004$.", "$V=0{,}004/0{,}1=0{,}04$ L, tức 40 mL."],
+          steps: ["Số mol $\\mathrm{H}^+$: $0{,}2\\cdot 0{,}02=0{,}004$.", "$V=\\dfrac{0{,}004}{0{,}1}=0{,}04$ L, tức 40 mL."],
           num: 40,
           calc: () => ((0.2 * 20) / 0.1),
         },

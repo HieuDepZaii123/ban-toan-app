@@ -110,7 +110,7 @@ export const lop03: GradeBook = {
       bai(
         "bang-nhan-3-9",
         "Bảng nhân từ $3$ đến $9$",
-        R`Mỗi bảng nhân là một dãy đếm thêm đều: bảng nhân $6$ là $6, 12, 18, 24$ và cứ thế thêm $6$. Đổi chỗ hai thừa số thì tích không đổi, nên $7\times 8$ và $8\times 7$ đều bằng $56$.`,
+        R`Mỗi bảng nhân là một dãy đếm thêm đều: bảng nhân $6$ là $6;\ 12;\ 18;\ 24$ và cứ thế thêm $6$. Đổi chỗ hai thừa số thì tích không đổi, nên $7\times 8$ và $8\times 7$ đều bằng $56$.`,
         [vd(
           R`Mỗi hộp có $6$ cái bánh. Hỏi $7$ hộp có bao nhiêu cái bánh?`,
           [

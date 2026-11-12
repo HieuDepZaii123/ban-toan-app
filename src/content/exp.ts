@@ -27,12 +27,12 @@ export const expQuestions: Question[] = [
     hint: R`$a^n$: nhân $a$ đúng $n$ lần.`,
     hintEn: R`$a^n$: multiply $a$ exactly $n$ times.`,
     steps: [
-      R`$2^3 = 2 \times 2 \times 2$.`,
+      R`$2^3 = 2\cdot 2\cdot 2$.`,
       R`Đó là $8$.`,
-      R`$6$ là $2 \times 3$. $9$ là $3^2$. $5$ là $2 + 3$.`,
+      R`$6$ là $2\cdot 3$. $9$ là $3^2$. $5$ là $2 + 3$.`,
     ],
     stepsEn: [
-      R`$2^3 = 2 \times 2 \times 2$.`,
+      R`$2^3 = 2\cdot 2\cdot 2$.`,
       R`That is $8$.`,
       R`$6$ is $2 \times 3$. $9$ is $3^2$. $5$ is $2 + 3$.`,
     ],
@@ -68,7 +68,7 @@ export const expQuestions: Question[] = [
     hintEn: R`Same base: $\log(ab)=\log a+\log b$.`,
     steps: [
       R`$\log a + \log b = \log(ab)$.`,
-      R`$2 \times 3 = 6$, nên tổng bằng $\log 6$.`,
+      R`$2\cdot 3 = 6$, nên tổng bằng $\log 6$.`,
       R`$\log 5$ là nhầm sang $\log(2+3)$. Tích hai log và số $5$ không phải công thức này.`,
     ],
     stepsEn: [
@@ -87,9 +87,9 @@ export const expQuestions: Question[] = [
     hint: R`Nhân $1{,}08$ năm lần, không cộng $0{,}8$ mỗi năm.`,
     hintEn: R`Multiply by $1{,}08$ five times, do not add $0{,}8$ each year.`,
     steps: [
-      R`Lãi kép: $10 \times (1{,}08)^5$.`,
+      R`Lãi kép: $10\cdot (1{,}08)^5$.`,
       R`$(1{,}08)^5 \approx 1{,}4693$, nên kết quả khoảng $14{,}69$ triệu.`,
-      R`$14$ triệu là lãi đơn $10(1 + 0{,}08 \times 5)$. $18$ triệu là $10 + 8$. $40$ triệu là $8 \times 5$: lấy số phần trăm nhân số năm, quên cả vốn gốc.`,
+      R`$14$ triệu là lãi đơn $10(1 + 0{,}08\cdot 5)$. $18$ triệu là $10 + 8$. $40$ triệu là $8\cdot 5$: lấy số phần trăm nhân số năm, quên cả vốn gốc.`,
     ],
     stepsEn: [
       R`Compound interest: $10 \times (1{,}08)^5$.`,
@@ -104,15 +104,15 @@ export const expQuestions: Question[] = [
     choices: ["Khoảng 9 năm", "8 năm", "12,5 năm", "5 năm"],
     choicesEn: ["About 9 years", "8 years", "12.5 years", "5 years"],
     answer: 0,
-    hint: R`$(1{,}08)^t=2$. Lấy $\ln$, không lấy $100/8$.`,
+    hint: R`$(1{,}08)^t=2$. Lấy $\ln$, không lấy $\dfrac{100}{8}$.`,
     hintEn: R`$(1{,}08)^t=2$. Take $\ln$, not $100/8$.`,
     steps: [
-      R`$(1{,}08)^t = 2$, nên $t = \ln 2 / \ln(1{,}08)$.`,
+      R`$(1{,}08)^t = 2$, nên $t = \dfrac{\ln 2}{\ln(1{,}08)}$.`,
       R`Giá trị đó khoảng $9{,}01$ năm, tức khoảng $9$ năm.`,
-      R`$8$ năm lấy nhầm số phần trăm. $12{,}5$ là $100/8$, quy tắc nhẩm không đúng với lãi kép. $5$ năm là ví dụ $14{,}69$ triệu, chưa gấp đôi.`,
+      R`$8$ năm lấy nhầm số phần trăm. $12{,}5$ là $\dfrac{100}{8}$, quy tắc nhẩm không đúng với lãi kép. $5$ năm là ví dụ $14{,}69$ triệu, chưa gấp đôi.`,
     ],
     stepsEn: [
-      R`$(1{,}08)^t = 2$, so $t = \ln 2 / \ln(1{,}08)$.`,
+      R`$(1{,}08)^t = 2$, so $t = \dfrac{\ln 2}{\ln(1{,}08)}$.`,
       R`That value is about $9{,}01$ years, about $9$ years.`,
       R`$8$ years copies the percent. $12{,}5$ is $100/8$, a rough rule that is not the compound-interest time. $5$ years is the $14{,}69$ triệu example, which has not doubled.`,
     ],
@@ -128,7 +128,7 @@ export const expQuestions: Question[] = [
     hintEn: R`Two half-lives: multiply by $\left(\dfrac12\right)^2$.`,
     steps: [
       R`Sau $10$ năm còn $40$ g. Sau thêm $10$ năm còn một nửa của $40$ g.`,
-      R`Đó là $20$ g, cũng là $80 \times (1/2)^{20/10}$.`,
+      R`Đó là $20$ g, cũng là $80\cdot (\dfrac{1}{2})^{20/10}$.`,
       R`$40$ g mới qua một chu kỳ. $0$ g là trừ hết hai nửa. $60$ g là giảm đều $10$ g mỗi chu kỳ, không phải phân rã.`,
     ],
     stepsEn: [

@@ -83,15 +83,15 @@ export const limitQuestions: Question[] = [
     promptEn: R`For $\dfrac{x^2-1}{x-1}$ with $f(1) = 2$, is the function continuous at $x = 1$?`,
     choices: [
       "Có, vì giới hạn bằng giá trị tại 1",
-      "Không, vì mẫu bằng 0 tại x = 1",
+      "Không, vì mẫu bằng $0$ tại $x = 1$",
       "Không, vì giới hạn bằng 0",
-      "Chỉ liên tục khi f(1) = 0",
+      "Chỉ liên tục khi $f(1) = 0$",
     ],
     choicesEn: [
       "Yes, because the limit equals the value at 1",
       "No, because the denominator is 0 at x = 1",
       "No, because the limit is 0",
-      "Continuous only when f(1) = 0",
+      "Continuous only when $f(1) = 0$",
     ],
     answer: 0,
     hint: "Liên tục khi giới hạn bằng đúng số đã gán tại điểm đó.",
@@ -117,7 +117,7 @@ export const limitQuestions: Question[] = [
     hint: R`Khi $t\to+\infty$, $e^{-t/4}\to 0$, còn lại $25$.`,
     hintEn: "A large negative exponent sends the exponential to 0. The 25 sits outside it.",
     steps: [
-      R`Khi $t \to +\infty$, $-t/4 \to -\infty$ nên $e^{-t/4} \to 0$.`,
+      R`Khi $t \to +\infty$, $-\dfrac{t}{4} \to -\infty$ nên $e^{-t/4} \to 0$.`,
       R`$T(t) \to 25 + 0 = 25$. Đó là nhiệt độ phòng.`,
       R`$85^\circ\text{C}$ là $T(0)$, lúc mới rót. $60^\circ\text{C}$ là phần nóng hơn phòng lúc đầu. Nước không nguội về $0^\circ\text{C}$.`,
     ],

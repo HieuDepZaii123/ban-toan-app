@@ -24,8 +24,8 @@ export const lop06: GradeBook = {
         )],
         [
           luyen(R`Tính $(2+3)\cdot 4$.`, R`Giá trị bằng $20$.`, [{ expr: "(2+3)*4", expect: "20" }], "Ngoặc bắt buộc cộng hai số trước. Tổng $5$ nhân với $4$ bằng $20$."),
-          luyen(R`Tính $20-6\div 2$.`, R`Giá trị bằng $17$.`, [{ expr: "20-6/2", expect: "17" }], "Phép chia đứng trước phép trừ. Thương $3$ được trừ khỏi $20$."),
-          luyen(R`Tính $8\div 2+1$.`, R`Giá trị bằng $5$.`, [{ expr: "8/2+1", expect: "5" }], "Chia trước được $4$, rồi cộng $1$. Không cộng $2$ với $1$ trước khi chia."),
+          luyen(R`Tính $20-6:2$.`, R`Giá trị bằng $17$.`, [{ expr: "20-6/2", expect: "17" }], "Phép chia đứng trước phép trừ. Thương $3$ được trừ khỏi $20$."),
+          luyen(R`Tính $8:2+1$.`, R`Giá trị bằng $5$.`, [{ expr: "8/2+1", expect: "5" }], "Chia trước được $4$, rồi cộng $1$. Không cộng $2$ với $1$ trước khi chia."),
         ],
       ),
       bai(

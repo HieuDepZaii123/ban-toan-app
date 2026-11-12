@@ -130,7 +130,7 @@ export const thcsNotes: NoteBook = {
 
   // Lớp 8
   "8/binh-phuong-tong": note(
-    R`Hình vuông cạnh $a+b$ cắt được thành một hình vuông cạnh $a$, một hình vuông cạnh $b$ và hai hình chữ nhật $a\times b$. Cộng bốn diện tích lại được $a^2+2ab+b^2$.`,
+    R`Hình vuông cạnh $a+b$ cắt được thành một hình vuông cạnh $a$, một hình vuông cạnh $b$ và hai hình chữ nhật $a\cdot b$. Cộng bốn diện tích lại được $a^2+2ab+b^2$.`,
     R`Viết $(a+b)^2=a^2+b^2$. Thiếu số hạng $2ab$, chính là hai hình chữ nhật trong hình vẽ.`,
   ),
   "8/hieu-binh": note(

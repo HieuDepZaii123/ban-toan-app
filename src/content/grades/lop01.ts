@@ -12,7 +12,7 @@ export const lop01: GradeBook = {
       bai(
         "dem-10",
         "Đếm các số từ 1 đến 10",
-        R`Các số $1, 2, 3, 4, 5, 6, 7, 8, 9, 10$ đi liền nhau. Số đứng sau lớn hơn số đứng trước đúng $1$.`,
+        R`Các số $1;\ 2;\ 3;\ 4;\ 5;\ 6;\ 7;\ 8;\ 9;\ 10$ đi liền nhau. Số đứng sau lớn hơn số đứng trước đúng $1$.`,
         [vd(
           R`Có $4$ ngôi sao. Đếm thêm một ngôi. Hỏi được số mấy?`,
           [
