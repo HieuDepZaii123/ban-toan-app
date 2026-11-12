@@ -1,4 +1,6 @@
 import { demoReply, MODE_INSTRUCTIONS, safetyReply, TUTOR_INSTRUCTIONS, type TutorMode } from "./policy.ts";
+import { handleHealth } from "../http/health.ts";
+import { publicApiPath } from "../http/foldedRoutes.ts";
 import { tutorTopics } from "./topics.ts";
 import { createHash } from "node:crypto";
 import { normalizeMath } from "./format.ts";
@@ -62,7 +64,10 @@ export function json(status: number, body: ChatJson): Response {
 
 export async function handleChat(request: Request, env: ChatEnv): Promise<Response> {
   const url = new URL(request.url);
-  if (url.pathname.replace(/\/$/, "") !== "/api/chat" || request.method !== "POST") {
+  const path = publicApiPath(url);
+  // Hobby plan: /api/health is rewritten onto this function. Non-GET still 405s inside handleHealth.
+  if (path === "/api/health") return handleHealth(request);
+  if (path !== "/api/chat" || request.method !== "POST") {
     return json(404, { error: "not_found", message: "Không có đường này." });
   }
   let body: Record<string, unknown> = {};

@@ -307,6 +307,10 @@ for (const buyer of ["", "child"]) {
   assert((await post("/api/premium/recover", { orderId: madeId, email: "ai-do@example.com" })).status === 404, "recover needs the buyer's email");
   const back = await post("/api/premium/recover", { orderId: madeId, email: "Khoi@Example.com" });
   assert(back.status === 200 && back.json.licenseKey === key, "recover returns the key for order id and email");
+  const folded = await post("/api/premium/status?route=recover", { orderId: madeId, email: "Khoi@Example.com" });
+  assert(folded.status === 200 && folded.json.licenseKey === key, "recover folded onto the status function still returns the key");
+  assert((await post("/api/premium/status", { orderId: madeId, email: "Khoi@Example.com" })).status === 404, "status does not recover without the folded route");
+  assert((await get(`/api/premium/status?route=recover&orderId=${madeId}`)).status === 404, "the recover rewrite is not a status lookup");
 }
 
 if (fails.length > 0) {

@@ -46,7 +46,7 @@ CI (`.github/workflows/ci.yml`) chạy trên mỗi pull request và mỗi lần 
 
 ## Triển khai
 
-Bàn Toán gồm một trang tĩnh (`dist/`) và các API trong `api/` (`/api/chat`, `/api/premium/*`, `/api/health`). Nơi triển khai được dự tính là **Vercel**: `vercel.json` đặt lệnh build, đưa mọi đường không phải `/api/` về `index.html`, gửi header bảo mật (CSP, `nosniff`, `frame-ancestors`…) và cache dài cho tệp có mã băm trong `/assets/`.
+Bàn Toán gồm một trang tĩnh (`dist/`) và các hàm trong `api/` (`/api/chat`, `/api/premium/*`). Nơi triển khai được dự tính là **Vercel**. Gói Hobby chỉ nhận tối đa 12 hàm serverless, nên `GET /api/health` và `POST /api/premium/recover` không có tệp riêng: `vercel.json` rewrite chúng vào `/api/chat` và `/api/premium/status` (vẫn giữ đúng đường công khai). `vercel.json` cũng đặt lệnh build, đưa mọi đường không phải `/api/` về `index.html`, gửi header bảo mật (CSP, `nosniff`, `frame-ancestors`…) và cache dài cho tệp có mã băm trong `/assets/`.
 
 - Đặt biến môi trường theo `.env.example`. Thiếu khóa AI thì trợ lý trả lời bằng bài mẫu và giao diện ghi rõ điều đó. Thiếu tài khoản nhận tiền thật thì trang Nâng cấp ghi "Premium chưa mở bán".
 - Production nên có `DATABASE_URL` (Postgres): không có thì đơn hàng nằm trong SQLite của từng instance và bộ đếm lượt hỏi không dùng chung. `GET /api/health` báo cảnh báo này.
