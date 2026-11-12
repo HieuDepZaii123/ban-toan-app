@@ -1589,3 +1589,4 @@ html[data-motion="less"] *, html[data-motion="less"] *::before, html[data-motion
 .speak-btn { min-height: 36px; font-size: 0.9rem; justify-self: start; }
 .practice .speak-btn { margin-top: -4px; }
 .speak-icon { margin-right: 6px; font-size: 0.8em; }
+.science-drill { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line, rgba(28, 25, 21, 0.12)); }
