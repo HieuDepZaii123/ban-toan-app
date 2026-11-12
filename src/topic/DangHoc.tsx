@@ -29,7 +29,7 @@ export function DangHoc({ topicId }: { topicId: string }) {
       <div lang="vi">
         {pack.dang.map((dang) => (
           <article key={dang.name} className="tool-card">
-            <h3>{dang.name}</h3>
+            <h3><MathText text={dang.name} /></h3>
             <p><b>{t(lang, "Nhận dạng.", "Recognise it.")}</b> <MathText text={dang.nhanDang} /></p>
             <p><b>{t(lang, "Phương pháp.", "Method.")}</b> <MathText text={dang.phuongPhap} /></p>
             <WorkedBlock item={dang.viDu} lang={lang} />

@@ -1,3 +1,4 @@
+import { plainMath } from "../lib/plainMath.ts";
 import { useEffect, useState } from "react";
 import { cards } from "../content/cards.ts";
 import { gradeBooks, lessonAt, lessonsOf } from "../content/grades/index.ts";
@@ -22,7 +23,7 @@ export function GradeDesk() {
     const book = parsed.grade ? gradeBooks.find((item) => item.grade === parsed.grade) : undefined;
     const found = parsed.grade && parsed.lesson ? lessonAt(parsed.grade, parsed.lesson) : undefined;
     const gradeWord = lang === "en" ? "Grade" : "Lớp";
-    document.title = found ? `${found.lesson.title} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
+    document.title = found ? `${plainMath(found.lesson.title)} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
   }, [parsed.grade, parsed.lesson, lang]);
 
   if (!parsed.grade) return <GradeHome />;
@@ -122,14 +123,14 @@ function GradeIndex({ book }: { book: GradeBook }) {
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
       {book.chapters.map((chapter) => (
         <section key={chapter.id} className="stream">
-          <h2>{chapter.title}</h2>
+          <h2><MathText text={chapter.title} /></h2>
           <div className="study-list">
             {chapter.lessons.map((lesson) => {
               const ready = done.includes(`${book.grade}/${lesson.id}`);
               return (
                 <A key={lesson.id} className="study-card" href={`/kien-thuc/${book.grade}/${lesson.id}`}>
                   <span>
-                    <strong>{lesson.title}</strong>
+                    <strong><MathText text={lesson.title} /></strong>
                     {lesson.topicId ? <small className="lecture-note">{topicNote(lang, lesson.topicId)}</small> : null}
                   </span>
                   {ready ? <span aria-label={t(lang, "Đã xong", "Done")}>✓</span> : null}
@@ -205,7 +206,7 @@ function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTi
         </article>
       </div>
       <p className="lesson-next">
-        {nextLesson ? <A className="text-btn" href={`/kien-thuc/${book.grade}/${nextLesson.id}`}>{t(lang, `Bài sau: ${nextLesson.title}`, `Next lesson: ${nextLesson.title}`)}</A> : null}
+        {nextLesson ? <A className="text-btn" href={`/kien-thuc/${book.grade}/${nextLesson.id}`}><MathText text={t(lang, `Bài sau: ${nextLesson.title}`, `Next lesson: ${nextLesson.title}`)} /></A> : null}
         <A className="text-btn" href={book.grade <= 9 ? `/luyen-lop/${book.grade}` : "/luyen-thpt"}>{t(lang, "Luyện nhanh", "Quick practice")}</A>
       </p>
     </PageFrame>

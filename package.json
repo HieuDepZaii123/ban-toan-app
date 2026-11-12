@@ -22,7 +22,9 @@
     "db:status": "tsx scripts/db.ts status",
     "db:copy-sqlite": "tsx scripts/db.ts copy-sqlite",
     "test:math": "tsx scripts/mathstyle.test.ts",
-    "fix:math": "tsx scripts/fix-math.ts"
+    "fix:math": "tsx scripts/fix-math.ts",
+    "test:ui": "tsx scripts/ui-audit.ts",
+    "test:ui:full": "tsx scripts/ui-audit.ts --full"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.104",
@@ -47,6 +49,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "oxlint": "^1.81.0",
     "pdfjs-dist": "^6.5.438",
+    "playwright": "1.63.0",
     "tsx": "^4.23.15",
     "typescript": "~6.0.2",
     "vite": "^8.3.0",

@@ -127,7 +127,7 @@ export function ExamPage() {
 
   return (
     <PageFrame
-      kicker={t(lang, "Premium · Luyện THPT", "Premium · THPT practice")}
+      kicker={selling === false ? t(lang, "Luyện THPT", "THPT practice") : t(lang, "Premium · Luyện THPT", "Premium · THPT practice")}
       title={t(lang, "Đề thi thử THPT", "THPT mock exam")}
       lead={t(
         lang,
@@ -155,7 +155,7 @@ export function ExamPage() {
             <button type="button" className="pay-btn" onClick={start}>
               {saved.last ? t(lang, "Làm đề mới", "Start a new paper") : t(lang, "Bắt đầu làm bài (90 phút)", "Start the paper (90 minutes)")}
             </button>
-            {premium.kind !== "active" ? <small className="exam-free"> {t(lang, "Đề đầu tiên miễn phí.", "Your first paper is free.")}</small> : null}
+            {premium.kind !== "active" ? <small className="exam-free"> {selling === false ? t(lang, "Hiện mọi đề đều miễn phí.", "Every paper is free for now.") : t(lang, "Đề đầu tiên miễn phí.", "Your first paper is free.")}</small> : null}
           </p>
         ) : (
           <p className="pay-card">

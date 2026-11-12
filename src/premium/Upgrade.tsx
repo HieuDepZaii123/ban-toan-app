@@ -186,17 +186,20 @@ export function Upgrade() {
         <h1>{t(lang, "Nâng cấp Premium", "Upgrade to Premium")}</h1>
         {closed ? <Closed /> : null}
         <PremiumBenefits />
-        <p className="pay-note">
-          {t(
-            lang,
-            `${vnd(month?.amount ?? 49000)} cho 30 ngày, ${vnd(year?.amount ?? 399000)} cho 365 ngày (khoảng ${vnd(Math.round((year?.amount ?? 399000) / 12000) * 1000)} mỗi tháng). Mua một lần, không tự gia hạn. Mọi bài học, bài luyện và trợ lý 8 câu mỗi ngày vẫn miễn phí.`,
-            `${vnd(month?.amount ?? 49000)} for 30 days, ${vnd(year?.amount ?? 399000)} for 365 days (about ${vnd(Math.round((year?.amount ?? 399000) / 12000) * 1000)} a month). Bought once, never renews automatically. All lessons, practice and 8 tutor questions a day stay free.`,
-          )}
-          {" "}
-          <A href="/chinh-sach">{t(lang, `Hoàn tiền trong ${REFUND_DAYS} ngày`, `Refund within ${REFUND_DAYS} days`)}</A>
-          {" · "}
-          <A href="/gioi-thieu">{t(lang, "Giới thiệu bạn bè", "Refer a friend")}</A>
-        </p>
+        {/* Chưa mở bán thì chưa nêu giá: giá và cách trả tiền chỉ hiện khi thật sự mua được. */}
+        {closed ? null : (
+          <p className="pay-note">
+            {t(
+              lang,
+              `${vnd(month?.amount ?? 49000)} cho 30 ngày, ${vnd(year?.amount ?? 399000)} cho 365 ngày (khoảng ${vnd(Math.round((year?.amount ?? 399000) / 12000) * 1000)} mỗi tháng). Mua một lần, không tự gia hạn. Mọi bài học, bài luyện và trợ lý 8 câu mỗi ngày vẫn miễn phí.`,
+              `${vnd(month?.amount ?? 49000)} for 30 days, ${vnd(year?.amount ?? 399000)} for 365 days (about ${vnd(Math.round((year?.amount ?? 399000) / 12000) * 1000)} a month). Bought once, never renews automatically. All lessons, practice and 8 tutor questions a day stay free.`,
+            )}
+            {" "}
+            <A href="/chinh-sach">{t(lang, `Hoàn tiền trong ${REFUND_DAYS} ngày`, `Refund within ${REFUND_DAYS} days`)}</A>
+            {" · "}
+            <A href="/gioi-thieu">{t(lang, "Giới thiệu bạn bè", "Refer a friend")}</A>
+          </p>
+        )}
         <LicenseBox />
         <RecoverBox />
         {SUPPORT_EMAIL ? (

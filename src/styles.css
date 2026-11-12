@@ -1690,3 +1690,9 @@ html[data-motion="less"] *, html[data-motion="less"] *::before, html[data-motion
 .miss-topic { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
 .miss-topic p { margin: 0; }
 .science-drill { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line, rgba(28, 25, 21, 0.12)); }
+/* Khi nhảy tới một mục bằng bàn phím hoặc bằng neo, mục đó không được nằm dưới thanh đầu hay thanh đáy. */
+html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var(--music-h) + 16px); }
+/* Mỗi bước giải là một đoạn văn: lời làm ở trên, lý do ở dưới. Không dàn hai cột,
+   vì cột hẹp bẻ công thức ra nhiều dòng trên điện thoại. */
+.steps li, .tool-card .steps li, .solution li, .method-steps li { display: list-item; }
+.step-why { display: block; margin-top: 4px; }

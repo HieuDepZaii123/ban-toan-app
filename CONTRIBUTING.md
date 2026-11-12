@@ -9,6 +9,10 @@ npm install
 pip install -r scripts/requirements.txt   # sympy, cho npm run test:content
 npm run dev                                # http://127.0.0.1:43123
 npm run check                              # lint + mọi bộ test + build, giống CI
+npm run test:math                          # quy ước trình bày toán bằng KaTeX (xem scripts/mathStyle.ts)
+npm run fix:math                           # tự sửa phần quy ước máy sửa được
+npm run build && npm run test:ui           # mở các trang bằng Playwright: công thức hiện thô, tràn ngang, nút bị che
+npm run test:ui:full                       # như trên, đủ mọi bài lớp 1–12
 ```
 
 Cần Node 22.13 trở lên. `npm run check` phải sạch trước khi mở pull request.
