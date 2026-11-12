@@ -4,6 +4,7 @@ import { isSharedCorrect, sharedDrill } from "../src/content/sharedDrill.ts";
 import { withPick, withoutMiss, type MissRow } from "../src/lib/missBook.ts";
 import { sciences } from "../src/science/catalog.ts";
 import { scienceLessons } from "../src/science/lessons.ts";
+import { scienceMore } from "../src/science/more.ts";
 import { foot, midpoint } from "../src/workshop/plane.ts";
 
 assert.equal(sharedDrill.length, 36);
@@ -39,6 +40,21 @@ for (const area of sciences) {
     assert.ok(layer.bits.length >= 1, area.id);
     assert.ok(layer.drill.steps.length >= 1, area.id);
     assert.ok(layer.drill.answer.length > 0, area.id);
+  }
+}
+for (const area of sciences) {
+  for (const key of ["basic", "exam", "adv"] as const) {
+    const more = scienceMore[area.id][key];
+    assert.ok(more.bits.length >= 3, `${area.id}/${key} cần thêm ít nhất ba ý`);
+    assert.ok(more.drills.length >= 2, `${area.id}/${key} cần thêm ít nhất hai bài luyện`);
+    for (const drill of more.drills) {
+      assert.ok(drill.steps.length >= 2 && drill.answer.length > 0, `${area.id}/${key}: ${drill.q}`);
+      assert.equal(drill.calc === undefined, drill.num === undefined, `${area.id}/${key}: num và calc phải đi cùng nhau`);
+      if (drill.calc && drill.num !== undefined) {
+        assert.ok(Math.abs(drill.calc() - drill.num) < 1e-9, `${area.id}/${key} tính lại ra ${drill.calc()}, khác ${drill.num}: ${drill.q}`);
+        assert.ok(drill.answer.includes(String(drill.num).replace(".", ",")), `${area.id}/${key} đáp số không chứa ${drill.num}: ${drill.q}`);
+      }
+    }
   }
 }
 assert.equal(scienceLessons.python.basic.drill.answer, "55");

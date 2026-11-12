@@ -2,7 +2,7 @@ export const sciences = [
   {
     id: "python",
     title: "Lập trình toán",
-    blurb: "Vòng lặp tính tổng 1 + … + n, rồi vẽ đồ thị.",
+    blurb: "Vòng lặp tính tổng, thuật toán Euclid, chia đôi tìm nghiệm.",
   },
   {
     id: "du-lieu",

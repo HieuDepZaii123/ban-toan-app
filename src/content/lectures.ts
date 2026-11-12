@@ -81,7 +81,7 @@ export const lectures: Record<CardId, [LectureVideo, LectureVideo]> = {
 export const scienceLectures: Record<ScienceId, [LectureVideo, LectureVideo]> = {
   python: [
     { slot: "python-basic", youtubeId: SAMPLE_YOUTUBE_ID, title: "Biến, vòng lặp và một hàm tính toán", level: "basic" },
-    { slot: "python-exam", youtubeId: "", title: "Vẽ đồ thị từ dãy số tính được", level: "exam" },
+    { slot: "python-exam", youtubeId: "", title: "Thuật toán Euclid và kiểm tra số nguyên tố", level: "exam" },
   ],
   "du-lieu": [
     { slot: "du-lieu-basic", youtubeId: "", title: "Trung bình và trung vị trên một dãy điểm", level: "basic" },

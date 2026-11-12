@@ -25,9 +25,12 @@ function numberOf(text: string): number | null {
   return null;
 }
 
-function assumed(chapterTitle: string, lesson: GradeLesson): string | undefined {
-  const blob = `${chapterTitle} ${lesson.title} ${lesson.summary}`.toLowerCase();
-  if (/thống kê|xác suất|tần số|biểu đồ|trung bình|mẫu/.test(blob)) return "Số liệu giả định.";
+/** Chỉ bài thống kê và xác suất mới dùng số liệu đặt ra; xét theo chính bài, không theo tên chương. */
+const DATA_LESSON = /thống kê|xác suất|tần số|biểu đồ|số trung bình|trung vị|phương sai|mẫu ghép|bảng số liệu|dữ liệu|biến cố|khả năng/;
+
+function assumed(lesson: GradeLesson): string | undefined {
+  const blob = `${lesson.title} ${lesson.summary}`.toLowerCase();
+  if (DATA_LESSON.test(blob) || /trung bình cộng/i.test(lesson.title)) return "Số liệu giả định.";
   return lesson.dataNote;
 }
 
@@ -83,7 +86,7 @@ export function deepen(book: GradeBook): GradeBook {
           ...lesson,
           whyTrue: lesson.whyTrue ?? written?.why,
           pitfalls: lesson.pitfalls ?? written?.pit,
-          dataNote: assumed(chapter.title, lesson),
+          dataNote: assumed(lesson),
           widget: lesson.widget ?? WIDGET[lesson.id],
           drills,
         };

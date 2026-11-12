@@ -6,7 +6,7 @@ const R = String.raw;
 export const lop07: GradeBook = {
   grade: 7,
   band: "thcs",
-  title: "Số hữu tỉ, tỉ lệ thuận, đa thức một biến và tam giác bằng nhau.",
+  title: "Số hữu tỉ, tỉ lệ thuận, đa thức một biến, đường thẳng song song, tam giác bằng nhau và lăng trụ đứng.",
   chapters: [
     chuong("huu-ti", "Số hữu tỉ và số thực", [
       bai(
@@ -252,6 +252,104 @@ export const lop07: GradeBook = {
           luyen(R`Túi $3$ bi đỏ và $2$ bi xanh. Xác suất rút được bi xanh bằng bao nhiêu?`, R`Xác suất bằng $\frac{2}{5}$.`, [{ expr: "Rational(2,5)", expect: "2/5" }], "Hai bi xanh trên năm bi. Đây là biến cố còn lại so với biến cố rút bi đỏ."),
           luyen(R`Xác suất bi đỏ $\frac{3}{5}$ và xác suất bi xanh $\frac{2}{5}$. Tổng hai xác suất bằng bao nhiêu?`, R`Tổng bằng $1$.`, [{ expr: "Rational(3,5)+Rational(2,5)", expect: "1" }], "Hai biến cố này không xảy ra cùng lúc và phủ hết các bi trong túi."),
         ],
+      ),
+    ]),
+    chuong("goc-song-song", "Góc và đường thẳng song song", [
+      bai(
+        "doi-dinh",
+        "Góc kề bù và góc đối đỉnh",
+        R`Hai góc kề bù có chung một cạnh, hai cạnh còn lại là hai tia đối nhau, và tổng số đo bằng $180^\circ$. Hai góc đối đỉnh có mỗi cạnh của góc này là tia đối của một cạnh góc kia, và chúng bằng nhau.`,
+        [vd(
+          R`Hai đường thẳng cắt nhau tạo một góc $50^\circ$. Tính ba góc còn lại.`,
+          [
+            buoc(R`Góc đối đỉnh với góc đã cho cũng bằng $50^\circ$.`, R`Hai góc đối đỉnh thì bằng nhau.`),
+            buoc(R`Mỗi góc kề bù với góc $50^\circ$ bằng $180^\circ-50^\circ=130^\circ$.`, R`Hai góc kề bù có tổng số đo bằng $180^\circ$.`),
+          ],
+          R`Ba góc còn lại bằng $50^\circ$, $130^\circ$ và $130^\circ$.`,
+          [{ expr: "180-50", expect: "130" }],
+        )],
+        [
+          luyen(R`Góc kề bù với góc $70^\circ$ bằng bao nhiêu độ?`, R`Góc đó bằng $110^\circ$.`, [{ expr: "180-70", expect: "110" }], R`Hai góc kề bù có tổng $180^\circ$, nên góc cần tìm là $180^\circ-70^\circ$.`),
+          luyen(R`Hai góc đối đỉnh có tổng $80^\circ$. Mỗi góc bằng bao nhiêu độ?`, R`Mỗi góc bằng $40^\circ$.`, [{ expr: "80/2", expect: "40" }], R`Hai góc đối đỉnh bằng nhau, nên mỗi góc bằng nửa tổng.`),
+          luyen(R`Tia phân giác chia góc $120^\circ$ thành hai góc. Mỗi góc bằng bao nhiêu độ?`, R`Mỗi góc bằng $60^\circ$.`, [{ expr: "120/2", expect: "60" }], R`Tia phân giác chia góc thành hai góc bằng nhau, mỗi góc bằng một nửa.`),
+        ],
+        {
+          figure: "angle",
+          whyTrue: R`Hai góc đối đỉnh cùng kề bù với một góc thứ ba. Cả hai đều bằng $180^\circ$ trừ đi góc đó, nên chúng bằng nhau.`,
+          pitfalls: R`Gọi hai góc bằng nhau có chung đỉnh là đối đỉnh. Các cạnh phải làm thành hai cặp tia đối nhau thì mới là góc đối đỉnh.`,
+        },
+      ),
+      bai(
+        "song-song-7",
+        "Hai đường thẳng song song",
+        R`Nếu một đường thẳng cắt hai đường thẳng và tạo ra một cặp góc so le trong bằng nhau, hoặc một cặp góc đồng vị bằng nhau, thì hai đường thẳng đó song song. Ngược lại, hai đường thẳng song song bị cắt bởi đường thứ ba thì các góc so le trong bằng nhau và các góc đồng vị bằng nhau.`,
+        [vd(
+          R`Cho $a$ song song với $b$. Đường thẳng $c$ cắt $a$ tạo một góc $65^\circ$. Tính góc so le trong và góc trong cùng phía với góc đó tại $b$.`,
+          [
+            buoc(R`Góc so le trong bằng $65^\circ$.`, R`Hai đường thẳng song song thì hai góc so le trong bằng nhau.`),
+            buoc(R`Góc trong cùng phía bằng $180^\circ-65^\circ=115^\circ$.`, R`Góc trong cùng phía kề bù với góc so le trong vừa tìm.`),
+          ],
+          R`Góc so le trong bằng $65^\circ$, góc trong cùng phía bằng $115^\circ$.`,
+          [{ expr: "180-65", expect: "115" }],
+        )],
+        [
+          luyen(R`Hai đường thẳng song song bị cắt bởi một đường thẳng. Một góc bằng $48^\circ$. Góc trong cùng phía với nó bằng bao nhiêu độ?`, R`Góc đó bằng $132^\circ$.`, [{ expr: "180-48", expect: "132" }], R`Hai góc trong cùng phía của hai đường thẳng song song có tổng $180^\circ$.`),
+          luyen(R`Một đường thẳng cắt hai đường thẳng, tạo hai góc so le trong cùng bằng $70^\circ$. Hai đường thẳng đó có song song không?`, R`Có, hai đường thẳng song song.`, [{ expr: "70-70", expect: "0" }], R`Một cặp góc so le trong bằng nhau là dấu hiệu nhận biết hai đường thẳng song song.`),
+          luyen(R`Cho $a$ song song với $b$ và $c$ vuông góc với $a$. Góc giữa $c$ và $b$ bằng bao nhiêu độ?`, R`Góc đó bằng $90^\circ$.`, [{ expr: "180-90", expect: "90" }], R`Góc đồng vị với góc vuông tại $a$ cũng là góc vuông, nên $c$ vuông góc với $b$.`),
+        ],
+        {
+          whyTrue: R`Qua một điểm nằm ngoài một đường thẳng chỉ có đúng một đường thẳng song song với đường thẳng đó. Vì chỉ có một đường như vậy, góc mà nó tạo với cát tuyến bị cố định và bằng đúng góc so le trong.`,
+          pitfalls: R`Dùng tính chất góc so le trong bằng nhau khi chưa biết hai đường thẳng song song. Tính chất ấy chỉ đúng sau khi đã có song song.`,
+        },
+      ),
+    ]),
+    chuong("hinh-khoi-7", "Hình hộp chữ nhật và lăng trụ đứng", [
+      bai(
+        "hop-7",
+        "Hình hộp chữ nhật và hình lập phương",
+        R`Hình hộp chữ nhật có $6$ mặt là hình chữ nhật, $12$ cạnh và $8$ đỉnh. Diện tích xung quanh bằng chu vi đáy nhân chiều cao. Thể tích bằng diện tích đáy nhân chiều cao.`,
+        [vd(
+          R`Hình hộp chữ nhật có đáy dài $5$, rộng $3$ và chiều cao $4$. Tính diện tích xung quanh và thể tích.`,
+          [
+            buoc(R`Chu vi đáy là $2\cdot(5+3)=16$, nên diện tích xung quanh là $16\cdot 4=64$.`, R`Trải bốn mặt bên ra thành một hình chữ nhật dài bằng chu vi đáy và rộng bằng chiều cao.`),
+            buoc(R`Thể tích là $5\cdot 3\cdot 4=60$.`, R`Diện tích đáy $15$ nhân với chiều cao $4$.`),
+          ],
+          R`Diện tích xung quanh bằng $64$ và thể tích bằng $60$.`,
+          [{ expr: "2*(5+3)*4", expect: "64" }, { expr: "5*3*4", expect: "60" }],
+        )],
+        [
+          luyen(R`Hình lập phương cạnh $3$ có thể tích bằng bao nhiêu?`, R`Thể tích bằng $27$.`, [{ expr: "3**3", expect: "27" }], R`Thể tích hình lập phương bằng cạnh nhân cạnh nhân cạnh.`),
+          luyen(R`Hình lập phương cạnh $3$ có diện tích xung quanh bằng bao nhiêu?`, R`Diện tích xung quanh bằng $36$.`, [{ expr: "4*3*3", expect: "36" }], R`Bốn mặt bên là bốn hình vuông cạnh $3$, mỗi mặt có diện tích $9$.`),
+          luyen(R`Bể nước hình hộp chữ nhật dài $2$ mét, rộng $1$ mét, cao $1{,}5$ mét. Bể chứa được bao nhiêu mét khối nước?`, R`Bể chứa được $3$ mét khối.`, [{ expr: "2*1*Rational(3,2)", expect: "3" }], R`Thể tích bằng $2\cdot 1\cdot 1{,}5=3$ mét khối.`),
+        ],
+        {
+          figure: "rect",
+          whyTrue: R`Cắt dọc theo một cạnh bên rồi trải phẳng, bốn mặt bên ghép thành một hình chữ nhật. Chiều dài của nó là chu vi đáy và chiều rộng là chiều cao của hình hộp.`,
+          pitfalls: R`Tính diện tích xung quanh mà cộng cả hai đáy. Diện tích xung quanh chỉ gồm các mặt bên, cộng thêm hai đáy mới thành diện tích toàn phần.`,
+        },
+      ),
+      bai(
+        "lang-tru-7",
+        "Hình lăng trụ đứng",
+        R`Hình lăng trụ đứng tam giác có hai đáy là hai tam giác bằng nhau và ba mặt bên là hình chữ nhật. Diện tích xung quanh bằng chu vi đáy nhân chiều cao. Thể tích bằng diện tích đáy nhân chiều cao.`,
+        [vd(
+          R`Lăng trụ đứng có đáy là tam giác vuông với hai cạnh góc vuông $3$ và $4$, cạnh huyền $5$, chiều cao lăng trụ $10$. Tính diện tích xung quanh và thể tích.`,
+          [
+            buoc(R`Chu vi đáy là $3+4+5=12$, nên diện tích xung quanh là $12\cdot 10=120$.`, R`Ba mặt bên trải ra thành một hình chữ nhật dài bằng chu vi đáy.`),
+            buoc(R`Diện tích đáy là $\frac{1}{2}\cdot 3\cdot 4=6$, nên thể tích là $6\cdot 10=60$.`, R`Đáy là tam giác vuông nên diện tích bằng nửa tích hai cạnh góc vuông.`),
+          ],
+          R`Diện tích xung quanh bằng $120$ và thể tích bằng $60$.`,
+          [{ expr: "(3+4+5)*10", expect: "120" }, { expr: "Rational(1,2)*3*4*10", expect: "60" }],
+        )],
+        [
+          luyen(R`Lăng trụ đứng có diện tích đáy $12$ và chiều cao $5$. Thể tích bằng bao nhiêu?`, R`Thể tích bằng $60$.`, [{ expr: "12*5", expect: "60" }], R`Thể tích lăng trụ đứng bằng diện tích đáy nhân chiều cao.`),
+          luyen(R`Lăng trụ đứng tam giác có đáy là tam giác đều cạnh $4$ và chiều cao $6$. Diện tích xung quanh bằng bao nhiêu?`, R`Diện tích xung quanh bằng $72$.`, [{ expr: "3*4*6", expect: "72" }], R`Chu vi đáy là $12$, nhân với chiều cao $6$ được $72$.`),
+          luyen(R`Lăng trụ đứng có đáy là hình thang với hai đáy $3$ và $5$, chiều cao hình thang $2$, chiều cao lăng trụ $7$. Thể tích bằng bao nhiêu?`, R`Thể tích bằng $56$.`, [{ expr: "Rational(3+5,2)*2*7", expect: "56" }], R`Diện tích đáy hình thang là $\frac{(3+5)\cdot 2}{2}=8$, nhân với $7$ được $56$.`),
+        ],
+        {
+          whyTrue: R`Lăng trụ đứng là một đáy được nâng thẳng lên theo chiều cao. Mọi lát cắt song song với đáy đều bằng đáy, nên thể tích là diện tích đáy nhân chiều cao.`,
+          pitfalls: R`Nhầm chiều cao của tam giác đáy với chiều cao của lăng trụ. Chiều cao lăng trụ là độ dài cạnh bên, vuông góc với hai đáy.`,
+        },
       ),
     ]),
   ],
