@@ -57,3 +57,25 @@ export function writeAns(value: number | null, store: CalcStore): void {
     else store.setItem(CALC_ANS_KEY, String(value));
   } catch { /* máy đầy */ }
 }
+
+export const CALC_VARS_KEY = "ban-toan-calc-vars";
+export const CALC_TAB_KEY = "ban-toan-calc-tab";
+
+/** Các biến A, B, C, D, M, X, Y, Z người dùng đã gán. */
+export function readVars(store: CalcStore): Record<string, number> {
+  try {
+    const parsed: unknown = JSON.parse(store.getItem(CALC_VARS_KEY) || "{}");
+    if (!parsed || typeof parsed !== "object") return {};
+    const out: Record<string, number> = {};
+    for (const [name, value] of Object.entries(parsed)) {
+      if (/^[abcdmxyz]$/.test(name) && typeof value === "number" && Number.isFinite(value)) out[name] = value;
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
+export function writeVars(vars: Record<string, number>, store: CalcStore): void {
+  try { store.setItem(CALC_VARS_KEY, JSON.stringify(vars)); } catch { /* máy đầy */ }
+}

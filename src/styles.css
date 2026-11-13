@@ -1133,7 +1133,7 @@ html[data-lamp="on"] body::before {
 /* .tool-card li is a flex row for tool lists; a document list item is running text with formulas. */
 .doc-sheet li { display: list-item; }
 .doc-tools .text-btn, .doc-export summary { min-height: 40px; }
-.calc { display: grid; gap: 10px; width: min(100%, 420px); max-width: 100%; }
+.calc { display: grid; gap: 10px; width: min(100%, 520px); max-width: 100%; }
 .calc-screen { display: grid; gap: 4px; padding: 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--sheet); }
 .calc-screen input { text-align: right; font-size: 1.25rem; }
 .calc-result { margin: 0; min-height: 1.6em; text-align: right; font-size: 1.5rem; font-weight: 650; padding-right: 36px; }
@@ -1696,3 +1696,31 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
    vì cột hẹp bẻ công thức ra nhiều dòng trên điện thoại. */
 .steps li, .tool-card .steps li, .solution li, .method-steps li { display: list-item; }
 .step-why { display: block; margin-top: 4px; }
+/* Máy tính khoa học: thanh chế độ, các bảng công cụ, bàn phím hàm. */
+.calc-tabs { margin-bottom: 8px; }
+.calc-mode { max-width: 520px; margin-bottom: 10px; }
+.calc-result .mathline { font-size: 1.35rem; }
+.calc-exact { margin: 0; text-align: right; color: var(--muted); padding-right: 36px; }
+.calc-fn-group { display: grid; gap: 6px; }
+.calc-fn-group > .lecture-note { margin: 0; }
+.calc-vars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.calc-var { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px; }
+.calc-var button { min-height: 44px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.calc-help ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+.calc-help li { display: list-item; }
+.calc-panel { width: min(100%, 640px); gap: 12px; }
+.calc-panel h3 { margin: 6px 0 0; font-size: 1rem; }
+.calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); gap: 8px; }
+.calc-field { display: grid; gap: 4px; min-width: 0; }
+.calc-field > span { color: var(--muted); font-size: 0.9rem; }
+.calc-field input, .calc-field textarea { width: 100%; min-width: 0; min-height: 44px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--sheet); color: var(--ink); font: inherit; }
+.calc-field textarea { resize: vertical; }
+.calc-out { padding: 10px 12px; border-radius: 12px; background: var(--accent-soft); display: grid; gap: 6px; overflow-x: auto; }
+.calc-out p { margin: 0; }
+.calc-table-wrap { overflow-x: auto; max-height: 360px; overflow-y: auto; border: 1px solid var(--line); border-radius: 12px; }
+.calc-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.calc-table th, .calc-table td { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; }
+.calc-table thead th { position: sticky; top: 0; background: var(--sheet); color: var(--muted); }
+.calc-plot { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--plot-bg, var(--sheet)); }
+.calc-axis { stroke: var(--plot-axis, var(--ink)); stroke-width: 1; opacity: 0.55; }
+.calc-curve { fill: none; stroke: var(--plot-curve, var(--accent)); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
