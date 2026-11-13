@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { QUESTION_TOTAL } from "../content/cards.ts";
+import { A } from "../lib/route.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
@@ -19,6 +20,14 @@ export function Welcome() {
           "Kéo một tham số, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
           "Drag one parameter, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
         )}
+      </p>
+      <p className="lead home-premium">
+        {t(
+          lang,
+          "Bài học và luyện tập miễn phí. Đề thi thử đầu tiên miễn phí. Premium dành cho đề không giới hạn, ôn lỗi sai theo lịch và trợ lý sâu hơn.",
+          "Lessons and practice stay free. The first mock exam is free. Premium is for unlimited papers, scheduled mistake review and a deeper tutor.",
+        )}{" "}
+        <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
       </p>
     </section>
   );

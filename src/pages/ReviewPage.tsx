@@ -86,7 +86,7 @@ export function ReviewPage() {
           </ul>
 
           {!isPremium ? (
-            <p className="pay-card">
+            <p className="pay-card" id="review-upgrade">
               <b>{t(lang, `${plan.total} câu sai đang chờ ôn.`, `${plan.total} missed questions are waiting.`)}</b>
               <span>
                 {premium.kind === "checking"

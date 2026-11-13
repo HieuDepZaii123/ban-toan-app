@@ -24,6 +24,8 @@ export type PayEnv = {
   /** Kho dựng sẵn (test). Bỏ trống thì handler tự chọn theo databaseUrl / dbPath. */
   store?: PayStore;
   sampleBank: boolean;
+  /** PREMIUM_SAMPLE=1: bảng giá đang là bản mẫu, được phép ghi «giá mẫu». */
+  samplePrices: boolean;
   lockContent: boolean;
   cryptoVndPerUsd: number;
   cryptoRateUrl: string;
@@ -111,6 +113,7 @@ export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => numbe
     dbPath: source.PREMIUM_DB_PATH?.trim() || "data/premium.sqlite",
     databaseUrl: source.DATABASE_URL?.trim() || source.POSTGRES_URL?.trim() || "",
     sampleBank: bankAccountNo === SAMPLE_ACCOUNT || bankAccountName === "NGUOI DUNG MAU",
+    samplePrices: source.PREMIUM_SAMPLE === "1",
     lockContent: source.PREMIUM_LOCK === "1" || source.VITE_PREMIUM_LOCK === "1",
     cryptoVndPerUsd: bounded(source.CRYPTO_VND_PER_USD, 25_000, 1000, 1_000_000),
     cryptoRateUrl: source.CRYPTO_RATE_URL === undefined

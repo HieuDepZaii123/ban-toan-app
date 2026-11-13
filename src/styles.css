@@ -755,6 +755,16 @@ html[data-lamp="on"] body::before {
 }
 .pay-card.is-on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .pay-card small, .pay-note { color: var(--ink-soft); }
+.pay-compare { max-width: 100%; }
+.pay-compare table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.pay-compare th, .pay-compare td { text-align: left; vertical-align: top; padding: 8px 6px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.pay-compare thead th { font-size: 0.82rem; color: var(--ink-soft); }
+.home-premium { max-width: 42rem; }
+.pay-compare { max-width: 100%; }
+.pay-compare table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.pay-compare th, .pay-compare td { text-align: left; vertical-align: top; padding: 8px 6px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.pay-compare thead th { font-size: 0.82rem; color: var(--ink-soft); }
+.home-premium { max-width: 42rem; }
 .pay-price { font-variant-numeric: tabular-nums; font-weight: 600; }
 .pay-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .pay-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 0.92rem; line-height: 1.5; margin: 8px 0; }
@@ -1273,7 +1283,7 @@ html[data-lamp="on"] body::before {
 .bar > .area-nav { grid-area: groups; }
 .bar > .prefs { grid-area: tools; }
 .bar > .sub-nav { grid-area: sub; }
-.area-nav { display: flex; gap: 4px; min-width: 0; }
+.area-nav { display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; max-width: 100%; }
 .area-nav a {
   min-height: 40px;
   display: inline-flex;
