@@ -34,7 +34,7 @@ export function MissPage() {
       {total === 0 ? (
         <div className="miss-empty">
           <p>{t(lang, "Chưa có câu sai nào. Làm vài câu rồi quay lại đây.", "No misses yet. Answer a few questions, then come back here.")}</p>
-          <A className="practice-link" href="/luyen">{t(lang, "Mở Đề luyện", "Open the mixed drill")}</A>
+          <A className="practice-link" href="/luyen">{t(lang, "Mở Đề tổng hợp", "Open the mixed drill")}</A>
         </div>
       ) : null}
       {rows.length > 0 ? (

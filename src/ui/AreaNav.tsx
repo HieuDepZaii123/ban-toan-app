@@ -2,7 +2,8 @@ import type { ReactNode } from "react";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { useRoute } from "../lib/useRoute.ts";
-import { NAV_GROUPS, locate } from "./navLinks.ts";
+import { NAV_GROUPS, locate, practiceHome } from "./navLinks.ts";
+import { parseGrade, usePref } from "./prefs.ts";
 import { useLang } from "./useLang.ts";
 
 /** Tab nhóm trên thanh đầu trang và hàng trang con của nhóm đang mở (hoặc hàng `sub` do trang truyền vào). */
@@ -11,11 +12,12 @@ export function AreaNav({ sub }: { sub?: ReactNode }) {
   const lang = useLang();
   const here = locate(path);
   const top = NAV_GROUPS.filter((group) => group.top);
+  const grade = parseGrade(usePref("bt-grade"));
   return (
     <>
       <nav className="area-nav" aria-label={t(lang, "Khu vực", "Sections")}>
         {top.map((group) => (
-          <A key={group.id} href={group.pages[0]?.href ?? "/"} aria-current={here?.group.id === group.id ? "true" : undefined}>
+          <A key={group.id} href={group.id === "practice" ? practiceHome(grade) : group.pages[0]?.href ?? "/"} aria-current={here?.group.id === group.id ? "true" : undefined}>
             {t(lang, group.label, group.en)}
           </A>
         ))}

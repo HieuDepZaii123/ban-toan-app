@@ -29,10 +29,10 @@ export const NAV_GROUPS: NavGroup[] = [
     en: "Learn",
     top: true,
     pages: [
-      { href: "/", id: "home", label: "Chuyên đề", en: "Topics", also: ["/t/"] },
-      { href: "/kien-thuc", id: "grades", label: "Lớp 1–12", en: "Grades 1–12", nested: true },
-      { href: "/so-cong-thuc", id: "formula", label: "Công thức", en: "Formulas" },
+      { href: "/", id: "home", label: "Trang chủ", en: "Home", also: ["/t/"] },
+      { href: "/kien-thuc", id: "grades", label: "Bài học lớp 1–12", en: "Lessons, grades 1–12", nested: true },
       { href: "/phuong-phap", id: "methods", label: "Phương pháp giải", en: "Methods", nested: true },
+      { href: "/so-cong-thuc", id: "formula", label: "Sổ công thức", en: "Formulas" },
       { href: "/tai-lieu", id: "packs", label: "Tài liệu ôn tập", en: "Study notes", nested: true },
       { href: "/khoa-hoc", id: "science", label: "Khoa học", en: "Science", nested: true },
       { href: "/nghien-cuu", id: "research", label: "Nghiên cứu", en: "Research" },
@@ -44,13 +44,13 @@ export const NAV_GROUPS: NavGroup[] = [
     en: "Practice",
     top: true,
     pages: [
-      { href: "/luyen", id: "drill", label: "Đề luyện", en: "Mixed drill" },
-      { href: "/luyen-lop", id: "lop", label: "Lớp 1–9", en: "Grades 1–9", nested: true },
-      { href: "/luyen-thpt", id: "thpt", label: "THPT 10–12", en: "Grades 10–12" },
+      { href: "/luyen-lop", id: "lop", label: "Luyện lớp 1–9", en: "Practice, grades 1–9", nested: true },
+      { href: "/luyen-thpt", id: "thpt", label: "Luyện lớp 10–12", en: "Practice, grades 10–12" },
+      { href: "/luyen", id: "drill", label: "Đề tổng hợp", en: "Mixed drill" },
       { href: "/thi-thu", id: "exam2025", label: "Thi thử THPT", en: "THPT mock exam" },
-      { href: "/on-loi-sai", id: "review", label: "Ôn lỗi sai", en: "Mistake review" },
-      { href: "/so-loi", id: "miss", label: "Sổ lỗi", en: "Miss book" },
-      { href: "/danh-gia", id: "assess", label: "Đánh giá", en: "Assess" },
+      { href: "/danh-gia", id: "assess", label: "Đánh giá năng lực", en: "Assessment" },
+      { href: "/so-loi", id: "miss", label: "Sổ câu sai", en: "Missed questions" },
+      { href: "/on-loi-sai", id: "review", label: "Lịch ôn câu sai", en: "Review plan" },
     ],
   },
   {
@@ -100,4 +100,14 @@ export function locate(path: string): { group: NavGroup; page: NavPage } | null 
 /** Mã trang đang mở ("" nếu không có). */
 export function menuArea(path: string): string {
   return locate(path)?.page.id ?? "";
+}
+
+/**
+ * Nơi "Luyện tập" đưa tới, theo lớp người học đã chọn: lớp 1–9 vào bài luyện của lớp mình,
+ * lớp 10–12 và người lớn vào luyện THPT, chưa chọn lớp thì vào trang chọn lớp để luyện.
+ */
+export function practiceHome(grade: number | "adult" | null): string {
+  if (grade === null) return "/luyen-lop";
+  if (typeof grade === "number" && grade <= 9) return `/luyen-lop/${grade}`;
+  return "/luyen-thpt";
 }

@@ -2,7 +2,8 @@ import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { useRoute } from "../lib/useRoute.ts";
 import { openChat, openMenu } from "./events.ts";
-import { locate } from "./navLinks.ts";
+import { locate, practiceHome } from "./navLinks.ts";
+import { parseGrade, usePref } from "./prefs.ts";
 import { useLang } from "./useLang.ts";
 
 const ICON = {
@@ -28,13 +29,15 @@ export function Dock() {
   const lang = useLang();
   const { path } = useRoute();
   const group = locate(path)?.group.id;
+  const grade = parseGrade(usePref("bt-grade"));
+  const practice = practiceHome(grade);
   return (
     <nav className="dock" aria-label={t(lang, "Lối tắt", "Shortcuts")}>
       <A href="/" aria-current={group === "learn" ? "true" : undefined}>
         <Icon kind="learn" />
         <span>{t(lang, "Học", "Learn")}</span>
       </A>
-      <A href="/luyen" aria-current={group === "practice" ? "true" : undefined}>
+      <A href={practice} aria-current={group === "practice" ? "true" : undefined}>
         <Icon kind="practice" />
         <span>{t(lang, "Luyện tập", "Practice")}</span>
       </A>

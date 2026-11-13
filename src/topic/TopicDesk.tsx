@@ -128,7 +128,7 @@ export function TopicDesk({ id }: { id: string }) {
               <span>{streamName(topic.stream, lang)} · {t(lang, "Lớp", "Grade")} {topic.grade}</span>
             </div>
             <nav className="tabs" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>
-              {(["hoc", "lam", "so", "nc"] as const).map((item) => (
+              {(["hoc", "lam", "nc", "so"] as const).map((item) => (
                 <a
                   key={item}
                   aria-current={tab === item ? "page" : undefined}
@@ -143,9 +143,9 @@ export function TopicDesk({ id }: { id: string }) {
                   {item === "hoc"
                     ? t(lang, "Học", "Study")
                     : item === "lam"
-                      ? t(lang, "Làm", "Practice")
+                      ? t(lang, "Luyện tập", "Practice")
                       : item === "so"
-                        ? t(lang, "Sổ", "Notebook")
+                        ? t(lang, "Sổ tay", "Notebook")
                         : t(lang, "Nghiên cứu", "Research")}
                 </a>
               ))}
