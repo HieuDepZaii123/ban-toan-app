@@ -7,6 +7,8 @@ import { useRoute } from "../lib/useRoute.ts";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 import { activateLicense, LICENSE_KEY, usePremium } from "./license.ts";
+import { expiredOrderNote } from "./orderNote.ts";
+import { yearSavings } from "./savings.ts";
 import { REFUND_DAYS } from "./terms.ts";
 
 type PlanId = "month" | "year";
@@ -16,6 +18,7 @@ type Plans = {
   sample: boolean;
   lockContent: boolean;
   plans: { id: PlanId; amount: number; days: number }[];
+  bank?: { sample: boolean };
   crypto?: { chains: { id: string; sample: boolean }[] };
 };
 
@@ -178,12 +181,20 @@ export function Upgrade() {
       <main id="content" className="pay">
         <p className="kicker">Premium</p>
         <h1>{t(lang, "Nâng cấp Premium", "Upgrade to Premium")}</h1>
+        <ComparePlans />
         <PremiumBenefits />
         <p className="pay-note">
+          {month && year
+            ? t(
+              lang,
+              `${vnd(month.amount)} cho ${month.days} ngày, ${vnd(year.amount)} cho ${year.days} ngày. `,
+              `${vnd(month.amount)} for ${month.days} days, ${vnd(year.amount)} for ${year.days} days. `,
+            )
+            : null}
           {t(
             lang,
-            "49.000đ cho 30 ngày, 399.000đ cho 365 ngày. Không tự gia hạn. Trả bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Mọi bài học, luyện tập và trợ lý 8 câu mỗi ngày vẫn miễn phí.",
-            "49,000 VND for 30 days, 399,000 VND for 365 days. Never renews automatically. Pay with MoMo, VietQR, bank transfer or USDT/USDC. All lessons, practice and 8 tutor questions a day stay free.",
+            "Không tự gia hạn. Trả bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Mọi bài học, luyện tập và trợ lý 8 câu mỗi ngày vẫn miễn phí.",
+            "Never renews automatically. Pay with MoMo, VietQR, bank transfer or USDT/USDC. All lessons, practice and 8 tutor questions a day stay free.",
           )}
           {" "}
           <A href="/chinh-sach">{t(lang, `Hoàn tiền trong ${REFUND_DAYS} ngày`, `Refund within ${REFUND_DAYS} days`)}</A>
@@ -201,8 +212,8 @@ export function Upgrade() {
             }}
           >
             <div className="pay-grid two" role="radiogroup" aria-label={t(lang, "Gói", "Plan")}>
-              <PlanCard id="month" title={t(lang, "Một tháng", "One month")} days={month?.days ?? 30} amount={month?.amount ?? 49000} on={plan === "month"} onPick={() => setPlan("month")} />
-              <PlanCard id="year" title={t(lang, "Một năm", "One year")} days={year?.days ?? 365} amount={year?.amount ?? 399000} on={plan === "year"} onPick={() => setPlan("year")} />
+              <PlanCard id="month" title={t(lang, "Một tháng", "One month")} days={month?.days ?? 30} amount={month?.amount} sample={plans?.sample === true} on={plan === "month"} onPick={() => setPlan("month")} />
+              <PlanCard id="year" title={t(lang, "Một năm", "One year")} days={year?.days ?? 365} amount={year?.amount} sample={plans?.sample === true} savings={month && year ? yearSavings(month.amount, year.amount) : null} on={plan === "year"} onPick={() => setPlan("year")} />
             </div>
             <label className="pay-row">
               <span>{t(lang, "Email", "Email")}</span>
@@ -235,7 +246,9 @@ export function Upgrade() {
                 id="qr"
                 on={method === "qr"}
                 title={t(lang, "Quét QR", "Scan a QR")}
-                body={t(lang, "Mã QR MoMo ngay trên trang, kèm VietQR chuyển khoản vào tài khoản mẫu.", "A MoMo QR on this page, plus a VietQR for the sample bank account.")}
+                body={plans?.bank?.sample
+                  ? t(lang, "Mã QR MoMo ngay trên trang, kèm VietQR chuyển khoản vào tài khoản mẫu.", "A MoMo QR on this page, plus a VietQR for the sample bank account.")
+                  : t(lang, "Mã QR MoMo ngay trên trang, kèm VietQR chuyển khoản.", "A MoMo QR on this page, plus a VietQR transfer.")}
                 onPick={() => setMethod("qr")}
               />
               <MethodCard
@@ -283,7 +296,16 @@ export function Upgrade() {
   );
 }
 
-function PlanCard({ id, title, days, amount, on, onPick }: { id: PlanId; title: string; days: number; amount: number | undefined; on: boolean; onPick: () => void }) {
+function PlanCard({ id, title, days, amount, sample, savings, on, onPick }: {
+  id: PlanId;
+  title: string;
+  days: number;
+  amount: number | undefined;
+  sample: boolean;
+  savings?: { saved: number; percent: number } | null;
+  on: boolean;
+  onPick: () => void;
+}) {
   const lang = useLang();
   return (
     <label className={`pay-card${on ? " is-on" : ""}`}>
@@ -292,7 +314,8 @@ function PlanCard({ id, title, days, amount, on, onPick }: { id: PlanId; title: 
         <b>{title}</b>
       </span>
       <span className="pay-price">{amount === undefined ? "…" : vnd(amount)}</span>
-      <small>{t(lang, `${days} ngày · giá mẫu`, `${days} days · sample price`)}</small>
+      <small>{sample ? t(lang, `${days} ngày · giá mẫu`, `${days} days · sample price`) : t(lang, `${days} ngày`, `${days} days`)}</small>
+      {savings ? <small>{t(lang, `Tiết kiệm ${vnd(savings.saved)} so với 12 tháng lẻ (${savings.percent}%).`, `Save ${vnd(savings.saved)} against 12 separate months (${savings.percent}%).`)}</small> : null}
     </label>
   );
 }
@@ -362,7 +385,11 @@ function OrderPanel({
         <BankBlock order={order} bank={order.bank} copied={copied} onCopy={onCopy} />
       ) : null}
       {waiting ? <p className="pay-note">{t(lang, "Trang tự cập nhật khi đơn được xác nhận.", "This page updates itself when the order is confirmed.")}</p> : null}
-      <A href="/nang-cap">{t(lang, "Tạo đơn khác", "Create another order")}</A>
+      {order.status === "expired" ? (
+        <p className="pay-note">{expiredOrderNote(order.method).text}</p>
+      ) : (
+        <A href="/nang-cap">{t(lang, "Tạo đơn khác", "Create another order")}</A>
+      )}
     </section>
   );
 }
@@ -395,7 +422,9 @@ function QrBlock({ order }: { order: OrderView }) {
       {order.bank?.qrDataUrl ? (
         <p>
           <img className="pay-qr" src={order.bank.qrDataUrl} alt={t(lang, "Mã VietQR chuyển khoản", "VietQR transfer code")} />
-          <small>{t(lang, "VietQR mẫu, quét bằng app ngân hàng. Tiền vào tài khoản cấu hình trên server.", "Sample VietQR, scanned with a banking app. Money goes to the account configured on the server.")}</small>
+          <small>{order.bank.sample
+            ? t(lang, "VietQR mẫu, quét bằng app ngân hàng. Tiền vào tài khoản cấu hình trên server.", "Sample VietQR, scanned with a banking app. Money goes to the account configured on the server.")
+            : t(lang, "Quét bằng app ngân hàng. Tiền vào tài khoản đã cấu hình.", "Scan with a banking app. Money goes to the configured account.")}</small>
         </p>
       ) : null}
     </section>
@@ -440,6 +469,40 @@ function BankBlock({
   );
 }
 
+function ComparePlans() {
+  const lang = useLang();
+  const rows = [
+    [t(lang, "Bài học, luyện tập, máy tính", "Lessons, practice, calculator"), t(lang, "Mở", "Open"), t(lang, "Mở", "Open")],
+    [t(lang, "Trợ lý", "Tutor"), t(lang, "Gợi ý, 8 câu mỗi ngày", "Hints, 8 questions a day"), t(lang, "Lời giải đầy đủ, kiểm tra bài làm, ảnh đề, 40 câu mỗi ngày", "Full solutions, checking work, photos, 40 questions a day")],
+    [t(lang, "Thi thử THPT 2025", "2025 mock exam"), t(lang, "Đề đầu, đủ 90 phút. Bảng điểm từng phần, chủ đề mất điểm và lời giải xem được ngay", "The first paper, full 90 minutes. The score table, topics and solutions stay visible"), t(lang, "Làm thêm đề, không giới hạn. Bảng điểm mỗi đề vẫn xem như đề miễn phí", "Further papers, without a cap. Each paper's score table stays visible, as on the free paper")],
+    [t(lang, "Ôn lỗi sai", "Mistake review"), t(lang, "Câu sai được ghi lại. Lịch ôn thì khóa", "Missed questions are recorded. The review schedule is locked"), t(lang, "Ôn theo lịch 1, 3, 7 và 14 ngày", "Review on days 1, 3, 7 and 14")],
+    [t(lang, "Tài liệu ôn tập", "Study notes"), t(lang, "Phần «Ý chính»", "The “Main idea” section"), t(lang, "Đủ bộ, tải PDF và Word", "The full set, PDF and Word downloads")],
+  ] as const;
+  return (
+    <section className="pay-compare" aria-labelledby="compare-title">
+      <h2 id="compare-title">{t(lang, "Miễn phí và Premium", "Free and Premium")}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{t(lang, "Việc", "What")}</th>
+            <th>{t(lang, "Miễn phí", "Free")}</th>
+            <th>Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([what, free, paid]) => (
+            <tr key={what}>
+              <th scope="row">{what}</th>
+              <td>{free}</td>
+              <td>{paid}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+
 function PremiumBenefits() {
   const lang = useLang();
   return (
@@ -453,8 +516,8 @@ function PremiumBenefits() {
             ": the three parts of the real paper (12 multiple choice, 4 true/false, 6 short answer), 90 minutes, scored on the Ministry's scale, with every question reviewable with its solution. Each paper is drawn fresh from the bank, as many as you like.")}
         </li>
         <li>
-          <b>{t(lang, "Bảng điểm theo phần và chủ đề", "Scores by part and topic")}</b>
-          {t(lang, ": sau mỗi đề biết mình mất điểm ở phần nào, chủ đề nào, và ôn ngay câu sai.", ": after each paper, see which part and topic cost points, then redo the missed questions.")}
+          <b>{t(lang, "Bảng điểm của đề đã làm", "Scores for papers you sat")}</b>
+          {t(lang, ": đề miễn phí cũng xem điểm từng phần và chủ đề mất điểm. Premium là làm thêm đề, rồi ôn câu sai theo lịch.", ": the free paper also shows the score of each part and the topics that cost points. Premium is further papers, then reviewing missed questions on a schedule.")}
         </li>
         <li>
           <b>{t(lang, "Tài liệu ôn tập 14 chuyên đề", "Study notes for 14 topics")}</b>

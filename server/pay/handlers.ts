@@ -81,7 +81,7 @@ function publicOrder(env: PayEnv, order: OrderRow, extras: Json = {}): Json {
     paidAt: order.paidAt,
     licenseKey: paid ? order.licenseKey : null,
     premiumUntil: paid && order.paidAt ? order.paidAt + termMs(order.plan) : null,
-    samplePrices: true,
+    samplePrices: env.samplePrices,
     sampleBank: env.sampleBank,
     ...extras,
   };
@@ -107,7 +107,7 @@ export async function handlePremium(request: Request, env: PayEnv): Promise<Resp
 
 function plans(env: PayEnv): Response {
   return json(200, {
-    sample: true,
+    sample: env.samplePrices,
     currency: "VND",
     lockContent: env.lockContent,
     plans: [
