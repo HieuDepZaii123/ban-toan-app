@@ -15,7 +15,7 @@ export function MethodsPage({ path }: { path: string }) {
       <PageFrame
         kicker={t(lang, "Phương pháp giải", "Solving methods")}
         title={t(lang, "Không thấy cách này", "This method is missing")}
-        lead={t(lang, "Bốn cách đang có nằm ở trang chọn.", "The four methods are on the chooser.")}
+        lead={t(lang, "Các phương pháp đang có nằm ở trang chọn.", "The available methods are on the chooser.")}
       >
         <A href="/phuong-phap">{t(lang, "Về trang chọn cách", "Back to the chooser")}</A>
       </PageFrame>

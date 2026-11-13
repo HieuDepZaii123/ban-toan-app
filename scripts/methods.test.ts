@@ -12,9 +12,9 @@ const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêề�
 const IDS = new Set<string>(cards.map((card) => card.id));
 const methodIds = new Set(methodsData.methods.map((item) => item.id));
 
-assert.equal(methodsData.methods.length, 4);
-assert.equal(methodIds.size, 4);
-assert.ok(methodsData.guide.length >= 4);
+assert.ok(methodsData.methods.length >= 14);
+assert.equal(methodIds.size, methodsData.methods.length);
+assert.ok(methodsData.guide.length >= methodsData.methods.length);
 
 for (const row of methodsData.guide) {
   assert.ok(methodIds.has(row.methodId), row.methodId);

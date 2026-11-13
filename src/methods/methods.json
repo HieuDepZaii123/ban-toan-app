@@ -1,8 +1,8 @@
 {
   "title": "Phương pháp giải",
   "titleEn": "Solving methods",
-  "lead": "Bốn cách thường gặp ở THPT. Nhận dạng trước, rồi mới tính. Mỗi ví dụ có đủ bước và một phép kiểm.",
-  "leadEn": "Four high-school methods. Recognize the shape first, then compute. Each example has every step and a check.",
+  "lead": "14 phương pháp thường gặp từ lớp 9 đến lớp 12. Nhận dạng trước, rồi mới tính. Mỗi phương pháp nêu khi nào dùng, cách nghĩ, điều kiện cần giữ, hai ví dụ đủ bước, lỗi hay gặp và bài tự luyện.",
+  "leadEn": "14 methods used from grade 9 to grade 12. Recognise the shape first, then compute. Each method says when to use it, how to think, which conditions to keep, two fully worked examples, common mistakes and practice.",
   "guide": [
     {
       "when": "Có $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ hoặc $\\sqrt{x^2-a^2}$, và không thấy sẵn đạo hàm của phần trong căn.",
@@ -27,6 +27,66 @@
       "methodId": "tung-phan",
       "topicHref": "/t/derivative",
       "topicLabel": "Đạo hàm"
+    },
+    {
+      "when": "Bất phương trình đưa được về tích hoặc thương so với $0$, hoặc cần biết dấu của đạo hàm.",
+      "methodId": "xet-dau",
+      "topicHref": "/t/ineq",
+      "topicLabel": "Bất đẳng thức"
+    },
+    {
+      "when": "Có tham số $m$ bậc nhất, hỏi số nghiệm hoặc điều kiện đúng với mọi $x$.",
+      "methodId": "co-lap-tham-so",
+      "topicHref": "/t/survey",
+      "topicLabel": "Khảo sát hàm số"
+    },
+    {
+      "when": "Hai vế có cùng một khuôn $f(u)=f(v)$, trộn đa thức với mũ, logarit hoặc căn.",
+      "methodId": "ham-dac-trung",
+      "topicHref": "/t/derivative",
+      "topicLabel": "Đạo hàm"
+    },
+    {
+      "when": "Tìm giá trị lớn nhất, nhỏ nhất khi có tổng hoặc tích không đổi, như $x$ và $\\dfrac{1}{x}$.",
+      "methodId": "diem-roi",
+      "topicHref": "/t/ineq",
+      "topicLabel": "Bất đẳng thức"
+    },
+    {
+      "when": "Giới hạn dạng $\\dfrac{0}{0}$ có căn, hoặc phương trình có hiệu hai căn.",
+      "methodId": "lien-hop",
+      "topicHref": "/t/limit",
+      "topicLabel": "Giới hạn"
+    },
+    {
+      "when": "Biểu thức đối xứng của hai nghiệm, như $x_1^2+x_2^2$, hoặc hệ thức giữa hai nghiệm có tham số.",
+      "methodId": "vi-et",
+      "topicHref": "/t/quadratic",
+      "topicLabel": "Hàm số bậc hai"
+    },
+    {
+      "when": "Hình có sẵn góc vuông, cần tính góc, khoảng cách hoặc chứng minh vuông góc.",
+      "methodId": "toa-do-hoa",
+      "topicHref": "/t/vector",
+      "topicLabel": "Vectơ"
+    },
+    {
+      "when": "Đề đếm hoặc tính xác suất có cụm \"ít nhất một\".",
+      "methodId": "phan-bu",
+      "topicHref": "/t/combo",
+      "topicLabel": "Tổ hợp"
+    },
+    {
+      "when": "Cần chứng minh một công thức, một tính chia hết hay một bất đẳng thức với mọi số nguyên dương $n$.",
+      "methodId": "quy-nap",
+      "topicHref": "/t/sequence",
+      "topicLabel": "Dãy số"
+    },
+    {
+      "when": "Tam thức bậc hai: tìm giá trị nhỏ nhất, giải phương trình, hoặc chứng minh không âm.",
+      "methodId": "tao-binh-phuong",
+      "topicHref": "/t/quadratic",
+      "topicLabel": "Hàm số bậc hai"
     }
   ],
   "methods": [
@@ -108,15 +168,40 @@
         }
       ],
       "links": [
-        { "href": "/t/trig", "label": "Lượng giác" },
-        { "href": "/t/integral", "label": "Tích phân" },
-        { "href": "/phuong-phap/an-phu", "label": "Khác với đặt ẩn phụ" }
+        {
+          "href": "/t/trig",
+          "label": "Lượng giác"
+        },
+        {
+          "href": "/t/integral",
+          "label": "Tích phân"
+        },
+        {
+          "href": "/phuong-phap/an-phu",
+          "label": "Khác với đặt ẩn phụ"
+        }
       ],
       "verify": [
-        { "where": "lg-1", "lhs": "integrate(1/sqrt(4-x**2),(x,0,1))", "rhs": "pi/6" },
-        { "where": "lg-2", "lhs": "integrate(1/sqrt(x**2+4),(x,0,2))", "rhs": "log(1+sqrt(2))" },
-        { "where": "lg-p1", "lhs": "integrate(1/sqrt(16-x**2),(x,0,2))", "rhs": "pi/6" },
-        { "where": "lg-p2", "lhs": "integrate(1/sqrt(x**2+9),(x,0,3))", "rhs": "log(1+sqrt(2))" }
+        {
+          "where": "lg-1",
+          "lhs": "integrate(1/sqrt(4-x**2),(x,0,1))",
+          "rhs": "pi/6"
+        },
+        {
+          "where": "lg-2",
+          "lhs": "integrate(1/sqrt(x**2+4),(x,0,2))",
+          "rhs": "log(1+sqrt(2))"
+        },
+        {
+          "where": "lg-p1",
+          "lhs": "integrate(1/sqrt(16-x**2),(x,0,2))",
+          "rhs": "pi/6"
+        },
+        {
+          "where": "lg-p2",
+          "lhs": "integrate(1/sqrt(x**2+9),(x,0,3))",
+          "rhs": "log(1+sqrt(2))"
+        }
       ]
     },
     {
@@ -196,16 +281,45 @@
         }
       ],
       "links": [
-        { "href": "/t/exp", "label": "Mũ và logarit" },
-        { "href": "/t/integral", "label": "Tích phân" },
-        { "href": "/phuong-phap/luong-giac", "label": "Khi nào phải lượng giác hóa" }
+        {
+          "href": "/t/exp",
+          "label": "Mũ và logarit"
+        },
+        {
+          "href": "/t/integral",
+          "label": "Tích phân"
+        },
+        {
+          "href": "/phuong-phap/luong-giac",
+          "label": "Khi nào phải lượng giác hóa"
+        }
       ],
       "verify": [
-        { "where": "ap-1", "lhs": "diff((x**2+1)**(Rational(3,2))/3, x)", "rhs": "x*sqrt(x**2+1)" },
-        { "where": "ap-2-plus", "lhs": "(3+sqrt(5))/2 + 2/(3+sqrt(5))", "rhs": "3" },
-        { "where": "ap-2-minus", "lhs": "(3-sqrt(5))/2 + 2/(3-sqrt(5))", "rhs": "3" },
-        { "where": "ap-p1", "lhs": "integrate(1/(x+sqrt(x)),(x,1,4))", "rhs": "2*log(Rational(3,2))" },
-        { "where": "ap-p2", "lhs": "((x+1/x)**2 - 2).subs(x, (3+sqrt(5))/2)", "rhs": "7" }
+        {
+          "where": "ap-1",
+          "lhs": "diff((x**2+1)**(Rational(3,2))/3, x)",
+          "rhs": "x*sqrt(x**2+1)"
+        },
+        {
+          "where": "ap-2-plus",
+          "lhs": "(3+sqrt(5))/2 + 2/(3+sqrt(5))",
+          "rhs": "3"
+        },
+        {
+          "where": "ap-2-minus",
+          "lhs": "(3-sqrt(5))/2 + 2/(3-sqrt(5))",
+          "rhs": "3"
+        },
+        {
+          "where": "ap-p1",
+          "lhs": "integrate(1/(x+sqrt(x)),(x,1,4))",
+          "rhs": "2*log(Rational(3,2))"
+        },
+        {
+          "where": "ap-p2",
+          "lhs": "((x+1/x)**2 - 2).subs(x, (3+sqrt(5))/2)",
+          "rhs": "7"
+        }
       ]
     },
     {
@@ -285,16 +399,45 @@
         }
       ],
       "links": [
-        { "href": "/t/integral", "label": "Tích phân" },
-        { "href": "/t/derivative", "label": "Đạo hàm" },
-        { "href": "/phuong-phap/tung-phan", "label": "Khi tích không có sẵn đạo hàm" }
+        {
+          "href": "/t/integral",
+          "label": "Tích phân"
+        },
+        {
+          "href": "/t/derivative",
+          "label": "Đạo hàm"
+        },
+        {
+          "href": "/phuong-phap/tung-phan",
+          "label": "Khi tích không có sẵn đạo hàm"
+        }
       ],
       "verify": [
-        { "where": "db-1", "lhs": "integrate(2*x*exp(x**2),(x,0,1))", "rhs": "exp(1)-1" },
-        { "where": "db-1-diff", "lhs": "diff(exp(x**2), x)", "rhs": "2*x*exp(x**2)" },
-        { "where": "db-2", "lhs": "integrate(sin(x)*cos(x),(x,0,pi/2))", "rhs": "Rational(1,2)" },
-        { "where": "db-p1", "lhs": "integrate((2*x+1)**3,(x,0,2))", "rhs": "78" },
-        { "where": "db-p2", "lhs": "integrate(cos(x)*exp(sin(x)),(x,0,pi/2))", "rhs": "exp(1)-1" }
+        {
+          "where": "db-1",
+          "lhs": "integrate(2*x*exp(x**2),(x,0,1))",
+          "rhs": "exp(1)-1"
+        },
+        {
+          "where": "db-1-diff",
+          "lhs": "diff(exp(x**2), x)",
+          "rhs": "2*x*exp(x**2)"
+        },
+        {
+          "where": "db-2",
+          "lhs": "integrate(sin(x)*cos(x),(x,0,pi/2))",
+          "rhs": "Rational(1,2)"
+        },
+        {
+          "where": "db-p1",
+          "lhs": "integrate((2*x+1)**3,(x,0,2))",
+          "rhs": "78"
+        },
+        {
+          "where": "db-p2",
+          "lhs": "integrate(cos(x)*exp(sin(x)),(x,0,pi/2))",
+          "rhs": "exp(1)-1"
+        }
       ]
     },
     {
@@ -375,15 +518,985 @@
         }
       ],
       "links": [
-        { "href": "/t/integral", "label": "Tích phân" },
-        { "href": "/t/derivative", "label": "Đạo hàm" },
-        { "href": "/phuong-phap/doi-bien", "label": "Đổi biến khi có sẵn đạo hàm" }
+        {
+          "href": "/t/integral",
+          "label": "Tích phân"
+        },
+        {
+          "href": "/t/derivative",
+          "label": "Đạo hàm"
+        },
+        {
+          "href": "/phuong-phap/doi-bien",
+          "label": "Đổi biến khi có sẵn đạo hàm"
+        }
       ],
       "verify": [
-        { "where": "tp-1", "lhs": "integrate(x*exp(x),(x,0,1))", "rhs": "1" },
-        { "where": "tp-2", "lhs": "integrate(x*cos(x),(x,0,pi/2))", "rhs": "pi/2-1" },
-        { "where": "tp-p1", "lhs": "integrate(x*exp(2*x),(x,0,1))", "rhs": "(exp(2)+1)/4" },
-        { "where": "tp-p2", "lhs": "integrate(log(x+1),(x,0,1))", "rhs": "2*log(2)-1" }
+        {
+          "where": "tp-1",
+          "lhs": "integrate(x*exp(x),(x,0,1))",
+          "rhs": "1"
+        },
+        {
+          "where": "tp-2",
+          "lhs": "integrate(x*cos(x),(x,0,pi/2))",
+          "rhs": "pi/2-1"
+        },
+        {
+          "where": "tp-p1",
+          "lhs": "integrate(x*exp(2*x),(x,0,1))",
+          "rhs": "(exp(2)+1)/4"
+        },
+        {
+          "where": "tp-p2",
+          "lhs": "integrate(log(x+1),(x,0,1))",
+          "rhs": "2*log(2)-1"
+        }
+      ]
+    },
+    {
+      "id": "xet-dau",
+      "title": "Lập bảng xét dấu",
+      "titleEn": "Sign charts",
+      "blurb": "Đưa bất phương trình về một tích hoặc một thương so với 0, rồi đọc dấu trên từng khoảng.",
+      "spot": [
+        "Dùng khi bất phương trình đưa được về dạng tích hoặc thương của các nhân tử bậc nhất, bậc hai so với $0$.",
+        "Cũng dùng để xét dấu đạo hàm khi tìm khoảng đồng biến, nghịch biến."
+      ],
+      "thinking": [
+        "Chuyển hết về một vế để vế kia bằng $0$. Không nhân chéo khi chưa biết dấu của mẫu.",
+        "Phân tích thành nhân tử, tìm các điểm làm mỗi nhân tử bằng $0$, xếp chúng tăng dần trên trục số.",
+        "Trên mỗi khoảng, mỗi nhân tử giữ một dấu. Nhân các dấu lại, rồi chọn khoảng có dấu đúng chiều bất phương trình."
+      ],
+      "care": [
+        "Điểm làm mẫu bằng $0$ luôn bị loại, kể cả khi bất phương trình có dấu bằng.",
+        "Nhân tử có lũy thừa chẵn, như $(x-1)^2$, không làm đổi dấu khi đi qua nghiệm của nó.",
+        "Với dấu $\\ge$ hoặc $\\le$, nhận thêm các nghiệm của tử số."
+      ],
+      "formulas": [
+        "$\\dfrac{A(x)}{B(x)}\\ge 0\\iff A(x)\\cdot B(x)\\ge 0$ và $B(x)\\neq 0$.",
+        "Tam thức $ax^2+bx+c$ có hai nghiệm $x_1<x_2$: trái dấu với $a$ trong khoảng $(x_1;x_2)$, cùng dấu với $a$ ở ngoài."
+      ],
+      "examples": [
+        {
+          "id": "xd-1",
+          "title": "Thương của ba nhân tử",
+          "prompt": "Giải bất phương trình $\\dfrac{(x-1)(x+2)}{x-3}\\ge 0$.",
+          "steps": [
+            "Các điểm đặc biệt: $x=-2$, $x=1$ làm tử bằng $0$, và $x=3$ làm mẫu bằng $0$.",
+            "Trên $(-\\infty;-2)$: ba nhân tử đều âm, thương âm.",
+            "Trên $(-2;1)$: $x+2$ dương, hai nhân tử còn lại âm, thương dương.",
+            "Trên $(1;3)$: chỉ $x-3$ âm, thương âm. Trên $(3;+\\infty)$: cả ba dương, thương dương.",
+            "Dấu $\\ge$ nên nhận $x=-2$ và $x=1$, còn $x=3$ bị loại vì làm mẫu bằng $0$."
+          ],
+          "result": "$S=[-2;1]\\cup(3;+\\infty)$"
+        },
+        {
+          "id": "xd-2",
+          "title": "Tam thức bậc hai",
+          "prompt": "Giải bất phương trình $x^2-5x+6<0$.",
+          "steps": [
+            "Phân tích: $x^2-5x+6=(x-2)(x-3)$, hai nghiệm là $2$ và $3$.",
+            "Hệ số $a=1>0$ nên tam thức âm ở giữa hai nghiệm.",
+            "Dấu $<$ là dấu chặt nên không nhận hai đầu mút.",
+            "Thử lại tại $x=\\dfrac{5}{2}$: giá trị là $-\\dfrac{1}{4}<0$, đúng."
+          ],
+          "result": "$S=(2;3)$"
+        }
+      ],
+      "mistakes": [
+        "Nhân hai vế với mẫu khi chưa biết mẫu dương hay âm, làm mất chiều bất phương trình.",
+        "Nhận cả điểm làm mẫu bằng $0$ vì thấy bất phương trình có dấu bằng.",
+        "Cho rằng dấu luôn đan xen, kể cả khi đi qua nghiệm bội chẵn."
+      ],
+      "practice": [
+        {
+          "id": "xd-p1",
+          "prompt": "Giải $\\dfrac{x+1}{x-2}\\le 0$.",
+          "answer": "$S=[-1;2)$",
+          "steps": [
+            "Điểm đặc biệt: $x=-1$ và $x=2$.",
+            "Thương âm trên $(-1;2)$.",
+            "Nhận $x=-1$, loại $x=2$."
+          ]
+        },
+        {
+          "id": "xd-p2",
+          "prompt": "Giải $x(x-4)(x+3)>0$.",
+          "answer": "$S=(-3;0)\\cup(4;+\\infty)$",
+          "steps": [
+            "Ba điểm đặc biệt: $-3$, $0$, $4$.",
+            "Dấu trên bốn khoảng lần lượt là âm, dương, âm, dương.",
+            "Lấy hai khoảng dương, không nhận đầu mút."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/ineq",
+          "label": "Bất đẳng thức"
+        },
+        {
+          "href": "/t/quadratic",
+          "label": "Hàm số bậc hai"
+        }
+      ],
+      "verify": [
+        {
+          "where": "xd-1 tại 0",
+          "lhs": "Rational((0-1)*(0+2),(0-3))",
+          "rhs": "Rational(2,3)"
+        },
+        {
+          "where": "xd-2 tại 5/2",
+          "lhs": "Rational(5,2)**2-5*Rational(5,2)+6",
+          "rhs": "Rational(-1,4)"
+        }
+      ]
+    },
+    {
+      "id": "co-lap-tham-so",
+      "title": "Cô lập tham số",
+      "titleEn": "Isolating the parameter",
+      "blurb": "Đưa tham số về một vế, vế kia là một hàm số. Số nghiệm đọc từ bảng biến thiên.",
+      "spot": [
+        "Dùng khi tham số $m$ chỉ xuất hiện bậc nhất và tách được về riêng một vế.",
+        "Hợp với câu hỏi về số nghiệm, hoặc về điều kiện để bất phương trình đúng trên một khoảng."
+      ],
+      "thinking": [
+        "Viết phương trình thành $f(x)=m$. Số nghiệm bằng số giao điểm của đồ thị $y=f(x)$ với đường thẳng nằm ngang $y=m$.",
+        "Khảo sát $f$: đạo hàm, bảng biến thiên, các giá trị cực trị và giới hạn ở hai đầu.",
+        "Với bất phương trình: $m\\ge f(x)$ với mọi $x$ thuộc $D$ khi $m\\ge\\max_D f$, còn $m\\le f(x)$ với mọi $x$ khi $m\\le\\min_D f$."
+      ],
+      "care": [
+        "Khi chia cho một biểu thức chứa $x$ để tách $m$, phải xét dấu của biểu thức đó và xét riêng chỗ nó bằng $0$.",
+        "Nếu $f$ không đạt giá trị lớn nhất trên miền đang xét thì dấu bằng ở điều kiện của $m$ có thể thay đổi."
+      ],
+      "formulas": [
+        "$f(x)=m$ có nghiệm trên $D\\iff m$ thuộc tập giá trị của $f$ trên $D$.",
+        "$m\\ge f(x)\\ \\forall x\\in D\\iff m\\ge\\max_D f$, khi giá trị lớn nhất tồn tại."
+      ],
+      "examples": [
+        {
+          "id": "cl-1",
+          "title": "Đếm số nghiệm",
+          "prompt": "Tìm $m$ để phương trình $x^3-3x=m$ có ba nghiệm phân biệt.",
+          "steps": [
+            "Xét $f(x)=x^3-3x$. Đạo hàm $f'(x)=3x^2-3$ bằng $0$ tại $x=\\pm 1$.",
+            "Bảng biến thiên: $f$ tăng đến $f(-1)=2$, giảm xuống $f(1)=-2$, rồi tăng mãi.",
+            "Đường thẳng $y=m$ cắt đồ thị tại ba điểm khi nằm hẳn giữa giá trị cực tiểu và giá trị cực đại."
+          ],
+          "result": "$-2<m<2$"
+        },
+        {
+          "id": "cl-2",
+          "title": "Bất phương trình đúng trên một đoạn",
+          "prompt": "Tìm $m$ để $x^2-4x+m\\ge 0$ với mọi $x\\in[0;3]$.",
+          "steps": [
+            "Tách tham số: $m\\ge -x^2+4x$ với mọi $x\\in[0;3]$.",
+            "Hàm $g(x)=-x^2+4x$ có đỉnh tại $x=2$ thuộc đoạn, và $g(2)=4$.",
+            "Giá trị lớn nhất của $g$ trên $[0;3]$ là $4$, nên cần $m\\ge 4$."
+          ],
+          "result": "$m\\ge 4$"
+        }
+      ],
+      "mistakes": [
+        "Tách $m$ bằng cách chia cho biểu thức có thể bằng $0$ hoặc đổi dấu mà không chia trường hợp.",
+        "Chỉ so sánh $m$ với giá trị cực trị mà quên giới hạn của hàm ở hai đầu miền.",
+        "Nhầm \"với mọi $x$\" với \"tồn tại $x$\": một bên cần giá trị lớn nhất, bên kia chỉ cần giá trị nhỏ nhất."
+      ],
+      "practice": [
+        {
+          "id": "cl-p1",
+          "prompt": "Tìm $m$ để phương trình $x^2-2x=m$ có hai nghiệm phân biệt.",
+          "answer": "$m>-1$",
+          "steps": [
+            "Hàm $f(x)=x^2-2x$ có giá trị nhỏ nhất $f(1)=-1$.",
+            "Đường $y=m$ cắt parabol tại hai điểm khi nằm trên đỉnh."
+          ]
+        },
+        {
+          "id": "cl-p2",
+          "prompt": "Tìm $m$ để $m\\le x+\\dfrac{4}{x}$ với mọi $x>0$.",
+          "answer": "$m\\le 4$",
+          "steps": [
+            "Với $x>0$: $x+\\dfrac{4}{x}\\ge 2\\sqrt{4}=4$, dấu bằng khi $x=2$.",
+            "Giá trị nhỏ nhất của vế phải là $4$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/survey",
+          "label": "Khảo sát hàm số"
+        },
+        {
+          "href": "/t/derivative",
+          "label": "Đạo hàm"
+        }
+      ],
+      "verify": [
+        {
+          "where": "cl-1 cực đại",
+          "lhs": "((-1)**3-3*(-1))",
+          "rhs": "2"
+        },
+        {
+          "where": "cl-1 cực tiểu",
+          "lhs": "(1**3-3*1)",
+          "rhs": "-2"
+        },
+        {
+          "where": "cl-2 đỉnh",
+          "lhs": "(-(2**2)+4*2)",
+          "rhs": "4"
+        }
+      ]
+    },
+    {
+      "id": "ham-dac-trung",
+      "title": "Hàm đặc trưng",
+      "titleEn": "The characteristic function",
+      "blurb": "Khi hai vế có cùng một khuôn, dùng tính đơn điệu để bỏ khuôn đi.",
+      "spot": [
+        "Hai vế viết được thành $f(u)=f(v)$ với cùng một hàm $f$.",
+        "Thường gặp ở phương trình trộn đa thức với mũ, logarit hoặc căn, nơi biến đổi đại số thông thường không tách được."
+      ],
+      "thinking": [
+        "Sắp xếp để mỗi vế chỉ chứa một biểu thức: vế trái theo $u$, vế phải theo $v$, cùng một cách ghép.",
+        "Chứng minh $f$ đồng biến, hoặc nghịch biến, trên miền chứa cả $u$ và $v$.",
+        "Hàm đơn điệu nhận mỗi giá trị nhiều nhất một lần, nên $f(u)=f(v)$ kéo theo $u=v$."
+      ],
+      "care": [
+        "Tính đơn điệu phải đúng trên một khoảng chứa cả $u$ và $v$, không chỉ tại vài điểm.",
+        "Giải xong $u=v$ vẫn phải đối chiếu điều kiện xác định của phương trình ban đầu."
+      ],
+      "formulas": [
+        "Nếu $f$ đơn điệu trên khoảng $K$ và $u,v\\in K$ thì $f(u)=f(v)\\iff u=v$.",
+        "Nếu $f$ đồng biến trên $K$ thì $f(u)>f(v)\\iff u>v$."
+      ],
+      "examples": [
+        {
+          "id": "dt-1",
+          "title": "Khuôn bậc ba",
+          "prompt": "Giải phương trình $x^3+x=(2x-1)^3+(2x-1)$.",
+          "steps": [
+            "Hai vế cùng có dạng $f(t)=t^3+t$, với $t=x$ ở vế trái và $t=2x-1$ ở vế phải.",
+            "Đạo hàm $f'(t)=3t^2+1>0$ với mọi $t$, nên $f$ đồng biến trên $\\mathbb{R}$.",
+            "Suy ra $x=2x-1$, tức $x=1$."
+          ],
+          "result": "$x=1$"
+        },
+        {
+          "id": "dt-2",
+          "title": "Khuôn mũ",
+          "prompt": "Giải phương trình $e^{x}+x=e^{2-x}+2-x$.",
+          "steps": [
+            "Đặt $f(t)=e^t+t$. Phương trình là $f(x)=f(2-x)$.",
+            "Đạo hàm $f'(t)=e^t+1>0$, nên $f$ đồng biến trên $\\mathbb{R}$.",
+            "Suy ra $x=2-x$, tức $x=1$. Thử lại: hai vế cùng bằng $e+1$."
+          ],
+          "result": "$x=1$"
+        }
+      ],
+      "mistakes": [
+        "Kết luận $u=v$ khi chưa chứng minh hàm đơn điệu. Với $f(t)=t^2$ thì $f(u)=f(v)$ còn cho $u=-v$.",
+        "Ghép sai khuôn, khiến hai vế không cùng một hàm."
+      ],
+      "practice": [
+        {
+          "id": "dt-p1",
+          "prompt": "Giải $\\sqrt{x+1}+x=\\sqrt{3-x}+2-x$.",
+          "answer": "$x=1$",
+          "steps": [
+            "Với $f(t)=\\sqrt{t+1}+t$, phương trình là $f(x)=f(2-x)$.",
+            "Hàm $f$ đồng biến trên $[-1;+\\infty)$, và điều kiện $-1\\le x\\le 3$ giữ cả $x$ lẫn $2-x$ trong miền đó.",
+            "Suy ra $x=2-x$, tức $x=1$."
+          ]
+        },
+        {
+          "id": "dt-p2",
+          "prompt": "Giải $\\ln x+x=\\ln(6-x)+6-x$.",
+          "answer": "$x=3$",
+          "steps": [
+            "Điều kiện: $0<x<6$.",
+            "Hàm $f(t)=\\ln t+t$ đồng biến trên $(0;+\\infty)$.",
+            "Suy ra $x=6-x$, tức $x=3$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/derivative",
+          "label": "Đạo hàm"
+        },
+        {
+          "href": "/t/exp",
+          "label": "Mũ và logarit"
+        }
+      ],
+      "verify": [
+        {
+          "where": "dt-1",
+          "lhs": "1**3+1",
+          "rhs": "(2*1-1)**3+(2*1-1)"
+        },
+        {
+          "where": "dt-2",
+          "lhs": "exp(1)+1",
+          "rhs": "exp(2-1)+2-1"
+        }
+      ]
+    },
+    {
+      "id": "diem-roi",
+      "title": "Chọn điểm rơi trong AM-GM",
+      "titleEn": "Choosing the equality case in AM-GM",
+      "blurb": "Tách hoặc thêm bớt sao cho dấu bằng xảy ra được, rồi mới áp dụng bất đẳng thức.",
+      "spot": [
+        "Tìm giá trị lớn nhất, nhỏ nhất của biểu thức có tổng không đổi hoặc tích không đổi sau khi biến đổi.",
+        "Biểu thức có một số hạng tăng và một số hạng giảm theo cùng một biến, như $x$ và $\\dfrac{1}{x}$."
+      ],
+      "thinking": [
+        "Đoán trước điểm rơi: giá trị của biến tại đó các số hạng đem so sánh bằng nhau.",
+        "Tách hoặc thêm bớt để tích các số hạng là hằng số (khi tìm giá trị nhỏ nhất của tổng), hoặc tổng là hằng số (khi tìm giá trị lớn nhất của tích).",
+        "Áp dụng bất đẳng thức, rồi kiểm tra dấu bằng có xảy ra trong miền cho phép không."
+      ],
+      "care": [
+        "Bất đẳng thức AM-GM chỉ dùng cho các số không âm.",
+        "Nếu dấu bằng không xảy ra trong miền đề cho thì cận tìm được chưa phải là giá trị nhỏ nhất hay lớn nhất."
+      ],
+      "formulas": [
+        "$a+b\\ge 2\\sqrt{ab}$ với $a,b\\ge 0$. Dấu bằng khi $a=b$.",
+        "$a+b+c\\ge 3\\sqrt[3]{abc}$ với $a,b,c\\ge 0$. Dấu bằng khi $a=b=c$.",
+        "$ab\\le\\left(\\dfrac{a+b}{2}\\right)^2$ với mọi số thực $a,b$."
+      ],
+      "examples": [
+        {
+          "id": "dr-1",
+          "title": "Thêm bớt để tích không đổi",
+          "prompt": "Tìm giá trị nhỏ nhất của $x+\\dfrac{1}{x-1}$ với $x>1$.",
+          "steps": [
+            "Viết lại: $x+\\dfrac{1}{x-1}=(x-1)+\\dfrac{1}{x-1}+1$.",
+            "Hai số $x-1$ và $\\dfrac{1}{x-1}$ dương, có tích bằng $1$, nên tổng của chúng không nhỏ hơn $2$.",
+            "Do đó biểu thức không nhỏ hơn $3$. Dấu bằng khi $x-1=\\dfrac{1}{x-1}$, tức $x=2$, thỏa $x>1$."
+          ],
+          "result": "Giá trị nhỏ nhất bằng $3$, đạt tại $x=2$."
+        },
+        {
+          "id": "dr-2",
+          "title": "Nhân thêm hệ số để tổng không đổi",
+          "prompt": "Tìm giá trị lớn nhất của $x(6-2x)$ với $0<x<3$.",
+          "steps": [
+            "Tổng $x+(6-2x)$ còn phụ thuộc $x$, nên chưa dùng được. Viết $x(6-2x)=\\dfrac{1}{2}\\cdot 2x\\,(6-2x)$.",
+            "Hai số $2x$ và $6-2x$ dương, có tổng bằng $6$, nên tích của chúng không vượt quá $\\left(\\dfrac{6}{2}\\right)^2=9$.",
+            "Vậy $x(6-2x)\\le\\dfrac{9}{2}$. Dấu bằng khi $2x=6-2x$, tức $x=\\dfrac{3}{2}$."
+          ],
+          "result": "Giá trị lớn nhất bằng $\\dfrac{9}{2}$, đạt tại $x=\\dfrac{3}{2}$."
+        }
+      ],
+      "mistakes": [
+        "Áp dụng thẳng cho $x$ và $\\dfrac{1}{x-1}$: tích không phải hằng số nên vế phải vẫn chứa $x$.",
+        "Không kiểm tra dấu bằng, nhận một cận không đạt được làm đáp số.",
+        "Dùng cho số âm."
+      ],
+      "practice": [
+        {
+          "id": "dr-p1",
+          "prompt": "Tìm giá trị nhỏ nhất của $x^2+\\dfrac{16}{x}$ với $x>0$.",
+          "answer": "$12$, đạt tại $x=2$",
+          "steps": [
+            "Tách: $x^2+\\dfrac{8}{x}+\\dfrac{8}{x}$, ba số dương có tích bằng $64$.",
+            "Tổng không nhỏ hơn $3\\sqrt[3]{64}=12$.",
+            "Dấu bằng khi $x^2=\\dfrac{8}{x}$, tức $x=2$."
+          ]
+        },
+        {
+          "id": "dr-p2",
+          "prompt": "Cho $a,b>0$ và $a+b=4$. Tìm giá trị nhỏ nhất của $\\dfrac{1}{a}+\\dfrac{1}{b}$.",
+          "answer": "$1$, đạt khi $a=b=2$",
+          "steps": [
+            "$\\dfrac{1}{a}+\\dfrac{1}{b}=\\dfrac{a+b}{ab}=\\dfrac{4}{ab}$.",
+            "Vì $ab\\le\\left(\\dfrac{a+b}{2}\\right)^2=4$ nên $\\dfrac{4}{ab}\\ge 1$.",
+            "Dấu bằng khi $a=b=2$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/ineq",
+          "label": "Bất đẳng thức"
+        }
+      ],
+      "verify": [
+        {
+          "where": "dr-1 tại 2",
+          "lhs": "2+Rational(1,2-1)",
+          "rhs": "3"
+        },
+        {
+          "where": "dr-2 tại 3/2",
+          "lhs": "Rational(3,2)*(6-2*Rational(3,2))",
+          "rhs": "Rational(9,2)"
+        }
+      ]
+    },
+    {
+      "id": "lien-hop",
+      "title": "Nhân lượng liên hợp",
+      "titleEn": "Multiplying by the conjugate",
+      "blurb": "Dùng hằng đẳng thức hiệu hai bình phương để làm mất căn ở chỗ đang gây khó.",
+      "spot": [
+        "Giới hạn dạng $\\dfrac{0}{0}$ có căn ở tử hoặc ở mẫu.",
+        "Phương trình chứa hiệu hai căn, hoặc cần trục căn ở mẫu."
+      ],
+      "thinking": [
+        "Biểu thức liên hợp của $\\sqrt{A}-\\sqrt{B}$ là $\\sqrt{A}+\\sqrt{B}$. Tích của chúng là $A-B$, không còn căn.",
+        "Nhân cả tử và mẫu với lượng liên hợp để giá trị không đổi.",
+        "Sau khi nhân, nhân tử gây ra dạng $\\dfrac{0}{0}$ thường lộ ra và rút gọn được."
+      ],
+      "care": [
+        "Lượng liên hợp phải khác $0$ trên miền đang xét thì mới được nhân và chia.",
+        "Với căn bậc ba, dùng hằng đẳng thức hiệu hai lập phương: nhân với $a^2+ab+b^2$."
+      ],
+      "formulas": [
+        "$\\left(\\sqrt{A}-\\sqrt{B}\\right)\\left(\\sqrt{A}+\\sqrt{B}\\right)=A-B$ với $A,B\\ge 0$.",
+        "$\\sqrt{A}-\\sqrt{B}=\\dfrac{A-B}{\\sqrt{A}+\\sqrt{B}}$ khi $\\sqrt{A}+\\sqrt{B}\\neq 0$."
+      ],
+      "examples": [
+        {
+          "id": "lh-1",
+          "title": "Giới hạn có căn",
+          "prompt": "Tính $\\lim\\limits_{x\\to 0}\\dfrac{\\sqrt{x+1}-1}{x}$.",
+          "steps": [
+            "Thế $x=0$ ra dạng $\\dfrac{0}{0}$. Nhân tử và mẫu với $\\sqrt{x+1}+1$.",
+            "Tử thành $(x+1)-1=x$. Biểu thức bằng $\\dfrac{x}{x\\left(\\sqrt{x+1}+1\\right)}=\\dfrac{1}{\\sqrt{x+1}+1}$ với $x\\neq 0$.",
+            "Cho $x\\to 0$: giới hạn bằng $\\dfrac{1}{1+1}=\\dfrac{1}{2}$."
+          ],
+          "result": "$\\dfrac{1}{2}$"
+        },
+        {
+          "id": "lh-2",
+          "title": "Phương trình có hiệu hai căn",
+          "prompt": "Giải phương trình $\\sqrt{x+3}-\\sqrt{x}=1$.",
+          "steps": [
+            "Điều kiện: $x\\ge 0$. Nhân liên hợp: $\\sqrt{x+3}-\\sqrt{x}=\\dfrac{3}{\\sqrt{x+3}+\\sqrt{x}}$.",
+            "Phương trình thành $\\sqrt{x+3}+\\sqrt{x}=3$.",
+            "Cộng với phương trình ban đầu: $2\\sqrt{x+3}=4$, nên $x+3=4$ và $x=1$.",
+            "Thử lại: $\\sqrt{4}-\\sqrt{1}=1$, đúng."
+          ],
+          "result": "$x=1$"
+        }
+      ],
+      "mistakes": [
+        "Chỉ nhân tử mà quên nhân mẫu, làm đổi giá trị biểu thức.",
+        "Bình phương hai vế ngay từ đầu, sinh thêm nghiệm ngoại lai mà không thử lại."
+      ],
+      "practice": [
+        {
+          "id": "lh-p1",
+          "prompt": "Tính $\\lim\\limits_{x\\to 4}\\dfrac{\\sqrt{x}-2}{x-4}$.",
+          "answer": "$\\dfrac{1}{4}$",
+          "steps": [
+            "Nhân với $\\sqrt{x}+2$: tử thành $x-4$.",
+            "Rút gọn còn $\\dfrac{1}{\\sqrt{x}+2}$.",
+            "Tại $x=4$ được $\\dfrac{1}{4}$."
+          ]
+        },
+        {
+          "id": "lh-p2",
+          "prompt": "Trục căn ở mẫu: $\\dfrac{1}{\\sqrt{3}-\\sqrt{2}}$.",
+          "answer": "$\\sqrt{3}+\\sqrt{2}$",
+          "steps": [
+            "Nhân tử và mẫu với $\\sqrt{3}+\\sqrt{2}$.",
+            "Mẫu thành $3-2=1$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/limit",
+          "label": "Giới hạn"
+        }
+      ],
+      "verify": [
+        {
+          "where": "lh-1",
+          "lhs": "diff(sqrt(x+1),x).subs(x,0)",
+          "rhs": "Rational(1,2)"
+        },
+        {
+          "where": "lh-2",
+          "lhs": "sqrt(1+3)-sqrt(1)",
+          "rhs": "1"
+        }
+      ]
+    },
+    {
+      "id": "vi-et",
+      "title": "Dùng định lí Vi-ét",
+      "titleEn": "Using Vieta's formulas",
+      "blurb": "Tính biểu thức đối xứng của hai nghiệm qua tổng và tích, không cần giải phương trình.",
+      "spot": [
+        "Đề hỏi một biểu thức đối xứng của hai nghiệm, như $x_1^2+x_2^2$ hoặc $\\dfrac{1}{x_1}+\\dfrac{1}{x_2}$.",
+        "Đề cho một hệ thức giữa hai nghiệm và hỏi tham số."
+      ],
+      "thinking": [
+        "Trước hết kiểm tra phương trình có nghiệm: $a\\neq 0$ và $\\Delta\\ge 0$.",
+        "Đặt $S=x_1+x_2=-\\dfrac{b}{a}$ và $P=x_1x_2=\\dfrac{c}{a}$.",
+        "Viết biểu thức cần tính theo $S$ và $P$, rồi thay số."
+      ],
+      "care": [
+        "Định lí chỉ nói về nghiệm khi nghiệm tồn tại. Tìm được tham số rồi vẫn phải đối chiếu điều kiện $\\Delta\\ge 0$.",
+        "Biểu thức có $\\dfrac{1}{x_1}$ cần thêm điều kiện nghiệm khác $0$, tức $P\\neq 0$."
+      ],
+      "formulas": [
+        "$x_1^2+x_2^2=S^2-2P$.",
+        "$x_1^3+x_2^3=S^3-3SP$.",
+        "$\\dfrac{1}{x_1}+\\dfrac{1}{x_2}=\\dfrac{S}{P}$ và $(x_1-x_2)^2=S^2-4P$."
+      ],
+      "examples": [
+        {
+          "id": "ve-1",
+          "title": "Tổng hai bình phương",
+          "prompt": "Phương trình $x^2-5x+3=0$ có hai nghiệm $x_1$, $x_2$. Tính $x_1^2+x_2^2$.",
+          "steps": [
+            "$\\Delta=25-12=13>0$ nên phương trình có hai nghiệm phân biệt.",
+            "$S=5$ và $P=3$.",
+            "$x_1^2+x_2^2=S^2-2P=25-6=19$."
+          ],
+          "result": "$19$"
+        },
+        {
+          "id": "ve-2",
+          "title": "Tìm tham số từ hệ thức",
+          "prompt": "Tìm $m$ để phương trình $x^2-2mx+m^2-1=0$ có hai nghiệm thỏa $x_1^2+x_2^2=10$.",
+          "steps": [
+            "$\\Delta'=m^2-(m^2-1)=1>0$ với mọi $m$, nên luôn có hai nghiệm phân biệt.",
+            "$S=2m$ và $P=m^2-1$.",
+            "$x_1^2+x_2^2=4m^2-2(m^2-1)=2m^2+2$. Cho bằng $10$ được $m^2=4$."
+          ],
+          "result": "$m=2$ hoặc $m=-2$"
+        }
+      ],
+      "mistakes": [
+        "Tìm $m$ xong mà không kiểm tra $\\Delta\\ge 0$, nhận cả giá trị làm phương trình vô nghiệm.",
+        "Nhầm dấu của tổng: $S=-\\dfrac{b}{a}$, không phải $\\dfrac{b}{a}$."
+      ],
+      "practice": [
+        {
+          "id": "ve-p1",
+          "prompt": "Với $x^2-3x-2=0$, tính $\\dfrac{1}{x_1}+\\dfrac{1}{x_2}$.",
+          "answer": "$-\\dfrac{3}{2}$",
+          "steps": [
+            "$S=3$ và $P=-2$, khác $0$.",
+            "$\\dfrac{S}{P}=-\\dfrac{3}{2}$."
+          ]
+        },
+        {
+          "id": "ve-p2",
+          "prompt": "Với $x^2-4x+1=0$, tính $x_1^3+x_2^3$.",
+          "answer": "$52$",
+          "steps": [
+            "$S=4$ và $P=1$.",
+            "$S^3-3SP=64-12=52$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/quadratic",
+          "label": "Hàm số bậc hai"
+        }
+      ],
+      "verify": [
+        {
+          "where": "ve-1",
+          "lhs": "5**2-2*3",
+          "rhs": "19"
+        },
+        {
+          "where": "ve-2",
+          "lhs": "(2*2)**2-2*(2**2-1)",
+          "rhs": "10"
+        }
+      ]
+    },
+    {
+      "id": "toa-do-hoa",
+      "title": "Tọa độ hóa",
+      "titleEn": "Introducing coordinates",
+      "blurb": "Gắn hệ trục vào hình, đổi quan hệ vuông góc, song song, khoảng cách thành phép tính.",
+      "spot": [
+        "Hình có sẵn các cạnh vuông góc: hình vuông, hình chữ nhật, tam giác vuông, hình lập phương, hình hộp chữ nhật.",
+        "Đề hỏi góc, khoảng cách hoặc cần chứng minh vuông góc mà kẻ thêm hình khó thấy."
+      ],
+      "thinking": [
+        "Chọn gốc tại một đỉnh có góc vuông, các trục dọc theo các cạnh vuông góc đó.",
+        "Ghi tọa độ mọi điểm cần dùng. Trung điểm lấy trung bình cộng tọa độ.",
+        "Vuông góc là tích vô hướng bằng $0$. Góc tính bằng côsin. Khoảng cách tính bằng công thức."
+      ],
+      "care": [
+        "Hệ trục phải gồm các trục đôi một vuông góc. Hình không có góc vuông cần dựng thêm trước khi gắn trục.",
+        "Góc giữa hai đường thẳng lấy trị tuyệt đối của côsin, vì góc đó không vượt quá $90^\\circ$."
+      ],
+      "formulas": [
+        "$\\vec u\\perp\\vec v\\iff\\vec u\\cdot\\vec v=0$.",
+        "$\\cos(\\vec u,\\vec v)=\\dfrac{\\vec u\\cdot\\vec v}{|\\vec u|\\,|\\vec v|}$.",
+        "Khoảng cách từ $M(x_0;y_0)$ đến đường thẳng $ax+by+c=0$ là $\\dfrac{|ax_0+by_0+c|}{\\sqrt{a^2+b^2}}$."
+      ],
+      "examples": [
+        {
+          "id": "td-1",
+          "title": "Chứng minh vuông góc trong hình vuông",
+          "prompt": "Cho hình vuông $ABCD$ cạnh $2$. Gọi $M$, $N$ là trung điểm của $BC$ và $CD$. Chứng minh $AM\\perp BN$.",
+          "steps": [
+            "Chọn $A(0;0)$, $B(2;0)$, $C(2;2)$, $D(0;2)$.",
+            "Trung điểm: $M(2;1)$ và $N(1;2)$.",
+            "$\\overrightarrow{AM}=(2;1)$ và $\\overrightarrow{BN}=(-1;2)$.",
+            "Tích vô hướng: $2\\cdot(-1)+1\\cdot 2=0$, nên hai đường thẳng vuông góc."
+          ],
+          "result": "$AM\\perp BN$"
+        },
+        {
+          "id": "td-2",
+          "title": "Góc trong hình lập phương",
+          "prompt": "Cho hình lập phương $ABCD.A'B'C'D'$ cạnh $1$. Tính góc giữa hai đường thẳng $AC'$ và $BD$.",
+          "steps": [
+            "Chọn $A(0;0;0)$, $B(1;0;0)$, $D(0;1;0)$, $A'(0;0;1)$. Khi đó $C'(1;1;1)$.",
+            "$\\overrightarrow{AC'}=(1;1;1)$ và $\\overrightarrow{BD}=(-1;1;0)$.",
+            "Tích vô hướng: $-1+1+0=0$."
+          ],
+          "result": "Góc giữa $AC'$ và $BD$ bằng $90^\\circ$."
+        }
+      ],
+      "mistakes": [
+        "Đặt trục dọc theo hai cạnh không vuông góc với nhau.",
+        "Lấy tọa độ điểm đầu trừ điểm cuối khi lập vectơ."
+      ],
+      "practice": [
+        {
+          "id": "td-p1",
+          "prompt": "Tam giác $ABC$ vuông tại $A$, $AB=3$, $AC=4$. Tính độ dài trung tuyến $AM$.",
+          "answer": "$\\dfrac{5}{2}$",
+          "steps": [
+            "Chọn $A(0;0)$, $B(3;0)$, $C(0;4)$.",
+            "Trung điểm $M\\left(\\dfrac{3}{2};2\\right)$.",
+            "$AM=\\sqrt{\\dfrac{9}{4}+4}=\\dfrac{5}{2}$."
+          ]
+        },
+        {
+          "id": "td-p2",
+          "prompt": "Hình chữ nhật $ABCD$ có $AB=4$, $AD=3$. Tính khoảng cách từ $A$ đến đường thẳng $BD$.",
+          "answer": "$\\dfrac{12}{5}$",
+          "steps": [
+            "Chọn $A(0;0)$, $B(4;0)$, $D(0;3)$.",
+            "Đường thẳng $BD$: $3x+4y-12=0$.",
+            "Khoảng cách: $\\dfrac{|-12|}{\\sqrt{9+16}}=\\dfrac{12}{5}$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/vector",
+          "label": "Vectơ"
+        },
+        {
+          "href": "/t/analytic",
+          "label": "Hình giải tích"
+        }
+      ],
+      "verify": [
+        {
+          "where": "td-1",
+          "lhs": "2*(-1)+1*2",
+          "rhs": "0"
+        },
+        {
+          "where": "td-2",
+          "lhs": "1*(-1)+1*1+1*0",
+          "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "phan-bu",
+      "title": "Đếm phần bù",
+      "titleEn": "Counting the complement",
+      "blurb": "Khi đề nói \"ít nhất một\", đếm phần ngược lại rồi lấy tất cả trừ đi.",
+      "spot": [
+        "Đề có cụm \"ít nhất một\", \"không phải tất cả\", \"có mặt\".",
+        "Đếm trực tiếp phải chia nhiều trường hợp, trong khi trường hợp ngược lại chỉ có một kiểu."
+      ],
+      "thinking": [
+        "Đếm toàn bộ số cách khi chưa có điều kiện.",
+        "Đếm số cách vi phạm điều kiện, tức phần bù.",
+        "Lấy toàn bộ trừ phần bù. Với xác suất: $P(A)=1-P(\\overline A)$."
+      ],
+      "care": [
+        "Phần bù của \"ít nhất một\" là \"không có cái nào\", không phải \"đúng một\".",
+        "Hai cách đếm, toàn bộ và phần bù, phải dùng cùng một quy ước về thứ tự."
+      ],
+      "formulas": [
+        "$n(A)=n(\\Omega)-n(\\overline A)$.",
+        "$P(A)=1-P(\\overline A)$."
+      ],
+      "examples": [
+        {
+          "id": "pb-1",
+          "title": "Số có chứa một chữ số cho trước",
+          "prompt": "Có bao nhiêu số tự nhiên có ba chữ số mà có ít nhất một chữ số $5$?",
+          "steps": [
+            "Có $900$ số có ba chữ số, từ $100$ đến $999$.",
+            "Số không có chữ số $5$ nào: hàng trăm có $8$ cách (bỏ $0$ và $5$), hàng chục và hàng đơn vị mỗi hàng $9$ cách.",
+            "Phần bù có $8\\cdot 9\\cdot 9=648$ số.",
+            "Kết quả: $900-648=252$."
+          ],
+          "result": "$252$ số"
+        },
+        {
+          "id": "pb-2",
+          "title": "Xác suất ít nhất một lần",
+          "prompt": "Gieo ba con xúc xắc cân đối. Tính xác suất có ít nhất một mặt $6$ chấm.",
+          "steps": [
+            "Biến cố đối: không con nào ra mặt $6$ chấm.",
+            "Mỗi con không ra $6$ với xác suất $\\dfrac{5}{6}$, và ba con độc lập, nên xác suất của biến cố đối là $\\left(\\dfrac{5}{6}\\right)^3=\\dfrac{125}{216}$.",
+            "Xác suất cần tìm: $1-\\dfrac{125}{216}=\\dfrac{91}{216}$."
+          ],
+          "result": "$\\dfrac{91}{216}$"
+        }
+      ],
+      "mistakes": [
+        "Đếm trực tiếp \"ít nhất một\" bằng cách cố định một vị trí rồi cho các vị trí còn lại tự do, làm một số cách bị đếm nhiều lần.",
+        "Lấy phần bù là \"đúng một\" thay vì \"không có\"."
+      ],
+      "practice": [
+        {
+          "id": "pb-p1",
+          "prompt": "Tung bốn đồng xu cân đối. Tính xác suất có ít nhất một mặt ngửa.",
+          "answer": "$\\dfrac{15}{16}$",
+          "steps": [
+            "Biến cố đối: cả bốn đồng đều sấp, xác suất $\\dfrac{1}{16}$.",
+            "$1-\\dfrac{1}{16}=\\dfrac{15}{16}$."
+          ]
+        },
+        {
+          "id": "pb-p2",
+          "prompt": "Chọn $3$ bạn từ $5$ bạn nam và $4$ bạn nữ. Có bao nhiêu cách chọn có ít nhất một bạn nữ?",
+          "answer": "$74$ cách",
+          "steps": [
+            "Tất cả: $C_9^3=84$ cách.",
+            "Không có nữ: $C_5^3=10$ cách.",
+            "$84-10=74$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/combo",
+          "label": "Tổ hợp"
+        },
+        {
+          "href": "/t/probability",
+          "label": "Xác suất"
+        }
+      ],
+      "verify": [
+        {
+          "where": "pb-1",
+          "lhs": "900-8*9*9",
+          "rhs": "252"
+        },
+        {
+          "where": "pb-2",
+          "lhs": "1-Rational(5,6)**3",
+          "rhs": "Rational(91,216)"
+        }
+      ]
+    },
+    {
+      "id": "quy-nap",
+      "title": "Quy nạp toán học",
+      "titleEn": "Mathematical induction",
+      "blurb": "Chứng minh một mệnh đề đúng với mọi số tự nhiên bằng hai bước: bước đầu và bước chuyển.",
+      "spot": [
+        "Mệnh đề phụ thuộc vào số nguyên dương $n$ và cần chứng minh với mọi $n$.",
+        "Thường gặp ở công thức tổng, tính chia hết và bất đẳng thức theo $n$."
+      ],
+      "thinking": [
+        "Bước cơ sở: kiểm tra mệnh đề với giá trị nhỏ nhất của $n$.",
+        "Giả thiết quy nạp: giả sử mệnh đề đúng với $n=k$.",
+        "Bước chuyển: từ giả thiết đó suy ra mệnh đề đúng với $n=k+1$. Phải dùng đến giả thiết quy nạp ở một chỗ cụ thể."
+      ],
+      "care": [
+        "Thiếu bước cơ sở thì bước chuyển không chứng minh được gì.",
+        "Bước chuyển phải đúng với mọi $k$ từ giá trị đầu tiên trở đi, không chỉ với $k$ đủ lớn."
+      ],
+      "formulas": [
+        "$P(1)$ đúng, và $P(k)\\Rightarrow P(k+1)$ với mọi $k\\ge 1$, thì $P(n)$ đúng với mọi $n\\ge 1$."
+      ],
+      "examples": [
+        {
+          "id": "qn-1",
+          "title": "Công thức tổng",
+          "prompt": "Chứng minh $1+2+\\cdots+n=\\dfrac{n(n+1)}{2}$ với mọi số nguyên dương $n$.",
+          "steps": [
+            "Với $n=1$: vế trái bằng $1$, vế phải bằng $\\dfrac{1\\cdot 2}{2}=1$. Đúng.",
+            "Giả sử $1+2+\\cdots+k=\\dfrac{k(k+1)}{2}$.",
+            "Cộng thêm $k+1$ vào hai vế: $1+2+\\cdots+k+(k+1)=\\dfrac{k(k+1)}{2}+(k+1)=\\dfrac{(k+1)(k+2)}{2}$.",
+            "Đây chính là công thức với $n=k+1$, nên mệnh đề đúng với mọi $n$."
+          ],
+          "result": "Điều phải chứng minh."
+        },
+        {
+          "id": "qn-2",
+          "title": "Tính chia hết",
+          "prompt": "Chứng minh $7^n-1$ chia hết cho $6$ với mọi số nguyên dương $n$.",
+          "steps": [
+            "Với $n=1$: $7-1=6$, chia hết cho $6$.",
+            "Giả sử $7^k-1$ chia hết cho $6$.",
+            "Viết $7^{k+1}-1=7\\left(7^k-1\\right)+6$.",
+            "Số hạng thứ nhất chia hết cho $6$ theo giả thiết quy nạp, số hạng thứ hai là $6$, nên tổng chia hết cho $6$."
+          ],
+          "result": "Điều phải chứng minh."
+        }
+      ],
+      "mistakes": [
+        "Thử vài giá trị đầu rồi kết luận đúng với mọi $n$.",
+        "Viết bước chuyển mà không dùng giả thiết quy nạp ở đâu cả."
+      ],
+      "practice": [
+        {
+          "id": "qn-p1",
+          "prompt": "Chứng minh $1+3+5+\\cdots+(2n-1)=n^2$.",
+          "answer": "Đúng với mọi $n\\ge 1$.",
+          "steps": [
+            "Với $n=1$: $1=1^2$.",
+            "Giả sử tổng $k$ số lẻ đầu bằng $k^2$.",
+            "Cộng thêm $2k+1$: $k^2+2k+1=(k+1)^2$."
+          ]
+        },
+        {
+          "id": "qn-p2",
+          "prompt": "Chứng minh $2^n>n$ với mọi số nguyên dương $n$.",
+          "answer": "Đúng với mọi $n\\ge 1$.",
+          "steps": [
+            "Với $n=1$: $2>1$.",
+            "Giả sử $2^k>k$.",
+            "Khi đó $2^{k+1}=2\\cdot 2^k>2k\\ge k+1$, vì $k\\ge 1$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/sequence",
+          "label": "Dãy số"
+        }
+      ],
+      "verify": [
+        {
+          "where": "qn-1",
+          "lhs": "x*(x+1)/2+(x+1)",
+          "rhs": "(x+1)*(x+2)/2"
+        },
+        {
+          "where": "qn-2",
+          "lhs": "7*(7**x-1)+6",
+          "rhs": "7**(x+1)-1"
+        }
+      ]
+    },
+    {
+      "id": "tao-binh-phuong",
+      "title": "Thêm bớt tạo bình phương",
+      "titleEn": "Completing the square",
+      "blurb": "Viết biểu thức bậc hai thành một bình phương cộng một hằng số để thấy ngay giá trị nhỏ nhất và nghiệm.",
+      "spot": [
+        "Tìm giá trị lớn nhất, nhỏ nhất của một tam thức bậc hai.",
+        "Giải phương trình bậc hai, tìm tâm và bán kính đường tròn từ phương trình khai triển, hoặc chứng minh một biểu thức không âm."
+      ],
+      "thinking": [
+        "Lấy một nửa hệ số của $x$, bình phương lên, rồi cộng vào và trừ đi đúng lượng đó.",
+        "Ba số hạng đầu gộp thành một bình phương. Phần còn lại là hằng số.",
+        "Bình phương không âm và bằng $0$ tại đúng một điểm, nên giá trị nhỏ nhất và điểm đạt được đọc ra ngay."
+      ],
+      "care": [
+        "Nếu hệ số của $x^2$ khác $1$, đặt nó ra ngoài ngoặc trước khi thêm bớt.",
+        "Khi hệ số của $x^2$ âm, bình phương mang dấu trừ, nên hằng số còn lại là giá trị lớn nhất."
+      ],
+      "formulas": [
+        "$x^2+px+q=\\left(x+\\dfrac{p}{2}\\right)^2+q-\\dfrac{p^2}{4}$.",
+        "$ax^2+bx+c=a\\left(x+\\dfrac{b}{2a}\\right)^2-\\dfrac{\\Delta}{4a}$ với $a\\neq 0$."
+      ],
+      "examples": [
+        {
+          "id": "bp-1",
+          "title": "Giá trị nhỏ nhất",
+          "prompt": "Tìm giá trị nhỏ nhất của $x^2-6x+11$.",
+          "steps": [
+            "Một nửa của $-6$ là $-3$, bình phương là $9$.",
+            "$x^2-6x+11=\\left(x^2-6x+9\\right)+2=(x-3)^2+2$.",
+            "Vì $(x-3)^2\\ge 0$ nên biểu thức không nhỏ hơn $2$, và bằng $2$ khi $x=3$."
+          ],
+          "result": "Giá trị nhỏ nhất bằng $2$, đạt tại $x=3$."
+        },
+        {
+          "id": "bp-2",
+          "title": "Giải phương trình",
+          "prompt": "Giải phương trình $x^2+4x-5=0$.",
+          "steps": [
+            "Thêm bớt $4$: $x^2+4x+4-9=0$, tức $(x+2)^2=9$.",
+            "Suy ra $x+2=3$ hoặc $x+2=-3$.",
+            "Vậy $x=1$ hoặc $x=-5$."
+          ],
+          "result": "$x=1$ hoặc $x=-5$"
+        }
+      ],
+      "mistakes": [
+        "Cộng thêm một lượng mà quên trừ lại, làm đổi giá trị biểu thức.",
+        "Quên đặt hệ số của $x^2$ ra ngoài trước khi lấy một nửa hệ số của $x$."
+      ],
+      "practice": [
+        {
+          "id": "bp-p1",
+          "prompt": "Tìm giá trị lớn nhất của $-x^2+4x+1$.",
+          "answer": "$5$, đạt tại $x=2$",
+          "steps": [
+            "$-x^2+4x+1=-\\left(x^2-4x+4\\right)+5=-(x-2)^2+5$.",
+            "Vì $-(x-2)^2\\le 0$ nên giá trị lớn nhất là $5$."
+          ]
+        },
+        {
+          "id": "bp-p2",
+          "prompt": "Chứng minh $x^2+y^2-2x+4y+5\\ge 0$ với mọi $x$, $y$.",
+          "answer": "Biểu thức bằng $(x-1)^2+(y+2)^2$.",
+          "steps": [
+            "Nhóm theo từng biến: $\\left(x^2-2x+1\\right)+\\left(y^2+4y+4\\right)$.",
+            "Tổng hai bình phương không âm, bằng $0$ khi $x=1$ và $y=-2$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/quadratic",
+          "label": "Hàm số bậc hai"
+        },
+        {
+          "href": "/t/analytic",
+          "label": "Hình giải tích"
+        }
+      ],
+      "verify": [
+        {
+          "where": "bp-1",
+          "lhs": "(x-3)**2+2",
+          "rhs": "x**2-6*x+11"
+        },
+        {
+          "where": "bp-2",
+          "lhs": "(x+2)**2-9",
+          "rhs": "x**2+4*x-5"
+        }
       ]
     }
   ]
