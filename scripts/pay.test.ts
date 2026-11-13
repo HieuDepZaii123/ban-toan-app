@@ -257,7 +257,8 @@ assert(ret.headers.get("location") === "http://pay.local/nang-cap?orderId=BTDEMO
 }
 
 // A production deploy must never fall back to MoMo's public sandbox secret or the .env.example placeholders.
-const prod = withTestStore(payEnv({ VERCEL_ENV: "production", ADMIN_TOKEN: "doi-token-admin", BANK_WEBHOOK_SECRET: "short" }, () => clock));
+// A real receiving account; with the sample account a live deploy refuses bank orders (scripts/pay-open.test.ts).
+const prod = withTestStore(payEnv({ VERCEL_ENV: "production", ADMIN_TOKEN: "doi-token-admin", BANK_WEBHOOK_SECRET: "short", BANK_ACCOUNT_NO: "1234567890", BANK_ACCOUNT_NAME: "NGUYEN VAN A" }, () => clock));
 assert(prod.live && !prod.momoReady, "live deploy without MoMo secret is not MoMo-ready");
 assert(prod.adminToken === "" && prod.webhookSecret === "", "placeholder or short secrets are refused when live");
 const forged = await handlePremium(new Request("http://pay.local/api/premium/ipn", { method: "POST", body: "{}" }), prod);

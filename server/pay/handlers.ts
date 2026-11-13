@@ -13,6 +13,7 @@ import {
   receiveAddress,
   verifyCrypto,
   chainSpec,
+  type CryptoChainId,
   type CryptoQuote,
 } from "./crypto.ts";
 import { commissionOf, normalizeCode, sameReferrer, secretHash } from "./affiliate.ts";
@@ -22,6 +23,23 @@ import { CryptoAmountTaken, licenseHash, storeFor, type OrderRow, type PayStore 
 import { buildVietQr, emvName } from "./vietqr.ts";
 
 const ORDER_TTL_MS = 15 * 60 * 1000;
+
+export type OpenMethods = { wallet: boolean; qr: boolean; bank: boolean; crypto: Record<CryptoChainId, boolean> };
+
+/**
+ * Which ways to pay can take real money. On a live deploy a method whose destination is still a
+ * placeholder (public MoMo sandbox key, sample bank account, sample wallet) is closed, so no buyer
+ * can send money that nobody receives. Locally and in previews everything stays open for testing.
+ */
+export function openMethods(env: PayEnv): OpenMethods {
+  const crypto = Object.fromEntries(CRYPTO_CHAIN_IDS.map((id) => [id, !env.live || !chainSample(env, id)])) as Record<CryptoChainId, boolean>;
+  return { wallet: env.momoReady, qr: env.momoReady, bank: !env.live || !env.sampleBank, crypto };
+}
+
+/** The sample bank account is never shown to a buyer on a live deploy, not even beside a MoMo QR. */
+function showBank(env: PayEnv): boolean {
+  return !env.live || !env.sampleBank;
+}
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export type Json = Record<string, unknown>;
@@ -114,6 +132,7 @@ function plans(env: PayEnv): Response {
       { id: "month", amount: priceOf(env, "month"), days: 30 },
       { id: "year", amount: priceOf(env, "year"), days: 365 },
     ],
+    open: openMethods(env),
     bank: {
       sample: env.sampleBank,
       bin: env.bankBin,
@@ -140,6 +159,13 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
   if (!EMAIL.test(email) || email.length > 120) return json(400, { error: "email" });
   if (!plan || !method) return json(400, { error: "plan" });
   if ((method === "wallet" || method === "qr") && !env.momoReady) return json(503, { error: "momo_not_configured" });
+  const open = openMethods(env);
+  if (method === "bank" && !open.bank) {
+    return json(503, { error: "bank_not_configured", message: "Chuyển khoản chưa mở: chưa có tài khoản nhận tiền thật. Bank transfer is not open yet." });
+  }
+  if (method === "crypto" && isCryptoChain(body.chain) && !open.crypto[body.chain]) {
+    return json(503, { error: "crypto_not_configured", message: "Mạng này chưa có ví nhận thật. This network has no live receiving wallet yet." });
+  }
   const amount = priceOf(env, plan);
   const now = env.now();
   const referred = await acceptedRef(store, body, email, env.affiliateRateBps);
@@ -244,7 +270,7 @@ async function enrich(env: PayEnv, order: OrderRow, cryptoCheck?: Json): Promise
   const image = await qrImage(payload);
   const momoQrPayload = order.qrCodeUrl || (order.method === "qr" ? order.payUrl : "");
   const momoQrDataUrl = momoQrPayload ? await qrImage(momoQrPayload) : "";
-  return { ...base, momoQrDataUrl, bank: bankView(env, order, payload, image) };
+  return showBank(env) ? { ...base, momoQrDataUrl, bank: bankView(env, order, payload, image) } : { ...base, momoQrDataUrl };
 }
 
 async function ipn(request: Request, env: PayEnv, store: PayStore): Promise<Response> {
