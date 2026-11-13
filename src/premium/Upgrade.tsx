@@ -20,6 +20,8 @@ type Plans = {
   plans: { id: PlanId; amount: number; days: number }[];
   bank?: { sample: boolean };
   crypto?: { chains: { id: string; sample: boolean }[] };
+  /** Methods and networks that can take real money; older servers send nothing, meaning all open. */
+  open?: { wallet: boolean; qr: boolean; bank: boolean; crypto: Record<string, boolean> };
 };
 
 type BankView = {
@@ -98,7 +100,16 @@ export function Upgrade() {
         setLoadError(true);
         return;
       }
-      setPlans(await res.json() as Plans);
+      const loaded = await res.json() as Plans;
+      setPlans(loaded);
+      if (loaded.open) {
+        const first = (["wallet", "qr", "bank", "crypto"] as const).find((id) => id === "crypto"
+          ? Object.values(loaded.open?.crypto ?? {}).some(Boolean)
+          : loaded.open?.[id]);
+        if (first) setMethod(first);
+        const chainOpen = Object.entries(loaded.open.crypto).find(([, ok]) => ok)?.[0];
+        if (chainOpen) setChain(chainOpen as CryptoChainId);
+      }
     }).catch(() => {
       if (live) setLoadError(true);
     });
@@ -167,6 +178,11 @@ export function Upgrade() {
     }
   }
 
+  const open = plans?.open;
+  const methodOpen = (id: PayMethod): boolean => !open || (id === "crypto" ? Object.values(open.crypto).some(Boolean) : open[id]);
+  const chainOpen = (id: string): boolean => !open || open.crypto[id] === true;
+  const nothingOpen = !!open && !(["wallet", "qr", "bank", "crypto"] as const).some(methodOpen);
+  const canPay = methodOpen(method) && (method !== "crypto" || chainOpen(chain));
   const month = plans?.plans.find((item) => item.id === "month");
   const year = plans?.plans.find((item) => item.id === "year");
   const waiting = order?.status === "pending";
@@ -238,6 +254,7 @@ export function Upgrade() {
               <MethodCard
                 id="wallet"
                 on={method === "wallet"}
+                closed={!methodOpen("wallet")}
                 title={t(lang, "Ví MoMo", "MoMo wallet")}
                 body={t(lang, "Mở app MoMo hoặc trang thanh toán. Xác nhận tự động khi MoMo báo IPN.", "Open the MoMo app or the payment page. Access turns on when MoMo sends the IPN.")}
                 onPick={() => setMethod("wallet")}
@@ -245,6 +262,7 @@ export function Upgrade() {
               <MethodCard
                 id="qr"
                 on={method === "qr"}
+                closed={!methodOpen("qr")}
                 title={t(lang, "Quét QR", "Scan a QR")}
                 body={plans?.bank?.sample
                   ? t(lang, "Mã QR MoMo ngay trên trang, kèm VietQR chuyển khoản vào tài khoản mẫu.", "A MoMo QR on this page, plus a VietQR for the sample bank account.")
@@ -254,6 +272,7 @@ export function Upgrade() {
               <MethodCard
                 id="bank"
                 on={method === "bank"}
+                closed={!methodOpen("bank")}
                 title={t(lang, "Chuyển khoản ngân hàng", "Bank transfer")}
                 body={t(lang, "Số tài khoản, số tiền và nội dung chuyển khoản riêng của đơn. Đơn chờ 15 phút.", "Account number, amount, and a transfer note unique to this order. The order waits 15 minutes.")}
                 onPick={() => setMethod("bank")}
@@ -261,6 +280,7 @@ export function Upgrade() {
               <MethodCard
                 id="crypto"
                 on={method === "crypto"}
+                closed={!methodOpen("crypto")}
                 title={t(lang, "Tiền mã hóa (ngoài Việt Nam)", "Crypto (outside Vietnam)")}
                 body={t(lang, "Dành cho người mua ở nước ngoài: USDT hoặc USDC chuyển thẳng vào ví của Bàn Toán. Ở Việt Nam hãy dùng MoMo hoặc chuyển khoản. Đơn chờ 15 phút.", "For buyers outside Vietnam: USDT or USDC sent straight to the Bàn Toán wallet. In Vietnam, use MoMo or a bank transfer. The order waits 15 minutes.")}
                 onPick={() => setMethod("crypto")}
@@ -271,16 +291,21 @@ export function Upgrade() {
                 <ChainPicker
                   name="crypto-chain"
                   value={chain}
-                  choices={chainChoices(lang, plans?.crypto?.chains.map((item) => item.id) ?? ["tron-usdt", "bsc-usdt", "bsc-usdc", "sol-usdc"])}
+                  choices={chainChoices(lang, (plans?.crypto?.chains.map((item) => item.id) ?? ["tron-usdt", "bsc-usdt", "bsc-usdc", "sol-usdc"]).filter(chainOpen))}
                   onPick={(id) => setChain(id as CryptoChainId)}
                 />
-                {plans?.crypto?.chains.find((item) => item.id === chain)?.sample ? (
+                {!chainOpen(chain) ? (
+                  <p className="pay-warn">{t(lang, "Mạng này chưa nhận thanh toán. Chọn mạng khác.", "This network is not taking payments yet. Pick another one.")}</p>
+                ) : plans?.crypto?.chains.find((item) => item.id === chain)?.sample ? (
                   <p className="pay-warn">{t(lang, "Ví nhận của mạng này đang là địa chỉ MẪU.", "The receiving wallet for this network is still a SAMPLE address.")}</p>
                 ) : null}
               </>
             ) : null}
+            {nothingOpen ? (
+              <p className="pay-warn" role="status">{t(lang, "Thanh toán đang được thiết lập và chưa nhận đơn. Bạn vẫn dùng miễn phí mọi bài học, luyện tập và trợ lý 8 câu mỗi ngày.", "Payments are being set up and are not taking orders yet. All lessons, practice and 8 tutor questions a day stay free.")}</p>
+            ) : null}
             {formError ? <p className="pay-warn" role="alert">{formError}</p> : null}
-            <button className="pay-btn" type="submit" disabled={busy || !plans || !agreed}>
+            <button className="pay-btn" type="submit" disabled={busy || !plans || !agreed || !canPay}>
               {busy ? t(lang, "Đang tạo đơn…", "Creating the order…") : t(lang, "Tạo đơn thanh toán", "Create the payment")}
             </button>
           </form>
@@ -320,14 +345,15 @@ function PlanCard({ id, title, days, amount, sample, savings, on, onPick }: {
   );
 }
 
-function MethodCard({ id, title, body, on, onPick }: { id: PayMethod; title: string; body: string; on: boolean; onPick: () => void }) {
+function MethodCard({ id, title, body, on, closed = false, onPick }: { id: PayMethod; title: string; body: string; on: boolean; closed?: boolean; onPick: () => void }) {
+  const lang = useLang();
   return (
-    <label className={`pay-card${on ? " is-on" : ""}`}>
+    <label className={`pay-card${on && !closed ? " is-on" : ""}${closed ? " is-closed" : ""}`}>
       <span className="pay-row">
-        <input type="radio" name="method" value={id} checked={on} onChange={onPick} />
+        <input type="radio" name="method" value={id} checked={on && !closed} disabled={closed} onChange={onPick} />
         <b>{title}</b>
       </span>
-      <small>{body}</small>
+      <small>{closed ? t(lang, "Chưa mở: đang thiết lập tài khoản nhận tiền.", "Not open yet: the receiving account is being set up.") : body}</small>
     </label>
   );
 }

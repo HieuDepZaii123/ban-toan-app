@@ -754,6 +754,7 @@ html[data-lamp="on"] body::before {
   min-height: 44px;
 }
 .pay-card.is-on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.pay-card.is-closed { opacity: 0.6; cursor: not-allowed; }
 .pay-card small, .pay-note { color: var(--ink-soft); }
 .pay-compare { max-width: 100%; }
 .pay-compare table { width: 100%; border-collapse: collapse; table-layout: fixed; }

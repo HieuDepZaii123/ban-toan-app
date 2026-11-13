@@ -55,6 +55,18 @@ Khi chạy production (`VERCEL_ENV=production`, `NODE_ENV=production` hoặc `PA
 
 Cờ `PREMIUM_LOCK` / `VITE_PREMIUM_LOCK` mặc định tắt. Không tờ nào đọc cờ này để giấu bài. Bật `1` chỉ để một lớp sau này khóa phần mới, không đụng công thức hay câu hỏi đã có.
 
+## Cách thanh toán nào đang mở
+
+Trên bản production (`VERCEL_ENV=production`, `NODE_ENV=production` hoặc `PAY_LIVE=1`), cách nào còn trỏ tới giá trị mẫu thì đóng, để không ai chuyển tiền vào chỗ không có người nhận (`openMethods` trong `server/pay/handlers.ts`):
+
+| Cách | Mở khi |
+|---|---|
+| Ví MoMo, Quét QR | có khóa MoMo doanh nghiệp thật (`MOMO_SECRET_KEY`, `MOMO_ENDPOINT` không phải sandbox) |
+| Chuyển khoản | `BANK_ACCOUNT_NO` và `BANK_ACCOUNT_NAME` là tài khoản thật |
+| Tiền mã hóa | từng mạng riêng: `CRYPTO_TRON_ADDRESS`, `CRYPTO_BSC_ADDRESS`, `CRYPTO_SOL_ADDRESS` là ví thật |
+
+`/api/premium/plans` trả `open` để trang `/nang-cap` làm mờ cách đang đóng; `/api/premium/create` từ chối đơn của cách đó (503 `bank_not_configured` / `crypto_not_configured` / `momo_not_configured`). Khi mọi cách đều đóng, trang báo thanh toán đang thiết lập. Quét QR không kèm VietQR khi tài khoản ngân hàng còn là mẫu. Ở máy local và bản preview, mọi cách vẫn mở để thử với giá trị mẫu.
+
 ## Kho dữ liệu
 
 Có hai kho, cùng giao diện `PayStore` (`server/pay/store.ts`), chọn theo biến môi trường:
