@@ -5,8 +5,8 @@ const R = String.raw;
 
 const W = {
   hop: "Phần giao đã được tính trong cả hai tập, nên phải trừ đúng một lần.",
-  mien: "Một điểm thuộc miền khi mọi bất phương trình của hệ đều đúng tại điểm đó.",
-  dinh: "Tung độ đỉnh bằng trừ biệt thức chia cho bốn lần hệ số bậc hai.",
+  mien: "Thế phương trình thứ nhất vào phương trình thứ hai thì chỉ còn một giá trị cho tọa độ kia.",
+  dinh: "Đỉnh nằm chính giữa hai nghiệm, mà hai nghiệm là một và năm.",
   dau: "Hệ số bậc hai dương nên tam thức âm đúng giữa hai nghiệm.",
   bpt2: "Bất phương trình không chặt nhận cả hai nghiệm của tam thức.",
   can: "Bình phương cho điều kiện cần. Nghiệm còn phải thỏa phương trình ban đầu.",
