@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
 import type { Picture, Tone } from "../content/grades/pictures.ts";
+import { pictureInEnglish } from "../content/grades/en/pictures.ts";
+
+/** Chọn chữ theo ngôn ngữ đang hiển thị: tr(tiếng Việt, tiếng Anh). */
+type Tr = (vi: string, en: string) => string;
 
 const W = 320;
 const H = 150;
@@ -17,7 +21,7 @@ function Label({ x, y, children, anchor = "middle", size = 13 }: { x: number; y:
   return <text x={x} y={y} textAnchor={anchor} fontSize={size} className="pic-text">{children}</text>;
 }
 
-function Groups({ spec }: { spec: Extract<Picture, { k: "groups" }> }) {
+function Groups({ spec, tr }: { spec: Extract<Picture, { k: "groups" }>; tr: Tr }) {
   const total = spec.items.reduce((s, g) => s + g.n, 0);
   const gap = Math.min(30, (W - 60) / Math.max(total + spec.items.length, 1));
   let x = (W - gap * (total + spec.items.length - 1)) / 2;
@@ -36,7 +40,7 @@ function Groups({ spec }: { spec: Extract<Picture, { k: "groups" }> }) {
   return (
     <>
       {out}
-      <Label x={W / 2} y={128}>{spec.op === "-" ? `Còn lại ${left}` : `Tất cả ${total}`}</Label>
+      <Label x={W / 2} y={128}>{spec.op === "-" ? tr(`Còn lại ${left}`, `Left ${left}`) : tr(`Tất cả ${total}`, `Altogether ${total}`)}</Label>
     </>
   );
 }
@@ -56,7 +60,7 @@ function Rows({ spec }: { spec: Extract<Picture, { k: "rows" }> }) {
 }
 
 /** Tấm trăm, bó chục và que lẻ của một hoặc hai số. */
-function Place({ spec }: { spec: Extract<Picture, { k: "place" }> }) {
+function Place({ spec, tr }: { spec: Extract<Picture, { k: "place" }>; tr: Tr }) {
   const band = W / spec.numbers.length;
   return (
     <>
@@ -72,7 +76,7 @@ function Place({ spec }: { spec: Extract<Picture, { k: "place" }> }) {
           <g key={value}>
             {items}
             <Label x={ni * band + band / 2} y={124} size={16}>{value}</Label>
-            <Label x={ni * band + band / 2} y={142} size={11}>{[h ? `${h} trăm` : "", `${t} chục`, `${o} lẻ`].filter(Boolean).join(", ")}</Label>
+            <Label x={ni * band + band / 2} y={142} size={11}>{[h ? tr(`${h} trăm`, `${h} hundreds`) : "", tr(`${t} chục`, `${t} tens`), tr(`${o} lẻ`, `${o} ones`)].filter(Boolean).join(", ")}</Label>
           </g>
         );
       })}
@@ -159,7 +163,7 @@ function ArrayDots({ spec }: { spec: Extract<Picture, { k: "array" }> }) {
   );
 }
 
-function Share({ spec }: { spec: Extract<Picture, { k: "share" }> }) {
+function Share({ spec, tr }: { spec: Extract<Picture, { k: "share" }>; tr: Tr }) {
   const each = Math.floor(spec.total / spec.groups);
   const left = spec.total - each * spec.groups;
   const boxW = (W - 20 - (left ? 50 : 0)) / spec.groups;
@@ -174,12 +178,12 @@ function Share({ spec }: { spec: Extract<Picture, { k: "share" }> }) {
         </g>
       ))}
       {Array.from({ length: left }, (_, i) => <circle key={`l${i}`} cx={W - 30} cy={30 + i * 15} r={5.5} className="pic-red" />)}
-      <Label x={W / 2} y={138}>{left ? `${spec.total} : ${spec.groups} = ${each}, dư ${left}` : `${spec.total} : ${spec.groups} = ${each}`}</Label>
+      <Label x={W / 2} y={138}>{left ? `${spec.total} : ${spec.groups} = ${each}, ${tr("dư", "remainder")} ${left}` : `${spec.total} : ${spec.groups} = ${each}`}</Label>
     </>
   );
 }
 
-function Grid({ spec }: { spec: Extract<Picture, { k: "grid" }> }) {
+function Grid({ spec, tr }: { spec: Extract<Picture, { k: "grid" }>; tr: Tr }) {
   const s = Math.min(22, 100 / spec.h);
   const x0 = (W - s * spec.w) / 2;
   return (
@@ -190,7 +194,7 @@ function Grid({ spec }: { spec: Extract<Picture, { k: "grid" }> }) {
       {spec.outline ? <rect x={x0} y={12} width={s * spec.w} height={s * spec.h} className="pic-outline" /> : null}
       <Label x={W / 2} y={12 + s * spec.h + 18} size={12}>{`${spec.w} ${spec.unit}`}</Label>
       <Label x={x0 - 8} y={12 + (s * spec.h) / 2 + 4} anchor="end" size={12}>{`${spec.h} ${spec.unit}`}</Label>
-      <Label x={W / 2} y={142}>{spec.outline ? `Chu vi = (${spec.w} + ${spec.h}) × 2 = ${(spec.w + spec.h) * 2} ${spec.unit}` : `${spec.w} × ${spec.h} = ${spec.w * spec.h} ô vuông`}</Label>
+      <Label x={W / 2} y={142}>{spec.outline ? `${tr("Chu vi", "Perimeter")} = (${spec.w} + ${spec.h}) × 2 = ${(spec.w + spec.h) * 2} ${spec.unit}` : `${spec.w} × ${spec.h} = ${spec.w * spec.h} ${tr("ô vuông", "squares")}`}</Label>
     </>
   );
 }
@@ -219,7 +223,7 @@ function Path({ spec }: { spec: Extract<Picture, { k: "path" }> }) {
   );
 }
 
-function CircleRadius({ spec }: { spec: Extract<Picture, { k: "circle" }> }) {
+function CircleRadius({ spec, tr }: { spec: Extract<Picture, { k: "circle" }>; tr: Tr }) {
   const cx = W / 2, cy = 66, r = 52;
   return (
     <>
@@ -228,28 +232,28 @@ function CircleRadius({ spec }: { spec: Extract<Picture, { k: "circle" }> }) {
       <line x1={cx} y1={cy} x2={cx + r * 0.6} y2={cy - r * 0.8} className="pic-hand" />
       <circle cx={cx} cy={cy} r={4} className="pic-red" />
       <Label x={cx - 8} y={cy + 16} size={12}>O</Label>
-      <Label x={cx + r + 8} y={cy - 30} anchor="start" size={12}>{`bán kính ${spec.r} ${spec.unit}`}</Label>
-      <Label x={W / 2} y={140}>{`đường kính = ${spec.r} × 2 = ${spec.r * 2} ${spec.unit}`}</Label>
+      <Label x={cx + r + 8} y={cy - 30} anchor="start" size={12}>{`${tr("bán kính", "radius")} ${spec.r} ${spec.unit}`}</Label>
+      <Label x={W / 2} y={140}>{`${tr("đường kính", "diameter")} = ${spec.r} × 2 = ${spec.r * 2} ${spec.unit}`}</Label>
     </>
   );
 }
 
-function Shapes() {
+function Shapes({ tr }: { tr: Tr }) {
   return (
     <>
       <circle cx={42} cy={64} r={28} className="pic-orange" />
       <polygon points="118,36 90,92 146,92" className="pic-green" />
       <rect x={168} y={36} width={56} height={56} rx={2} className="pic-blue" />
       <rect x={240} y={46} width={66} height={40} rx={2} className="pic-purple" />
-      <Label x={42} y={124} size={11}>tròn</Label>
-      <Label x={118} y={124} size={11}>tam giác</Label>
-      <Label x={196} y={124} size={11}>vuông</Label>
-      <Label x={273} y={124} size={11}>chữ nhật</Label>
+      <Label x={42} y={124} size={11}>{tr("tròn", "circle")}</Label>
+      <Label x={118} y={124} size={11}>{tr("tam giác", "triangle")}</Label>
+      <Label x={196} y={124} size={11}>{tr("vuông", "square")}</Label>
+      <Label x={273} y={124} size={11}>{tr("chữ nhật", "rectangle")}</Label>
     </>
   );
 }
 
-function Solids() {
+function Solids({ tr }: { tr: Tr }) {
   return (
     <>
       <ellipse cx={60} cy={34} rx={30} ry={10} className="pic-blue" />
@@ -258,14 +262,14 @@ function Solids() {
       <circle cx={160} cy={66} r={36} className="pic-orange" />
       <ellipse cx={160} cy={66} rx={36} ry={11} className="pic-band" />
       <polygon points="232,40 300,52 288,100 240,92" className="pic-green" />
-      <Label x={60} y={130} size={11}>khối trụ</Label>
-      <Label x={160} y={130} size={11}>khối cầu</Label>
-      <Label x={266} y={130} size={11}>tứ giác</Label>
+      <Label x={60} y={130} size={11}>{tr("khối trụ", "cylinder")}</Label>
+      <Label x={160} y={130} size={11}>{tr("khối cầu", "sphere")}</Label>
+      <Label x={266} y={130} size={11}>{tr("tứ giác", "quadrilateral")}</Label>
     </>
   );
 }
 
-function Parts({ spec }: { spec: Extract<Picture, { k: "parts" }> }) {
+function Parts({ spec, tr }: { spec: Extract<Picture, { k: "parts" }>; tr: Tr }) {
   const band = W / spec.parts.length;
   const r = Math.min(44, band / 2 - 10);
   return (
@@ -282,7 +286,7 @@ function Parts({ spec }: { spec: Extract<Picture, { k: "parts" }> }) {
             {Array.from({ length: n }, (_, k) => (
               <line key={k} x1={cx} y1={cy} x2={cx + r * Math.sin(k * slice)} y2={cy - r * Math.cos(k * slice)} className="pic-tick" />
             ))}
-            <Label x={cx} y={cy + r + 22} size={13}>{`một phần ${["", "", "hai", "ba", "tư", "năm", "sáu", "bảy", "tám", "chín"][n] ?? n}`}</Label>
+            <Label x={cx} y={cy + r + 22} size={13}>{tr(`một phần ${["", "", "hai", "ba", "tư", "năm", "sáu", "bảy", "tám", "chín"][n] ?? n}`, `one ${["", "", "half", "third", "quarter", "fifth", "sixth", "seventh", "eighth", "ninth"][n] ?? `part of ${n}`}`)}</Label>
           </g>
         );
       })}
@@ -315,7 +319,7 @@ function NumberLine({ spec }: { spec: Extract<Picture, { k: "line" }> }) {
   );
 }
 
-function Calendar({ spec }: { spec: Extract<Picture, { k: "calendar" }> }) {
+function Calendar({ spec, tr }: { spec: Extract<Picture, { k: "calendar" }>; tr: Tr }) {
   const s = 18;
   const x0 = (W - s * 7) / 2;
   return (
@@ -326,7 +330,7 @@ function Calendar({ spec }: { spec: Extract<Picture, { k: "calendar" }> }) {
           <Label x={x0 + (i % 7) * s + (s - 2) / 2} y={8 + Math.floor(i / 7) * s + 12} size={8}>{i + 1}</Label>
         </g>
       ))}
-      <Label x={W / 2} y={140}>{`Đã qua ${spec.past} ngày, còn ${spec.days - spec.past} ngày`}</Label>
+      <Label x={W / 2} y={140}>{tr(`Đã qua ${spec.past} ngày, còn ${spec.days - spec.past} ngày`, `${spec.past} days gone, ${spec.days - spec.past} days left`)}</Label>
     </>
   );
 }
@@ -346,25 +350,27 @@ function Tiles({ spec }: { spec: Extract<Picture, { k: "tiles" }> }) {
   );
 }
 
-export function LessonPicture({ spec }: { spec: Picture }) {
+export function LessonPicture({ spec: source, english = false }: { spec: Picture; english?: boolean }) {
+  const spec = english ? pictureInEnglish(source) : source;
+  const tr: Tr = (vi, en) => (english ? en : vi);
   return (
     <svg className="lesson-picture" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={spec.alt}>
-      {spec.k === "groups" ? <Groups spec={spec} /> : null}
+      {spec.k === "groups" ? <Groups spec={spec} tr={tr} /> : null}
       {spec.k === "rows" ? <Rows spec={spec} /> : null}
-      {spec.k === "place" ? <Place spec={spec} /> : null}
+      {spec.k === "place" ? <Place spec={spec} tr={tr} /> : null}
       {spec.k === "clock" ? <Clock spec={spec} /> : null}
       {spec.k === "ruler" ? <Ruler spec={spec} /> : null}
       {spec.k === "bars" ? <Bars spec={spec} /> : null}
       {spec.k === "array" ? <ArrayDots spec={spec} /> : null}
-      {spec.k === "share" ? <Share spec={spec} /> : null}
-      {spec.k === "grid" ? <Grid spec={spec} /> : null}
+      {spec.k === "share" ? <Share spec={spec} tr={tr} /> : null}
+      {spec.k === "grid" ? <Grid spec={spec} tr={tr} /> : null}
       {spec.k === "path" ? <Path spec={spec} /> : null}
-      {spec.k === "circle" ? <CircleRadius spec={spec} /> : null}
-      {spec.k === "shapes" ? <Shapes /> : null}
-      {spec.k === "solids" ? <Solids /> : null}
-      {spec.k === "parts" ? <Parts spec={spec} /> : null}
+      {spec.k === "circle" ? <CircleRadius spec={spec} tr={tr} /> : null}
+      {spec.k === "shapes" ? <Shapes tr={tr} /> : null}
+      {spec.k === "solids" ? <Solids tr={tr} /> : null}
+      {spec.k === "parts" ? <Parts spec={spec} tr={tr} /> : null}
       {spec.k === "line" ? <NumberLine spec={spec} /> : null}
-      {spec.k === "calendar" ? <Calendar spec={spec} /> : null}
+      {spec.k === "calendar" ? <Calendar spec={spec} tr={tr} /> : null}
       {spec.k === "tiles" ? <Tiles spec={spec} /> : null}
     </svg>
   );

@@ -190,7 +190,7 @@ function LessonView({ book, chapterId, chapterTitle, lesson: source }: { book: G
               <p><MathText text={lesson.pitfalls} /></p>
             </>
           ) : null}
-          {pictures[`${book.grade}/${lesson.id}`] ? <LessonPicture spec={pictures[`${book.grade}/${lesson.id}`]!} /> : lesson.figure ? <GradeFigure kind={lesson.figure} /> : null}
+          {pictures[`${book.grade}/${lesson.id}`] ? <LessonPicture spec={pictures[`${book.grade}/${lesson.id}`]!} english={Boolean(english)} /> : lesson.figure ? <GradeFigure kind={lesson.figure} /> : null}
           {lesson.widget ? <GradeWidgetView kind={lesson.widget} /> : null}
           {topic ? <p><A href={`/t/${topic.id}`}>{t(lang, `Mở chuyên đề ${topic.title}`, `Open the topic ${topic.titleEn}`)}</A></p> : null}
         </article>

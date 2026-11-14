@@ -6,6 +6,8 @@
  */
 import { gradeBooks } from "../src/content/grades/index.ts";
 import { lessonInEnglish, lessonsEn } from "../src/content/grades/en/index.ts";
+import { pictures } from "../src/content/grades/pictures.ts";
+import { pictureTextEn } from "../src/content/grades/en/pictures.ts";
 
 const fails: string[] = [];
 const fail = (where: string, what: string): void => {
@@ -79,6 +81,22 @@ for (const book of gradeBooks) {
   }
 }
 for (const key of Object.keys(lessonsEn)) if (!seen.has(key)) fail(key, "không ứng với bài nào");
+// Mọi chữ trong hình minh họa lớp 1–3 phải có bản tiếng Anh.
+const pictureStrings = new Set<string>();
+const collectText = (value: unknown, key = ""): void => {
+  if (typeof value === "string") {
+    if (key !== "k" && key !== "tone" && /\p{L}/u.test(value)) pictureStrings.add(value);
+  } else if (Array.isArray(value)) value.forEach((item) => collectText(item, key));
+  else if (value && typeof value === "object") for (const [k, v] of Object.entries(value)) collectText(v, k);
+};
+collectText(pictures);
+for (const text of pictureStrings) {
+  const en = pictureTextEn[text];
+  if (!en) fail("hình", `thiếu bản tiếng Anh: ${text}`);
+  else if (VI_LETTERS.test(en)) fail("hình", `còn chữ tiếng Việt: ${en}`);
+}
+for (const text of Object.keys(pictureTextEn)) if (!pictureStrings.has(text)) fail("hình", `bản dịch thừa: ${text}`);
+if (lessons < total) fail("en", `mới dịch ${lessons}/${total} bài; mọi bài phải có bản tiếng Anh`);
 
 if (fails.length) {
   console.error(fails.slice(0, 40).join("\n"));
