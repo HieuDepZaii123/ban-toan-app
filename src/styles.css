@@ -1756,3 +1756,5 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .code-no { display: inline-block; width: 2ch; margin-right: 10px; text-align: right; color: var(--muted); user-select: none; }
 .code-state { display: grid; gap: 6px; }
 .code-state code { font-size: 0.95rem; }
+/* Chữ hoa trang trí của tiêu đề không được đổi biến trong công thức: y = ax² không thành Y = AX². */
+.katex { text-transform: none; }

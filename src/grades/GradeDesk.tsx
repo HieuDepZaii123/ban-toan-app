@@ -1,3 +1,4 @@
+import { gradeTitle } from "../content/grades/titlesEn.ts";
 import { plainMath } from "../lib/plainMath.ts";
 import { useEffect, useState } from "react";
 import { cards } from "../content/cards.ts";
@@ -25,7 +26,7 @@ export function GradeDesk() {
     const book = parsed.grade ? gradeBooks.find((item) => item.grade === parsed.grade) : undefined;
     const found = parsed.grade && parsed.lesson ? lessonAt(parsed.grade, parsed.lesson) : undefined;
     const gradeWord = lang === "en" ? "Grade" : "Lớp";
-    document.title = found ? `${plainMath(found.lesson.title)} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
+    document.title = found ? `${plainMath(gradeTitle(lang, `${parsed.grade}/${found.lesson.id}`, found.lesson.title))} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
   }, [parsed.grade, parsed.lesson, lang]);
 
   if (!parsed.grade) return <GradeHome />;
@@ -46,7 +47,7 @@ export function GradeDesk() {
       </PageFrame>
     );
   }
-  return <LessonView book={book} chapterTitle={found.chapter.title} lesson={found.lesson} />;
+  return <LessonView book={book} chapterId={found.chapter.id} chapterTitle={found.chapter.title} lesson={found.lesson} />;
 }
 
 function useDone(): string[] {
@@ -102,7 +103,7 @@ function GradeHome() {
                 <A key={book.grade} className="study-card" href={`/kien-thuc/${book.grade}`}>
                   <span>
                     <strong>{t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)}</strong>
-                    <small className="lecture-note">{book.title}</small>
+                    <small className="lecture-note">{gradeTitle(lang, String(book.grade), book.title)}</small>
                     <ProgressBar done={count} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
                   </span>
                 </A>
@@ -120,19 +121,19 @@ function GradeIndex({ book }: { book: GradeBook }) {
   const done = useDone();
   const ids = lessonsOf(book).map((item) => item.lesson.id);
   return (
-    <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={book.title}>
+    <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={gradeTitle(lang, String(book.grade), book.title)}>
       <p><A href="/kien-thuc">{t(lang, "Tất cả các lớp", "All grades")}</A>{" · "}{book.grade <= 9 ? <A href={`/luyen-lop/${book.grade}`}>{t(lang, "Luyện nhanh lớp này", "Quick practice")}</A> : <A href="/luyen-thpt">{t(lang, "Luyện THPT", "Upper-secondary practice")}</A>}</p>
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
       {book.chapters.map((chapter) => (
         <section key={chapter.id} className="stream">
-          <h2><MathText text={chapter.title} /></h2>
+          <h2><MathText text={gradeTitle(lang, `${book.grade}/c/${chapter.id}`, chapter.title)} /></h2>
           <div className="study-list">
             {chapter.lessons.map((lesson) => {
               const ready = done.includes(`${book.grade}/${lesson.id}`);
               return (
                 <A key={lesson.id} className="study-card" href={`/kien-thuc/${book.grade}/${lesson.id}`}>
                   <span>
-                    <strong><MathText text={lesson.title} /></strong>
+                    <strong><MathText text={gradeTitle(lang, `${book.grade}/${lesson.id}`, lesson.title)} /></strong>
                     {lesson.topicId ? <small className="lecture-note">{topicNote(lang, lesson.topicId)}</small> : null}
                   </span>
                   {ready ? <span aria-label={t(lang, "Đã xong", "Done")}>✓</span> : null}
@@ -152,7 +153,7 @@ function topicNote(lang: Lang, topicId: string): string {
   return t(lang, `Có hình kéo và câu luyện trong chuyên đề ${topic.title}`, `Interactive figure and practice in the topic ${topic.titleEn}`);
 }
 
-function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTitle: string; lesson: GradeBook["chapters"][number]["lessons"][number] }) {
+function LessonView({ book, chapterId, chapterTitle, lesson }: { book: GradeBook; chapterId: string; chapterTitle: string; lesson: GradeBook["chapters"][number]["lessons"][number] }) {
   const lang = useLang();
   const topic = lesson.topicId ? cards.find((card) => card.id === lesson.topicId) : undefined;
   const [correct, setCorrect] = useState<boolean[]>(() => lesson.drills.map(() => false));
@@ -164,9 +165,9 @@ function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTi
   const nextLesson = at >= 0 ? allLessons[at + 1] : undefined;
   const score = correct.filter(Boolean).length;
   return (
-    <PageFrame kicker={`${t(lang, "Lớp", "Grade")} ${book.grade} · ${chapterTitle}`} title={lesson.title}>
+    <PageFrame kicker={`${t(lang, "Lớp", "Grade")} ${book.grade} · ${gradeTitle(lang, `${book.grade}/c/${chapterId}`, chapterTitle)}`} title={gradeTitle(lang, `${book.grade}/${lesson.id}`, lesson.title)}>
       <p><A href={`/kien-thuc/${book.grade}`}>{t(lang, `Về các bài lớp ${book.grade}`, `Back to grade ${book.grade} lessons`)}</A></p>
-      {lang === "en" ? <p className="lecture-note vi-only-note">This lesson is written in Vietnamese; only the labels are translated.</p> : null}
+      {lang === "en" ? <p className="lecture-note vi-only-note">The lesson title is translated; the lesson text itself is in Vietnamese.</p> : null}
       <div lang="vi" className="lesson-body">
         <article className="tool-card">
           <h2>{t(lang, "Tóm tắt", "Summary")}</h2>
@@ -208,7 +209,7 @@ function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTi
         </article>
       </div>
       <p className="lesson-next">
-        {nextLesson ? <A className="text-btn" href={`/kien-thuc/${book.grade}/${nextLesson.id}`}><MathText text={t(lang, `Bài sau: ${nextLesson.title}`, `Next lesson: ${nextLesson.title}`)} /></A> : null}
+        {nextLesson ? <A className="text-btn" href={`/kien-thuc/${book.grade}/${nextLesson.id}`}><MathText text={t(lang, `Bài sau: ${nextLesson.title}`, `Next lesson: ${gradeTitle(lang, `${book.grade}/${nextLesson.id}`, nextLesson.title)}`)} /></A> : null}
         <A className="text-btn" href={book.grade <= 9 ? `/luyen-lop/${book.grade}` : "/luyen-thpt"}>{t(lang, "Luyện nhanh", "Quick practice")}</A>
       </p>
     </PageFrame>

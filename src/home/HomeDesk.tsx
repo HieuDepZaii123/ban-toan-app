@@ -103,7 +103,7 @@ function GradePicker({ current, onPick, onCancel }: { current: Grade; onPick: (g
   );
 }
 
-type NextLesson = { grade: number; href: string; title: string; done: number; total: number };
+type NextLesson = { grade: number; href: string; title: string; titleEn: string; done: number; total: number };
 
 /** Bài kế tiếp chưa xong của lớp. Dữ liệu các lớp nặng, nên chỉ tải khi trang đã hiện. */
 function useNextLesson(grade: number): NextLesson | null {
@@ -111,7 +111,7 @@ function useNextLesson(grade: number): NextLesson | null {
   useEffect(() => {
     let live = true;
     const run = () => {
-      void Promise.all([import("../content/grades/index.ts"), import("../grades/progress.ts")]).then(([books, progress]) => {
+      void Promise.all([import("../content/grades/index.ts"), import("../grades/progress.ts"), import("../content/grades/titlesEn.ts")]).then(([books, progress, names]) => {
         if (!live) return;
         const book = books.bookByGrade(grade);
         if (!book) return;
@@ -123,6 +123,7 @@ function useNextLesson(grade: number): NextLesson | null {
           grade,
           href: `/kien-thuc/${grade}/${next.id}`,
           title: next.title,
+          titleEn: names.titlesEn[`${grade}/${next.id}`] ?? next.title,
           done: progress.doneCount(grade, lessons.map((lesson) => lesson.id), done),
           total: lessons.length,
         });
@@ -143,8 +144,8 @@ function GradeHero({ grade, onChange }: { grade: number; onChange: () => void })
   const practice = grade <= 9 ? `/luyen-lop/${grade}` : "/luyen-thpt";
   const start = next
     ? next.done > 0
-      ? t(lang, `Học tiếp: ${next.title}`, `Continue: ${next.title}`)
-      : t(lang, `Bắt đầu: ${next.title}`, `Start: ${next.title}`)
+      ? t(lang, `Học tiếp: ${next.title}`, `Continue: ${next.titleEn}`)
+      : t(lang, `Bắt đầu: ${next.title}`, `Start: ${next.titleEn}`)
     : t(lang, `Mở bài lớp ${grade}`, `Open grade ${grade} lessons`);
   return (
     <section className="home-hero" aria-labelledby="home-title">
