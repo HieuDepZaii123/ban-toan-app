@@ -17,6 +17,7 @@ import {
   type Paper,
   type PaperScore,
 } from "../thpt/exam2025.ts";
+import { addPaper, loadReview, saveReview, schedule } from "../thpt/review.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -110,6 +111,8 @@ export function ExamPage() {
     const paper = buildPaper(sitting.seed);
     const score = scorePaper(paper, sitting.answers, topicName);
     const finishedAt = Math.min(Date.now(), sitting.startedAt + LIMIT_MS);
+    // Missed questions go into the review plan (kept for everyone; reviewing them is Premium).
+    saveReview(addPaper(loadReview(), paper, sitting.answers, score.losses, Date.now()));
     update({
       active: null,
       last: { ...sitting, finishedAt },
@@ -150,7 +153,7 @@ export function ExamPage() {
         ) : (
           <p className="pay-card">
             <b>{t(lang, "Bạn đã dùng đề miễn phí.", "You have used your free paper.")}</b>
-            <span>{premium.kind === "checking" ? t(lang, " Đang kiểm mã Premium…", " Checking your Premium key…") : t(lang, " Premium mở đề không giới hạn, kèm bảng điểm theo chủ đề.", " Premium unlocks unlimited papers with topic breakdowns.")}</span>
+            <span>{premium.kind === "checking" ? t(lang, " Đang kiểm mã Premium…", " Checking your Premium key…") : t(lang, " Premium mở thêm đề, không giới hạn. Bảng điểm đề đã làm vẫn xem được.", " Premium opens further papers, without a cap. The score table of a paper you sat stays visible.")}</span>
             {" "}
             <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
           </p>
@@ -288,8 +291,22 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
   );
 }
 
+/** Pointer from the result to the mistake review plan, with how many questions wait there today. */
+function ReviewLink() {
+  const lang = useLang();
+  const plan = useMemo(() => schedule(loadReview(), Date.now()), []);
+  if (plan.total === 0) return null;
+  return (
+    <p className="exam-2025">
+      <A href="/on-loi-sai">{t(lang, "Kế hoạch ôn lỗi sai", "Mistake review plan")}</A>
+      <span>{t(lang, `${plan.total} câu sai đang chờ, ${plan.today} câu ôn được hôm nay.`, `${plan.total} missed questions waiting, ${plan.today} ready today.`)}</span>
+    </p>
+  );
+}
+
 function Result({ finished }: { finished: Finished }) {
   const lang = useLang();
+  const premium = usePremium();
   const paper: Paper = useMemo(() => buildPaper(finished.seed), [finished.seed]);
   const score: PaperScore = useMemo(() => scorePaper(paper, finished.answers, topicName), [paper, finished.answers]);
   const { answers } = finished;
@@ -313,6 +330,14 @@ function Result({ finished }: { finished: Finished }) {
             ))}
           </ul>
         </>
+      ) : null}
+      <ReviewLink />
+      {premium.kind !== "active" ? (
+        <aside className="pay-card exam-premium-card">
+          <b>{t(lang, "Làm thêm đề và ôn câu vừa sai", "Further papers and the questions you just missed")}</b>
+          <span>{t(lang, " Bảng điểm đề này xem được ngay. Premium mở đề tiếp theo và lịch ôn câu sai.", " This paper's score table is already visible. Premium opens the next paper and the review schedule.")}</span>{" "}
+          <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
+        </aside>
       ) : null}
       <details className="exam-review">
         <summary>{t(lang, "Xem lại từng câu kèm lời giải", "Review every question with solutions")}</summary>

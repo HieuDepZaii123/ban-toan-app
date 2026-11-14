@@ -7,10 +7,13 @@ import { useLang } from "../ui/useLang.ts";
 import { ChatText } from "./ChatText.tsx";
 import { mockTutor } from "./mock.ts";
 import { deviceId } from "../lib/device.ts";
-import { parentModeOn } from "../parent/parentMode.ts";
+import { parentModeOn, useParentMode } from "../parent/parentMode.ts";
+import { shrinkPhoto } from "./photo.ts";
+import { usePremium } from "../premium/license.ts";
 import { TOPIC_QUICK, topicById } from "./tutorCopy.ts";
 
 type Turn = { role: "user" | "assistant"; content: string };
+type TutorMode = "hint" | "solve" | "check";
 type ChatState = {
   reply?: string;
   text?: string;
@@ -90,6 +93,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
+  const [premiumAsk, setPremiumAsk] = useState(false);
   const [meta, setMeta] = useState<ChatState>({});
   const [url, setUrl] = useState(() => {
     if (!DEV_TOOLS) return "";
@@ -100,6 +104,12 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     try { return localStorage.getItem(MOCK_KEY) === "1"; } catch { return false; }
   });
   const [localLeft, setLocalLeft] = useState(() => Math.max(0, LOCAL_LIMIT - usedToday()));
+  const [tutorMode, setTutorMode] = useState<TutorMode>("hint");
+  const [photo, setPhoto] = useState<string | null>(null);
+  const premiumState = usePremium();
+  const isPremium = premiumState.kind === "active" || meta.premium === true;
+  const parentOn = useParentMode();
+  const picker = useRef<HTMLInputElement>(null);
   const box = useRef<HTMLTextAreaElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
 
@@ -120,8 +130,34 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     scroller.current?.scrollTo({ top: scroller.current.scrollHeight });
   }, [turns, busy]);
 
+  function premiumOnly(): void {
+    setPremiumAsk(true);
+    setNote("");
+  }
+
+  function pickMode(next: TutorMode): void {
+    if (next === "solve" && parentOn) {
+      setNote(t(lang, "Chế độ phụ huynh đang bật: lời giải đầy đủ bị khóa. Dùng Kiểm tra bài làm.", "Parent mode is on: full solutions are locked. Use Check my work."));
+      return;
+    }
+    if (next !== "hint" && !isPremium) return premiumOnly();
+    setTutorMode(next);
+    setNote("");
+  }
+
+  async function choosePhoto(file: File | undefined): Promise<void> {
+    if (!file) return;
+    if (!isPremium) return premiumOnly();
+    const url = await shrinkPhoto(file);
+    if (!url) return setNote(t(lang, "Ảnh chưa đọc được. Thử ảnh khác.", "That photo could not be read. Try another."));
+    setPhoto(url);
+    setNote("");
+  }
+
   async function send(text?: string): Promise<void> {
-    const content = (text ?? draft).trim();
+    const typed = (text ?? draft).trim();
+    const attached = text === undefined ? photo : null;
+    const content = typed || (attached ? t(lang, "Đề bài trong ảnh.", "The problem is in the photo.") : "");
     if (!content || busy) return;
     const localMode = mock || url.trim() !== "";
     if (localMode && usedToday() >= LOCAL_LIMIT) {
@@ -129,8 +165,11 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       return;
     }
     const next = [...turns, { role: "user" as const, content }].slice(-12);
-    setTurns(next);
+    const sentMode: TutorMode = text === undefined ? tutorMode : "hint";
+    const label = attached ? t(lang, "(kèm ảnh) ", "(photo attached) ") : "";
+    setTurns([...turns, { role: "user" as const, content: label + content }].slice(-12));
     setDraft("");
+    if (attached) setPhoto(null);
     setBusy(true);
     setNote("");
     try {
@@ -154,7 +193,15 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "content-type": "application/json", "x-ban-toan-session": sessionId() },
-          body: JSON.stringify({ messages: next, license, topic: studying?.id ?? "", device: deviceId(), parent: parentModeOn() }),
+          body: JSON.stringify({
+            messages: next,
+            license,
+            topic: studying?.id ?? "",
+            device: deviceId(),
+            mode: sentMode,
+            parent: parentModeOn(),
+            ...(attached ? { image: attached } : {}),
+          }),
         });
         const body = await res.json() as ChatState;
         setMeta(body);
@@ -210,13 +257,67 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         ))}
         {busy ? <p className="chat-typing">{t(lang, "Đang soạn…", "Typing…")}</p> : null}
         {note ? <p className="chat-note" role="status">{note}</p> : null}
+        {premiumAsk ? (
+          <p className="chat-note" role="status">
+            {t(lang, "Lời giải đầy đủ, kiểm tra bài làm và ảnh đề là Premium. ", "Full solutions, checking work and problem photos are Premium. ")}
+            <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
+          </p>
+        ) : null}
       </div>
       <div className="quick-row">
         {quick.map((item) => (
           <button key={item} type="button" className="text-btn" disabled={busy} onClick={() => void send(item)}>{item}</button>
         ))}
       </div>
+      <div className="chat-modes" role="radiogroup" aria-label={t(lang, "Kiểu trả lời", "Answer style")}>
+        {([
+          ["hint", t(lang, "Gợi ý", "Hints")],
+          ["solve", t(lang, "Lời giải đầy đủ", "Full solution")],
+          ["check", t(lang, "Kiểm tra bài làm", "Check my work")],
+        ] as const).map(([id, label]) => (
+          <button
+            key={id}
+            type="button"
+            role="radio"
+            aria-checked={tutorMode === id}
+            className={`chat-mode${tutorMode === id ? " is-on" : ""}`}
+            disabled={busy}
+            onClick={() => pickMode(id)}
+          >
+            {label}
+            {id === "solve" && parentOn
+              ? <span className="chat-lock"> · {t(lang, "khóa", "locked")}</span>
+              : id !== "hint" && !isPremium ? <span className="chat-lock"> · Premium</span> : null}
+          </button>
+        ))}
+      </div>
+      {photo ? (
+        <div className="chat-photo">
+          <img src={photo} alt={t(lang, "Ảnh đề bài sẽ gửi", "Photo to send")} />
+          <button type="button" className="text-btn" onClick={() => setPhoto(null)}>{t(lang, "Bỏ ảnh", "Remove photo")}</button>
+        </div>
+      ) : null}
+      <input
+        ref={picker}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        hidden
+        onChange={(event) => {
+          void choosePhoto(event.target.files?.[0]);
+          event.target.value = "";
+        }}
+      />
       <form className="chat-form" onSubmit={(event) => { event.preventDefault(); void send(); }}>
+        <button
+          type="button"
+          className="text-btn chat-photo-btn"
+          disabled={busy}
+          title={isPremium ? t(lang, "Chụp hoặc chọn ảnh đề bài", "Take or choose a photo of the problem") : t(lang, "Ảnh đề bài (Premium)", "Photo of a problem (Premium)")}
+          onClick={() => (isPremium ? picker.current?.click() : premiumOnly())}
+        >
+          {t(lang, "Ảnh", "Photo")}
+        </button>
         <label className="sr" htmlFor="chat-q">{t(lang, "Câu hỏi toán", "Math question")}</label>
         <textarea
           id="chat-q"
@@ -224,7 +325,9 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
           rows={2}
           value={draft}
           maxLength={1500}
-          placeholder={t(lang, "Viết công thức trong $...$ nếu cần", "Put a formula inside $...$ if you need one")}
+          placeholder={tutorMode === "check"
+            ? t(lang, "Dán đề bài rồi bài làm của bạn, mỗi bước một dòng", "Paste the problem, then your working, one step per line")
+            : t(lang, "Viết công thức trong $...$ nếu cần", "Put a formula inside $...$ if you need one")}
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={(event) => {
             if (event.key === "Enter" && !event.shiftKey) {
@@ -233,7 +336,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             }
           }}
         />
-        <button className="pay-btn" type="submit" disabled={busy || draft.trim() === ""}>{t(lang, "Gửi", "Send")}</button>
+        <button className="pay-btn" type="submit" disabled={busy || (draft.trim() === "" && !photo)}>{t(lang, "Gửi", "Send")}</button>
       </form>
       {draft.includes("$") ? (
         <p className="chat-preview" aria-label={t(lang, "Xem công thức", "Formula preview")}><MathText text={draft} /></p>

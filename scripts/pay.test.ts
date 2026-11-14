@@ -164,11 +164,13 @@ function signedIpn(orderId: string, amount: number, resultCode = 0, transId = "9
 const plans = await get("/api/premium/plans");
 assert(plans.status === 200, "plans status");
 assert(plans.json.lockContent === false, "content lock defaults off");
+assert(plans.json.sample === false, "sample price label stays off unless PREMIUM_SAMPLE=1");
 assert((plans.json.plans as { amount: number }[])[0]?.amount === 49000, "month price is server config");
 
 const tampered = await post("/api/premium/create", { email: "hieu@example.com", plan: "month", method: "bank", amount: 1000 });
 assert(tampered.status === 200, "bank order created");
 assert(tampered.json.amount === 49000, "client amount was ignored");
+assert(tampered.json.samplePrices === false, "a configured order is not marked as sample prices");
 assert(typeof tampered.json.transferCode === "string", "transfer code");
 const bankQr = tampered.json.bank as { qrDataUrl?: string; accountNo?: string; sample?: boolean } | undefined;
 assert(bankQr?.qrDataUrl?.startsWith("data:image/png;base64,") === true, "VietQR image");
@@ -255,7 +257,8 @@ assert(ret.headers.get("location") === "http://pay.local/nang-cap?orderId=BTDEMO
 }
 
 // A production deploy must never fall back to MoMo's public sandbox secret or the .env.example placeholders.
-const prod = withTestStore(payEnv({ VERCEL_ENV: "production", ADMIN_TOKEN: "doi-token-admin", BANK_WEBHOOK_SECRET: "short" }, () => clock));
+// A real receiving account; with the sample account a live deploy refuses bank orders (scripts/pay-open.test.ts).
+const prod = withTestStore(payEnv({ VERCEL_ENV: "production", ADMIN_TOKEN: "doi-token-admin", BANK_WEBHOOK_SECRET: "short", BANK_ACCOUNT_NO: "1234567890", BANK_ACCOUNT_NAME: "NGUYEN VAN A" }, () => clock));
 assert(prod.live && !prod.momoReady, "live deploy without MoMo secret is not MoMo-ready");
 assert(prod.adminToken === "" && prod.webhookSecret === "", "placeholder or short secrets are refused when live");
 const forged = await handlePremium(new Request("http://pay.local/api/premium/ipn", { method: "POST", body: "{}" }), prod);
@@ -266,6 +269,9 @@ const bankProd = await handlePremium(new Request("http://pay.local/api/premium/c
 assert(bankProd.status === 200, `bank transfer still works without MoMo ${bankProd.status}`);
 const dev = payEnv({ ADMIN_TOKEN: "doi-token-admin" });
 assert(!dev.live && dev.momoReady && dev.adminToken === "", "sandbox works locally, placeholders never do");
+assert(dev.samplePrices === false, "PREMIUM_SAMPLE defaults off");
+assert(payEnv({ PREMIUM_SAMPLE: "1" }).samplePrices === true, "PREMIUM_SAMPLE=1 marks demo prices");
+assert(payEnv({ PREMIUM_SAMPLE: "0" }).samplePrices === false, "PREMIUM_SAMPLE=0 stays off");
 
 if (fails.length > 0) {
   console.error(fails.join("\n"));

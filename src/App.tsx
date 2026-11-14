@@ -16,6 +16,8 @@ import { useLang } from "./ui/useLang.ts";
 const TopicDesk = lazy(() => import("./topic/TopicDesk.tsx").then((mod) => ({ default: mod.TopicDesk })));
 const Upgrade = lazy(() => import("./premium/Upgrade.tsx").then((mod) => ({ default: mod.Upgrade })));
 const ExamPage = lazy(() => import("./pages/ExamPage.tsx").then((mod) => ({ default: mod.ExamPage })));
+const ReviewPage = lazy(() => import("./pages/ReviewPage.tsx").then((mod) => ({ default: mod.ReviewPage })));
+const StudyPackPage = lazy(() => import("./pages/StudyPackPage.tsx").then((mod) => ({ default: mod.StudyPackPage })));
 const PolicyPage = lazy(() => import("./pages/PolicyPage.tsx").then((mod) => ({ default: mod.PolicyPage })));
 const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
 const GradeDesk = lazy(() => import("./grades/GradeDesk.tsx").then((mod) => ({ default: mod.GradeDesk })));
@@ -33,6 +35,7 @@ const CheckPage = lazy(() => import("./check/CheckPage.tsx").then((mod) => ({ de
 const ParentPage = lazy(() => import("./parent/ParentPage.tsx").then((mod) => ({ default: mod.ParentPage })));
 const ReportPage = lazy(() => import("./parent/ReportPage.tsx").then((mod) => ({ default: mod.ReportPage })));
 const GradePracticePage = lazy(() => import("./pages/GradePracticePage.tsx").then((mod) => ({ default: mod.GradePracticePage })));
+const CalcPage = lazy(() => import("./pages/CalcPage.tsx").then((mod) => ({ default: mod.CalcPage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -82,6 +85,8 @@ function Shell() {
   if (path === "/cham-bai") return <CheckPage />;
   if (path === "/phu-huynh") return <ParentPage />;
   if (path === "/bao-cao") return <ReportPage />;
+  if (path === "/on-loi-sai") return <ReviewPage />;
+  if (path === "/tai-lieu" || path.startsWith("/tai-lieu/")) return <StudyPackPage path={path} />;
   if (path === "/so-cong-thuc") return <FormulaPage />;
   if (path === "/danh-gia") return <AssessPage />;
   if (path === "/xuong-hinh") return <WorkshopPage />;
@@ -90,6 +95,7 @@ function Shell() {
   if (path === "/gioi-thieu") return <ReferPage />;
   if (path === "/nghien-cuu") return <ResearchIdeasPage />;
   if (path === "/soan-tai-lieu") return <DocPage />;
+  if (path === "/may-tinh") return <CalcPage />;
   if (path === "/phuong-phap" || path.startsWith("/phuong-phap/")) return <MethodsPage path={path} />;
   if (path === "/luyen-lop" || path.startsWith("/luyen-lop/")) return <GradePracticePage path={path} />;
   if (path === "/luyen-thpt") return <ThptPracticePage />;

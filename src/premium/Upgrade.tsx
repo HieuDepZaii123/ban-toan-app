@@ -7,6 +7,8 @@ import { useRoute } from "../lib/useRoute.ts";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 import { activateLicense, LICENSE_KEY, usePremium } from "./license.ts";
+import { expiredOrderNote } from "./orderNote.ts";
+import { yearSavings } from "./savings.ts";
 import { REFUND_DAYS } from "./terms.ts";
 
 type PlanId = "month" | "year";
@@ -16,7 +18,10 @@ type Plans = {
   sample: boolean;
   lockContent: boolean;
   plans: { id: PlanId; amount: number; days: number }[];
+  bank?: { sample: boolean };
   crypto?: { chains: { id: string; sample: boolean }[] };
+  /** Methods and networks that can take real money; older servers send nothing, meaning all open. */
+  open?: { wallet: boolean; qr: boolean; bank: boolean; crypto: Record<string, boolean> };
 };
 
 type BankView = {
@@ -95,7 +100,16 @@ export function Upgrade() {
         setLoadError(true);
         return;
       }
-      setPlans(await res.json() as Plans);
+      const loaded = await res.json() as Plans;
+      setPlans(loaded);
+      if (loaded.open) {
+        const first = (["wallet", "qr", "bank", "crypto"] as const).find((id) => id === "crypto"
+          ? Object.values(loaded.open?.crypto ?? {}).some(Boolean)
+          : loaded.open?.[id]);
+        if (first) setMethod(first);
+        const chainOpen = Object.entries(loaded.open.crypto).find(([, ok]) => ok)?.[0];
+        if (chainOpen) setChain(chainOpen as CryptoChainId);
+      }
     }).catch(() => {
       if (live) setLoadError(true);
     });
@@ -164,6 +178,11 @@ export function Upgrade() {
     }
   }
 
+  const open = plans?.open;
+  const methodOpen = (id: PayMethod): boolean => !open || (id === "crypto" ? Object.values(open.crypto).some(Boolean) : open[id]);
+  const chainOpen = (id: string): boolean => !open || open.crypto[id] === true;
+  const nothingOpen = !!open && !(["wallet", "qr", "bank", "crypto"] as const).some(methodOpen);
+  const canPay = methodOpen(method) && (method !== "crypto" || chainOpen(chain));
   const month = plans?.plans.find((item) => item.id === "month");
   const year = plans?.plans.find((item) => item.id === "year");
   const waiting = order?.status === "pending";
@@ -178,12 +197,20 @@ export function Upgrade() {
       <main id="content" className="pay">
         <p className="kicker">Premium</p>
         <h1>{t(lang, "Nâng cấp Premium", "Upgrade to Premium")}</h1>
+        <ComparePlans />
         <PremiumBenefits />
         <p className="pay-note">
+          {month && year
+            ? t(
+              lang,
+              `${vnd(month.amount)} cho ${month.days} ngày, ${vnd(year.amount)} cho ${year.days} ngày. `,
+              `${vnd(month.amount)} for ${month.days} days, ${vnd(year.amount)} for ${year.days} days. `,
+            )
+            : null}
           {t(
             lang,
-            "49.000đ cho 30 ngày, 399.000đ cho 365 ngày. Không tự gia hạn. Trả bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Mọi bài học, luyện tập và trợ lý 8 câu mỗi ngày vẫn miễn phí.",
-            "49,000 VND for 30 days, 399,000 VND for 365 days. Never renews automatically. Pay with MoMo, VietQR, bank transfer or USDT/USDC. All lessons, practice and 8 tutor questions a day stay free.",
+            "Không tự gia hạn. Trả bằng MoMo, VietQR, chuyển khoản hoặc USDT/USDC. Mọi bài học, luyện tập và trợ lý 8 câu mỗi ngày vẫn miễn phí.",
+            "Never renews automatically. Pay with MoMo, VietQR, bank transfer or USDT/USDC. All lessons, practice and 8 tutor questions a day stay free.",
           )}
           {" "}
           <A href="/chinh-sach">{t(lang, `Hoàn tiền trong ${REFUND_DAYS} ngày`, `Refund within ${REFUND_DAYS} days`)}</A>
@@ -201,8 +228,8 @@ export function Upgrade() {
             }}
           >
             <div className="pay-grid two" role="radiogroup" aria-label={t(lang, "Gói", "Plan")}>
-              <PlanCard id="month" title={t(lang, "Một tháng", "One month")} days={month?.days ?? 30} amount={month?.amount ?? 49000} on={plan === "month"} onPick={() => setPlan("month")} />
-              <PlanCard id="year" title={t(lang, "Một năm", "One year")} days={year?.days ?? 365} amount={year?.amount ?? 399000} on={plan === "year"} onPick={() => setPlan("year")} />
+              <PlanCard id="month" title={t(lang, "Một tháng", "One month")} days={month?.days ?? 30} amount={month?.amount} sample={plans?.sample === true} on={plan === "month"} onPick={() => setPlan("month")} />
+              <PlanCard id="year" title={t(lang, "Một năm", "One year")} days={year?.days ?? 365} amount={year?.amount} sample={plans?.sample === true} savings={month && year ? yearSavings(month.amount, year.amount) : null} on={plan === "year"} onPick={() => setPlan("year")} />
             </div>
             <label className="pay-row">
               <span>{t(lang, "Email", "Email")}</span>
@@ -227,6 +254,7 @@ export function Upgrade() {
               <MethodCard
                 id="wallet"
                 on={method === "wallet"}
+                closed={!methodOpen("wallet")}
                 title={t(lang, "Ví MoMo", "MoMo wallet")}
                 body={t(lang, "Mở app MoMo hoặc trang thanh toán. Xác nhận tự động khi MoMo báo IPN.", "Open the MoMo app or the payment page. Access turns on when MoMo sends the IPN.")}
                 onPick={() => setMethod("wallet")}
@@ -234,13 +262,17 @@ export function Upgrade() {
               <MethodCard
                 id="qr"
                 on={method === "qr"}
+                closed={!methodOpen("qr")}
                 title={t(lang, "Quét QR", "Scan a QR")}
-                body={t(lang, "Mã QR MoMo ngay trên trang, kèm VietQR chuyển khoản vào tài khoản mẫu.", "A MoMo QR on this page, plus a VietQR for the sample bank account.")}
+                body={plans?.bank?.sample
+                  ? t(lang, "Mã QR MoMo ngay trên trang, kèm VietQR chuyển khoản vào tài khoản mẫu.", "A MoMo QR on this page, plus a VietQR for the sample bank account.")
+                  : t(lang, "Mã QR MoMo ngay trên trang, kèm VietQR chuyển khoản.", "A MoMo QR on this page, plus a VietQR transfer.")}
                 onPick={() => setMethod("qr")}
               />
               <MethodCard
                 id="bank"
                 on={method === "bank"}
+                closed={!methodOpen("bank")}
                 title={t(lang, "Chuyển khoản ngân hàng", "Bank transfer")}
                 body={t(lang, "Số tài khoản, số tiền và nội dung chuyển khoản riêng của đơn. Đơn chờ 15 phút.", "Account number, amount, and a transfer note unique to this order. The order waits 15 minutes.")}
                 onPick={() => setMethod("bank")}
@@ -248,8 +280,9 @@ export function Upgrade() {
               <MethodCard
                 id="crypto"
                 on={method === "crypto"}
-                title={t(lang, "Tiền mã hóa", "Crypto")}
-                body={t(lang, "USDT hoặc USDC chuyển thẳng vào ví chủ app. Không qua bên giữ tiền. Đơn chờ 15 phút.", "USDT or USDC sent straight to the app owner's wallet. No custodian. The order waits 15 minutes.")}
+                closed={!methodOpen("crypto")}
+                title={t(lang, "Tiền mã hóa (ngoài Việt Nam)", "Crypto (outside Vietnam)")}
+                body={t(lang, "Dành cho người mua ở nước ngoài: USDT hoặc USDC chuyển thẳng vào ví của Bàn Toán. Ở Việt Nam hãy dùng MoMo hoặc chuyển khoản. Đơn chờ 15 phút.", "For buyers outside Vietnam: USDT or USDC sent straight to the Bàn Toán wallet. In Vietnam, use MoMo or a bank transfer. The order waits 15 minutes.")}
                 onPick={() => setMethod("crypto")}
               />
             </div>
@@ -258,16 +291,21 @@ export function Upgrade() {
                 <ChainPicker
                   name="crypto-chain"
                   value={chain}
-                  choices={chainChoices(lang, plans?.crypto?.chains.map((item) => item.id) ?? ["tron-usdt", "bsc-usdt", "bsc-usdc", "sol-usdc"])}
+                  choices={chainChoices(lang, (plans?.crypto?.chains.map((item) => item.id) ?? ["tron-usdt", "bsc-usdt", "bsc-usdc", "sol-usdc"]).filter(chainOpen))}
                   onPick={(id) => setChain(id as CryptoChainId)}
                 />
-                {plans?.crypto?.chains.find((item) => item.id === chain)?.sample ? (
+                {!chainOpen(chain) ? (
+                  <p className="pay-warn">{t(lang, "Mạng này chưa nhận thanh toán. Chọn mạng khác.", "This network is not taking payments yet. Pick another one.")}</p>
+                ) : plans?.crypto?.chains.find((item) => item.id === chain)?.sample ? (
                   <p className="pay-warn">{t(lang, "Ví nhận của mạng này đang là địa chỉ MẪU.", "The receiving wallet for this network is still a SAMPLE address.")}</p>
                 ) : null}
               </>
             ) : null}
+            {nothingOpen ? (
+              <p className="pay-warn" role="status">{t(lang, "Thanh toán đang được thiết lập và chưa nhận đơn. Bạn vẫn dùng miễn phí mọi bài học, luyện tập và trợ lý 8 câu mỗi ngày.", "Payments are being set up and are not taking orders yet. All lessons, practice and 8 tutor questions a day stay free.")}</p>
+            ) : null}
             {formError ? <p className="pay-warn" role="alert">{formError}</p> : null}
-            <button className="pay-btn" type="submit" disabled={busy || !plans || !agreed}>
+            <button className="pay-btn" type="submit" disabled={busy || !plans || !agreed || !canPay}>
               {busy ? t(lang, "Đang tạo đơn…", "Creating the order…") : t(lang, "Tạo đơn thanh toán", "Create the payment")}
             </button>
           </form>
@@ -283,7 +321,16 @@ export function Upgrade() {
   );
 }
 
-function PlanCard({ id, title, days, amount, on, onPick }: { id: PlanId; title: string; days: number; amount: number | undefined; on: boolean; onPick: () => void }) {
+function PlanCard({ id, title, days, amount, sample, savings, on, onPick }: {
+  id: PlanId;
+  title: string;
+  days: number;
+  amount: number | undefined;
+  sample: boolean;
+  savings?: { saved: number; percent: number } | null;
+  on: boolean;
+  onPick: () => void;
+}) {
   const lang = useLang();
   return (
     <label className={`pay-card${on ? " is-on" : ""}`}>
@@ -292,19 +339,21 @@ function PlanCard({ id, title, days, amount, on, onPick }: { id: PlanId; title: 
         <b>{title}</b>
       </span>
       <span className="pay-price">{amount === undefined ? "…" : vnd(amount)}</span>
-      <small>{t(lang, `${days} ngày · giá mẫu`, `${days} days · sample price`)}</small>
+      <small>{sample ? t(lang, `${days} ngày · giá mẫu`, `${days} days · sample price`) : t(lang, `${days} ngày`, `${days} days`)}</small>
+      {savings ? <small>{t(lang, `Tiết kiệm ${vnd(savings.saved)} so với 12 tháng lẻ (${savings.percent}%).`, `Save ${vnd(savings.saved)} against 12 separate months (${savings.percent}%).`)}</small> : null}
     </label>
   );
 }
 
-function MethodCard({ id, title, body, on, onPick }: { id: PayMethod; title: string; body: string; on: boolean; onPick: () => void }) {
+function MethodCard({ id, title, body, on, closed = false, onPick }: { id: PayMethod; title: string; body: string; on: boolean; closed?: boolean; onPick: () => void }) {
+  const lang = useLang();
   return (
-    <label className={`pay-card${on ? " is-on" : ""}`}>
+    <label className={`pay-card${on && !closed ? " is-on" : ""}${closed ? " is-closed" : ""}`}>
       <span className="pay-row">
-        <input type="radio" name="method" value={id} checked={on} onChange={onPick} />
+        <input type="radio" name="method" value={id} checked={on && !closed} disabled={closed} onChange={onPick} />
         <b>{title}</b>
       </span>
-      <small>{body}</small>
+      <small>{closed ? t(lang, "Chưa mở: đang thiết lập tài khoản nhận tiền.", "Not open yet: the receiving account is being set up.") : body}</small>
     </label>
   );
 }
@@ -362,7 +411,11 @@ function OrderPanel({
         <BankBlock order={order} bank={order.bank} copied={copied} onCopy={onCopy} />
       ) : null}
       {waiting ? <p className="pay-note">{t(lang, "Trang tự cập nhật khi đơn được xác nhận.", "This page updates itself when the order is confirmed.")}</p> : null}
-      <A href="/nang-cap">{t(lang, "Tạo đơn khác", "Create another order")}</A>
+      {order.status === "expired" ? (
+        <p className="pay-note">{expiredOrderNote(order.method).text}</p>
+      ) : (
+        <A href="/nang-cap">{t(lang, "Tạo đơn khác", "Create another order")}</A>
+      )}
     </section>
   );
 }
@@ -395,7 +448,9 @@ function QrBlock({ order }: { order: OrderView }) {
       {order.bank?.qrDataUrl ? (
         <p>
           <img className="pay-qr" src={order.bank.qrDataUrl} alt={t(lang, "Mã VietQR chuyển khoản", "VietQR transfer code")} />
-          <small>{t(lang, "VietQR mẫu, quét bằng app ngân hàng. Tiền vào tài khoản cấu hình trên server.", "Sample VietQR, scanned with a banking app. Money goes to the account configured on the server.")}</small>
+          <small>{order.bank.sample
+            ? t(lang, "VietQR mẫu, quét bằng app ngân hàng. Tiền vào tài khoản cấu hình trên server.", "Sample VietQR, scanned with a banking app. Money goes to the account configured on the server.")
+            : t(lang, "Quét bằng app ngân hàng. Tiền vào tài khoản đã cấu hình.", "Scan with a banking app. Money goes to the configured account.")}</small>
         </p>
       ) : null}
     </section>
@@ -440,6 +495,40 @@ function BankBlock({
   );
 }
 
+function ComparePlans() {
+  const lang = useLang();
+  const rows = [
+    [t(lang, "Bài học, luyện tập, máy tính", "Lessons, practice, calculator"), t(lang, "Mở", "Open"), t(lang, "Mở", "Open")],
+    [t(lang, "Trợ lý", "Tutor"), t(lang, "Gợi ý, 8 câu mỗi ngày", "Hints, 8 questions a day"), t(lang, "Lời giải đầy đủ, kiểm tra bài làm, ảnh đề, 40 câu mỗi ngày", "Full solutions, checking work, photos, 40 questions a day")],
+    [t(lang, "Thi thử THPT 2025", "2025 mock exam"), t(lang, "Đề đầu, đủ 90 phút. Bảng điểm từng phần, chủ đề mất điểm và lời giải xem được ngay", "The first paper, full 90 minutes. The score table, topics and solutions stay visible"), t(lang, "Làm thêm đề, không giới hạn. Bảng điểm mỗi đề vẫn xem như đề miễn phí", "Further papers, without a cap. Each paper's score table stays visible, as on the free paper")],
+    [t(lang, "Ôn lỗi sai", "Mistake review"), t(lang, "Câu sai được ghi lại. Lịch ôn thì khóa", "Missed questions are recorded. The review schedule is locked"), t(lang, "Ôn theo lịch 1, 3, 7 và 14 ngày", "Review on days 1, 3, 7 and 14")],
+    [t(lang, "Tài liệu ôn tập", "Study notes"), t(lang, "Phần «Ý chính»", "The “Main idea” section"), t(lang, "Đủ bộ, tải PDF và Word", "The full set, PDF and Word downloads")],
+  ] as const;
+  return (
+    <section className="pay-compare" aria-labelledby="compare-title">
+      <h2 id="compare-title">{t(lang, "Miễn phí và Premium", "Free and Premium")}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{t(lang, "Việc", "What")}</th>
+            <th>{t(lang, "Miễn phí", "Free")}</th>
+            <th>Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([what, free, paid]) => (
+            <tr key={what}>
+              <th scope="row">{what}</th>
+              <td>{free}</td>
+              <td>{paid}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+
 function PremiumBenefits() {
   const lang = useLang();
   return (
@@ -453,15 +542,33 @@ function PremiumBenefits() {
             ": the three parts of the real paper (12 multiple choice, 4 true/false, 6 short answer), 90 minutes, scored on the Ministry's scale, with every question reviewable with its solution. Each paper is drawn fresh from the bank, as many as you like.")}
         </li>
         <li>
-          <b>{t(lang, "Bảng điểm theo phần và chủ đề", "Scores by part and topic")}</b>
-          {t(lang, ": sau mỗi đề biết mình mất điểm ở phần nào, chủ đề nào, và ôn ngay câu sai.", ": after each paper, see which part and topic cost points, then redo the missed questions.")}
+          <b>{t(lang, "Bảng điểm của đề đã làm", "Scores for papers you sat")}</b>
+          {t(lang, ": đề miễn phí cũng xem điểm từng phần và chủ đề mất điểm. Premium là làm thêm đề, rồi ôn câu sai theo lịch.", ": the free paper also shows the score of each part and the topics that cost points. Premium is further papers, then reviewing missed questions on a schedule.")}
         </li>
         <li>
-          <b>{t(lang, "Chấm bài làm 40 lượt mỗi ngày", "40 markings of your working a day")}</b>
+          <b>{t(lang, "Tài liệu ôn tập 14 chuyên đề", "Study notes for 14 topics")}</b>
+          {t(lang, ": bài giảng viết, lỗi hay gặp, ví dụ giải từng bước và đề tự luyện có đáp án, đọc trên trang hoặc tải PDF, Word để in.", ": written lecture notes, common mistakes, examples solved step by step and a self-test with answers, to read here or download as PDF or Word.")}
+          {" "}<A href="/tai-lieu">{t(lang, "Xem tài liệu", "See the notes")}</A>
+        </li>
+        <li>
+          <b>{t(lang, "Kế hoạch ôn lỗi sai", "Mistake review plan")}</b>
+          {t(lang, ": câu sai trong đề thi thử tự quay lại sau 1, 3, 7 và 14 ngày, kèm danh sách chủ đề mất điểm nhiều nhất.", ": questions you miss in mock exams come back after 1, 3, 7 and 14 days, with the topics that cost you the most points.")}
+          {" "}<A href="/on-loi-sai">{t(lang, "Mở kế hoạch", "Open the plan")}</A>
+        </li>
+        <li>
+          <b>{t(lang, "Lời giải đầy đủ", "Full worked solutions")}</b>
+          {t(lang, ": sau khi tự thử, xin trợ lý giải trọn từng bước, có đáp số và bước thử lại. Bản miễn phí chỉ gợi ý.", ": after trying, ask the tutor for every step with the final answer and a check. The free tutor gives hints only.")}
+        </li>
+        <li>
+          <b>{t(lang, "Kiểm tra bài làm, 40 lượt chấm mỗi ngày", "Check my work, 40 markings a day")}</b>
           {t(lang,
-            ": ghi các bước tự làm, Bàn Toán tìm bước sai đầu tiên và gợi ý cách sửa. Bản miễn phí có 3 lượt mỗi tuần để thử trước.",
-            ": write your own steps and Bàn Toán finds the first wrong one with a hint to fix it. The free version has 3 a week to try first.")}
+            ": ghi các bước tự làm, Bàn Toán chỉ ra bước sai đầu tiên, vì sao sai và cách sửa. Bản miễn phí có 3 lượt chấm mỗi tuần để thử trước.",
+            ": write your own steps and Bàn Toán points to the first wrong one, why it is wrong and how to fix it. The free version has 3 markings a week to try first.")}
           {" "}<A href="/cham-bai">{t(lang, "Thử chấm", "Try it")}</A>
+        </li>
+        <li>
+          <b>{t(lang, "Chụp ảnh đề bài", "Photo of a problem")}</b>
+          {t(lang, ": chụp đề trong sách hay đề thi, trợ lý đọc ảnh rồi giúp bạn giải.", ": photograph a problem from a book or paper and the tutor reads it and helps.")}
         </li>
         <li>
           <b>{t(lang, "Chế độ phụ huynh và báo cáo tuần", "Parent mode and a weekly report")}</b>

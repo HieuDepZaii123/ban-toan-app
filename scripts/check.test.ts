@@ -159,6 +159,15 @@ const work = { problem: "Giải 2x + 6 = 0", steps: ["2x = 6", "x = 3"], device:
   assert(seen.includes(PARENT_NOTE), "parent mode adds the attempt-first note to the tutor");
   await ask(false);
   assert(!seen.includes(PARENT_NOTE), "without parent mode the note is absent");
+  const chatPremium: ChatEnv = { ...chat, premium: async (license) => license === "bt_premium" };
+  const solve = (parent: boolean) => handleChat(new Request("http://pay.local/api/chat", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ messages: [{ role: "user", content: "Giải 2x + 6 = 0" }], mode: "solve", license: "bt_premium", parent }),
+  }), chatPremium);
+  const locked = await solve(true);
+  assert(locked.status === 403 && (await locked.json() as { error?: string }).error === "parent", "parent mode locks full solutions even for Premium");
+  assert((await solve(false)).status === 200, "Premium full solutions work without parent mode");
 }
 
 // --- parent PIN

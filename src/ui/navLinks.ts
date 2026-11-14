@@ -14,7 +14,7 @@ export type NavPage = {
 };
 
 export type NavGroup = {
-  id: "learn" | "practice" | "tools" | "more";
+  id: "learn" | "practice" | "tools" | "premium" | "more";
   label: string;
   en: string;
   /** Nhóm có tab trên thanh đầu trang; nhóm "Khác" chỉ nằm trong Mục lục. */
@@ -33,6 +33,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/kien-thuc", id: "grades", label: "Lớp 1–12", en: "Grades 1–12", nested: true },
       { href: "/so-cong-thuc", id: "formula", label: "Công thức", en: "Formulas" },
       { href: "/phuong-phap", id: "methods", label: "Phương pháp giải", en: "Methods", nested: true },
+      { href: "/tai-lieu", id: "packs", label: "Tài liệu ôn tập", en: "Study notes", nested: true },
       { href: "/khoa-hoc", id: "science", label: "Khoa học", en: "Science", nested: true },
       { href: "/nghien-cuu", id: "research", label: "Nghiên cứu", en: "Research" },
     ],
@@ -47,6 +48,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: "/luyen-lop", id: "lop", label: "Lớp 1–9", en: "Grades 1–9", nested: true },
       { href: "/luyen-thpt", id: "thpt", label: "THPT 10–12", en: "Grades 10–12" },
       { href: "/thi-thu", id: "exam2025", label: "Thi thử 2025", en: "2025 mock exam" },
+      { href: "/on-loi-sai", id: "review", label: "Ôn lỗi sai", en: "Mistake review" },
       { href: "/cham-bai", id: "check", label: "Chấm bài", en: "Mark my working" },
       { href: "/so-loi", id: "miss", label: "Sổ lỗi", en: "Miss book" },
       { href: "/danh-gia", id: "assess", label: "Đánh giá", en: "Assess" },
@@ -60,6 +62,16 @@ export const NAV_GROUPS: NavGroup[] = [
     pages: [
       { href: "/soan-tai-lieu", id: "soan", label: "Soạn tài liệu", en: "Documents" },
       { href: "/xuong-hinh", id: "workshop", label: "Xưởng hình", en: "Workshop" },
+      { href: "/may-tinh", id: "calc", label: "Máy tính", en: "Calculator" },
+    ],
+  },
+  {
+    id: "premium",
+    label: "Premium",
+    en: "Premium",
+    top: true,
+    pages: [
+      { href: "/nang-cap", id: "premium", label: "Premium", en: "Premium" },
     ],
   },
   {
@@ -70,7 +82,6 @@ export const NAV_GROUPS: NavGroup[] = [
     pages: [
       { href: "/gioi-thieu", id: "refer", label: "Giới thiệu", en: "Refer" },
       { href: "/phu-huynh", id: "parent", label: "Phụ huynh", en: "Parents", also: ["/bao-cao"] },
-      { href: "/nang-cap", id: "premium", label: "Premium", en: "Premium" },
       { href: "/chinh-sach", id: "policy", label: "Chính sách", en: "Policy" },
     ],
   },
