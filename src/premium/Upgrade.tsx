@@ -457,6 +457,20 @@ function PremiumBenefits() {
           {t(lang, ": sau mỗi đề biết mình mất điểm ở phần nào, chủ đề nào, và ôn ngay câu sai.", ": after each paper, see which part and topic cost points, then redo the missed questions.")}
         </li>
         <li>
+          <b>{t(lang, "Chấm bài làm 40 lượt mỗi ngày", "40 markings of your working a day")}</b>
+          {t(lang,
+            ": ghi các bước tự làm, Bàn Toán tìm bước sai đầu tiên và gợi ý cách sửa. Bản miễn phí có 3 lượt mỗi tuần để thử trước.",
+            ": write your own steps and Bàn Toán finds the first wrong one with a hint to fix it. The free version has 3 a week to try first.")}
+          {" "}<A href="/cham-bai">{t(lang, "Thử chấm", "Try it")}</A>
+        </li>
+        <li>
+          <b>{t(lang, "Chế độ phụ huynh và báo cáo tuần", "Parent mode and a weekly report")}</b>
+          {t(lang,
+            ": khóa lời giải đến khi con tự làm, và báo cáo điểm thi thử con gửi cho bố mẹ bằng link. Miễn phí cho mọi người.",
+            ": solutions stay locked until your child has tried, and a mock-score report your child sends by link. Free for everyone.")}
+          {" "}<A href="/phu-huynh">{t(lang, "Dành cho phụ huynh", "For parents")}</A>
+        </li>
+        <li>
           <b>{t(lang, "Trợ lý toán 40 câu mỗi ngày", "40 tutor questions a day")}</b>
           {t(lang, " thay vì 8, tính riêng cho mã của bạn.", " instead of 8, counted for your key alone.")}
         </li>

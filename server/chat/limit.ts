@@ -24,8 +24,8 @@ export function createQuota(): Quota {
   };
 }
 
-/** Lượt cũ hơn mốc này bị xóa khi ghi lượt mới cùng khóa; cửa sổ dài nhất đang dùng là một ngày. */
-export const QUOTA_KEEP_MS = 2 * 86_400_000;
+/** Lượt cũ hơn mốc này bị xóa khi ghi lượt mới cùng khóa; cửa sổ dài nhất đang dùng là một tuần (lượt chấm miễn phí). */
+export const QUOTA_KEEP_MS = 8 * 86_400_000;
 
 /** Bộ đếm trên Postgres: mọi instance thấy cùng số lượt. */
 export function pgQuota(client: SqlClient): Quota {

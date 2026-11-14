@@ -1,12 +1,13 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { loadEnv, type Connect, type Plugin } from "vite";
-import { adaptChat } from "../chat/nodeAdapter.ts";
+import { adaptChat, adaptCheck } from "../chat/nodeAdapter.ts";
 import { adaptNode } from "./nodeAdapter.ts";
 
 type Route = { prefix: string; handle: (req: IncomingMessage, res: ServerResponse) => Promise<void> };
 
 const ROUTES: Route[] = [
   { prefix: "/api/chat", handle: adaptChat },
+  { prefix: "/api/check", handle: adaptCheck },
   { prefix: "/api/premium", handle: adaptNode },
 ];
 
@@ -41,7 +42,7 @@ function middleware(): Connect.NextHandleFunction {
   };
 }
 
-/** Phục vụ /api/chat và /api/premium trên Vite dev và preview. Production dùng các hàm trong `api/`. */
+/** Phục vụ /api/chat, /api/check và /api/premium trên Vite dev và preview. Production dùng các hàm trong `api/`. */
 export function payApi(): Plugin {
   return {
     name: "ban-toan-api",

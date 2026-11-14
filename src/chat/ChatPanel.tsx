@@ -6,6 +6,8 @@ import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { ChatText } from "./ChatText.tsx";
 import { mockTutor } from "./mock.ts";
+import { deviceId } from "../lib/device.ts";
+import { parentModeOn } from "../parent/parentMode.ts";
 import { TOPIC_QUICK, topicById } from "./tutorCopy.ts";
 
 type Turn = { role: "user" | "assistant"; content: string };
@@ -47,19 +49,6 @@ function sessionId(): string {
   const next = crypto.randomUUID();
   sessionStorage.setItem(SESSION, next);
   return next;
-}
-
-/** Stable per-browser id so the free allowance is per learner, not per shared school network. */
-function deviceId(): string {
-  try {
-    const saved = localStorage.getItem("ban-toan-device");
-    if (saved && /^[A-Za-z0-9-]{8,64}$/.test(saved)) return saved;
-    const next = crypto.randomUUID();
-    localStorage.setItem("ban-toan-device", next);
-    return next;
-  } catch {
-    return "";
-  }
 }
 
 function dayKey(): string {
@@ -165,7 +154,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "content-type": "application/json", "x-ban-toan-session": sessionId() },
-          body: JSON.stringify({ messages: next, license, topic: studying?.id ?? "", device: deviceId() }),
+          body: JSON.stringify({ messages: next, license, topic: studying?.id ?? "", device: deviceId(), parent: parentModeOn() }),
         });
         const body = await res.json() as ChatState;
         setMeta(body);

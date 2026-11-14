@@ -29,6 +29,9 @@ const ResearchIdeasPage = lazy(() => import("./pages/ResearchIdeasPage.tsx").the
 const DocPage = lazy(() => import("./pages/DocPage.tsx").then((mod) => ({ default: mod.DocPage })));
 const MethodsPage = lazy(() => import("./pages/MethodsPage.tsx").then((mod) => ({ default: mod.MethodsPage })));
 const ThptPracticePage = lazy(() => import("./pages/ThptPracticePage.tsx").then((mod) => ({ default: mod.ThptPracticePage })));
+const CheckPage = lazy(() => import("./check/CheckPage.tsx").then((mod) => ({ default: mod.CheckPage })));
+const ParentPage = lazy(() => import("./parent/ParentPage.tsx").then((mod) => ({ default: mod.ParentPage })));
+const ReportPage = lazy(() => import("./parent/ReportPage.tsx").then((mod) => ({ default: mod.ReportPage })));
 const GradePracticePage = lazy(() => import("./pages/GradePracticePage.tsx").then((mod) => ({ default: mod.GradePracticePage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
@@ -76,6 +79,9 @@ function Shell() {
   if (path === "/nang-cap") return <Upgrade />;
   if (path === "/chinh-sach") return <PolicyPage />;
   if (path === "/thi-thu") return <ExamPage />;
+  if (path === "/cham-bai") return <CheckPage />;
+  if (path === "/phu-huynh") return <ParentPage />;
+  if (path === "/bao-cao") return <ReportPage />;
   if (path === "/so-cong-thuc") return <FormulaPage />;
   if (path === "/danh-gia") return <AssessPage />;
   if (path === "/xuong-hinh") return <WorkshopPage />;

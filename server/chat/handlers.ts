@@ -8,6 +8,8 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const MAX_TURNS = 8;
 const MAX_CHARS = 1500;
 
+export const PARENT_NOTE = "Chế độ phụ huynh đang bật. Parent mode is on: never write a full worked solution or a final answer. Ask for the student's own attempt first, then point to their first wrong step with a hint only.";
+
 export type ChatTurn = { role: "user" | "assistant"; content: string };
 
 export type ChatEnv = {
@@ -100,7 +102,9 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
   if (!premium && who !== `ip:${ip}`) await env.quota.add(`net:${ip}`, env.now());
   const remaining = dailyLimit - usedToday - 1;
   try {
-    const note = topicId ? `\nHọc sinh đang mở tờ /t/${topicId}.` : "";
+    const sheet = topicId ? `\nHọc sinh đang mở tờ /t/${topicId}.` : "";
+    // Parent mode on this device: no full worked solution until the student has shown their own attempt.
+    const note = body.parent === true ? `${sheet}\n${PARENT_NOTE}` : sheet;
     const reply = env.mode === "demo"
       ? demoReply(last.content, topicId)
       : await env.complete(TUTOR_INSTRUCTIONS + note, messages);
@@ -127,7 +131,7 @@ function readMessages(value: unknown): ChatTurn[] {
 }
 
 /** Prefer headers the platform sets itself (Vercel overwrites these), then the first forwarded hop. */
-function clientIp(request: Request): string {
+export function clientIp(request: Request): string {
   const platform = request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip")?.trim();
   if (platform) return platform;
   const forwarded = request.headers.get("x-forwarded-for") ?? "";

@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { usePremium } from "../premium/license.ts";
+import { useParentMode } from "../parent/parentMode.ts";
+import { EXAM_KEY } from "../parent/report.ts";
 import { thptById, topicById } from "../thpt/bank.ts";
 import {
   buildPaper,
@@ -19,7 +21,7 @@ import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
 import { useLang } from "../ui/useLang.ts";
 
-const KEY = "ban-toan-thi2025-v1";
+const KEY = EXAM_KEY;
 const HISTORY = 30;
 const LIMIT_MS = EXAM_MINUTES_2025 * 60_000;
 
@@ -291,6 +293,8 @@ function Result({ finished }: { finished: Finished }) {
   const paper: Paper = useMemo(() => buildPaper(finished.seed), [finished.seed]);
   const score: PaperScore = useMemo(() => scorePaper(paper, finished.answers, topicName), [paper, finished.answers]);
   const { answers } = finished;
+  const parent = useParentMode();
+  const locked = <p className="exam-locked">{t(lang, "Chế độ phụ huynh: lời giải chỉ mở ở câu con đã làm.", "Parent mode: solutions open only for questions you attempted.")}</p>;
   const minutes = Math.round((finished.finishedAt - finished.startedAt) / 60000);
   return (
     <section className="exam-result" aria-labelledby="exam-score">
@@ -326,7 +330,7 @@ function Result({ finished }: { finished: Finished }) {
                 {picked !== undefined && !right ? <> · {t(lang, "Bạn chọn ", "You chose ")}{String.fromCharCode(65 + picked)}</> : null}
                 {picked === undefined ? <> · {t(lang, "Bỏ trống", "Left blank")}</> : null}
               </p>
-              <ol>{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>
+              {parent && picked === undefined ? locked : <ol>{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>}
             </article>
           );
         })}
@@ -342,7 +346,7 @@ function Result({ finished }: { finished: Finished }) {
                   <li key={si}>
                     {ok ? "✓" : "✗"} <MathText text={lang === "en" ? statement.en : statement.vi} /> — <b>{statement.truth ? t(lang, "Đúng", "True") : t(lang, "Sai", "False")}</b>
                     {mine === undefined ? <> ({t(lang, "bỏ trống", "blank")})</> : null}
-                    <br /><small><MathText text={lang === "en" ? statement.whyEn : statement.whyVi} /></small>
+                    {parent && mine === undefined ? null : <><br /><small><MathText text={lang === "en" ? statement.whyEn : statement.whyVi} /></small></>}
                   </li>
                 );
               })}
@@ -362,7 +366,7 @@ function Result({ finished }: { finished: Finished }) {
                 {t(lang, "Đáp số: ", "Answer: ")}<b>{fmt(shortValue(question) ?? 0, lang)}</b>
                 {" · "}{typed.trim() ? t(lang, `Bạn ghi ${typed.trim()}`, `You wrote ${typed.trim()}`) : t(lang, "Bỏ trống", "Left blank")}
               </p>
-              <ol>{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>
+              {parent && !typed.trim() ? locked : <ol>{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>}
             </article>
           );
         })}
