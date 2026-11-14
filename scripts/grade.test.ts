@@ -8,6 +8,7 @@ import { cards } from "../src/content/cards.ts";
 import { noteKeys } from "../src/content/grades/notes/index.ts";
 import { kidSummaries } from "../src/content/grades/notes/kidVoice.ts";
 import { pictures } from "../src/content/grades/pictures.ts";
+import { secondExamples } from "../src/content/grades/notes/secondExamples.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
@@ -125,6 +126,7 @@ for (const book of gradeBooks) {
 
 const lessonKeys = new Set(gradeBooks.flatMap((book) => lessonsOf(book).map((item) => `${book.grade}/${item.lesson.id}`)));
 for (const key of noteKeys()) assert(lessonKeys.has(key), `lời giải thích ${key} không ứng với bài nào`);
+for (const key of Object.keys(secondExamples)) assert(lessonKeys.has(key), `ví dụ thứ hai ${key} không ứng với bài nào`);
 for (const key of Object.keys(pictures)) assert(lessonKeys.has(key), `hình minh họa ${key} không ứng với bài nào`);
 for (const key of Object.keys(kidSummaries)) assert(pictures[key] !== undefined, `bài ${key} chưa có hình minh họa riêng`);
 for (const key of Object.keys(kidSummaries)) assert(lessonKeys.has(key), `tóm tắt cho trẻ ${key} không ứng với bài nào`);

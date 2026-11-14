@@ -1,6 +1,7 @@
 import type { GradeBook, GradeDrill, GradeLesson, GradeWidget } from "./types.ts";
 import { noteFor } from "./notes/index.ts";
 import { kidSummaries } from "./notes/kidVoice.ts";
+import { secondExamples } from "./notes/secondExamples.ts";
 
 const WIDGET: Record<string, GradeWidget> = {
   "phan-nho": "fraction",
@@ -86,6 +87,9 @@ export function deepen(book: GradeBook): GradeBook {
         return {
           ...lesson,
           summary: kidSummaries[`${book.grade}/${lesson.id}`] ?? lesson.summary,
+          examples: lesson.examples.length < 2 && secondExamples[`${book.grade}/${lesson.id}`]
+            ? [...lesson.examples, secondExamples[`${book.grade}/${lesson.id}`]!]
+            : lesson.examples,
           whyTrue: lesson.whyTrue ?? written?.why,
           pitfalls: lesson.pitfalls ?? written?.pit,
           dataNote: assumed(lesson),
