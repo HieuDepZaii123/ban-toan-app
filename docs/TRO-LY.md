@@ -64,7 +64,9 @@ Video «Cơ bản» xem miễn phí. Video «Chuẩn thi» chỉ mở cho mã Pr
 
 Khi có video thật, thay bằng id YouTube đúng 11 ký tự, ví dụ `dQw4w9WgXcQ`. Không commit file mp4. Iframe chỉ tải sau khi bấm **Xem video**, không tự phát.
 
-## Chấm bài làm (`/cham-bai`, `/api/check`)
+
+## Chấm bài làm (`/cham-bai`, `/api/chat?do=check`)
+Chấm bài chạy trong cùng hàm serverless với trợ lý (`api/chat.ts`), vì gói Hobby của Vercel chỉ cho 12 hàm mỗi lần deploy và `api/` đã đủ 12. Đừng thêm tệp mới vào `api/`; test `scripts/check.test.ts` báo lỗi nếu vượt.
 
 Học sinh ghi đề và các bước tự làm, mỗi dòng một bước (tối đa 20). Server gọi model với `CHECK_INSTRUCTIONS` (`server/chat/check.ts`), nhận về JSON `verdict` / `step` / `why` / `hint` / `fix`, và kiểm từng trường trước khi trả. Chấm lỗi không trừ lượt.
 
@@ -76,7 +78,7 @@ Học sinh ghi đề và các bước tự làm, mỗi dòng một bước (tố
 Cài đặt trên máy, khóa bằng mã PIN 4–8 số (băm SHA-256 kèm salt, `src/parent/parentMode.ts`). Khi bật, trình duyệt gửi `parent: true`:
 
 - `/api/chat` chặn `mode: "solve"` (trả 403 `parent`) kể cả với Premium, và thêm `PARENT_NOTE` vào lời dặn trợ lý.
-- `/api/check` bỏ trường `fix` (bước sửa) trước khi trả, không phụ thuộc model.
+- Chấm bài bỏ trường `fix` (bước sửa) trước khi trả, không phụ thuộc model.
 - Đề thi thử chỉ hiện lời giải ở câu học sinh đã làm.
 
 Báo cáo tuần (`src/parent/report.ts`) dựng trên máy từ lịch sử thi thử và các lượt chấm, mã hóa vào phần `#r=` của link nên server không nhận được. Đây không phải khóa chống gian lận: xóa dữ liệu trình duyệt sẽ tắt chế độ phụ huynh, và báo cáo ghi rõ chế độ có bật suốt tuần hay không.

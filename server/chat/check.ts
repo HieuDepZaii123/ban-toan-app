@@ -1,6 +1,6 @@
 /**
  * Chấm bài làm: học sinh gửi đề và các bước tự làm, máy tìm bước sai đầu tiên.
- * Marking: the student sends the problem and their own lines of working; we find the first wrong step.
+ * Marking (/api/chat?do=check): the student sends the problem and their own lines of working; we find the first wrong step.
  *
  * Free learners get a few markings a week so the checker can prove itself before anyone pays;
  * Premium gets a daily allowance. In parent mode the reply never carries the corrected step, only a hint,
@@ -121,7 +121,8 @@ export function demoVerdict(steps: string[], lang: "vi" | "en"): CheckJson {
 
 export async function handleCheck(request: Request, env: CheckEnv): Promise<Response> {
   const url = new URL(request.url);
-  if (url.pathname.replace(/\/$/, "") !== "/api/check" || request.method !== "POST") {
+  // Served by the chat function as /api/chat?do=check (see nodeAdapter.ts).
+  if (url.pathname.replace(/\/$/, "") !== "/api/chat" || url.searchParams.get("do") !== "check" || request.method !== "POST") {
     return reply(404, { error: "not_found", message: "Không có đường này." });
   }
   let body: Record<string, unknown> = {};

@@ -46,7 +46,7 @@ export function CheckPage() {
     setResult(null);
     const sent = steps.slice(0, MAX_STEPS);
     try {
-      const res = await fetch("/api/check", {
+      const res = await fetch("/api/chat?do=check", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ problem: problem.trim(), steps: sent, license: savedLicense(), device: deviceId(), parent }),

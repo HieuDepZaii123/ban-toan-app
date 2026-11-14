@@ -1,5 +1,5 @@
 /**
- * Marking own working (/api/check), parent mode and the weekly parent report.
+ * Marking own working (/api/chat?do=check), parent mode and the weekly parent report.
  * Run with: tsx scripts/check.test.ts
  */
 import { firstWrongStep } from "../src/check/arith.ts";
@@ -8,6 +8,8 @@ import { handleChat, PARENT_NOTE, type ChatEnv } from "../server/chat/handlers.t
 import { createQuota } from "../server/chat/limit.ts";
 import { appendCheck, buildReport, decodeReport, encodeReport, problemKey, readCheckRows, readExamRows } from "../src/parent/report.ts";
 import { hashPin, PIN_RULE } from "../src/parent/parentMode.ts";
+import { isCheck } from "../server/chat/nodeAdapter.ts";
+import { readdirSync } from "node:fs";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
@@ -75,7 +77,7 @@ function env(over: Partial<CheckEnv> = {}): CheckEnv {
 }
 
 async function post(target: CheckEnv, body: unknown, ip = "203.0.113.9"): Promise<{ status: number; json: Record<string, unknown> }> {
-  const res = await handleCheck(new Request("http://pay.local/api/check", {
+  const res = await handleCheck(new Request("http://pay.local/api/chat?do=check", {
     method: "POST",
     headers: { "content-type": "application/json", "x-forwarded-for": ip },
     body: JSON.stringify(body),
@@ -129,7 +131,7 @@ const work = { problem: "Giải 2x + 6 = 0", steps: ["2x = 6", "x = 3"], device:
   assert(empty.status === 400, "no steps is a 400");
   const noProblem = await post(env(), { problem: " ", steps: ["1 = 1"] });
   assert(noProblem.status === 400, "no problem is a 400");
-  const notFound = await handleCheck(new Request("http://pay.local/api/check", { method: "GET" }), env());
+  const notFound = await handleCheck(new Request("http://pay.local/api/chat?do=check", { method: "GET" }), env());
   assert(notFound.status === 404, "GET is not a route");
 }
 
@@ -210,6 +212,16 @@ const work = { problem: "Giải 2x + 6 = 0", steps: ["2x = 6", "x = 3"], device:
   assert(decodeReport("!!!") === null, "garbage is not a report");
   const forged = encodeReport({ ...report, papers: [{ at: now, total: 42 }] });
   assert(decodeReport(forged) === null, "a score above 10 is rejected");
+}
+
+// --- deployment shape
+{
+  assert(isCheck(new Request("http://x/api/chat?do=check", { method: "POST" })), "?do=check routes to marking");
+  assert(!isCheck(new Request("http://x/api/chat", { method: "POST" })), "plain /api/chat stays the tutor");
+  const functions = (function count(dir: string): number {
+    return readdirSync(dir, { withFileTypes: true }).reduce((n, entry) => n + (entry.isDirectory() ? count(`${dir}/${entry.name}`) : /\.(ts|js)$/.test(entry.name) ? 1 : 0), 0);
+  })("api");
+  assert(functions <= 12, `api/ has ${functions} serverless functions; Vercel Hobby allows 12 per deployment`);
 }
 
 if (fails.length > 0) {
