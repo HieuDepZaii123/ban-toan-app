@@ -1,5 +1,5 @@
 /**
- * Ví dụ mẫu thứ hai cho các bài từ lớp 6: khác ví dụ thứ nhất về dạng hoặc độ khó, để người học
+ * Ví dụ mẫu thứ hai cho các bài từ lớp 6 (lớp 1–5 ở secondKids.ts): khác ví dụ thứ nhất về dạng hoặc độ khó, để người học
  * thấy cùng một quy tắc dùng trong hoàn cảnh khác. Khóa là "<lớp>/<mã bài>".
  */
 import type { GradeExample } from "../types.ts";

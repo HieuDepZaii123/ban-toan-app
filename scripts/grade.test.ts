@@ -10,6 +10,7 @@ import { kidSummaries } from "../src/content/grades/notes/kidVoice.ts";
 import { pictures } from "../src/content/grades/pictures.ts";
 import { titlesEn } from "../src/content/grades/titlesEn.ts";
 import { secondExamples } from "../src/content/grades/notes/secondExamples.ts";
+import { secondKids } from "../src/content/grades/notes/secondKids.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
@@ -135,6 +136,8 @@ for (const book of gradeBooks) {
   }
 }
 for (const key of Object.keys(secondExamples)) assert(lessonKeys.has(key), `ví dụ thứ hai ${key} không ứng với bài nào`);
+for (const key of Object.keys(secondKids)) assert(lessonKeys.has(key) && Number(key.split("/")[0]) <= 5, `ví dụ thứ hai tiểu học ${key} không ứng với bài lớp 1–5 nào`);
+for (const key of Object.keys(secondExamples)) assert(Number(key.split("/")[0]) >= 6, `ví dụ thứ hai ${key} của tiểu học phải nằm trong secondKids.ts`);
 for (const key of Object.keys(pictures)) assert(lessonKeys.has(key), `hình minh họa ${key} không ứng với bài nào`);
 for (const key of Object.keys(kidSummaries)) assert(pictures[key] !== undefined, `bài ${key} chưa có hình minh họa riêng`);
 for (const key of Object.keys(kidSummaries)) assert(lessonKeys.has(key), `tóm tắt cho trẻ ${key} không ứng với bài nào`);
