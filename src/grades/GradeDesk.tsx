@@ -1,4 +1,5 @@
 import { gradeTitle } from "../content/grades/titlesEn.ts";
+import { lessonInEnglish } from "../content/grades/en/index.ts";
 import { plainMath } from "../lib/plainMath.ts";
 import { useEffect, useState } from "react";
 import { cards } from "../content/cards.ts";
@@ -153,8 +154,11 @@ function topicNote(lang: Lang, topicId: string): string {
   return t(lang, `Có hình kéo và câu luyện trong chuyên đề ${topic.title}`, `Interactive figure and practice in the topic ${topic.titleEn}`);
 }
 
-function LessonView({ book, chapterId, chapterTitle, lesson }: { book: GradeBook; chapterId: string; chapterTitle: string; lesson: GradeBook["chapters"][number]["lessons"][number] }) {
+function LessonView({ book, chapterId, chapterTitle, lesson: source }: { book: GradeBook; chapterId: string; chapterTitle: string; lesson: GradeBook["chapters"][number]["lessons"][number] }) {
   const lang = useLang();
+  const english = lang === "en" ? lessonInEnglish(book.grade, source) : undefined;
+  const lesson = english ?? source;
+  const speech = english ? "en" : "vi";
   const topic = lesson.topicId ? cards.find((card) => card.id === lesson.topicId) : undefined;
   const [correct, setCorrect] = useState<boolean[]>(() => lesson.drills.map(() => false));
   useEffect(() => {
@@ -167,11 +171,11 @@ function LessonView({ book, chapterId, chapterTitle, lesson }: { book: GradeBook
   return (
     <PageFrame kicker={`${t(lang, "Lớp", "Grade")} ${book.grade} · ${gradeTitle(lang, `${book.grade}/c/${chapterId}`, chapterTitle)}`} title={gradeTitle(lang, `${book.grade}/${lesson.id}`, lesson.title)}>
       <p><A href={`/kien-thuc/${book.grade}`}>{t(lang, `Về các bài lớp ${book.grade}`, `Back to grade ${book.grade} lessons`)}</A></p>
-      {lang === "en" ? <p className="lecture-note vi-only-note">The lesson title is translated; the lesson text itself is in Vietnamese.</p> : null}
-      <div lang="vi" className="lesson-body">
+      {lang === "en" && !english ? <p className="lecture-note vi-only-note">The lesson title is translated; the lesson text itself is in Vietnamese.</p> : null}
+      <div lang={english ? "en" : "vi"} className="lesson-body">
         <article className="tool-card">
           <h2>{t(lang, "Tóm tắt", "Summary")}</h2>
-          <Speak text={[lesson.summary, lesson.whyTrue, lesson.pitfalls].filter(Boolean).join(". ")} />
+          <Speak speech={speech} text={[lesson.summary, lesson.whyTrue, lesson.pitfalls].filter(Boolean).join(". ")} />
           {lesson.dataNote ? <p className="lecture-note">{lesson.dataNote}</p> : null}
           <p><MathText text={lesson.summary} /></p>
           {lesson.whyTrue ? (
@@ -191,7 +195,7 @@ function LessonView({ book, chapterId, chapterTitle, lesson }: { book: GradeBook
           {topic ? <p><A href={`/t/${topic.id}`}>{t(lang, `Mở chuyên đề ${topic.title}`, `Open the topic ${topic.titleEn}`)}</A></p> : null}
         </article>
         {lesson.examples.map((example, index) => (
-          <ExampleBlock key={example.prompt} example={example} index={index} lang={lang} />
+          <ExampleBlock key={example.prompt} example={example} index={index} lang={lang} speech={speech} />
         ))}
         <article className="tool-card">
           <h2>{t(lang, "Tự luyện", "Practice")}</h2>
@@ -202,6 +206,7 @@ function LessonView({ book, chapterId, chapterTitle, lesson }: { book: GradeBook
               drill={drill}
               index={index}
               lang={lang}
+              speech={speech}
               correct={correct[index] ?? false}
               onCorrect={() => setCorrect((prev) => prev.map((item, itemIndex) => itemIndex === index ? true : item))}
             />
@@ -216,14 +221,14 @@ function LessonView({ book, chapterId, chapterTitle, lesson }: { book: GradeBook
   );
 }
 
-function ExampleBlock({ example, index, lang }: { example: GradeExample; index: number; lang: Lang }) {
+function ExampleBlock({ example, index, lang, speech }: { example: GradeExample; index: number; lang: Lang; speech: "vi" | "en" }) {
   const [shown, setShown] = useState(0);
   const done = shown >= example.steps.length;
   return (
     <article className="tool-card">
       <h2>{t(lang, `Ví dụ ${index + 1}`, `Example ${index + 1}`)}</h2>
       <p><MathText text={example.prompt} /></p>
-      <Speak text={[example.prompt, ...example.steps.slice(0, shown).map((step) => `${step.claim}. Lý do: ${step.why}`)].join(". ")} />
+      <Speak speech={speech} text={[example.prompt, ...example.steps.slice(0, shown).map((step) => `${step.claim}. ${speech === "en" ? "Why" : "Lý do"}: ${step.why}`)].join(". ")} />
       <ol className="steps" aria-live="polite">
         {example.steps.slice(0, shown).map((step) => (
           <li key={step.claim}>
@@ -241,7 +246,7 @@ function ExampleBlock({ example, index, lang }: { example: GradeExample; index: 
   );
 }
 
-function DrillBlock({ drill, index, lang, correct, onCorrect }: { drill: GradeDrill; index: number; lang: Lang; correct: boolean; onCorrect: () => void }) {
+function DrillBlock({ drill, index, lang, speech, correct, onCorrect }: { drill: GradeDrill; index: number; lang: Lang; speech: "vi" | "en"; correct: boolean; onCorrect: () => void }) {
   const [open, setOpen] = useState(false);
   const [hints, setHints] = useState(0);
   const [note, setNote] = useState("");
@@ -252,7 +257,7 @@ function DrillBlock({ drill, index, lang, correct, onCorrect }: { drill: GradeDr
         {drill.stars ? <span role="img" aria-label={t(lang, `Độ khó ${drill.stars} trên 3`, `Difficulty ${drill.stars} of 3`)}>{"★".repeat(drill.stars)} </span> : null}
         <MathText text={drill.prompt} />
       </p>
-      <Speak text={drill.prompt} />
+      <Speak speech={speech} text={drill.prompt} />
       {drill.ask ? <AskForm ask={drill.ask} index={index} lang={lang} correct={correct} onCorrect={onCorrect} onNote={setNote} /> : null}
       {note ? <p role="status" className={correct ? "ask-ok" : "ask-miss"}>{note}</p> : null}
       {drill.hints && hints < drill.hints.length ? (
