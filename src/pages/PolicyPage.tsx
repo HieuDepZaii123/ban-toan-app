@@ -44,8 +44,14 @@ export function PolicyPage() {
             `Trợ lý toán: câu hỏi, ảnh đề bài nếu bạn gửi, và vài lượt trò chuyện gần nhất được gửi tới máy chủ Bàn Toán rồi chuyển cho một nhà cung cấp AI (${AI_PROVIDERS}). Gói miễn phí của các nhà cung cấp này có thể dùng nội dung để cải thiện mô hình. Đừng gửi họ tên, địa chỉ, số điện thoại hay ảnh có thông tin cá nhân.`,
             `Maths tutor: your question, a photo of the problem if you send one, and the last few turns go to the Bàn Toán server and then to one AI provider (${AI_PROVIDERS}). These providers' free tiers may use content to improve their models. Do not send names, addresses, phone numbers or photos with personal details.`)}</li>
           <li>{t(lang,
-            "Giới hạn lượt hỏi: máy chủ đếm lượt theo một mã ngẫu nhiên của trình duyệt (hoặc mã Premium đã băm) và địa chỉ mạng, giữ tối đa hai ngày rồi xóa.",
-            "Question limits: the server counts questions by a random browser id (or a hashed Premium key) and network address, kept for at most two days and then deleted.")}</li>
+            "Chấm bài làm (/cham-bai): đề và các bước con ghi được gửi tới máy chủ Bàn Toán rồi tới một nhà cung cấp AI như trên. Kết quả chấm chỉ lưu trên máy này.",
+            "Marking (/cham-bai): the problem and the steps you write go to the Bàn Toán server and then to one AI provider, as above. The marking result is stored only on this device.")}</li>
+          <li>{t(lang,
+            "Giới hạn lượt hỏi và lượt chấm: máy chủ đếm lượt theo một mã ngẫu nhiên của trình duyệt (hoặc mã Premium đã băm) và địa chỉ mạng, giữ tối đa tám ngày rồi xóa.",
+            "Question and marking limits: the server counts uses by a random browser id (or a hashed Premium key) and network address, kept for at most eight days and then deleted.")}</li>
+          <li>{t(lang,
+            "Báo cáo tuần cho phụ huynh: báo cáo nằm trong phần sau dấu # của đường link, trình duyệt không gửi phần này lên máy chủ. Ai có link đều đọc được.",
+            "Weekly parent report: the report sits in the part of the link after #, which browsers never send to the server. Anyone with the link can read it.")}</li>
           <li>{t(lang,
             "Luyện chung (/luyen): lựa chọn đáp án được sao lưu kèm một mã thiết bị ngẫu nhiên, không kèm tên hay email.",
             "Shared drill (/luyen): your answer choices are backed up with a random device id, with no name or email.")}</li>

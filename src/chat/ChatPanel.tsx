@@ -6,6 +6,8 @@ import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { ChatText } from "./ChatText.tsx";
 import { mockTutor } from "./mock.ts";
+import { deviceId } from "../lib/device.ts";
+import { parentModeOn, useParentMode } from "../parent/parentMode.ts";
 import { shrinkPhoto } from "./photo.ts";
 import { usePremium } from "../premium/license.ts";
 import { TOPIC_QUICK, topicById } from "./tutorCopy.ts";
@@ -50,19 +52,6 @@ function sessionId(): string {
   const next = crypto.randomUUID();
   sessionStorage.setItem(SESSION, next);
   return next;
-}
-
-/** Stable per-browser id so the free allowance is per learner, not per shared school network. */
-function deviceId(): string {
-  try {
-    const saved = localStorage.getItem("ban-toan-device");
-    if (saved && /^[A-Za-z0-9-]{8,64}$/.test(saved)) return saved;
-    const next = crypto.randomUUID();
-    localStorage.setItem("ban-toan-device", next);
-    return next;
-  } catch {
-    return "";
-  }
 }
 
 function dayKey(): string {
@@ -119,6 +108,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   const [photo, setPhoto] = useState<string | null>(null);
   const premiumState = usePremium();
   const isPremium = premiumState.kind === "active" || meta.premium === true;
+  const parentOn = useParentMode();
   const picker = useRef<HTMLInputElement>(null);
   const box = useRef<HTMLTextAreaElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -146,6 +136,10 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   }
 
   function pickMode(next: TutorMode): void {
+    if (next === "solve" && parentOn) {
+      setNote(t(lang, "Chế độ phụ huynh đang bật: lời giải đầy đủ bị khóa. Dùng Kiểm tra bài làm.", "Parent mode is on: full solutions are locked. Use Check my work."));
+      return;
+    }
     if (next !== "hint" && !isPremium) return premiumOnly();
     setTutorMode(next);
     setNote("");
@@ -205,6 +199,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             topic: studying?.id ?? "",
             device: deviceId(),
             mode: sentMode,
+            parent: parentModeOn(),
             ...(attached ? { image: attached } : {}),
           }),
         });
@@ -289,7 +284,10 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             disabled={busy}
             onClick={() => pickMode(id)}
           >
-            {label}{id !== "hint" && !isPremium ? <span className="chat-lock"> · Premium</span> : null}
+            {label}
+            {id === "solve" && parentOn
+              ? <span className="chat-lock"> · {t(lang, "khóa", "locked")}</span>
+              : id !== "hint" && !isPremium ? <span className="chat-lock"> · Premium</span> : null}
           </button>
         ))}
       </div>

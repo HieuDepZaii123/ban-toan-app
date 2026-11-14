@@ -41,7 +41,7 @@ function middleware(): Connect.NextHandleFunction {
   };
 }
 
-/** Phục vụ /api/chat và /api/premium trên Vite dev và preview. Production dùng các hàm trong `api/`. */
+/** Phục vụ /api/chat (cả chấm bài qua ?do=check) và /api/premium trên Vite dev và preview. Production dùng các hàm trong `api/`. */
 export function payApi(): Plugin {
   return {
     name: "ban-toan-api",

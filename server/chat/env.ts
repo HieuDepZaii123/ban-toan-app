@@ -4,6 +4,7 @@ import { demoReply } from "./policy.ts";
 import { sharedClient } from "../db/sql.ts";
 import { createQuota, pgQuota, type Quota } from "./limit.ts";
 import type { ChatEnv, ChatTurn } from "./handlers.ts";
+import type { CheckEnv } from "./check.ts";
 import { completeLive, hasLiveKey } from "./model.ts";
 
 const DAY = 86_400_000;
@@ -45,6 +46,15 @@ export function chatEnv(source: NodeJS.ProcessEnv = process.env, quota: Quota = 
     windowLimit: integer(source.CHAT_WINDOW_LIMIT, 10),
     windowMs: integer(source.CHAT_WINDOW_MS, 10 * 60 * 1000),
     networkDaily: integer(source.CHAT_NETWORK_DAILY, 160),
+  };
+}
+
+/** Chấm bài dùng chung bộ đếm và mô hình với trợ lý, cộng hạn mức riêng. */
+export function checkEnv(source: NodeJS.ProcessEnv = process.env, quota: Quota = quotaFor(source)): CheckEnv {
+  return {
+    ...chatEnv(source, quota),
+    freeChecksWeekly: integer(source.CHECK_FREE_WEEKLY, 3),
+    premiumChecksDaily: integer(source.CHECK_PREMIUM_DAILY, 40),
   };
 }
 

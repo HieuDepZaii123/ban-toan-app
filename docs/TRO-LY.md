@@ -63,3 +63,22 @@ Mỗi chủ đề có hai chỗ video trong `src/content/lectures.ts`: `basic` (
 Video «Cơ bản» xem miễn phí. Video «Chuẩn thi» chỉ mở cho mã Premium còn hạn; người chưa có Premium thấy một thẻ mời nâng cấp. Trang chỉ hiện mục video khi có ít nhất một id thật, nên trước đó không ai thấy ô trống. Video cũng hiện ở cuối mỗi bộ tài liệu `/tai-lieu/<tờ>`.
 
 Khi có video thật, thay bằng id YouTube đúng 11 ký tự, ví dụ `dQw4w9WgXcQ`. Không commit file mp4. Iframe chỉ tải sau khi bấm **Xem video**, không tự phát.
+
+
+## Chấm bài làm (`/cham-bai`, `/api/chat?do=check`)
+Chấm bài chạy trong cùng hàm serverless với trợ lý (`api/chat.ts`), vì gói Hobby của Vercel chỉ cho 12 hàm mỗi lần deploy và `api/` đã đủ 12. Đừng thêm tệp mới vào `api/`; test `scripts/check.test.ts` báo lỗi nếu vượt.
+
+Học sinh ghi đề và các bước tự làm, mỗi dòng một bước (tối đa 20). Server gọi model với `CHECK_INSTRUCTIONS` (`server/chat/check.ts`), nhận về JSON `verdict` / `step` / `why` / `hint` / `fix`, và kiểm từng trường trước khi trả. Chấm lỗi không trừ lượt.
+
+- Lượt: miễn phí 3 lượt mỗi 7 ngày cho mỗi máy (`CHECK_FREE_WEEKLY`), Premium 40 lượt mỗi ngày (`CHECK_PREMIUM_DAILY`). Đếm trong cùng bảng `chat_hits` (khóa `chk:` và `chkn:`); lượt được giữ 8 ngày.
+- Không có khóa AI: `src/check/arith.ts` kiểm phép tính và hằng đẳng thức. Gặp phương trình hay hàm số thì trả `unclear`, không đoán.
+
+## Chế độ phụ huynh và báo cáo tuần (`/phu-huynh`, `/bao-cao`)
+
+Cài đặt trên máy, khóa bằng mã PIN 4–8 số (băm SHA-256 kèm salt, `src/parent/parentMode.ts`). Khi bật, trình duyệt gửi `parent: true`:
+
+- `/api/chat` chặn `mode: "solve"` (trả 403 `parent`) kể cả với Premium, và thêm `PARENT_NOTE` vào lời dặn trợ lý.
+- Chấm bài bỏ trường `fix` (bước sửa) trước khi trả, không phụ thuộc model.
+- Đề thi thử chỉ hiện lời giải ở câu học sinh đã làm.
+
+Báo cáo tuần (`src/parent/report.ts`) dựng trên máy từ lịch sử thi thử và các lượt chấm, mã hóa vào phần `#r=` của link nên server không nhận được. Đây không phải khóa chống gian lận: xóa dữ liệu trình duyệt sẽ tắt chế độ phụ huynh, và báo cáo ghi rõ chế độ có bật suốt tuần hay không.

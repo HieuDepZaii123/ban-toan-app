@@ -560,12 +560,22 @@ function PremiumBenefits() {
           {t(lang, ": sau khi tự thử, xin trợ lý giải trọn từng bước, có đáp số và bước thử lại. Bản miễn phí chỉ gợi ý.", ": after trying, ask the tutor for every step with the final answer and a check. The free tutor gives hints only.")}
         </li>
         <li>
-          <b>{t(lang, "Kiểm tra bài làm", "Check my work")}</b>
-          {t(lang, ": dán bài giải của bạn, trợ lý chỉ ra đúng bước sai đầu tiên, vì sao sai và cách sửa.", ": paste your solution and the tutor points to the first wrong step, why it is wrong and how to fix it.")}
+          <b>{t(lang, "Kiểm tra bài làm, 40 lượt chấm mỗi ngày", "Check my work, 40 markings a day")}</b>
+          {t(lang,
+            ": ghi các bước tự làm, Bàn Toán chỉ ra bước sai đầu tiên, vì sao sai và cách sửa. Bản miễn phí có 3 lượt chấm mỗi tuần để thử trước.",
+            ": write your own steps and Bàn Toán points to the first wrong one, why it is wrong and how to fix it. The free version has 3 markings a week to try first.")}
+          {" "}<A href="/cham-bai">{t(lang, "Thử chấm", "Try it")}</A>
         </li>
         <li>
           <b>{t(lang, "Chụp ảnh đề bài", "Photo of a problem")}</b>
           {t(lang, ": chụp đề trong sách hay đề thi, trợ lý đọc ảnh rồi giúp bạn giải.", ": photograph a problem from a book or paper and the tutor reads it and helps.")}
+        </li>
+        <li>
+          <b>{t(lang, "Chế độ phụ huynh và báo cáo tuần", "Parent mode and a weekly report")}</b>
+          {t(lang,
+            ": khóa lời giải đến khi con tự làm, và báo cáo điểm thi thử con gửi cho bố mẹ bằng link. Miễn phí cho mọi người.",
+            ": solutions stay locked until your child has tried, and a mock-score report your child sends by link. Free for everyone.")}
+          {" "}<A href="/phu-huynh">{t(lang, "Dành cho phụ huynh", "For parents")}</A>
         </li>
         <li>
           <b>{t(lang, "Trợ lý toán 40 câu mỗi ngày", "40 tutor questions a day")}</b>
