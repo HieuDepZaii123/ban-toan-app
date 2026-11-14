@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const quadraticLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Parabol $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: bề lõm hướng lên, có giá trị nhỏ nhất tại đỉnh. $a<0$: bề lõm hướng xuống, có giá trị lớn nhất tại đỉnh.`, en: R`The parabola $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: opens up, a minimum. $a<0$: opens down, a maximum.` },
+    { k: "mo", vi: R`Hàm số bậc hai $y=ax^2+bx+c$ với $a\neq 0$ có đồ thị là một đường cong gọi là parabol. Hệ số $a$ quyết định hình dáng: khi $a>0$ parabol mở lên như cái chén, điểm thấp nhất là đỉnh, nên hàm có giá trị nhỏ nhất tại đỉnh; khi $a<0$ parabol úp xuống, đỉnh là điểm cao nhất. Đỉnh nằm trên đường thẳng $x=-\dfrac{b}{2a}$, và parabol đối xứng qua đường thẳng này.`, en: R`A quadratic function $y=ax^2+bx+c$ with $a\neq 0$ graphs as a curve called a parabola. The coefficient $a$ sets its shape: for $a>0$ it opens upward like a bowl and its lowest point, the vertex, gives the minimum; for $a<0$ it opens downward and the vertex is the highest point. The vertex lies on the line $x=-\dfrac{b}{2a}$, and the parabola is symmetric about that line.` },
     { k: "dinh", vi: R`Đỉnh $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, với $\Delta=b^2-4ac$.`, en: R`Vertex $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, where $\Delta=b^2-4ac$.` },
     { k: "vd", vi: R`Chuồng $40$ m, một cạnh tựa tường: $S=x(40-2x)=-2x^2+40x$. Đỉnh tại $x=-\dfrac{40}{2\cdot(-2)}=10$, và $S(10)=200$.`, en: R`A $40$ m pen with one side against a wall: $S=x(40-2x)=-2x^2+40x$. $S'=0$ at $x=10$, and $S(10)=200$.` },
   ],

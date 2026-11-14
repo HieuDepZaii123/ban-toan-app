@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const ineqLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Chia $-2x\le 4$ cho $-2$ thì đảo thành $x\ge -2$. Nhân một số dương thì giữ chiều.`, en: R`Dividing $-2x\le 4$ by $-2$ flips it to $x\ge -2$. Multiplying by a positive keeps the direction.` },
+    { k: "mo", vi: R`Bất đẳng thức so sánh hai đại lượng. Cộng hoặc trừ cùng một số vào hai vế không làm đổi chiều. Nhân hoặc chia hai vế cho một số dương cũng giữ chiều, nhưng nhân hoặc chia cho một số âm thì phải đổi chiều: từ $-2x\le 4$, chia cho $-2$ được $x\ge -2$. Lí do là nhân với số âm lật các số qua điểm $0$ trên trục số, nên thứ tự bị đảo.`, en: R`An inequality compares two quantities. Adding or subtracting the same number on both sides keeps the direction. Multiplying or dividing by a positive number keeps it too, but multiplying or dividing by a negative number flips it: from $-2x\le 4$, dividing by $-2$ gives $x\ge -2$. A negative factor reflects numbers across $0$ on the number line, which reverses their order.` },
     { k: "dinh", vi: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, đẳng thức khi $a=b$.`, en: R`$a,b>0\Rightarrow\dfrac{a+b}{2}\ge\sqrt{ab}$, with equality when $a=b$.` },
     { k: "vd", vi: R`Với $4$ và $9$: $\dfrac{4+9}{2}=6{,}5$ và $\sqrt{4\cdot 9}=6$.`, en: R`For $4$ and $9$: $\dfrac{4+9}{2}=6{,}5$ and $\sqrt{4\cdot 9}=6$.` },
   ],

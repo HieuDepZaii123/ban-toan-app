@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const derivativeLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Đạo hàm tại $a$ là giới hạn của hệ số góc cát tuyến khi hai điểm tiến sát nhau. Khi giới hạn đó là một số, nó là hệ số góc của tiếp tuyến tại $a$.`, en: R`The derivative at $a$ is the limit of the secant slope as the two points close in. When that limit is a number, it is the slope of the tangent at $a$.` },
+    { k: "mo", vi: R`Lấy hai điểm trên đồ thị và nối chúng bằng một đường thẳng gọi là cát tuyến. Cho điểm thứ hai trượt dần về điểm thứ nhất tại hoành độ $a$, cát tuyến xoay dần thành tiếp tuyến. Đạo hàm $f'(a)$ là hệ số góc của tiếp tuyến đó. Nó cho biết tại $a$, khi $x$ tăng một chút thì $f(x)$ thay đổi nhanh đến đâu.`, en: R`Take two points on the graph and join them with a secant line. Slide the second point toward the first at $x=a$ and the secant turns into the tangent line. The derivative $f'(a)$ is the slope of that tangent. It tells how fast $f(x)$ changes near $a$ when $x$ increases a little.` },
     { k: "dinh", vi: R`$f'(a)=\lim_{h\to 0}\dfrac{f(a+h)-f(a)}{h}$, khi giới hạn đó tồn tại.`, en: R`$f'(a)=\lim_{h\to 0}\dfrac{f(a+h)-f(a)}{h}$, when that limit exists.` },
     { k: "vd", vi: R`$f(x)=x^2$ từ $1$ đến $1+h$: $\dfrac{(1+h)^2-1}{h}=2+h$. Cho $h\to 0$ được $f'(1)=2$.`, en: R`$f(x)=x^2$ from $1$ to $1+h$: $\dfrac{(1+h)^2-1}{h}=2+h$. Sending $h\to 0$ gives $f'(1)=2$.` },
   ],

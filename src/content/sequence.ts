@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const sequenceLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Cấp số cộng: mỗi bước cộng $d$. Cấp số nhân: mỗi bước nhân $q$.`, en: R`An arithmetic sequence adds $d$ each step. A geometric sequence multiplies by $q$.` },
+    { k: "mo", vi: R`Dãy số là các số viết theo một thứ tự, số thứ $n$ kí hiệu $u_n$. Cấp số cộng là dãy mà mỗi số hạng bằng số hạng đứng trước cộng thêm một số cố định $d$, gọi là công sai, ví dụ $3;\ 7;\ 11;\ 15$. Cấp số nhân là dãy mà mỗi số hạng bằng số hạng đứng trước nhân với một số cố định $q$, gọi là công bội, ví dụ $2;\ 6;\ 18;\ 54$.`, en: R`A sequence is a list of numbers in order, the $n$-th one written $u_n$. In an arithmetic sequence each term is the previous one plus a fixed number $d$, the common difference, as in $3, 7, 11, 15$. In a geometric sequence each term is the previous one times a fixed number $q$, the common ratio, as in $2, 6, 18, 54$.` },
     { k: "dinh", vi: R`$u_n=u_1+(n-1)d$. Nếu $q\neq 1$ thì $S_n=u_1\dfrac{1-q^n}{1-q}$.`, en: R`$u_n=u_1+(n-1)d$. If $q\neq 1$ then $S_n=u_1\dfrac{1-q^n}{1-q}$.` },
     { k: "vd", vi: R`Dãy $3;\ 7;\ 11;\ 15$ có công sai $d=4$. Số hạng thứ $10$ là $u_{10}=3+9\cdot 4=39$.`, en: R`The sequence $3,7,11,15$ has common difference $d=4$. The 10th term is $u_{10}=3+9\cdot 4=39$.` },
   ],

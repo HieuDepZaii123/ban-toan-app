@@ -19,7 +19,7 @@ export function ResearchIdeasPage() {
     <PageFrame
       kicker={t(lang, "Nghiên cứu", "Research")}
       title={t(lang, "Ý tưởng và chủ đề", "Ideas and themes")}
-      lead={t(lang, "Mỗi mục có một câu hỏi, một cách làm, và vài bước tính. Muốn kéo số thì mở tab Nghiên cứu trên tờ đó.", "Each item has a question, a method, and a few calculated steps. To drag the numbers, open the Research tab on that sheet.")}
+      lead={t(lang, "Các câu hỏi để tự tìm tòi, từ một buổi làm ngắn đến một báo cáo nhỏ. Mỗi mục nêu câu hỏi, gợi ý cách làm và vài bước tính mẫu để bắt đầu. Nhiều mục có hình kéo được hoặc dùng được máy tính khoa học để thử nhiều số.", "Each item has a question, a method, and a few calculated steps. To drag the numbers, open the Research tab on that sheet.")}
     >
       <IdeaGroup id="y-tuong" title={t(lang, "Ý tưởng", "Ideas")} note={t(lang, "Một câu hỏi cho một buổi làm.", "One question for one sitting.")} items={sparks} />
       <IdeaGroup id="chu-de" title={t(lang, "Chủ đề nghiên cứu", "Research themes")} note={t(lang, "Một báo cáo ngắn: câu hỏi, cách làm, rồi một con số.", "A short report: question, method, then one number.")} items={themes} />

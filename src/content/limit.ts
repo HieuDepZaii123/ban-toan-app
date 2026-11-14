@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const limitLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`$\lim_{x\to a}f(x)=L$ khi cả hai phía tiến tới $L$. Giá trị $f(a)$ không quyết định giới hạn.`, en: R`$\lim_{x\to a}f(x)=L$ when both sides approach $L$. The value $f(a)$ does not decide the limit.` },
+    { k: "mo", vi: R`Giới hạn mô tả giá trị mà $f(x)$ tiến tới khi $x$ tiến sát $a$, chứ không phải giá trị đúng tại $a$. Ta viết $\lim_{x\to a}f(x)=L$ khi $f(x)$ gần $L$ tùy ý mỗi khi $x$ đủ gần $a$ từ cả hai phía. Hàm có thể không xác định tại $a$ mà vẫn có giới hạn, như $\dfrac{x^2-1}{x-1}$ tiến tới $2$ khi $x\to 1$.`, en: R`A limit describes the value $f(x)$ approaches as $x$ gets close to $a$, not the value at $a$ itself. We write $\lim_{x\to a}f(x)=L$ when $f(x)$ is as close to $L$ as we like whenever $x$ is close enough to $a$ from both sides. The function may be undefined at $a$ and still have a limit: $\dfrac{x^2-1}{x-1}$ tends to $2$ as $x\to 1$.` },
     { k: "dinh", vi: R`Liên tục tại $a$ khi giới hạn tồn tại và bằng $f(a)$.`, en: R`Continuous at $a$ when the limit exists and equals $f(a)$.` },
     { k: "vd", vi: R`Với $x\neq 1$, $\dfrac{x^2-1}{x-1}=x+1$. Khi $x$ sát $1$, biểu thức sát $2$, dù có gán $f(1)=5$.`, en: R`For $x\neq 1$, $\dfrac{x^2-1}{x-1}=x+1$. When $x$ is near $1$, the expression is near $2$, even if $f(1)=5$.` },
   ],

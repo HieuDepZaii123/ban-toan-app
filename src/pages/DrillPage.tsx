@@ -59,7 +59,7 @@ export function DrillPage() {
     <PageFrame
       kicker={t(lang, "Luyện tập", "Practice")}
       title={t(lang, `Đề ${sharedDrill.length} câu`, `${sharedDrill.length} questions`)}
-      lead={t(lang, "Câu THPT có lời giải nhiều bước. Câu sai tự vào Sổ lỗi.", "Upper-secondary questions with multi-step solutions. Misses go to the miss book.")}
+      lead={t(lang, "Ngân hàng câu hỏi lớp 10–12 chia theo lớp và chủ đề. Chọn đáp án là thấy ngay đúng hay sai, kèm lời giải từng bước. Câu làm sai được ghi vào Sổ câu sai để ôn lại sau.", "Upper-secondary questions with multi-step solutions. Misses go to the miss book.")}
     >
       <PracticeBar
         total={sharedDrill.length}

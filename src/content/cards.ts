@@ -46,8 +46,8 @@ export const cards = [
     "status": "ready",
     "title": "Hàm số bậc hai",
     "titleEn": "Quadratic functions",
-    "blurb": "Đỉnh và Δ. Chuồng 40 m đạt 200 m².",
-    "blurbEn": "Vertex and discriminant. A 40 m fence reaches 200 m².",
+    "blurb": "Tìm đỉnh, vẽ parabol, xét số nghiệm, và dùng hàm bậc hai để tìm diện tích lớn nhất của một mảnh đất.",
+    "blurbEn": "Find the vertex, sketch the parabola, count the roots, and use a quadratic to get the largest area of a plot.",
     "questions": 13
   },
   {
@@ -58,8 +58,8 @@ export const cards = [
     "status": "ready",
     "title": "Bất đẳng thức",
     "titleEn": "Inequalities",
-    "blurb": "4 và 9: trung bình cộng 6,5, trung bình nhân 6.",
-    "blurbEn": "4 and 9: arithmetic mean 6.5, geometric mean 6.",
+    "blurb": "So sánh trung bình cộng với trung bình nhân, tìm giá trị lớn nhất, nhỏ nhất, và giải hệ bất phương trình trên một miền.",
+    "blurbEn": "Compare arithmetic and geometric means, find maxima and minima, and solve systems of inequalities on a region.",
     "questions": 13
   },
   {
@@ -70,8 +70,8 @@ export const cards = [
     "status": "ready",
     "title": "Mũ và logarit",
     "titleEn": "Exponents and logarithms",
-    "blurb": "10 triệu, lãi kép 8% sau 5 năm khoảng 14,69, không phải 14.",
-    "blurbEn": "10 million at 8% compound for 5 years is about 14.69, not 14.",
+    "blurb": "Lũy thừa, logarit, lãi kép và tăng trưởng: vì sao tiền gửi lãi kép tăng nhanh hơn lãi đơn.",
+    "blurbEn": "Powers, logarithms, compound interest and growth: why compound interest outgrows simple interest.",
     "questions": 13
   },
   {
@@ -82,8 +82,8 @@ export const cards = [
     "status": "ready",
     "title": "Dãy số",
     "titleEn": "Sequences",
-    "blurb": "Cộng d hoặc nhân q. Có tổng vô hạn khi |q| < 1.",
-    "blurbEn": "Add d, or multiply by q. An infinite sum when |q| < 1.",
+    "blurb": "Cấp số cộng, cấp số nhân, công thức số hạng tổng quát, tính tổng và tổng vô hạn.",
+    "blurbEn": "Arithmetic and geometric sequences, the general term, finite sums and infinite sums.",
     "questions": 13
   },
   {
@@ -94,8 +94,8 @@ export const cards = [
     "status": "ready",
     "title": "Lượng giác",
     "titleEn": "Trigonometry",
-    "blurb": "Đường tròn bán kính 1: góc 90° là điểm (0; 1).",
-    "blurbEn": "Circle of radius 1: 90° is the point (0, 1).",
+    "blurb": "Đường tròn lượng giác, giá trị sin và cos của các góc, công thức biến đổi và phương trình lượng giác.",
+    "blurbEn": "The unit circle, sine and cosine values, identities and trigonometric equations.",
     "questions": 13
   },
   {
@@ -106,8 +106,8 @@ export const cards = [
     "status": "ready",
     "title": "Giới hạn",
     "titleEn": "Limits",
-    "blurb": "Hai phía cùng tiến tới một số. Giá trị tại điểm không quyết định giới hạn.",
-    "blurbEn": "Both sides approach one number. The value at the point does not decide the limit.",
+    "blurb": "Giới hạn của dãy số và hàm số, cách khử dạng không xác định, và hàm số liên tục.",
+    "blurbEn": "Limits of sequences and functions, removing indeterminate forms, and continuity.",
     "questions": 13
   },
   {
@@ -118,8 +118,8 @@ export const cards = [
     "status": "ready",
     "title": "Đạo hàm",
     "titleEn": "Derivatives",
-    "blurb": "Cát tuyến thành tiếp tuyến khi h về 0.",
-    "blurbEn": "The secant becomes the tangent as h goes to 0.",
+    "blurb": "Đạo hàm là hệ số góc của tiếp tuyến. Học các quy tắc tính đạo hàm và viết phương trình tiếp tuyến.",
+    "blurbEn": "The derivative is the slope of the tangent. Learn the rules for derivatives and write tangent lines.",
     "questions": 14
   },
   {
@@ -130,8 +130,8 @@ export const cards = [
     "status": "ready",
     "title": "Khảo sát hàm số",
     "titleEn": "Curve sketching",
-    "blurb": "y = x³ − 3x: cực đại 2 tại x = −1, cực tiểu −2 tại x = 1.",
-    "blurbEn": "y = x³ − 3x: maximum 2 at x = −1, minimum −2 at x = 1.",
+    "blurb": "Dùng đạo hàm để biết hàm tăng giảm ở đâu, tìm cực trị, tiệm cận và vẽ bảng biến thiên.",
+    "blurbEn": "Use derivatives to see where a function rises and falls, find extrema and asymptotes, and build the variation table.",
     "questions": 13
   },
   {
@@ -142,8 +142,8 @@ export const cards = [
     "status": "ready",
     "title": "Tích phân",
     "titleEn": "Integrals",
-    "blurb": "Diện tích có dấu, và phần giữa hai đồ thị.",
-    "blurbEn": "Signed area, and the region between two graphs.",
+    "blurb": "Nguyên hàm, tích phân, diện tích hình phẳng và thể tích khối tròn xoay.",
+    "blurbEn": "Antiderivatives, definite integrals, areas between curves and volumes of revolution.",
     "questions": 13
   },
   {
@@ -154,8 +154,8 @@ export const cards = [
     "status": "ready",
     "title": "Vectơ và ma trận",
     "titleEn": "Vectors and matrices",
-    "blurb": "Độ dài, định thức, và hệ hai ẩn khi có đúng một nghiệm.",
-    "blurbEn": "Length, a determinant, and a two-unknown system with exactly one solution.",
+    "blurb": "Cộng trừ vectơ, tích vô hướng, góc giữa hai vectơ, và giải hệ hai ẩn bằng định thức.",
+    "blurbEn": "Adding vectors, the dot product, the angle between vectors, and solving two-unknown systems with determinants.",
     "questions": 13
   },
   {
@@ -166,8 +166,8 @@ export const cards = [
     "status": "ready",
     "title": "Hình giải tích",
     "titleEn": "Coordinate geometry",
-    "blurb": "(3; 1) cách đường x + y − 2 = 0 đúng √2.",
-    "blurbEn": "(3, 1) is exactly √2 from the line x + y − 2 = 0.",
+    "blurb": "Phương trình đường thẳng, đường tròn, khoảng cách từ một điểm đến một đường thẳng trong mặt phẳng tọa độ.",
+    "blurbEn": "Equations of lines and circles, and the distance from a point to a line in the coordinate plane.",
     "questions": 13
   },
   {
@@ -178,8 +178,8 @@ export const cards = [
     "status": "ready",
     "title": "Hình phẳng và không gian",
     "titleEn": "Plane and solid figures",
-    "blurb": "Đáy 6, cao 4 thì diện tích 12. Chóp còn nhân 1/3.",
-    "blurbEn": "Base 6 and height 4 give area 12. A pyramid also multiplies by 1/3.",
+    "blurb": "Định lí sin, định lí côsin, giải tam giác, diện tích và thể tích các khối hình.",
+    "blurbEn": "The laws of sines and cosines, solving triangles, areas and volumes of solids.",
     "questions": 13
   },
   {
@@ -190,8 +190,8 @@ export const cards = [
     "status": "ready",
     "title": "Tổ hợp và thống kê",
     "titleEn": "Combinatorics and statistics",
-    "blurb": "A kể thứ tự, C thì không. Một điểm lệch kéo trung bình.",
-    "blurbEn": "A counts order, C does not. One outlier pulls the mean.",
+    "blurb": "Quy tắc đếm, hoán vị, chỉnh hợp, tổ hợp, và các số đặc trưng của một mẫu số liệu.",
+    "blurbEn": "Counting rules, permutations, arrangements, combinations, and summary statistics of a data set.",
     "questions": 13
   },
   {
@@ -202,8 +202,8 @@ export const cards = [
     "status": "ready",
     "title": "Xác suất",
     "titleEn": "Probability",
-    "blurb": "Khi đã biết thêm một dữ kiện, mẫu số không còn là mẫu lúc đầu.",
-    "blurbEn": "Once one more fact is known, the denominator is no longer the original sample.",
+    "blurb": "Xác suất cổ điển, biến cố đối, xác suất có điều kiện và công thức Bayes qua các ví dụ đời thường.",
+    "blurbEn": "Classical probability, complements, conditional probability and Bayes' rule through everyday examples.",
     "questions": 13
   }
 ] as const satisfies readonly Card[];

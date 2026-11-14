@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const vectorLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Vectơ là mũi tên có hướng. Độ dài là khoảng từ gốc tới ngọn, không phải tổng các thành phần.`, en: R`A vector is a directed arrow. Its length is the distance from tail to tip, not the sum of the components.` },
+    { k: "mo", vi: R`Vectơ là một đoạn thẳng có hướng, vẽ bằng mũi tên. Nó mang hai thông tin: hướng đi và độ dài. Trong mặt phẳng tọa độ, vectơ $(x;y)$ nghĩa là đi $x$ đơn vị theo trục hoành và $y$ đơn vị theo trục tung. Độ dài của nó là $\sqrt{x^2+y^2}$, theo định lí Pythagore, chứ không phải $x+y$.`, en: R`A vector is a directed segment, drawn as an arrow. It carries a direction and a length. In the coordinate plane, the vector $(x;y)$ means move $x$ units along the horizontal axis and $y$ along the vertical one. Its length is $\sqrt{x^2+y^2}$ by Pythagoras, not $x+y$.` },
     { k: "dinh", vi: R`$|\vec u|=\sqrt{x^2+y^2+z^2}$. $\vec u\cdot\vec v=0$ thì hai vectơ vuông góc.`, en: R`$|\vec u|=\sqrt{x^2+y^2+z^2}$. $\vec u\cdot\vec v=0$ means the vectors are perpendicular.` },
     { k: "vd", vi: R`Độ dài $|(2;1;2)|=\sqrt{2^2+1^2+2^2}=\sqrt{9}=3$.`, en: R`The length $|(2;1;2)|=\sqrt{2^2+1^2+2^2}=\sqrt{9}=3$.` },
   ],

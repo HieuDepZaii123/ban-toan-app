@@ -36,7 +36,7 @@ function collect(value: unknown, vi: string[], en: string[], seen: Set<unknown>,
 }
 
 function levelOf(file: string): Level {
-  if (/lop0[1-5]\.ts$|tieuHoc\.ts$/.test(file)) return "primary";
+  if (/lop0[1-5]\.ts$|tieuHoc\.ts$|kidVoice\.ts$/.test(file)) return "primary";
   return "upper";
 }
 

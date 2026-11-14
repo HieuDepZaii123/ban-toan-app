@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const expLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`$a^n$ là $a$ nhân $n$ lần, với $n$ nguyên dương. $\log_a b$ là số mũ $x$ thỏa $a^x=b$, chẳng hạn $2^3=8$ nên $\log_2 8=3$.`, en: R`$a^n$ is $a$ multiplied $n$ times, for a positive integer $n$. $\log_a b$ is the exponent $x$ with $a^x=b$; for example $2^3=8$ so $\log_2 8=3$.` },
+    { k: "mo", vi: R`Lũy thừa $a^n$ với $n$ nguyên dương là tích của $n$ thừa số $a$. Logarit là phép ngược của lũy thừa: $\log_a b$ trả lời câu hỏi phải nâng $a$ lên mũ mấy để được $b$. Chẳng hạn $2^3=8$ nên $\log_2 8=3$. Vì vậy logarit chỉ có nghĩa khi cơ số $a$ dương, khác $1$, và số $b$ dương.`, en: R`A power $a^n$ with a positive integer $n$ is the product of $n$ factors equal to $a$. A logarithm undoes a power: $\log_a b$ asks which exponent turns $a$ into $b$. For instance $2^3=8$, so $\log_2 8=3$. That is why a logarithm needs a positive base $a$ other than $1$, and a positive number $b$.` },
     { k: "dinh", vi: R`$a>0$, $a\neq 1$: $\log_a(bc)=\log_a b+\log_a c$ và $\log_a(b^k)=k\log_a b$.`, en: R`$a>0$, $a\neq 1$: $\log_a(bc)=\log_a b+\log_a c$ and $\log_a(b^k)=k\log_a b$.` },
     { k: "vd", vi: R`Vốn $10$, lãi kép $8\%$ trong $5$ năm: $10(1{,}08)^5\approx 14{,}69$. Lãi đơn cùng kỳ là $14$.`, en: R`Principal $10$, compound interest $8\%$ for $5$ years: $10(1{,}08)^5\approx 14{,}69$. Simple interest over the same time is $14$.` },
   ],

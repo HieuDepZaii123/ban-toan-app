@@ -30,7 +30,7 @@ export function GradeDesk() {
   const book = gradeBooks.find((item) => item.grade === parsed.grade);
   if (!book) {
     return (
-      <PageFrame kicker={t(lang, "Chương trình 2018", "2018 curriculum")} title={t(lang, "Không thấy lớp này", "This grade is missing")} lead={t(lang, "Chọn một lớp từ 1 đến 12.", "Choose a grade from 1 to 12.")}>
+      <PageFrame kicker={t(lang, "Chương trình 2018", "2018 curriculum")} title={t(lang, "Không thấy lớp này", "This grade is missing")} lead={t(lang, "Chọn lớp để xem danh sách bài học của lớp đó.", "Choose a grade from 1 to 12.")}>
         <A href="/kien-thuc">{t(lang, "Về danh sách lớp", "Back to grades")}</A>
       </PageFrame>
     );
@@ -86,7 +86,7 @@ function GradeHome() {
     <PageFrame
       kicker={t(lang, "Chương trình GDPT 2018", "2018 curriculum")}
       title={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")}
-      lead={t(lang, "Tiểu học lớp 1–5, THCS lớp 6–9, THPT lớp 10–12. Mỗi bài có ví dụ tính được và bài luyện.", "Primary grades 1–5, lower secondary 6–9, upper secondary 10–12. Each lesson has a worked example and practice.")}
+      lead={t(lang, "Bài học theo chương trình giáo dục phổ thông 2018, từ lớp 1 đến lớp 12. Mỗi bài có tóm tắt, lời giải thích vì sao quy tắc đúng, lỗi hay gặp, ví dụ giải từng bước và bài tự luyện có chấm.", "Primary grades 1–5, lower secondary 6–9, upper secondary 10–12. Each lesson has a worked example and practice.")}
     >
       <p><A href="/luyen-lop">{t(lang, "Luyện nhanh lớp 1–9", "Quick practice, grades 1–9")}</A>{" · "}<A href="/luyen-thpt">{t(lang, "Luyện THPT lớp 10–12", "Upper-secondary practice, 10–12")}</A></p>
       {bands.map((band) => (

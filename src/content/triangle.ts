@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const triangleLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Diện tích tam giác là nửa đáy nhân chiều cao. Thể tích hộp là dài nhân rộng nhân cao.`, en: R`A triangle's area is half base times height. A box's volume is length times width times height.` },
+    { k: "mo", vi: R`Một tam giác được xác định khi biết đủ ba yếu tố, trong đó có ít nhất một cạnh. Diện tích bằng nửa tích của đáy với chiều cao ứng với đáy đó, hoặc bằng $\dfrac{1}{2}ab\sin C$ khi biết hai cạnh và góc xen giữa. Trong không gian, thể tích hình hộp chữ nhật bằng dài nhân rộng nhân cao, còn hình chóp bằng một phần ba diện tích đáy nhân chiều cao.`, en: R`A triangle is fixed once three of its parts are known, including at least one side. Its area is half the base times the matching height, or $\dfrac{1}{2}ab\sin C$ from two sides and the included angle. In space, a box has volume length times width times height, and a pyramid one third of base area times height.` },
     { k: "dinh", vi: R`$S=\dfrac12 bh$. Chóp $V=\dfrac13 Sh$. Tứ diện đều cạnh $a$: $V=\dfrac{a^3\sqrt2}{12}$.`, en: R`$S=\dfrac12 bh$. Pyramid $V=\dfrac13 Sh$. Regular tetrahedron of edge $a$: $V=\dfrac{a^3\sqrt2}{12}$.` },
     { k: "vd", vi: R`Tam giác đáy $6$, cao $4$: $S=\dfrac{6\cdot 4}{2}=12$.`, en: R`A triangle with base $6$ and height $4$: $S=\dfrac{6\cdot 4}{2}=12$.` },
   ],

@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const probabilityLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn sau điều kiện đã biết.`, en: R`Probability is the favorable cases divided by the cases that remain after what is already known.` },
+    { k: "mo", vi: R`Khi mọi kết quả có khả năng như nhau, xác suất của một biến cố bằng số kết quả thuận lợi chia cho tổng số kết quả có thể. Nếu đã biết thêm một điều gì đó, những kết quả trái với điều đó bị loại đi, và ta chỉ đếm trong phần còn lại. Đó là xác suất có điều kiện.`, en: R`When all outcomes are equally likely, the probability of an event is the number of favourable outcomes divided by the number of possible outcomes. If something more is known, outcomes that contradict it are removed and we count only among those left. That is conditional probability.` },
     { k: "dinh", vi: R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ khi $P(B)\neq 0$. Mẫu số là $B$, không phải không gian cũ.`, en: R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ when $P(B)\neq 0$. The denominator is $B$, not the original space.` },
     { k: "vd", vi: R`Ba đồng xu, ít nhất một mặt ngửa: $1-\left(\dfrac12\right)^3=\dfrac78$.`, en: R`Three coins, at least one head: $1-\left(\dfrac12\right)^3=\dfrac78$.` },
   ],

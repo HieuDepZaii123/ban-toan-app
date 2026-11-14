@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const integralLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Tích phân xác định là diện tích có dấu: phần dưới Ox tính âm.`, en: R`A definite integral is signed area: the part below the $x$-axis counts as negative.` },
+    { k: "mo", vi: R`Tích phân xác định $\int_a^b f(x)\,dx$ đo diện tích có dấu giữa đồ thị và trục hoành, từ $x=a$ đến $x=b$: phần nằm trên trục tính dương, phần nằm dưới trục tính âm. Để tính, tìm một nguyên hàm $F$, tức hàm có $F'=f$, rồi lấy $F(b)-F(a)$.`, en: R`The definite integral $\int_a^b f(x)\,dx$ measures signed area between the graph and the $x$-axis from $x=a$ to $x=b$: area above the axis counts as positive, area below as negative. To compute it, find an antiderivative $F$ with $F'=f$, then take $F(b)-F(a)$.` },
     { k: "dinh", vi: R`Nếu $F'=f$ thì $\displaystyle\int_a^b f(x)\,dx=F(b)-F(a)$.`, en: R`If $F'=f$ then $\displaystyle\int_a^b f(x)\,dx=F(b)-F(a)$.` },
     { k: "vd", vi: R`Tính $\int_0^2(2x-x^2)\,dx=\left[x^2-\dfrac{x^3}{3}\right]_0^2=4-\dfrac{8}{3}=\dfrac{4}{3}$.`, en: R`Compute $\int_0^2(2x-x^2)\,dx=\left[x^2-\dfrac{x^3}{3}\right]_0^2=4-\dfrac{8}{3}=\dfrac{4}{3}$.` },
   ],

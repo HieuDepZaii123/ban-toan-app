@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const comboLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Có thứ tự thì nhân dần các chỗ còn lại. Không thứ tự thì chia cho số cách xếp của nhóm đã chọn.`, en: R`If order counts, multiply the remaining places. If not, divide by the arrangements of the chosen group.` },
+    { k: "mo", vi: R`Đếm theo từng bước: nếu việc gồm nhiều bước nối tiếp thì nhân số cách của từng bước. Khi xếp $k$ phần tử vào $k$ chỗ có thứ tự, chỗ đầu có $n$ cách, chỗ thứ hai còn $n-1$ cách, và cứ thế giảm dần. Nếu thứ tự không quan trọng, mỗi nhóm đã bị đếm $k!$ lần, nên chia cho $k!$.`, en: R`Count step by step: when a task has several steps in a row, multiply the ways for each step. Placing $k$ items in $k$ ordered spots gives $n$ choices for the first, $n-1$ for the second, and so on. If order does not matter, each group was counted $k!$ times, so divide by $k!$.` },
     { k: "dinh", vi: R`$A_n^k=\dfrac{n!}{(n-k)!}$, $C_n^k=\dfrac{A_n^k}{k!}$. Và $C_n^k=C_n^{n-k}$.`, en: R`$A(n,k)=\dfrac{n!}{(n-k)!}$, $C(n,k)=\dfrac{A(n,k)}{k!}$. And $C(n,k)=C(n,n-k)$.` },
     { k: "vd", vi: R`Chọn $2$ phần tử trong $5$: có thứ tự thì $A_5^2=5\cdot 4=20$, không thứ tự thì $C_5^2=10$.`, en: R`Choose $2$ items from $5$: with order, $A(5,2)=5\cdot 4=20$; without order, $C(5,2)=10$.` },
   ],

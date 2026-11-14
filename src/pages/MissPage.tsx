@@ -29,7 +29,7 @@ export function MissPage() {
     <PageFrame
       kicker={t(lang, "Sổ lỗi", "Miss book")}
       title={t(lang, "Những câu còn sai", "Questions still wrong")}
-      lead={t(lang, "Câu sai từ Đề luyện, và số câu sai trong từng tờ chuyên đề.", "Misses from the mixed drill, and the count of misses on each topic sheet.")}
+      lead={t(lang, "Mọi câu bạn từng làm sai trong Đề tổng hợp, và số câu sai trong từng chuyên đề. Làm lại một câu cho đến khi đúng thì câu đó rời khỏi sổ.", "Misses from the mixed drill, and the count of misses on each topic sheet.")}
     >
       {total === 0 ? (
         <div className="miss-empty">

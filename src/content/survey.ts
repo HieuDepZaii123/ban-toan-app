@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const surveyLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Chiều đi theo dấu $y'$. Với $y=x^3-3x$, $y'=3(x^2-1)$ dương khi $|x|>1$.`, en: R`Direction follows the sign of $y'$. For $y=x^3-3x$, $y'=3(x^2-1)$ is positive when $|x|>1$.` },
+    { k: "mo", vi: R`Khảo sát hàm số là tìm hiểu hàm tăng ở đâu, giảm ở đâu và đạt cực trị ở đâu. Công cụ chính là dấu của đạo hàm: $y'>0$ trên một khoảng thì hàm đồng biến trên khoảng đó, $y'<0$ thì nghịch biến. Với $y=x^3-3x$, đạo hàm $y'=3(x^2-1)$ dương khi $|x|>1$ và âm khi $|x|<1$, nên hàm tăng, rồi giảm, rồi lại tăng.`, en: R`Studying a function means finding where it rises, where it falls and where it peaks. The main tool is the sign of the derivative: $y'>0$ on an interval means increasing there, $y'<0$ means decreasing. For $y=x^3-3x$, $y'=3(x^2-1)$ is positive when $|x|>1$ and negative when $|x|<1$, so the function rises, falls, then rises again.` },
     { k: "dinh", vi: R`$y'>0$: đồng biến. $y'=0$ và $y'$ đổi dấu: cực trị. $y''$ đổi dấu: điểm uốn.`, en: R`$y'>0$: increasing. $y'=0$ and $y'$ changes sign: an extremum. $y''$ changes sign: an inflection point.` },
     { k: "vd", vi: R`$y=x^3-3x$, $y'=3(x-1)(x+1)$. $y'=0$ tại $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.`, en: R`$y=x^3-3x$, $y'=3(x-1)(x+1)$. $y'=0$ at $x=\pm 1$. $y(-1)=2$, $y(1)=-2$.` },
   ],

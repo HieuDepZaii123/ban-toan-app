@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const analyticLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Đường $x+y-2=0$ có pháp tuyến $(1;1)$, dài $\sqrt2$. Khoảng cách bằng tử chia cho $\sqrt2$.`, en: R`The line $x+y-2=0$ has normal $(1;1)$, of length $\sqrt2$. Distance is the numerator divided by $\sqrt2$.` },
+    { k: "mo", vi: R`Phương pháp tọa độ biến hình học thành tính toán. Đường thẳng $ax+by+c=0$ có vectơ pháp tuyến $(a;b)$, là vectơ vuông góc với đường thẳng. Khoảng cách từ điểm $(x_0;y_0)$ tới đường thẳng là $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$: tử đo điểm lệch khỏi đường bao nhiêu, mẫu là độ dài pháp tuyến. Ví dụ với $x+y-2=0$ thì mẫu là $\sqrt2$.`, en: R`Coordinates turn geometry into computation. The line $ax+by+c=0$ has normal vector $(a;b)$, which is perpendicular to the line. The distance from $(x_0;y_0)$ to the line is $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$: the numerator measures how far the point is off the line, the denominator is the normal's length. For $x+y-2=0$ the denominator is $\sqrt2$.` },
     { k: "dinh", vi: R`Khoảng cách từ $(x_0;y_0)$ tới $ax+by+c=0$ là $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.`, en: R`Distance from $(x_0;y_0)$ to $ax+by+c=0$ is $\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$.` },
     { k: "vd", vi: R`$(3;1)$ tới $x+y-2=0$: $\dfrac{|3+1-2|}{\sqrt2}=\sqrt2$.`, en: R`$(3;1)$ to $x+y-2=0$: $\dfrac{|3+1-2|}{\sqrt2}=\sqrt2$.` },
   ],

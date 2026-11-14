@@ -51,7 +51,7 @@ export function AssessPage() {
     <PageFrame
       kicker={t(lang, "Đánh giá năng lực", "Self-assessment")}
       title={t(lang, "Ba bộ tự chấm", "Three self-marked sets")}
-      lead={t(lang, "Tư duy, tổng hợp, đội tuyển. Lời giải mở sau khi chấm.", "Reasoning, mixed, and olympiad sets. Solutions open after marking.")}
+      lead={t(lang, "Ba bộ câu hỏi để tự đánh giá: tư duy toán, vận dụng vào vật lý, hóa và đời sống, và mức đội tuyển học sinh giỏi. Lời giải hiện ra sau khi bạn trả lời. Điểm ở đây chỉ để tự ước lượng, không phải điểm chuẩn hóa.", "Reasoning, mixed, and olympiad sets. Solutions open after marking.")}
     >
       <div className="read-switch" role="tablist" aria-label={t(lang, "Bộ đánh giá", "Assessment set")}>
         {assessBanks.map((item) => {

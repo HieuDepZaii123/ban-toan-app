@@ -43,7 +43,7 @@ function Picker({ missing = false }: { missing?: boolean }) {
     <PageFrame
       kicker={t(lang, "Luyện theo lớp", "Practice by grade")}
       title={missing ? t(lang, "Không thấy lớp này", "This grade is missing") : t(lang, "Luyện lớp 1–9", "Practice, grades 1–9")}
-      lead={t(lang, "Tiểu học và THCS, mỗi lớp hơn một trăm câu trắc nghiệm có lời giải. Lớp 10–12 có phần Luyện THPT riêng.", "Primary and lower secondary, over a hundred worked multiple-choice questions per grade. Grades 10–12 have their own upper-secondary practice.")}
+      lead={t(lang, "Câu trắc nghiệm cho lớp 1 đến lớp 9, mỗi lớp hơn một trăm câu, câu nào cũng có lời giải ba bước. Chọn lớp để bắt đầu. Lớp 10–12 luyện ở mục Luyện lớp 10–12.", "Primary and lower secondary, over a hundred worked multiple-choice questions per grade. Grades 10–12 have their own upper-secondary practice.")}
     >
       <Band title={t(lang, "Tiểu học 1–5", "Primary 1–5")} grades={PRIMARY} />
       <Band title={t(lang, "THCS 6–9", "Lower secondary 6–9")} grades={LOWER} />

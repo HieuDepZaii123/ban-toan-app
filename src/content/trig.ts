@@ -4,7 +4,7 @@ const R = String.raw;
 
 export const trigLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Trên đường tròn bán kính $1$, góc $0^\circ$ là điểm $(1;0)$ và góc $90^\circ$ là $(0;1)$: hoành là $\cos$, tung là $\sin$.`, en: R`On the circle of radius $1$, $0^\circ$ is the point $(1;0)$ and $90^\circ$ is $(0;1)$: the $x$-coordinate is $\cos$, the $y$-coordinate is $\sin$.` },
+    { k: "mo", vi: R`Vẽ đường tròn tâm $O$ bán kính $1$, gọi là đường tròn lượng giác. Mỗi góc ứng với một điểm trên đường tròn: góc $0^\circ$ là điểm $(1;0)$, góc $90^\circ$ là điểm $(0;1)$. Hoành độ của điểm đó là $\cos$ của góc, tung độ là $\sin$ của góc. Vì điểm nằm trên đường tròn bán kính $1$ nên luôn có $\sin^2+\cos^2=1$.`, en: R`Draw the circle of radius $1$ centred at $O$, the unit circle. Each angle matches a point on it: $0^\circ$ is $(1;0)$ and $90^\circ$ is $(0;1)$. The point's $x$-coordinate is the cosine of the angle and its $y$-coordinate is the sine. Since the point lies on a circle of radius $1$, always $\sin^2+\cos^2=1$.` },
     { k: "dinh", vi: R`Hệ thức $\sin^2\alpha+\cos^2\alpha=1$. $\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}$ khi $\cos\alpha\neq 0$.`, en: R`Identity $\sin^2\alpha+\cos^2\alpha=1$. $\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}$ when $\cos\alpha\neq 0$.` },
     { k: "vd", vi: R`Góc $150^\circ=180^\circ-30^\circ$: $\sin$ giữ $\dfrac12$, $\cos$ đổi thành $-\dfrac{\sqrt3}{2}$.`, en: R`The angle $150^\circ=180^\circ-30^\circ$: $\sin$ stays $\dfrac12$, and $\cos$ becomes $-\dfrac{\sqrt3}{2}$.` },
   ],

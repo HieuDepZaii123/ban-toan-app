@@ -15,224 +15,224 @@ export const guides = {
     "soon": "Ba hình: dạng tổng quát, dạng đỉnh, và chuồng tựa tường.",
     "soonEn": "Three figures: general form, vertex form, and a pen against a wall.",
     "think": {
-      "nhin": "Dấu $a$. Dạng $ax^2+bx+c$ hay $a(x-h)^2+k$.",
-      "lam": "Đỉnh $x=-\\frac{b}{2a}$. $\\Delta=b^2-4ac$: số giao Ox.",
-      "ket": "Cực trị, tập giá trị, nghiệm. $\\Delta$ không tìm đỉnh."
+      "nhin": "Xem dấu của hệ số $a$ trước: $a>0$ thì parabol mở lên và có điểm thấp nhất, $a<0$ thì mở xuống và có điểm cao nhất. Rồi xem hàm đang viết ở dạng $ax^2+bx+c$ hay dạng đỉnh $a(x-h)^2+k$.",
+      "lam": "Tìm đỉnh bằng $x=-\\dfrac{b}{2a}$, rồi thay vào để có tung độ đỉnh. Tính $\\Delta=b^2-4ac$ để biết parabol cắt trục hoành ở hai, một hay không điểm nào.",
+      "ket": "Từ đỉnh đọc ra giá trị lớn nhất hoặc nhỏ nhất và tập giá trị. Từ $\\Delta$ đọc ra số nghiệm. Hai việc này dùng hai công cụ khác nhau."
     },
     "thinkEn": {
-      "nhin": "Sign of $a$. Form $ax^2+bx+c$ or $a(x-h)^2+k$.",
-      "lam": "Vertex $x=-\\frac{b}{2a}$. $\\Delta=b^2-4ac$: Ox crossings.",
-      "ket": "Extremum, range, roots. $\\Delta$ does not find the vertex."
+      "nhin": "Check the sign of $a$ first: $a>0$ opens upward with a lowest point, $a<0$ opens downward with a highest point. Then see whether the function is written as $ax^2+bx+c$ or in vertex form $a(x-h)^2+k$.",
+      "lam": "Find the vertex with $x=-\\dfrac{b}{2a}$ and substitute for its height. Compute $\\Delta=b^2-4ac$ to know whether the parabola meets the $x$-axis twice, once or not at all.",
+      "ket": "The vertex gives the maximum or minimum and the range. $\\Delta$ gives the number of roots. These are two different tools."
     },
-    "trap": "$ax^2+bx+c$: đổi $a$ thì đỉnh chạy. $a(x-h)^2+k$: đỉnh đứng yên.",
-    "trapEn": "$ax^2+bx+c$: changing $a$ moves the vertex. $a(x-h)^2+k$: the vertex stays."
+    "trap": "Ở dạng $ax^2+bx+c$, đổi $a$ thì đỉnh di chuyển theo. Ở dạng $a(x-h)^2+k$, đổi $a$ chỉ làm parabol hẹp hay rộng ra, đỉnh $(h;k)$ đứng yên. Đừng dùng $\\Delta$ để tìm đỉnh.",
+    "trapEn": "In the form $ax^2+bx+c$, changing $a$ moves the vertex. In the form $a(x-h)^2+k$, changing $a$ only narrows or widens the parabola and the vertex $(h,k)$ stays put. Do not use $\\Delta$ to find the vertex."
   },
   "ineq": {
     "soon": "Hai cột trung bình, hai mũi tên Cauchy, và miền bàn ghế.",
     "soonEn": "Two mean bars, two Cauchy arrows, and the desk-and-chair region.",
     "think": {
-      "nhin": "$a,b>0$, hai cặp, hoặc miền $P$. Dấu của $a$.",
-      "lam": "AM–GM, Cauchy, $P$ tại đỉnh. Chia âm $\\Rightarrow$ đảo.",
-      "ket": "$a=b$ hoặc tỉ lệ. $\\max$ ở đỉnh. $-2x\\le4\\Rightarrow x\\ge-2$."
+      "nhin": "Xem đề cho các số dương ($a,b>0$), cho hai cặp số cần nhân chéo, hay cho một miền giới hạn bởi các bất phương trình. Nếu phải nhân hoặc chia hai vế, để ý dấu của số đó.",
+      "lam": "Hai số dương thì dùng AM-GM: $\\dfrac{a+b}{2}\\ge\\sqrt{ab}$. Hai cặp số thì dùng Cauchy-Schwarz. Bài trên một miền thì tính biểu thức tại các đỉnh của miền. Chia cho số âm thì đổi chiều.",
+      "ket": "Nêu giá trị lớn nhất hoặc nhỏ nhất kèm điểm đạt được. Dấu bằng của AM-GM xảy ra khi $a=b$, của Cauchy-Schwarz khi hai cặp tỉ lệ."
     },
     "thinkEn": {
-      "nhin": "$a,b>0$, two pairs, or the region of $P$. Sign of $a$.",
-      "lam": "AM–GM, Cauchy, $P$ at a vertex. Divide by a negative $\\Rightarrow$ flip.",
-      "ket": "$a=b$ or proportional. $\\max$ at a vertex. $-2x\\le4\\Rightarrow x\\ge-2$."
+      "nhin": "See whether the problem gives positive numbers ($a,b>0$), two pairs to pair off, or a region bounded by inequalities. If you must multiply or divide both sides, watch that number's sign.",
+      "lam": "For two positive numbers use AM-GM: $\\dfrac{a+b}{2}\\ge\\sqrt{ab}$. For two pairs use Cauchy-Schwarz. For a region, evaluate at its corners. Dividing by a negative flips the sign.",
+      "ket": "State the maximum or minimum together with where it is reached. AM-GM is an equality when $a=b$, Cauchy-Schwarz when the pairs are proportional."
     },
-    "trap": "Chia âm thì đảo. $a,b>0$. Điểm trong $\\neq\\max$.",
-    "trapEn": "A negative divisor flips the sign. $a,b>0$. An interior point $\\neq\\max$."
+    "trap": "Chia $-2x\\le 4$ cho $-2$ phải được $x\\ge -2$, không phải $x\\le -2$. Và một cận chỉ là giá trị nhỏ nhất khi dấu bằng thật sự xảy ra trong miền đề cho.",
+    "trapEn": "Dividing $-2x\\le 4$ by $-2$ gives $x\\ge -2$, not $x\\le -2$. A bound is the minimum only if equality is actually reached inside the allowed range."
   },
   "exp": {
     "soon": "Kéo cơ số qua 1, thấy đồ thị mũ và log đối xứng qua đường y = x.",
     "soonEn": "Drag the base through 1 and see the exponential and logarithm mirror across y = x.",
     "think": {
-      "nhin": "$a>0$, $a\\neq1$. Mũ hay $\\log$.",
-      "lam": "Cùng cơ số, hoặc $\\log$ hai vế. $\\log(ab)=\\log a+\\log b\\neq\\log(a+b)$.",
-      "ket": "Nghiệm, hoặc thời gian gấp đôi."
+      "nhin": "Xem cơ số lớn hơn $1$ hay nằm giữa $0$ và $1$, vì điều đó quyết định hàm tăng hay giảm. Với logarit, ghi ngay điều kiện biểu thức trong logarit dương.",
+      "lam": "Đưa hai vế về cùng một cơ số, hoặc lấy logarit hai vế. Dùng các quy tắc $\\log_a(xy)=\\log_a x+\\log_a y$ và $\\log_a x^n=n\\log_a x$ khi $x,y>0$.",
+      "ket": "Đối chiếu nghiệm với điều kiện ban đầu. Với bất phương trình, cơ số nằm giữa $0$ và $1$ thì phải đổi chiều."
     },
     "thinkEn": {
-      "nhin": "$a>0$, $a\\neq1$. Exponent or $\\log$.",
-      "lam": "Match bases, or $\\log$ both sides. $\\log(ab)=\\log a+\\log b\\neq\\log(a+b)$.",
-      "ket": "A solution, or a doubling time."
+      "nhin": "Check whether the base is above $1$ or between $0$ and $1$: that decides whether the function rises or falls. For logarithms, write down at once that the argument must be positive.",
+      "lam": "Bring both sides to the same base, or take logarithms of both sides. Use $\\log_a(xy)=\\log_a x+\\log_a y$ and $\\log_a x^n=n\\log_a x$ for $x,y>0$.",
+      "ket": "Check every solution against the starting conditions. In an inequality, a base between $0$ and $1$ flips the direction."
     },
-    "trap": "$\\log(a+b)\\neq\\log a+\\log b$. $10(1{,}08)^5\\approx14{,}69\\neq14$. $\\approx9{,}01\\neq8;\\ \\neq12{,}5$.",
-    "trapEn": "$\\log(a+b)\\neq\\log a+\\log b$. $10(1{,}08)^5\\approx14{,}69\\neq14$. $\\approx9{,}01\\neq8;\\ \\neq12{,}5$."
+    "trap": "$\\log(a+b)$ không bằng $\\log a+\\log b$. Lãi kép $10\\cdot 1{,}08^5\\approx 14{,}69$, khác lãi đơn $10\\cdot(1+0{,}08\\cdot 5)=14$.",
+    "trapEn": "$\\log(a+b)$ is not $\\log a+\\log b$. Compound interest $10\\cdot 1.08^5\\approx 14.69$ differs from simple interest $10\\cdot(1+0.08\\cdot 5)=14$."
   },
   "sequence": {
     "soon": "Cột uₙ, tổng Sₙ, và dãy hình học hội tụ khi |q| < 1.",
     "soonEn": "A column of terms, the sum Sₙ, and geometric convergence when |q| < 1.",
     "think": {
-      "nhin": "$d$ hay $q$. $u_1$ đứng riêng.",
-      "lam": "$u_n=u_1+(n-1)d$. $|q|<1\\Rightarrow S=\\frac{u_1}{1-q}$.",
-      "ket": "Một số hạng, $S_n$, hoặc $\\lim$."
+      "nhin": "So hai số hạng liên tiếp: hiệu không đổi là cấp số cộng, thương không đổi là cấp số nhân. Xem đề hỏi một số hạng, tổng hữu hạn hay tổng vô hạn.",
+      "lam": "Cấp số cộng: $u_n=u_1+(n-1)d$ và $S_n=\\dfrac{n(u_1+u_n)}{2}$. Cấp số nhân: $u_n=u_1q^{n-1}$, và tổng vô hạn bằng $\\dfrac{u_1}{1-q}$ khi $|q|<1$.",
+      "ket": "Kiểm tra lại bằng cách tính tay vài số hạng đầu. Tổng vô hạn chỉ tồn tại khi $|q|<1$."
     },
     "thinkEn": {
-      "nhin": "$d$ or $q$. $u_1$ stands apart.",
-      "lam": "$u_n=u_1+(n-1)d$. $|q|<1\\Rightarrow S=\\frac{u_1}{1-q}$.",
-      "ket": "One term, $S_n$, or $\\lim$."
+      "nhin": "Compare consecutive terms: a constant difference means arithmetic, a constant ratio means geometric. See whether a term, a finite sum or an infinite sum is asked.",
+      "lam": "Arithmetic: $u_n=u_1+(n-1)d$ and $S_n=\\dfrac{n(u_1+u_n)}{2}$. Geometric: $u_n=u_1q^{n-1}$, and the infinite sum is $\\dfrac{u_1}{1-q}$ when $|q|<1$.",
+      "ket": "Check by writing out the first few terms. An infinite sum exists only when $|q|<1$."
     },
-    "trap": "$u_n$ dùng $n-1$ bước. $|q|<1$: số hạng $\\to0$ nhưng $\\neq0$. $S_\\infty\\neq$ giới hạn số hạng.",
-    "trapEn": "$u_n$ takes $n-1$ steps. $|q|<1$: terms $\\to0$ but $\\neq0$. $S_\\infty\\neq$ the limit of a term."
+    "trap": "Từ $u_1$ đến $u_n$ chỉ có $n-1$ bước nhảy, nên $u_{10}=u_1+9d$, không phải $u_1+10d$.",
+    "trapEn": "From $u_1$ to $u_n$ there are only $n-1$ steps, so $u_{10}=u_1+9d$, not $u_1+10d$."
   },
   "trig": {
     "soon": "Quay góc trên đường tròn, rồi đo cây bằng tan.",
     "soonEn": "Turn an angle on the circle, then measure a tree with tan.",
     "think": {
-      "nhin": "Góc phần tư. Ngang $\\cos$, đứng $\\sin$.",
-      "lam": "Góc liên kết. $\\sin^2+\\cos^2=1$. $\\tan=\\dfrac{\\sin}{\\cos}$.",
-      "ket": "Đúng dấu, hoặc $d\\tan\\theta+1{,}5$."
+      "nhin": "Đổi góc về độ hoặc rađian cho thống nhất, rồi xác định góc nằm ở phần tư nào để biết dấu của sin, cos, tan.",
+      "lam": "Dùng góc liên kết để đưa về góc nhọn, dùng $\\sin^2x+\\cos^2x=1$ khi biết một giá trị cần tìm giá trị kia. Với phương trình, viết đủ các họ nghiệm.",
+      "ket": "Ghi họ nghiệm có $k\\in\\mathbb{Z}$, hoặc chọn đúng các nghiệm trong khoảng đề yêu cầu."
     },
     "thinkEn": {
-      "nhin": "The quadrant. Horizontal $\\cos$, vertical $\\sin$.",
-      "lam": "A related angle. $\\sin^2+\\cos^2=1$. $\\tan=\\dfrac{\\sin}{\\cos}$.",
-      "ket": "The signed value, or $d\\tan\\theta+1{,}5$."
+      "nhin": "Put every angle in the same unit, degrees or radians, then find the quadrant to know the signs of sine, cosine and tangent.",
+      "lam": "Use related angles to reduce to an acute angle, and $\\sin^2x+\\cos^2x=1$ to get one value from another. For equations, write every family of solutions.",
+      "ket": "Write the families with $k\\in\\mathbb{Z}$, or pick exactly the solutions in the requested interval."
     },
-    "trap": "$\\sin150^\\circ=\\sin30^\\circ$, nhưng $\\cos150^\\circ$ đổi dấu.",
-    "trapEn": "$\\sin150^\\circ=\\sin30^\\circ$, but $\\cos150^\\circ$ changes sign."
+    "trap": "Phương trình $\\sin x=m$ có hai họ nghiệm: $x=\\alpha+k2\\pi$ và $x=\\pi-\\alpha+k2\\pi$. Hay quên họ thứ hai.",
+    "trapEn": "$\\sin x=m$ has two families: $x=\\alpha+2k\\pi$ and $x=\\pi-\\alpha+2k\\pi$. The second one is often forgotten."
   },
   "limit": {
     "soon": "Cát tuyến co lại khi h → 0, và một bước nhảy thì không có giới hạn.",
     "soonEn": "A secant shrinking as h → 0, and a jump with no limit.",
     "think": {
-      "nhin": "Hai phía cùng một số? $f(a)$ để sau.",
-      "lam": "Rút gọn rồi thế. Hai phía khác: không có giới hạn.",
-      "ket": "Một số, hoặc không tồn tại. Liên tục khi $\\lim=f(a)$."
+      "nhin": "Thay thử giá trị $x$ vào. Nếu ra một số thì đó là giới hạn. Nếu ra dạng $\\dfrac{0}{0}$ hoặc $\\dfrac{\\infty}{\\infty}$ thì cần biến đổi tiếp.",
+      "lam": "Dạng $\\dfrac{0}{0}$: phân tích nhân tử hoặc nhân liên hợp để rút gọn phần gây ra số $0$. Dạng $\\dfrac{\\infty}{\\infty}$: chia cả tử và mẫu cho lũy thừa cao nhất của $x$.",
+      "ket": "Sau khi rút gọn, thay lại để có giới hạn. Nếu giới hạn trái và phải khác nhau thì giới hạn không tồn tại."
     },
     "thinkEn": {
-      "nhin": "Do both sides share a number? $f(a)$ comes later.",
-      "lam": "Simplify, then substitute. Different sides: no limit.",
-      "ket": "A number, or it does not exist. Continuous when $\\lim=f(a)$."
+      "nhin": "Substitute the value of $x$. A number means you are done. The form $\\dfrac{0}{0}$ or $\\dfrac{\\infty}{\\infty}$ means more work is needed.",
+      "lam": "For $\\dfrac{0}{0}$, factor or multiply by the conjugate to cancel what makes the zero. For $\\dfrac{\\infty}{\\infty}$, divide top and bottom by the highest power of $x$.",
+      "ket": "After simplifying, substitute again. If the left and right limits differ, the limit does not exist."
     },
-    "trap": "$f(a)$ không quyết định $\\lim$. Hai phía khác nhau: dừng.",
-    "trapEn": "$f(a)$ does not decide $\\lim$. Different sides: stop."
+    "trap": "Dạng $\\dfrac{0}{0}$ không có nghĩa là giới hạn bằng $0$ hay bằng $1$; nó chỉ báo rằng phải rút gọn trước.",
+    "trapEn": "The form $\\dfrac{0}{0}$ does not mean the limit is $0$ or $1$; it only says you must simplify first."
   },
   "derivative": {
     "soon": "Ba hình: cát tuyến của x², ném bóng, và quãng đường phanh.",
     "soonEn": "Three figures: the secant of x², a vertical throw, and a braking distance.",
     "think": {
-      "nhin": "Hai điểm cát tuyến. $h$ là khoảng ngang.",
-      "lam": "$\\frac{f(a+h)-f(a)}{h}$, rồi $h\\to0$. $f'=0$ chỉ là điểm dừng.",
-      "ket": "Cực trị khi $f'$ đổi dấu. Đoạn đóng: so cả hai đầu."
+      "nhin": "Nhận ra hàm đang là tổng, tích, thương hay hàm hợp của các hàm quen thuộc. Mỗi dạng có một quy tắc riêng.",
+      "lam": "Áp dụng quy tắc: $(uv)'=u'v+uv'$, $\\left(\\dfrac{u}{v}\\right)'=\\dfrac{u'v-uv'}{v^2}$, và đạo hàm hàm hợp nhân thêm đạo hàm của hàm bên trong.",
+      "ket": "Thay số nếu đề hỏi đạo hàm tại một điểm. Hệ số góc tiếp tuyến tại $x_0$ chính là $f'(x_0)$."
     },
     "thinkEn": {
-      "nhin": "The two secant points. $h$ is the horizontal gap.",
-      "lam": "$\\frac{f(a+h)-f(a)}{h}$, then $h\\to0$. $f'=0$ is only stationary.",
-      "ket": "An extremum needs $f'$ to change sign. On a closed interval, compare both ends."
+      "nhin": "Decide whether the function is a sum, product, quotient or composition of familiar functions. Each shape has its own rule.",
+      "lam": "Apply the rule: $(uv)'=u'v+uv'$, $\\left(\\dfrac{u}{v}\\right)'=\\dfrac{u'v-uv'}{v^2}$, and for a composition multiply by the derivative of the inside.",
+      "ket": "Substitute if a value at a point is asked. The slope of the tangent at $x_0$ is $f'(x_0)$."
     },
-    "trap": "$h(1)=15$, $v(1)=10$. Đỉnh $t=2$, $h=20$. $(5t^2)'=10t$.",
-    "trapEn": "$h(1)=15$, $v(1)=10$. Apex $t=2$, $h=20$. $(5t^2)'=10t$."
+    "trap": "$(uv)'$ không bằng $u'v'$. Và đạo hàm của $\\cos x$ là $-\\sin x$, nhớ dấu trừ.",
+    "trapEn": "$(uv)'$ is not $u'v'$. And the derivative of $\\cos x$ is $-\\sin x$; keep the minus sign."
   },
   "survey": {
     "soon": "Bậc ba y = x³ − 3x. Chạm một cột của bảng thì điểm trên đồ thị nhảy tới.",
     "soonEn": "The cubic y = x³ − 3x. Tap a column of the table and the point on the graph jumps there.",
     "think": {
-      "nhin": "Dấu $y'$, rồi $y''$.",
-      "lam": "$y'=0$. $y''$ đổi dấu: uốn, kể cả $y'\\neq0$.",
-      "ket": "Cực trị, hoặc không nếu $y'$ không đổi dấu. Bậc ba trên $\\mathbb{R}$: không $\\max$."
+      "nhin": "Ghi tập xác định trước tiên. Tìm các điểm làm đạo hàm bằng $0$ hoặc không xác định.",
+      "lam": "Xét dấu đạo hàm trên từng khoảng giữa các điểm vừa tìm, rồi lập bảng biến thiên. Tìm thêm giới hạn ở hai đầu và các tiệm cận.",
+      "ket": "Đọc từ bảng: khoảng đồng biến, nghịch biến, cực đại, cực tiểu, giá trị lớn nhất và nhỏ nhất trên đoạn."
     },
     "thinkEn": {
-      "nhin": "Sign of $y'$, then $y''$.",
-      "lam": "$y'=0$. $y''$ changes sign: inflection, even if $y'\\neq0$.",
-      "ket": "Extrema, or none if $y'$ does not change sign. A cubic on $\\mathbb{R}$: no $\\max$."
+      "nhin": "Write the domain first. Find the points where the derivative is zero or undefined.",
+      "lam": "Find the sign of the derivative on each interval between those points and build the variation table. Add the limits at both ends and any asymptotes.",
+      "ket": "Read from the table: where the function rises or falls, the local maximum and minimum, and the extreme values on an interval."
     },
-    "trap": "$y=x^3$: $y'(0)=0$ không phải cực trị. $x^3-3x$: nghiệm $0;\\ \\pm\\sqrt{3}\\neq\\pm1$. Giao tiệm cận không trên đồ thị.",
-    "trapEn": "$y=x^3$: $y'(0)=0$ is not an extremum. $x^3-3x$: roots $0,\\pm\\sqrt{3}\\neq\\pm1$. The asymptote crossing is not on the graph."
+    "trap": "Đạo hàm bằng $0$ chưa đủ để có cực trị. Hàm $y=x^3$ có $y'(0)=0$ nhưng không có cực trị tại $0$ vì $y'$ không đổi dấu.",
+    "trapEn": "A zero derivative is not enough for an extremum. $y=x^3$ has $y'(0)=0$ but no extremum at $0$, because $y'$ does not change sign."
   },
   "integral": {
     "soon": "Hình thang cong, rồi diện tích giữa y = x² và y = x trên [0; 1] bằng 1/6.",
     "soonEn": "Trapezoid strips, then the area between y = x² and y = x on [0, 1], which is 1/6.",
     "think": {
-      "nhin": "Đường nào trên. Dưới Ox: âm.",
-      "lam": "Nguyên hàm, thế cận. Hai đường: lấy hiệu.",
-      "ket": "Một số. Diện tích: $|\\,|$ từng miền."
+      "nhin": "Xem biểu thức dưới dấu tích phân là hàm cơ bản, có dạng hàm hợp (dùng đổi biến), hay là tích của đa thức với hàm mũ, lượng giác, logarit (dùng từng phần).",
+      "lam": "Tìm một nguyên hàm $F$, rồi tính $F(b)-F(a)$. Đổi biến thì đổi luôn cận. Diện tích giữa hai đường thì lấy tích phân của hiệu, có trị tuyệt đối.",
+      "ket": "Kiểm tra bằng cách đạo hàm lại $F$. Diện tích và thể tích luôn là số dương."
     },
     "thinkEn": {
-      "nhin": "Which curve is on top. Below Ox: negative.",
-      "lam": "Antiderivative, then both ends. Two curves: the difference.",
-      "ket": "A number. Area: $|\\,|$ on each piece."
+      "nhin": "Decide whether the integrand is a basic function, a composition (use substitution), or a product of a polynomial with an exponential, trig or log function (use parts).",
+      "lam": "Find an antiderivative $F$, then compute $F(b)-F(a)$. When substituting, change the limits too. For the area between two curves, integrate the absolute difference.",
+      "ket": "Check by differentiating $F$. Areas and volumes are always positive."
     },
-    "trap": "Tích phân âm $\\neq$ diện tích. Quay: $\\pi\\int y^2$, đừng quên bình phương.",
-    "trapEn": "A negative integral $\\neq$ area. Revolution: $\\pi\\int y^2$. Do not drop the square."
+    "trap": "Phần đồ thị nằm dưới trục hoành cho tích phân âm. Muốn có diện tích thì phải lấy trị tuyệt đối hoặc tách thành từng đoạn.",
+    "trapEn": "A part of the graph below the $x$-axis gives a negative integral. For an area, take the absolute value or split the interval."
   },
   "vector": {
     "soon": "Hai mũi tên trong không gian, hình bình hành của định thức, và giao của hai đường.",
     "soonEn": "Two arrows in space, the parallelogram of a determinant, and the crossing of two lines.",
     "think": {
-      "nhin": "$(x;y;z)$, $\\det$, hoặc hệ.",
-      "lam": "$|\\vec u|=\\sqrt{x^2+y^2+z^2}$. $\\det=ad-bc$. $\\det\\neq0\\Rightarrow$ một nghiệm.",
-      "ket": "$|u|$, $\\cdot=0$, $\\det$, hoặc $(x;y)$."
+      "nhin": "Chuyển các điểm và vectơ sang tọa độ nếu được. Xem đề hỏi độ dài, góc, hay quan hệ cùng phương, vuông góc.",
+      "lam": "Cộng trừ theo từng tọa độ. Độ dài là căn của tổng bình phương. Tích vô hướng $x_1x_2+y_1y_2$ cho côsin của góc.",
+      "ket": "Hai vectơ vuông góc khi tích vô hướng bằng $0$. Cùng phương khi tọa độ tỉ lệ."
     },
     "thinkEn": {
-      "nhin": "$(x;y;z)$, $\\det$, or a system.",
-      "lam": "$|\\vec u|=\\sqrt{x^2+y^2+z^2}$. $\\det=ad-bc$. $\\det\\neq0\\Rightarrow$ one solution.",
-      "ket": "$|u|$, $\\cdot=0$, $\\det$, or $(x;y)$."
+      "nhin": "Move points and vectors into coordinates when you can. See whether a length, an angle, or a parallel or perpendicular relation is asked.",
+      "lam": "Add and subtract coordinate by coordinate. The length is the square root of the sum of squares. The dot product $x_1x_2+y_1y_2$ gives the cosine of the angle.",
+      "ket": "Two vectors are perpendicular when the dot product is $0$, and parallel when the coordinates are proportional."
     },
-    "trap": "$|(2;1;2)|=3\\neq\\sqrt{5}$. $\\cdot=0\\Rightarrow\\perp$, kể cả công.",
-    "trapEn": "$|(2;1;2)|=3\\neq\\sqrt{5}$. $\\cdot=0\\Rightarrow\\perp$, including work."
+    "trap": "Tọa độ của $\\overrightarrow{AB}$ là tọa độ $B$ trừ tọa độ $A$, không phải ngược lại. Tích vô hướng là một số, không phải một vectơ.",
+    "trapEn": "$\\overrightarrow{AB}$ is $B$ minus $A$, not the other way round. The dot product is a number, not a vector."
   },
   "analytic": {
     "soon": "Chân đường vuông góc trên Oxy, mặt phẳng trong Oxyz, và đường tròn bán kính 5.",
     "soonEn": "The foot of a perpendicular in Oxy, a plane in Oxyz, and a circle of radius 5.",
     "think": {
-      "nhin": "$\\vec n=(a;b)$ hoặc $(a;b;c)$, điểm ngoài.",
-      "lam": "$d=\\frac{|ax+by+c|}{|\\vec n|}$. Chân $=P-t\\vec n$.",
-      "ket": "$d$ và chân. Tròn: $x^2+y^2$ với $r^2$."
+      "nhin": "Đọc từ phương trình các yếu tố có sẵn: vectơ pháp tuyến của đường thẳng, tâm và bán kính của đường tròn.",
+      "lam": "Viết phương trình đường thẳng qua một điểm và một pháp tuyến. Khoảng cách từ điểm đến đường thẳng dùng công thức có trị tuyệt đối ở tử.",
+      "ket": "Thay một điểm vào phương trình vừa viết để kiểm tra. Đường thẳng tiếp xúc đường tròn khi khoảng cách từ tâm bằng bán kính."
     },
     "thinkEn": {
-      "nhin": "$\\vec n=(a;b)$ or $(a;b;c)$, and a point off the figure.",
-      "lam": "$d=\\frac{|ax+by+c|}{|\\vec n|}$. Foot $=P-t\\vec n$.",
-      "ket": "$d$ and the foot. Circle: $x^2+y^2$ against $r^2$."
+      "nhin": "Read what the equation already gives: the normal vector of a line, the centre and radius of a circle.",
+      "lam": "Write a line through a point with a given normal. The distance from a point to a line uses the formula with an absolute value on top.",
+      "ket": "Substitute a point into the new equation to check it. A line touches a circle when its distance from the centre equals the radius."
     },
-    "trap": "$\\vec n\\neq\\vec d$. Tử $2\\neq\\sqrt{2}$.",
-    "trapEn": "$\\vec n\\neq\\vec d$. Numerator $2\\neq\\sqrt{2}$."
+    "trap": "Phương trình $(x-1)^2+(y+2)^2=9$ có tâm $(1;-2)$, không phải $(-1;2)$, và bán kính $3$, không phải $9$.",
+    "trapEn": "$(x-1)^2+(y+2)^2=9$ has centre $(1,-2)$, not $(-1,2)$, and radius $3$, not $9$."
   },
   "triangle": {
     "soon": "Kéo đáy và chiều cao, rồi hộp, chóp và tứ diện trên cùng những số ấy.",
     "soonEn": "Drag the base and the height, then the box, the pyramid and the tetrahedron on those same numbers.",
     "think": {
-      "nhin": "Đáy, cao, hoặc cạnh $a$.",
-      "lam": "$S=\\frac12 bh$. $V=abc$. Chóp $\\frac13 Sh$. Tứ diện $\\frac{a^3\\sqrt{2}}{12}$.",
-      "ket": "$S$ hoặc $V$. $k\\Rightarrow k^2$ cho diện tích."
+      "nhin": "Ghi ra đề đã cho những cạnh nào, góc nào, và cạnh nào đối diện góc nào.",
+      "lam": "Biết hai cạnh và góc xen giữa thì dùng định lí côsin. Biết một cạnh và hai góc thì dùng định lí sin. Diện tích dùng $\\dfrac{1}{2}ab\\sin C$.",
+      "ket": "Kiểm tra cạnh lớn nhất đối diện góc lớn nhất, và tổng ba góc bằng $180^\\circ$."
     },
     "thinkEn": {
-      "nhin": "A base, a height, or the edge $a$.",
-      "lam": "$S=\\frac12 bh$. $V=abc$. Pyramid $\\frac13 Sh$. Tetrahedron $\\frac{a^3\\sqrt{2}}{12}$.",
-      "ket": "$S$ or $V$. $k\\Rightarrow k^2$ for area."
+      "nhin": "List which sides and angles are given, and which side is opposite which angle.",
+      "lam": "Two sides and the included angle: law of cosines. One side and two angles: law of sines. Area: $\\dfrac{1}{2}ab\\sin C$.",
+      "ket": "Check that the longest side faces the largest angle and the angles add up to $180^\\circ$."
     },
-    "trap": "Chóp $48\\neq36$. Hộp $60\\neq12$. $k=2\\Rightarrow S\\cdot 4$.",
-    "trapEn": "Pyramid $48\\neq36$. Box $60\\neq12$. $k=2\\Rightarrow S\\times4$."
+    "trap": "Công thức $\\dfrac{1}{2}ab\\sin C$ cần đúng góc $C$ nằm giữa hai cạnh $a$ và $b$. Dùng góc khác là sai.",
+    "trapEn": "$\\dfrac{1}{2}ab\\sin C$ needs the angle $C$ between sides $a$ and $b$. Any other angle gives a wrong area."
   },
   "combo": {
     "soon": "A cạnh C, sáu cách xếp ba ghế, và một cột điểm kéo trung bình.",
     "soonEn": "A beside C, six ways to fill three chairs, and a score bar that pulls the mean.",
     "think": {
-      "nhin": "Có thứ tự? Dãy đã sắp?",
-      "lam": "$A=\\frac{n!}{(n-k)!}$, $C=\\frac{A}{k!}$. Trung vị: số giữa.",
-      "ket": "Số cách, hoặc $\\bar x$ với trung vị."
+      "nhin": "Hỏi hai câu: thứ tự có quan trọng không, và các phần tử có được lặp lại không. Với bài thống kê, xem dãy số đã sắp xếp chưa.",
+      "lam": "Có thứ tự thì dùng chỉnh hợp $A_n^k=\\dfrac{n!}{(n-k)!}$. Không thứ tự thì dùng tổ hợp $C_n^k=\\dfrac{A_n^k}{k!}$. Trung vị là số đứng giữa của dãy đã xếp tăng.",
+      "ket": "Kết quả đếm phải là số nguyên dương. Thử lại với số nhỏ bằng cách liệt kê."
     },
     "thinkEn": {
-      "nhin": "Does order count? Is the list sorted?",
-      "lam": "$A=\\frac{n!}{(n-k)!}$, $C=\\frac{A}{k!}$. Median: the middle value.",
-      "ket": "A count, or $\\bar x$ with the median."
+      "nhin": "Ask two questions: does order matter, and can elements repeat? For statistics, check whether the list is sorted.",
+      "lam": "With order use $A_n^k=\\dfrac{n!}{(n-k)!}$. Without order use $C_n^k=\\dfrac{A_n^k}{k!}$. The median is the middle of the sorted list.",
+      "ket": "A count must be a positive whole number. Check a small case by listing."
     },
-    "trap": "$A_5^2=20$, $C_5^2=10$. $6\\to20$: $\\bar x=6{,}8$, trung vị $4$.",
-    "trapEn": "$A(5,2)=20$, $C(5,2)=10$. $6\\to20$: $\\bar x=6{,}8$, median $4$."
+    "trap": "Chọn $2$ trong $5$: có thứ tự là $A_5^2=20$, không thứ tự là $C_5^2=10$. Một giá trị rất lớn kéo trung bình đi xa, nhưng trung vị hầu như không đổi.",
+    "trapEn": "Choosing $2$ of $5$: with order $20$, without order $10$. One very large value drags the mean, while the median barely moves."
   },
   "probability": {
     "soon": "Xét nghiệm dương, và hai xúc xắc khi đã biết có một mặt 6: còn 11 cặp, không phải 36.",
     "soonEn": "A positive test, and two dice given that at least one face is 6: 11 outcomes remain, not 36.",
     "think": {
-      "nhin": "Đã biết phần nào? Mẫu số là phần còn.",
-      "lam": "Đếm phần còn, rồi lấy tỉ. $C_n^kp^k(1-p)^{n-k}$.",
-      "ket": "Một xác suất có điều kiện."
+      "nhin": "Xác định đề đã cho biết điều gì. Điều đã biết thu hẹp lại tập kết quả, và mẫu số chỉ gồm phần còn lại đó.",
+      "lam": "Đếm số kết quả thuận lợi trong phần còn lại rồi lấy tỉ số. Với nhiều lần thử độc lập, dùng $C_n^kp^k(1-p)^{n-k}$.",
+      "ket": "Xác suất nằm giữa $0$ và $1$. Với câu hỏi \\\"ít nhất một\\\", tính qua biến cố đối thường nhanh hơn."
     },
     "thinkEn": {
-      "nhin": "What is already known? The denominator is what remains.",
-      "lam": "Count what remains, then the ratio. $C(n,k)p^k(1-p)^{n-k}$.",
-      "ket": "A conditional probability."
+      "nhin": "Find what is already known. That knowledge shrinks the set of outcomes, and the denominator counts only what remains.",
+      "lam": "Count the favourable outcomes among those that remain, then take the ratio. For repeated independent trials use $C_n^kp^k(1-p)^{n-k}$.",
+      "ket": "A probability lies between $0$ and $1$. For \\\"at least one\\\", the complement is usually quicker."
     },
-    "trap": "Dương: mẫu là số lần dương. Xúc xắc: $11$ cặp, không $12$, không $36$.",
-    "trapEn": "A positive call: the sample is the positive calls. Dice: $11$ pairs, not $12$, not $36$."
+    "trap": "Biết hai xúc xắc có ít nhất một mặt $6$ thì chỉ còn $11$ cặp, không phải $36$. Xét nghiệm dương thì mẫu số là mọi lần cho kết quả dương, kể cả dương nhầm.",
+    "trapEn": "Knowing two dice show at least one $6$ leaves $11$ pairs, not $36$. For a positive test, the denominator is every positive result, false positives included."
   }
 } satisfies Record<CardId, Guide>;
