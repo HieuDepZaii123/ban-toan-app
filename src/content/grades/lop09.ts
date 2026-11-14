@@ -6,7 +6,7 @@ const R = String.raw;
 export const lop09: GradeBook = {
   grade: 9,
   band: "thcs",
-  title: "Căn bậc hai và căn bậc ba, hàm số bậc hai, bất phương trình, đường tròn, tứ giác nội tiếp và xác suất.",
+  title: "Căn bậc hai và căn bậc ba, hàm số bậc hai, bất phương trình, đường tròn, xác suất, và một chương ôn thi vào lớp 10.",
   chapters: [
     chuong("can", "Căn bậc hai", [
       bai(
@@ -470,6 +470,116 @@ export const lop09: GradeBook = {
         {
           whyTrue: R`Liệt kê đầy đủ không gian mẫu bảo đảm không bỏ sót và không đếm trùng kết quả nào. Khi mọi kết quả đồng khả năng, chỉ cần đếm là tính được xác suất.`,
           pitfalls: R`Coi SN và NS là một kết quả. Hai đồng xu phân biệt nên đó là hai kết quả khác nhau của không gian mẫu.`,
+        },
+      ),
+    ]),
+    chuong("on-vao-10", "Ôn thi vào lớp 10", [
+      bai(
+        "on10-rut-gon",
+        "Rút gọn biểu thức chứa căn và bài toán phụ",
+        R`Câu đầu của đề thi vào lớp 10 thường cho một biểu thức chứa căn: tìm điều kiện xác định, rút gọn, rồi tính giá trị hoặc tìm $x$ để biểu thức thỏa một điều kiện. Làm theo thứ tự: điều kiện trước, quy đồng, phân tích tử và mẫu thành nhân tử, rút gọn, cuối cùng mới thay số.`,
+        [vd(
+          R`Cho $A=\frac{\sqrt{x}}{\sqrt{x}-1}-\frac{1}{\sqrt{x}-1}$ với $x\ge 0$ và $x\neq 1$. Rút gọn $A$ rồi tính $A$ khi $x=9$.`,
+          [
+            buoc(R`Hai phân thức có cùng mẫu, nên $A=\frac{\sqrt{x}-1}{\sqrt{x}-1}$.`, R`Cùng mẫu thì trừ hai tử và giữ nguyên mẫu, không cần quy đồng.`),
+            buoc(R`Vì $x\neq 1$ nên $\sqrt{x}-1\neq 0$, do đó $A=1$.`, R`Điều kiện $x\neq 1$ bảo đảm mẫu khác $0$ nên được phép rút gọn tử với mẫu.`),
+            buoc(R`Với $x=9$ thỏa điều kiện, $A=1$.`, R`Biểu thức đã rút gọn là hằng số trên toàn bộ miền xác định, nên tại $x=9$ cũng bằng $1$.`),
+          ],
+          R`Biểu thức $A=1$ với mọi $x\ge 0$, $x\neq 1$; tại $x=9$ thì $A=1$.`,
+          [{ expr: "(sqrt(9)-1)/(sqrt(9)-1)", expect: "1" }],
+        ), vd(
+          R`Cho $B=\frac{x-4}{\sqrt{x}-2}$ với $x\ge 0$ và $x\neq 4$. Rút gọn $B$ rồi tìm $x$ để $B=5$.`,
+          [
+            buoc(R`Viết $x-4=(\sqrt{x}-2)(\sqrt{x}+2)$, nên $B=\sqrt{x}+2$.`, R`Với $x\ge 0$ thì $x=\left(\sqrt{x}\right)^2$, và tử là hiệu hai bình phương.`),
+            buoc(R`Giải $\sqrt{x}+2=5$ được $\sqrt{x}=3$, tức $x=9$.`, R`Căn bậc hai số học bằng $3$ khi số dưới căn bằng $3^2$.`),
+            buoc(R`Đối chiếu: $x=9$ thỏa $x\ge 0$ và $x\neq 4$, nên nhận.`, R`Nghiệm tìm được phải nằm trong điều kiện xác định đã ghi từ đầu.`),
+          ],
+          R`Rút gọn được $B=\sqrt{x}+2$, và $B=5$ khi $x=9$.`,
+          [{ expr: "(9-4)/(sqrt(9)-2)", expect: "5" }],
+        )],
+        [
+          luyen(R`Rút gọn $\frac{x-9}{\sqrt{x}+3}$ với $x\ge 0$.`, R`Kết quả là $\sqrt{x}-3$.`, [{ expr: "(16-9)/(sqrt(16)+3)", expect: "sqrt(16)-3" }], R`Tử là $(\sqrt{x}-3)(\sqrt{x}+3)$, rút gọn với mẫu $\sqrt{x}+3$ luôn dương.`),
+          luyen(R`Cho $C=\sqrt{x}+2$ với $x\ge 0$. Tính $C$ khi $x=16$.`, R`Khi đó $C=6$.`, [{ expr: "sqrt(16)+2", expect: "6" }], R`Thay $x=16$ vào biểu thức đã rút gọn: $\sqrt{16}+2=4+2=6$.`),
+          luyen(R`Cho $D=\frac{\sqrt{x}+1}{\sqrt{x}}$ với $x>0$. Tìm $x$ để $D=2$.`, R`Giá trị cần tìm là $x=1$.`, [{ expr: "(sqrt(1)+1)/sqrt(1)", expect: "2" }], R`Từ $\sqrt{x}+1=2\sqrt{x}$ suy ra $\sqrt{x}=1$, nên $x=1$, thỏa $x>0$.`),
+        ],
+        {
+          whyTrue: R`Rút gọn chỉ đổi cách viết, không đổi giá trị, khi mọi bước chia đều chia cho số khác $0$. Vì vậy phải viết điều kiện xác định trước tiên: nó cho biết được phép chia cho những gì.`,
+          pitfalls: R`Tìm được $x$ rồi quên đối chiếu với điều kiện xác định. Giá trị làm mẫu bằng $0$ hoặc làm số dưới căn âm phải bị loại.`,
+        },
+      ),
+      bai(
+        "on10-vi-et",
+        "Phương trình bậc hai có tham số và hệ thức Vi-ét",
+        R`Câu hỏi quen thuộc: tìm $m$ để phương trình bậc hai có hai nghiệm thỏa một hệ thức. Các bước: tính $\Delta$ và tìm điều kiện để có nghiệm, viết tổng và tích hai nghiệm theo Vi-ét, biến đổi hệ thức về tổng và tích, giải tìm $m$, rồi đối chiếu với điều kiện có nghiệm.`,
+        [vd(
+          R`Tìm $m$ để phương trình $x^2-2x+m-3=0$ có hai nghiệm $x_1$, $x_2$ thỏa $x_1^2+x_2^2=10$.`,
+          [
+            buoc(R`Ta có $\Delta'=1-(m-3)=4-m$. Có hai nghiệm khi $4-m\ge 0$, tức $m\le 4$.`, R`Điều kiện có nghiệm phải tìm trước, vì Vi-ét chỉ nói về nghiệm khi nghiệm tồn tại.`),
+            buoc(R`Theo Vi-ét: $x_1+x_2=2$ và $x_1x_2=m-3$.`, R`Với phương trình $x^2+bx+c=0$, tổng hai nghiệm là $-b$ và tích là $c$.`),
+            buoc(R`Biến đổi $x_1^2+x_2^2=(x_1+x_2)^2-2x_1x_2=4-2(m-3)=10-2m$. Cho bằng $10$ được $m=0$.`, R`Tổng bình phương viết được qua tổng và tích bằng hằng đẳng thức bình phương của tổng.`),
+            buoc(R`Giá trị $m=0$ thỏa $m\le 4$, nên nhận.`, R`Giá trị tìm được phải nằm trong điều kiện có nghiệm đã tìm ở bước đầu.`),
+          ],
+          R`Giá trị cần tìm là $m=0$.`,
+          [{ expr: "2**2-2*(0-3)", expect: "10" }],
+        )],
+        [
+          luyen(R`Phương trình $x^2-6x+5=0$ có hai nghiệm $x_1$, $x_2$. Tính $x_1^2+x_2^2$.`, R`Kết quả là $26$.`, [{ expr: "6**2-2*5", expect: "26" }], R`Tổng là $6$, tích là $5$, nên $x_1^2+x_2^2=36-10=26$.`),
+          luyen(R`Tìm $m$ để $x^2-4x+m=0$ có nghiệm kép.`, R`Giá trị cần tìm là $m=4$.`, [{ expr: "solve(16-4*m, m)[0]", expect: "4" }], R`Nghiệm kép khi $\Delta=16-4m=0$, tức $m=4$.`),
+          luyen(R`Tìm $m$ để $x^2-2x+m=0$ có hai nghiệm thỏa $x_1-x_2=4$, biết $x_1>x_2$.`, R`Giá trị cần tìm là $m=-3$.`, [{ expr: "solve(2**2-4*m-16, m)[0]", expect: "-3" }], R`Ta có $(x_1-x_2)^2=(x_1+x_2)^2-4x_1x_2=4-4m$, cho bằng $16$ được $m=-3$, thỏa $\Delta'=1-m>0$.`),
+        ],
+        {
+          whyTrue: R`Nếu $x_1$, $x_2$ là hai nghiệm thì $x^2+bx+c=(x-x_1)(x-x_2)$. Nhân vế phải ra và so hệ số, ta được tổng hai nghiệm bằng $-b$ và tích bằng $c$.`,
+          pitfalls: R`Giải ra $m$ mà không đối chiếu điều kiện $\Delta\ge 0$, nhận cả giá trị làm phương trình vô nghiệm.`,
+        },
+      ),
+      bai(
+        "on10-lap-he",
+        "Giải bài toán bằng cách lập hệ phương trình",
+        R`Bài toán có lời văn thường có hai đại lượng chưa biết. Gọi mỗi đại lượng là một ẩn, ghi đơn vị và điều kiện. Từ hai mối quan hệ trong đề, lập hai phương trình. Giải hệ, đối chiếu điều kiện, rồi trả lời đúng câu đề hỏi.`,
+        [vd(
+          R`Một mảnh vườn hình chữ nhật có chu vi $34$ m. Nếu tăng chiều dài thêm $3$ m và tăng chiều rộng thêm $2$ m thì diện tích tăng thêm $45$ m². Tính chiều dài và chiều rộng.`,
+          [
+            buoc(R`Gọi chiều dài là $x$ m, chiều rộng là $y$ m, với $x\ge y>0$. Chu vi cho $x+y=17$.`, R`Nửa chu vi bằng tổng chiều dài và chiều rộng.`),
+            buoc(R`Diện tích mới là $(x+3)(y+2)=xy+45$, rút gọn được $2x+3y=39$.`, R`Khai triển vế trái, số hạng $xy$ ở hai vế triệt tiêu, còn lại một phương trình bậc nhất.`),
+            buoc(R`Từ $x=17-y$ thế vào: $34-2y+3y=39$, nên $y=5$ và $x=12$.`, R`Rút $x$ từ phương trình thứ nhất rồi thế vào phương trình thứ hai để còn một ẩn.`),
+            buoc(R`Kiểm tra: $12+5=17$ và $15\cdot 7-12\cdot 5=45$. Cả hai đều đúng.`, R`Thử lại vào đề bài gốc, không chỉ vào hệ đã lập, để phát hiện lỗi khi lập phương trình.`),
+          ],
+          R`Chiều dài $12$ m, chiều rộng $5$ m.`,
+          [{ expr: "solve([x+y-17, 2*x+3*y-39],[x,y])[x]", expect: "12" }, { expr: "solve([x+y-17, 2*x+3*y-39],[x,y])[y]", expect: "5" }],
+        )],
+        [
+          luyen(R`Hai số có tổng $50$ và hiệu $12$. Tìm số lớn.`, R`Số lớn bằng $31$.`, [{ expr: "solve([x+y-50, x-y-12],[x,y])[x]", expect: "31" }], R`Cộng hai phương trình: $2x=62$, nên $x=31$.`),
+          luyen(R`Mua $3$ bút và $2$ vở hết $26$ nghìn đồng, mua $1$ bút và $4$ vở hết $32$ nghìn đồng. Một quyển vở giá bao nhiêu nghìn đồng?`, R`Một quyển vở giá $7$ nghìn đồng.`, [{ expr: "solve([3*x+2*y-26, x+4*y-32],[x,y])[y]", expect: "7" }], R`Nhân phương trình thứ hai với $3$ rồi trừ phương trình thứ nhất: $10y=70$, nên $y=7$.`),
+          luyen(R`Một ca nô đi xuôi dòng $60$ km hết $2$ giờ và ngược dòng $60$ km hết $3$ giờ. Vận tốc dòng nước là bao nhiêu km/h?`, R`Vận tốc dòng nước là $5$ km/h.`, [{ expr: "solve([x+y-30, x-y-20],[x,y])[y]", expect: "5" }], R`Vận tốc xuôi là $30$, ngược là $20$. Vận tốc dòng nước bằng nửa hiệu: $5$ km/h.`),
+        ],
+        {
+          whyTrue: R`Mỗi câu trong đề mô tả một quan hệ giữa các đại lượng. Viết quan hệ đó bằng ẩn là chuyển câu chữ thành phương trình, nên nghiệm của hệ chính là các đại lượng cần tìm.`,
+          pitfalls: R`Quên điều kiện của ẩn và đơn vị, hoặc trả lời sai đại lượng: đề hỏi vận tốc dòng nước nhưng lại trả lời vận tốc ca nô.`,
+        },
+      ),
+      bai(
+        "on10-hinh",
+        "Hình học đường tròn trong đề thi vào lớp 10",
+        R`Bài hình thường có ba ý: chứng minh bốn điểm cùng thuộc một đường tròn, chứng minh một hệ thức về độ dài, và một ý nâng cao. Công cụ chính: tứ giác có tổng hai góc đối bằng $180^\circ$ thì nội tiếp, tiếp tuyến vuông góc với bán kính, góc nội tiếp bằng nửa góc ở tâm, và tam giác đồng dạng.`,
+        [vd(
+          R`Từ điểm $A$ nằm ngoài đường tròn tâm $O$, kẻ hai tiếp tuyến $AB$, $AC$ với $B$, $C$ là tiếp điểm. Chứng minh bốn điểm $A$, $B$, $O$, $C$ cùng thuộc một đường tròn. Nếu $OA=10$ và bán kính bằng $6$ thì $AB$ dài bao nhiêu?`,
+          [
+            buoc(R`Tiếp tuyến vuông góc với bán kính tại tiếp điểm, nên $\widehat{ABO}=\widehat{ACO}=90^\circ$.`, R`Đây là tính chất cơ bản của tiếp tuyến, dùng ở hầu hết bài hình có tiếp tuyến.`),
+            buoc(R`Tứ giác $ABOC$ có $\widehat{ABO}+\widehat{ACO}=180^\circ$, nên nội tiếp đường tròn đường kính $OA$.`, R`Hai góc đối có tổng $180^\circ$ là dấu hiệu tứ giác nội tiếp; hai góc vuông cùng nhìn $OA$ nên $OA$ là đường kính.`),
+            buoc(R`Tam giác $ABO$ vuông tại $B$: $AB^2=OA^2-OB^2=100-36=64$, nên $AB=8$.`, R`Định lí Pythagore trong tam giác vuông có cạnh huyền là $OA$.`),
+          ],
+          R`Bốn điểm cùng thuộc đường tròn đường kính $OA$, và $AB=8$.`,
+          [{ expr: "sqrt(10**2-6**2)", expect: "8" }],
+        )],
+        [
+          luyen(R`Tứ giác nội tiếp có một góc bằng $75^\circ$. Góc đối diện bằng bao nhiêu độ?`, R`Góc đó bằng $105^\circ$.`, [{ expr: "180-75", expect: "105" }], R`Hai góc đối của tứ giác nội tiếp có tổng $180^\circ$.`),
+          luyen(R`Đường tròn bán kính $5$, điểm $A$ cách tâm $13$. Tính độ dài tiếp tuyến kẻ từ $A$.`, R`Độ dài tiếp tuyến bằng $12$.`, [{ expr: "sqrt(13**2-5**2)", expect: "12" }], R`Tam giác tạo bởi tâm, $A$ và tiếp điểm vuông tại tiếp điểm, nên tiếp tuyến dài $\sqrt{169-25}=12$.`),
+          luyen(R`Góc ở tâm chắn cung $AB$ bằng $110^\circ$. Góc nội tiếp chắn cung $AB$ bằng bao nhiêu độ?`, R`Góc đó bằng $55^\circ$.`, [{ expr: "110/2", expect: "55" }], R`Góc nội tiếp bằng nửa góc ở tâm cùng chắn một cung.`),
+        ],
+        {
+          figure: "circle",
+          whyTrue: R`Một tứ giác nội tiếp khi bốn đỉnh cùng cách đều một điểm. Hai góc vuông cùng nhìn một đoạn thẳng thì hai đỉnh đó nằm trên đường tròn nhận đoạn ấy làm đường kính, vì góc nội tiếp chắn nửa đường tròn là góc vuông.`,
+          pitfalls: R`Vẽ hình đặc biệt, như tam giác cân hay vuông, rồi dùng tính chất của hình đặc biệt đó cho trường hợp tổng quát.`,
         },
       ),
     ]),
