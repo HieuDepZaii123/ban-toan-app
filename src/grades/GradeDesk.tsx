@@ -12,6 +12,8 @@ import { PageFrame } from "../ui/PageFrame.tsx";
 import { Speak } from "../ui/Speak.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { GradeFigure } from "./GradeFigure.tsx";
+import { LessonPicture } from "./LessonPicture.tsx";
+import { pictures } from "../content/grades/pictures.ts";
 import { GradeWidgetView } from "./GradeWidgets.tsx";
 import { doneCount, markDone, readDone } from "./progress.ts";
 
@@ -183,7 +185,7 @@ function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTi
               <p><MathText text={lesson.pitfalls} /></p>
             </>
           ) : null}
-          {lesson.figure ? <GradeFigure kind={lesson.figure} /> : null}
+          {pictures[`${book.grade}/${lesson.id}`] ? <LessonPicture spec={pictures[`${book.grade}/${lesson.id}`]!} /> : lesson.figure ? <GradeFigure kind={lesson.figure} /> : null}
           {lesson.widget ? <GradeWidgetView kind={lesson.widget} /> : null}
           {topic ? <p><A href={`/t/${topic.id}`}>{t(lang, `Mở chuyên đề ${topic.title}`, `Open the topic ${topic.titleEn}`)}</A></p> : null}
         </article>

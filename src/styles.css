@@ -1724,3 +1724,27 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .calc-plot { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--plot-bg, var(--sheet)); }
 .calc-axis { stroke: var(--plot-axis, var(--ink)); stroke-width: 1; opacity: 0.55; }
 .calc-curve { fill: none; stroke: var(--plot-curve, var(--accent)); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+/* Hình minh họa riêng cho bài lớp 1–3: màu tươi, chữ rõ, hợp cả nền sáng lẫn nền đêm. */
+:root { --pic-red: #e2574c; --pic-orange: #f0a030; --pic-green: #3fa56a; --pic-blue: #3f86d6; --pic-purple: #8a63c9; --pic-face: #fffaf0; --pic-line: #4b4438; }
+:root[data-theme="night"] { --pic-red: #ff7a6e; --pic-orange: #ffbd59; --pic-green: #5ccf8b; --pic-blue: #6aa8f0; --pic-purple: #b192ec; --pic-face: #2a2620; --pic-line: #e8dcc6; }
+.lesson-picture { display: block; width: min(100%, 420px); height: auto; margin: 10px 0 4px; border-radius: 14px; background: var(--sheet); border: 1px solid var(--line); }
+.lesson-picture .pic-red { fill: var(--pic-red); }
+.lesson-picture .pic-orange { fill: var(--pic-orange); }
+.lesson-picture .pic-green { fill: var(--pic-green); }
+.lesson-picture .pic-blue { fill: var(--pic-blue); }
+.lesson-picture .pic-purple { fill: var(--pic-purple); }
+.lesson-picture .pic-text { fill: var(--pic-line); font-family: inherit; font-weight: 600; }
+.lesson-picture .pic-gone circle { opacity: 0.35; }
+.lesson-picture .pic-cross { stroke: var(--pic-line); stroke-width: 2.5; stroke-linecap: round; }
+.lesson-picture .pic-face { fill: var(--pic-face); stroke: var(--pic-line); stroke-width: 2; }
+.lesson-picture .pic-hand { stroke: var(--pic-line); stroke-width: 3; stroke-linecap: round; }
+.lesson-picture .pic-hand-hour { stroke-width: 5; }
+.lesson-picture .pic-dash { stroke-dasharray: 5 4; stroke-width: 2; }
+.lesson-picture .pic-tick { stroke: var(--pic-line); stroke-width: 1.2; opacity: 0.7; }
+.lesson-picture .pic-ruler { fill: var(--pic-face); stroke: var(--pic-line); stroke-width: 1.2; }
+.lesson-picture .pic-box { fill: var(--pic-face); stroke: var(--pic-line); stroke-width: 1.2; opacity: 0.9; }
+.lesson-picture .pic-cell { fill: color-mix(in srgb, var(--pic-blue) 30%, transparent); stroke: var(--pic-blue); stroke-width: 1; }
+.lesson-picture .pic-cell-soft { fill: color-mix(in srgb, var(--pic-blue) 12%, transparent); stroke: color-mix(in srgb, var(--pic-blue) 50%, transparent); stroke-width: 1; }
+.lesson-picture .pic-outline { fill: none; stroke: var(--pic-red); stroke-width: 3.5; }
+.lesson-picture .pic-path { fill: none; stroke: var(--pic-green); stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
+.lesson-picture .pic-band { fill: none; stroke: var(--pic-face); stroke-width: 2; opacity: 0.7; }
