@@ -24,7 +24,8 @@
     "test:math": "tsx scripts/mathstyle.test.ts",
     "fix:math": "tsx scripts/fix-math.ts",
     "test:ui": "tsx scripts/ui-audit.ts",
-    "test:ui:full": "tsx scripts/ui-audit.ts --full"
+    "test:ui:full": "tsx scripts/ui-audit.ts --full",
+    "traces": "python3 scripts/make_traces.py"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.104",

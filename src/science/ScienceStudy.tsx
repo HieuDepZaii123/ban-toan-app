@@ -3,6 +3,8 @@ import type { ScienceId } from "./catalog.ts";
 import { scienceLessons, type ScienceDrill, type ScienceLayer } from "./lessons.ts";
 import { scienceMore, type LayerKey, type MoreLayer } from "./more.ts";
 import { MathText } from "../ui/MathText.tsx";
+import { CodeTrace } from "./CodeTrace.tsx";
+import { useLang } from "../ui/useLang.ts";
 
 const LAYERS: readonly (readonly [LayerKey, string])[] = [
   ["basic", "Cơ bản"],
@@ -28,12 +30,13 @@ export function ScienceStudy({ id }: { id: ScienceId }) {
 }
 
 function LayerBody({ layer, more }: { layer: ScienceLayer; more: MoreLayer }) {
+  const lang = useLang();
   const drills = [layer.drill, ...more.drills];
   return (
     <>
       {[...layer.bits, ...more.bits].map((bit) => <p key={bit}><MathText text={bit} /></p>)}
-      {layer.code ? <pre className="code-block">{layer.code}</pre> : null}
-      {more.code ? <pre className="code-block">{more.code}</pre> : null}
+      {layer.code ? <CodeTrace code={layer.code} lang={lang} /> : null}
+      {more.code ? <CodeTrace code={more.code} lang={lang} /> : null}
       {drills.map((drill, index) => <DrillBox key={drill.q} drill={drill} label={`Bài luyện ${index + 1}.`} />)}
     </>
   );

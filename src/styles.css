@@ -1748,3 +1748,11 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .lesson-picture .pic-outline { fill: none; stroke: var(--pic-red); stroke-width: 3.5; }
 .lesson-picture .pic-path { fill: none; stroke: var(--pic-green); stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
 .lesson-picture .pic-band { fill: none; stroke: var(--pic-face); stroke-width: 2; opacity: 0.7; }
+/* Chạy từng bước: dòng sắp chạy được tô, số dòng mờ bên trái. */
+.code-trace { display: grid; gap: 8px; }
+.code-trace .code-block { counter-reset: none; }
+.code-line { display: block; padding: 0 6px; border-radius: 4px; }
+.code-line.is-now { background: color-mix(in srgb, var(--accent) 22%, transparent); outline: 1px solid var(--accent); }
+.code-no { display: inline-block; width: 2ch; margin-right: 10px; text-align: right; color: var(--muted); user-select: none; }
+.code-state { display: grid; gap: 6px; }
+.code-state code { font-size: 0.95rem; }

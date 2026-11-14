@@ -62,4 +62,15 @@ assert.equal(scienceLessons["vat-ly"].basic.drill.answer, "5");
 assert.equal(scienceLessons.hoa.adv.drill.answer, "2");
 assert.equal(scienceLessons.chuyen.adv.drill.answer, "9");
 
+// Mỗi đoạn code trong mảng Khoa học có bản ghi chạy từng bước, và bản ghi khớp lần chạy mới nhất.
+{
+  const { traces } = await import("../src/science/CodeTrace.tsx");
+  const codes = [
+    ...Object.values(scienceLessons).flatMap((lesson) => [lesson.basic.code, lesson.exam.code, lesson.adv.code]),
+    ...Object.values(scienceMore).flatMap((area) => [area.basic.code, area.exam.code, area.adv.code]),
+  ].filter((code): code is string => typeof code === "string");
+  for (const code of codes) assert.ok(traces.some((item) => item.code === code), `thiếu bản ghi chạy từng bước cho: ${code.split("\n")[0]}`);
+  const { execFileSync } = await import("node:child_process");
+  execFileSync("python3", ["scripts/make_traces.py", "--check"], { stdio: "inherit" });
+}
 console.log("gap ok");
