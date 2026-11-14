@@ -287,7 +287,7 @@ export const lop11: GradeBook = {
         )],
         [
           luyen(R`Đường trung bình của tam giác có cạnh đáy $10$. Đường đó dài bao nhiêu?`, R`Đường trung bình dài $5$ và song song với đáy.`, [{ expr: "10/2", expect: "5" }], "Độ dài đường trung bình bằng nửa cạnh thứ ba. Quan hệ song song đi cùng hệ thức độ dài này."),
-          luyen(R`Mặt phẳng $(P)$ chứa đường $a$. Đường $d$ song song với $a$ và không nằm trong $(P)$. Đường $d$ và mặt phẳng $(P)$ song song hay cắt nhau?`, R`Đường $d$ song song với $(P)$.`, [{ expr: "8/2", expect: "4" }], "Một đường song song với một đường nằm trong mặt phẳng, và không nằm trong mặt phẳng đó, thì song song với mặt phẳng. Số $4$ là độ dài đường trung bình ứng với cạnh $8$."),
+          luyen(R`Mặt phẳng $(P)$ chứa đường $a$. Đường $d$ song song với $a$ và không nằm trong $(P)$. Đường $d$ và mặt phẳng $(P)$ song song hay cắt nhau?`, R`Đường $d$ song song với $(P)$.`, [{ expr: "8/2", expect: "4" }], "Một đường song song với một đường nằm trong mặt phẳng, và không nằm trong mặt phẳng đó, thì song song với mặt phẳng."),
           luyen(R`Cho $AB=12$ và $M, N$ là trung điểm của $SA, SB$. Tính $MN$.`, R`Đoạn $MN$ dài $6$.`, [{ expr: "12/2", expect: "6" }], "Cùng định lí đường trung bình trong mặt phẳng của tam giác $SAB$."),
         ]),
       bai("vuong-goc", "Quan hệ vuông góc",
@@ -303,7 +303,7 @@ export const lop11: GradeBook = {
         [
           luyen(R`Cho $AH$ vuông góc với mặt phẳng, $AH=5$ và $HB=12$. Tính $AB$.`, R`Độ dài $AB$ bằng $13$.`, [{ expr: "sqrt(5**2+12**2)", expect: "13" }], "Tam giác $AHB$ vuông tại chân đường vuông góc. Cạnh xiên là cạnh huyền."),
           luyen(R`Nếu $AH=9$ và $AB=15$, với $AH$ vuông góc mặt phẳng, hình chiếu $HB$ dài bao nhiêu?`, R`Hình chiếu $HB$ dài $12$.`, [{ expr: "sqrt(15**2-9**2)", expect: "12" }], "Từ tam giác vuông tại $H$, bình phương hình chiếu bằng hiệu hai bình phương còn lại."),
-          luyen(R`Đường $d$ trong mặt đáy vuông góc với hình chiếu $HB$. Theo định lí ba đường vuông góc, $d$ có vuông góc với $AB$ không?`, R`Có. Điều kiện vuông góc với hình chiếu là điều kiện cần và đủ.`, [{ expr: "sqrt(8**2+15**2)", expect: "17" }], "Một bộ số $8$, $15$, $17$ chỉ xác nhận tam giác vuông của đường xiên. Kết luận vuông góc giữa $d$ và $AB$ là nội dung định lí."),
+          luyen(R`Đường $d$ trong mặt đáy vuông góc với hình chiếu $HB$. Theo định lí ba đường vuông góc, $d$ có vuông góc với $AB$ không?`, R`Có. Điều kiện vuông góc với hình chiếu là điều kiện cần và đủ.`, [{ expr: "sqrt(8**2+15**2)", expect: "17" }], "Kết luận vuông góc giữa $d$ và $AB$ là nội dung của định lí ba đường vuông góc, không cần tính độ dài."),
         ]),
       bai("goc-kc", "Góc nhị diện và khoảng cách",
         R`Góc phẳng của góc nhị diện là góc tạo bởi hai đường thẳng cùng vuông góc với giao tuyến tại một điểm trên giao tuyến, mỗi đường nằm trong một mặt. Khoảng cách giữa hai mặt đáy song song của một lăng trụ bằng chiều cao của lăng trụ.`,
