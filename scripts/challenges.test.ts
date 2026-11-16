@@ -3,7 +3,8 @@
  * lời giải thích hai ngôn ngữ đúng văn phong toán.
  * Chạy: tsx scripts/challenges.test.ts
  */
-import { labSpecs, makeSay, type Dense, type Challenge, type LabSpec } from "../src/content/challenges.ts";
+import { makeSay, type Dense, type Challenge, type LabSpec } from "../src/content/challenges.ts";
+import { allLabSpecs as labSpecs } from "../src/content/labSpecs.ts";
 import { mathIssues, MATH } from "./mathStyle.ts";
 
 const fails: string[] = [];
@@ -14,13 +15,14 @@ const VI = /[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềế
 const TOPICS = ["quadratic", "ineq", "exp", "sequence", "trig", "limit", "derivative", "survey", "integral", "probability", "vector", "analytic", "triangle", "combo"];
 
 function style(where: string, text: string, english: boolean, strict = false): void {
+  const times = where.startsWith("vector/");
   if (!text.trim()) return fail(where, "trống");
   if (strict && /^\$/.test(text.trim())) fail(where, `câu mở đầu bằng ký hiệu: ${text}`);
   const rest = text.replace(MATH, "");
   if (english ? VI.test(rest) : strict && /[A-Za-z]{3}/.test(rest) && !VI.test(rest)) fail(where, `sai ngôn ngữ: ${text}`);
   if (english && /\{,\}/.test(text)) fail(where, `bản Anh còn dấu phẩy thập phân: ${text}`);
   for (const m of text.match(MATH) ?? []) {
-    for (const issue of mathIssues(m.slice(1, -1), "upper", false, english)) fail(where, `${issue.rule}: ${m}`);
+    for (const issue of mathIssues(m.slice(1, -1), "upper", times, english)) fail(where, `${issue.rule}: ${m}`);
   }
 }
 
@@ -39,7 +41,7 @@ for (const id of TOPICS) {
     fail(id, "chưa có thử thách");
     continue;
   }
-  if (spec.challenges.length < 3) fail(id, `chỉ có ${spec.challenges.length} thử thách, cần ít nhất 3`);
+  if (spec.challenges.length < 6) fail(id, `chỉ có ${spec.challenges.length} thử thách, cần ít nhất 6`);
   const ids = new Set<string>();
   spec.challenges.forEach((c: Challenge) => {
     total += 1;
@@ -63,6 +65,11 @@ for (const id of TOPICS) {
       style(`${at} sai ${tag}`, bad.why, en);
     }
     if (c.sol.scene !== c.set.scene) fail(at, "nghiệm và đề khác cảnh");
+    if (c.hint) {
+      style(`${at} gợi ý vi`, c.hint.vi, false);
+      style(`${at} gợi ý en`, c.hint.en, true);
+    }
+    if (c.level !== undefined && ![1, 2, 3].includes(c.level)) fail(at, "mức độ sai");
     if (c.guess) {
       style(`${at} đoán vi`, c.guess.vi, false);
       style(`${at} đoán en`, c.guess.en, true);

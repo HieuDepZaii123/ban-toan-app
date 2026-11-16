@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { labSpecs, makeSay, type Dense, type Verdict } from "../content/challenges.ts";
+import { makeSay, type Dense, type Verdict } from "../content/challenges.ts";
+import { allLabSpecs as labSpecs } from "../content/labSpecs.ts";
 import { readParams, useSlice, writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
@@ -34,12 +35,14 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
   const [index, setIndex] = useState(0);
   const [done, setDone] = useState<string[]>(() => loadDone(id));
   const [guess, setGuess] = useState<number | null>(null);
+  const [hintOpen, setHintOpen] = useState(false);
   const [checked, setChecked] = useState<{ verdict: Verdict; at: string; guess: number | null } | null>(null);
 
   useEffect(() => {
     setIndex(0);
     setDone(loadDone(id));
     setGuess(null);
+    setHintOpen(false);
     setChecked(null);
   }, [id]);
 
@@ -54,6 +57,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
   const pick = (next: number) => {
     setIndex(next);
     setGuess(null);
+    setHintOpen(false);
     setChecked(null);
   };
   const preset = (target: Record<string, number>) => {
@@ -89,7 +93,14 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
           </button>
         ))}
       </div>
-      <p className="challenge-prompt"><MathText text={en ? challenge.en : challenge.vi} /></p>
+      <p className="challenge-prompt">
+        {challenge.level ? (
+          <span className={`level level-${challenge.level}`}>
+            {challenge.level === 1 ? t(lang, "Dễ", "Easy") : challenge.level === 2 ? t(lang, "Vừa", "Medium") : t(lang, "Khó", "Hard")}
+          </span>
+        ) : null}
+        <MathText text={en ? challenge.en : challenge.vi} />
+      </p>
       {challenge.guess ? (
         <fieldset className="challenge-guess">
           <legend><b>{t(lang, "Đoán trước: ", "Predict first: ")}</b><MathText text={en ? challenge.guess.en : challenge.guess.vi} /></legend>
@@ -105,8 +116,12 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
       <div className="challenge-actions">
         <button type="button" className="text-btn" onClick={() => preset(challenge.set)}>{t(lang, "Đặt đề", "Set up")}</button>
         <button type="button" className="play" onClick={run} disabled={needGuess}>{t(lang, "Kiểm tra", "Check")}</button>
+        {challenge.hint ? (
+          <button type="button" className="text-btn" aria-expanded={hintOpen} onClick={() => setHintOpen(!hintOpen)}>{t(lang, "Gợi ý", "Hint")}</button>
+        ) : null}
         <button type="button" className="text-btn" onClick={() => preset(challenge.sol)}>{t(lang, "Xem đáp án mẫu", "Show a sample answer")}</button>
       </div>
+      {hintOpen && challenge.hint ? <p className="note challenge-hint"><MathText text={en ? challenge.hint.en : challenge.hint.vi} /></p> : null}
       {needGuess ? <p className="note">{t(lang, "Chọn một dự đoán rồi mới kiểm tra.", "Pick a prediction before you check.")}</p> : null}
       {!sameScene ? (
         <p className="note">{t(lang, "Hình đang ở cảnh khác: bấm Đặt đề để về đúng cảnh của thử thách.", "The figure is on a different scene: press Set up to return to this challenge's scene.")}</p>

@@ -195,7 +195,7 @@ export function TopicDesk({ id }: { id: string }) {
         ) : null}
         {tab === "tn" ? (
           Lab ? (
-            <div className="hoc lab-desk">
+            <div className="lab-desk">
               <Suspense fallback={<div className="graph-wrap skeleton" aria-hidden="true" />}>
                 <Lab key={`${topic.id}:${labRun}`} />
               </Suspense>

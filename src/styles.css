@@ -1763,7 +1763,12 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .dang-card h3 { margin: 1rem 0 0.25rem; font-size: 0.95rem; }
 
 .lab-link { margin: 0.5rem 0 1rem; }
-.lab-desk { display: grid; gap: 1rem; }
+.lab-desk { display: grid; gap: 1rem; max-width: 1100px; }
+@media (min-width: 960px) {
+  .lab-desk { grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr); align-items: start; }
+  .lab-desk > .challenge { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--study-h) + 12px); }
+  .lab-desk > :not(.challenge) { grid-column: 1; grid-row: 1; }
+}
 .challenge { display: grid; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--sheet); }
 .challenge-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
 .challenge-head h2 { margin: 0; font-size: 1.1rem; }
@@ -1777,3 +1782,7 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .verdict.ok { background: var(--ok-soft); color: var(--ink); }
 .verdict.bad { background: var(--clay-soft); color: var(--ink); }
 .verdict-guess { margin: 0; color: var(--ink-soft); }
+.level { display: inline-block; margin-right: 8px; padding: 1px 9px; border-radius: 999px; font-size: 0.78rem; border: 1px solid var(--line); color: var(--ink-soft); }
+.level-1 { background: var(--ok-soft); }
+.level-3 { background: var(--clay-soft); }
+.challenge-hint { margin: 0; padding: 6px 10px; border-left: 3px solid var(--accent); }

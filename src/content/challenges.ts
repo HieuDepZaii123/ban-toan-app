@@ -29,6 +29,10 @@ export type Challenge = {
   set: Values;
   /** Optional predict-first question. `answer` indexes `options`. */
   guess?: { vi: string; en: string; options: Bi[]; answer: number; why: Bi };
+  /** 1 easy, 2 medium, 3 hard. Older challenges leave it out. */
+  level?: 1 | 2 | 3;
+  /** One nudge shown on request, without giving the answer. */
+  hint?: Bi;
   /** A solution, used for the hint and by the tests. */
   sol: Values;
   check: (v: Dense, say: Say) => Verdict;
@@ -47,11 +51,11 @@ export function makeSay(en: boolean): Say {
 
 type Test = [boolean, string, string];
 /** First failing test explains the miss; passing every test gives the reason it works. */
-function judge(say: Say, tests: Test[], good: [string, string]): Verdict {
+export function judge(say: Say, tests: Test[], good: [string, string]): Verdict {
   const bad = tests.find((test) => !test[0]);
   return bad ? { ok: false, why: say.s(bad[1], bad[2]) } : { ok: true, why: say.s(good[0], good[1]) };
 }
-const near = (a: number, b: number, tol = 1e-6) => Math.abs(a - b) <= tol;
+export const near = (a: number, b: number, tol = 1e-6) => Math.abs(a - b) <= tol;
 
 const quadratic: Challenge[] = [
   {
