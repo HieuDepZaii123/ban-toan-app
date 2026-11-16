@@ -59,6 +59,7 @@ Service worker đăng ký sau khi trang đã hiện, chỉ ở bản production.
 3. Hình kéo là một component trong `src/labs/`, vẽ bằng canvas, và được `lazy()` trong `src/topic/TopicDesk.tsx`. Số liệu dùng chung nằm ở `src/lib/math.ts` để phần Làm và phần hình không lệch nhau.
 4. Câu hỏi dùng `$...$` cho KaTeX. Chữ thường tiếng Việt có dấu. Mỗi câu bốn lựa chọn, một đáp án, một gợi ý, ba bước. Số sai phải là nhầm lẫn thật (đổi dấu, quên cộng mắt, lấy t = 1 thay vì đỉnh).
 5. `npm test` phải vẫn xanh. Hàm mới trong `src/lib/math.ts` thì thêm một khẳng định vào `scripts/check-math.ts`.
+7. Kiến thức tổng quát và chi tiết nằm ở `src/content/knowledge/<id>.ts` (xuất `<id>Knowledge`, nối vào `src/content/knowledge/index.ts`) và hiện trong tab Học, giữa bài giảng ngắn và phần Dạng bài. Mỗi bộ có phần tổng quát, 5–8 phần chi tiết gồm định nghĩa, định lí, công thức, cách làm, lưu ý và ví dụ, mục «cần nhớ», liên kết sang tờ khác, và các phép kiểm SymPy cho mọi số trong ví dụ. Tiêu đề không có công thức, chữ có dấu không nằm trong `$...$`. `npm test` (`scripts/knowledge.test.ts`) kiểm cấu trúc, văn phong, KaTeX và SymPy; khi đang soạn dở có thể chạy `npx tsx scripts/knowledge.test.ts <id>`.
 6. Ảnh động nằm ở `src/motion/clips/<id>.ts` và được `loadClip` gọi khi cần. Số trong hình lấy từ `src/motion/facts.ts`, và `npm test` phải khớp với `src/lib/math.ts`.
 
 ## Gói

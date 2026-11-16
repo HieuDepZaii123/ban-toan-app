@@ -18,6 +18,7 @@ import { Notebook } from "./Notebook.tsx";
 import { Practice } from "./Practice.tsx";
 import { DangHoc } from "./DangHoc.tsx";
 import { FocusBar } from "./FocusBar.tsx";
+import { KnowledgeRead } from "./KnowledgeRead.tsx";
 import { LectureVideos } from "./LectureVideos.tsx";
 import { SangTao } from "./SangTao.tsx";
 
@@ -171,6 +172,7 @@ export function TopicDesk({ id }: { id: string }) {
                   <p>{lang === "en" ? topic.soonEn : topic.soon}</p>
                 </>
               )}
+              <KnowledgeRead topicId={topic.id} />
               <DangHoc topicId={topic.id} />
               <LectureVideos topicId={topic.id} />
               <SangTao topicId={topic.id} />

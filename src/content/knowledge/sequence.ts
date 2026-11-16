@@ -1,0 +1,126 @@
+import type { TopicKnowledge } from "./types.ts";
+
+const R = String.raw;
+
+export const sequenceKnowledge: TopicKnowledge = {
+  id: "sequence",
+  tongQuat: {
+    la: R`Dãy số là một danh sách các số xếp theo thứ tự $u_1,u_2,u_3,\dots$, tức là một hàm số xác định trên các số nguyên dương. Hai dãy quan trọng nhất là cấp số cộng, mỗi số hạng hơn số hạng trước một lượng không đổi $d$, và cấp số nhân, mỗi số hạng bằng số hạng trước nhân với một số không đổi $q$.`,
+    dungDe: R`Mô tả những đại lượng đổi theo từng bước đều đặn: tiền tiết kiệm mỗi tháng, số ghế tăng dần theo hàng, quãng đường của quả bóng nảy, lãi kép, dân số. Trong bài thi, chuyên đề cho bài tìm số hạng, tính tổng, xác định công sai hoặc công bội từ điều kiện, bài toán thực tế và tổng vô hạn.`,
+    lienHe: R`Cấp số cộng là hàm bậc nhất của chỉ số $n$, cấp số nhân là hàm mũ của $n$, nên chuyên đề nối với Hàm số bậc hai và Mũ và logarit. Tổng vô hạn và dãy hội tụ là nền của chuyên đề Giới hạn, còn phép chứng minh quy nạp dùng được cho mọi công thức theo $n$.`,
+  },
+  canBiet: [
+    R`Hàm số bậc nhất và hàm mũ, để thấy dãy là hàm của chỉ số.`,
+    R`Giải phương trình và hệ hai ẩn.`,
+    R`Ký hiệu chỉ số dưới như $u_n$ và cách đọc «số hạng thứ $n$».`,
+  ],
+  sections: [
+    {
+      title: "Dãy số và cách cho dãy số",
+      items: [
+        { kind: "dinh-nghia", title: "Dãy số", text: R`Dãy số $(u_n)$ gán cho mỗi số nguyên dương $n$ một số thực $u_n$, gọi là số hạng thứ $n$. Số hạng $u_1$ là số hạng đầu, và $u_n$ là số hạng tổng quát.` },
+        { kind: "cach-lam", title: "Ba cách cho một dãy", text: R`Cho bằng công thức số hạng tổng quát $u_n=f(n)$; cho bằng hệ thức truy hồi, tức là cho $u_1$ và cách tính $u_{n+1}$ từ các số hạng trước; hoặc cho bằng lời mô tả. Công thức tổng quát cho phép tính ngay số hạng bất kì, còn truy hồi phải tính lần lượt.` },
+        { kind: "tinh-chat", title: "Dãy tăng, giảm, bị chặn", text: R`Dãy tăng nếu $u_{n+1}>u_n$ với mọi $n$, giảm nếu $u_{n+1}<u_n$ với mọi $n$. Dãy bị chặn trên nếu có số $M$ để $u_n\le M$ với mọi $n$, bị chặn dưới nếu có số $m$ để $u_n\ge m$.` },
+        { kind: "luu-y", text: R`Dãy khác tập hợp ở chỗ thứ tự và sự lặp lại có ý nghĩa. Dãy $1,2,1,2,\dots$ vẫn là một dãy, dù chỉ có hai giá trị khác nhau.` },
+        { kind: "vi-du", text: R`Với $u_n=2n+1$ ta có $3,5,7,9,\dots$, một dãy tăng. Với $u_1=1$ và $u_{n+1}=2u_n$ ta có $1,2,4,8,\dots$, dãy này được cho bằng truy hồi.` },
+        { kind: "vi-du", text: R`Dãy $u_n=\frac{n}{n+1}$ cho $\frac{1}{2},\frac{2}{3},\frac{3}{4},\dots$ là dãy tăng và bị chặn trên bởi $1$. Các số hạng tiến sát $1$ nhưng không bao giờ bằng $1$.` },
+      ],
+    },
+    {
+      title: "Cấp số cộng",
+      items: [
+        { kind: "dinh-nghia", title: "Cấp số cộng", text: R`Dãy $(u_n)$ là cấp số cộng nếu $u_{n+1}=u_n+d$ với mọi $n$, trong đó $d$ không đổi và gọi là công sai. Hai số hạng liên tiếp luôn hơn kém nhau đúng $d$.` },
+        { kind: "cong-thuc", title: "Số hạng tổng quát", text: R`Công thức là $u_n=u_1+(n-1)d$. Số hạng thứ $n$ bằng số hạng đầu cộng $n-1$ lần công sai, vì từ $u_1$ đến $u_n$ có $n-1$ bước.` },
+        { kind: "cong-thuc", title: "Quan hệ giữa hai số hạng bất kì", text: R`Có $u_m=u_k+(m-k)d$, nên $d=\frac{u_m-u_k}{m-k}$ khi $m\neq k$. Biết hai số hạng bất kì là đủ để tìm cả cấp số cộng.` },
+        { kind: "tinh-chat", title: "Số hạng giữa", text: R`Mỗi số hạng, trừ số hạng đầu, bằng trung bình cộng của hai số hạng kề nó: $u_k=\frac{u_{k-1}+u_{k+1}}{2}$. Ba số $a,b,c$ lập thành cấp số cộng khi và chỉ khi $a+c=2b$.` },
+        { kind: "luu-y", text: R`Công sai dương thì dãy tăng, âm thì dãy giảm, bằng $0$ thì dãy là hằng số. Dãy hằng vẫn là cấp số cộng, nên đừng loại $d=0$ khi đề không cấm.` },
+        { kind: "cach-lam", title: "Tìm số hạng đầu và công sai từ hai số hạng", text: R`Lập hai phương trình bậc nhất theo $u_1$ và $d$ rồi giải, hoặc tính $d$ bằng công thức giữa hai số hạng rồi suy ra $u_1$. Cách thứ hai gọn hơn vì không cần giải hệ.` },
+        { kind: "vi-du", text: R`Cho $u_1=3$ và $d=4$ thì $u_{10}=3+9\cdot 4=39$. Cho $u_3=7$ và $u_8=22$ thì $d=\frac{22-7}{8-3}=3$ và $u_1=7-2\cdot 3=1$.` },
+      ],
+    },
+    {
+      title: "Tổng của cấp số cộng",
+      items: [
+        { kind: "cong-thuc", title: "Tổng của các số hạng đầu", text: R`Công thức là $S_n=\frac{n(u_1+u_n)}{2}=\frac{n\left[2u_1+(n-1)d\right]}{2}$. Dạng đầu dùng khi biết số hạng cuối, dạng sau dùng khi biết công sai.` },
+        { kind: "cach-lam", title: "Vì sao có công thức", text: R`Viết tổng hai lần, một lần theo thứ tự xuôi và một lần ngược rồi cộng từng cặp. Mỗi cặp bằng $u_1+u_n$ và có $n$ cặp, nên $2S_n=n(u_1+u_n)$.` },
+        { kind: "tinh-chat", title: "Tổng là hàm bậc hai của chỉ số", text: R`Khai triển được $S_n=\frac{d}{2}n^2+\left(u_1-\frac{d}{2}\right)n$, một đa thức bậc hai của $n$ không có hạng tử tự do. Vì vậy $S_n$ và $S_{n-1}$ cho lại $u_n=S_n-S_{n-1}$.` },
+        { kind: "luu-y", title: "Đếm đủ số số hạng", text: R`Từ số hạng thứ $a$ đến số hạng thứ $b$ có $b-a+1$ số hạng, không phải $b-a$. Đếm thiếu một số hạng là lỗi hay gặp nhất khi tính tổng một đoạn.` },
+        { kind: "vi-du", text: R`Tổng $1+2+\dots+100$ có $u_1=1$, $u_{100}=100$ nên $S_{100}=\frac{100\cdot 101}{2}=5050$.` },
+        { kind: "vi-du", text: R`Một rạp có $20$ ghế ở hàng đầu, mỗi hàng sau nhiều hơn hàng trước $2$ ghế, và có $15$ hàng. Hàng cuối có $20+14\cdot 2=48$ ghế, và tổng số ghế là $\frac{15(20+48)}{2}=510$.` },
+      ],
+    },
+    {
+      title: "Cấp số nhân",
+      items: [
+        { kind: "dinh-nghia", title: "Cấp số nhân", text: R`Dãy $(u_n)$ là cấp số nhân nếu $u_{n+1}=u_n\cdot q$ với mọi $n$, trong đó $q$ không đổi và gọi là công bội. Hai số hạng liên tiếp luôn có thương bằng $q$.` },
+        { kind: "cong-thuc", title: "Số hạng tổng quát", text: R`Công thức là $u_n=u_1\cdot q^{n-1}$, và $u_m=u_k\cdot q^{m-k}$ cho hai số hạng bất kì. Số mũ là số bước từ số hạng này sang số hạng kia.` },
+        { kind: "tinh-chat", title: "Số hạng giữa", text: R`Với mọi số hạng không phải số hạng đầu, $u_k^2=u_{k-1}\cdot u_{k+1}$. Ba số khác $0$ là $a,b,c$ lập thành cấp số nhân khi và chỉ khi $b^2=ac$, và nếu chúng cùng dấu thì $b$ là trung bình nhân của $a$ và $c$.` },
+        { kind: "tinh-chat", title: "Chiều biến thiên", text: R`Với $u_1>0$: nếu $q>1$ dãy tăng, nếu $0<q<1$ dãy giảm. Nếu $q<0$ dãy đổi dấu liên tục nên không đơn điệu. Nếu $q=1$ dãy là hằng số.` },
+        { kind: "luu-y", text: R`Công bội $q=0$ hoặc $u_1=0$ làm mọi số hạng sau đều bằng $0$ và thương không xác định, nên thường được loại khi đề nói «cấp số nhân». Đừng nhầm cấp số nhân với cấp số cộng khi đọc đề: cộng thêm $d$ khác nhân lên $q$ lần.` },
+        { kind: "vi-du", text: R`Với $u_1=2$ và $q=3$ ta có $2,6,18,54,162$, nên $u_5=2\cdot 3^4=162$. Ba số $2,6,18$ là cấp số nhân vì $6^2=36=2\cdot 18$.` },
+      ],
+    },
+    {
+      title: "Tổng của cấp số nhân và tổng vô hạn",
+      items: [
+        { kind: "cong-thuc", title: "Tổng của các số hạng đầu", text: R`Với $q\neq 1$ có $S_n=u_1\cdot\frac{1-q^n}{1-q}$. Với $q=1$ mọi số hạng bằng nhau và $S_n=n\,u_1$.` },
+        { kind: "cach-lam", title: "Vì sao có công thức", text: R`Nhân $S_n$ với $q$ rồi trừ cho $S_n$: các số hạng ở giữa triệt tiêu, còn lại $S_n(1-q)=u_1(1-q^n)$. Chia hai vế cho $1-q$ khi $q\neq 1$ thì được công thức.` },
+        { kind: "dinh-ly", title: "Tổng vô hạn", text: R`Nếu $|q|<1$ thì $q^n$ tiến về $0$ khi $n$ tăng, nên tổng vô hạn là $S=\frac{u_1}{1-q}$. Nếu $|q|\ge 1$ và $u_1\neq 0$ thì tổng các số hạng không tiến tới một số hữu hạn.` },
+        { kind: "luu-y", text: R`Điều kiện $|q|<1$ là bắt buộc. Với $1+2+4+\dots$ công thức $\frac{1}{1-2}=-1$ cho một số vô nghĩa, vì thực tế tổng này lớn vô hạn.` },
+        { kind: "vi-du", text: R`Tổng $1+\frac{1}{2}+\frac{1}{4}+\dots$ có $u_1=1$ và $q=\frac{1}{2}$ nên bằng $\frac{1}{1-\frac{1}{2}}=2$. Tổng $2+6+18+54+162$ bằng $2\cdot\frac{1-3^5}{1-3}=242$.` },
+        { kind: "vi-du", text: R`Quả bóng rơi từ độ cao $10$ m rồi nảy lên $\frac{3}{5}$ độ cao trước đó. Các độ cao nảy là $6;3{,}6;\dots$ có tổng $\frac{6}{1-\frac{3}{5}}=15$. Mỗi lần nảy bóng đi lên rồi xuống, nên tổng quãng đường là $10+2\cdot 15=40$ m.` },
+        { kind: "vi-du", text: R`Gửi vào đầu mỗi năm $10$ triệu đồng, lãi kép $8\%$ mỗi năm. Sau $3$ năm tiền là $10\left(1{,}08+1{,}08^2+1{,}08^3\right)=10\cdot 1{,}08\cdot\frac{1{,}08^3-1}{0{,}08}\approx 35{,}06$ triệu, là tổng của một cấp số nhân có công bội $1{,}08$.` },
+      ],
+    },
+    {
+      title: "Quy nạp và hệ thức truy hồi",
+      items: [
+        { kind: "dinh-ly", title: "Nguyên lí quy nạp", text: R`Để chứng minh mệnh đề $P(n)$ đúng với mọi $n\ge n_0$, làm hai bước. Bước cơ sở: kiểm $P(n_0)$ đúng. Bước quy nạp: giả sử $P(k)$ đúng với một $k\ge n_0$, chứng minh $P(k+1)$ đúng.` },
+        { kind: "cach-lam", title: "Mẫu chứng minh", text: R`Muốn chứng minh $1+3+5+\dots+(2n-1)=n^2$: với $n=1$ hai vế cùng bằng $1$. Giả sử tổng của $k$ số đầu là $k^2$, thì tổng của $k+1$ số đầu là $k^2+(2k+1)=(k+1)^2$, đúng công thức với $n=k+1$.` },
+        { kind: "luu-y", text: R`Bước cơ sở không được bỏ. Nếu chỉ có bước quy nạp thì «mọi số bằng nhau» cũng chứng minh được bằng một lập luận sai, vì thiếu điểm xuất phát.` },
+        { kind: "cach-lam", title: "Dãy cho bằng truy hồi", text: R`Tính vài số hạng đầu, đoán công thức tổng quát, rồi chứng minh công thức bằng quy nạp. Cách này đáng tin vì phép đoán chưa phải là phép chứng minh.` },
+        { kind: "vi-du", text: R`Dãy $u_1=1$ và $u_{n+1}=u_n+2n+1$ cho $u_2=1+3=4$ và $u_3=4+5=9$, gợi ý $u_n=n^2$. Với $n=5$, tổng $1+3+5+7+9=25=5^2$ cũng khớp.` },
+      ],
+    },
+  ],
+  canNho: [
+    R`Cấp số cộng: $u_{n+1}=u_n+d$ và $u_n=u_1+(n-1)d$.`,
+    R`Tổng cấp số cộng: $S_n=\frac{n(u_1+u_n)}{2}$; đếm đúng $n$ trước khi thay vào.`,
+    R`Ba số lập thành cấp số cộng khi $a+c=2b$, và cấp số nhân khi $b^2=ac$.`,
+    R`Cấp số nhân: $u_{n+1}=u_nq$ và $u_n=u_1q^{n-1}$.`,
+    R`Tổng cấp số nhân: $S_n=u_1\frac{1-q^n}{1-q}$ khi $q\neq 1$.`,
+    R`Tổng vô hạn $S=\frac{u_1}{1-q}$ chỉ khi $|q|<1$.`,
+    R`Biết hai số hạng bất kì thì tìm được công sai hoặc công bội qua $u_m=u_k+(m-k)d$ hoặc $u_m=u_kq^{m-k}$.`,
+    R`Chứng minh bằng quy nạp luôn có hai bước: cơ sở và quy nạp.`,
+  ],
+  lienQuan: [
+    { id: "exp", vi: R`Cấp số nhân là hàm mũ theo chỉ số, và lãi kép chính là cấp số nhân với công bội $1+r$.` },
+    { id: "limit", vi: R`Tổng vô hạn và dãy $\frac{n}{n+1}$ tiến tới một số là những ví dụ đầu tiên của giới hạn.` },
+    { id: "ineq", vi: R`Trung bình cộng và trung bình nhân của hai số là số hạng giữa của cấp số cộng và cấp số nhân qua chúng.` },
+  ],
+  checks: [
+    { expr: "3+(10-1)*4", expect: "39" },
+    { expr: "Rational(22-7,8-3)", expect: "3" },
+    { expr: "7-2*3", expect: "1" },
+    { expr: "Rational(100*101,2)", expect: "5050" },
+    { expr: "20+14*2", expect: "48" },
+    { expr: "Rational(15*(20+48),2)", expect: "510" },
+    { expr: "simplify(n*(2*u1+(n-1)*d)/2-(d/2*n**2+(u1-d/2)*n))", expect: "0" },
+    { expr: "Rational(3+11,2)", expect: "7" },
+    { expr: "2*3**4", expect: "162" },
+    { expr: "2*18", expect: "6**2" },
+    { expr: "1/(1-Rational(1,2))", expect: "2" },
+    { expr: "2*(1-3**5)/(1-3)", expect: "242" },
+    { expr: "2+6+18+54+162", expect: "242" },
+    { expr: "limit(n/(n+1), n, oo)", expect: "1" },
+    { expr: "10+2*Rational(6,1)/(1-Rational(3,5))", expect: "40" },
+    { expr: "Rational(6,1)/(1-Rational(3,5))", expect: "15" },
+    { expr: "floor(100000*10*Rational(108,100)*(Rational(108,100)**3-1)/Rational(8,100))", expect: "3506112" },
+    { expr: "simplify(10*Rational(108,100)*(Rational(108,100)**3-1)/Rational(8,100)-10*(Rational(108,100)+Rational(108,100)**2+Rational(108,100)**3))", expect: "0" },
+    { expr: "summation(2*k-1, (k,1,n))", expect: "n**2" },
+    { expr: "1+3+5+7+9", expect: "25" },
+    { expr: "1+(2*1+1)", expect: "4" },
+    { expr: "4+(2*2+1)", expect: "9" },
+    { expr: "simplify(k**2+(2*k+1)-(k+1)**2)", expect: "0" },
+  ],
+};
