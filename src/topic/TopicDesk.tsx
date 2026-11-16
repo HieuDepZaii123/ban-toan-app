@@ -19,6 +19,7 @@ import { Practice } from "./Practice.tsx";
 import { DangHoc } from "./DangHoc.tsx";
 import { FocusBar } from "./FocusBar.tsx";
 import { LectureVideos } from "./LectureVideos.tsx";
+import { LabChallenges } from "../labs/LabChallenges.tsx";
 import { SangTao } from "./SangTao.tsx";
 
 const Research = lazy(() => import("./Research.tsx").then((mod) => ({ default: mod.Research })));
@@ -66,9 +67,10 @@ export function TopicDesk({ id }: { id: string }) {
   const lang = useLang();
   const { search, go } = useRoute();
   const tabParam = new URLSearchParams(search).get("tab");
-  const tab = tabParam === "lam" || tabParam === "so" || tabParam === "nc" ? tabParam : "hoc";
+  const tab = tabParam === "lam" || tabParam === "so" || tabParam === "nc" || tabParam === "tn" ? tabParam : "hoc";
   const [pack, setPack] = useState<Loaded | null>(null);
   const [focus, setFocus] = useState(false);
+  const [labRun, setLabRun] = useState(0);
 
   useEffect(() => {
     if (topic) setLast(topic.id);
@@ -115,6 +117,7 @@ export function TopicDesk({ id }: { id: string }) {
   const questions = ready?.questions ?? [];
   const vary = ready?.vary ?? [];
   const Lab = isCardId(topic.id) ? labs[topic.id] : null;
+  const tabs = (Lab ? ["hoc", "tn", "lam", "nc", "so"] : ["hoc", "lam", "nc", "so"]) as readonly ("hoc" | "tn" | "lam" | "nc" | "so")[];
 
   return (
     <div className={`desk${focus ? " is-focus" : ""}`}>
@@ -128,7 +131,7 @@ export function TopicDesk({ id }: { id: string }) {
               <span>{streamName(topic.stream, lang)} · {t(lang, "Lớp", "Grade")} {topic.grade}</span>
             </div>
             <nav className="tabs" aria-label={t(lang, "Việc trên tờ", "Work on this sheet")}>
-              {(["hoc", "lam", "nc", "so"] as const).map((item) => (
+              {tabs.map((item) => (
                 <a
                   key={item}
                   aria-current={tab === item ? "page" : undefined}
@@ -142,7 +145,9 @@ export function TopicDesk({ id }: { id: string }) {
                 >
                   {item === "hoc"
                     ? t(lang, "Học", "Study")
-                    : item === "lam"
+                    : item === "tn"
+                      ? t(lang, "Thí nghiệm", "Lab")
+                      : item === "lam"
                       ? t(lang, "Luyện tập", "Practice")
                       : item === "so"
                         ? t(lang, "Sổ tay", "Notebook")
@@ -176,9 +181,9 @@ export function TopicDesk({ id }: { id: string }) {
               <SangTao topicId={topic.id} />
             </div>
             {Lab ? (
-              <Suspense fallback={<div className="graph-wrap skeleton" aria-hidden="true" />}>
-                <Lab />
-              </Suspense>
+              <p className="lab-link">
+                <A href={`/t/${topic.id}?tab=tn`}>{t(lang, "Mở tab Thí nghiệm để kéo hình và làm thử thách", "Open the Lab tab to drag the figure and try the challenges")}</A>
+              </p>
             ) : (
               <div className="stub-stage" role="note">
                 <b>{t(lang, "Chưa có hình kéo", "No interactive figure yet")}</b>
@@ -187,6 +192,21 @@ export function TopicDesk({ id }: { id: string }) {
             )}
             <Guide topic={topic} />
           </div>
+        ) : null}
+        {tab === "tn" ? (
+          Lab ? (
+            <div className="hoc lab-desk">
+              <Suspense fallback={<div className="graph-wrap skeleton" aria-hidden="true" />}>
+                <Lab key={`${topic.id}:${labRun}`} />
+              </Suspense>
+              <LabChallenges key={topic.id} id={topic.id} onPreset={() => setLabRun((n) => n + 1)} />
+            </div>
+          ) : (
+            <div className="stub-stage" role="note">
+              <b>{t(lang, "Chưa có hình kéo", "No interactive figure yet")}</b>
+              <p>{lang === "en" ? topic.soonEn : topic.soon}</p>
+            </div>
+          )
         ) : null}
         {tab === "lam" ? (
           !ready ? (

@@ -5,6 +5,7 @@ import { circlePlace, lineFoot2, planeFoot } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -196,25 +197,25 @@ export function AnalyticLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Khoảng cách", "Distance")}</dt><dd>{showExact(foot.dist)}</dd></div>
           <div><dt>{t(lang, "Chân", "Foot")}</dt><dd>({fmt(foot.x)}; {fmt(foot.y)})</dd></div>
           <div><dt>{t(lang, "Chỉ phương", "Direction")}</dt><dd>({fmt(b)}; {fmt(-a)})</dd></div>
           <div><dt>{t(lang, "Pháp tuyến", "Normal")}</dt><dd>({fmt(a)}; {fmt(b)})</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Khoảng cách", "Distance")}</dt><dd>{showExact(plane.dist)}</dd></div>
           <div className="wide"><dt>{t(lang, "Chân", "Foot")}</dt><dd>({fmt(plane.x)}; {fmt(plane.y)}; {fmt(plane.z)})</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>r</dt><dd>{fmt(radius)}</dd></div>
           <div><dt>{t(lang, "Điểm", "Point")}</dt><dd>{placeWord(place, lang === "en")}</dd></div>
           <div className="wide"><dt>(6; 0)</dt><dd>{placeWord(guest, lang === "en")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

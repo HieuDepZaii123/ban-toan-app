@@ -1761,3 +1761,19 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 
 .dang-card summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 0.4em; font-size: 1.05rem; }
 .dang-card h3 { margin: 1rem 0 0.25rem; font-size: 0.95rem; }
+
+.lab-link { margin: 0.5rem 0 1rem; }
+.lab-desk { display: grid; gap: 1rem; }
+.challenge { display: grid; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--sheet); }
+.challenge-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.challenge-head h2 { margin: 0; font-size: 1.1rem; }
+.challenge-count { color: var(--muted); font-variant-numeric: tabular-nums; }
+.challenge-prompt { margin: 0; }
+.challenge-guess { margin: 0; padding: 8px 10px; border: 1px dashed var(--line); border-radius: 8px; display: grid; gap: 8px; }
+.challenge-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.challenge-actions .play:disabled { opacity: 0.5; cursor: not-allowed; }
+.challenge-result { display: grid; gap: 6px; min-height: 1px; }
+.verdict { margin: 0; padding: 8px 10px; border-radius: 8px; }
+.verdict.ok { background: var(--ok-soft); color: var(--ink); }
+.verdict.bad { background: var(--clay-soft); color: var(--ink); }
+.verdict-guess { margin: 0; color: var(--ink-soft); }

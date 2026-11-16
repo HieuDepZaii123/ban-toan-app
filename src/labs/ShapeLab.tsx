@@ -5,6 +5,7 @@ import { boxBase, boxVolume, pyramidBase, pyramidVolume, tetraVerts, tetraVolume
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -174,31 +175,31 @@ export function ShapeLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Diện tích", "Area")}</dt><dd>{fmt(area)}</dd></div>
           <div><dt>{t(lang, "Đáy", "Base")}</dt><dd>{fmt(base)}</dd></div>
           <div><dt>{t(lang, "Cao", "Height")}</dt><dd>{fmt(tall)}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Thể tích", "Volume")}</dt><dd>{fmt(volume)}</dd></div>
           <div><dt>{t(lang, "Đáy", "Base")}</dt><dd>{fmt(baseArea)}</dd></div>
           <div className="wide"><dt>{t(lang, "Ba cạnh", "Three edges")}</dt><dd>{fmt(len)} × {fmt(wid)} × {fmt(ht)}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Thể tích", "Volume")}</dt><dd>{fmt(pyr)}</dd></div>
           <div><dt>{t(lang, "Đáy", "Base")}</dt><dd>{fmt(pyrBase)}</dd></div>
           <div><dt>{t(lang, "Cao", "Height")}</dt><dd>{fmt(ph)}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 3 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Thể tích", "Volume")}</dt><dd>{showExact(tet)}</dd></div>
           <div><dt>{t(lang, "Cạnh", "Edge")}</dt><dd>{edgesEqual ? fmt(edgeShown) : t(lang, "lệch", "unequal")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

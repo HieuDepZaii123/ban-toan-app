@@ -1,5 +1,7 @@
 import { useId } from "react";
 import { fmt, snap } from "../lib/format.ts";
+import { toTex } from "../lib/tex.ts";
+import { MathText } from "./MathText.tsx";
 
 export function Slider({
   label,
@@ -23,10 +25,9 @@ export function Slider({
   return (
     <div className="slider">
       <div className="slider-top">
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id}><MathText text={toTex(label)} /></label>
         <output htmlFor={id}>
-          {fmt(shown)}
-          {suffix ?? ""}
+          <MathText text={toTex(`${fmt(shown)}${suffix ?? ""}`)} />
         </output>
       </div>
       <input

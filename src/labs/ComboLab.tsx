@@ -5,6 +5,7 @@ import { arrange, comb, meanOf, medianOf } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -141,24 +142,24 @@ export function ComboLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>A</dt><dd>{fmt(waysA)}</dd></div>
           <div><dt>C</dt><dd>{fmt(waysC)}</dd></div>
           <div><dt>n</dt><dd>{fmt(n)}</dd></div>
           <div><dt>k</dt><dd>{fmt(k)}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>3!</dt><dd>6</dd></div>
           <div><dt>{t(lang, "Cách", "Way")}</dt><dd>{fmt(seat + 1)} / 6</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Trung vị", "Median")}</dt><dd>{fmt(median)}</dd></div>
           <div><dt>{t(lang, "Trung bình", "Mean")}</dt><dd>{fmt(mean)}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

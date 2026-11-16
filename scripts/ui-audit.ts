@@ -52,7 +52,7 @@ function routes(): { path: string; shapes: Shape[] }[] {
   const out: { path: string; shapes: Shape[] }[] = STATIC.map((path) => ({ path, shapes: [PHONE, DESKTOP] }));
   for (const card of cards) {
     out.push({ path: `/t/${card.id}`, shapes: [PHONE, DESKTOP] });
-    for (const tab of ["lam", "so", "nc"]) out.push({ path: `/t/${card.id}?tab=${tab}`, shapes: [PHONE] });
+    for (const tab of ["lam", "so", "nc", "tn"]) out.push({ path: `/t/${card.id}?tab=${tab}`, shapes: [PHONE] });
   }
   for (const area of sciences) out.push({ path: `/khoa-hoc/${area.id}`, shapes: [PHONE] });
   for (const book of gradeBooks) {

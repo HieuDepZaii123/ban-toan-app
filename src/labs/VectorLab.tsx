@@ -5,6 +5,7 @@ import { det2, solve2, vec3Add, vec3Cross, vec3Dot, vec3Len } from "../lib/math.
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -193,25 +194,25 @@ export function VectorLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>|u|</dt><dd>{showExact(vec3Len(u))}</dd></div>
           <div><dt>u · v</dt><dd>{fmt(vec3Dot(u, v))}</dd></div>
           <div><dt>|u × v|</dt><dd>{showExact(vec3Len(cross))}</dd></div>
           <div><dt>u + v</dt><dd>({fmt(sum[0])}; {fmt(sum[1])}; {fmt(sum[2])})</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>det</dt><dd>{fmt(det)}</dd></div>
           <div><dt>{t(lang, "Diện tích", "Area")}</dt><dd>{fmt(Math.abs(det))}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>x</dt><dd>{solved ? fmt(solved.x) : "—"}</dd></div>
           <div><dt>y</dt><dd>{solved ? fmt(solved.y) : "—"}</dd></div>
           <div className="wide"><dt>{t(lang, "Kết luận", "Conclusion")}</dt><dd>{solved ? t(lang, "Một nghiệm", "One solution") : t(lang, "Không có nghiệm duy nhất", "No unique solution")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

@@ -5,6 +5,7 @@ import { cubic, cubicSecond, cubicSlope, pureCubic, pureCubicSlope, rationalObli
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -142,12 +143,12 @@ export function SurveyLab() {
       <Live text={live} />
       {scene === 0 ? (
         <>
-          <dl className="readout">
+          <Readout>
             <div><dt>y</dt><dd>{fmt(cubic(x))}</dd></div>
             <div><dt>y′</dt><dd>{fmt(slope)}</dd></div>
             <div><dt>y″</dt><dd>{fmt(cubicSecond(x))}</dd></div>
             <div><dt>{t(lang, "Xu hướng", "Trend")}</dt><dd>{trend}</dd></div>
-          </dl>
+          </Readout>
           <div className="chips" role="group" aria-label={t(lang, "Điểm đặc biệt", "Marked points")}>
             {[
               [-1, "x = −1"],
@@ -162,19 +163,19 @@ export function SurveyLab() {
         </>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>x</dt><dd>{fmt(rx)}</dd></div>
           <div><dt>y</dt><dd>{fmt(rationalY(rx))}</dd></div>
           <div><dt>{t(lang, "Đứng", "Vertical")}</dt><dd>x = 1</dd></div>
           <div><dt>{t(lang, "Xiên", "Oblique")}</dt><dd>y = x + 1</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>y</dt><dd>{fmt(pureCubic(px))}</dd></div>
           <div><dt>y′</dt><dd>{fmt(pureSlope)}</dd></div>
           <div className="wide"><dt>{t(lang, "Tại 0", "At 0")}</dt><dd>{t(lang, "Tiếp tuyến ngang, vẫn đồng biến", "Horizontal tangent, still increasing")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? <Slider label="x" min={-2.4} max={2.4} step={0.05} value={x} onChange={(next) => { stop(); patch({ x: next }); }} /> : null}
       {scene === 1 ? <Slider label="x" min={-1.5} max={4} step={0.05} value={rx} onChange={(next) => { stop(); patch({ rx: avoidPole(next) }); }} /> : null}

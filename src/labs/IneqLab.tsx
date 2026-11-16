@@ -5,6 +5,7 @@ import { amGm, cauchyPair, workshopOk, workshopProfit } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -207,27 +208,27 @@ export function IneqLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>a</dt><dd>{fmt(a)}</dd></div>
           <div><dt>b</dt><dd>{fmt(b)}</dd></div>
           <div><dt>{t(lang, "Cộng", "Arithmetic")}</dt><dd>{means ? fmt(means.am) : "—"}</dd></div>
           <div><dt>{t(lang, "Nhân", "Geometric")}</dt><dd>{means ? fmt(means.gm) : "—"}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Vế trái", "Left")}</dt><dd>{fmt(pair.left)}</dd></div>
           <div><dt>{t(lang, "Vế phải", "Right")}</dt><dd>{fmt(pair.right)}</dd></div>
           <div className="wide"><dt>{t(lang, "Dấu", "Sign")}</dt><dd>{pair.equal ? t(lang, "Bằng", "Equal") : "≥"}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>x</dt><dd>{fmt(x)}</dd></div>
           <div><dt>y</dt><dd>{fmt(y)}</dd></div>
           <div><dt>P</dt><dd>{fmt(profit)}</dd></div>
           <div><dt>{t(lang, "Miền", "Region")}</dt><dd>{inside ? t(lang, "Trong", "Inside") : t(lang, "Ngoài", "Outside")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

@@ -5,6 +5,7 @@ import { apex, brakeMotion, brakeTimeFromDistance, flightTime, projectile, secan
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -151,28 +152,28 @@ export function DerivativeLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>h</dt><dd>{fmt(h)}</dd></div>
           <div><dt>{t(lang, "Cát tuyến", "Secant")}</dt><dd>{fmt(slope)}</dd></div>
           <div><dt>{t(lang, "Rút gọn", "Simplified")}</dt><dd>2 + h</dd></div>
           <div><dt>{t(lang, "Tiếp tuyến", "Tangent")}</dt><dd>2</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>t</dt><dd>{fmt(time)} s</dd></div>
           <div><dt>h</dt><dd>{fmt(ball.h)} m</dd></div>
           <div><dt>v</dt><dd>{fmt(ball.v)} m/s</dd></div>
           <div><dt>{t(lang, "Đỉnh", "Top")}</dt><dd>{fmt(top.h)} m · t = {fmt(top.t)} s</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>t</dt><dd>{fmt(motion.t)} s</dd></div>
           <div><dt>v</dt><dd>{fmt(motion.v)} m/s</dd></div>
           <div><dt>s</dt><dd>{fmt(motion.s)} m</dd></div>
           <div><dt>{t(lang, "Khi dừng", "When it stops")}</dt><dd>50 m · 5 s</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? <Slider label="h" min={-1.5} max={1.5} step={0.05} value={h} onChange={(next) => { stop(); patch({ h: next }); }} /> : null}
       {scene === 1 ? (

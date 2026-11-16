@@ -5,6 +5,7 @@ import { coolingTemp, holeY, jumpStudy } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -150,29 +151,29 @@ export function LimitLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div className="wide"><dt>{t(lang, "Đang đứng", "Standing at")}</dt><dd>x = {fmt(1 + h)}</dd></div>
           <div><dt>y</dt><dd>{Math.abs(h) < 0.001 ? "—" : fmt(holeY(1 + h))}</dd></div>
           <div><dt>{t(lang, "Giới hạn", "Limit")}</dt><dd>2</dd></div>
           <div><dt>f(1)</dt><dd>{fmt(assigned)}</dd></div>
           <div><dt>{t(lang, "Liên tục", "Continuous")}</dt><dd>{Math.abs(assigned - 2) < 0.001 ? t(lang, "Có", "Yes") : t(lang, "Không", "No")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Trái", "Left")}</dt><dd>{fmt(left)}</dd></div>
           <div><dt>{t(lang, "Phải", "Right")}</dt><dd>{fmt(right)}</dd></div>
           <div><dt>f(0)</dt><dd>{fmt(at)}</dd></div>
           <div><dt>{t(lang, "Giới hạn", "Limit")}</dt><dd>{study.exists ? fmt(study.limit ?? 0) : t(lang, "Không có", "None")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>t</dt><dd>{fmt(time)} {t(lang, "phút", "min")}</dd></div>
           <div><dt>T</dt><dd>{fmt(coolingTemp(time))}°C</dd></div>
           <div><dt>T(0)</dt><dd>85°C</dd></div>
           <div><dt>{t(lang, "Tiến về", "Approaches")}</dt><dd>25°C</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

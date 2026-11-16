@@ -5,6 +5,7 @@ import { baseOk, compoundAmount, decayMass, expY, logY, simpleAmount, yearsToDou
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -149,27 +150,27 @@ export function ExpLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>a</dt><dd>{fmt(base)}</dd></div>
           <div><dt>x</dt><dd>{fmt(x)}</dd></div>
           <div><dt>aˣ</dt><dd>{allowed ? fmt(expY(base, x)) : "—"}</dd></div>
           <div><dt>log</dt><dd>{allowed && expY(base, x) > 0 ? fmt(x) : "—"}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Kép", "Compound")}</dt><dd>{fmt(compound)} {t(lang, "triệu", "triệu")}</dd></div>
           <div><dt>{t(lang, "Đơn", "Simple")}</dt><dd>{fmt(simple)} {t(lang, "triệu", "triệu")}</dd></div>
           <div className="wide"><dt>{t(lang, "Gấp đôi", "Doubles in")}</dt><dd>{fmt(doubling)} {t(lang, "năm", "years")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>t</dt><dd>{fmt(massTime)} {t(lang, "năm", "years")}</dd></div>
           <div><dt>M</dt><dd>{fmt(mass)} g</dd></div>
           <div><dt>log₁₀ M</dt><dd>{fmt(Math.log10(mass))}</dd></div>
           <div><dt>t = 20</dt><dd>20 g</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

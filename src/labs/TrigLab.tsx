@@ -5,6 +5,7 @@ import { cosDeg, quadrant, showCos, showSin, showSinCos, showTan, sinDeg, treeHe
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -138,21 +139,21 @@ export function TrigLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Góc", "Angle")}</dt><dd>{fmt(angle)}°</dd></div>
           <div><dt>{t(lang, "Vị trí", "Place")}</dt><dd>{quadrant(angle, lang)}</dd></div>
           <div><dt>sin</dt><dd>{showSin(angle)}</dd></div>
           <div><dt>cos</dt><dd>{showCos(angle)}</dd></div>
           <div><dt>tan</dt><dd>{showTan(angle)}</dd></div>
           <div><dt>sin + cos</dt><dd>{showSinCos(angle)}</dd></div>
-        </dl>
+        </Readout>
       ) : (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Khoảng cách", "Distance")}</dt><dd>{fmt(distance)} m</dd></div>
           <div><dt>{t(lang, "Góc ngẩng", "Angle")}</dt><dd>{fmt(tilt)}°</dd></div>
           <div><dt>{t(lang, "Trên mắt", "Above eye")}</dt><dd>{fmt(above)} m</dd></div>
           <div><dt>{t(lang, "Cả cây", "Whole tree")}</dt><dd>{fmt(total)} m</dd></div>
-        </dl>
+        </Readout>
       )}
       {scene === 0 ? (
         <Slider label={t(lang, "Góc", "Angle")} min={0} max={360} step={1} suffix="°" value={angle} onChange={(next) => { stop(); patch({ angle: next }); }} />

@@ -1,0 +1,84 @@
+/**
+ * Thử thách của các lab (src/content/challenges.ts): nghiệm mẫu phải đạt, đề chưa giải thì không đạt,
+ * lời giải thích hai ngôn ngữ đúng văn phong toán.
+ * Chạy: tsx scripts/challenges.test.ts
+ */
+import { labSpecs, makeSay, type Dense, type Challenge, type LabSpec } from "../src/content/challenges.ts";
+import { mathIssues, MATH } from "./mathStyle.ts";
+
+const fails: string[] = [];
+const fail = (where: string, what: string): void => {
+  fails.push(`${where}: ${what}`);
+};
+const VI = /[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i;
+const TOPICS = ["quadratic", "ineq", "exp", "sequence", "trig", "limit", "derivative", "survey", "integral", "probability", "vector", "analytic", "triangle", "combo"];
+
+function style(where: string, text: string, english: boolean, strict = false): void {
+  if (!text.trim()) return fail(where, "trống");
+  if (strict && /^\$/.test(text.trim())) fail(where, `câu mở đầu bằng ký hiệu: ${text}`);
+  const rest = text.replace(MATH, "");
+  if (english ? VI.test(rest) : strict && /[A-Za-z]{3}/.test(rest) && !VI.test(rest)) fail(where, `sai ngôn ngữ: ${text}`);
+  if (english && /\{,\}/.test(text)) fail(where, `bản Anh còn dấu phẩy thập phân: ${text}`);
+  for (const m of text.match(MATH) ?? []) {
+    for (const issue of mathIssues(m.slice(1, -1), "upper", false, english)) fail(where, `${issue.rule}: ${m}`);
+  }
+}
+
+function withinRange(where: string, spec: LabSpec, values: Record<string, number>): void {
+  for (const [key, value] of Object.entries(values)) {
+    const range = spec.range[key];
+    if (!(key in spec.init)) fail(where, `tham số lạ ${key}`);
+    else if (range && (value < range[0] - 1e-9 || value > range[1] + 1e-9)) fail(where, `${key}=${value} ngoài khoảng`);
+  }
+}
+
+let total = 0;
+for (const id of TOPICS) {
+  const spec = labSpecs[id];
+  if (!spec) {
+    fail(id, "chưa có thử thách");
+    continue;
+  }
+  if (spec.challenges.length < 3) fail(id, `chỉ có ${spec.challenges.length} thử thách, cần ít nhất 3`);
+  const ids = new Set<string>();
+  spec.challenges.forEach((c: Challenge) => {
+    total += 1;
+    const at = `${id}/${c.id}`;
+    if (ids.has(c.id)) fail(at, "trùng mã");
+    ids.add(c.id);
+    style(`${at} đề vi`, c.vi, false, true);
+    style(`${at} đề en`, c.en, true, true);
+    withinRange(`${at} set`, spec, c.set);
+    withinRange(`${at} sol`, spec, c.sol);
+    const start = { ...spec.init, ...c.set };
+    const answer = { ...spec.init, ...c.sol };
+    for (const en of [false, true]) {
+      const say = makeSay(en);
+      const good = c.check(answer as Dense, say);
+      const bad = c.check(start as Dense, say);
+      const tag = en ? "en" : "vi";
+      if (!good.ok) fail(at, `nghiệm mẫu không đạt (${tag}): ${good.why}`);
+      if (bad.ok) fail(at, `đề chưa giải đã đạt (${tag})`);
+      style(`${at} đúng ${tag}`, good.why, en);
+      style(`${at} sai ${tag}`, bad.why, en);
+    }
+    if (c.sol.scene !== c.set.scene) fail(at, "nghiệm và đề khác cảnh");
+    if (c.guess) {
+      style(`${at} đoán vi`, c.guess.vi, false);
+      style(`${at} đoán en`, c.guess.en, true);
+      if (c.guess.options.length < 2 || c.guess.answer < 0 || c.guess.answer >= c.guess.options.length) fail(at, "đáp án đoán sai chỉ số");
+      style(`${at} giải thích đoán vi`, c.guess.why.vi, false);
+      style(`${at} giải thích đoán en`, c.guess.why.en, true);
+      for (const o of c.guess.options) {
+        style(`${at} lựa chọn vi`, o.vi, false);
+        style(`${at} lựa chọn en`, o.en, true);
+      }
+    }
+  });
+}
+
+if (fails.length) {
+  console.error(`challenges: ${fails.length} lỗi\n${fails.map((line) => `  - ${line}`).join("\n")}`);
+  process.exit(1);
+}
+console.log(`challenges ok: ${total} thử thách / ${TOPICS.length} lab`);

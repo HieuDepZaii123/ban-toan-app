@@ -5,6 +5,7 @@ import { archIntegral, archRiemann, archVolumeCoeff, archY, betweenIntegral } fr
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -133,28 +134,28 @@ export function IntegralLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Cận", "End")}</dt><dd>{fmt(upper)}</dd></div>
           <div><dt>{t(lang, "Tích phân", "Integral")}</dt><dd>{areaText}</dd></div>
           <div><dt>{t(lang, "Dải", "Strips")}</dt><dd>{fmt(strips)}</dd></div>
           <div><dt>{t(lang, "Xấp xỉ", "Approximation")}</dt><dd>{fmt(approx)}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Cận", "End")}</dt><dd>{fmt(gap)}</dd></div>
           <div><dt>∫x</dt><dd>{fmt((gap * gap) / 2)}</dd></div>
           <div><dt>∫x²</dt><dd>{fmt((gap ** 3) / 3)}</dd></div>
           <div><dt>{t(lang, "Hiệu", "Difference")}</dt><dd>{bandText}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>x</dt><dd>{fmt(span)}</dd></div>
           <div><dt>y</dt><dd>{fmt(archY(span))}</dd></div>
           <div><dt>∫ y²</dt><dd>{fmt(coeff)}</dd></div>
           <div><dt>V</dt><dd>{volText}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

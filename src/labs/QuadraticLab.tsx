@@ -5,6 +5,7 @@ import { fence, opening, quadStudy, rootsText } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -139,21 +140,21 @@ export function QuadraticLab() {
       </div>
       <Live text={live} />
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div className="wide"><dt>{t(lang, "Công thức", "Formula")}</dt><dd>S = x(40 − 2x)</dd></div>
           <div><dt>x</dt><dd>{fmt(values.fence ?? 10)} m</dd></div>
           <div><dt>{t(lang, "Song song tường", "Parallel side")}</dt><dd>{fmt(pen.length)} m</dd></div>
           <div><dt>S</dt><dd>{fmt(pen.area)} m²</dd></div>
           <div><dt>S′</dt><dd>{fmt(pen.slope)}{Math.abs(pen.slope) < 0.05 ? t(lang, " · lớn nhất", " · maximum") : ""}</dd></div>
-        </dl>
+        </Readout>
       ) : (
-        <dl className="readout">
+        <Readout>
           <div className="wide"><dt>{t(lang, "Đang vẽ", "Drawing")}</dt><dd>{formula}</dd></div>
           <div><dt>{t(lang, "Đỉnh", "Vertex")}</dt><dd>{study.vertex ? `(${fmt(study.vertex.x)}; ${fmt(study.vertex.y)})` : "—"}</dd></div>
           <div><dt>Δ</dt><dd>{study.linear ? "—" : fmt(study.delta)}</dd></div>
           <div className="wide"><dt>Ox</dt><dd>{rootsText(scene === 1 ? values.va ?? 1 : values.a ?? 1, scene === 1 ? -2 * (values.va ?? 1) * (values.vh ?? 1) : values.b ?? -2, scene === 1 ? (values.va ?? 1) * (values.vh ?? 1) ** 2 + (values.vk ?? -4) : values.c ?? -3, lang)}</dd></div>
           <div className="wide"><dt>{t(lang, "Bề lõm", "Opening")}</dt><dd>{opening(scene === 1 ? values.va ?? 1 : values.a ?? 1, lang)}</dd></div>
-        </dl>
+        </Readout>
       )}
       {scene === 0 ? (
         <>

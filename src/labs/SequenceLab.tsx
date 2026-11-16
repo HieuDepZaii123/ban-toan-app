@@ -5,6 +5,7 @@ import { arithSum, arithTerm, bouncePath, geomInfinite, geomPartial, geomTerm, s
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -155,25 +156,25 @@ export function SequenceLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>uₙ</dt><dd>{fmt(last)}</dd></div>
           <div><dt>Sₙ</dt><dd>{fmt(total)}</dd></div>
           <div><dt>{t(lang, "Đếm thừa", "One step over")}</dt><dd>{fmt(u1 + n * d)}</dd></div>
           <div><dt>n</dt><dd>{fmt(n)}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>uₙ</dt><dd>{fmt(gLast)}</dd></div>
           <div><dt>Sₙ</dt><dd>{fmt(gSum)}</dd></div>
           <div className="wide"><dt>{t(lang, "Tổng vô hạn", "Infinite sum")}</dt><dd>{infinite === null ? t(lang, "Không có", "None") : fmt(infinite)}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Quãng đường", "Path")}</dt><dd>{fmt(path ?? 0)} m</dd></div>
           <div><dt>{t(lang, "Đã gửi", "Deposited")}</dt><dd>{fmt(saved)} {t(lang, "triệu", "triệu")}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <>

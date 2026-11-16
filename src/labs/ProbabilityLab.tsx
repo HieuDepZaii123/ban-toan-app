@@ -5,6 +5,7 @@ import { bayes, binom, binomAtLeastOne, diceCondition } from "../lib/math.ts";
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { Slider } from "../ui/Slider.tsx";
@@ -156,27 +157,27 @@ export function ProbabilityLab() {
       </div>
       <Live text={live} />
       {scene === 0 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Mặt", "Face")}</dt><dd>{fmt(face)}</dd></div>
           <div><dt>{t(lang, "Còn lại", "Remain")}</dt><dd>{dice.remain}</dd></div>
           <div><dt>{t(lang, "Cả hai", "Both")}</dt><dd>{dice.both}</dd></div>
           <div><dt>P</dt><dd>{dice.both}/{dice.remain}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 1 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>{t(lang, "Dương thật", "True positive")}</dt><dd>{fmt(test.tp)}</dd></div>
           <div><dt>{t(lang, "Dương giả", "False positive")}</dt><dd>{fmt(test.fp)}</dd></div>
           <div className="wide"><dt>{t(lang, "Khi đã dương", "After a positive")}</dt><dd>{posterior}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 2 ? (
-        <dl className="readout">
+        <Readout>
           <div><dt>n</dt><dd>{fmt(n)}</dd></div>
           <div><dt>k</dt><dd>{fmt(k)}</dd></div>
           <div><dt>P(X = k)</dt><dd>{pmf}</dd></div>
           <div><dt>P(X ≥ 1)</dt><dd>{leastText}</dd></div>
-        </dl>
+        </Readout>
       ) : null}
       {scene === 0 ? (
         <Slider label={t(lang, "Mặt đã biết", "Known face")} min={1} max={6} step={1} value={face} onChange={(next) => { stop(); patch({ face: next }); }} />
