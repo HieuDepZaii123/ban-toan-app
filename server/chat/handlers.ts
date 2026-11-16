@@ -3,7 +3,7 @@ import { tutorTopics } from "./topics.ts";
 import { createHash } from "node:crypto";
 import { normalizeMath } from "./format.ts";
 import { verifiedNote } from "./facts.ts";
-import type { Quota } from "./limit.ts";
+import type { Limit, Quota } from "./limit.ts";
 import type { ChatImage } from "./model.ts";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -112,7 +112,14 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
     ? `lic:${createHash("sha256").update(license).digest("hex").slice(0, 32)}`
     : device ? `dev:${device}` : `ip:${ip}`;
   const networkDaily = env.networkDaily ?? env.freeDaily * 20;
-  if ((await env.quota.used(`win:${who}`, env.now(), env.windowMs)) >= env.windowLimit) {
+  const limits: Limit[] = [
+    { key: `win:${who}`, windowMs: env.windowMs, max: env.windowLimit },
+    { key: `day:${who}`, windowMs: DAY_MS, max: dailyLimit },
+  ];
+  // Device ids are client-made, so free use also has a looser cap per network.
+  if (!premium && who !== `ip:${ip}`) limits.push({ key: `net:${ip}`, windowMs: DAY_MS, max: networkDaily });
+  const claim = await env.quota.claim(limits, env.now());
+  if (!claim.ok && claim.full === 0) {
     return json(429, {
       error: "rate",
       message: "Bạn hỏi hơi nhanh. Đợi một lát rồi thử lại.",
@@ -121,10 +128,7 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
       remaining: 0,
     });
   }
-  const usedToday = await env.quota.used(`day:${who}`, env.now(), DAY_MS);
-  // Device ids are client-made, so free use also has a looser cap per network.
-  const networkFull = !premium && who !== `ip:${ip}` && (await env.quota.used(`net:${ip}`, env.now(), DAY_MS)) >= networkDaily;
-  if (usedToday >= dailyLimit || networkFull) {
+  if (!claim.ok) {
     return json(429, {
       error: "quota",
       message: premium
@@ -135,10 +139,7 @@ export async function handleChat(request: Request, env: ChatEnv): Promise<Respon
       remaining: 0,
     });
   }
-  await env.quota.add(`win:${who}`, env.now());
-  await env.quota.add(`day:${who}`, env.now());
-  if (!premium && who !== `ip:${ip}`) await env.quota.add(`net:${ip}`, env.now());
-  const remaining = dailyLimit - usedToday - 1;
+  const remaining = dailyLimit - (claim.used[1] ?? 0) - 1;
   try {
     const sheet = topicId ? `\nHọc sinh đang mở tờ /t/${topicId}.` : "";
     // Parent mode on this device: no full worked solution until the student has shown their own attempt.

@@ -104,6 +104,18 @@ assert.equal(await quota.used("day:1.2.3.4", NOW + 86_400_000 + 5, 86_400_000), 
 await quota.add("day:1.2.3.4", NOW + QUOTA_KEEP_MS + 10);
 assert.equal(num((await client.query<{ n: unknown }>("SELECT COUNT(*) AS n FROM chat_hits")).rows[0]?.n), 1, "lượt quá cũ bị dọn");
 
+// claim: kiểm và ghi trong một bước, nên nhiều request song song không vượt hạn mức.
+const T = NOW + QUOTA_KEEP_MS + 100;
+const day = { key: "day:burst", windowMs: 86_400_000, max: 3 };
+const claims = await Promise.all(Array.from({ length: 10 }, (_, i) => (i % 2 ? otherInstance : quota).claim([day], T)));
+assert.equal(claims.filter((item) => item.ok).length, 3, "10 request song song từ hai instance: đúng 3 lượt được nhận");
+assert.equal(await quota.used("day:burst", T, 86_400_000), 3, "chỉ ghi các lượt được nhận");
+const refused = await quota.claim([{ key: "win:other", windowMs: 60_000, max: 5 }, day], T);
+assert.ok(!refused.ok && refused.full === 1 && refused.used[1] === 3, "báo đúng hạn mức đã đầy");
+assert.equal(await quota.used("win:other", T, 60_000), 0, "bị từ chối thì không ghi khóa nào");
+await quota.release(["day:burst"], T);
+assert.equal(await quota.used("day:burst", T, 86_400_000), 2, "release trả lại đúng một lượt");
+
 /* ---------- chọn kho theo cấu hình ---------- */
 const dir = mkdtempSync(join(tmpdir(), "ban-toan-db-"));
 assert.equal(storeFor({ databaseUrl: "", dbPath: join(dir, "a.sqlite") }).kind, "sqlite");

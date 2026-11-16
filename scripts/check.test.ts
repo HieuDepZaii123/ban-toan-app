@@ -125,6 +125,19 @@ const work = { problem: "Giải 2x + 6 = 0", steps: ["2x = 6", "x = 3"], device:
   assert(good.status === 200 && good.json.remaining === 2, "the next marking uses the first turn");
 }
 {
+  // Markings are counted when they start, so a burst sent while the model is slow stays within the week's 3.
+  let marked = 0;
+  const target = env({
+    complete: async () => {
+      marked += 1;
+      await new Promise((done) => setTimeout(done, 5));
+      return '{"verdict":"ok","step":null,"why":"Đúng.","hint":""}';
+    },
+  });
+  const codes = (await Promise.all(Array.from({ length: 10 }, () => post(target, { ...work, device: "device-burst-0001" })))).map((res) => res.status);
+  assert(marked === 3 && codes.filter((code) => code === 200).length === 3, `parallel markings stay within the cap: ${marked} model calls, ${codes.join(",")}`);
+}
+{
   const demo = await post(env({ mode: "demo" }), { problem: "Tính", steps: ["2 + 3 = 6"], device: "device-cccc-3333" });
   assert(demo.status === 200 && demo.json.verdict === "wrong" && demo.json.step === 1 && demo.json.mode === "demo", "demo mode marks arithmetic offline");
   const empty = await post(env(), { problem: "Tính", steps: [] });
