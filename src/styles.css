@@ -793,6 +793,24 @@ html[data-lamp="on"] body::before {
 .exam-review summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; }
 .exam-review .exam-q.is-right h4 { color: var(--ok); }
 .exam-review .exam-q.is-wrong h4 { color: var(--clay); }
+.knowledge { margin: 20px 0; display: grid; gap: 10px; }
+.knowledge h2, .knowledge h3 { margin: 0; }
+.kn-general { display: grid; gap: 6px; }
+.kn-general p, .kn-item p { margin: 0; }
+.kn-list { margin: 0; padding-left: 1.25rem; display: grid; gap: 4px; }
+.kn-section { border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); padding: 0 14px; }
+.kn-section > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; }
+.kn-section[open] { padding-bottom: 10px; }
+.kn-item { padding: 8px 0 8px 10px; border-left: 3px solid var(--line); margin: 6px 0; overflow-wrap: anywhere; }
+.kn-item .katex-display, .kn-item .mathline { max-width: 100%; }
+.kn-tag { display: inline-block; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--accent); margin-right: 4px; }
+.kn-dinh-nghia, .kn-dinh-ly { border-left-color: var(--accent); }
+.kn-cong-thuc { border-left-color: var(--accent); background: var(--accent-soft); }
+.kn-luu-y { border-left-color: var(--clay); }
+.kn-luu-y .kn-tag { color: var(--clay); }
+.kn-vi-du { border-left-color: var(--ok); }
+.kn-vi-du .kn-tag { color: var(--ok); }
+.kn-recap, .kn-related { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: var(--sheet); display: grid; gap: 6px; }
 .pack-list { list-style: none; padding: 0; margin: 0 0 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
 .pack-list a { display: grid; gap: 2px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); color: inherit; text-decoration: none; min-height: 44px; }
 .pack-list a:hover, .pack-list a:focus-visible { border-color: var(--accent); }

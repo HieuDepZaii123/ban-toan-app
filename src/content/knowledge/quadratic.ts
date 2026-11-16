@@ -1,0 +1,125 @@
+import type { TopicKnowledge } from "./types.ts";
+
+const R = String.raw;
+
+export const quadraticKnowledge: TopicKnowledge = {
+  id: "quadratic",
+  tongQuat: {
+    la: R`Hàm số bậc hai là hàm có dạng $y=ax^2+bx+c$ với $a\neq 0$. Đồ thị của nó là một parabol: đường cong đối xứng qua một đường thẳng đứng, có đúng một điểm cao nhất hoặc thấp nhất gọi là đỉnh.`,
+    dungDe: R`Mô tả mọi đại lượng tăng rồi giảm hoặc giảm rồi tăng: quỹ đạo của vật ném, diện tích lớn nhất khi chu vi cố định, lợi nhuận theo giá bán. Trong bài thi, chuyên đề cho ba loại bài: tìm nghiệm và xét dấu, tìm giá trị lớn nhất hoặc nhỏ nhất, và bài có tham số.`,
+    lienHe: R`Phương trình bậc hai là trường hợp $y=0$ của hàm này, bất phương trình bậc hai là bài xét dấu của hàm. Ở lớp 12, đạo hàm cho một cách tìm đỉnh khác là giải $y'=0$. Bất đẳng thức dùng chính phép biến đổi thành bình phương ở đây.`,
+  },
+  canBiet: [
+    R`Khai triển và hằng đẳng thức $(a\pm b)^2$.`,
+    R`Giải phương trình bậc nhất và lấy căn bậc hai.`,
+    R`Đọc điểm và đường cong trên hệ trục tọa độ.`,
+  ],
+  sections: [
+    {
+      title: "Định nghĩa và hình dạng đồ thị",
+      items: [
+        { kind: "dinh-nghia", title: "Hàm số bậc hai", text: R`Hàm số cho bởi $y=ax^2+bx+c$ với $a,b,c$ là các số thực và $a\neq 0$. Tập xác định là $\mathbb{R}$. Nếu $a=0$ thì chỉ còn $y=bx+c$, là hàm bậc nhất có đồ thị là đường thẳng.` },
+        { kind: "tinh-chat", title: "Hướng của parabol", text: R`Khi $a>0$, parabol mở lên và đỉnh là điểm thấp nhất. Khi $a<0$, parabol mở xuống và đỉnh là điểm cao nhất. Giá trị $|a|$ càng lớn thì parabol càng hẹp.` },
+        { kind: "tinh-chat", title: "Trục đối xứng", text: R`Đồ thị đối xứng qua đường thẳng đứng $x=-\frac{b}{2a}$. Hai điểm cùng độ cao nằm cách đều trục này, nên nếu biết một điểm thì suy ra được điểm đối xứng với nó.` },
+        { kind: "tinh-chat", title: "Giao với trục tung", text: R`Đồ thị cắt trục tung tại điểm $(0;c)$ vì $y(0)=c$. Hệ số $c$ vì vậy cho biết ngay parabol bắt đầu từ đâu.` },
+        { kind: "vi-du", text: R`Với $y=x^2-4x+3$ có $a=1>0$ nên parabol mở lên, trục đối xứng là $x=2$ và đồ thị cắt trục tung tại $(0;3)$. Điểm $(1;0)$ và $(3;0)$ đối xứng nhau qua trục $x=2$.` },
+      ],
+    },
+    {
+      title: "Đỉnh, giá trị lớn nhất và nhỏ nhất",
+      items: [
+        { kind: "cong-thuc", title: "Tọa độ đỉnh", text: R`Đỉnh là $I\left(-\frac{b}{2a};\,-\frac{\Delta}{4a}\right)$ với $\Delta=b^2-4ac$. Hoành độ đỉnh nằm trên trục đối xứng, tung độ là giá trị của hàm tại đó.` },
+        { kind: "cach-lam", title: "Vì sao có công thức đỉnh", text: R`Hoàn thiện bình phương: $ax^2+bx+c=a\left(x+\frac{b}{2a}\right)^2-\frac{\Delta}{4a}$. Bình phương không âm và bằng $0$ đúng khi $x=-\frac{b}{2a}$, nên giá trị cực trị đạt tại điểm đó và bằng $-\frac{\Delta}{4a}$.` },
+        { kind: "dinh-nghia", title: "Dạng đỉnh", text: R`Hàm $y=a(x-h)^2+k$ có đỉnh $(h;k)$ ngay trên mặt chữ. Dạng này cho thấy ngay phép tịnh tiến: đồ thị $y=ax^2$ dịch sang phải $h$ đơn vị và lên $k$ đơn vị.` },
+        { kind: "dinh-ly", title: "Giá trị lớn nhất và nhỏ nhất trên cả trục số", text: R`Nếu $a>0$ thì hàm có giá trị nhỏ nhất $-\frac{\Delta}{4a}$ tại $x=-\frac{b}{2a}$ và không có giá trị lớn nhất. Nếu $a<0$ thì hàm có giá trị lớn nhất $-\frac{\Delta}{4a}$ và không có giá trị nhỏ nhất.` },
+        { kind: "cach-lam", title: "Trên một đoạn cho trước", text: R`Tính giá trị hàm tại hai đầu mút, rồi tại đỉnh nếu hoành độ đỉnh nằm trong đoạn. Số lớn nhất trong các giá trị đó là giá trị lớn nhất, số nhỏ nhất là giá trị nhỏ nhất. Đỉnh nằm ngoài đoạn thì hàm đơn điệu trên đoạn và cực trị nằm ở đầu mút.` },
+        { kind: "vi-du", text: R`Với $y=-2x^2+8x-3$, hoành độ đỉnh là $-\frac{8}{2\cdot(-2)}=2$ và $y(2)=5$, nên giá trị lớn nhất trên $\mathbb{R}$ là $5$. Trên đoạn $[3;5]$ đỉnh nằm ngoài, ta có $y(3)=3$ và $y(5)=-13$, nên giá trị lớn nhất là $3$.` },
+      ],
+    },
+    {
+      title: "Phương trình bậc hai và biệt thức",
+      items: [
+        { kind: "cong-thuc", title: "Công thức nghiệm", text: R`Phương trình $ax^2+bx+c=0$ với $\Delta=b^2-4ac\ge 0$ có nghiệm $x=\frac{-b\pm\sqrt{\Delta}}{2a}$. Công thức này suy ra từ dạng đỉnh bằng cách đặt bình phương bằng $\frac{\Delta}{4a^2}$.` },
+        { kind: "dinh-ly", title: "Số nghiệm theo biệt thức", text: R`Nếu $\Delta>0$ có hai nghiệm phân biệt, nếu $\Delta=0$ có một nghiệm kép $x=-\frac{b}{2a}$, nếu $\Delta<0$ vô nghiệm thực. Về hình học, đó là số giao điểm của parabol với trục hoành: hai, một (tiếp xúc), hoặc không có.` },
+        { kind: "cong-thuc", title: "Biệt thức thu gọn", text: R`Khi $b=2b'$ đặt $\Delta'=b'^2-ac$ và nghiệm là $x=\frac{-b'\pm\sqrt{\Delta'}}{a}$. Cách này tránh số lớn khi hệ số $b$ chẵn, và $\Delta=4\Delta'$ nên dấu của hai biệt thức luôn giống nhau.` },
+        { kind: "dinh-ly", title: "Hệ thức Viète", text: R`Nếu phương trình có hai nghiệm $x_1,x_2$ (kể cả nghiệm kép) thì $x_1+x_2=-\frac{b}{a}$ và $x_1x_2=\frac{c}{a}$. Ngược lại, hai số có tổng $S$ và tích $P$ là nghiệm của $X^2-SX+P=0$ khi $S^2-4P\ge 0$.` },
+        { kind: "tinh-chat", title: "Nhẩm nghiệm", text: R`Nếu $a+b+c=0$ thì $x=1$ là một nghiệm và nghiệm còn lại là $\frac{c}{a}$. Nếu $a-b+c=0$ thì $x=-1$ là một nghiệm và nghiệm còn lại là $-\frac{c}{a}$.` },
+        { kind: "cach-lam", title: "Biểu thức đối xứng của hai nghiệm", text: R`Đặt $S=x_1+x_2$, $P=x_1x_2$ rồi quy mọi biểu thức về $S$ và $P$: $x_1^2+x_2^2=S^2-2P$, $x_1^3+x_2^3=S^3-3SP$, $|x_1-x_2|=\frac{\sqrt{\Delta}}{|a|}$. Không cần giải ra nghiệm.` },
+        { kind: "luu-y", text: R`Dùng Viète mà quên điều kiện $\Delta\ge 0$ là lỗi hay gặp nhất ở bài có tham số. Tìm được giá trị của tham số xong, phải thay lại để kiểm phương trình có nghiệm.` },
+        { kind: "vi-du", text: R`Với $x^2-5x+6=0$ có $\Delta=1$ và nghiệm $x=2$, $x=3$; đúng với $S=5$ và $P=6$. Với $2x^2+3x-5=0$ có $a+b+c=0$ nên $x=1$, nghiệm kia là $\frac{-5}{2}$.` },
+      ],
+    },
+    {
+      title: "Dấu của tam thức bậc hai",
+      items: [
+        { kind: "dinh-ly", title: "Định lí về dấu", text: R`Xét $f(x)=ax^2+bx+c$. Nếu $\Delta<0$ thì $f(x)$ cùng dấu với $a$ với mọi $x$. Nếu $\Delta=0$ thì $f(x)$ cùng dấu với $a$ trừ tại nghiệm kép, nơi bằng $0$. Nếu $\Delta>0$ thì $f(x)$ cùng dấu với $a$ khi $x$ nằm ngoài hai nghiệm và trái dấu với $a$ khi $x$ nằm giữa hai nghiệm.` },
+        { kind: "luu-y", title: "Trong trái, ngoài cùng", text: R`Cách nhớ: giữa hai nghiệm thì trái dấu với $a$, ngoài hai nghiệm thì cùng dấu với $a$. Vẽ parabol phác ra giấy sẽ thấy ngay vì dấu của $f$ là dấu của đồ thị so với trục hoành.` },
+        { kind: "cach-lam", title: "Giải bất phương trình bậc hai", text: R`Tìm nghiệm của vế trái, đặt hai nghiệm lên trục số, xét dấu theo định lí trên rồi chọn khoảng thỏa dấu yêu cầu. Chú ý bất phương trình có dấu bằng thì lấy cả hai nghiệm.` },
+        { kind: "tinh-chat", title: "Luôn dương, luôn không âm", text: R`Bất phương trình $ax^2+bx+c>0$ đúng với mọi $x$ khi và chỉ khi $a>0$ và $\Delta<0$. Bất phương trình $ax^2+bx+c\ge 0$ đúng với mọi $x$ khi và chỉ khi $a>0$ và $\Delta\le 0$. Với chiều ngược lại, đổi dấu của $a$.` },
+        { kind: "luu-y", text: R`Khi hệ số $a$ chứa tham số, hãy xét riêng trường hợp $a=0$ trước, vì lúc đó biểu thức là bậc nhất và định lí về dấu không áp dụng.` },
+        { kind: "vi-du", text: R`Bất phương trình $x^2-5x+6<0$ có hai nghiệm $2$ và $3$, hệ số $a=1>0$, nên đúng khi $2<x<3$. Còn $x^2+x+1>0$ đúng với mọi $x$ vì $\Delta=-3<0$ và $a=1>0$.` },
+      ],
+    },
+    {
+      title: "Parabol và đường thẳng, so sánh nghiệm với một số",
+      items: [
+        { kind: "cach-lam", title: "Giao điểm với đường thẳng", text: R`Cho parabol $y=f(x)$ và đường thẳng $y=px+q$, giải phương trình hoành độ giao điểm $f(x)=px+q$. Số nghiệm của nó là số giao điểm. Nghiệm kép nghĩa là đường thẳng tiếp xúc với parabol.` },
+        { kind: "dinh-ly", title: "Hai nghiệm ở hai phía của một số", text: R`Phương trình $f(x)=0$ có hai nghiệm phân biệt $x_1<\alpha<x_2$ khi và chỉ khi $a\cdot f(\alpha)<0$. Điều kiện này gọn vì tự chứa cả $\Delta>0$, không cần kiểm riêng.` },
+        { kind: "cach-lam", title: "Hai nghiệm cùng phía của một số", text: R`Để cả hai nghiệm cùng lớn hơn $\alpha$, cần $\Delta\ge 0$, $a\cdot f(\alpha)>0$ và $\frac{S}{2}>\alpha$. Đổi chiều dấu cuối để được hai nghiệm cùng nhỏ hơn $\alpha$.` },
+        { kind: "luu-y", text: R`Hai nghiệm cùng dương nghĩa là $\Delta\ge 0$, $P>0$ và $S>0$; hai nghiệm trái dấu chỉ cần $P<0$. Đừng dùng điều kiện $P>0$ riêng lẻ, vì nó cho cả trường hợp hai nghiệm cùng âm.` },
+        { kind: "vi-du", text: R`Parabol $y=x^2$ và đường thẳng $y=2x+m$ cho phương trình $x^2-2x-m=0$ có $\Delta'=1+m$. Có hai giao điểm khi $m>-1$, tiếp xúc khi $m=-1$ tại $x=1$, và không giao khi $m<-1$.` },
+      ],
+    },
+    {
+      title: "Ứng dụng và những lỗi hay gặp",
+      items: [
+        { kind: "cach-lam", title: "Bài tối ưu", text: R`Gọi đại lượng cần tối ưu là $y$, chọn biến $x$ sao cho $y$ là một hàm bậc hai của $x$, tìm đỉnh rồi trả lời trong miền hợp lệ của $x$. Đừng quên đổi kết quả về đơn vị của đề.` },
+        { kind: "vi-du", text: R`Có $40$ m lưới rào ba cạnh một chuồng tựa vào tường, cạnh vuông góc dài $x$. Diện tích $S=x(40-2x)=-2x^2+40x$ có đỉnh tại $x=10$, và $S(10)=200$ m$^2$. Miền hợp lệ là $0<x<20$, nên đỉnh thuộc miền.` },
+        { kind: "vi-du", text: R`Một vật ném lên có độ cao $h=20t-5t^2$ mét sau $t$ giây. Đỉnh ở $t=2$ và độ cao lớn nhất là $h(2)=20$ mét, rồi vật rơi xuống đất khi $h=0$, tức $t=4$ giây.` },
+        { kind: "luu-y", text: R`Đỉnh chỉ có nghĩa với bài toán khi hoành độ của nó nằm trong miền của biến. Nếu miền bị giới hạn, so sánh với đầu mút như mục giá trị lớn nhất trên một đoạn.` },
+        { kind: "luu-y", text: R`Nhầm hay gặp: lấy $-\frac{\Delta}{4a}$ làm hoành độ đỉnh, hoặc quên dấu trừ trong $-\frac{b}{2a}$. Hoành độ đỉnh chỉ phụ thuộc $a$ và $b$; $\Delta$ chỉ xuất hiện ở tung độ.` },
+        { kind: "luu-y", text: R`Biệt thức âm không có nghĩa là hàm số không xác định, mà chỉ là đồ thị không cắt trục hoành. Hàm vẫn nhận mọi giá trị $x$ và vẫn có đỉnh.` },
+      ],
+    },
+  ],
+  canNho: [
+    R`Hàm bậc hai có $a\neq 0$; $a>0$ thì parabol mở lên, $a<0$ thì mở xuống.`,
+    R`Trục đối xứng $x=-\frac{b}{2a}$, đỉnh $\left(-\frac{b}{2a};-\frac{\Delta}{4a}\right)$ với $\Delta=b^2-4ac$.`,
+    R`Số nghiệm theo $\Delta$: dương hai nghiệm, bằng $0$ nghiệm kép, âm vô nghiệm.`,
+    R`Viète: $x_1+x_2=-\frac{b}{a}$ và $x_1x_2=\frac{c}{a}$, chỉ dùng khi $\Delta\ge 0$.`,
+    R`Dấu của tam thức: giữa hai nghiệm trái dấu $a$, ngoài hai nghiệm cùng dấu $a$.`,
+    R`Luôn dương với mọi $x$: $a>0$ và $\Delta<0$.`,
+    R`Giá trị lớn nhất hoặc nhỏ nhất trên đoạn: so đầu mút với đỉnh khi đỉnh nằm trong đoạn.`,
+    R`Bài có tham số: xét riêng $a=0$, và thay lại để kiểm $\Delta\ge 0$.`,
+  ],
+  lienQuan: [
+    { id: "derivative", vi: R`Đỉnh của parabol là nơi $y'=0$, nên đạo hàm cho cách tìm cực trị cho mọi hàm, không chỉ hàm bậc hai.` },
+    { id: "ineq", vi: R`Phép biến đổi thành bình phương ở đây là công cụ chính để chứng minh bất đẳng thức và tìm giá trị nhỏ nhất.` },
+    { id: "analytic", vi: R`Parabol cũng là một đường conic; giao điểm và tiếp xúc với đường thẳng giải bằng đúng điều kiện về $\Delta$.` },
+  ],
+  checks: [
+    { expr: "-8/(2*(-2))", expect: "2" },
+    { expr: "-2*2**2+8*2-3", expect: "5" },
+    { expr: "-2*3**2+8*3-3", expect: "3" },
+    { expr: "-2*5**2+8*5-3", expect: "-13" },
+    { expr: "(-5)**2-4*1*6", expect: "1" },
+    { expr: "solve(x**2-5*x+6, x)", expect: "[2, 3]" },
+    { expr: "sorted(solve(2*x**2+3*x-5, x))", expect: "[Rational(-5,2), 1]" },
+    { expr: "2+3+(-5)", expect: "0" },
+    { expr: "2+3", expect: "5" },
+    { expr: "2*3", expect: "6" },
+    { expr: "(2-3)**2", expect: "1" },
+    { expr: "1**2-4*1*1", expect: "-3" },
+    { expr: "diff(x*(40-2*x), x).subs(x,10)", expect: "0" },
+    { expr: "10*(40-2*10)", expect: "200" },
+    { expr: "diff(20*t-5*t**2, t).subs(t,2)", expect: "0" },
+    { expr: "20*2-5*2**2", expect: "20" },
+    { expr: "solve(20*t-5*t**2, t)", expect: "[0, 4]" },
+    { expr: "discriminant(x**2-2*x-m, x)/4", expect: "1+m" },
+    { expr: "(x**2-4*x+3).subs(x,1)", expect: "0" },
+    { expr: "(x**2-4*x+3).subs(x,3)", expect: "0" },
+    { expr: "simplify(a*(x+b/(2*a))**2-(b**2-4*a*c)/(4*a)-(a*x**2+b*x+c))", expect: "0" },
+    { expr: "simplify(((x1+x2)**2-2*x1*x2)-(x1**2+x2**2))", expect: "0" },
+    { expr: "simplify(((x1+x2)**3-3*(x1+x2)*x1*x2)-(x1**3+x2**3))", expect: "0" },
+  ],
+};
