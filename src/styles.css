@@ -1758,3 +1758,6 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .code-state code { font-size: 0.95rem; }
 /* Chữ hoa trang trí của tiêu đề không được đổi biến trong công thức: y = ax² không thành Y = AX². */
 .katex { text-transform: none; }
+
+.dang-card summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 0.4em; font-size: 1.05rem; }
+.dang-card h3 { margin: 1rem 0 0.25rem; font-size: 0.95rem; }

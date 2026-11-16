@@ -57,6 +57,7 @@ function routes(): { path: string; shapes: Shape[] }[] {
   for (const area of sciences) out.push({ path: `/khoa-hoc/${area.id}`, shapes: [PHONE] });
   for (const book of gradeBooks) {
     out.push({ path: `/kien-thuc/${book.grade}`, shapes: [PHONE, DESKTOP] });
+    out.push({ path: `/kien-thuc/${book.grade}/dang`, shapes: [PHONE] });
     for (const chapter of book.chapters) {
       const lessons = FULL ? chapter.lessons : chapter.lessons.slice(0, 1);
       for (const lesson of lessons) out.push({ path: `/kien-thuc/${book.grade}/${lesson.id}`, shapes: [PHONE] });

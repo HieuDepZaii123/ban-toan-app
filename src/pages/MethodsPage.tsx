@@ -51,6 +51,15 @@ function Chooser() {
           })}
         </ul>
       </section>
+      <section className="tool-card">
+        <h2>{t(lang, "Dạng bài theo lớp", "Problem types by grade")}</h2>
+        <p className="lecture-note">{t(lang, "Mỗi lớp có mười dạng bài, mỗi dạng kèm cách nhận ra, các bước giải và ví dụ.", "Each grade has ten problem types, each with how to spot it, the steps and a worked example.")}</p>
+        <p>
+          {Array.from({ length: 12 }, (_, i) => i + 1).map((grade) => (
+            <span key={grade}><A href={`/kien-thuc/${grade}/dang`}>{t(lang, `Lớp ${grade}`, `Grade ${grade}`)}</A>{grade < 12 ? " · " : ""}</span>
+          ))}
+        </p>
+      </section>
       <div className="study-list">
         {methodsData.methods.map((item) => (
           <A key={item.id} className="tool-card" href={`/phuong-phap/${item.id}`}>

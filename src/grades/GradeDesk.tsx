@@ -14,6 +14,7 @@ import { PageFrame } from "../ui/PageFrame.tsx";
 import { Speak } from "../ui/Speak.tsx";
 import { useLang } from "../ui/useLang.ts";
 import { GradeFigure } from "./GradeFigure.tsx";
+import { DangView } from "./GradeDang.tsx";
 import { LessonPicture } from "./LessonPicture.tsx";
 import { pictures } from "../content/grades/pictures.ts";
 import { GradeWidgetView } from "./GradeWidgets.tsx";
@@ -40,6 +41,7 @@ export function GradeDesk() {
     );
   }
   if (!parsed.lesson) return <GradeIndex book={book} />;
+  if (parsed.lesson === "dang") return <DangView book={book} />;
   const found = lessonAt(book.grade, parsed.lesson);
   if (!found) {
     return (
@@ -125,6 +127,7 @@ function GradeIndex({ book }: { book: GradeBook }) {
     <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={gradeTitle(lang, String(book.grade), book.title)}>
       <p><A href="/kien-thuc">{t(lang, "Tất cả các lớp", "All grades")}</A>{" · "}{book.grade <= 9 ? <A href={`/luyen-lop/${book.grade}`}>{t(lang, "Luyện nhanh lớp này", "Quick practice")}</A> : <A href="/luyen-thpt">{t(lang, "Luyện THPT", "Upper-secondary practice")}</A>}</p>
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
+      <p><A className="text-btn" href={`/kien-thuc/${book.grade}/dang`}>{t(lang, "Dạng bài và phương pháp giải", "Problem types and solving methods")}</A></p>
       {book.chapters.map((chapter) => (
         <section key={chapter.id} className="stream">
           <h2><MathText text={gradeTitle(lang, `${book.grade}/c/${chapter.id}`, chapter.title)} /></h2>
