@@ -78,4 +78,5 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test:content
+      - run: npm run test:ui
       - run: npm run build

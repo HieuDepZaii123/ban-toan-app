@@ -85,10 +85,10 @@ export default defineConfig({
   server: { host: "127.0.0.1", port: 43123, strictPort: true },
   preview: { host: "127.0.0.1", port: 43991, strictPort: true },
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes("node_modules/katex")) return "katex";
+        codeSplitting: {
+          groups: [{ name: "katex", test: /node_modules[\\/]katex[\\/]/ }],
         },
       },
     },

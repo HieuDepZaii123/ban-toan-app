@@ -125,6 +125,21 @@ await post(tight, { ...ask("tích phân"), device: "rotating-0002" }, "203.0.113
 const rotated = await post(tight, { ...ask("tích phân"), device: "rotating-0003" }, "203.0.113.10");
 assert(rotated.status === 429, "rotating device ids still hit the per-network cap");
 
+// A burst of parallel requests must not slip past the daily cap before any of them is counted.
+let burstCalls = 0;
+const burst = env({
+  mode: "live",
+  windowLimit: 100,
+  freeDaily: 3,
+  complete: async () => {
+    burstCalls += 1;
+    await new Promise((done) => setTimeout(done, 5));
+    return "Một gợi ý.";
+  },
+});
+const burstCodes = (await Promise.all(Array.from({ length: 12 }, () => post(burst, { ...ask("tích phân"), device: "burst-device-01" }, "203.0.113.11")))).map((res) => res.status);
+assert(burstCalls === 3 && burstCodes.filter((code) => code === 200).length === 3, `parallel burst stays within the cap: ${burstCalls} model calls, ${burstCodes.join(",")}`);
+
 const broken = env({
   mode: "live",
   complete: () => Promise.reject(new Error("secret-key-should-not-leak")),

@@ -151,13 +151,21 @@ export async function handleCheck(request: Request, env: CheckEnv): Promise<Resp
   const windowMs = premium ? DAY_MS : WEEK_MS;
   const period = premium ? "day" : "week";
 
-  if ((await env.quota.used(`win:${who}`, env.now(), env.windowMs)) >= env.windowLimit) {
+  const limits = [
+    { key: `win:${who}`, windowMs: env.windowMs, max: env.windowLimit },
+    { key: `chk:${who}`, windowMs, max: limit },
+  ];
+  // Device ids are made by the client, so free marking also has a looser cap per network.
+  if (!premium && who !== `ip:${ip}`) limits.push({ key: `chkn:${ip}`, windowMs: WEEK_MS, max: env.freeChecksWeekly * 20 });
+  // The turn is taken before marking starts, so parallel requests cannot all slip under the cap
+  // while the model is still working; a failed marking gives it back below.
+  const claimedAt = env.now();
+  const claim = await env.quota.claim(limits, claimedAt);
+  if (!claim.ok && claim.full === 0) {
     return reply(429, { error: "rate", message: "Bạn gửi hơi nhanh. Đợi một lát rồi thử lại.", premium, limit, period, remaining: 0 });
   }
-  const used = await env.quota.used(`chk:${who}`, env.now(), windowMs);
-  // Device ids are made by the client, so free marking also has a looser cap per network.
-  const networkFull = !premium && who !== `ip:${ip}` && (await env.quota.used(`chkn:${ip}`, env.now(), WEEK_MS)) >= env.freeChecksWeekly * 20;
-  if (used >= limit || networkFull) {
+  const used = claim.used[1] ?? 0;
+  if (!claim.ok) {
     return reply(429, {
       error: "quota",
       message: premium
@@ -183,11 +191,11 @@ export async function handleCheck(request: Request, env: CheckEnv): Promise<Resp
     verdict = null;
   }
   // A failed marking does not cost the learner a turn.
-  if (!verdict) return reply(502, { error: "model", message: "Chưa chấm được. Thử lại sau.", premium, limit, period, remaining: limit - used });
+  if (!verdict) {
+    await env.quota.release(limits.map((item) => item.key), claimedAt);
+    return reply(502, { error: "model", message: "Chưa chấm được. Thử lại sau.", premium, limit, period, remaining: limit - used });
+  }
 
-  await env.quota.add(`win:${who}`, env.now());
-  await env.quota.add(`chk:${who}`, env.now());
-  if (!premium && who !== `ip:${ip}`) await env.quota.add(`chkn:${ip}`, env.now());
   const out: CheckJson = { ...verdict, mode: env.mode, premium, limit, period, remaining: limit - used - 1 };
   if (parent) delete out.fix;
   return reply(200, out);
