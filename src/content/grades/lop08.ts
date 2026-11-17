@@ -7,6 +7,7 @@ export const lop08: GradeBook = {
   grade: 8,
   band: "thcs",
   title: "Hằng đẳng thức, phân thức, hàm số bậc nhất, Pythagore, tứ giác và hình chóp đều.",
+  titleEn: "Algebraic identities, algebraic fractions, linear functions, Pythagoras, quadrilaterals and regular pyramids.",
   chapters: [
     chuong("dang-thuc", "Hằng đẳng thức, phân tích đa thức và phân thức", [
       bai(
@@ -27,6 +28,7 @@ export const lop08: GradeBook = {
           luyen(R`Tính $17^2-3^2$ bằng $(17-3)(17+3)$.`, R`Hiệu bằng $280$.`, [{ expr: "(17-3)*(17+3)", expect: "280" }], "Hiệu hai bình phương bằng tích của hiệu và tổng. Tích $14$ với $20$ bằng $280$."),
           luyen(R`Tính $(a-b)^2$ khi $a=6$ và $b=1$.`, R`Giá trị bằng $25$.`, [{ expr: "6**2-2*6*1+1**2", expect: "25" }], "Số hạng giữa mang dấu trừ. Phép $36-12+1$ bằng $25$."),
         ],
+        { titleEn: "Square of a sum and of a difference" },
       ),
       bai(
         "hieu-binh",
@@ -46,6 +48,7 @@ export const lop08: GradeBook = {
           luyen(R`Tính $3^3+1^3$ bằng $(3+1)(9-3+1)$.`, R`Tổng hai lập phương bằng $28$.`, [{ expr: "(3+1)*(3**2-3*1+1**2)", expect: "28" }], "Tổng hai lập phương bằng tổng nhân với hiệu của hai bình phương và tích."),
           luyen(R`Tính $6^3-3^3$.`, R`Hiệu bằng $189$.`, [{ expr: "6**3-3**3", expect: "189" }], "Có thể tính $216-27$, hoặc $(6-3)(36+18+9)$. Cả hai cách cùng ra $189$."),
         ],
+        { titleEn: "Cubes, and the sum and difference of two cubes" },
       ),
       bai(
         "phan-tich",
@@ -68,6 +71,7 @@ export const lop08: GradeBook = {
           luyen(R`Tính giá trị của $(x-2)(x-3)$ khi $x=4$.`, R`Giá trị bằng $2$.`, [{ expr: "(4-2)*(4-3)", expect: "2" }], "Đa thức đã tách nhân tử thì thay số vào từng nhân tử rồi nhân. Tích $2\\cdot 1$ bằng $2$."),
           luyen(R`Đặt thừa số chung của $6x+9$. Hệ số trong ngoặc của hạng tử không chứa $x$, khi đã đặt $3$, bằng bao nhiêu?`, R`Hạng tử đó là $3$, và đa thức bằng $3(2x+3)$.`, [{ expr: "factor(6*x+9).subs(x,1)", expect: "15" }], "Thừa số chung bằng $3$. Thay $x=1$ vào đa thức gốc được $15$, trùng giá trị của dạng đã phân tích."),
         ],
+        { titleEn: "Factorising polynomials" },
       ),
       bai(
         "phan-thuc",
@@ -87,8 +91,9 @@ export const lop08: GradeBook = {
           luyen(R`Rút gọn $\frac{x^2-4}{x-2}$ với $x\neq 2$.`, R`Phân thức bằng $x+2$.`, [{ expr: "simplify((x**2-4)/(x-2))", expect: "x+2" }], "Tử có nhân tử $x-2$. Sau khi chia, còn $x+2$, với điều kiện mẫu khác $0$."),
           luyen(R`Tại $x=3$, phân thức $\frac{x^2-4}{x-2}$ bằng bao nhiêu?`, R`Giá trị bằng $5$.`, [{ expr: "(3**2-4)/(3-2)", expect: "5" }], "Mẫu tại $x=3$ khác $0$. Thay vào dạng rút gọn $x+2$ cũng được $5$."),
         ],
+        { titleEn: "Algebraic fractions" },
       ),
-    ]),
+    ], "Identities, factorising and algebraic fractions"),
     chuong("pt-ham", "Phương trình bậc nhất và hàm số bậc nhất", [
       bai(
         "pt-bac-nhat",
@@ -108,6 +113,7 @@ export const lop08: GradeBook = {
           luyen(R`Giải $5x=15$.`, R`Nghiệm là $x=3$.`, [{ expr: "solve(5*x-15, x)[0]", expect: "3" }], "Chuyển về $5x-15=0$ rồi chia cho hệ số khác $0$."),
           luyen(R`Giải $4x-8=0$.`, R`Nghiệm là $x=2$.`, [{ expr: "solve(4*x-8, x)[0]", expect: "2" }], "Nghiệm duy nhất là số đối của hạng tử tự do, chia cho hệ số của $x$."),
         ],
+        { titleEn: "Linear equations in one unknown" },
       ),
       bai(
         "ham-bac-nhat",
@@ -127,8 +133,9 @@ export const lop08: GradeBook = {
           luyen(R`Đồ thị của $y=3x-6$ cắt trục hoành tại điểm có hoành độ bao nhiêu?`, R`Hoành độ giao điểm bằng $2$.`, [{ expr: "solve(3*x-6, x)[0]", expect: "2" }], "Giao với trục hoành là điểm có tung độ bằng $0$. Giải phương trình bậc nhất đó."),
           luyen(R`Hai điểm trên đồ thị $y=2x$ có hoành độ $1$ và $4$. Hiệu tung độ bằng bao nhiêu?`, R`Hiệu tung độ bằng $6$.`, [{ expr: "2*4-2*1", expect: "6" }], "Hệ số góc $2$ nhân với hiệu hoành độ $3$ cũng ra hiệu tung độ $6$."),
         ],
+        { titleEn: "Linear functions" },
       ),
-    ]),
+    ], "Linear equations and linear functions"),
     chuong("tam-giac", "Tam giác đồng dạng và định lí Pythagore", [
       bai(
         "ti-so-dong-dang",
@@ -148,7 +155,7 @@ export const lop08: GradeBook = {
           luyen(R`Hai đoạn $4$ và $10$ có tỉ số bằng bao nhiêu?`, R`Tỉ số bằng $\frac{2}{5}$.`, [{ expr: "Rational(4,10)", expect: "Rational(2,5)" }], "Chia độ dài đoạn nhỏ cho đoạn lớn rồi rút gọn. Ước chung của $4$ và $10$ là $2$."),
           luyen(R`Trong tam giác $ABC$, đường thẳng song song với $BC$ cắt $AB$ và $AC$. Đường này chia mỗi cạnh kể từ đỉnh $A$ theo tỉ số $\frac{1}{2}$, và $BC=18$. Đoạn nằm giữa hai giao điểm dài bao nhiêu?`, R`Đoạn đó dài $9$.`, [{ expr: "18*Rational(1,2)", expect: "9" }], "Định lí Thales cần điều kiện đường thẳng song song với cạnh thứ ba. Khi ấy đoạn chắn bằng nửa cạnh $BC$."),
         ],
-        { figure: "triangle" },
+        { titleEn: "Similarity ratio", figure: "triangle" },
       ),
       bai(
         "pitago",
@@ -168,9 +175,9 @@ export const lop08: GradeBook = {
           luyen(R`Tam giác vuông cân có cạnh góc vuông $1$. Cạnh huyền bằng bao nhiêu?`, R`Cạnh huyền bằng $\sqrt{2}$.`, [{ expr: "sqrt(1**2+1**2)", expect: "sqrt(2)" }], "Hai cạnh góc vuông bằng nhau. Tổng hai bình phương bằng $2$, căn không âm là $\\sqrt{2}$."),
           luyen(R`Kiểm tra bộ độ dài $6, 8, 10$ có phải tam giác vuông không.`, R`Có, vì $6^2+8^2=10^2$.`, [{ expr: "6**2+8**2-10**2", expect: "0" }], "Đảo định lí Pythagore: nếu bình phương một cạnh bằng tổng bình phương hai cạnh kia thì tam giác vuông tại góc giữa hai cạnh đó."),
         ],
-        { figure: "triangle" },
+        { titleEn: "Pythagoras' theorem", figure: "triangle" },
       ),
-    ]),
+    ], "Similar triangles and Pythagoras' theorem"),
     chuong("tu-giac", "Tứ giác và hình chóp đều", [
       bai(
         "binh-hanh",
@@ -190,7 +197,7 @@ export const lop08: GradeBook = {
           luyen(R`Hình chữ nhật dài $7$ và rộng $3$ có diện tích bằng bao nhiêu?`, R`Diện tích bằng $21$.`, [{ expr: "7*3", expect: "21" }], "Diện tích hình chữ nhật là tích chiều dài với chiều rộng."),
           luyen(R`Hình vuông cạnh $5$ có chu vi bằng bao nhiêu?`, R`Chu vi bằng $20$.`, [{ expr: "4*5", expect: "20" }], "Hình vuông có bốn cạnh bằng nhau. Chu vi bằng bốn lần một cạnh."),
         ],
-        { figure: "rect" },
+        { titleEn: "Parallelograms and rectangles", figure: "rect" },
       ),
       bai(
         "chop-deu",
@@ -210,7 +217,8 @@ export const lop08: GradeBook = {
           luyen(R`Đáy là tam giác đều có diện tích $12$, chiều cao chóp bằng $5$. Thể tích bằng bao nhiêu?`, R`Thể tích bằng $20$.`, [{ expr: "Rational(1,3)*12*5", expect: "20" }], "Đáy đa giác đều. Thể tích vẫn là một phần ba tích diện tích đáy với chiều cao."),
           luyen(R`Nếu thể tích hình chóp đều bằng $48$ và diện tích đáy bằng $36$, chiều cao bằng bao nhiêu?`, R`Chiều cao bằng $4$.`, [{ expr: "solve(Rational(1,3)*36*h-48, h)[0]", expect: "4" }], "Từ công thức thể tích, nhân $3$ rồi chia cho diện tích đáy khác $0$ để tìm chiều cao."),
         ],
+        { titleEn: "Regular pyramids" },
       ),
-    ]),
+    ], "Quadrilaterals and regular pyramids"),
   ],
 };
