@@ -20,7 +20,7 @@ export function GradeDesk() {
     const book = parsed.grade ? gradeBooks.find((item) => item.grade === parsed.grade) : undefined;
     const found = parsed.grade && parsed.lesson ? lessonAt(parsed.grade, parsed.lesson) : undefined;
     const gradeWord = lang === "en" ? "Grade" : "Lớp";
-    document.title = found ? `${tr(lang, found.lesson)} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
+    document.title = found ? `${plainMath(tr(lang, found.lesson))} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
   }, [parsed.grade, parsed.lesson, lang]);
 
   if (!parsed.grade) return <GradeHome />;
@@ -120,14 +120,14 @@ function GradeIndex({ book }: { book: GradeBook }) {
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
       {book.chapters.map((chapter) => (
         <section key={chapter.id} className="stream">
-          <h2>{tr(lang, chapter)}</h2>
+          <h2><MathText text={tr(lang, chapter)} /></h2>
           <div className="study-list">
             {chapter.lessons.map((lesson) => {
               const ready = done.includes(`${book.grade}/${lesson.id}`);
               return (
                 <A key={lesson.id} className="study-card" href={`/kien-thuc/${book.grade}/${lesson.id}`}>
                   <span>
-                    <strong>{tr(lang, lesson)}</strong>
+                    <strong><MathText text={tr(lang, lesson)} /></strong>
                     {lesson.topicId ? <small className="lecture-note">{t(lang, "Nối sang chuyên đề đã có", "Links to an existing topic")}</small> : null}
                   </span>
                   {ready ? <span aria-label={t(lang, "Đã xong", "Done")}>✓</span> : null}
@@ -149,7 +149,7 @@ function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTi
     if (correct.length === lesson.drills.length && correct.every(Boolean)) markDone(book.grade, lesson.id);
   }, [book.grade, correct, lesson.drills.length, lesson.id]);
   return (
-    <PageFrame kicker={`${t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} · ${chapterTitle}`} title={tr(lang, lesson)}>
+    <PageFrame kicker={<MathText text={`${t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} · ${chapterTitle}`} />} title={<MathText text={tr(lang, lesson)} />}>
       <p><A href={`/kien-thuc/${book.grade}`}>{t(lang, `Về các bài lớp ${book.grade}`, `Back to grade ${book.grade} lessons`)}</A></p>
       <article className="tool-card">
         <h2>{t(lang, "Tóm tắt", "Summary")}</h2>
@@ -285,6 +285,11 @@ function AskForm({ ask, index, correct, onCorrect, onNote }: { ask: GradeAsk; in
 /** The English title when the language is English and one exists, else the Vietnamese one. */
 function tr(lang: "vi" | "en", item: { title: string; titleEn?: string }): string {
   return lang === "en" && item.titleEn ? item.titleEn : item.title;
+}
+
+/** A title for the browser tab, where formulas cannot render: "$y=ax^2$" becomes "y=ax^2". */
+function plainMath(text: string): string {
+  return text.replace(/\$([^$]*)\$/g, "$1").replace(/\\circ/g, "°").replace(/\^°/g, "°");
 }
 
 function near(raw: string, value: number, tolerance: number): boolean {

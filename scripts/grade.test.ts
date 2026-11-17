@@ -160,8 +160,9 @@ assert(g11.includes("nghiệm tổng quát") && g11.includes("ba đường vuôn
 assert(!g11.includes("Oxyz") && !g11.includes("(1;0;0)"), "lớp 11 còn tọa độ Oxyz");
 assert(g12.includes("giá trị đại diện") && g12.includes("nội suy") && g12.includes("tiệm cận đứng"), "lớp 12 thiếu mẫu ghép nhóm hoặc hai tiệm cận đứng");
 
-// English titles: optional while they are filled in grade by grade, but a present one must be real English.
+// English titles: every book, chapter and lesson has one, and it must be real English.
 function checkEnglish(where: string, vi: string, en: string | undefined): void {
+  assert(en !== undefined, `${where}: thiếu titleEn`);
   if (en === undefined) return;
   assert(en.trim() !== "", `${where}: titleEn rỗng`);
   assert(!MARK.test(en.replace(/\$[^$]*\$/g, "")), `${where}: titleEn còn dấu tiếng Việt: ${en}`);

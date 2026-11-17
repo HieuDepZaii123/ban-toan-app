@@ -4,7 +4,7 @@ import { SiteFooter } from "./SiteFooter.tsx";
 import { t } from "../lib/text.ts";
 import { useLang } from "./useLang.ts";
 
-export function PageFrame({ kicker, title, lead, children }: { kicker: string; title: string; lead?: string; children: ReactNode }) {
+export function PageFrame({ kicker, title, lead, children }: { kicker: ReactNode; title: ReactNode; lead?: ReactNode; children: ReactNode }) {
   return (
     <div className="desk">
       <a className="skip" href="#content">{t(useLang(), "Vào nội dung", "Skip to content")}</a>
