@@ -7,6 +7,7 @@ export const lop06: GradeBook = {
   grade: 6,
   band: "thcs",
   title: "Số tự nhiên, số nguyên tố, phân số âm, hỗn số, ước lượng và hình đều.",
+  titleEn: "Natural numbers, prime numbers, negative fractions, mixed numbers, estimation and regular shapes.",
   chapters: [
     chuong("so-tu-nhien", "Số tự nhiên", [
       bai(
@@ -27,6 +28,7 @@ export const lop06: GradeBook = {
           luyen(R`Tính $20-6\div 2$.`, R`Giá trị bằng $17$.`, [{ expr: "20-6/2", expect: "17" }], "Phép chia đứng trước phép trừ. Thương $3$ được trừ khỏi $20$."),
           luyen(R`Tính $8\div 2+1$.`, R`Giá trị bằng $5$.`, [{ expr: "8/2+1", expect: "5" }], "Chia trước được $4$, rồi cộng $1$. Không cộng $2$ với $1$ trước khi chia."),
         ],
+        { titleEn: "Order of operations" },
       ),
       bai(
         "luy-thua",
@@ -46,8 +48,9 @@ export const lop06: GradeBook = {
           luyen(R`Tính $10^2$.`, R`Giá trị bằng $100$.`, [{ expr: "10**2", expect: "100" }], "Bình phương của $10$ là tích của hai thừa số $10$."),
           luyen(R`Tính $5^1$.`, R`Giá trị bằng $5$.`, [{ expr: "5**1", expect: "5" }], "Số mũ $1$ nghĩa là còn đúng một thừa số, bằng chính cơ số."),
         ],
+        { titleEn: "Powers with natural-number exponents" },
       ),
-    ]),
+    ], "Natural numbers"),
     chuong("chia-het", "Tính chia hết", [
       bai(
         "ucln",
@@ -70,6 +73,7 @@ export const lop06: GradeBook = {
           luyen(R`Tìm bội chung nhỏ nhất của $4$ và $6$.`, R`Bội chung nhỏ nhất bằng $12$.`, [{ expr: "lcm(4,6)", expect: "12" }], "Số $12$ là bội chung dương nhỏ nhất của $4$ và của $6$."),
           luyen(R`Số $135$ có chia hết cho $9$ không? Hãy dùng tổng các chữ số.`, R`Có, vì tổng chữ số bằng $9$ và $135=9\cdot 15$.`, [{ expr: "1+3+5", expect: "9" }], "Một số chia hết cho $9$ khi tổng các chữ số của nó chia hết cho $9$."),
         ],
+        { titleEn: "Highest common factor and lowest common multiple" },
       ),
       bai(
         "so-nguyen-to",
@@ -89,8 +93,9 @@ export const lop06: GradeBook = {
           luyen(R`Số $2$ có phải số nguyên tố không?`, R`Có. Số $2$ là số nguyên tố chẵn duy nhất.`, [{ expr: "isprime(2)", expect: "True" }], "Số $2$ lớn hơn $1$ và chỉ có hai ước dương là $1$ và $2$."),
           luyen(R`Kiểm tra phân tích $18=2\cdot 3^2$.`, R`Phân tích đúng, vì $2\cdot 9=18$.`, [{ expr: "2*3**2", expect: "18" }], "Mỗi thừa số đều là số nguyên tố. Bình phương của $3$ đếm hai lần thừa số $3$."),
         ],
+        { titleEn: "Prime numbers and prime factorisation" },
       ),
-    ]),
+    ], "Divisibility"),
     chuong("so-nguyen", "Số nguyên", [
       bai(
         "cong-tru-nguyen",
@@ -113,6 +118,7 @@ export const lop06: GradeBook = {
           luyen(R`Tính $(-6)\cdot 2$.`, R`Tích bằng $-12$.`, [{ expr: "(-6)*2", expect: "-12" }], "Hai thừa số khác dấu, nên tích âm và bằng $6\\cdot 2$."),
           luyen(R`Tính $(-8)-(-3)$.`, R`Hiệu bằng $-5$.`, [{ expr: "-8-(-3)", expect: "-5" }], "Trừ một số âm là cộng trị tuyệt đối của số đó. Từ $-8$ cộng $3$ được $-5$."),
         ],
+        { titleEn: "Adding and multiplying integers" },
       ),
       bai(
         "tri-tuyet-doi",
@@ -132,8 +138,9 @@ export const lop06: GradeBook = {
           luyen(R`Số nào lớn hơn, $-10$ hay $-1$?`, R`Số $-1$ lớn hơn số $-10$.`, [{ expr: "Abs(-10)-Abs(-1)", expect: "9" }], "Số $-1$ nằm bên phải $-10$ trên trục số. Hiệu hai trị tuyệt đối cho khoảng cách giữa chúng."),
           luyen(R`Tính $|-3|+|2|$.`, R`Tổng bằng $5$.`, [{ expr: "Abs(-3)+Abs(2)", expect: "5" }], "Mỗi trị tuyệt đối là số không âm. Cộng $3$ với $2$ được $5$."),
         ],
+        { titleEn: "Absolute value and comparing integers" },
       ),
-    ]),
+    ], "Integers"),
     chuong("phan-so", "Phân số âm và hỗn số", [
       bai(
         "phan-am",
@@ -153,6 +160,7 @@ export const lop06: GradeBook = {
           luyen(R`Tính $\left(-\frac{3}{4}\right)\cdot\frac{2}{3}$.`, R`Tích bằng $-\frac{1}{2}$.`, [{ expr: "Rational(-3,4)*Rational(2,3)", expect: "Rational(-1,2)" }], "Một phân số âm nhân một phân số dương cho tích âm. Rút gọn còn một nửa."),
           luyen(R`Số đối của $-\frac{5}{6}$ bằng bao nhiêu?`, R`Số đối bằng $\frac{5}{6}$.`, [{ expr: "-Rational(-5,6)", expect: "Rational(5,6)" }], "Số đối của một số âm là số dương có cùng trị tuyệt đối."),
         ],
+        { titleEn: "Negative fractions" },
       ),
       bai(
         "hon-so",
@@ -172,8 +180,9 @@ export const lop06: GradeBook = {
           luyen(R`Phân số $\frac{11}{4}$ viết thành hỗn số có phần nguyên nào?`, R`Phần nguyên là $2$, vì $\frac{11}{4}=2\frac{3}{4}$.`, [{ expr: "11//4", expect: "2" }], "Chia tử cho mẫu. Thương nguyên là phần nguyên của hỗn số, dư là tử của phần phân số."),
           luyen(R`Tính $3\frac{1}{2}+1\frac{1}{2}$.`, R`Tổng bằng $5$.`, [{ expr: "(3+Rational(1,2))+(1+Rational(1,2))", expect: "5" }], "Cộng phần nguyên với nhau và phần phân số với nhau. Một nửa cộng một nửa thành một đơn vị."),
         ],
+        { titleEn: "Mixed numbers" },
       ),
-    ]),
+    ], "Negative fractions and mixed numbers"),
     chuong("thap-phan", "Số thập phân âm và ước lượng", [
       bai(
         "thap-phan-am",
@@ -193,6 +202,7 @@ export const lop06: GradeBook = {
           luyen(R`Số nào lớn hơn, $-0{,}4$ hay $-0{,}7$?`, R`Số $-0{,}4$ lớn hơn.`, [{ expr: "Rational(-4,10)-Rational(-7,10)", expect: "Rational(3,10)" }], "Trên trục số, $-0{,}4$ nằm bên phải $-0{,}7$. Hiệu dương xác nhận chiều so sánh."),
           luyen(R`Tính $|-1{,}5|$.`, R`Trị tuyệt đối bằng $1{,}5$.`, [{ expr: "Abs(Rational(-3,2))", expect: "Rational(3,2)" }], "Trị tuyệt đối của số thập phân âm là số thập phân dương đối với nó."),
         ],
+        { titleEn: "Negative decimals" },
       ),
       bai(
         "uoc-luong",
@@ -212,8 +222,9 @@ export const lop06: GradeBook = {
           luyen(R`Tổng đúng của $48$ và $37$ bằng bao nhiêu?`, R`Tổng đúng bằng $85$.`, [{ expr: "48+37", expect: "85" }], "Ước lượng $90$ chỉ để đối chiếu. Phép cộng đúng vẫn tính trên hai số ban đầu."),
           luyen(R`Ước lượng $62-18$ đến hàng chục.`, R`Ước lượng bằng $60-20=40$.`, [{ expr: "round(62,-1)-round(18,-1)", expect: "40" }], "Làm tròn từng số trước khi trừ. Hiệu của hai số tròn chục là ước lượng."),
         ],
+        { titleEn: "Estimating results" },
       ),
-    ]),
+    ], "Negative decimals and estimation"),
     chuong("ti-so-pt", "Tỉ số phần trăm", [
       bai(
         "ti-so-phan-tram",
@@ -233,6 +244,7 @@ export const lop06: GradeBook = {
           luyen(R`So sánh $60\%$ và $50\%$. Hiệu bằng bao nhiêu điểm phần trăm?`, R`Hiệu bằng $10$ điểm phần trăm, nên $60\%$ lớn hơn.`, [{ expr: "60-50", expect: "10" }], "Hai tỉ số đã đổi về cùng cách viết phần trăm thì trừ các số phần trăm."),
           luyen(R`Trong $40$ bạn có $8$ bạn chọn môn A. Tỉ số phần trăm bằng bao nhiêu?`, R`Tỉ số bằng $20\%$.`, [{ expr: "Rational(8,40)*100", expect: "20" }], "Chia $8$ cho $40$ được $\\frac{1}{5}$, rồi nhân $100$."),
         ],
+        { titleEn: "Writing a ratio as a percentage" },
       ),
       bai(
         "so-sanh-ti-so",
@@ -252,8 +264,9 @@ export const lop06: GradeBook = {
           luyen(R`Trong hai tỉ số $\frac{4}{5}$ và $\frac{3}{4}$, tỉ số nào lớn hơn?`, R`Tỉ số $\frac{4}{5}$ lớn hơn, vì $80\%>75\%$.`, [{ expr: "Rational(4,5)*100-Rational(3,4)*100", expect: "5" }], "Đổi cả hai tỉ số ra phần trăm. Hiệu $5$ điểm phần trăm cho biết chiều so sánh."),
           luyen(R`Nếu $25\%$ của một số bằng $10$, cả số bằng bao nhiêu?`, R`Cả số bằng $40$.`, [{ expr: "10/Rational(25,100)", expect: "40" }], "Biết một phần trăm thì chia cho tỉ số phần trăm đó để tìm cả số."),
         ],
+        { titleEn: "Comparing two ratios using percentages" },
       ),
-    ]),
+    ], "Percentages"),
     chuong("hinh", "Góc và hình đều", [
       bai(
         "so-do-goc",
@@ -273,7 +286,7 @@ export const lop06: GradeBook = {
           luyen(R`Một góc $90^\circ$ được chia thành hai góc $40^\circ$ và một góc còn lại. Góc còn lại bằng bao nhiêu độ?`, R`Góc còn lại bằng $50^\circ$.`, [{ expr: "90-40", expect: "50" }], "Tổng hai góc thành phần bằng số đo góc ban đầu. Trừ góc $40^\\circ$ khỏi góc vuông."),
           luyen(R`Ba góc kề nhau $20^\circ$, $30^\circ$ và $40^\circ$ gộp lại bằng bao nhiêu độ?`, R`Góc gộp bằng $90^\circ$.`, [{ expr: "20+30+40", expect: "90" }], "Cộng lần lượt ba số đo. Tổng này đúng bằng một góc vuông."),
         ],
-        { figure: "angle" },
+        { titleEn: "Angles and measuring angles", figure: "angle" },
       ),
       bai(
         "hinh-deu",
@@ -293,7 +306,7 @@ export const lop06: GradeBook = {
           luyen(R`Hình đều $6$ cạnh, mỗi cạnh dài $4$. Chu vi bằng bao nhiêu?`, R`Chu vi bằng $24$.`, [{ expr: "6*4", expect: "24" }], "Hình đều có mọi cạnh bằng nhau. Chu vi bằng số cạnh nhân độ dài một cạnh."),
           luyen(R`Hình vuông có $4$ trục đối xứng, tam giác đều có $3$ trục. Hiệu số trục bằng bao nhiêu?`, R`Hiệu bằng $1$ trục.`, [{ expr: "4-3", expect: "1" }], "Lấy số trục của hình vuông trừ số trục của tam giác đều."),
         ],
-        { figure: "rect" },
+        { titleEn: "Regular shapes and lines of symmetry", figure: "rect" },
       ),
       bai(
         "diem-duong",
@@ -313,9 +326,9 @@ export const lop06: GradeBook = {
           luyen(R`Đoạn $AB$ dài $9$ xentimét, điểm $M$ nằm giữa và $AM=4$ xentimét. Đoạn $MB$ dài bao nhiêu?`, R`Đoạn $MB$ dài $5$ xentimét.`, [{ expr: "9-4", expect: "5" }], "Điểm nằm giữa hai đầu mút thì cả đoạn bằng tổng hai đoạn nhỏ."),
           luyen(R`Một tia có một gốc. Hai tia khác gốc có tất cả bao nhiêu gốc?`, R`Có $2$ gốc.`, [{ expr: "1+1", expect: "2" }], "Mỗi tia có đúng một gốc. Hai tia khác gốc thì có hai gốc."),
         ],
-        { figure: "segment" },
+        { titleEn: "Points, lines, rays and line segments", figure: "segment" },
       ),
-    ]),
+    ], "Angles and regular shapes"),
     chuong("tk-xs-6", "Thống kê và xác suất thực nghiệm", [
       bai(
         "thu-thap",
@@ -335,7 +348,7 @@ export const lop06: GradeBook = {
           luyen(R`Số liệu giả định. Mẫu $12$ giá trị, đã ghi $7$ giá trị loại một. Còn bao nhiêu giá trị loại khác?`, R`Còn $5$ giá trị.`, [{ expr: "12-7", expect: "5" }], "Phần còn lại bằng cỡ mẫu trừ số đã đếm ở loại một."),
           luyen(R`Số liệu giả định. Hai người cùng đếm một mẫu và cùng ra $9$. Hiệu hai lần đếm bằng bao nhiêu?`, R`Hiệu bằng $0$, hai lần đếm khớp nhau.`, [{ expr: "9-9", expect: "0" }], "Hai lần thu thập cùng một mẫu cho cùng một số thì hiệu bằng không."),
         ],
-        { figure: "bar" },
+        { titleEn: "Collecting data", figure: "bar" },
       ),
       bai(
         "bieu-dien-6",
@@ -355,7 +368,7 @@ export const lop06: GradeBook = {
           luyen(R`Số liệu giả định. Ba cột $1$, $1$ và $5$. Có một cột cao nhất duy nhất không?`, R`Có. Cột $5$ là cột cao nhất duy nhất.`, [{ expr: "Max(1,1,5)", expect: "5" }], "Hai cột cùng cao $1$, cột còn lại cao hơn nên là cột cao nhất duy nhất."),
           luyen(R`Số liệu giả định. Các cột $3$, $3$ và $4$ có tổng bằng bao nhiêu?`, R`Tổng bằng $10$.`, [{ expr: "3+3+4", expect: "10" }], "Cộng các số đọc trên biểu đồ. Hai cột cùng độ cao đều được cộng."),
         ],
-        { figure: "bar" },
+        { titleEn: "Representing data", figure: "bar" },
       ),
       bai(
         "xs-thuc-nghiem",
@@ -375,7 +388,8 @@ export const lop06: GradeBook = {
           luyen(R`Số liệu giả định. Thử $20$ lần, mặt ngửa $9$ lần. Mặt sấp xảy ra bao nhiêu lần nếu mỗi lần ra đúng một mặt?`, R`Mặt sấp xảy ra $11$ lần.`, [{ expr: "20-9", expect: "11" }], "Mỗi lần thử ra đúng một mặt. Phần còn lại là mặt sấp."),
           luyen(R`Số liệu giả định. Thử $5$ lần và cả $5$ lần đều thuận. Xác suất thực nghiệm bằng bao nhiêu?`, R`Bằng $1$.`, [{ expr: "5/5", expect: "1" }], "Mọi lần thử đều thuận thì ước lượng bằng một. Mẫu lớn hơn có thể cho số khác."),
         ],
+        { titleEn: "Experimental probability" },
       ),
-    ]),
+    ], "Statistics and experimental probability"),
   ],
 };
