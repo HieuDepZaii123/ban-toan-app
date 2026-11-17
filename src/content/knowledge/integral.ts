@@ -73,11 +73,12 @@ export const integralKnowledge: TopicKnowledge = {
           ],
           suyKhac: [
             {
-              cach: "Bằng đổi biến",
+              cach: "Bằng tổng Riemann",
               buoc: [
-                R`Đặt $t=ax+b$. Khi $x$ tăng $dx$ thì $t$ tăng $dt=a\,dx$, tức $dx=\frac{dt}{a}$ (vì $a\neq 0$).`,
-                R`Thay vào: $\int f(ax+b)\,dx=\int f(t)\,\frac{dt}{a}=\frac{1}{a}\int f(t)\,dt$, vì hằng số $\frac{1}{a}$ đưa ra ngoài dấu nguyên hàm được.`,
-                R`Theo giả thiết $\int f(t)\,dt=F(t)+C$. Trả lại $t=ax+b$ được $\frac{1}{a}F(ax+b)+C$, đúng công thức cần chứng minh.`,
+                R`Giả sử $f$ liên tục. Chia $[p;q]$ bởi $x_0<x_1<\dots<x_n$ rồi đặt $t_i=ax_i+b$. Các điểm $t_i$ chia đoạn có hai đầu $ap+b$ và $aq+b$, và $\Delta t_i=a\,\Delta x_i$.`,
+                R`Tổng Riemann của $\int_p^q f(ax+b)\,dx$ là $\sum f(t_i)\,\Delta x_i=\frac{1}{a}\sum f(t_i)\,\Delta t_i$. Vế phải là $\frac{1}{a}$ nhân với tổng Riemann của $f$ trên đoạn của $t$.`,
+                R`Cho độ chia về $0$: $\int_p^q f(ax+b)\,dx=\frac{1}{a}\int_{ap+b}^{aq+b}f(t)\,dt$. Theo Newton–Leibniz, vế phải bằng $\frac{1}{a}\bigl[F(aq+b)-F(ap+b)\bigr]$.`,
+                R`Đúng với mọi $p$, $q$, nên $\frac{1}{a}F(ax+b)$ có hiệu giá trị ở hai đầu bằng tích phân của $f(ax+b)$, tức là một nguyên hàm của $f(ax+b)$.`,
               ],
             },
           ],
@@ -102,10 +103,10 @@ export const integralKnowledge: TopicKnowledge = {
             {
               cach: "Bằng tổng Riemann và định lí giá trị trung bình",
               buoc: [
-                R`Chia $[a;b]$ bởi các điểm $a=x_0<x_1<\dots<x_n=b$. Hiệu $F(b)-F(a)$ là một tổng lồng nhau: $F(b)-F(a)=\sum_{i=1}^{n}\bigl[F(x_i)-F(x_{i-1})\bigr]$, vì các số hạng ở giữa triệt tiêu từng đôi.`,
+                R`Giả sử $f$ liên tục trên $[a;b]$, khi đó $F$ liên tục trên đoạn và khả vi trong khoảng. Chia $[a;b]$ bởi các điểm $a=x_0<x_1<\dots<x_n=b$. Hiệu $F(b)-F(a)$ là một tổng lồng nhau: $F(b)-F(a)=\sum_{i=1}^{n}\bigl[F(x_i)-F(x_{i-1})\bigr]$, vì các số hạng ở giữa triệt tiêu từng đôi.`,
                 R`Trên mỗi đoạn $[x_{i-1};x_i]$, định lí giá trị trung bình (được công nhận) cho một điểm $c_i$ để $F(x_i)-F(x_{i-1})=F'(c_i)(x_i-x_{i-1})=f(c_i)\,\Delta x_i$, vì $F'=f$.`,
                 R`Vậy $F(b)-F(a)=\sum_{i=1}^{n}f(c_i)\,\Delta x_i$ với mọi cách chia. Vế phải là một tổng Riemann của $f$.`,
-                R`Cho các đoạn chia nhỏ dần về $0$ thì tổng Riemann tiến về $\int_a^b f(x)\,dx$, còn vế trái không đổi. Vậy $\int_a^b f(x)\,dx=F(b)-F(a)$.`,
+                R`Cho độ dài lớn nhất của các đoạn chia tiến về $0$ thì vì $f$ liên tục, tổng Riemann (với các điểm $c_i$ này) tiến về $\int_a^b f(x)\,dx$, còn vế trái không đổi. Vậy $\int_a^b f(x)\,dx=F(b)-F(a)$.`,
               ],
             },
           ],
@@ -136,9 +137,9 @@ export const integralKnowledge: TopicKnowledge = {
             {
               cach: "Bằng cân bằng phần dôi và phần thiếu",
               buoc: [
-                R`Hỏi ngược lại: chiều cao $m$ nào làm cho phần đồ thị cao hơn đường $y=m$ bù đúng phần thấp hơn? Phần dôi trừ phần thiếu chính là diện tích có dấu $\int_a^b\bigl(f(x)-m\bigr)\,dx$, nên điều kiện bù đúng là $\int_a^b\bigl(f(x)-m\bigr)\,dx=0$.`,
+                R`Với $n$ số, trung bình $m$ là số duy nhất làm tổng chênh lệch bằng $0$: $\sum\bigl(f(x_i)-m\bigr)=0$. Với vô số giá trị, tổng ấy trở thành diện tích có dấu $\int_a^b\bigl(f(x)-m\bigr)\,dx$, nên đòi hỏi tương tự là $\int_a^b\bigl(f(x)-m\bigr)\,dx=0$: phần dôi bù đúng phần thiếu.`,
                 R`Tách tích phân: $\int_a^b f(x)\,dx-\int_a^b m\,dx=0$. Mà $\int_a^b m\,dx=m(b-a)$, diện tích hình chữ nhật cao $m$ và rộng $b-a$.`,
-                R`Giải ra $m=\frac{1}{b-a}\int_a^b f(x)\,dx$. Vậy giá trị trung bình là chiều cao làm phần dôi và phần thiếu cân bằng nhau.`,
+                R`Giải ra $m=\frac{1}{b-a}\int_a^b f(x)\,dx$, khớp với kết quả ở cách thứ nhất. Vậy giá trị trung bình là chiều cao làm phần dôi và phần thiếu cân bằng nhau.`,
               ],
             },
           ],
@@ -173,11 +174,12 @@ export const integralKnowledge: TopicKnowledge = {
           ],
           suyKhac: [
             {
-              cach: "Bằng tích phân xác định và Newton–Leibniz",
+              cach: "Bằng tổng rời rạc",
               buoc: [
-                R`Cho $u$, $v$ có đạo hàm liên tục trên $[a;b]$. Hàm $uv$ là một nguyên hàm của $(uv)'=u'v+uv'$, nên theo Newton–Leibniz $\int_a^b(u'v+uv')\,dx=\big[uv\big]_a^b$.`,
-                R`Tách tích phân của tổng thành hai tích phân: $\int_a^b u'v\,dx+\int_a^b uv'\,dx=\big[uv\big]_a^b$.`,
-                R`Chuyển vế: $\int_a^b uv'\,dx=\big[uv\big]_a^b-\int_a^b u'v\,dx$. Viết $dv=v'\,dx$ và $du=u'\,dx$ được $\int_a^b u\,dv=\big[uv\big]_a^b-\int_a^b v\,du$, không cần đi qua nguyên hàm bất định.`,
+                R`Cho $u$, $v$ có đạo hàm liên tục. Chia $[a;b]$ bởi $x_0<\dots<x_n$ và viết $u_i=u(x_i)$, $v_i=v(x_i)$. Có đồng nhất thức $u_iv_i-u_{i-1}v_{i-1}=u_i(v_i-v_{i-1})+v_{i-1}(u_i-u_{i-1})$, kiểm bằng cách khai triển vế phải.`,
+                R`Cộng theo $i=1,\dots,n$. Vế trái triệt tiêu từng đôi và còn $u_nv_n-u_0v_0=u(b)v(b)-u(a)v(a)$.`,
+                R`Hai tổng ở vế phải là $\sum u_i\,\Delta v_i$ và $\sum v_{i-1}\,\Delta u_i$. Cho độ chia về $0$, chúng tiến về $\int_a^b u\,dv$ và $\int_a^b v\,du$.`,
+                R`Vậy $\int_a^b u\,dv+\int_a^b v\,du=\big[uv\big]_a^b$, tức $\int_a^b u\,dv=\big[uv\big]_a^b-\int_a^b v\,du$. Về hình học, hai phần diện tích ghép thành hình chữ nhật có hai cạnh $u$ và $v$.`,
               ],
             },
           ],
@@ -237,8 +239,8 @@ export const integralKnowledge: TopicKnowledge = {
             {
               cach: "Bằng cách chia đoạn tại các lúc vật đổi chiều",
               buoc: [
-                R`Chia $[t_1;t_2]$ tại các lúc $v$ đổi dấu. Trên mỗi đoạn con, vật đi theo một chiều không đổi, nên quãng đường bằng độ lớn của độ dời trên đoạn đó.`,
-                R`Độ dời trên một đoạn con $[p;q]$ là $\int_p^q v\,dt$ theo cách thứ nhất. Khi $v\ge 0$ nó bằng $\int_p^q|v|\,dt$, khi $v\le 0$ nó bằng $-\int_p^q|v|\,dt$, nên độ lớn của nó đều là $\int_p^q|v|\,dt$.`,
+                R`Giả sử $v$ liên tục và đổi dấu hữu hạn lần. Chia $[t_1;t_2]$ tại các lúc $v$ đổi dấu. Trên mỗi đoạn con $[p;q]$, vật đi theo một chiều không đổi, nên vị trí $s(t)$ đơn điệu và quãng đường bằng $|s(q)-s(p)|$.`,
+                R`Theo phần chứng minh trên, $s(q)-s(p)=\int_p^q v\,dt$. Khi $v\ge 0$ nó bằng $\int_p^q|v|\,dt$, khi $v\le 0$ nó bằng $-\int_p^q|v|\,dt$, nên độ lớn của nó đều là $\int_p^q|v|\,dt$.`,
                 R`Cộng quãng đường các đoạn con: $\sum\int_p^q|v|\,dt=\int_{t_1}^{t_2}|v(t)|\,dt$. Độ dời toàn chặng là tổng các độ dời có dấu, nên bị trừ bớt ở những đoạn $v<0$.`,
               ],
             },
