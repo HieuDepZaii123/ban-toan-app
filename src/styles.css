@@ -1548,3 +1548,26 @@ html[data-lamp="on"] body::before {
 .fz-pair { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
 .fz-pair .graph { height: 220px; }
 @media (max-width: 640px) { .fz-pair { grid-template-columns: 1fr; } }
+.fz-vt { display: flex; gap: 12px; overflow-x: auto; padding: 4px 0; }
+.fz-vt-piece { display: flex; border: 1px solid var(--line); border-radius: 8px; background: var(--plot-bg); }
+.fz-vt-col { min-width: 84px; padding: 8px 10px; display: grid; gap: 2px; text-align: center; border-right: 1px dashed var(--line); font-size: 0.85rem; }
+.fz-vt-col:last-child { border-right: 0; }
+.fz-vt-x { font-weight: 700; }
+.fz-vt-y { color: var(--ink-soft); }
+.fz-vt-up { color: var(--accent); font-weight: 600; }
+.fz-vt-down { color: var(--clay); font-weight: 600; }
+.fz-links { border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); padding: 14px 16px; display: grid; gap: 10px; }
+.fz-links h3 { margin: 0; }
+.fz-map { width: 100%; height: auto; max-height: 420px; }
+.fz-edge { stroke: var(--line); stroke-width: 1; }
+.fz-edge.on { stroke: var(--accent); stroke-width: 2.4; }
+.fz-node { cursor: pointer; outline: none; }
+.fz-node circle { fill: var(--plot-bg); stroke: var(--ink-soft); stroke-width: 1.5; }
+.fz-node text { font-size: 11.5px; fill: var(--ink-soft); }
+.fz-node.near circle { fill: var(--accent-soft); stroke: var(--accent); }
+.fz-node.near text { fill: var(--ink); font-weight: 600; }
+.fz-node.self circle { fill: var(--accent); stroke: var(--accent); }
+.fz-node.self text { fill: var(--ink); font-weight: 700; font-size: 13px; }
+.fz-node:focus-visible circle, .fz-node:hover circle { stroke-width: 3; }
+.fz-edge-list { margin: 0; padding-left: 1.2rem; display: grid; gap: 4px; }
+.fz-bridge-title { margin: 8px 0 0; }

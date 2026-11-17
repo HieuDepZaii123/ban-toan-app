@@ -8,6 +8,14 @@ import { ArchimedesLab, PythagorasLab, SectorConeLab, SimilarityLab, TetraRatioL
 import { AlphaLab, CompleteSquareLab, FitLab, IntervalLab, LineIntersectLab, RootsLab, ShapeLab, SignLab, TranslateLab } from "./quadWidgets.tsx";
 import { AntiderivLab, AreaBetweenLab, AreaFunctionLab, DisplacementLab, MonteCarloAreaLab, PartsLab, SubstitutionLab, VolumeLab } from "./integralWidgets.tsx";
 import { BackpropLab, BoxLab, DerivCurveLab, ExtremaLab, KinkLab, MotionLab, RuleLab, TangentLab } from "./derivWidgets.tsx";
+import { BridgeFigures } from "./bridges.tsx";
+import { TopicLinks } from "./links.tsx";
+import { DecayLab, ExpEquationLab, ExpLawsLab, InverseGraphLab, SlideRuleLab } from "./expWidgets.tsx";
+import { ArithGeoLab, ArithSumLab, CobwebLab, InductionLab } from "./seqWidgets.tsx";
+import { CubicTypesLab, QuarticLab, SolutionsLab, VariationTableLab } from "./surveyWidgets.tsx";
+import { LayerLab, MatrixLab, VectorCentroidLab } from "./vectorWidgets.tsx";
+import { BinomialExpansionLab, GroupedLab, StatsLab } from "./comboWidgets.tsx";
+import { BayesLab, BinomialLab, BirthdayLab, CLTLab, LawLargeNumbersLab } from "./probWidgets.tsx";
 import { AdditionLab, BeatLab, ReflectLab, SolveLab, TriangleLab, WaveLab } from "./trigWidgets.tsx";
 import { BallValley, BisectLab, CircleWalk, CompoundLab, CramerLab, DartLab, DiceLab, DotNeuron, EnumLab, EpsilonGame, HillClimbLab, NetFit, PartialSums, PerceptronLab, RiemannLab, SecantLab, type NetTarget } from "./widgets.tsx";
 
@@ -52,20 +60,29 @@ const SECTIONS: Record<string, { lead: [string, string]; parts: () => ReactNode 
     ),
   },
   exp: {
-    lead: ["Hàm mũ là «nhân lặp». Hãy xem nhân lặp chia nhỏ dần ra sao khi kì lãi ngắn lại, rồi xem một mạng nơ-ron học cái dáng bùng nổ của hàm mũ.", "The exponential function is «repeated multiplication». See how repeated multiplication behaves as the compounding period gets shorter, then watch a neural network learn the explosive shape of the exponential."],
+    lead: ["Hàm mũ là «nhân lặp». Ta đếm thừa số để hiểu các quy tắc lũy thừa, dùng thước logarit để thấy logarit biến nhân thành cộng, soi gương hàm mũ và logarit, mô phỏng phân rã phóng xạ, giải phương trình mũ, rồi xem mạng nơ-ron học dáng bùng nổ của hàm mũ.", "The exponential function is «repeated multiplication». We count factors to understand the laws of exponents, use a slide rule to see logarithms turn multiplication into addition, mirror the exponential and the logarithm, simulate radioactive decay, solve exponential equations, then watch a neural network learn the explosive shape of the exponential."],
     parts: () => (
       <>
+        <ExpLawsLab />
         <CompoundLab />
+        <SlideRuleLab />
+        <InverseGraphLab />
+        <ExpEquationLab />
+        <DecayLab />
         <NetFit target={EXP} story={["Cho mạng xem các chấm của 2^x. Hàm này tăng ngày càng nhanh, nên mạng phải uốn đường cong mỗi lúc một gắt. Thử ít nơ-ron (2–3) và nhiều nơ-ron (12–16) để thấy sự khác nhau.", "Show the network the dots of 2^x. This function grows faster and faster, so the network must bend the curve more and more sharply. Try few neurons (2–3) and many (12–16) to see the difference."]} why={NET_WHY} />
       </>
     ),
   },
   sequence: {
-    lead: ["Dãy số là danh sách có thứ tự; tổng là việc cộng dồn. Máy tính chỉ làm được hữu hạn bước, nên nó cộng dồn từng miếng và xem tổng có chịu dừng lại không.", "A sequence is an ordered list and a sum is an accumulation. A computer can only do finitely many steps, so it adds piece by piece and checks whether the total is willing to settle."],
+    lead: ["Dãy số là danh sách có thứ tự; tổng là việc cộng dồn. Ta ghép hai hàng để cộng cấp số cộng, đua cộng đều với nhân đều, lần theo mạng nhện của dãy truy hồi, và chứng minh bằng quy nạp. Máy tính chỉ làm được hữu hạn bước, nên nó cộng dồn từng miếng và xem tổng có chịu dừng lại không.", "A sequence is an ordered list and a sum is an accumulation. We pair two rows to add an arithmetic sequence, race adding against multiplying, follow the cobweb of a recurrence, and prove by induction. A computer can only do finitely many steps, so it adds piece by piece and checks whether the total is willing to settle."],
     parts: () => (
       <>
+        <ArithSumLab />
         <PartialSums />
+        <ArithGeoLab />
         <EpsilonGame />
+        <CobwebLab />
+        <InductionLab />
       </>
     ),
   },
@@ -116,9 +133,13 @@ const SECTIONS: Record<string, { lead: [string, string]; parts: () => ReactNode 
     ),
   },
   survey: {
-    lead: ["Khảo sát hàm số là đọc bản đồ: độ dốc bằng 0 là nơi quay đầu. Thuật toán lăn bóng cho thấy rõ cực tiểu cục bộ, và mạng nơ-ron học lại đồ thị bậc ba.", "Studying a function is reading a map: slope 0 is where the curve turns. The rolling-ball algorithm shows local minima clearly, and a neural network relearns the cubic graph."],
+    lead: ["Khảo sát hàm số là đọc bản đồ: độ dốc bằng 0 là nơi quay đầu. Máy tự lập bảng biến thiên, phân loại hàm bậc ba và trùng phương, đếm nghiệm khi tham số chạy, lăn bóng tìm cực tiểu cục bộ, và một mạng nơ-ron học lại đồ thị bậc ba.", "Studying a function is reading a map: slope 0 is where the curve turns. The machine builds the variation table by itself, classifies cubics and biquadratics, counts solutions as the parameter runs, rolls a ball to find local minima, and a neural network relearns the cubic graph."],
     parts: () => (
       <>
+        <VariationTableLab />
+        <CubicTypesLab />
+        <QuarticLab />
+        <SolutionsLab />
         <BallValley kind="w" />
         <NetFit target={CUBIC} story={["Đồ thị bậc ba có một đỉnh đồi và một đáy. Nhìn xem mạng có tự uốn ra đúng hai chỗ quay đầu không.", "A cubic graph has one hilltop and one bottom. See whether the network bends out exactly two turning points by itself."]} why={NET_WHY} />
       </>
@@ -141,11 +162,14 @@ const SECTIONS: Record<string, { lead: [string, string]; parts: () => ReactNode 
     ),
   },
   vector: {
-    lead: ["Vectơ là chỉ dẫn di chuyển; tích vô hướng đo hai hướng ăn khớp đến đâu. Một nơ-ron của mạng chỉ làm đúng phép ấy. Định thức quyết định hệ phương trình có nghiệm.", "A vector is an instruction to move; the dot product measures how well two directions agree. One neuron of a network does exactly that. The determinant decides whether a system of equations has a solution."],
+    lead: ["Vectơ là chỉ dẫn di chuyển; cộng nối đuôi cho trọng tâm, tích vô hướng đo hai hướng ăn khớp đến đâu (một nơ-ron làm đúng phép ấy). Ma trận là một phép biến đổi mặt phẳng với định thức là hệ số đổi diện tích, và một lớp nơ-ron chỉ là ma trận cộng một phép gấp.", "A vector is an instruction to move; adding end to end gives the centroid, and the dot product measures how well two directions agree (one neuron does exactly that). A matrix is a transformation of the plane whose determinant is the area scale factor, and a layer of neurons is just a matrix plus a fold."],
     parts: () => (
       <>
+        <VectorCentroidLab />
         <DotNeuron />
+        <MatrixLab />
         <CramerLab />
+        <LayerLab />
       </>
     ),
   },
@@ -178,12 +202,28 @@ const SECTIONS: Record<string, { lead: [string, string]; parts: () => ReactNode 
     ),
   },
   combo: {
-    lead: ["Đếm là liệt kê. Máy liệt kê rất nhanh, nhưng chỉ đến một giới hạn; công thức giúp đếm mà không liệt kê.", "Counting is listing. The machine lists very fast but only up to a limit; formulas let us count without listing."],
-    parts: () => <EnumLab />,
+    lead: ["Đếm là liệt kê. Máy liệt kê rất nhanh, nhưng chỉ đến một giới hạn; công thức giúp đếm mà không liệt kê. Ta khai triển nhị thức bằng cách nhân từng ngoặc, và xem trung bình, trung vị, tứ phân vị, phương sai phản ứng thế nào với một giá trị lạ và với số liệu ghép nhóm.", "Counting is listing. The machine lists very fast but only up to a limit; formulas let us count without listing. We expand binomials by multiplying one bracket at a time, and see how the mean, median, quartiles and variance react to an odd value and to grouped data."],
+    parts: () => (
+      <>
+        <EnumLab />
+        <BinomialExpansionLab />
+        <StatsLab />
+        <GroupedLab />
+      </>
+    ),
   },
   probability: {
-    lead: ["Xác suất là điều xảy ra khi lặp lại thật nhiều lần. Ta vừa đếm bằng lập luận vừa chạy mô phỏng, rồi so hai bên.", "Probability is what happens when you repeat something a very large number of times. We count by reasoning and also run simulations, then compare the two."],
-    parts: () => <DiceLab />,
+    lead: ["Xác suất là điều xảy ra khi lặp lại thật nhiều lần. Ta vừa đếm bằng lập luận vừa chạy mô phỏng, rồi so hai bên: công thức Bayes bằng diện tích, phân phối nhị thức, nghịch lí ngày sinh, luật số lớn và hình chuông xuất hiện khi cộng nhiều xúc xắc.", "Probability is what happens when you repeat something a very large number of times. We count by reasoning and also run simulations, then compare the two: Bayes' formula as areas, the binomial distribution, the birthday paradox, the law of large numbers, and the bell shape that appears when adding many dice."],
+    parts: () => (
+      <>
+        <DiceLab />
+        <BayesLab />
+        <BinomialLab />
+        <BirthdayLab />
+        <LawLargeNumbersLab />
+        <CLTLab />
+      </>
+    ),
   },
 };
 
@@ -196,6 +236,8 @@ export default function FromZero({ topicId }: { topicId: string }) {
       <h2 id="fz-title">{tt("Suy từ số 0: tự tay chạy thuật toán", "From zero: run the algorithms yourself")}</h2>
       <p className="fz-lead"><MathText text={tt(section.lead[0], section.lead[1])} /></p>
       {section.parts()}
+      <TopicLinks topicId={topicId} />
+      <BridgeFigures topicId={topicId} />
     </section>
   );
 }

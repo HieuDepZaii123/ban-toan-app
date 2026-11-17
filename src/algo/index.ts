@@ -758,3 +758,165 @@ export function sectorAreaNumeric(r: number, alpha: number, n = 20000): number {
   for (let i = 0; i < n; i++) s += 0.5 * r * r * dth;
   return s;
 }
+
+/* ---------- Thống kê, xác suất, ma trận, dãy lặp: thuật toán bổ sung ---------- */
+
+export const mean = (xs: readonly number[]): number => xs.reduce((s, v) => s + v, 0) / xs.length;
+
+function medianSorted(s: readonly number[]): number {
+  const n = s.length;
+  return n % 2 === 1 ? (s[(n - 1) / 2] as number) : ((s[n / 2 - 1] as number) + (s[n / 2] as number)) / 2;
+}
+
+/** Trung vị và tứ phân vị theo cách làm trong sách: Q2 là trung vị, Q1 và Q3 là trung vị của nửa dưới và nửa trên (bỏ số ở giữa nếu n lẻ). */
+export function quartiles(xs: readonly number[]): { min: number; q1: number; q2: number; q3: number; max: number } {
+  const s = [...xs].sort((a, b) => a - b);
+  const n = s.length;
+  const half = Math.floor(n / 2);
+  return { min: s[0] as number, q1: medianSorted(s.slice(0, half)), q2: medianSorted(s), q3: medianSorted(s.slice(n - half)), max: s[n - 1] as number };
+}
+
+/** Phương sai theo định nghĩa: trung bình của bình phương độ lệch. */
+export function variance(xs: readonly number[]): number {
+  const m = mean(xs);
+  return mean(xs.map((v) => (v - m) ** 2));
+}
+
+/** Chia dữ liệu vào các nhóm [lo + i·w; lo + (i+1)·w). */
+export function histogram(xs: readonly number[], lo: number, w: number, bins: number): number[] {
+  const c = Array<number>(bins).fill(0);
+  for (const v of xs) {
+    const i = Math.floor((v - lo) / w);
+    if (i >= 0 && i < bins) c[i] = (c[i] as number) + 1;
+  }
+  return c;
+}
+
+/** Số trung bình của mẫu ghép nhóm: mỗi nhóm đại diện bằng điểm giữa. */
+export function groupedMean(counts: readonly number[], lo: number, w: number): number {
+  const n = counts.reduce((s, v) => s + v, 0);
+  return counts.reduce((s, v, i) => s + v * (lo + (i + 0.5) * w), 0) / n;
+}
+
+/** Tứ phân vị Q_j của mẫu ghép nhóm bằng công thức nội suy: u_m + (jn/4 − C)/n_m · w. */
+export function groupedQuartile(counts: readonly number[], lo: number, w: number, j: 1 | 2 | 3): number {
+  const n = counts.reduce((s, v) => s + v, 0);
+  let acc = 0;
+  for (let i = 0; i < counts.length; i++) {
+    const c = counts[i] as number;
+    if (acc + c >= (j * n) / 4) return lo + i * w + (((j * n) / 4 - acc) / c) * w;
+    acc += c;
+  }
+  return lo + counts.length * w;
+}
+
+/** Phân phối nhị thức: P(X = k) = C(n,k) p^k (1−p)^(n−k), tính bằng truy hồi để không tràn số. */
+export function binomialPmf(n: number, p: number): number[] {
+  const out = Array<number>(n + 1).fill(0);
+  out[0] = (1 - p) ** n;
+  for (let k = 1; k <= n; k++) out[k] = p === 1 ? (k === n ? 1 : 0) : ((out[k - 1] as number) * ((n - k + 1) / k) * p) / (1 - p);
+  return out;
+}
+
+/** Nghịch lí ngày sinh: xác suất có ít nhất hai người trùng ngày sinh trong n người (365 ngày). */
+export function birthdayExact(n: number): number {
+  let none = 1;
+  for (let i = 0; i < n; i++) none *= (365 - i) / 365;
+  return 1 - none;
+}
+
+export function birthdaySim(n: number, trials: number, rng: () => number): number {
+  let hit = 0;
+  for (let t = 0; t < trials; t++) {
+    const seen = new Set<number>();
+    for (let i = 0; i < n; i++) {
+      const d = Math.floor(rng() * 365);
+      if (seen.has(d)) { hit++; break; }
+      seen.add(d);
+    }
+  }
+  return hit / trials;
+}
+
+/** Công thức Bayes cho hai nguyên nhân B và không-B: trả về P(A) và P(B|A). */
+export function bayes(pB: number, pAgB: number, pAgNotB: number): { pA: number; pBgA: number } {
+  const pA = pB * pAgB + (1 - pB) * pAgNotB;
+  return { pA, pBgA: pA === 0 ? 0 : (pB * pAgB) / pA };
+}
+
+/** Tỉ lệ ngửa chạy theo số lần tung: luật số lớn. */
+export function runningProportion(n: number, rng: () => number): number[] {
+  const out: number[] = [];
+  let heads = 0;
+  for (let i = 1; i <= n; i++) { if (rng() < 0.5) heads++; out.push(heads / i); }
+  return out;
+}
+
+/** Tổng của k xúc xắc, tung rolls lần: histogram của các tổng (tiến về hình chuông). */
+export function diceSumHistogram(k: number, rolls: number, rng: () => number): number[] {
+  const c = Array<number>(6 * k + 1).fill(0);
+  for (let r = 0; r < rolls; r++) {
+    let s = 0;
+    for (let i = 0; i < k; i++) s += 1 + Math.floor(rng() * 6);
+    c[s] = (c[s] as number) + 1;
+  }
+  return c;
+}
+
+/** Phân rã phóng xạ mô phỏng: mỗi bước mỗi nguyên tử còn lại phân rã với xác suất p. Trả về số nguyên tử còn lại sau mỗi bước. */
+export function simulateDecay(n0: number, p: number, steps: number, rng: () => number): number[] {
+  const out = [n0];
+  let n = n0;
+  for (let s = 0; s < steps; s++) {
+    let left = 0;
+    for (let i = 0; i < n; i++) if (rng() >= p) left++;
+    n = left;
+    out.push(n);
+  }
+  return out;
+}
+
+/** Lặp x ← f(x): dãy truy hồi u_{n+1} = f(u_n). */
+export function iterate(f: Fn, x0: number, n: number): number[] {
+  const out = [x0];
+  for (let i = 0; i < n; i++) out.push(f(out[i] as number));
+  return out;
+}
+
+/** Nhân hai đa thức (hệ số từ bậc thấp đến cao): cách khai triển nhị thức bằng máy. */
+export function polyMul(a: readonly number[], b: readonly number[]): number[] {
+  const out = Array<number>(a.length + b.length - 1).fill(0);
+  a.forEach((x, i) => b.forEach((y, j) => { out[i + j] = (out[i + j] as number) + x * y; }));
+  return out;
+}
+
+/** Diện tích đa giác bằng công thức dây giày. */
+export function polyArea(pts: readonly { x: number; y: number }[]): number {
+  return Math.abs(pts.reduce((acc, p, i) => { const q = pts[(i + 1) % pts.length] as { x: number; y: number }; return acc + (p.x * q.y - q.x * p.y); }, 0)) / 2;
+}
+
+export type M2 = [number, number, number, number];
+export const matApply = (m: M2, p: { x: number; y: number }): { x: number; y: number } => ({ x: m[0] * p.x + m[1] * p.y, y: m[2] * p.x + m[3] * p.y });
+export const matMul = (m: M2, n: M2): M2 => [m[0] * n[0] + m[1] * n[2], m[0] * n[1] + m[1] * n[3], m[2] * n[0] + m[3] * n[2], m[2] * n[1] + m[3] * n[3]];
+export const matDet = (m: M2): number => m[0] * m[3] - m[1] * m[2];
+
+/** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
+export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
+  const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);
+  const cuts = [a, ...crit, b];
+  const signs: (1 | -1)[] = [];
+  for (let i = 0; i + 1 < cuts.length; i++) signs.push(diff(f, ((cuts[i] as number) + (cuts[i + 1] as number)) / 2, 1e-5) >= 0 ? 1 : -1);
+  return { cuts, signs, values: cuts.map((x) => f(x)) };
+}
+
+/** Số nghiệm của f(x) = m trên [a;b]. */
+export function countSolutions(f: Fn, m: number, a: number, b: number): number {
+  return findRoots((x) => f(x) - m, a, b, 6000).length;
+}
+
+/** Chỉ số n đầu tiên mà dãy h vượt dãy g và từ đó ở lại trên: so tăng mũ với tăng tuyến tính. Trả về null nếu chưa vượt trong nMax số hạng. */
+export function crossoverIndex(g: (n: number) => number, h: (n: number) => number, nMax: number): number | null {
+  let last = 0;
+  for (let n = 1; n <= nMax; n++) if (h(n) <= g(n)) last = n;
+  return last < nMax ? last + 1 : null;
+}

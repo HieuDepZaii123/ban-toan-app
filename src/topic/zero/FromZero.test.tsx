@@ -1,6 +1,8 @@
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
+import { RouteProvider } from "../../lib/route.tsx";
 import { setLang } from "../../lib/store.ts";
+import { EDGES } from "./edges.ts";
 import FromZero from "./FromZero.tsx";
 
 const IDS = ["quadratic", "ineq", "exp", "sequence", "trig", "limit", "derivative", "survey", "integral", "vector", "analytic", "triangle", "combo", "probability"];
@@ -28,7 +30,7 @@ describe("Suy từ số 0 (FromZero)", () => {
 
   test.each(IDS)("%s: tiếng Anh không lẫn chữ Việt, tiếng Việt vẫn nguyên", (id) => {
     setLang("en");
-    const en = render(<FromZero topicId={id} />);
+    const en = render(<RouteProvider><FromZero topicId={id} /></RouteProvider>);
     const enText = visibleText(en.container).map((t) => t.replace(/Viète/g, "Viete"));
     expect(enText.filter((t) => VN.test(t))).toEqual([]);
     expect(en.container.querySelector("h2")?.textContent).toBe("From zero: run the algorithms yourself");
@@ -36,18 +38,35 @@ describe("Suy từ số 0 (FromZero)", () => {
     en.unmount();
 
     setLang("vi");
-    const vi = render(<FromZero topicId={id} />);
+    const vi = render(<RouteProvider><FromZero topicId={id} /></RouteProvider>);
     expect(vi.container.querySelector("h2")?.textContent).toBe("Suy từ số 0: tự tay chạy thuật toán");
     expect(visibleText(vi.container).some((t) => VN.test(t))).toBe(true);
   });
 
-  test("số hình tối thiểu cho từng chuyên đề không bị rớt", () => {
+  test("mọi chuyên đề có đủ hình, có bản đồ liên kết và danh sách mối nối", () => {
     setLang("en");
-    const min: Record<string, number> = { quadratic: 11, ineq: 7, trig: 8, limit: 7, derivative: 10, integral: 9, analytic: 6, triangle: 8 };
+    const min: Record<string, number> = { quadratic: 13, ineq: 8, exp: 8, sequence: 7, trig: 10, limit: 9, derivative: 14, survey: 7, integral: 13, vector: 7, analytic: 7, triangle: 9, combo: 5, probability: 7 };
     for (const [id, n] of Object.entries(min)) {
-      const r = render(<FromZero topicId={id} />);
-      expect(r.container.querySelectorAll(".fz-card").length).toBeGreaterThanOrEqual(n);
+      const r = render(<RouteProvider><FromZero topicId={id} /></RouteProvider>);
+      expect(r.container.querySelectorAll(".fz-card").length, `${id}: số hình`).toBeGreaterThanOrEqual(n);
+      expect(r.container.querySelectorAll(".fz-node").length, `${id}: số nút của bản đồ`).toBe(14);
+      expect(r.container.querySelectorAll(".fz-edge-list li").length, `${id}: số mối nối`).toBeGreaterThanOrEqual(3);
+      expect(r.container.querySelector(".fz-node.self"), `${id}: nút của chính nó`).not.toBeNull();
       r.unmount();
     }
+  });
+
+  test("mọi mối nối nối hai chuyên đề có thật và không trùng lặp", () => {
+    const ids = new Set(IDS);
+    const seen = new Set<string>();
+    for (const e of EDGES) {
+      expect(ids.has(e.a) && ids.has(e.b) && e.a !== e.b, `${e.a}–${e.b}`).toBe(true);
+      const key = [e.a, e.b].sort().join("|");
+      expect(seen.has(key), `trùng ${key}`).toBe(false);
+      seen.add(key);
+      expect(e.vi.length).toBeGreaterThan(30);
+      expect(e.en.length).toBeGreaterThan(30);
+    }
+    for (const id of IDS) expect(EDGES.filter((e) => e.a === id || e.b === id).length, id).toBeGreaterThanOrEqual(3);
   });
 });

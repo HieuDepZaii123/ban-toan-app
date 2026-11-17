@@ -293,6 +293,56 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   near("diện tích quạt = ½r²α", A.sectorAreaNumeric(3, 2), 9, 1e-9);
 }
 
+// Thống kê, xác suất, ma trận, dãy lặp.
+{
+  const d = [2, 4, 4, 4, 5, 5, 7, 9];
+  near("trung bình", A.mean(d), 5, 1e-12);
+  near("phương sai", A.variance(d), 4, 1e-12);
+  const q = A.quartiles([1, 2, 3, 4, 5, 6, 7, 8]);
+  is("tứ phân vị chẵn", q.q1 === 2.5 && q.q2 === 4.5 && q.q3 === 6.5);
+  const q2 = A.quartiles([1, 2, 3, 4, 5, 6, 7]);
+  is("tứ phân vị lẻ bỏ số giữa", q2.q1 === 2 && q2.q2 === 4 && q2.q3 === 6);
+  const mean0 = A.mean([1, 5, 9, 13]);
+  near("cộng c: trung bình +c", A.mean([1, 5, 9, 13].map((v) => v + 10)), mean0 + 10, 1e-12);
+  near("cộng c: phương sai giữ", A.variance([1, 5, 9, 13].map((v) => v + 10)), A.variance([1, 5, 9, 13]), 1e-12);
+  near("nhân k: phương sai ×k²", A.variance([1, 5, 9, 13].map((v) => v * 3)), 9 * A.variance([1, 5, 9, 13]), 1e-9);
+  const h = A.histogram([1, 2, 3, 11, 12, 21], 0, 10, 3);
+  is("histogram", h.join() === "3,2,1");
+  near("trung bình ghép nhóm", A.groupedMean([3, 2, 1], 0, 10), (3 * 5 + 2 * 15 + 25) / 6, 1e-12);
+  near("trung vị ghép nhóm", A.groupedQuartile([3, 2, 1], 0, 10, 2), 10 + ((3 - 3) / 2) * 10, 1e-12);
+  const bn = A.binomialPmf(10, 0.3);
+  near("nhị thức tổng 1", bn.reduce((s2, v) => s2 + v, 0), 1, 1e-12);
+  near("nhị thức trung bình np", bn.reduce((s2, v, k) => s2 + k * v, 0), 3, 1e-12);
+  near("C(10,3) 0.3^3 0.7^7", bn[3]!, 120 * 0.3 ** 3 * 0.7 ** 7, 1e-12);
+  near("ngày sinh 23 người ≈ 0.507", A.birthdayExact(23), 0.5073, 1e-3);
+  near("ngày sinh mô phỏng", A.birthdaySim(23, 40000, mulberry32(9)), A.birthdayExact(23), 0.015);
+  const by = A.bayes(0.01, 0.95, 0.05);
+  near("Bayes: P(A)", by.pA, 0.01 * 0.95 + 0.99 * 0.05, 1e-12);
+  near("Bayes: P(B|A) ≈ 0.161", by.pBgA, 0.0095 / 0.059, 1e-12);
+  const rp = A.runningProportion(20000, mulberry32(4));
+  near("luật số lớn", rp[19999]!, 0.5, 0.02);
+  const ds = A.diceSumHistogram(3, 30000, mulberry32(8));
+  is("tổng 3 xúc xắc đỉnh ở 10–11", ds.indexOf(Math.max(...ds)) >= 10 && ds.indexOf(Math.max(...ds)) <= 11);
+  const dc = A.simulateDecay(4000, 0.1, 7, mulberry32(3));
+  near("phân rã mô phỏng ≈ N0·0.9^7", dc[7]!, 4000 * 0.9 ** 7, 120);
+  const it = A.iterate((x) => (x + 2 / x) / 2, 1, 8);
+  near("lặp Newton → √2", it[8]!, Math.SQRT2, 1e-12);
+  is("iterate n=0 chỉ có giá trị đầu", A.iterate((x) => x + 1, 5, 0).join() === "5");
+  is("(1+x)^4 hệ số", A.polyMul(A.polyMul([1, 1], [1, 1]), A.polyMul([1, 1], [1, 1])).join() === "1,4,6,4,1");
+  near("diện tích dây giày", A.polyArea([{ x: 0, y: 0 }, { x: 4, y: 0 }, { x: 4, y: 3 }]), 6, 1e-12);
+  const M: A.M2 = [2, 1, 0, 3];
+  near("det", A.matDet(M), 6, 1e-12);
+  const sq = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }].map((p) => A.matApply(M, p));
+  near("diện tích ảnh = |det|", A.polyArea(sq), 6, 1e-12);
+  near("det(AB)=det A·det B", A.matDet(A.matMul(M, [1, 2, 3, 4])), 6 * -2, 1e-12);
+  is("AB ≠ BA", A.matMul([1, 1, 0, 1], [1, 0, 1, 1]).join() !== A.matMul([1, 0, 1, 1], [1, 1, 0, 1]).join());
+  const vt = A.variationTable((x) => x ** 3 - 3 * x, -3, 3);
+  is("bảng biến thiên x³−3x: tăng, giảm, tăng", vt.signs.join() === "1,-1,1" && vt.cuts.length === 4);
+  is("f(x)=m có 3 nghiệm khi |m|<2", A.countSolutions((x) => x ** 3 - 3 * x, 1, -3, 3) === 3 && A.countSolutions((x) => x ** 3 - 3 * x, 3, -3, 3) === 1);
+  is("2^n vượt 100n từ n=10", A.crossoverIndex((n) => 100 * n, (n) => 2 ** n, 40) === 10);
+  is("không vượt trong giới hạn thì null", A.crossoverIndex((n) => 100 * n, (n) => 2 ** n, 8) === null);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);
