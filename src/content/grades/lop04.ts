@@ -7,6 +7,7 @@ export const lop04: GradeBook = {
   grade: 4,
   band: "tieu-hoc",
   title: "Số đến lớp triệu, phân số, góc, đường thẳng và biểu đồ cột.",
+  titleEn: "Numbers into the millions, fractions, angles, lines and bar charts.",
   chapters: [
     chuong("lop-trieu", "Số đến lớp triệu", [
       bai(
@@ -27,6 +28,7 @@ export const lop04: GradeBook = {
           luyen(R`Số nào lớn hơn, $3\,000\,000$ hay $999\,999$?`, R`Số $3\,000\,000$ lớn hơn.`, [{ expr: "3000000-999999", expect: "2000001" }], "Số có lớp triệu lớn hơn số chỉ tới lớp nghìn."),
           luyen(R`Tính $1\,000\,000+20\,000$.`, R`Tổng bằng $1\,020\,000$.`, [{ expr: "1000000+20000", expect: "1020000" }], "Một triệu thêm hai mươi nghìn. Hàng triệu vẫn là $1$."),
         ],
+        { titleEn: "Reading numbers in the millions" },
       ),
       bai(
         "so-sanh-trieu",
@@ -46,8 +48,9 @@ export const lop04: GradeBook = {
           luyen(R`So sánh $1\,200\,000$ và $1\,200\,500$.`, R`Số $1\,200\,500$ lớn hơn.`, [{ expr: "1200500-1200000", expect: "500" }], "Hai lớp triệu và lớp nghìn giống nhau. Lớp đơn vị $500$ lớn hơn $0$."),
           luyen(R`Sắp $30\,000$ và $3\,000\,000$. Số nhỏ hơn là số nào?`, R`Số nhỏ hơn là $30\,000$.`, [{ expr: "3000000/30000", expect: "100" }], "Ba mươi nghìn thuộc lớp nghìn. Ba triệu thuộc lớp triệu và lớn hơn đúng một trăm lần."),
         ],
+        { titleEn: "Comparing numbers in the millions" },
       ),
-    ]),
+    ], "Numbers into the millions"),
     chuong("phan-so", "Phân số", [
       bai(
         "phan-bang",
@@ -67,6 +70,7 @@ export const lop04: GradeBook = {
           luyen(R`Rút gọn $\frac{4}{10}$.`, R`Phân số tối giản là $\frac{2}{5}$.`, [{ expr: "Rational(4,10)", expect: "Rational(2,5)" }], "Chia tử và mẫu cho ước chung $2$. Giá trị phân số không đổi."),
           luyen(R`Hai phân số $\frac{3}{5}$ và $\frac{6}{10}$ có bằng nhau không?`, R`Có.`, [{ expr: "Rational(3,5)-Rational(6,10)", expect: "0" }], "Nhân tử và mẫu của $\\frac{3}{5}$ với $2$ được $\\frac{6}{10}$."),
         ],
+        { titleEn: "Equivalent fractions" },
       ),
       bai(
         "so-sanh-phan-4",
@@ -86,8 +90,9 @@ export const lop04: GradeBook = {
           luyen(R`Tính $\frac{2}{3}:\frac{4}{5}$.`, R`Thương bằng $\frac{5}{6}$.`, [{ expr: "Rational(2,3)/Rational(4,5)", expect: "Rational(5,6)" }], "Nhân $\\frac{2}{3}$ với phân số đảo $\\frac{5}{4}$, rồi rút gọn."),
           luyen(R`Tính $\frac{2}{8}+\frac{1}{8}$.`, R`Tổng bằng $\frac{3}{8}$.`, [{ expr: "Rational(2,8)+Rational(1,8)", expect: "Rational(3,8)" }], "Cùng mẫu thì cộng tử và giữ mẫu. Đây là phép cộng, không phải phép nhân."),
         ],
+        { titleEn: "Comparing and dividing fractions" },
       ),
-    ]),
+    ], "Fractions"),
     chuong("goc-duong", "Góc và hai đường thẳng", [
       bai(
         "goc-4",
@@ -107,7 +112,7 @@ export const lop04: GradeBook = {
           luyen(R`Góc $180^\circ$ là góc gì?`, R`Đó là góc bẹt.`, [{ expr: "180-90", expect: "90" }], "Số đo $180$ lớn hơn góc vuông đúng $90$ độ và đúng bằng góc bẹt."),
           luyen(R`Dùng thước đo góc, một góc vuông là bao nhiêu độ?`, R`Góc vuông là $90^\circ$.`, [{ expr: "180/2", expect: "90" }], "Góc vuông là nửa góc bẹt. Thước đo góc ghi vạch $90$ tại góc này."),
         ],
-        { figure: "angle" },
+        { titleEn: "Acute, obtuse and straight angles; measuring angles", figure: "angle" },
       ),
       bai(
         "vuong-song",
@@ -127,8 +132,9 @@ export const lop04: GradeBook = {
           luyen(R`Hình bình hành cạnh $5$ và $3$ có chu vi bằng bao nhiêu?`, R`Chu vi bằng $16$.`, [{ expr: "(5+3)*2", expect: "16" }], "Hai cặp cạnh đối bằng nhau. Chu vi là hai lần tổng hai cạnh kề."),
           luyen(R`Một đường thẳng vuông góc với cả hai đường song song. Tổng hai góc vuông đó bằng bao nhiêu độ?`, R`Tổng bằng $180^\circ$, vì mỗi góc là $90^\circ$.`, [{ expr: "90+90", expect: "180" }], "Đường vuông góc với một trong hai đường song song thì vuông góc với đường còn lại. Hai góc vuông cộng thành góc bẹt."),
         ],
+        { titleEn: "Perpendicular and parallel lines" },
       ),
-    ]),
+    ], "Angles and pairs of lines"),
     chuong("thong-ke-4", "Trung bình cộng và biểu đồ cột", [
       bai(
         "trung-binh-4",
@@ -148,6 +154,7 @@ export const lop04: GradeBook = {
           luyen(R`Ba số có tổng $15$. Trung bình cộng bằng bao nhiêu?`, R`Trung bình bằng $5$.`, [{ expr: "Rational(15,3)", expect: "5" }], "Chia tổng cho số các số. Ở đây có đúng ba số."),
           luyen(R`Trung bình cộng của $2$ và $8$ bằng bao nhiêu?`, R`Trung bình bằng $5$.`, [{ expr: "Rational(2+8,2)", expect: "5" }], "Tổng hai số là $10$. Chia cho $2$ được $5$."),
         ],
+        { titleEn: "Finding the average" },
       ),
       bai(
         "bieu-do-cot-4",
@@ -167,8 +174,8 @@ export const lop04: GradeBook = {
           luyen(R`Cột $8$ cao hơn cột $3$ bao nhiêu đơn vị?`, R`Cao hơn $5$ đơn vị.`, [{ expr: "8-3", expect: "5" }], "Hiệu hai độ cao là phần cột này nhô hơn cột kia."),
           luyen(R`Ba cột $1, 2, 3$ có tổng bằng bao nhiêu?`, R`Tổng bằng $6$.`, [{ expr: "1+2+3", expect: "6" }], "Cộng các số đọc được trên biểu đồ cột."),
         ],
-        { figure: "bar" },
+        { titleEn: "Bar charts", figure: "bar" },
       ),
-    ]),
+    ], "Averages and bar charts"),
   ],
 };
