@@ -7,6 +7,7 @@ export const lop05: GradeBook = {
   grade: 5,
   band: "tieu-hoc",
   title: "Số thập phân, phần trăm, diện tích tam giác, hình tròn và thể tích hình hộp.",
+  titleEn: "Decimals, percentages, the area of triangles and circles, and the volume of cuboids.",
   chapters: [
     chuong("thap-phan", "Số thập phân", [
       bai(
@@ -27,6 +28,7 @@ export const lop05: GradeBook = {
           luyen(R`Tính $1{,}5\times 2$.`, R`Tích bằng $3$.`, [{ expr: "Rational(3,2)*2", expect: "3" }], "Một phẩy năm là $\\frac{3}{2}$. Nhân với $2$ được $3$."),
           luyen(R`Tính $2{,}4\times 0{,}5$.`, R`Tích bằng $1{,}2$.`, [{ expr: "Rational(24,10)*Rational(1,2)", expect: "Rational(6,5)" }], "Một nửa của $2{,}4$ là $1{,}2$. Đây vẫn là phép nhân số thập phân."),
         ],
+        { titleEn: "Multiplying decimals" },
       ),
       bai(
         "lam-tron",
@@ -46,8 +48,9 @@ export const lop05: GradeBook = {
           luyen(R`Làm tròn $4{,}13$ đến hàng phần mười.`, R`Kết quả là $4{,}1$.`, [{ expr: "round(Rational(413,100),1)", expect: "41/10" }], "Chữ số phần trăm là $3$, nhỏ hơn $5$, nên giữ chữ số phần mười."),
           luyen(R`Hiệu giữa $3{,}3$ và $3{,}26$ bằng bao nhiêu?`, R`Hiệu bằng $0{,}04$.`, [{ expr: "Rational(33,10)-Rational(326,100)", expect: "Rational(4,100)" }], "Số đã làm tròn lên lớn hơn số ban đầu. Hiệu là bốn phần trăm."),
         ],
+        { titleEn: "Rounding decimals" },
       ),
-    ]),
+    ], "Decimals"),
     chuong("phan-tram", "Phần trăm", [
       bai(
         "mot-phan-tram",
@@ -70,6 +73,7 @@ export const lop05: GradeBook = {
           luyen(R`Tính $50\%$ của $18$.`, R`Kết quả bằng $9$.`, [{ expr: "18*Rational(1,2)", expect: "9" }], "Năm mươi phần trăm bằng một nửa. Nửa của $18$ là $9$."),
           luyen(R`Một lớp $40$ bạn có $30\%$ đạt giải. Có bao nhiêu bạn đạt giải?`, R`Có $12$ bạn đạt giải.`, [{ expr: "40*Rational(30,100)", expect: "12" }], "Lấy $30$ phần trăm của $40$. Nhân $40$ với $\\frac{30}{100}$ được $12$."),
         ],
+        { titleEn: "Finding a percentage of a number" },
       ),
       bai(
         "doi-phan-tram",
@@ -89,8 +93,9 @@ export const lop05: GradeBook = {
           luyen(R`Đổi $\frac{1}{5}$ thành phần trăm.`, R`Một phần năm bằng $20\%$.`, [{ expr: "Rational(1,5)*100", expect: "20" }], "Nhân $\\frac{1}{5}$ với $100$ được $20$. Đó là số phần trăm."),
           luyen(R`Biết $25\%$ của một số bằng $10$. Cả số bằng bao nhiêu?`, R`Cả số bằng $40$.`, [{ expr: "10/Rational(25,100)", expect: "40" }], "Chia phần đã biết cho phân số phần trăm. Thương là cả số ban đầu."),
         ],
+        { titleEn: "Converting fractions to percentages" },
       ),
-    ]),
+    ], "Percentages"),
     chuong("dien-tich", "Diện tích", [
       bai(
         "tam-giac-thang",
@@ -113,7 +118,7 @@ export const lop05: GradeBook = {
           luyen(R`Hình thang hai đáy $2$ và $6$, cao $5$, có diện tích bằng bao nhiêu?`, R`Diện tích bằng $20$.`, [{ expr: "(2+6)/2*5", expect: "20" }], "Trung bình hai đáy bằng $4$. Nhân với chiều cao $5$ được $20$."),
           luyen(R`Hình chữ nhật $4$ trên $4$ có diện tích bằng bao nhiêu?`, R`Diện tích bằng $16$.`, [{ expr: "4*4", expect: "16" }], "Hình chữ nhật này có hai kích thước bằng nhau, nên là hình vuông cạnh $4$. Diện tích là bình phương cạnh."),
         ],
-        { figure: "triangle" },
+        { titleEn: "Area of triangles and trapeziums", figure: "triangle" },
       ),
       bai(
         "hinh-tron-5",
@@ -133,9 +138,9 @@ export const lop05: GradeBook = {
           luyen(R`Hình tròn bán kính $1$ xentimét, lấy $3{,}14$. Chu vi bằng bao nhiêu?`, R`Chu vi bằng $6{,}28$ xentimét.`, [{ expr: "Rational(314,100)*2*1", expect: "Rational(157,25)" }], "Nhân $2$ với $3{,}14$ và với bán kính $1$."),
           luyen(R`Hình tròn bán kính $3$ xentimét, lấy $3{,}14$. Diện tích bằng bao nhiêu?`, R`Diện tích bằng $28{,}26$ xentimét vuông.`, [{ expr: "Rational(314,100)*3**2", expect: "Rational(1413,50)" }], "Bình phương bán kính bằng $9$. Nhân $9$ với $3{,}14$."),
         ],
-        { figure: "circle" },
+        { titleEn: "Circumference and area of a circle", figure: "circle" },
       ),
-    ]),
+    ], "Area"),
     chuong("the-tich", "Thể tích hình hộp", [
       bai(
         "hop",
@@ -155,7 +160,7 @@ export const lop05: GradeBook = {
           luyen(R`Hộp $5\times 2\times 2$ có thể tích bằng bao nhiêu?`, R`Thể tích bằng $20$.`, [{ expr: "5*2*2", expect: "20" }], "Nhân lần lượt ba kích thước. Diện tích đáy $10$ nhân chiều cao $2$ cũng ra $20$."),
           luyen(R`Hộp có thể tích $24$ xentimét khối và chiều cao $4$ xentimét. Diện tích mặt đáy bằng bao nhiêu?`, R`Diện tích mặt đáy bằng $6$ xentimét vuông.`, [{ expr: "24/4", expect: "6" }], "Thể tích bằng diện tích đáy nhân chiều cao. Lấy $24:4$ được diện tích mặt đáy."),
         ],
-        { figure: "rect" },
+        { titleEn: "Volume of a cuboid", figure: "rect" },
       ),
       bai(
         "lap-phuong",
@@ -175,8 +180,9 @@ export const lop05: GradeBook = {
           luyen(R`Hình lập phương cạnh $5$ có diện tích một mặt bằng bao nhiêu?`, R`Diện tích một mặt bằng $25$.`, [{ expr: "5**2", expect: "25" }], "Mỗi mặt là hình vuông. Diện tích một mặt là bình phương cạnh."),
           luyen(R`Hình lập phương cạnh $5$ có diện tích toàn phần bằng bao nhiêu?`, R`Diện tích toàn phần bằng $150$.`, [{ expr: "6*5**2", expect: "150" }], "Sáu mặt vuông, mỗi mặt diện tích $25$. Sáu lần $25$ bằng $150$."),
         ],
+        { titleEn: "Cubes" },
       ),
-    ]),
+    ], "Volume of cuboids"),
     chuong("ti-so", "Tỉ số, tỉ lệ bản đồ và chuyển động đều", [
       bai(
         "ti-so-5",
@@ -196,6 +202,7 @@ export const lop05: GradeBook = {
           luyen(R`Cho $4:x=2:5$ và $x\neq 0$. Tìm $x$.`, R`Giá trị $x$ bằng $10$.`, [{ expr: "4*5/2", expect: "10" }], "Tích chéo cho $2x=20$. Chia cho $2$ được $10$."),
           luyen(R`Tỉ số $8:2$ bằng bao nhiêu?`, R`Tỉ số bằng $4$.`, [{ expr: "8/2", expect: "4" }], "Chia số đứng trước cho số đứng sau khi số sau khác $0$."),
         ],
+        { titleEn: "Ratios" },
       ),
       bai(
         "ban-do",
@@ -215,6 +222,7 @@ export const lop05: GradeBook = {
           luyen(R`Đổi $100\,000$ xentimét ra kilômét thì được bao nhiêu?`, R`Bằng $1$ kilômét.`, [{ expr: "100000/100000", expect: "1" }], "Chia cho $100\\,000$ vì đó là số xentimét trong một kilômét."),
           luyen(R`Bản đồ $1:100\,000$, quãng đường thực $4$ kilômét. Trên bản đồ dài bao nhiêu xentimét?`, R`Dài $4$ xentimét.`, [{ expr: "4*100000/100000", expect: "4" }], "Bốn kilômét là $400\\,000$ xentimét. Chia cho mẫu tỉ lệ $100\\,000$ được $4$ xentimét."),
         ],
+        { titleEn: "Map scales" },
       ),
       bai(
         "chuyen-dong",
@@ -234,8 +242,9 @@ export const lop05: GradeBook = {
           luyen(R`Đi $45$ kilômét trong $3$ giờ, đều. Vận tốc bằng bao nhiêu?`, R`Vận tốc bằng $15$ kilômét mỗi giờ.`, [{ expr: "45/3", expect: "15" }], "Chia quãng đường cho thời gian."),
           luyen(R`Vận tốc $20$ kilômét mỗi giờ, quãng đường $80$ kilômét. Thời gian bằng bao nhiêu giờ?`, R`Thời gian bằng $4$ giờ.`, [{ expr: "80/20", expect: "4" }], "Thời gian bằng quãng đường chia vận tốc, khi vận tốc khác $0$."),
         ],
+        { titleEn: "Uniform motion" },
       ),
-    ]),
+    ], "Ratios, map scales and uniform motion"),
     chuong("thoi-gian", "Số đo thời gian", [
       bai(
         "doi-gio",
@@ -255,6 +264,7 @@ export const lop05: GradeBook = {
           luyen(R`Đổi $90$ phút ra giờ và phút.`, R`Bằng $1$ giờ $30$ phút.`, [{ expr: "90-60", expect: "30" }], "Một giờ lấy $60$ phút. Phần còn lại là số phút lẻ."),
           luyen(R`Đổi $2$ phút ra giây.`, R`Bằng $120$ giây.`, [{ expr: "2*60", expect: "120" }], "Mỗi phút có $60$ giây. Hai phút là hai lần sáu mươi giây."),
         ],
+        { titleEn: "Converting units of time" },
       ),
       bai(
         "khoang-gio",
@@ -274,8 +284,9 @@ export const lop05: GradeBook = {
           luyen(R`Đổi $150$ phút ra giờ và phút.`, R`Bằng $2$ giờ $30$ phút.`, [{ expr: "150//60", expect: "2" }], "Chia cho $60$ được số giờ. Phần dư $30$ là số phút."),
           luyen(R`Một việc làm từ $14$ giờ đến $14$ giờ $20$ phút. Khoảng thời gian là bao nhiêu phút?`, R`Là $20$ phút.`, [{ expr: "(14*60+20)-(14*60)", expect: "20" }], "Đổi cả hai mốc ra phút rồi trừ. Phần giờ giống nhau nên chỉ còn $20$ phút."),
         ],
+        { titleEn: "Working out time intervals" },
       ),
-    ]),
+    ], "Measuring time"),
     chuong("bieu-do-5", "Biểu đồ hình quạt", [
       bai(
         "quat-5",
@@ -295,7 +306,7 @@ export const lop05: GradeBook = {
           luyen(R`Quạt $72$ độ ứng với phần nào của cả nhóm?`, R`Ứng với $\frac{1}{5}$ cả nhóm.`, [{ expr: "Rational(72,360)", expect: "Rational(1,5)" }], "Chia số đo quạt cho $360$ độ."),
           luyen(R`Hai quạt $90$ độ và $120$ độ. Phần còn lại của hình tròn là bao nhiêu độ?`, R`Phần còn lại là $150$ độ.`, [{ expr: "360-90-120", expect: "150" }], "Tổng các quạt của một biểu đồ đủ nhóm bằng $360$ độ."),
         ],
-        { figure: "circle" },
+        { titleEn: "Pie charts", figure: "circle" },
       ),
       bai(
         "doc-quat",
@@ -315,7 +326,8 @@ export const lop05: GradeBook = {
           luyen(R`Nhóm $30$ bạn, quạt $120$ độ. Quạt đó có bao nhiêu bạn?`, R`Có $10$ bạn.`, [{ expr: "Rational(120,360)*30", expect: "10" }], "Phần $\\frac{120}{360}$ bằng $\\frac{1}{3}$. Một phần ba của $30$ là $10$."),
           luyen(R`Quạt $360$ độ của nhóm $15$ bạn có bao nhiêu bạn?`, R`Có $15$ bạn.`, [{ expr: "Rational(360,360)*15", expect: "15" }], "Cả hình tròn là cả nhóm."),
         ],
+        { titleEn: "Reading data from pie charts" },
       ),
-    ]),
+    ], "Pie charts"),
   ],
 };
