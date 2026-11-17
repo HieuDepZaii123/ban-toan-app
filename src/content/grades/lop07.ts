@@ -7,6 +7,7 @@ export const lop07: GradeBook = {
   grade: 7,
   band: "thcs",
   title: "Số hữu tỉ, tỉ lệ thuận, đa thức một biến và tam giác bằng nhau.",
+  titleEn: "Rational numbers, direct proportion, polynomials in one variable and congruent triangles.",
   chapters: [
     chuong("huu-ti", "Số hữu tỉ và số thực", [
       bai(
@@ -30,6 +31,7 @@ export const lop07: GradeBook = {
           luyen(R`Tính $\left(-\frac{3}{4}\right)\cdot\frac{2}{3}$.`, R`Tích bằng $-\frac{1}{2}$.`, [{ expr: "Rational(-3,4)*Rational(2,3)", expect: "Rational(-1,2)" }], "Hai thừa số khác dấu nên tích âm. Rút gọn $3$ và $2$ được $\\frac{1}{2}$."),
           luyen(R`Tính $\frac{7}{2}+\left(-\frac{1}{2}\right)$.`, R`Tổng bằng $3$.`, [{ expr: "Rational(7,2)+Rational(-1,2)", expect: "3" }], "Cùng mẫu, cộng tử $7+(-1)$ được $6$. Phân số $\\frac{6}{2}$ bằng $3$."),
         ],
+        { titleEn: "Operations with rational numbers" },
       ),
       bai(
         "so-thuc",
@@ -49,8 +51,9 @@ export const lop07: GradeBook = {
           luyen(R`Tính $\sqrt{9}+\sqrt{4}$.`, R`Tổng bằng $5$.`, [{ expr: "sqrt(9)+sqrt(4)", expect: "5" }], "Mỗi căn của số chính phương là một số nguyên. Cộng $3$ với $2$ được $5$."),
           luyen(R`Số $-\sqrt{4}$ có phải căn bậc hai số học của $4$ không?`, R`Không. Căn số học bằng $2$, còn $-\sqrt{4}$ bằng $-2$.`, [{ expr: "-sqrt(4)", expect: "-2" }], "Căn bậc hai số học được quy ước không âm. Số âm có bình phương bằng $4$ nhưng không phải căn số học."),
         ],
+        { titleEn: "Real numbers and square roots" },
       ),
-    ]),
+    ], "Rational and real numbers"),
     chuong("ti-le", "Tỉ lệ thức và đại lượng tỉ lệ", [
       bai(
         "ti-le-thuc",
@@ -70,6 +73,7 @@ export const lop07: GradeBook = {
           luyen(R`Nếu $ab=24$ và $a=6$, tìm $b$.`, R`Giá trị $b$ bằng $4$.`, [{ expr: "solve(6*b-24, b)[0]", expect: "4" }], "Từ tích hai thừa số, chia cho thừa số khác $0$ để tìm thừa số còn lại."),
           luyen(R`Cho $\frac{3}{x}=\frac{1}{4}$ với $x\neq 0$. Tìm $x$.`, R`Giá trị $x$ bằng $12$.`, [{ expr: "solve(x-12, x)[0]", expect: "12" }], "Tích chéo cho $x=12$. Thử lại, cả hai vế của tỉ lệ thức bằng $\\frac{1}{4}$."),
         ],
+        { titleEn: "Basic properties of proportions" },
       ),
       bai(
         "dai-luong-ti-le",
@@ -89,8 +93,9 @@ export const lop07: GradeBook = {
           luyen(R`Bốn máy làm xong một lô hàng trong $6$ giờ. Ba máy cùng năng suất làm trong bao nhiêu giờ?`, R`Ba máy làm trong $8$ giờ.`, [{ expr: "4*6/3", expect: "8" }], "Số máy tỉ lệ nghịch với số giờ. Tích $4\\cdot 6$ giữ nguyên, rồi chia cho $3$."),
           luyen(R`Giá trị $y$ tỉ lệ thuận với $x$ và $y=12$ khi $x=3$. Tìm $y$ khi $x=5$.`, R`Giá trị $y$ bằng $20$.`, [{ expr: "12/3*5", expect: "20" }], "Thương $y$ chia cho $x$ bằng $4$, không đổi. Nhân $4$ với $5$ được $20$."),
         ],
+        { titleEn: "Direct and inverse proportion" },
       ),
-    ]),
+    ], "Proportions and proportional quantities"),
     chuong("dai-so", "Biểu thức đại số và đa thức một biến", [
       bai(
         "gia-tri-bt",
@@ -110,6 +115,7 @@ export const lop07: GradeBook = {
           luyen(R`Cộng đơn thức $3x+5x$.`, R`Tổng bằng $8x$.`, [{ expr: "3+5", expect: "8" }], "Hai đơn thức cùng biến và cùng số mũ thì cộng hệ số. Biến $x$ được giữ nguyên."),
           luyen(R`Tính $a+b$ khi $a=2$ và $b=-7$.`, R`Tổng bằng $-5$.`, [{ expr: "2+(-7)", expect: "-5" }], "Hai chữ khác nhau nhận hai giá trị khác nhau. Cộng $2$ với $-7$ được $-5$."),
         ],
+        { titleEn: "Evaluating an expression" },
       ),
       bai(
         "da-thuc",
@@ -129,8 +135,9 @@ export const lop07: GradeBook = {
           luyen(R`Tính $4x-x$ khi $x=6$.`, R`Giá trị bằng $18$.`, [{ expr: "(4-1)*6", expect: "18" }], "Hiệu hai đơn thức cùng bậc là đơn thức hệ số $3$. Nhân $3$ với $6$ được $18$."),
           luyen(R`Đa thức $x^2-4$ tại $x=3$ bằng bao nhiêu?`, R`Giá trị bằng $5$.`, [{ expr: "3**2-4", expect: "5" }], "Thay $3$ vào biến. Bình phương bằng $9$, trừ $4$ còn $5$."),
         ],
+        { titleEn: "Polynomials in one variable" },
       ),
-    ]),
+    ], "Algebraic expressions and polynomials in one variable"),
     chuong("tam-giac", "Tam giác", [
       bai(
         "tong-goc",
@@ -150,7 +157,7 @@ export const lop07: GradeBook = {
           luyen(R`Tam giác vuông có một góc nhọn $35^\circ$. Góc nhọn còn lại bằng bao nhiêu độ?`, R`Góc còn lại bằng $55^\circ$.`, [{ expr: "90-35", expect: "55" }], "Hai góc nhọn của tam giác vuông có tổng $90^\\circ$. Góc vuông đã chiếm $90^\\circ$ trong tổng $180^\\circ$."),
           luyen(R`Tam giác có các góc $40^\circ$, $60^\circ$ và $80^\circ$. Tổng ba góc bằng bao nhiêu độ?`, R`Tổng bằng $180^\circ$.`, [{ expr: "40+60+80", expect: "180" }], "Cộng đủ ba số đo. Kết quả khớp định lí tổng ba góc trong."),
         ],
-        { figure: "triangle" },
+        { titleEn: "Angle sum of a triangle", figure: "triangle" },
       ),
       bai(
         "bang-nhau",
@@ -170,7 +177,7 @@ export const lop07: GradeBook = {
           luyen(R`Tam giác có các cạnh $3$, $4$ và $5$. Chu vi bằng bao nhiêu?`, R`Chu vi bằng $12$.`, [{ expr: "3+4+5", expect: "12" }], "Chu vi là tổng ba cạnh. Bộ ba này cũng là một trường hợp dùng được cho cạnh-cạnh-cạnh khi tam giác kia có cùng ba cạnh."),
           luyen(R`Hai tam giác có các cạnh $7$, $8$, $9$ và $7$, $8$, $9$. Chúng bằng nhau theo trường hợp nào, và chu vi mỗi tam giác bằng bao nhiêu?`, R`Bằng nhau theo cạnh-cạnh-cạnh. Chu vi bằng $24$.`, [{ expr: "7+8+9", expect: "24" }], "Đủ ba cặp cạnh tương ứng bằng nhau thì dùng cạnh-cạnh-cạnh. Chu vi là tổng ba cạnh."),
         ],
-        { figure: "triangle" },
+        { titleEn: "Congruent triangles", figure: "triangle" },
       ),
       bai(
         "can-deu",
@@ -190,9 +197,9 @@ export const lop07: GradeBook = {
           luyen(R`Tam giác cân có hai góc đáy, mỗi góc $50^\circ$. Góc ở đỉnh bằng bao nhiêu độ?`, R`Góc ở đỉnh bằng $80^\circ$.`, [{ expr: "180-50-50", expect: "80" }], "Hai góc đáy bằng nhau. Phần còn lại của tổng $180^\\circ$ là góc đỉnh."),
           luyen(R`Góc ngoài kề bù với một góc trong $50^\circ$ bằng bao nhiêu độ?`, R`Góc kề bù bằng $130^\circ$.`, [{ expr: "180-50", expect: "130" }], "Hai góc kề bù có tổng $180^\\circ$. Biết một góc thì góc kia là phần bù đến $180^\\circ$."),
         ],
-        { figure: "triangle" },
+        { titleEn: "Isosceles and equilateral triangles", figure: "triangle" },
       ),
-    ]),
+    ], "Triangles"),
     chuong("thong-ke", "Thống kê và xác suất", [
       bai(
         "doan-thang",
@@ -212,7 +219,7 @@ export const lop07: GradeBook = {
           luyen(R`Một đoạn thẳng trên biểu đồ nối mốc $4$ với mốc $9$. Mức tăng bằng bao nhiêu?`, R`Mức tăng bằng $5$.`, [{ expr: "9-4", expect: "5" }], "Đi từ trái sang phải theo thời gian. Mốc sau lớn hơn mốc trước nên đoạn đi lên."),
           luyen(R`Ba mốc $2, 5, 5$. Đoạn thứ hai đi lên, đi xuống hay nằm ngang?`, R`Đoạn thứ hai nằm ngang.`, [{ expr: "5-5", expect: "0" }], "Hai mốc bằng nhau thì hiệu bằng $0$. Đoạn thẳng nằm ngang."),
         ],
-        { figure: "segment" },
+        { titleEn: "Line graphs", figure: "segment" },
       ),
       bai(
         "quat-tron",
@@ -232,7 +239,7 @@ export const lop07: GradeBook = {
           luyen(R`Nhóm chiếm $\frac{1}{5}$ số bạn. Quạt đó bao nhiêu độ?`, R`Quạt là $72^\circ$.`, [{ expr: "Rational(1,5)*360", expect: "72" }], "Nhân phần của nhóm với $360^\\circ$. Một phần năm của $360$ là $72$."),
           luyen(R`Ba quạt $90^\circ$, $120^\circ$ và phần còn lại. Phần còn lại bao nhiêu độ?`, R`Phần còn lại là $150^\circ$.`, [{ expr: "360-90-120", expect: "150" }], "Tổng các quạt của một biểu đồ đủ nhóm bằng $360^\\circ$. Trừ hai quạt đã biết."),
         ],
-        { figure: "circle" },
+        { titleEn: "Pie charts", figure: "circle" },
       ),
       bai(
         "xs-bien-co",
@@ -252,7 +259,8 @@ export const lop07: GradeBook = {
           luyen(R`Túi $3$ bi đỏ và $2$ bi xanh. Xác suất rút được bi xanh bằng bao nhiêu?`, R`Xác suất bằng $\frac{2}{5}$.`, [{ expr: "Rational(2,5)", expect: "2/5" }], "Hai bi xanh trên năm bi. Đây là biến cố còn lại so với biến cố rút bi đỏ."),
           luyen(R`Xác suất bi đỏ $\frac{3}{5}$ và xác suất bi xanh $\frac{2}{5}$. Tổng hai xác suất bằng bao nhiêu?`, R`Tổng bằng $1$.`, [{ expr: "Rational(3,5)+Rational(2,5)", expect: "1" }], "Hai biến cố này không xảy ra cùng lúc và phủ hết các bi trong túi."),
         ],
+        { titleEn: "Probability of an event" },
       ),
-    ]),
+    ], "Statistics and probability"),
   ],
 };
