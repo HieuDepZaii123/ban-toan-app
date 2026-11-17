@@ -7,6 +7,7 @@ export const lop02: GradeBook = {
   grade: 2,
   band: "tieu-hoc",
   title: "Phép cộng, phép trừ trong phạm vi 100, bảng nhân, bảng chia và số đến 1000.",
+  titleEn: "Addition and subtraction within 100, multiplication and division tables, and numbers to 1000.",
   chapters: [
     chuong("cong-tru", "Cộng và trừ trong phạm vi 100", [
       bai(
@@ -27,6 +28,7 @@ export const lop02: GradeBook = {
           luyen(R`Tính $50+18$.`, R`Tổng bằng $68$.`, [{ expr: "50+18", expect: "68" }], "Hàng đơn vị $0+8$ viết $8$. Hàng chục $5+1$ bằng $6$, tổng là $68$."),
           luyen(R`Tính $19+21$.`, R`Tổng bằng $40$.`, [{ expr: "19+21", expect: "40" }], "Hàng đơn vị $9+1$ bằng $10$, nhớ $1$ sang hàng chục và được $40$."),
         ],
+        { titleEn: "Addition with carrying" },
       ),
       bai(
         "tru-nho",
@@ -46,8 +48,9 @@ export const lop02: GradeBook = {
           luyen(R`Tính $51-16$.`, R`Hiệu bằng $35$.`, [{ expr: "51-16", expect: "35" }], "Hàng đơn vị mượn một chục. Sau khi trừ hai hàng, hiệu là $35$."),
           luyen(R`Tính $40-25$.`, R`Hiệu bằng $15$.`, [{ expr: "40-25", expect: "15" }], "Số $40$ không có đơn vị sẵn, nên mượn một chục trước khi trừ $5$."),
         ],
+        { titleEn: "Subtraction with borrowing" },
       ),
-    ]),
+    ], "Addition and subtraction within 100"),
     chuong("nhan", "Bảng nhân và bảng chia", [
       bai(
         "bang-nhan",
@@ -67,7 +70,7 @@ export const lop02: GradeBook = {
           luyen(R`Tính $5\times 5$.`, R`Tích bằng $25$.`, [{ expr: "5*5", expect: "25" }], "Năm lần số $5$ bằng $25$. Bảng nhân $5$ kết thúc ở năm mươi khi nhân với mười."),
           luyen(R`Tính $2\times 9$.`, R`Tích bằng $18$.`, [{ expr: "2*9", expect: "18" }], "Chín lần số $2$ bằng $18$. Cộng chín số $2$ cũng ra cùng kết quả."),
         ],
-        { figure: "count" },
+        { titleEn: "The $2$ and $5$ times tables", figure: "count" },
       ),
       bai(
         "bang-chia",
@@ -87,8 +90,9 @@ export const lop02: GradeBook = {
           luyen(R`Tính $15:5$.`, R`Thương bằng $3$.`, [{ expr: "15/5", expect: "3" }], "Năm nhân $3$ bằng $15$. Phép chia này hết, không có dư."),
           luyen(R`Tính $16:2$.`, R`Thương bằng $8$.`, [{ expr: "16/2", expect: "8" }], "Hai nhân $8$ bằng $16$. Thương của phép chia hết là $8$."),
         ],
+        { titleEn: "Exact division" },
       ),
-    ]),
+    ], "Multiplication and division tables"),
     chuong("den-1000", "Các số đến 1000", [
       bai(
         "tram",
@@ -108,7 +112,7 @@ export const lop02: GradeBook = {
           luyen(R`Tính $400+50$.`, R`Tổng bằng $450$.`, [{ expr: "400+50", expect: "450" }], "Bốn trăm thêm năm chục. Hàng đơn vị vẫn là $0$."),
           luyen(R`Tính $1000-1$.`, R`Hiệu bằng $999$.`, [{ expr: "1000-1", expect: "999" }], "Số đứng ngay trước $1000$ là $999$. Bớt một đơn vị khỏi một nghìn."),
         ],
-        { figure: "segment" },
+        { titleEn: "Hundreds, tens and ones", figure: "segment" },
       ),
       bai(
         "so-sanh-tram",
@@ -128,8 +132,9 @@ export const lop02: GradeBook = {
           luyen(R`So sánh $640$ và $604$.`, R`Số $640$ lớn hơn số $604$.`, [{ expr: "640-604", expect: "36" }], "Cùng $6$ trăm. Hàng chục $4$ lớn hơn hàng chục $0$."),
           luyen(R`Số gồm $7$ trăm và $8$ đơn vị là số nào?`, R`Số đó là $708$.`, [{ expr: "7*100+8", expect: "708" }], "Không có chục thì chữ số hàng chục là $0$. Ghép $700$ với $8$ được $708$."),
         ],
+        { titleEn: "Comparing three-digit numbers" },
       ),
-    ]),
+    ], "Numbers to 1000"),
     chuong("do-dai", "Độ dài đường gấp khúc", [
       bai(
         "gap-khuc",
@@ -149,7 +154,7 @@ export const lop02: GradeBook = {
           luyen(R`Hình tam giác có ba cạnh $3$, $4$ và $5$ xentimét. Chu vi bằng bao nhiêu?`, R`Chu vi bằng $12$ xentimét.`, [{ expr: "3+4+5", expect: "12" }], "Chu vi là tổng độ dài các cạnh. Ba cạnh cùng đơn vị nên cộng được."),
           luyen(R`Đoạn $20$ xentimét bớt đi $6$ xentimét. Còn bao nhiêu?`, R`Còn $14$ xentimét.`, [{ expr: "20-6", expect: "14" }], "Bớt một phần của đoạn thì lấy hiệu hai độ dài cùng đơn vị."),
         ],
-        { figure: "segment" },
+        { titleEn: "Length of a broken line", figure: "segment" },
       ),
       bai(
         "met-cm",
@@ -169,7 +174,8 @@ export const lop02: GradeBook = {
           luyen(R`Đổi $400$ xentimét ra mét.`, R`Bằng $4$ mét.`, [{ expr: "400/100", expect: "4" }], "Chia số xentimét cho $100$. Bốn trăm xentimét là bốn mét."),
           luyen(R`Một đoạn $1$ mét nối với một đoạn $20$ xentimét. Cả đoạn dài bao nhiêu xentimét?`, R`Cả đoạn dài $120$ xentimét.`, [{ expr: "100+20", expect: "120" }], "Đổi mét ra xentimét trước khi cộng. Một mét là $100$ xentimét, thêm $20$ được $120$."),
         ],
+        { titleEn: "Metres and centimetres" },
       ),
-    ]),
+    ], "Length of a broken line"),
   ],
 };

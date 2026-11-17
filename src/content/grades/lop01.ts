@@ -7,6 +7,7 @@ export const lop01: GradeBook = {
   grade: 1,
   band: "tieu-hoc",
   title: "Các số đến 10 và đến 100, phép cộng, phép trừ, hình quen thuộc.",
+  titleEn: "Numbers to 10 and to 100, addition, subtraction and familiar shapes.",
   chapters: [
     chuong("so-10", "Các số đến 10", [
       bai(
@@ -27,7 +28,7 @@ export const lop01: GradeBook = {
           luyen(R`Số đứng ngay trước $6$ là số nào?`, R`Số đứng trước là $5$.`, [{ expr: "6-1", expect: "5" }], "Số đứng ngay trước một số là số đó bớt đi $1$. Trước $6$ là $5$."),
           luyen(R`Đếm $3$ rồi đếm thêm $1$. Được số nào?`, R`Được số $4$.`, [{ expr: "3+1", expect: "4" }], "Đếm thêm một là đi một bước trên dãy số. Từ $3$ tới $4$."),
         ],
-        { figure: "count" },
+        { titleEn: "Counting from 1 to 10", figure: "count" },
       ),
       bai(
         "so-sanh",
@@ -47,8 +48,9 @@ export const lop01: GradeBook = {
           luyen(R`Số đứng ngay sau $3$ và số đứng ngay trước $5$ có phải cùng một số không?`, R`Có. Cả hai cách đều ra số $4$.`, [{ expr: "3+1", expect: "4" }, { expr: "5-1", expect: "4" }], "Số sau $3$ là $3$ thêm $1$. Số trước $5$ là $5$ bớt $1$. Hai kết quả cùng bằng $4$."),
           luyen(R`Số $1$ và số $10$, số nào bé hơn?`, R`Số $1$ bé hơn số $10$.`, [{ expr: "10-1", expect: "9" }], "Số $1$ đứng trước số $10$. Số đứng trước thì bé hơn."),
         ],
+        { titleEn: "Comparing two numbers" },
       ),
-    ]),
+    ], "Numbers to 10"),
     chuong("cong-tru", "Phép cộng và phép trừ trong phạm vi 10", [
       bai(
         "cong-10",
@@ -68,7 +70,7 @@ export const lop01: GradeBook = {
           luyen(R`Tính $6+4$.`, R`Tổng bằng $10$.`, [{ expr: "6+4", expect: "10" }], "Gộp $6$ với $4$ vẫn nằm trong phạm vi $10$. Tổng đúng bằng $10$."),
           luyen(R`Có $1$ con cá, thêm $5$ con. Hỏi có tất cả bao nhiêu con?`, R`Có tất cả $6$ con cá.`, [{ expr: "1+5", expect: "6" }], "Phép cộng gộp cả hai nhóm cá. Một thêm năm được sáu."),
         ],
-        { figure: "count" },
+        { titleEn: "Addition within 10", figure: "count" },
       ),
       bai(
         "tru-10",
@@ -88,8 +90,9 @@ export const lop01: GradeBook = {
           luyen(R`Tính $10-6$.`, R`Hiệu bằng $4$.`, [{ expr: "10-6", expect: "4" }], "Từ $10$ bớt $6$ còn $4$. Phép trừ này nằm trong phạm vi $10$."),
           luyen(R`Có $5$ cái kẹo, ăn hết $5$ cái. Hỏi còn bao nhiêu cái?`, R`Còn $0$ cái kẹo.`, [{ expr: "5-5", expect: "0" }], "Bớt hết nhóm đã có thì không còn cái nào. Hiệu bằng $0$."),
         ],
+        { titleEn: "Subtraction within 10" },
       ),
-    ]),
+    ], "Addition and subtraction within 10"),
     chuong("so-100", "Các số đến 100", [
       bai(
         "chuc",
@@ -109,7 +112,7 @@ export const lop01: GradeBook = {
           luyen(R`Tính $50+7$.`, R`Tổng bằng $57$.`, [{ expr: "50+7", expect: "57" }], "Năm chục thêm $7$ đơn vị. Ghép hai hàng được số $57$."),
           luyen(R`Tính $20+30$.`, R`Tổng bằng $50$.`, [{ expr: "20+30", expect: "50" }], "Cộng các chục với nhau. Hai chục thêm ba chục được năm chục."),
         ],
-        { figure: "segment" },
+        { titleEn: "Tens and ones", figure: "segment" },
       ),
       bai(
         "so-sanh-chuc",
@@ -129,6 +132,7 @@ export const lop01: GradeBook = {
           luyen(R`So sánh $61$ và $67$.`, R`Số $67$ lớn hơn số $61$.`, [{ expr: "67-61", expect: "6" }], "Hai số cùng $6$ chục, nên so sánh hàng đơn vị. Số $7$ lớn hơn số $1$."),
           luyen(R`Ba chục và bảy đơn vị là số nào?`, R`Số đó là $37$.`, [{ expr: "3*10+7", expect: "37" }], "Ba chục là $30$, thêm $7$ đơn vị được $37$."),
         ],
+        { titleEn: "Comparing two-digit numbers" },
       ),
       bai(
         "cong-khong-nho",
@@ -148,6 +152,7 @@ export const lop01: GradeBook = {
           luyen(R`Tính $50+30$.`, R`Tổng bằng $80$.`, [{ expr: "50+30", expect: "80" }], "Hai số tròn chục cộng theo hàng chục. Năm chục thêm ba chục được tám chục."),
           luyen(R`Tính $14+5$.`, R`Tổng bằng $19$.`, [{ expr: "14+5", expect: "19" }], "Chỉ hàng đơn vị đổi. Phép $4+5$ bằng $9$, chưa tới $10$."),
         ],
+        { titleEn: "Adding without carrying within 100" },
       ),
       bai(
         "tru-khong-nho",
@@ -167,8 +172,9 @@ export const lop01: GradeBook = {
           luyen(R`Tính $90-40$.`, R`Hiệu bằng $50$.`, [{ expr: "90-40", expect: "50" }], "Trừ các chục với nhau. Chín chục bớt bốn chục còn năm chục."),
           luyen(R`Tính $29-6$.`, R`Hiệu bằng $23$.`, [{ expr: "29-6", expect: "23" }], "Chỉ hàng đơn vị đổi. Phép $9-6$ bằng $3$, hàng chục giữ nguyên."),
         ],
+        { titleEn: "Subtracting without borrowing within 100" },
       ),
-    ]),
+    ], "Numbers to 100"),
     chuong("do-xem", "Đo độ dài, xem giờ và xem lịch", [
       bai(
         "hinh-quen",
@@ -188,7 +194,7 @@ export const lop01: GradeBook = {
           luyen(R`Ba hình tam giác có tất cả bao nhiêu cạnh?`, R`Có tất cả $9$ cạnh.`, [{ expr: "3*3", expect: "9" }], "Mỗi hình tam giác có ba cạnh. Ba hình thì lấy ba lần số ba."),
           luyen(R`Hai hình chữ nhật có tất cả bao nhiêu cạnh?`, R`Có tất cả $8$ cạnh.`, [{ expr: "4+4", expect: "8" }], "Mỗi hình chữ nhật có bốn cạnh. Hai hình thì cộng bốn với bốn."),
         ],
-        { figure: "rect" },
+        { titleEn: "Circles, squares and triangles", figure: "rect" },
       ),
       bai(
         "do-cm",
@@ -208,7 +214,7 @@ export const lop01: GradeBook = {
           luyen(R`Thước dài $20$ xentimét, bút dài $15$ xentimét. Thước dài hơn bao nhiêu?`, R`Thước dài hơn $5$ xentimét.`, [{ expr: "20-15", expect: "5" }], "Hiệu hai số đo cho phần dài hơn."),
           luyen(R`Một gang tay dài $10$ xentimét. Hai gang tay đặt nối nhau dài bao nhiêu?`, R`Dài $20$ xentimét.`, [{ expr: "10+10", expect: "20" }], "Hai lần cùng một độ dài thì cộng hai số đo."),
         ],
-        { figure: "segment" },
+        { titleEn: "Measuring length in centimetres", figure: "segment" },
       ),
       bai(
         "xem-gio",
@@ -228,6 +234,7 @@ export const lop01: GradeBook = {
           luyen(R`Từ $1$ giờ đúng đến $4$ giờ đúng là mấy giờ?`, R`Là $3$ giờ.`, [{ expr: "4-1", expect: "3" }], "Hiệu hai giờ đúng trên mặt đồng hồ là khoảng thời gian."),
           luyen(R`Bây giờ $9$ giờ đúng. Thêm $1$ giờ nữa là mấy giờ?`, R`Là $10$ giờ đúng.`, [{ expr: "9+1", expect: "10" }], "Thêm một giờ đúng là đi tới số tiếp theo trên mặt đồng hồ."),
         ],
+        { titleEn: "Telling the time to the hour" },
       ),
       bai(
         "xem-lich",
@@ -247,7 +254,8 @@ export const lop01: GradeBook = {
           luyen(R`Tháng $4$ có $30$ ngày. Đã qua $12$ ngày. Còn bao nhiêu ngày?`, R`Còn $18$ ngày.`, [{ expr: "30-12", expect: "18" }], "Lấy số ngày của tháng trừ số ngày đã qua."),
           luyen(R`Một tuần đã qua $3$ ngày. Còn bao nhiêu ngày trong tuần?`, R`Còn $4$ ngày.`, [{ expr: "7-3", expect: "4" }], "Một tuần có bảy ngày. Bảy trừ ba ngày đã qua còn bốn ngày."),
         ],
+        { titleEn: "Reading a calendar" },
       ),
-    ]),
+    ], "Measuring length, telling the time and reading a calendar"),
   ],
 };
