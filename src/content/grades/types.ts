@@ -34,6 +34,8 @@ export type GradeDrill = {
 export type GradeLesson = {
   id: string;
   title: string;
+  /** English title, shown when the site language is English. */
+  titleEn?: string;
   summary: string;
   /** Vì sao quy tắc trong bài đúng. */
   whyTrue?: string;
@@ -49,7 +51,7 @@ export type GradeLesson = {
   topicId?: string;
 };
 
-export type GradeChapter = { id: string; title: string; lessons: GradeLesson[] };
+export type GradeChapter = { id: string; title: string; titleEn?: string; lessons: GradeLesson[] };
 
 export type GradeBand = "tieu-hoc" | "thcs" | "thpt";
 
@@ -57,6 +59,8 @@ export type GradeBook = {
   grade: number;
   band: GradeBand;
   title: string;
+  /** English version of the one-line book description. */
+  titleEn?: string;
   chapters: GradeChapter[];
 };
 
@@ -78,15 +82,16 @@ export function bai(
   summary: string,
   examples: GradeExample[],
   drills: GradeDrill[],
-  extra?: { figure?: FigureKind; topicId?: string; whyTrue?: string; pitfalls?: string; dataNote?: string; widget?: GradeWidget },
+  extra?: { titleEn?: string; figure?: FigureKind; topicId?: string; whyTrue?: string; pitfalls?: string; dataNote?: string; widget?: GradeWidget },
 ): GradeLesson {
   return {
     id, title, summary, examples, drills,
+    ...(extra?.titleEn ? { titleEn: extra.titleEn } : {}),
     figure: extra?.figure, topicId: extra?.topicId, whyTrue: extra?.whyTrue,
     pitfalls: extra?.pitfalls, dataNote: extra?.dataNote, widget: extra?.widget,
   };
 }
 
-export function chuong(id: string, title: string, lessons: GradeLesson[]): GradeChapter {
-  return { id, title, lessons };
+export function chuong(id: string, title: string, lessons: GradeLesson[], titleEn?: string): GradeChapter {
+  return { id, title, lessons, ...(titleEn ? { titleEn } : {}) };
 }
