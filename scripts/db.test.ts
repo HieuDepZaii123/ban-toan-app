@@ -115,6 +115,12 @@ assert.ok(!refused.ok && refused.full === 1 && refused.used[1] === 3, "báo đú
 assert.equal(await quota.used("win:other", T, 60_000), 0, "bị từ chối thì không ghi khóa nào");
 await quota.release(["day:burst"], T);
 assert.equal(await quota.used("day:burst", T, 86_400_000), 2, "release trả lại đúng một lượt");
+// Hai request nhận lượt cùng mili-giây: release chỉ trả đúng một dòng mỗi khóa, và trả cả hai khóa trong một giao dịch.
+await quota.claim([{ key: "win:pair", windowMs: 60_000, max: 5 }, { key: "chk:pair", windowMs: 60_000, max: 5 }], T);
+await otherInstance.claim([{ key: "win:pair", windowMs: 60_000, max: 5 }, { key: "chk:pair", windowMs: 60_000, max: 5 }], T);
+await quota.release(["win:pair", "chk:pair", "win:pair"], T);
+assert.equal(await quota.used("win:pair", T, 60_000), 1, "khóa lặp trong danh sách chỉ trả một lượt");
+assert.equal(await quota.used("chk:pair", T, 60_000), 1, "mọi khóa được trả cùng nhau");
 
 /* ---------- chọn kho theo cấu hình ---------- */
 const dir = mkdtempSync(join(tmpdir(), "ban-toan-db-"));

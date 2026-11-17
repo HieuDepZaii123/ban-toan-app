@@ -32,7 +32,10 @@ export function ReportPage() {
       )}
     >
       {report ? (
-        <section className="tool-card"><ReportView report={report} /></section>
+        <section className="tool-card">
+          <p className="pay-note">{t(lang, "Báo cáo này chưa có chữ ký: nó do máy của con tạo ra và có thể bị sửa. Hãy coi đây là bản tự khai của máy con.", "This report is unsigned: it was made by your child's device and could have been edited. Treat it as that device's own account.")}</p>
+          <ReportView report={report} />
+        </section>
       ) : (
         <p className="empty">{t(lang, "Đường link này không có báo cáo hợp lệ. Nhờ con gửi lại.", "This link has no valid report. Ask your child to send it again.")}</p>
       )}

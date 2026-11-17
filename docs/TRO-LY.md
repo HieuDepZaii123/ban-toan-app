@@ -81,4 +81,11 @@ Cài đặt trên máy, khóa bằng mã PIN 4–8 số (băm SHA-256 kèm salt,
 - Chấm bài bỏ trường `fix` (bước sửa) trước khi trả, không phụ thuộc model.
 - Đề thi thử chỉ hiện lời giải ở câu học sinh đã làm.
 
-Báo cáo tuần (`src/parent/report.ts`) dựng trên máy từ lịch sử thi thử và các lượt chấm, mã hóa vào phần `#r=` của link nên server không nhận được. Đây không phải khóa chống gian lận: xóa dữ liệu trình duyệt sẽ tắt chế độ phụ huynh, và báo cáo ghi rõ chế độ có bật suốt tuần hay không.
+Báo cáo tuần (`src/parent/report.ts`) dựng trên máy từ lịch sử thi thử và các lượt chấm, mã hóa vào phần `#r=` của link nên server không nhận được. Giới hạn đã biết, có chủ ý:
+
+- Cờ `parent` do trình duyệt tự gửi, server không kiểm chứng được. Chế độ phụ huynh là rào chắn trong gia đình, không phải ranh giới bảo mật: ai tự gửi request không kèm cờ này vẫn nhận lời giải.
+- Ở chế độ phụ huynh, chấm bài còn dặn model chỉ nói bước nào sai và loại lỗi gì, và thay lời giải thích/gợi ý nếu chúng chép lại bước sửa. Model vẫn có thể diễn đạt lại đáp án; đây là giảm thiểu, không phải bảo đảm.
+- Đề thi thử mở lời giải sau khi làm ngẫu nhiên một câu trả lời: cố ý, vì chế độ này chỉ nhằm không để lộ lời giải cho câu chưa thử.
+- Báo cáo tuần không có chữ ký: ai sửa link `#r=` đều đổi được nội dung, và cờ chế độ phụ huynh lấy từ thời gian ghi trên máy của con. Phụ huynh nên coi nó là bản tự khai của máy con.
+
+Đây không phải khóa chống gian lận: xóa dữ liệu trình duyệt sẽ tắt chế độ phụ huynh, và báo cáo ghi rõ chế độ có bật suốt tuần hay không.

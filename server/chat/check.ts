@@ -3,8 +3,14 @@
  * Marking (/api/chat?do=check): the student sends the problem and their own lines of working; we find the first wrong step.
  *
  * Free learners get a few markings a week so the checker can prove itself before anyone pays;
- * Premium gets a daily allowance. In parent mode the reply never carries the corrected step, only a hint,
- * and that is enforced here, not left to the model.
+ * Premium gets a daily allowance. In parent mode the reply never carries the corrected step, only a hint.
+ * The `fix` field is dropped here rather than left to the model, and `why` and `hint` are checked for the
+ * corrected text (see withholdFix) and told not to give it away.
+ *
+ * What this does NOT do: the `parent` flag is sent by the browser, and there are no accounts, so the server
+ * cannot tell whether the person sending it is a parent. Parent mode is a household setting on the child's
+ * device (src/parent/parentMode.ts), a guardrail against casually reading answers, not a security boundary
+ * against a child who sends the request by hand. docs/TRO-LY.md says the same.
  */
 import { createHash } from "node:crypto";
 import { clientIp, type ChatEnv } from "./handlers.ts";
@@ -57,6 +63,33 @@ Reply with ONE JSON object and nothing else, no code fence:
 Use "unclear" only when the steps cannot be read or do not belong to the problem.
 Write why, hint and fix in the language of the problem (Vietnamese or English). Formulas inside $...$ on one line. Never solve the rest of the problem. Never give the final answer unless the student already reached it.`;
 
+/** Added to the instructions in parent mode: the reply may name the wrong step and the kind of mistake, nothing more. */
+export const PARENT_CHECK_NOTE = `
+Parent mode is on. In why and hint say only WHICH step is wrong and what KIND of mistake it is (for example a sign, a dropped factor, a wrong rule). Never write the corrected expression, the correct value, or the final answer anywhere in the reply.`;
+
+const GENERIC_WHY = { vi: (step: number) => `Bước ${step} có một lỗi.`, en: (step: number) => `Step ${step} has a mistake.` };
+const GENERIC_HINT = { vi: "Tính lại riêng bước đó, từng số hạng một.", en: "Redo that one step slowly, term by term." };
+
+/** Compare ignoring spaces, `$` and TeX braces, so `x = -3` and `$x=-3$` count as the same text. */
+const squash = (text: string): string => text.toLowerCase().replace(/[\s$\\{}]/g, "");
+
+/**
+ * Parent mode: drop the corrected step, and if the model wrote it into `why` or `hint` anyway, replace that
+ * text with a generic one. A model can still paraphrase the answer; PARENT_CHECK_NOTE asks it not to, and
+ * this catches the common case where it repeats the fix word for word.
+ */
+export function withholdFix(verdict: CheckJson, lang: "vi" | "en"): CheckJson {
+  const out: CheckJson = { ...verdict };
+  const key = squash(out.fix ?? "");
+  delete out.fix;
+  const leaks = (text: string | undefined): boolean => key.length >= 3 && !!text && squash(text).includes(key);
+  if (out.verdict === "wrong" && typeof out.step === "number") {
+    if (leaks(out.why)) out.why = GENERIC_WHY[lang](out.step);
+    if (leaks(out.hint)) out.hint = GENERIC_HINT[lang];
+  }
+  return out;
+}
+
 function readSteps(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
   return value
@@ -88,13 +121,16 @@ export function parseVerdict(text: string, steps: number): CheckJson | null {
 }
 
 /** Offline marking: checks arithmetic and algebraic identities line by line (see src/check/arith.ts). */
-export function demoVerdict(steps: string[], lang: "vi" | "en"): CheckJson {
+export function demoVerdict(steps: string[], lang: "vi" | "en", parent = false): CheckJson {
   const found = firstWrongStep(steps);
   if (found.kind === "wrong") {
     return {
       verdict: "wrong",
       step: found.step,
-      why: lang === "en"
+      // The two evaluated sides show the correct value, so parent mode only says which step is wrong.
+      why: parent
+        ? GENERIC_WHY[lang](found.step)
+        : lang === "en"
         ? `The two sides of step ${found.step} are not equal: ${found.left} ≠ ${found.right}.`
         : `Hai vế của bước ${found.step} không bằng nhau: ${found.left} ≠ ${found.right}.`,
       hint: lang === "en" ? "Redo that one calculation slowly, term by term." : "Tính lại riêng bước đó, từng số hạng một.",
@@ -181,10 +217,11 @@ export async function handleCheck(request: Request, env: CheckEnv): Promise<Resp
   let verdict: CheckJson | null;
   try {
     if (env.mode === "demo") {
-      verdict = demoVerdict(steps, lang);
+      verdict = demoVerdict(steps, lang, parent);
     } else {
       const numbered = steps.map((step, index) => `${index + 1}. ${step}`).join("\n");
-      const text = await env.complete(CHECK_INSTRUCTIONS, [{ role: "user", content: `Đề / Problem:\n${problem}\n\nBài làm / Working:\n${numbered}` }]);
+      const instructions = parent ? CHECK_INSTRUCTIONS + PARENT_CHECK_NOTE : CHECK_INSTRUCTIONS;
+      const text = await env.complete(instructions, [{ role: "user", content: `Đề / Problem:\n${problem}\n\nBài làm / Working:\n${numbered}` }]);
       verdict = parseVerdict(text, steps.length);
     }
   } catch {
@@ -192,11 +229,16 @@ export async function handleCheck(request: Request, env: CheckEnv): Promise<Resp
   }
   // A failed marking does not cost the learner a turn.
   if (!verdict) {
-    await env.quota.release(limits.map((item) => item.key), claimedAt);
+    // Giving the turn back must not turn a 502 into a 500: if the store is down the learner still gets the
+    // plain "try again" reply, and the failed release is logged so the lost turn can be found.
+    try {
+      await env.quota.release(limits.map((item) => item.key), claimedAt);
+    } catch (error) {
+      console.error("check: could not give back a marking turn", error instanceof Error ? error.message : error);
+    }
     return reply(502, { error: "model", message: "Chưa chấm được. Thử lại sau.", premium, limit, period, remaining: limit - used });
   }
 
-  const out: CheckJson = { ...verdict, mode: env.mode, premium, limit, period, remaining: limit - used - 1 };
-  if (parent) delete out.fix;
-  return reply(200, out);
+  const marked: CheckJson = parent ? withholdFix(verdict, lang) : verdict;
+  return reply(200, { ...marked, mode: env.mode, premium, limit, period, remaining: limit - used - 1 });
 }
