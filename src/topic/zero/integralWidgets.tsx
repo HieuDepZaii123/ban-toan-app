@@ -8,7 +8,7 @@ import { Graph } from "../../labs/Graph.tsx";
 import { fmt } from "../../lib/format.ts";
 import { freshSeed, mulberry32 } from "../../lib/prng.ts";
 import { Slider } from "../../ui/Slider.tsx";
-import { at, frame, label, useTicker } from "./kit.ts";
+import { at, frame, label, useTicker, en, useTx } from "./kit.ts";
 import { Buttons, Stage } from "./widgets.tsx";
 
 const R = String.raw;
@@ -36,6 +36,7 @@ const ANTI: { name: string; f: Fn; F: Fn; tex: string; Ftex: string; x0: number;
 ];
 
 export function AntiderivLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(0);
   const [C, setC] = useState(1);
   const [u, setU] = useState(0.55);
@@ -47,13 +48,13 @@ export function AntiderivLab() {
   for (let i = 0; i <= 1200; i += 10) worst = Math.max(worst, Math.abs(at(path, i).y - (s.F(at(path, i).x) + C)));
   return (
     <Stage
-      title="Nguyên hàm: cho độ dốc, dựng lại đường cong"
-      story={R`Bạn biết độ dốc của đường cong ở mọi chỗ nhưng không biết đường cong ở độ cao nào. Cứ đặt bút tại một điểm bất kì rồi vẽ theo độ dốc cho trước: được một đường cong. Đặt bút ở chỗ cao hơn hay thấp hơn thì vẽ ra đường cong cao hơn hay thấp hơn, nhưng cùng một dáng, vì độ dốc không đổi khi nâng cả đường lên. Máy vẽ bằng cách cộng dồn độ dốc nhân bước ngang. Các tiếp tuyến ở cùng một vị trí của cả họ đường cong song song nhau.`}
-      read={`Độ dốc cho trước $f(x)=${s.tex}$. Đường cam do máy cộng dồn từng bước xuất phát ở độ cao $F(x_0)+C$ với $C=${fmt(C)}$; công thức $F(x)+C=${s.Ftex}+${fmt(C)}$. Lệch lớn nhất giữa hai đường $${fmt(worst, 8)}$. Tại $x=${fmt(x, 2)}$ độ dốc của mọi đường trong họ đều bằng $${fmt(s.f(x), 3)}$.`}
-      why={R`Hai nguyên hàm của cùng một hàm chỉ khác nhau một hằng số vì hiệu của chúng có độ dốc 0 ở mọi nơi, tức là đường nằm ngang. Đó là lý do phải ghi $+C$: nó ghi lại độ cao xuất phát mà độ dốc không cho biết.`}
+      title={tt(R`Nguyên hàm: cho độ dốc, dựng lại đường cong`, R`Antiderivative: given the slope, rebuild the curve`)}
+      story={tt(R`Bạn biết độ dốc của đường cong ở mọi chỗ nhưng không biết đường cong ở độ cao nào. Cứ đặt bút tại một điểm bất kì rồi vẽ theo độ dốc cho trước: được một đường cong. Đặt bút ở chỗ cao hơn hay thấp hơn thì vẽ ra đường cong cao hơn hay thấp hơn, nhưng cùng một dáng, vì độ dốc không đổi khi nâng cả đường lên. Máy vẽ bằng cách cộng dồn độ dốc nhân bước ngang. Các tiếp tuyến ở cùng một vị trí của cả họ đường cong song song nhau.`, R`You know the slope of a curve everywhere but not at what height it sits. Just put the pen down at any point and draw following the given slope: you get a curve. Put the pen higher or lower and you draw a higher or lower curve of the same shape, since raising the whole curve does not change its slope. The machine draws by accumulating slope times the horizontal step. The tangents at the same position on every curve of the family are parallel.`)}
+      read={tt(`Độ dốc cho trước $f(x)=${s.tex}$. Đường cam do máy cộng dồn từng bước xuất phát ở độ cao $F(x_0)+C$ với $C=${fmt(C)}$; công thức $F(x)+C=${s.Ftex}+${fmt(C)}$. Lệch lớn nhất giữa hai đường $${fmt(worst, 8)}$. Tại $x=${fmt(x, 2)}$ độ dốc của mọi đường trong họ đều bằng $${fmt(s.f(x), 3)}$.`, `Given slope $f(x)=${s.tex}$. The orange curve, accumulated step by step by the machine starting at height $F(x_0)+C$ with $C=${fmt(C)}$; the formula $F(x)+C=${s.Ftex}+${fmt(C)}$. Largest gap between the two curves $${fmt(worst, 8)}$. At $x=${fmt(x, 2)}$ the slope of every curve in the family equals $${fmt(s.f(x), 3)}$.`)}
+      why={tt(R`Hai nguyên hàm của cùng một hàm chỉ khác nhau một hằng số vì hiệu của chúng có độ dốc 0 ở mọi nơi, tức là đường nằm ngang. Đó là lý do phải ghi $+C$: nó ghi lại độ cao xuất phát mà độ dốc không cho biết.`, R`Two antiderivatives of the same function differ by a constant because their difference has slope 0 everywhere, i.e. it is a horizontal line. That is why we must write $+C$: it records the starting height that the slope cannot tell.`)}
     >
       <Graph
-        label="Họ các đường cong có cùng độ dốc"
+        label={tt("Họ các đường cong có cùng độ dốc", "A family of curves with the same slope")}
         draw={(ctx, w, h) => {
           const { colors, map, pad } = frame(ctx, w, h, s.x0, s.x1, s.y0, s.y1);
           for (const c of [-3, -2, -1, 0, 1, 2, 3]) {
@@ -65,15 +66,15 @@ export function AntiderivLab() {
           }
           strokeFn(ctx, map, w, h, pad, s.x0, s.x1, num, colors.alt, 2.8);
           dot(ctx, map.x(s.x0), map.y(s.F(s.x0) + C), colors.alt, colors.bg, 6);
-          label(ctx, "điểm đặt bút", map.x(s.x0) + 8, map.y(s.F(s.x0) + C) - 8, colors.alt);
+          label(ctx, tt("điểm đặt bút", "pen start"), map.x(s.x0) + 8, map.y(s.F(s.x0) + C) - 8, colors.alt);
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Độ dốc cho trước
-          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{ANTI.map((a, i) => <option key={a.name} value={i}>{a.name}</option>)}</select>
+        <label className="fz-pick">{tt("Độ dốc cho trước", "Given slope")}
+          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{ANTI.map((a, i) => <option key={a.name} value={i}>{tt(a.name, en(a.name))}</option>)}</select>
         </label>
-        <Slider label="Hằng số C (độ cao đặt bút)" value={C} min={-3} max={3} step={0.5} onChange={setC} />
-        <Slider label="Vị trí xem tiếp tuyến" value={u} min={0.1} max={0.9} step={0.02} onChange={setU} />
+        <Slider label={tt("Hằng số C (độ cao đặt bút)", "Constant C (pen height)")} value={C} min={-3} max={3} step={0.5} onChange={setC} />
+        <Slider label={tt("Vị trí xem tiếp tuyến", "Where to view the tangents")} value={u} min={0.1} max={0.9} step={0.02} onChange={setU} />
       </div>
     </Stage>
   );
@@ -88,6 +89,7 @@ const AREA_FNS: { name: string; f: Fn; a: number; b: number; y0: number; y1: num
 ];
 
 export function AreaFunctionLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(0);
   const [u, setU] = useState(0.6);
   const s = at(AREA_FNS, pick);
@@ -99,13 +101,13 @@ export function AreaFunctionLab() {
   const mean = A(x) / (x - s.a);
   return (
     <Stage
-      title="Định lí cơ bản: diện tích đã quét có độ dốc bằng chiều cao"
-      story={R`Một tấm rèm kéo từ trái sang phải, quét qua miền dưới đồ thị. Gọi $A(x)$ là diện tích đã quét tới vị trí x (đường cam trong hình). Khi rèm đi thêm một bước nhỏ, diện tích tăng thêm một dải mỏng cao đúng bằng giá trị của hàm tại chỗ rèm đứng. Vậy tốc độ diện tích tăng chính là chiều cao đồ thị tại đó.`}
-      read={`Tại $x=${fmt(x, 3)}$: diện tích quét được $A=${fmt(A(x), 4)}$; chiều cao đồ thị $f(x)=${fmt(s.f(x), 4)}$; độ dốc của đường $A$ do máy đo $${fmt(slope, 4)}$. Hai số sau bằng nhau. Giá trị trung bình của hàm trên $[${fmt(s.a)};\\ ${fmt(x, 2)}]$ là $\\frac{A}{x-a}=${fmt(mean, 4)}$, là chiều cao hình chữ nhật có cùng diện tích.`}
-      why={R`$A(x+h)-A(x)\approx f(x)\cdot h$, chia cho $h$ rồi cho $h\to 0$ được $A'(x)=f(x)$. Vậy $A$ là một nguyên hàm của $f$, và nếu $F$ là nguyên hàm bất kì thì $A=F+C$ với $C=-F(a)$ vì $A(a)=0$. Cho nên $\int_a^b f=F(b)-F(a)$: tính diện tích bằng cách trừ hai giá trị của nguyên hàm.`}
+      title={tt(R`Định lí cơ bản: diện tích đã quét có độ dốc bằng chiều cao`, R`The fundamental theorem: the area swept has slope equal to the height`)}
+      story={tt(R`Một tấm rèm kéo từ trái sang phải, quét qua miền dưới đồ thị. Gọi $A(x)$ là diện tích đã quét tới vị trí x (đường cam trong hình). Khi rèm đi thêm một bước nhỏ, diện tích tăng thêm một dải mỏng cao đúng bằng giá trị của hàm tại chỗ rèm đứng. Vậy tốc độ diện tích tăng chính là chiều cao đồ thị tại đó.`, R`A curtain is pulled from left to right, sweeping across the region under the graph. Let $A(x)$ be the area swept up to position x (the orange curve in the picture). When the curtain moves a little further, the area grows by a thin strip as tall as the value of the function where the curtain stands. So the rate at which the area grows is the height of the graph at that place.`)}
+      read={tt(`Tại $x=${fmt(x, 3)}$: diện tích quét được $A=${fmt(A(x), 4)}$; chiều cao đồ thị $f(x)=${fmt(s.f(x), 4)}$; độ dốc của đường $A$ do máy đo $${fmt(slope, 4)}$. Hai số sau bằng nhau. Giá trị trung bình của hàm trên $[${fmt(s.a)};\\ ${fmt(x, 2)}]$ là $\\frac{A}{x-a}=${fmt(mean, 4)}$, là chiều cao hình chữ nhật có cùng diện tích.`, `At $x=${fmt(x, 3)}$: area swept $A=${fmt(A(x), 4)}$; height of the graph $f(x)=${fmt(s.f(x), 4)}$; the slope of the curve $A$ measured by the machine $${fmt(slope, 4)}$. The last two agree. The mean value of the function on $[${fmt(s.a)};\\ ${fmt(x, 2)}]$ is $\\frac{A}{x-a}=${fmt(mean, 4)}$, the height of the rectangle with the same area.`)}
+      why={tt(R`$A(x+h)-A(x)\approx f(x)\cdot h$, chia cho $h$ rồi cho $h\to 0$ được $A'(x)=f(x)$. Vậy $A$ là một nguyên hàm của $f$, và nếu $F$ là nguyên hàm bất kì thì $A=F+C$ với $C=-F(a)$ vì $A(a)=0$. Cho nên $\int_a^b f=F(b)-F(a)$: tính diện tích bằng cách trừ hai giá trị của nguyên hàm.`, R`$A(x+h)-A(x)\approx f(x)\cdot h$; divide by h and let $h\to 0$ to get $A'(x)=f(x)$. So $A$ is an antiderivative of $f$, and if $F$ is any antiderivative then $A=F+C$ with $C=-F(a)$ because $A(a)=0$. Hence $\int_a^b f=F(b)-F(a)$: compute an area by subtracting two values of the antiderivative.`)}
     >
       <Graph
-        label="Hàm số, miền đã quét và hàm diện tích"
+        label={tt("Hàm số, miền đã quét và hàm diện tích", "The function, the swept region and the area function")}
         draw={(ctx, w, h) => {
           const aMin = Math.min(...path.map((p) => p.y));
           const aMax = Math.max(...path.map((p) => p.y));
@@ -125,10 +127,10 @@ export function AreaFunctionLab() {
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Hàm
-          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{AREA_FNS.map((a, i) => <option key={a.name} value={i}>{a.name}</option>)}</select>
+        <label className="fz-pick">{tt("Hàm", "Function")}
+          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{AREA_FNS.map((a, i) => <option key={a.name} value={i}>{tt(a.name, en(a.name))}</option>)}</select>
         </label>
-        <Slider label="Rèm đứng ở (0 = trái, 1 = phải)" value={u} min={0.05} max={1} step={0.01} onChange={setU} />
+        <Slider label={tt("Rèm đứng ở (0 = trái, 1 = phải)", "Curtain stands at (0 = left, 1 = right)")} value={u} min={0.05} max={1} step={0.01} onChange={setU} />
       </div>
     </Stage>
   );
@@ -137,31 +139,32 @@ export function AreaFunctionLab() {
 /* ---------- 3. Độ dời và quãng đường ---------- */
 
 export function DisplacementLab() {
+  const tt = useTx();
   const [vmax, setVmax] = useState(4);
   const [T, setT] = useState(3);
   const v: Fn = (t) => vmax - t * t;
   const r = displacementAndDistance(v, 0, T);
   return (
     <Stage
-      title="Đi rồi quay lại: độ dời và quãng đường khác nhau"
-      story={R`Xe chạy với vận tốc $v(t)=${"v_{\\max}"}-t^2$: lúc đầu chạy tới, vận tốc giảm dần, rồi vận tốc âm nghĩa là xe chạy lùi. Phần diện tích phía trên trục là đoạn đi tới, phần phía dưới trục là đoạn đi lùi. Độ dời là hiệu «tới trừ lùi», quãng đường là tổng «tới cộng lùi» mà đồng hồ cây số thực sự đếm.`}
-      read={`$v(t)=${fmt(vmax)}-t^2$ trong $[0;\\ ${fmt(T)}]$. ${r.turns.length ? `Xe đổi chiều tại $t=${fmt(r.turns[0] as number, 3)}$ s.` : "Xe không đổi chiều."} Độ dời $\\int v\\,dt=${fmt(r.displacement, 4)}$ m. Quãng đường $\\int|v|\\,dt=${fmt(r.distance, 4)}$ m.`}
-      why={R`Vận tốc là đạo hàm của vị trí nên $\int_0^T v\,dt=s(T)-s(0)$ là độ dời (hiệu vị trí). Quãng đường phải tính chiều đi và chiều lùi riêng rồi cộng độ lớn, tức $\int|v|\,dt$: tách tích phân tại các chỗ $v$ đổi dấu.`}
+      title={tt(R`Đi rồi quay lại: độ dời và quãng đường khác nhau`, R`Out and back: displacement and distance differ`)}
+      story={tt(R`Xe chạy với vận tốc $v(t)=${"v_{\\max}"}-t^2$: lúc đầu chạy tới, vận tốc giảm dần, rồi vận tốc âm nghĩa là xe chạy lùi. Phần diện tích phía trên trục là đoạn đi tới, phần phía dưới trục là đoạn đi lùi. Độ dời là hiệu «tới trừ lùi», quãng đường là tổng «tới cộng lùi» mà đồng hồ cây số thực sự đếm.`, R`A car drives with velocity $v(t)=v_{\max}-t^2$: at first it goes forward, the velocity decreases, then a negative velocity means the car reverses. The area above the axis is the forward stretch, the area below is the backward stretch. The displacement is «forward minus backward», the distance is «forward plus backward» that the odometer really counts.`)}
+      read={tt(`$v(t)=${fmt(vmax)}-t^2$ trong $[0;\\ ${fmt(T)}]$. ${r.turns.length ? `Xe đổi chiều tại $t=${fmt(r.turns[0] as number, 3)}$ s.` : "Xe không đổi chiều."} Độ dời $\\int v\\,dt=${fmt(r.displacement, 4)}$ m. Quãng đường $\\int|v|\\,dt=${fmt(r.distance, 4)}$ m.`, `$v(t)=${fmt(vmax)}-t^2$ on $[0;\\ ${fmt(T)}]$. ${r.turns.length ? `The car turns at $t=${fmt(r.turns[0] as number, 3)}$ s.` : "The car does not turn."} Displacement $\\int v\\,dt=${fmt(r.displacement, 4)}$ m. Distance $\\int|v|\\,dt=${fmt(r.distance, 4)}$ m.`)}
+      why={tt(R`Vận tốc là đạo hàm của vị trí nên $\int_0^T v\,dt=s(T)-s(0)$ là độ dời (hiệu vị trí). Quãng đường phải tính chiều đi và chiều lùi riêng rồi cộng độ lớn, tức $\int|v|\,dt$: tách tích phân tại các chỗ $v$ đổi dấu.`, R`Velocity is the derivative of position, so $\int_0^T v\,dt=s(T)-s(0)$ is the displacement (difference of positions). The distance must count the forward and backward parts separately and add their sizes, i.e. $\int|v|\,dt$: split the integral where $v$ changes sign.`)}
     >
       <Graph
-        label="Vận tốc theo thời gian, phần đi tới và phần đi lùi"
+        label={tt("Vận tốc theo thời gian, phần đi tới và phần đi lùi", "Velocity against time, forward and backward parts")}
         draw={(ctx, w, h) => {
           const { colors, map, pad } = frame(ctx, w, h, 0, 4.5, -9, 9, "t (s)", "v");
           shade(ctx, map, v, 0, T, colors.curve, colors.alt);
           strokeFn(ctx, map, w, h, pad, 0, 4.5, v, colors.curve, 2.4);
           dashed(ctx, map.x(T), map.y(-9), map.x(T), map.y(9), colors.soft);
-          label(ctx, "đi tới (+)", map.x(0.2), map.y(Math.max(1, vmax * 0.5)), colors.curve);
-          label(ctx, "đi lùi (−)", map.x(Math.max(2.3, Math.sqrt(vmax) + 0.3)), map.y(-1.5), colors.alt);
+          label(ctx, tt("đi tới (+)", "forward (+)"), map.x(0.2), map.y(Math.max(1, vmax * 0.5)), colors.curve);
+          label(ctx, tt("đi lùi (−)", "backward (−)"), map.x(Math.max(2.3, Math.sqrt(vmax) + 0.3)), map.y(-1.5), colors.alt);
         }}
       />
       <div className="fz-controls">
-        <Slider label="Vận tốc ban đầu v" value={vmax} min={1} max={8} step={0.5} onChange={setVmax} />
-        <Slider label="Thời gian T (s)" value={T} min={0.5} max={4.5} step={0.1} onChange={setT} />
+        <Slider label={tt("Vận tốc ban đầu v", "Initial velocity v")} value={vmax} min={1} max={8} step={0.5} onChange={setVmax} />
+        <Slider label={tt("Thời gian T (s)", "Time T (s)")} value={T} min={0.5} max={4.5} step={0.1} onChange={setT} />
       </div>
     </Stage>
   );
@@ -176,6 +179,7 @@ const PAIRS: { name: string; f: Fn; g: Fn; a: number; b: number; y0: number; y1:
 ];
 
 export function AreaBetweenLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(1);
   const [lo, setLo] = useState(0);
   const s = at(PAIRS, pick);
@@ -186,13 +190,13 @@ export function AreaBetweenLab() {
   const closed = inner.length >= 2 ? areaBetween(s.f, s.g, inner[0] as number, inner[inner.length - 1] as number).area : NaN;
   return (
     <Stage
-      title="Diện tích giữa hai đường cong"
-      story={R`Hai đường cong vây quanh một miền. Cắt miền thành những dải đứng mỏng: mỗi dải cao bằng khoảng cách giữa hai đường tại chỗ đó, tức độ lớn của hiệu hai hàm. Khi hai đường đổi vị trí trên dưới thì hiệu đổi dấu, nên máy tìm các giao điểm trước, chia thành từng đoạn rồi mới cộng.`}
-      read={`Máy tìm được các giao điểm: ${inner.map((c) => fmt(c, 3)).join("; ")}. Miền kín nằm giữa giao điểm đầu và cuối, diện tích $${fmt(closed, 5)}$; đáp số đúng $${s.tex}=${fmt(s.exact, 5)}$. Phần bạn đang tô, từ $x=${fmt(a, 2)}$ đến $x=${fmt(s.b, 2)}$, có diện tích $${fmt(r.area, 5)}$${r.area > closed + 1e-6 ? ", lớn hơn vì đã lấn ra ngoài miền kín (phần đó không được hai đường vây lại)" : ""}.`}
-      why={R`Diện tích là $\int_a^b|f-g|\,dx$. Dấu giá trị tuyệt đối không tính trực tiếp được, nên tách tại các nghiệm của $f=g$, ở mỗi đoạn biết hàm nào nằm trên và bỏ được dấu tuyệt đối. Nếu quên tách thì phần trên và phần dưới trừ nhau và diện tích bị tính thiếu.`}
+      title={tt(R`Diện tích giữa hai đường cong`, R`Area between two curves`)}
+      story={tt(R`Hai đường cong vây quanh một miền. Cắt miền thành những dải đứng mỏng: mỗi dải cao bằng khoảng cách giữa hai đường tại chỗ đó, tức độ lớn của hiệu hai hàm. Khi hai đường đổi vị trí trên dưới thì hiệu đổi dấu, nên máy tìm các giao điểm trước, chia thành từng đoạn rồi mới cộng.`, R`Two curves enclose a region. Cut the region into thin vertical strips: each strip is as tall as the distance between the two curves there, i.e. the size of the difference of the two functions. When the curves swap places the difference changes sign, so the machine first finds the intersections, splits into pieces and only then adds.`)}
+      read={tt(`Máy tìm được các giao điểm: ${inner.map((c) => fmt(c, 3)).join("; ")}. Miền kín nằm giữa giao điểm đầu và cuối, diện tích $${fmt(closed, 5)}$; đáp số đúng $${s.tex}=${fmt(s.exact, 5)}$. Phần bạn đang tô, từ $x=${fmt(a, 2)}$ đến $x=${fmt(s.b, 2)}$, có diện tích $${fmt(r.area, 5)}$${r.area > closed + 1e-6 ? ", lớn hơn vì đã lấn ra ngoài miền kín (phần đó không được hai đường vây lại)" : ""}.`, `The machine finds the intersections: ${inner.map((c) => fmt(c, 3)).join("; ")}. The enclosed region lies between the first and last intersection, area $${fmt(closed, 5)}$; the exact answer $${s.tex}=${fmt(s.exact, 5)}$. The part you are shading, from $x=${fmt(a, 2)}$ to $x=${fmt(s.b, 2)}$, has area $${fmt(r.area, 5)}$${r.area > closed + 1e-6 ? ", larger because it reaches outside the enclosed region (that part is not fenced in by the two curves)" : ""}.`)}
+      why={tt(R`Diện tích là $\int_a^b|f-g|\,dx$. Dấu giá trị tuyệt đối không tính trực tiếp được, nên tách tại các nghiệm của $f=g$, ở mỗi đoạn biết hàm nào nằm trên và bỏ được dấu tuyệt đối. Nếu quên tách thì phần trên và phần dưới trừ nhau và diện tích bị tính thiếu.`, R`The area is $\int_a^b|f-g|\,dx$. The absolute value cannot be integrated directly, so split at the solutions of $f=g$; on each piece we know which function is on top and can drop the absolute value. If you forget to split, the parts above and below cancel and the area comes out too small.`)}
     >
       <Graph
-        label="Miền giữa hai đồ thị"
+        label={tt("Miền giữa hai đồ thị", "The region between two graphs")}
         draw={(ctx, w, h) => {
           const { colors, map, pad } = frame(ctx, w, h, s.a, s.b, s.y0, s.y1);
           const steps = 360;
@@ -213,10 +217,10 @@ export function AreaBetweenLab() {
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Cặp đường cong
-          <select value={pick} onChange={(e) => { setPick(Number(e.target.value)); setLo(0); }}>{PAIRS.map((p, i) => <option key={p.name} value={i}>{p.name}</option>)}</select>
+        <label className="fz-pick">{tt("Cặp đường cong", "Pair of curves")}
+          <select value={pick} onChange={(e) => { setPick(Number(e.target.value)); setLo(0); }}>{PAIRS.map((p, i) => <option key={p.name} value={i}>{tt(p.name, en(p.name))}</option>)}</select>
         </label>
-        <Slider label="Bắt đầu tính từ (0 = mép trái)" value={lo} min={0} max={0.9} step={0.02} onChange={setLo} />
+        <Slider label={tt("Bắt đầu tính từ (0 = mép trái)", "Start counting from (0 = left edge)")} value={lo} min={0} max={0.9} step={0.02} onChange={setLo} />
       </div>
     </Stage>
   );
@@ -231,6 +235,7 @@ const SOLIDS: { name: string; f: Fn; a: number; b: number; exact: number; tex: s
 ];
 
 export function VolumeLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(1);
   const [n, setN] = useState(6);
   const s = at(SOLIDS, pick);
@@ -238,16 +243,16 @@ export function VolumeLab() {
   const dx = (s.b - s.a) / n;
   return (
     <Stage
-      title="Khối tròn xoay: xếp chồng những chiếc đĩa mỏng"
-      story={R`Quay một đường cong quanh trục ngang, ta được một khối tròn như chiếc bình tiện bằng máy. Cắt khối thành những lát mỏng vuông góc với trục: mỗi lát gần như một chiếc đĩa tròn, bán kính bằng độ cao của đường cong tại chỗ cắt. Thể tích một đĩa là diện tích mặt tròn nhân bề dày. Cộng mọi đĩa lại, càng nhiều đĩa mỏng thì càng sát. Hình dưới là hình cắt dọc: mỗi cột là một đĩa nhìn nghiêng.`}
-      read={`${n} đĩa dày $${fmt(dx, 3)}$ cho thể tích $\\sum\\pi f(x_i)^2\\Delta x=${fmt(v, 4)}$. Công thức hình học $${s.tex}$ cho $${fmt(s.exact, 4)}$. Sai lệch $${fmt(Math.abs(v - s.exact), 4)}$.`}
-      why={R`Một đĩa bán kính $r=f(x)$ có thể tích $\pi r^2\,dx$. Khi số đĩa tăng vô hạn, tổng tiến về $V=\pi\int_a^b[f(x)]^2dx$. Hãy chọn hình cầu và thấy kết quả khớp công thức $\frac{4}{3}\pi R^3$: công thức đã học được suy ra từ chồng đĩa chứ không phải thứ để thuộc.`}
+      title={tt(R`Khối tròn xoay: xếp chồng những chiếc đĩa mỏng`, R`Solids of revolution: stacking thin discs`)}
+      story={tt(R`Quay một đường cong quanh trục ngang, ta được một khối tròn như chiếc bình tiện bằng máy. Cắt khối thành những lát mỏng vuông góc với trục: mỗi lát gần như một chiếc đĩa tròn, bán kính bằng độ cao của đường cong tại chỗ cắt. Thể tích một đĩa là diện tích mặt tròn nhân bề dày. Cộng mọi đĩa lại, càng nhiều đĩa mỏng thì càng sát. Hình dưới là hình cắt dọc: mỗi cột là một đĩa nhìn nghiêng.`, R`Rotate a curve around the horizontal axis and you get a round solid, like a vase turned on a lathe. Cut the solid into thin slices perpendicular to the axis: each slice is nearly a round disc whose radius is the height of the curve at the cut. A disc's volume is the area of its face times its thickness. Add all the discs: the more thin discs, the closer. The picture is a vertical section: each column is a disc seen from the side.`)}
+      read={tt(`${n} đĩa dày $${fmt(dx, 3)}$ cho thể tích $\\sum\\pi f(x_i)^2\\Delta x=${fmt(v, 4)}$. Công thức hình học $${s.tex}$ cho $${fmt(s.exact, 4)}$. Sai lệch $${fmt(Math.abs(v - s.exact), 4)}$.`, `${n} discs of thickness $${fmt(dx, 3)}$ give the volume $\\sum\\pi f(x_i)^2\\Delta x=${fmt(v, 4)}$. The geometric formula $${s.tex}$ gives $${fmt(s.exact, 4)}$. Error $${fmt(Math.abs(v - s.exact), 4)}$.`)}
+      why={tt(R`Một đĩa bán kính $r=f(x)$ có thể tích $\pi r^2\,dx$. Khi số đĩa tăng vô hạn, tổng tiến về $V=\pi\int_a^b[f(x)]^2dx$. Hãy chọn hình cầu và thấy kết quả khớp công thức $\frac{4}{3}\pi R^3$: công thức đã học được suy ra từ chồng đĩa chứ không phải thứ để thuộc.`, R`A disc of radius $r=f(x)$ has volume $\pi r^2\,dx$. As the number of discs tends to infinity the sum tends to $V=\pi\int_a^b[f(x)]^2dx$. Choose the sphere and see the result match the formula $\frac{4}{3}\pi R^3$: the formula we learned is derived from a stack of discs, it is not something to memorise.`)}
     >
       <Graph
-        label="Hình cắt dọc khối tròn xoay và các đĩa"
+        label={tt("Hình cắt dọc khối tròn xoay và các đĩa", "Vertical section of the solid of revolution and the discs")}
         draw={(ctx, w, h) => {
           const rMax = Math.max(...Array.from({ length: 101 }, (_, i) => s.f(s.a + ((s.b - s.a) * i) / 100)));
-          const { colors, map, pad } = frame(ctx, w, h, s.a - 0.3, s.b + 0.3, -rMax * 1.25, rMax * 1.25);
+          const { colors, map, pad } = frame(ctx, w, h, s.a - 0.3, s.b + 0.3, -rMax * 1.25, rMax * 1.25, "x", "y", true);
           for (let i = 0; i < n; i++) {
             const xm = s.a + (i + 0.5) * dx;
             const r = s.f(xm);
@@ -264,10 +269,10 @@ export function VolumeLab() {
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Khối
-          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{SOLIDS.map((o, i) => <option key={o.name} value={i}>{o.name}</option>)}</select>
+        <label className="fz-pick">{tt("Khối", "Solid")}
+          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{SOLIDS.map((o, i) => <option key={o.name} value={i}>{tt(o.name, en(o.name))}</option>)}</select>
         </label>
-        <Slider label="Số đĩa" value={n} min={1} max={60} step={1} onChange={setN} />
+        <Slider label={tt("Số đĩa", "Number of discs")} value={n} min={1} max={60} step={1} onChange={setN} />
       </div>
     </Stage>
   );
@@ -282,6 +287,7 @@ const SUBS: { name: string; itex: string; f: Fn; u: Fn; du: Fn; ftex: string; ut
 ];
 
 export function SubstitutionLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(0);
   const [b, setB] = useState(1.2);
   const s = at(SUBS, pick);
@@ -293,36 +299,36 @@ export function SubstitutionLab() {
   const maxF = Math.max(1, ...Array.from({ length: 80 }, (_, i) => Math.abs(s.f(u0 + ((ub - u0) * (i + 1)) / 80))));
   return (
     <Stage
-      title="Đổi biến: kéo giãn trục, diện tích không đổi"
-      story={R`Hai hình dưới có dáng khác nhau nhưng diện tích bằng nhau. Hình trái là đồ thị theo biến $x$ với dải rộng $dx$ đều nhau. Đặt $u=u(x)$ thì trục ngang bị kéo giãn: chỗ nào $u$ đổi nhanh thì dải bị dãn rộng, và cao độ co lại đúng bằng hệ số đó. Hình phải là đồ thị theo $u$. Kéo $x$ thành $u$ làm dải rộng gấp $u'$ lần và cao chỉ còn $\frac{1}{u'}$: tích không đổi.`}
-      read={`$\\int_0^{${fmt(b)}} ${s.itex}\\,dx=${fmt(both.inX, 6)}$ (theo $x$). Đặt $u=${s.utex}$ thì thành $\\int_{${fmt(u0, 2)}}^{${fmt(ub, 3)}} ${s.ftex}\\,du=${fmt(both.inU, 6)}$ (theo $u$, cận đổi theo). Công thức $${s.Ftex(b)}=${fmt(s.closed(b), 6)}$.`}
-      why={R`Quy tắc hàm hợp cho $\frac{d}{dx}F(u(x))=f(u(x))\,u'(x)$, nên $F(u(x))$ là nguyên hàm của vế trái, và theo định lí cơ bản $\int_a^b f(u(x))u'(x)dx=F(u(b))-F(u(a))$, chính là $\int_{u(a)}^{u(b)}f(u)du$. Nhớ đổi cả cận khi đổi biến.`}
+      title={tt(R`Đổi biến: kéo giãn trục, diện tích không đổi`, R`Substitution: stretch the axis, the area stays the same`)}
+      story={tt(R`Hai hình dưới có dáng khác nhau nhưng diện tích bằng nhau. Hình trái là đồ thị theo biến $x$ với dải rộng $dx$ đều nhau. Đặt $u=u(x)$ thì trục ngang bị kéo giãn: chỗ nào $u$ đổi nhanh thì dải bị dãn rộng, và cao độ co lại đúng bằng hệ số đó. Hình phải là đồ thị theo $u$. Kéo $x$ thành $u$ làm dải rộng gấp $u'$ lần và cao chỉ còn $\frac{1}{u'}$: tích không đổi.`, R`The two pictures below have different shapes but the same area. The left is the graph in the variable $x$ with strips of equal width $dx$. Setting $u=u(x)$ stretches the horizontal axis: where $u$ changes quickly the strips are stretched wider, and the heights shrink by exactly that factor. The right is the graph in $u$. Turning $x$ into $u$ makes a strip $u'$ times wider and only $\frac{1}{u'}$ as tall: the product is unchanged.`)}
+      read={tt(`$\\int_0^{${fmt(b)}} ${s.itex}\\,dx=${fmt(both.inX, 6)}$ (theo $x$). Đặt $u=${s.utex}$ thì thành $\\int_{${fmt(u0, 2)}}^{${fmt(ub, 3)}} ${s.ftex}\\,du=${fmt(both.inU, 6)}$ (theo $u$, cận đổi theo). Công thức $${s.Ftex(b)}=${fmt(s.closed(b), 6)}$.`, `$\\int_0^{${fmt(b)}} ${s.itex}\\,dx=${fmt(both.inX, 6)}$ (in $x$). Setting $u=${s.utex}$ it becomes $\\int_{${fmt(u0, 2)}}^{${fmt(ub, 3)}} ${s.ftex}\\,du=${fmt(both.inU, 6)}$ (in $u$, with the limits changed). The formula $${s.Ftex(b)}=${fmt(s.closed(b), 6)}$.`)}
+      why={tt(R`Quy tắc hàm hợp cho $\frac{d}{dx}F(u(x))=f(u(x))\,u'(x)$, nên $F(u(x))$ là nguyên hàm của vế trái, và theo định lí cơ bản $\int_a^b f(u(x))u'(x)dx=F(u(b))-F(u(a))$, chính là $\int_{u(a)}^{u(b)}f(u)du$. Nhớ đổi cả cận khi đổi biến.`, R`The chain rule gives $\frac{d}{dx}F(u(x))=f(u(x))\,u'(x)$, so $F(u(x))$ is an antiderivative of the left side, and by the fundamental theorem $\int_a^b f(u(x))u'(x)dx=F(u(b))-F(u(a))$, which is $\int_{u(a)}^{u(b)}f(u)du$. Remember to change the limits as well when you change the variable.`)}
     >
       <div className="fz-pair">
         <Graph
-          label="Đồ thị theo biến x"
+          label={tt("Đồ thị theo biến x", "Graph in the variable x")}
           draw={(ctx, w, h) => {
             const { colors, map, pad } = frame(ctx, w, h, 0, b + 0.2, -maxG * 0.3, maxG * 1.15, "x", "");
             shade(ctx, map, gx, 0, b, colors.curve, colors.alt);
             strokeFn(ctx, map, w, h, pad, 0, b + 0.2, gx, colors.curve, 2.4);
-            label(ctx, "theo x", map.x(0) + 8, map.y(maxG * 1.05), colors.curve);
+            label(ctx, tt("theo x", "in x"), map.x(0) + 8, map.y(maxG * 1.05), colors.curve);
           }}
         />
         <Graph
-          label="Đồ thị theo biến u"
+          label={tt("Đồ thị theo biến u", "Graph in the variable u")}
           draw={(ctx, w, h) => {
             const { colors, map, pad } = frame(ctx, w, h, u0 - 0.05, ub + 0.2, -maxF * 0.3, maxF * 1.15, "u", "");
             shade(ctx, map, s.f, u0, ub, colors.alt, colors.curve);
             strokeFn(ctx, map, w, h, pad, u0 + 1e-6, ub + 0.2, s.f, colors.alt, 2.4);
-            label(ctx, "theo u", map.x(u0) + 8, map.y(maxF * 1.05), colors.alt);
+            label(ctx, tt("theo u", "in u"), map.x(u0) + 8, map.y(maxF * 1.05), colors.alt);
           }}
         />
       </div>
       <div className="fz-controls">
-        <label className="fz-pick">Tích phân
-          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{SUBS.map((o, i) => <option key={o.name} value={i}>{o.name}</option>)}</select>
+        <label className="fz-pick">{tt("Tích phân", "Integral")}
+          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{SUBS.map((o, i) => <option key={o.name} value={i}>{tt(o.name, en(o.name))}</option>)}</select>
         </label>
-        <Slider label="Cận trên b" value={b} min={0.3} max={1.6} step={0.05} onChange={setB} />
+        <Slider label={tt("Cận trên b", "Upper limit b")} value={b} min={0.3} max={1.6} step={0.05} onChange={setB} />
       </div>
     </Stage>
   );
@@ -337,6 +343,7 @@ const PARTS: { name: string; u: Fn; v: Fn; du: Fn; dv: Fn; a: number; bMax: numb
 ];
 
 export function PartsLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(0);
   const [t, setT] = useState(0.8);
   const s = at(PARTS, pick);
@@ -350,13 +357,13 @@ export function PartsLab() {
   const u1 = s.u(b);
   return (
     <Stage
-      title="Tích phân từng phần: hai mảnh ghép thành hình chữ nhật"
-      story={R`Vẽ điểm có tọa độ $(v;u)$ khi $x$ chạy từ cận dưới đến cận trên: ta được một đường cong. Phần diện tích nằm dưới đường cong là $\int u\,dv$ (cam). Phần diện tích nằm bên trái đường cong là $\int v\,du$ (xanh). Hai phần ghép lại vừa khít hình chữ nhật cạnh $v$ và $u$. Đó là công thức từng phần, vẽ thành hình.`}
-      read={`$\\int ${s.tex}\\,dx$ từ $${fmt(s.a)}$ đến $${fmt(b, 2)}$: vế trái $\\int u\\,dv=${fmt(r.left, 5)}$. Vế phải $[uv]-\\int v\\,du=${fmt(u1 * v1 - u0 * v0, 4)}-${fmt(A2, 4)}=${fmt(r.right, 5)}$. Diện tích cam $${fmt(A1, 4)}$ + xanh $${fmt(A2, 4)}$ $=${fmt(A1 + A2, 4)}$ $=u_1v_1-u_0v_0=${fmt(u1 * v1 - u0 * v0, 4)}$.`}
-      why={R`Quy tắc đạo hàm của tích: $(uv)'=u'v+uv'$. Lấy tích phân hai vế từ $a$ đến $b$: $[uv]_a^b=\int v\,du+\int u\,dv$. Chuyển vế được $\int u\,dv=[uv]-\int v\,du$. Hãy chọn $u$ là phần khi lấy đạo hàm thì đơn giản đi (như $x$ hay $\ln x$) để $\int v\,du$ dễ hơn.`}
+      title={tt(R`Tích phân từng phần: hai mảnh ghép thành hình chữ nhật`, R`Integration by parts: two pieces fit into a rectangle`)}
+      story={tt(R`Vẽ điểm có tọa độ $(v;u)$ khi $x$ chạy từ cận dưới đến cận trên: ta được một đường cong. Phần diện tích nằm dưới đường cong là $\int u\,dv$ (cam). Phần diện tích nằm bên trái đường cong là $\int v\,du$ (xanh). Hai phần ghép lại vừa khít hình chữ nhật cạnh $v$ và $u$. Đó là công thức từng phần, vẽ thành hình.`, R`Plot the point with coordinates $(v;u)$ as $x$ runs from the lower to the upper limit: you get a curve. The area under the curve is $\int u\,dv$ (orange). The area to the left of the curve is $\int v\,du$ (green). The two pieces together fit exactly into the rectangle with sides $v$ and $u$. That is the integration by parts formula, drawn.`)}
+      read={tt(`$\\int ${s.tex}\\,dx$ từ $${fmt(s.a)}$ đến $${fmt(b, 2)}$: vế trái $\\int u\\,dv=${fmt(r.left, 5)}$. Vế phải $[uv]-\\int v\\,du=${fmt(u1 * v1 - u0 * v0, 4)}-${fmt(A2, 4)}=${fmt(r.right, 5)}$. Diện tích cam $${fmt(A1, 4)}$ + xanh $${fmt(A2, 4)}$ $=${fmt(A1 + A2, 4)}$ $=u_1v_1-u_0v_0=${fmt(u1 * v1 - u0 * v0, 4)}$.`, `$\\int ${s.tex}\\,dx$ from $${fmt(s.a)}$ to $${fmt(b, 2)}$: left side $\\int u\\,dv=${fmt(r.left, 5)}$. Right side $[uv]-\\int v\\,du=${fmt(u1 * v1 - u0 * v0, 4)}-${fmt(A2, 4)}=${fmt(r.right, 5)}$. Orange area $${fmt(A1, 4)}$ + green $${fmt(A2, 4)}$ $=${fmt(A1 + A2, 4)}$ $=u_1v_1-u_0v_0=${fmt(u1 * v1 - u0 * v0, 4)}$.`)}
+      why={tt(R`Quy tắc đạo hàm của tích: $(uv)'=u'v+uv'$. Lấy tích phân hai vế từ $a$ đến $b$: $[uv]_a^b=\int v\,du+\int u\,dv$. Chuyển vế được $\int u\,dv=[uv]-\int v\,du$. Hãy chọn $u$ là phần khi lấy đạo hàm thì đơn giản đi (như $x$ hay $\ln x$) để $\int v\,du$ dễ hơn.`, R`The product rule: $(uv)'=u'v+uv'$. Integrate both sides from $a$ to $b$: $[uv]_a^b=\int v\,du+\int u\,dv$. Rearranging gives $\int u\,dv=[uv]-\int v\,du$. Choose $u$ to be the part that becomes simpler when differentiated (like $x$ or $\ln x$) so that $\int v\,du$ is easier.`)}
     >
       <Graph
-        label="Đường cong (v; u) và hai miền diện tích"
+        label={tt("Đường cong (v; u) và hai miền diện tích", "The curve (v; u) and the two area regions")}
         draw={(ctx, w, h) => {
           const vMax = Math.max(v1, v0) * 1.12;
           const uMax = Math.max(u1, u0) * 1.12;
@@ -392,10 +399,10 @@ export function PartsLab() {
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Tích phân
-          <select value={pick} onChange={(e) => { setPick(Number(e.target.value)); setT(0.8); }}>{PARTS.map((p, i) => <option key={p.name} value={i}>{p.name}</option>)}</select>
+        <label className="fz-pick">{tt("Tích phân", "Integral")}
+          <select value={pick} onChange={(e) => { setPick(Number(e.target.value)); setT(0.8); }}>{PARTS.map((p, i) => <option key={p.name} value={i}>{tt(p.name, en(p.name))}</option>)}</select>
         </label>
-        <Slider label="Cận trên" value={t} min={0.15} max={1} step={0.01} onChange={setT} />
+        <Slider label={tt("Cận trên", "Upper limit")} value={t} min={0.15} max={1} step={0.01} onChange={setT} />
       </div>
     </Stage>
   );
@@ -410,6 +417,7 @@ const MC: { name: string; f: Fn; a: number; b: number; top: number; exact: numbe
 ];
 
 export function MonteCarloAreaLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(0);
   const [running, setRunning] = useState(false);
   const [rng, setRng] = useState(() => mulberry32(77));
@@ -431,13 +439,13 @@ export function MonteCarloAreaLab() {
   const sure = useMemo(() => monteCarloArea(s.f, s.a, s.b, s.top, 200000, mulberry32(3)).area, [s]);
   return (
     <Stage
-      title="Đo diện tích bằng phi tiêu: không cần nguyên hàm"
-      story={R`Vẽ hình chữ nhật bao quanh miền dưới đường cong rồi ném phi tiêu rải đều. Tỉ lệ phi tiêu rơi vào dưới đường cong bằng tỉ lệ diện tích. Phương pháp này không cần biết nguyên hàm, nên là cách máy tính tính những tích phân mà không có công thức, và đặc biệt hữu ích khi có hàng trăm biến.`}
-      read={`Đã ném ${state.total} phi tiêu, ${state.hits} trúng. Ước lượng diện tích $${fmt(est, 4)}$. Đáp số đúng $${s.tex}=${fmt(s.exact, 4)}$. Chạy nhanh 200000 phi tiêu cho $${fmt(sure, 4)}$.`}
-      why={R`Sai số giảm như $\frac{1}{\sqrt{N}}$: muốn chính xác gấp 10 lần phải ném nhiều gấp 100 lần. Chậm hơn nhiều so với tổng Riemann cho một biến, nhưng sai số này không phụ thuộc số biến, nên Monte Carlo thắng khi số biến lớn.`}
+      title={tt(R`Đo diện tích bằng phi tiêu: không cần nguyên hàm`, R`Measuring area with darts: no antiderivative needed`)}
+      story={tt(R`Vẽ hình chữ nhật bao quanh miền dưới đường cong rồi ném phi tiêu rải đều. Tỉ lệ phi tiêu rơi vào dưới đường cong bằng tỉ lệ diện tích. Phương pháp này không cần biết nguyên hàm, nên là cách máy tính tính những tích phân mà không có công thức, và đặc biệt hữu ích khi có hàng trăm biến.`, R`Draw a rectangle around the region under the curve and throw darts evenly. The share of darts landing under the curve equals the share of area. This method needs no antiderivative, so it is how computers integrate when there is no formula, and it is especially useful when there are hundreds of variables.`)}
+      read={tt(`Đã ném ${state.total} phi tiêu, ${state.hits} trúng. Ước lượng diện tích $${fmt(est, 4)}$. Đáp số đúng $${s.tex}=${fmt(s.exact, 4)}$. Chạy nhanh 200000 phi tiêu cho $${fmt(sure, 4)}$.`, `Threw ${state.total} darts, ${state.hits} hit. Estimated area $${fmt(est, 4)}$. Exact answer $${s.tex}=${fmt(s.exact, 4)}$. A quick run of 200000 darts gives $${fmt(sure, 4)}$.`)}
+      why={tt(R`Sai số giảm như $\frac{1}{\sqrt{N}}$: muốn chính xác gấp 10 lần phải ném nhiều gấp 100 lần. Chậm hơn nhiều so với tổng Riemann cho một biến, nhưng sai số này không phụ thuộc số biến, nên Monte Carlo thắng khi số biến lớn.`, R`The error shrinks like $\frac{1}{\sqrt{N}}$: to be 10 times more accurate you must throw 100 times as many darts. Much slower than Riemann sums in one variable, but this error does not depend on the number of variables, so Monte Carlo wins when there are many.`)}
     >
       <Graph
-        label="Phi tiêu rơi dưới và trên đường cong"
+        label={tt("Phi tiêu rơi dưới và trên đường cong", "Darts landing below and above the curve")}
         draw={(ctx, w, h) => {
           const { colors, map, pad } = frame(ctx, w, h, s.a - 0.1, s.b + 0.1, -s.top * 0.08, s.top * 1.1);
           for (const d of state.dots) {
@@ -448,13 +456,13 @@ export function MonteCarloAreaLab() {
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Đường cong
-          <select value={pick} onChange={(e) => { setRunning(false); setState({ dots: [], hits: 0, total: 0 }); setPick(Number(e.target.value)); }}>{MC.map((m, i) => <option key={m.name} value={i}>{m.name}</option>)}</select>
+        <label className="fz-pick">{tt("Đường cong", "Curve")}
+          <select value={pick} onChange={(e) => { setRunning(false); setState({ dots: [], hits: 0, total: 0 }); setPick(Number(e.target.value)); }}>{MC.map((m, i) => <option key={m.name} value={i}>{tt(m.name, en(m.name))}</option>)}</select>
         </label>
       </div>
       <Buttons>
-        <button type="button" className="text-btn" onClick={() => setRunning(!running)}>{running ? "Dừng" : "Ném phi tiêu"}</button>
-        <button type="button" className="text-btn" onClick={() => { setRunning(false); setState({ dots: [], hits: 0, total: 0 }); setRng(() => mulberry32(freshSeed())); }}>Xóa</button>
+        <button type="button" className="text-btn" onClick={() => setRunning(!running)}>{running ? tt("Dừng", "Stop") : tt("Ném phi tiêu", "Throw darts")}</button>
+        <button type="button" className="text-btn" onClick={() => { setRunning(false); setState({ dots: [], hits: 0, total: 0 }); setRng(() => mulberry32(freshSeed())); }}>{tt("Xóa", "Clear")}</button>
       </Buttons>
     </Stage>
   );

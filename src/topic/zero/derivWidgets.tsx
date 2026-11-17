@@ -4,7 +4,7 @@ import { dashed, dot, strokeFn } from "../../labs/draw.ts";
 import { Graph } from "../../labs/Graph.tsx";
 import { fmt } from "../../lib/format.ts";
 import { Slider } from "../../ui/Slider.tsx";
-import { at, frame, label, line } from "./kit.ts";
+import { at, frame, label, line, en, useTx } from "./kit.ts";
 import { Buttons, Stage } from "./widgets.tsx";
 
 const R = String.raw;
@@ -22,6 +22,7 @@ const CATALOG: { name: string; tex: string; f: Fn; df: Fn; x0: number; x1: numbe
 ];
 
 export function DerivCurveLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(0);
   const [u, setU] = useState(0.5);
   const spec = at(CATALOG, pick);
@@ -34,13 +35,13 @@ export function DerivCurveLab() {
   }
   return (
     <Stage
-      title="Đạo hàm là một hàm mới: đo độ dốc ở mọi nơi rồi vẽ lại"
-      story={R`Đi dọc đồ thị từ trái sang phải, ở mỗi chỗ ghi lại độ dốc của đường cong rồi chấm con số đó lên một đồ thị mới. Đường cam là đồ thị mới ấy, do máy đo bằng cát tuyến thật nhỏ. Đường xám đậm nét đứt là công thức trong bảng đạo hàm. Hai đường trùng nhau: bảng đạo hàm không phải thứ để thuộc lòng, nó là kết quả của phép đo độ dốc.`}
-      read={`Tại $x=${fmt(x, 3)}$: độ dốc máy đo $${fmt(slope, 4)}$, công thức $(${spec.tex})'=${spec.dtex}$ cho $${fmt(spec.df(x), 4)}$. Độ lệch tương đối lớn nhất trên cả đoạn: $${fmt(worst, 10)}$.`}
-      why={R`Khi đường cong đi lên thì đường cam nằm trên trục hoành, khi đường cong đi xuống thì đường cam nằm dưới, và ở chỗ đường cong quay đầu thì đường cam cắt trục. Đó là lý do «đạo hàm dương thì hàm tăng» và «cực trị tại nơi đạo hàm bằng 0».`}
+      title={tt(R`Đạo hàm là một hàm mới: đo độ dốc ở mọi nơi rồi vẽ lại`, R`The derivative is a new function: measure the slope everywhere and redraw it`)}
+      story={tt(R`Đi dọc đồ thị từ trái sang phải, ở mỗi chỗ ghi lại độ dốc của đường cong rồi chấm con số đó lên một đồ thị mới. Đường cam là đồ thị mới ấy, do máy đo bằng cát tuyến thật nhỏ. Đường xám đậm nét đứt là công thức trong bảng đạo hàm. Hai đường trùng nhau: bảng đạo hàm không phải thứ để thuộc lòng, nó là kết quả của phép đo độ dốc.`, R`Walk along the graph from left to right, record the slope of the curve at each place, and plot that number on a new graph. The orange line is that new graph, measured by the machine with very small secants. The thick grey dashed line is the formula from the derivative table. The two coincide: the derivative table is not something to memorise, it is the result of measuring slope.`)}
+      read={tt(`Tại $x=${fmt(x, 3)}$: độ dốc máy đo $${fmt(slope, 4)}$, công thức $(${spec.tex})'=${spec.dtex}$ cho $${fmt(spec.df(x), 4)}$. Độ lệch tương đối lớn nhất trên cả đoạn: $${fmt(worst, 10)}$.`, `At $x=${fmt(x, 3)}$: slope measured by the machine $${fmt(slope, 4)}$, the formula $(${spec.tex})'=${spec.dtex}$ gives $${fmt(spec.df(x), 4)}$. Largest relative error over the whole interval: $${fmt(worst, 10)}$.`)}
+      why={tt(R`Khi đường cong đi lên thì đường cam nằm trên trục hoành, khi đường cong đi xuống thì đường cam nằm dưới, và ở chỗ đường cong quay đầu thì đường cam cắt trục. Đó là lý do «đạo hàm dương thì hàm tăng» và «cực trị tại nơi đạo hàm bằng 0».`, R`When the curve goes up the orange line is above the horizontal axis, when the curve goes down it is below, and where the curve turns round the orange line crosses the axis. That is why «positive derivative means increasing» and «extremum where the derivative is zero».`)}
     >
       <Graph
-        label="Đồ thị hàm số, tiếp tuyến và đồ thị đạo hàm"
+        label={tt("Đồ thị hàm số, tiếp tuyến và đồ thị đạo hàm", "The graph, its tangent and the derivative graph")}
         draw={(ctx, w, h) => {
           const { colors, map, pad } = frame(ctx, w, h, spec.x0, spec.x1, spec.y0, spec.y1);
           strokeFn(ctx, map, w, h, pad, spec.x0, spec.x1, spec.df, colors.soft, 5);
@@ -56,10 +57,10 @@ export function DerivCurveLab() {
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Hàm
-          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{CATALOG.map((c, i) => <option key={c.name} value={i}>{c.name}</option>)}</select>
+        <label className="fz-pick">{tt("Hàm", "Function")}
+          <select value={pick} onChange={(e) => setPick(Number(e.target.value))}>{CATALOG.map((c, i) => <option key={c.name} value={i}>{tt(c.name, en(c.name))}</option>)}</select>
         </label>
-        <Slider label="Vị trí đo (0 = trái, 1 = phải)" value={u} min={0.02} max={0.98} step={0.01} onChange={setU} />
+        <Slider label={tt("Vị trí đo (0 = trái, 1 = phải)", "Where to measure (0 = left, 1 = right)")} value={u} min={0.02} max={0.98} step={0.01} onChange={setU} />
       </div>
     </Stage>
   );
@@ -97,6 +98,7 @@ const RULES: Record<RuleKey, { name: string; f: Fn; tex: string; parts: (x: numb
 };
 
 export function RuleLab() {
+  const tt = useTx();
   const [key, setKey] = useState<RuleKey>("tich");
   const [x, setX] = useState(1.2);
   const [hExp, setHExp] = useState(0.6);
@@ -109,17 +111,17 @@ export function RuleLab() {
   const dV = rule.parts(x + h).v - p.v;
   return (
     <Stage
-      title="Quy tắc tích, thương, hợp: máy kiểm từng công thức"
-      story={R`Tích hai hàm là diện tích hình chữ nhật có hai cạnh u và v. Khi x nhích một chút, cả hai cạnh dài ra, diện tích có thêm ba mảnh: dải dọc, dải ngang và một mảnh góc bé xíu. Mảnh góc nhỏ như tích của hai số nhỏ nên bị bỏ qua khi bước dần về 0. Hãy kéo bước h xuống thật nhỏ và xem mảnh góc biến mất, còn hai dải còn lại cho $u'v+uv'$.`}
-      read={`${rule.name}: $${rule.tex}$ tại $x=${fmt(x)}$. Độ dốc máy đo $${fmt(numeric, 6)}$. Công thức $${rule.ftex}$ với $u=${fmt(p.u, 3)}$, $v=${fmt(p.v, 3)}$, $u'=${fmt(p.du, 3)}$, $v'=${fmt(p.dv, 3)}$ cho $${fmt(exact, 6)}$.${key === "tich" ? ` Với bước $h=${fmt(h, 4)}$: dải dọc $v\\Delta u=${fmt(p.v * dU, 5)}$, dải ngang $u\\Delta v=${fmt(p.u * dV, 5)}$, mảnh góc $\\Delta u\\Delta v=${fmt(dU * dV, 7)}$.` : ""}`}
-      why={key === "tich"
+      title={tt(R`Quy tắc tích, thương, hợp: máy kiểm từng công thức`, R`Product, quotient and chain rules: the machine checks each formula`)}
+      story={tt(R`Tích hai hàm là diện tích hình chữ nhật có hai cạnh u và v. Khi x nhích một chút, cả hai cạnh dài ra, diện tích có thêm ba mảnh: dải dọc, dải ngang và một mảnh góc bé xíu. Mảnh góc nhỏ như tích của hai số nhỏ nên bị bỏ qua khi bước dần về 0. Hãy kéo bước h xuống thật nhỏ và xem mảnh góc biến mất, còn hai dải còn lại cho $u'v+uv'$.`, R`A product of two functions is the area of a rectangle with sides u and v. When x moves a little, both sides grow and the area gains three pieces: a vertical strip, a horizontal strip and a tiny corner piece. The corner is like a product of two small numbers, so it is dropped as the step tends to 0. Drag the step h very small and watch the corner piece disappear, leaving the two strips that give $u'v+uv'$.`)}
+      read={tt(`${rule.name}: $${rule.tex}$ tại $x=${fmt(x)}$. Độ dốc máy đo $${fmt(numeric, 6)}$. Công thức $${rule.ftex}$ với $u=${fmt(p.u, 3)}$, $v=${fmt(p.v, 3)}$, $u'=${fmt(p.du, 3)}$, $v'=${fmt(p.dv, 3)}$ cho $${fmt(exact, 6)}$.${key === "tich" ? ` Với bước $h=${fmt(h, 4)}$: dải dọc $v\\Delta u=${fmt(p.v * dU, 5)}$, dải ngang $u\\Delta v=${fmt(p.u * dV, 5)}$, mảnh góc $\\Delta u\\Delta v=${fmt(dU * dV, 7)}$.` : ""}`, `${tt(rule.name, en(rule.name))}: $${rule.tex}$ at $x=${fmt(x)}$. Slope measured by the machine $${fmt(numeric, 6)}$. The formula $${rule.ftex}$ with $u=${fmt(p.u, 3)}$, $v=${fmt(p.v, 3)}$, $u'=${fmt(p.du, 3)}$, $v'=${fmt(p.dv, 3)}$ gives $${fmt(exact, 6)}$.${key === "tich" ? ` With step $h=${fmt(h, 4)}$: vertical strip $v\\Delta u=${fmt(p.v * dU, 5)}$, horizontal strip $u\\Delta v=${fmt(p.u * dV, 5)}$, corner piece $\\Delta u\\Delta v=${fmt(dU * dV, 7)}$.` : ""}`)}
+      why={tt(key === "tich"
         ? R`Chia diện tích tăng thêm cho h: $\frac{\Delta u}{h}v+u\frac{\Delta v}{h}+\frac{\Delta u}{h}\Delta v$. Số hạng cuối có thừa số $\Delta v$ tiến về 0, nên chỉ còn $u'v+uv'$.`
         : key === "thuong"
           ? R`Gọi $w=\frac{u}{v}$ thì $u=wv$. Lấy đạo hàm hai vế bằng quy tắc tích: $u'=w'v+wv'$, giải ra $w'=\frac{u'v-uv'}{v^2}$. Quy tắc thương không phải công thức mới, nó là quy tắc tích đọc ngược.`
-          : R`Tốc độ nhân với nhau: nếu $u$ đổi nhanh gấp 3 lần $x$ và hàm ngoài đổi nhanh gấp 2 lần $u$ thì hàm hợp đổi nhanh gấp 6 lần $x$. Viết $\frac{\Delta f}{\Delta x}=\frac{\Delta f}{\Delta u}\cdot\frac{\Delta u}{\Delta x}$ rồi cho bước về 0.`}
+          : R`Tốc độ nhân với nhau: nếu $u$ đổi nhanh gấp 3 lần $x$ và hàm ngoài đổi nhanh gấp 2 lần $u$ thì hàm hợp đổi nhanh gấp 6 lần $x$. Viết $\frac{\Delta f}{\Delta x}=\frac{\Delta f}{\Delta u}\cdot\frac{\Delta u}{\Delta x}$ rồi cho bước về 0.`, key === "tich" ? R`Divide the added area by h: $\frac{\Delta u}{h}v+u\frac{\Delta v}{h}+\frac{\Delta u}{h}\Delta v$. The last term has the factor $\Delta v$ tending to 0, so only $u'v+uv'$ remains.` : key === "thuong" ? R`Let $w=\frac{u}{v}$, so $u=wv$. Differentiate both sides with the product rule: $u'=w'v+wv'$, and solving gives $w'=\frac{u'v-uv'}{v^2}$. The quotient rule is not a new formula, it is the product rule read backwards.` : R`Rates multiply: if $u$ changes 3 times as fast as $x$ and the outer function changes 2 times as fast as $u$, the composite changes 6 times as fast as $x$. Write $\frac{\Delta f}{\Delta x}=\frac{\Delta f}{\Delta u}\cdot\frac{\Delta u}{\Delta x}$ and let the step go to 0.`)}
     >
       <Graph
-        label="Đồ thị hàm hợp từ các hàm thành phần và tiếp tuyến"
+        label={tt("Đồ thị hàm hợp từ các hàm thành phần và tiếp tuyến", "The graph of the composite function and its tangent")}
         draw={(ctx, w, hh) => {
           const { colors, map, pad } = frame(ctx, w, hh, -1, 4, -3, 8);
           strokeFn(ctx, map, w, hh, pad, -1, 4, rule.f, colors.curve, 2.6);
@@ -146,20 +148,20 @@ export function RuleLab() {
             ctx.strokeStyle = colors.ink;
             ctx.lineWidth = 1.2;
             ctx.strokeRect(ox, oy - p.v * s, p.u * s, p.v * s);
-            label(ctx, "cạnh u", ox + (p.u * s) / 2 - 16, oy + 14, colors.ink);
-            label(ctx, "cạnh v", ox - 42, oy - (p.v * s) / 2 + 4, colors.ink);
-            label(ctx, `hai dải thêm (phóng ×${fmt(mag, 0)})`, ox - 40, oy - p.v * s - sh - 8, colors.alt);
+            label(ctx, tt("cạnh u", "side u"), ox + (p.u * s) / 2 - 16, oy + 14, colors.ink);
+            label(ctx, tt("cạnh v", "side v"), ox - 42, oy - (p.v * s) / 2 + 4, colors.ink);
+            label(ctx, tt(`hai dải thêm (phóng ×${fmt(mag, 0)})`, `the two added strips (magnified ×${fmt(mag, 0)})`), ox - 40, oy - p.v * s - sh - 8, colors.alt);
           }
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Quy tắc
+        <label className="fz-pick">{tt("Quy tắc", "Rule")}
           <select value={key} onChange={(e) => setKey(e.target.value as RuleKey)}>
-            {(Object.keys(RULES) as RuleKey[]).map((k) => <option key={k} value={k}>{RULES[k].name}</option>)}
+            {(Object.keys(RULES) as RuleKey[]).map((k) => <option key={k} value={k}>{tt(RULES[k].name, en(RULES[k].name))}</option>)}
           </select>
         </label>
-        <Slider label="Vị trí x" value={x} min={-0.8} max={3.5} step={0.05} onChange={setX} />
-        <Slider label="Bước h nhỏ dần (kéo phải)" value={hExp} min={0} max={4} step={0.1} onChange={setHExp} />
+        <Slider label={tt("Vị trí x", "Position x")} value={x} min={-0.8} max={3.5} step={0.05} onChange={setX} />
+        <Slider label={tt("Bước h nhỏ dần (kéo phải)", "Step h shrinking (drag right)")} value={hExp} min={0} max={4} step={0.1} onChange={setHExp} />
       </div>
     </Stage>
   );
@@ -168,6 +170,7 @@ export function RuleLab() {
 /* ---------- 3. Lan truyền ngược = quy tắc hàm hợp ---------- */
 
 export function BackpropLab() {
+  const tt = useTx();
   const [x, setX] = useState(0.7);
   const [w1, setW1] = useState(1.3);
   const [w2, setW2] = useState(-0.8);
@@ -182,13 +185,13 @@ export function BackpropLab() {
   };
   return (
     <Stage
-      title="Mạng nơ-ron học bằng quy tắc hàm hợp (lan truyền ngược)"
-      story={R`Một mạng nhỏ nhất: số x nhân với trọng số $w_1$, rồi qua hàm $\tanh$ (một chữ S), rồi nhân với $w_2$ ra kết quả y. Đó là ba hàm xếp nối nhau, tức một hàm hợp. Muốn biết nên chỉnh $w_1$ hay $w_2$ thế nào để y gần mục tiêu, ta cần đạo hàm của y theo chúng, và quy tắc hàm hợp cho đạo hàm đó bằng cách nhân các đạo hàm cục bộ dọc chuỗi, đi ngược từ phải sang trái.`}
-      read={`Xuôi: $z=w_1x=${fmt(g.z, 3)}$, $a=\\tanh z=${fmt(g.a, 3)}$, $y=w_2a=${fmt(g.y, 3)}$. Ngược: $\\frac{dy}{dx}=w_2\\cdot(1-a^2)\\cdot w_1=${fmt(w2, 2)}\\cdot${fmt(g.da, 3)}\\cdot${fmt(w1, 2)}=${fmt(g.dy_dx, 5)}$; máy đo bằng cát tuyến $${fmt(numeric, 5)}$. Sai số mục tiêu $(y-t)^2=${fmt(loss, 5)}$.`}
-      why={R`Đạo hàm của $\tanh z$ là $1-\tanh^2z$ nên các đạo hàm cục bộ có sẵn trong lần tính xuôi. Gradient theo $w_1$ là $w_2\cdot(1-a^2)\cdot x$, theo $w_2$ là $a$. Bấm «Học một bước» rồi xem sai số giảm: mỗi bước đi ngược hướng dốc của sai số. Mạng lớn chỉ là chuỗi dài hơn cùng một quy tắc.`}
+      title={tt(R`Mạng nơ-ron học bằng quy tắc hàm hợp (lan truyền ngược)`, R`A neural network learns through the chain rule (backpropagation)`)}
+      story={tt(R`Một mạng nhỏ nhất: số x nhân với trọng số $w_1$, rồi qua hàm $\tanh$ (một chữ S), rồi nhân với $w_2$ ra kết quả y. Đó là ba hàm xếp nối nhau, tức một hàm hợp. Muốn biết nên chỉnh $w_1$ hay $w_2$ thế nào để y gần mục tiêu, ta cần đạo hàm của y theo chúng, và quy tắc hàm hợp cho đạo hàm đó bằng cách nhân các đạo hàm cục bộ dọc chuỗi, đi ngược từ phải sang trái.`, R`The smallest network: a number x is multiplied by a weight $w_1$, then passes through $\tanh$ (an S-shaped curve), then is multiplied by $w_2$ to give the result y. Those are three functions in a row, a composite function. To know how to adjust $w_1$ or $w_2$ so that y gets closer to the target we need the derivative of y with respect to them, and the chain rule gives that derivative by multiplying the local derivatives along the chain, walking backwards from right to left.`)}
+      read={tt(`Xuôi: $z=w_1x=${fmt(g.z, 3)}$, $a=\\tanh z=${fmt(g.a, 3)}$, $y=w_2a=${fmt(g.y, 3)}$. Ngược: $\\frac{dy}{dx}=w_2\\cdot(1-a^2)\\cdot w_1=${fmt(w2, 2)}\\cdot${fmt(g.da, 3)}\\cdot${fmt(w1, 2)}=${fmt(g.dy_dx, 5)}$; máy đo bằng cát tuyến $${fmt(numeric, 5)}$. Sai số mục tiêu $(y-t)^2=${fmt(loss, 5)}$.`, `Forward: $z=w_1x=${fmt(g.z, 3)}$, $a=\\tanh z=${fmt(g.a, 3)}$, $y=w_2a=${fmt(g.y, 3)}$. Backward: $\\frac{dy}{dx}=w_2\\cdot(1-a^2)\\cdot w_1=${fmt(w2, 2)}\\cdot${fmt(g.da, 3)}\\cdot${fmt(w1, 2)}=${fmt(g.dy_dx, 5)}$; measured by the machine with a secant $${fmt(numeric, 5)}$. Error to the target $(y-t)^2=${fmt(loss, 5)}$.`)}
+      why={tt(R`Đạo hàm của $\tanh z$ là $1-\tanh^2z$ nên các đạo hàm cục bộ có sẵn trong lần tính xuôi. Gradient theo $w_1$ là $w_2\cdot(1-a^2)\cdot x$, theo $w_2$ là $a$. Bấm «Học một bước» rồi xem sai số giảm: mỗi bước đi ngược hướng dốc của sai số. Mạng lớn chỉ là chuỗi dài hơn cùng một quy tắc.`, R`The derivative of $\tanh z$ is $1-\tanh^2z$, so the local derivatives are already available from the forward pass. The gradient with respect to $w_1$ is $w_2\cdot(1-a^2)\cdot x$ and with respect to $w_2$ it is $a$. Press «Learn one step» and watch the error fall: each step goes against the slope of the error. A big network is just a longer chain with the same rule.`)}
     >
       <Graph
-        label="Sơ đồ chuỗi tính toán và các đạo hàm cục bộ"
+        label={tt("Sơ đồ chuỗi tính toán và các đạo hàm cục bộ", "The chain of computations and the local derivatives")}
         draw={(ctx, w, h) => {
           const { colors } = frame(ctx, w, h, 0, 1, 0, 1);
           ctx.clearRect(0, 0, w, h);
@@ -222,17 +225,17 @@ export function BackpropLab() {
               label(ctx, locals[i] as string, ax - 2, h / 2 - 44, colors.alt);
             }
           });
-          label(ctx, "lan truyền xuôi →", 20, 24, colors.curve);
-          label(ctx, `← ngược: bắt đầu từ dy/dy = 1, mỗi bước nhân thêm một đạo hàm cục bộ`, 20, h - 14, colors.alt);
+          label(ctx, tt("lan truyền xuôi →", "forward pass →"), 20, 24, colors.curve);
+          label(ctx, tt(`← ngược: bắt đầu từ dy/dy = 1, mỗi bước nhân thêm một đạo hàm cục bộ`, `← backward: start from dy/dy = 1, each step multiplies by one more local derivative`), 20, h - 14, colors.alt);
         }}
       />
       <div className="fz-controls">
-        <Slider label="Đầu vào x" value={x} min={-2} max={2} step={0.1} onChange={setX} />
-        <Slider label="Trọng số w₁" value={w1} min={-3} max={3} step={0.05} onChange={setW1} />
-        <Slider label="Trọng số w₂" value={w2} min={-3} max={3} step={0.05} onChange={setW2} />
-        <Slider label="Mục tiêu t" value={target} min={-2} max={2} step={0.1} onChange={setTarget} />
+        <Slider label={tt("Đầu vào x", "Input x")} value={x} min={-2} max={2} step={0.1} onChange={setX} />
+        <Slider label={tt("Trọng số w₁", "Weight w₁")} value={w1} min={-3} max={3} step={0.05} onChange={setW1} />
+        <Slider label={tt("Trọng số w₂", "Weight w₂")} value={w2} min={-3} max={3} step={0.05} onChange={setW2} />
+        <Slider label={tt("Mục tiêu t", "Target t")} value={target} min={-2} max={2} step={0.1} onChange={setTarget} />
       </div>
-      <Buttons><button type="button" className="text-btn" onClick={step}>Học một bước</button></Buttons>
+      <Buttons><button type="button" className="text-btn" onClick={step}>{tt("Học một bước", "Learn one step")}</button></Buttons>
     </Stage>
   );
 }
@@ -240,6 +243,7 @@ export function BackpropLab() {
 /* ---------- 4. Chuyển động: gia tốc → vận tốc → vị trí ---------- */
 
 export function MotionLab() {
+  const tt = useTx();
   const [a, setA] = useState(-10);
   const [v0, setV0] = useState(20);
   const [t, setT] = useState(1);
@@ -254,13 +258,13 @@ export function MotionLab() {
   const vMax = Math.max(v0, 1);
   return (
     <Stage
-      title="Quả bóng ném lên: gia tốc, vận tốc, vị trí"
-      story={R`Máy chỉ biết một luật: mỗi khoảnh khắc nhỏ dt, vận tốc đổi một lượng a·dt, vị trí đổi một lượng v·dt. Cho máy gia tốc rồi để nó chạy, ta thu được vận tốc và vị trí theo thời gian. Sau đó làm ngược: lấy đường vị trí đo độ dốc bằng cát tuyến, ta thấy nó đúng bằng vận tốc mà máy đã dùng. Hai phép làm ngược nhau là cùng một chuyện.`}
-      read={`Lúc $t=${fmt(t)}$ s: vị trí $s=${fmt(cur.s, 3)}$ m, vận tốc máy dùng $v=${fmt(cur.v, 3)}$ m/s. Đo độ dốc của đường vị trí cho $${fmt(vNumeric, 3)}$ m/s. ${a < 0 ? `Bóng đạt đỉnh khi $v=0$, tức $t=\\frac{v_0}{|a|}=${fmt(tPeak, 3)}$ s, cao $${fmt(sPeak, 3)}$ m.` : "Gia tốc không âm nên bóng không quay lại."}`}
-      why={R`Vận tốc là đạo hàm của vị trí, gia tốc là đạo hàm của vận tốc. Đường vị trí là parabol $s=v_0t+\frac{1}{2}at^2$, đạo hàm của nó là $v_0+at$: đường thẳng dốc xuống, cắt trục tại đỉnh. Ở đỉnh, độ dốc của vị trí bằng 0, đó chính là điều kiện cực trị.`}
+      title={tt(R`Quả bóng ném lên: gia tốc, vận tốc, vị trí`, R`A ball thrown up: acceleration, velocity, position`)}
+      story={tt(R`Máy chỉ biết một luật: mỗi khoảnh khắc nhỏ dt, vận tốc đổi một lượng a·dt, vị trí đổi một lượng v·dt. Cho máy gia tốc rồi để nó chạy, ta thu được vận tốc và vị trí theo thời gian. Sau đó làm ngược: lấy đường vị trí đo độ dốc bằng cát tuyến, ta thấy nó đúng bằng vận tốc mà máy đã dùng. Hai phép làm ngược nhau là cùng một chuyện.`, R`The machine knows one law: in each tiny moment dt the velocity changes by a·dt and the position by v·dt. Give it the acceleration and let it run, and we get velocity and position over time. Then do the reverse: measure the slope of the position curve with a secant and it equals the velocity the machine used. The two operations undo each other.`)}
+      read={tt(`Lúc $t=${fmt(t)}$ s: vị trí $s=${fmt(cur.s, 3)}$ m, vận tốc máy dùng $v=${fmt(cur.v, 3)}$ m/s. Đo độ dốc của đường vị trí cho $${fmt(vNumeric, 3)}$ m/s. ${a < 0 ? `Bóng đạt đỉnh khi $v=0$, tức $t=\\frac{v_0}{|a|}=${fmt(tPeak, 3)}$ s, at height $${fmt(sPeak, 3)}$ m.` : "Gia tốc không âm nên bóng không quay lại."}`, `At $t=${fmt(t)}$ s: position $s=${fmt(cur.s, 3)}$ m, the velocity the machine used $v=${fmt(cur.v, 3)}$ m/s. Measuring the slope of the position curve gives $${fmt(vNumeric, 3)}$ m/s. ${a < 0 ? `The ball peaks when $v=0$, i.e. $t=\\frac{v_0}{|a|}=${fmt(tPeak, 3)}$ s, at height $${fmt(sPeak, 3)}$ m.` : "The acceleration is not negative so the ball never comes back."}`)}
+      why={tt(R`Vận tốc là đạo hàm của vị trí, gia tốc là đạo hàm của vận tốc. Đường vị trí là parabol $s=v_0t+\frac{1}{2}at^2$, đạo hàm của nó là $v_0+at$: đường thẳng dốc xuống, cắt trục tại đỉnh. Ở đỉnh, độ dốc của vị trí bằng 0, đó chính là điều kiện cực trị.`, R`Velocity is the derivative of position and acceleration is the derivative of velocity. The position curve is the parabola $s=v_0t+\frac{1}{2}at^2$, whose derivative is $v_0+at$: a falling straight line that crosses the axis at the top. At the top the slope of the position is 0, which is exactly the extremum condition.`)}
     >
       <Graph
-        label="Vị trí, vận tốc theo thời gian và quả bóng"
+        label={tt("Vị trí, vận tốc theo thời gian và quả bóng", "Position and velocity against time, and the ball")}
         draw={(ctx, w, h) => {
           const sTop = Math.max(10, sPeak * 1.15);
           const { colors, map, pad } = frame(ctx, w, h, 0, tEnd, -vMax * 1.2, Math.max(sTop, vMax * 1.2), "t (s)", "");
@@ -271,14 +275,14 @@ export function MotionLab() {
           dot(ctx, map.x(t), map.y(cur.v), colors.alt, colors.bg, 6);
           const ext = 0.6;
           dashed(ctx, map.x(t - ext), map.y(cur.s - ext * cur.v), map.x(t + ext), map.y(cur.s + ext * cur.v), colors.curve);
-          label(ctx, "vị trí s", map.x(0.2), map.y(sTop * 0.9), colors.curve);
-          label(ctx, "vận tốc v", map.x(0.2), map.y(v0 * 0.86), colors.alt);
+          label(ctx, tt("vị trí s", "position s"), map.x(0.2), map.y(sTop * 0.9), colors.curve);
+          label(ctx, tt("vận tốc v", "velocity v"), map.x(0.2), map.y(v0 * 0.86), colors.alt);
         }}
       />
       <div className="fz-controls">
-        <Slider label="Gia tốc a (m/s²)" value={a} min={-20} max={-2} step={0.5} onChange={setA} />
-        <Slider label="Vận tốc ném v₀ (m/s)" value={v0} min={5} max={40} step={1} onChange={setV0} />
-        <Slider label="Thời điểm t (s)" value={t} min={0.1} max={7.9} step={0.1} onChange={setT} />
+        <Slider label={tt("Gia tốc a (m/s²)", "Acceleration a (m/s²)")} value={a} min={-20} max={-2} step={0.5} onChange={setA} />
+        <Slider label={tt("Vận tốc ném v₀ (m/s)", "Throwing velocity v₀ (m/s)")} value={v0} min={5} max={40} step={1} onChange={setV0} />
+        <Slider label={tt("Thời điểm t (s)", "Time t (s)")} value={t} min={0.1} max={7.9} step={0.1} onChange={setT} />
       </div>
     </Stage>
   );
@@ -294,6 +298,7 @@ const KINKS: { name: string; f: Fn; note: string }[] = [
 ];
 
 export function KinkLab() {
+  const tt = useTx();
   const [pick, setPick] = useState(0);
   const [e, setE] = useState(1);
   const spec = at(KINKS, pick);
@@ -303,13 +308,13 @@ export function KinkLab() {
   const agree = hasDerivativeAt(spec.f, 0);
   return (
     <Stage
-      title="Khi nào đường cong không có tiếp tuyến"
-      story={R`Đạo hàm đòi hỏi độ dốc từ hai phía cùng dồn về một con số. Tiến sát điểm 0 từ bên trái và bên phải, ghi độ dốc cát tuyến: nếu hai dãy số hội tụ về cùng một chỗ thì có tiếp tuyến. Hãy thử bốn đường cong và nhìn bảng.`}
-      read={`Bước $h=${fmt(h, 5)}$: độ dốc trái $${fmt(cur.left, 4)}$, phải $${fmt(cur.right, 4)}$. Bảng khi h giảm dần (trái; phải): ${rows.map((r) => `${fmt(r.left, 2)}; ${fmt(r.right, 2)}`).join(" | ")}. Kết luận: ${agree ? "có đạo hàm tại 0" : "không có đạo hàm tại 0"} (${spec.note}).`}
-      why={R`Hàm $|x|$ liên tục tại 0 mà không có đạo hàm: có đạo hàm thì chắc chắn liên tục, nhưng liên tục thì chưa chắc có đạo hàm. Vì $f(a+h)-f(a)=\frac{f(a+h)-f(a)}{h}\cdot h$, nếu thương dồn về một số hữu hạn thì phần chênh lệch tiến về 0, tức hàm liên tục.`}
+      title={tt(R`Khi nào đường cong không có tiếp tuyến`, R`When a curve has no tangent`)}
+      story={tt(R`Đạo hàm đòi hỏi độ dốc từ hai phía cùng dồn về một con số. Tiến sát điểm 0 từ bên trái và bên phải, ghi độ dốc cát tuyến: nếu hai dãy số hội tụ về cùng một chỗ thì có tiếp tuyến. Hãy thử bốn đường cong và nhìn bảng.`, R`A derivative needs the slopes from both sides to settle at one number. Approach the point 0 from the left and from the right and record the secant slopes: if the two lists of numbers converge to the same place there is a tangent. Try the four curves and read the table.`)}
+      read={tt(`Bước $h=${fmt(h, 5)}$: độ dốc trái $${fmt(cur.left, 4)}$, phải $${fmt(cur.right, 4)}$. Bảng khi h giảm dần (trái; phải): ${rows.map((r) => `${fmt(r.left, 2)}; ${fmt(r.right, 2)}`).join(" | ")}. Kết luận: ${agree ? "có đạo hàm tại 0" : "không có đạo hàm tại 0"} (${spec.note}).`, `Step $h=${fmt(h, 5)}$: left slope $${fmt(cur.left, 4)}$, right $${fmt(cur.right, 4)}$. Table as h shrinks (left; right): ${rows.map((r) => `${fmt(r.left, 2)}; ${fmt(r.right, 2)}`).join(" | ")}. Conclusion: ${agree ? "the derivative exists at 0" : "no derivative at 0"} (${tt(spec.note, en(spec.note))}).`)}
+      why={tt(R`Hàm $|x|$ liên tục tại 0 mà không có đạo hàm: có đạo hàm thì chắc chắn liên tục, nhưng liên tục thì chưa chắc có đạo hàm. Vì $f(a+h)-f(a)=\frac{f(a+h)-f(a)}{h}\cdot h$, nếu thương dồn về một số hữu hạn thì phần chênh lệch tiến về 0, tức hàm liên tục.`, R`The function $|x|$ is continuous at 0 yet has no derivative: differentiable implies continuous, but continuous does not imply differentiable. Since $f(a+h)-f(a)=\frac{f(a+h)-f(a)}{h}\cdot h$, if the quotient settles to a finite number the difference tends to 0, i.e. the function is continuous.`)}
     >
       <Graph
-        label="Đường cong và hai cát tuyến sát điểm 0"
+        label={tt("Đường cong và hai cát tuyến sát điểm 0", "The curve and two secants close to the point 0")}
         draw={(ctx, w, hh) => {
           const { colors, map, pad } = frame(ctx, w, hh, -1, 1, -1, 1);
           strokeFn(ctx, map, w, hh, pad, -1, 1, spec.f, colors.curve, 2.4);
@@ -322,10 +327,10 @@ export function KinkLab() {
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Đường cong
-          <select value={pick} onChange={(ev) => setPick(Number(ev.target.value))}>{KINKS.map((k, i) => <option key={k.name} value={i}>{k.name}</option>)}</select>
+        <label className="fz-pick">{tt("Đường cong", "Curve")}
+          <select value={pick} onChange={(ev) => setPick(Number(ev.target.value))}>{KINKS.map((k, i) => <option key={k.name} value={i}>{tt(k.name, en(k.name))}</option>)}</select>
         </label>
-        <Slider label="Bước h nhỏ dần (10 mũ −)" value={e} min={0.2} max={5} step={0.1} onChange={setE} />
+        <Slider label={tt("Bước h nhỏ dần (10 mũ −)", "Step h shrinking (10 to the power −)")} value={e} min={0.2} max={5} step={0.1} onChange={setE} />
       </div>
     </Stage>
   );
@@ -337,6 +342,7 @@ type TanMode = "diem" | "k" | "qua";
 const CUBIC: Fn = (x) => x ** 3 - 3 * x;
 
 export function TangentLab() {
+  const tt = useTx();
   const [mode, setMode] = useState<TanMode>("qua");
   const [x0, setX0] = useState(1.5);
   const [k, setK] = useState(2);
@@ -346,17 +352,17 @@ export function TangentLab() {
   const eqs = xs.map((t) => { const s = diff(CUBIC, t, 1e-4); return { t, s, m: CUBIC(t) - s * t }; });
   return (
     <Stage
-      title="Ba kiểu tiếp tuyến của $y=x^3-3x$: máy tìm tiếp điểm"
-      story={R`Tiếp tuyến tại một điểm thì dễ: biết chỗ đứng là biết độ dốc. Khó hơn là hai kiểu còn lại, vì ta chưa biết tiếp điểm ở đâu: «tiếp tuyến có độ dốc cho trước» và «tiếp tuyến đi qua một điểm ngoài đồ thị». Máy giải bằng cách viết điều kiện thành một phương trình theo hoành độ tiếp điểm rồi tìm mọi nghiệm. Số nghiệm chính là số tiếp tuyến.`}
-      read={`${eqs.length} tiếp tuyến: ${eqs.map((q) => `$y=${fmt(q.s, 3)}x${q.m < 0 ? "-" : "+"}${fmt(Math.abs(q.m), 3)}$ (tiếp điểm $x_0=${fmt(q.t, 3)}$)`).join("; ") || "không có"}.`}
-      why={mode === "diem"
+      title={tt(R`Ba kiểu tiếp tuyến của $y=x^3-3x$: máy tìm tiếp điểm`, R`Three kinds of tangent to $y=x^3-3x$: the machine finds the tangent point`)}
+      story={tt(R`Tiếp tuyến tại một điểm thì dễ: biết chỗ đứng là biết độ dốc. Khó hơn là hai kiểu còn lại, vì ta chưa biết tiếp điểm ở đâu: «tiếp tuyến có độ dốc cho trước» và «tiếp tuyến đi qua một điểm ngoài đồ thị». Máy giải bằng cách viết điều kiện thành một phương trình theo hoành độ tiếp điểm rồi tìm mọi nghiệm. Số nghiệm chính là số tiếp tuyến.`, R`A tangent at a given point is easy: knowing where you stand gives the slope. The other two kinds are harder because the point of tangency is unknown: «a tangent with a given slope» and «a tangent through a point outside the graph». The machine writes the condition as an equation in the x-coordinate of the tangent point and finds every solution. The number of solutions is the number of tangents.`)}
+      read={tt(`${eqs.length} tiếp tuyến: ${eqs.map((q) => `$y=${fmt(q.s, 3)}x${q.m < 0 ? "-" : "+"}${fmt(Math.abs(q.m), 3)}$ (tiếp điểm $x_0=${fmt(q.t, 3)}$)`).join("; ") || "không có"}.`, `${eqs.length} tangents: ${eqs.map((q) => `$y=${fmt(q.s, 3)}x${q.m < 0 ? "-" : "+"}${fmt(Math.abs(q.m), 3)}$, (point of tangency $x_0=${fmt(q.t, 3)}$)`).join("; ") || "none"}.`)}
+      why={tt(mode === "diem"
         ? R`Tiếp tuyến tại $x_0$: $y=f'(x_0)(x-x_0)+f(x_0)$. Đạo hàm cho độ dốc, đồ thị cho điểm đi qua.`
         : mode === "k"
           ? R`Độ dốc cho trước nghĩa là $f'(x_0)=k$. Với $f'=3x^2-3$ đó là phương trình bậc hai, nên có tối đa hai tiếp điểm: hai tiếp tuyến song song.`
-          : R`Tiếp tuyến tại $x_0$ đi qua $P$ nghĩa là $f(x_0)+f'(x_0)(p_x-x_0)=p_y$. Điểm $P$ ở những chỗ khác nhau cho 1, 2 hoặc 3 tiếp tuyến: hãy kéo $P$ để thấy số tiếp tuyến thay đổi.`}
+          : R`Tiếp tuyến tại $x_0$ đi qua $P$ nghĩa là $f(x_0)+f'(x_0)(p_x-x_0)=p_y$. Điểm $P$ ở những chỗ khác nhau cho 1, 2 hoặc 3 tiếp tuyến: hãy kéo $P$ để thấy số tiếp tuyến thay đổi.`, mode === "diem" ? R`The tangent at $x_0$: $y=f'(x_0)(x-x_0)+f(x_0)$. The derivative gives the slope, the graph gives the point it passes through.` : mode === "k" ? R`A given slope means $f'(x_0)=k$. With $f'=3x^2-3$ this is a quadratic equation, so there are at most two tangent points: two parallel tangents.` : R`The tangent at $x_0$ passes through $P$ means $f(x_0)+f'(x_0)(p_x-x_0)=p_y$. Depending on where $P$ is there are 1, 2 or 3 tangents: drag $P$ to see the number change.`)}
     >
       <Graph
-        label="Đồ thị bậc ba và các tiếp tuyến"
+        label={tt("Đồ thị bậc ba và các tiếp tuyến", "The cubic graph and its tangents")}
         draw={(ctx, w, h) => {
           const { colors, map, pad } = frame(ctx, w, h, -3.5, 3.5, -6, 6);
           strokeFn(ctx, map, w, h, pad, -3.5, 3.5, CUBIC, colors.curve, 2.6);
@@ -368,14 +374,14 @@ export function TangentLab() {
         }}
       />
       <div className="fz-controls">
-        <label className="fz-pick">Kiểu bài
+        <label className="fz-pick">{tt("Kiểu bài", "Kind of problem")}
           <select value={mode} onChange={(ev) => setMode(ev.target.value as TanMode)}>
-            <option value="diem">tại một điểm của đồ thị</option><option value="k">có hệ số góc cho trước</option><option value="qua">đi qua một điểm ngoài đồ thị</option>
+            <option value="diem">{tt("tại một điểm của đồ thị", "at a point of the graph")}</option><option value="k">{tt("có hệ số góc cho trước", "with a given slope")}</option><option value="qua">{tt("đi qua một điểm ngoài đồ thị", "through a point off the graph")}</option>
           </select>
         </label>
-        {mode === "diem" ? <Slider label="Hoành độ tiếp điểm" value={x0} min={-3} max={3} step={0.1} onChange={setX0} /> : null}
-        {mode === "k" ? <Slider label="Hệ số góc k" value={k} min={-3} max={12} step={0.5} onChange={setK} /> : null}
-        {mode === "qua" ? (<><Slider label="Điểm P: x" value={px} min={-3} max={3} step={0.1} onChange={setPx} /><Slider label="Điểm P: y" value={py} min={-5} max={5} step={0.1} onChange={setPy} /></>) : null}
+        {mode === "diem" ? <Slider label={tt("Hoành độ tiếp điểm", "x-coordinate of the tangent point")} value={x0} min={-3} max={3} step={0.1} onChange={setX0} /> : null}
+        {mode === "k" ? <Slider label={tt("Hệ số góc k", "Slope k")} value={k} min={-3} max={12} step={0.5} onChange={setK} /> : null}
+        {mode === "qua" ? (<><Slider label={tt("Điểm P: x", "Point P: x")} value={px} min={-3} max={3} step={0.1} onChange={setPx} /><Slider label={tt("Điểm P: y", "Point P: y")} value={py} min={-5} max={5} step={0.1} onChange={setPy} /></>) : null}
       </div>
     </Stage>
   );
@@ -384,6 +390,7 @@ export function TangentLab() {
 /* ---------- 7. Chiều biến thiên, cực trị, giá trị lớn nhất trên đoạn ---------- */
 
 export function ExtremaLab() {
+  const tt = useTx();
   const [lo, setLo] = useState(-2.5);
   const [hi, setHi] = useState(2.5);
   const f = CUBIC;
@@ -396,13 +403,13 @@ export function ExtremaLab() {
   for (let i = 0; i <= 5000; i++) { const y = f(lo + ((hi - lo) * i) / 5000); scanMax = Math.max(scanMax, y); scanMin = Math.min(scanMin, y); }
   return (
     <Stage
-      title="Tìm giá trị lớn nhất, nhỏ nhất trên một đoạn"
-      story={R`Hãy tô màu đường cong theo dấu của độ dốc: xanh khi đang đi lên, cam khi đang đi xuống. Chỗ đổi màu là chỗ quay đầu, tức điểm tới hạn. Để tìm cao nhất và thấp nhất trên một đoạn, ta chỉ cần so sánh các ứng viên: hai đầu mút và các chỗ quay đầu nằm trong đoạn. Máy làm đúng việc đó rồi kiểm lại bằng cách quét 5000 điểm.`}
-      read={`Trên $[${fmt(lo)};\\ ${fmt(hi)}]$ có ${cps.length} điểm tới hạn: ${cps.map((c) => `$x=${fmt(c.x, 3)}$ (${c.kind === "max" ? "cực đại" : "cực tiểu"}, $y=${fmt(c.y, 3)}$)`).join("; ") || "không có"}. So các ứng viên: lớn nhất $${fmt(best.y, 4)}$ tại $x=${fmt(best.x, 3)}$ (${best.tag}), nhỏ nhất $${fmt(worst.y, 4)}$ tại $x=${fmt(worst.x, 3)}$ (${worst.tag}). Quét 5000 điểm cho $${fmt(scanMax, 4)}$ và $${fmt(scanMin, 4)}$.`}
-      why={R`Trong khoảng mà $f'>0$ hàm đi lên nên cao nhất ở đầu bên phải; trong khoảng mà $f'<0$ hàm đi xuống nên cao nhất ở đầu bên trái. Do đó cực trị chỉ có thể ở đầu mút hoặc ở chỗ $f'$ đổi dấu. Cực đại hay cực tiểu thì nhìn đạo hàm cấp hai: độ dốc đang tăng là đáy, đang giảm là đỉnh.`}
+      title={tt(R`Tìm giá trị lớn nhất, nhỏ nhất trên một đoạn`, R`Finding the largest and smallest values on an interval`)}
+      story={tt(R`Hãy tô màu đường cong theo dấu của độ dốc: xanh khi đang đi lên, cam khi đang đi xuống. Chỗ đổi màu là chỗ quay đầu, tức điểm tới hạn. Để tìm cao nhất và thấp nhất trên một đoạn, ta chỉ cần so sánh các ứng viên: hai đầu mút và các chỗ quay đầu nằm trong đoạn. Máy làm đúng việc đó rồi kiểm lại bằng cách quét 5000 điểm.`, R`Colour the curve by the sign of its slope: green where it rises, orange where it falls. Where the colour changes is a turning point, a critical point. To find the highest and lowest values on an interval we only compare the candidates: the two endpoints and the turning points inside the interval. The machine does exactly that and then checks by scanning 5000 points.`)}
+      read={tt(`Trên $[${fmt(lo)};\\ ${fmt(hi)}]$ có ${cps.length} điểm tới hạn: ${cps.map((c) => `$x=${fmt(c.x, 3)}$ (${c.kind === "max" ? "cực đại" : "cực tiểu"}, $y=${fmt(c.y, 3)}$)`).join("; ") || "không có"}. So các ứng viên: lớn nhất $${fmt(best.y, 4)}$ tại $x=${fmt(best.x, 3)}$ (${best.tag}), nhỏ nhất $${fmt(worst.y, 4)}$ tại $x=${fmt(worst.x, 3)}$ (${worst.tag}). Quét 5000 điểm cho $${fmt(scanMax, 4)}$ và $${fmt(scanMin, 4)}$.`, `On $[${fmt(lo)};\\ ${fmt(hi)}]$ there are ${cps.length} critical points: ${cps.map((c) => `$x=${fmt(c.x, 3)}$ (${c.kind === "max" ? "maximum" : "minimum"}, $y=${fmt(c.y, 3)}$)`).join("; ") || "none"}. Comparing the candidates: largest $${fmt(best.y, 4)}$ at $x=${fmt(best.x, 3)}$ (${tt(best.tag, en(best.tag))}), smallest $${fmt(worst.y, 4)}$ at $x=${fmt(worst.x, 3)}$ (${tt(worst.tag, en(worst.tag))}). Scanning 5000 points gives $${fmt(scanMax, 4)}$ and $${fmt(scanMin, 4)}$.`)}
+      why={tt(R`Trong khoảng mà $f'>0$ hàm đi lên nên cao nhất ở đầu bên phải; trong khoảng mà $f'<0$ hàm đi xuống nên cao nhất ở đầu bên trái. Do đó cực trị chỉ có thể ở đầu mút hoặc ở chỗ $f'$ đổi dấu. Cực đại hay cực tiểu thì nhìn đạo hàm cấp hai: độ dốc đang tăng là đáy, đang giảm là đỉnh.`, R`Where $f'>0$ the function rises so its highest value is at the right end; where $f'<0$ it falls so its highest value is at the left end. So an extremum can only be at an endpoint or where $f'$ changes sign. For maximum or minimum look at the second derivative: slope increasing means a bottom, slope decreasing means a top.`)}
     >
       <Graph
-        label="Đường cong tô màu theo dấu đạo hàm, điểm tới hạn và đoạn khảo sát"
+        label={tt("Đường cong tô màu theo dấu đạo hàm, điểm tới hạn và đoạn khảo sát", "The curve coloured by the sign of the derivative, critical points and the interval studied")}
         draw={(ctx, w, h) => {
           const { colors, map } = frame(ctx, w, h, -3.2, 3.2, -4.5, 4.5);
           ctx.fillStyle = colors.curve;
@@ -418,8 +425,8 @@ export function ExtremaLab() {
         }}
       />
       <div className="fz-controls">
-        <Slider label="Đầu mút trái" value={lo} min={-3} max={1.5} step={0.1} onChange={(v) => setLo(Math.min(v, hi - 0.3))} />
-        <Slider label="Đầu mút phải" value={hi} min={-1.5} max={3} step={0.1} onChange={(v) => setHi(Math.max(v, lo + 0.3))} />
+        <Slider label={tt("Đầu mút trái", "Left endpoint")} value={lo} min={-3} max={1.5} step={0.1} onChange={(v) => setLo(Math.min(v, hi - 0.3))} />
+        <Slider label={tt("Đầu mút phải", "Right endpoint")} value={hi} min={-1.5} max={3} step={0.1} onChange={(v) => setHi(Math.max(v, lo + 0.3))} />
       </div>
     </Stage>
   );
@@ -428,6 +435,7 @@ export function ExtremaLab() {
 /* ---------- 8. Bài tối ưu: gấp hộp ---------- */
 
 export function BoxLab() {
+  const tt = useTx();
   const [side, setSide] = useState(12);
   const [x, setX] = useState(1.5);
   const xm = Math.min(x, side / 2 - 0.05);
@@ -435,13 +443,13 @@ export function BoxLab() {
   const best = criticalPoints(V, 0.01, side / 2 - 0.01).find((c) => c.kind === "max");
   return (
     <Stage
-      title="Gấp hộp lớn nhất từ một tấm bìa vuông"
-      story={R`Có tấm bìa vuông. Cắt bỏ bốn hình vuông nhỏ cạnh x ở bốn góc rồi gấp các cánh lên thành hộp không nắp. Cắt ít thì đáy to nhưng thành thấp, cắt nhiều thì thành cao nhưng đáy bé. Có một cỡ cắt cho thể tích lớn nhất. Kéo x để tự tìm, rồi xem máy tìm bằng đạo hàm.`}
-      read={`Cắt $x=${fmt(xm, 2)}$: đáy $${fmt(side - 2 * xm, 2)}\\times${fmt(side - 2 * xm, 2)}$, cao $${fmt(xm, 2)}$, thể tích $V=${fmt(V(xm), 3)}$. Độ dốc của $V$ tại đó $${fmt(diff(V, xm), 3)}$. Máy giải $V'=0$ tìm được $x=${best ? fmt(best.x, 4) : "?"}$, thể tích lớn nhất $${best ? fmt(best.y, 3) : "?"}$. So với $\\frac{${fmt(side)}}{6}=${fmt(side / 6, 4)}$.`}
-      why={R`$V=x(a-2x)^2$ với $a$ là cạnh tấm bìa. Đạo hàm: $V'=(a-2x)^2-4x(a-2x)=(a-2x)(a-6x)$. Nghiệm hợp lệ là $x=\frac{a}{6}$, với mọi cỡ bìa. Bên trái đó $V'>0$ (hộp đang to lên), bên phải $V'<0$ (hộp nhỏ lại): đúng đỉnh.`}
+      title={tt(R`Gấp hộp lớn nhất từ một tấm bìa vuông`, R`Folding the biggest box from a square sheet`)}
+      story={tt(R`Có tấm bìa vuông. Cắt bỏ bốn hình vuông nhỏ cạnh x ở bốn góc rồi gấp các cánh lên thành hộp không nắp. Cắt ít thì đáy to nhưng thành thấp, cắt nhiều thì thành cao nhưng đáy bé. Có một cỡ cắt cho thể tích lớn nhất. Kéo x để tự tìm, rồi xem máy tìm bằng đạo hàm.`, R`Take a square sheet of card. Cut away four small squares of side x from the corners and fold the flaps up into an open box. Cut little and the base is big but the walls low, cut a lot and the walls are tall but the base is small. There is one size of cut that gives the largest volume. Drag x to find it yourself, then see how the machine finds it with the derivative.`)}
+      read={tt(`Cắt $x=${fmt(xm, 2)}$: đáy $${fmt(side - 2 * xm, 2)}\\times${fmt(side - 2 * xm, 2)}$, cao $${fmt(xm, 2)}$, thể tích $V=${fmt(V(xm), 3)}$. Độ dốc của $V$ tại đó $${fmt(diff(V, xm), 3)}$. Máy giải $V'=0$ tìm được $x=${best ? fmt(best.x, 4) : "?"}$, thể tích lớn nhất $${best ? fmt(best.y, 3) : "?"}$. So với $\\frac{${fmt(side)}}{6}=${fmt(side / 6, 4)}$.`, `Cut $x=${fmt(xm, 2)}$: base $${fmt(side - 2 * xm, 2)}\\times${fmt(side - 2 * xm, 2)}$, height $${fmt(xm, 2)}$, volume $V=${fmt(V(xm), 3)}$. The slope of $V$ there $${fmt(diff(V, xm), 3)}$. The machine solves $V'=0$ and finds $x=${best ? fmt(best.x, 4) : "?"}$, the largest volume $${best ? fmt(best.y, 3) : "?"}$. Compare with $\\frac{${fmt(side)}}{6}=${fmt(side / 6, 4)}$.`)}
+      why={tt(R`$V=x(a-2x)^2$ với $a$ là cạnh tấm bìa. Đạo hàm: $V'=(a-2x)^2-4x(a-2x)=(a-2x)(a-6x)$. Nghiệm hợp lệ là $x=\frac{a}{6}$, với mọi cỡ bìa. Bên trái đó $V'>0$ (hộp đang to lên), bên phải $V'<0$ (hộp nhỏ lại): đúng đỉnh.`, R`$V=x(a-2x)^2$ where $a$ is the side of the sheet. The derivative: $V'=(a-2x)^2-4x(a-2x)=(a-2x)(a-6x)$. The valid solution is $x=\frac{a}{6}$, for every sheet size. To its left $V'>0$ (the box is growing), to its right $V'<0$ (the box shrinks): exactly a peak.`)}
     >
       <Graph
-        label="Tấm bìa cắt góc và đồ thị thể tích theo x"
+        label={tt("Tấm bìa cắt góc và đồ thị thể tích theo x", "The sheet with cut corners and the volume graph against x")}
         draw={(ctx, w, h) => {
           const half = Math.floor(w * 0.34);
           const s = Math.min(half - 20, h - 40);
@@ -461,7 +469,7 @@ export function BoxLab() {
           ctx.strokeStyle = colors.alt;
           ctx.lineWidth = 1.5;
           ctx.strokeRect(ox, oy, s, s);
-          label(ctx, `cạnh ${side}`, ox + s / 2 - 22, oy - 6, colors.ink);
+          label(ctx, tt(`cạnh ${side}`, `side ${side}`), ox + s / 2 - 22, oy - 6, colors.ink);
           const gx0 = ox + s + 26;
           const gw = w - gx0 - 12;
           const vMax = boxVolume(side / 6, side) * 1.15;
@@ -475,12 +483,12 @@ export function BoxLab() {
           ctx.stroke();
           if (best) { dot(ctx, gxf(best.x), gy(best.y), colors.alt, colors.bg, 6); dashed(ctx, gxf(best.x), gy(best.y), gxf(best.x), h - 26, colors.alt); }
           dot(ctx, gxf(xm), gy(V(xm)), colors.ink, colors.bg, 6);
-          label(ctx, "V theo x", gx0 + 6, 18, colors.curve);
+          label(ctx, tt("V theo x", "V against x"), gx0 + 6, 18, colors.curve);
         }}
       />
       <div className="fz-controls">
-        <Slider label="Cạnh tấm bìa" value={side} min={6} max={30} step={1} onChange={setSide} />
-        <Slider label="Cắt góc cạnh x" value={xm} min={0.1} max={side / 2 - 0.1} step={0.05} onChange={setX} />
+        <Slider label={tt("Cạnh tấm bìa", "Side of the sheet")} value={side} min={6} max={30} step={1} onChange={setSide} />
+        <Slider label={tt("Cắt góc cạnh x", "Corner cut x")} value={xm} min={0.1} max={side / 2 - 0.1} step={0.05} onChange={setX} />
       </div>
     </Stage>
   );

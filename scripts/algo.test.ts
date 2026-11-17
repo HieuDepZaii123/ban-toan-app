@@ -252,6 +252,47 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("(x−1)²≤0 chỉ có x=1", i5.length === 1 && Math.abs(i5[0]!.lo - 1) < 1e-6 && Math.abs(i5[0]!.hi - 1) < 1e-6);
 }
 
+// Bốn chuyên đề bổ sung.
+{
+  const r = mulberry32(5);
+  const ok = A.counterexampleSearch((q) => q[0]! ** 2 + q[1]! ** 2 - 2 * q[0]! * q[1]!, 2, -10, 10, 20000, r);
+  is("a²+b²≥2ab không có phản ví dụ", ok.counter === null && ok.min >= 0);
+  const bad = A.counterexampleSearch((q) => (q[0]! + q[1]!) / 2 - Math.sqrt(Math.abs(q[0]! * q[1]!)), 2, -10, 10, 20000, r);
+  is("trung bình cộng ≥ trung bình nhân của |ab| sai khi cả hai âm", bad.counter !== null && bad.counter.every((v) => v < 5));
+  const bad2 = A.counterexampleSearch((q) => q[0]! + 1 / q[0]! - 2, 1, -5, 5, 20000, r);
+  is("x+1/x≥2 sai với x âm", bad2.counter !== null && bad2.counter[0]! < 0);
+  const mc = A.meanChain(3, 12);
+  near("hm ≤ gm", mc.gm, 6, 1e-12);
+  is("chuỗi bốn trung bình", mc.hm < mc.gm && mc.gm < mc.am && mc.am < mc.qm);
+  near("độ cao nửa đường tròn = √(ab)", A.semicircleHeight(3, 12), Math.sqrt(36), 1e-12);
+  const le = A.limitEstimate((x) => (x * x - 1) / (x - 1), 1, "right");
+  near("(x²−1)/(x−1) → 2", le[8]!.value, 2, 1e-6);
+  const sx = A.limitEstimate((x) => Math.sin(x) / x, 0, "left");
+  near("sin x / x → 1", sx[5]!.value, 1, 1e-9);
+  const lc = A.lineCircle(1, -1, 0, 0, 0, 2);
+  near("y=x cắt tròn R=2: khoảng cách 0", lc.d, 0, 1e-12);
+  is("hai giao điểm cách tâm R", lc.points.length === 2 && lc.points.every((p) => Math.abs(Math.hypot(p.x, p.y) - 2) < 1e-9));
+  const tg = A.lineCircle(0, 1, -2, 0, 0, 2);
+  is("tiếp xúc: một điểm", tg.points.length === 1 && Math.abs(tg.points[0]!.y - 2) < 1e-9);
+  is("không cắt", A.lineCircle(0, 1, -5, 0, 0, 2).points.length === 0);
+  const pl = A.planeThrough([1, 0, 0], [0, 1, 0], [0, 0, 1]);
+  near("mặt x+y+z=1: khoảng cách từ gốc = 1/√3", A.distToPlane(pl, [0, 0, 0]), 1 / Math.sqrt(3), 1e-12);
+  const cr = A.cross3([1, 2, 3], [4, 5, 6]);
+  near("tích có hướng vuông góc a", A.dot3(cr, [1, 2, 3]), 0, 1e-12);
+  near("tích có hướng vuông góc b", A.dot3(cr, [4, 5, 6]), 0, 1e-12);
+  const T = A.triCenters({ x: 0, y: 0 }, { x: 6, y: 0 }, { x: 1, y: 4 });
+  near("O, G, H thẳng hàng: H = 3G − 2O (x)", T.H.x, 3 * T.G.x - 2 * T.O.x, 1e-9);
+  near("O, G, H thẳng hàng: H = 3G − 2O (y)", T.H.y, 3 * T.G.y - 2 * T.O.y, 1e-9);
+  near("tâm ngoại tiếp cách đều ba đỉnh", Math.hypot(T.O.x - 6, T.O.y), T.R, 1e-9);
+  near("bán kính nội tiếp = 2S/chu vi", T.r, (2 * T.area) / (6 + Math.hypot(1, 4) + Math.hypot(5, 4)), 1e-12);
+  near("diện tích 12", T.area, 12, 1e-12);
+  const lat = A.latticeArea([{ x: 0, y: 0 }, { x: 6, y: 0 }, { x: 1, y: 4 }], 0.05, 8);
+  near("đếm ô ≈ 12", lat.area, 12, 0.1);
+  const tm = A.tetraRatioMC(0.5, 0.6, 0.8, 200000, mulberry32(2));
+  near("tỉ số thể tích = tích ba tỉ số", tm.fraction, 0.5 * 0.6 * 0.8, 0.005);
+  near("diện tích quạt = ½r²α", A.sectorAreaNumeric(3, 2), 9, 1e-9);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

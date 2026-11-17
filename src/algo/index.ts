@@ -632,3 +632,129 @@ export function solveInequality(f: Fn, rel: ">" | "<" | ">=" | "<=", bound = 100
   }
   return merged;
 }
+
+/* ---------- Bất đẳng thức, giới hạn, hình giải tích, hình học: thuật toán bổ sung ---------- */
+
+/** Tìm phản ví dụ: thử n điểm ngẫu nhiên, báo giá trị nhỏ nhất của «vế trái − vế phải» và điểm làm sai (nếu có). */
+export function counterexampleSearch(diffFn: (p: number[]) => number, dims: number, lo: number, hi: number, n: number, rng: () => number): { min: number; at: number[]; counter: number[] | null; tried: number } {
+  let min = Infinity;
+  let at: number[] = [];
+  let counter: number[] | null = null;
+  for (let i = 0; i < n; i++) {
+    const p = Array.from({ length: dims }, () => lo + rng() * (hi - lo));
+    const v = diffFn(p);
+    if (v < min) { min = v; at = p; }
+    if (v < -1e-12 && counter === null) counter = p;
+  }
+  return { min, at, counter, tried: n };
+}
+
+/** Bốn trung bình của a, b > 0: điều hòa, nhân, cộng, bình phương. */
+export function meanChain(a: number, b: number): { hm: number; gm: number; am: number; qm: number } {
+  return { hm: (2 * a * b) / (a + b), gm: Math.sqrt(a * b), am: (a + b) / 2, qm: Math.sqrt((a * a + b * b) / 2) };
+}
+
+/** Nửa đường tròn đường kính a+b: độ cao dây vuông góc dựng tại điểm chia đường kính thành a và b (đo bằng phương trình đường tròn). */
+export function semicircleHeight(a: number, b: number): number {
+  const r = (a + b) / 2;
+  return Math.sqrt(Math.max(0, r * r - (a - r) ** 2));
+}
+
+/** Ước lượng giới hạn của f khi x → x0 từ một phía bằng dãy bước h = 10^−k; trả về từng bước và nhận xét có dồn lại không. */
+export function limitEstimate(f: Fn, x0: number, side: "left" | "right", kMax = 9): { h: number; value: number }[] {
+  const rows: { h: number; value: number }[] = [];
+  for (let k = 1; k <= kMax; k++) {
+    const h = 10 ** -k;
+    rows.push({ h, value: f(side === "left" ? x0 - h : x0 + h) });
+  }
+  return rows;
+}
+
+/** Giao của đường thẳng ax+by+c=0 và đường tròn tâm (cx;cy) bán kính R: khoảng cách d, chân đường vuông góc và các giao điểm. */
+export function lineCircle(a: number, b: number, c: number, cx: number, cy: number, R: number): { d: number; foot: { x: number; y: number }; points: { x: number; y: number }[] } {
+  const n = Math.hypot(a, b);
+  const s = (a * cx + b * cy + c) / (n * n);
+  const foot = { x: cx - a * s, y: cy - b * s };
+  const d = Math.abs(a * cx + b * cy + c) / n;
+  if (d > R + 1e-9) return { d, foot, points: [] };
+  const half = Math.sqrt(Math.max(0, R * R - d * d));
+  const ux = -b / n;
+  const uy = a / n;
+  const pts = half < 1e-9 ? [foot] : [{ x: foot.x - ux * half, y: foot.y - uy * half }, { x: foot.x + ux * half, y: foot.y + uy * half }];
+  return { d, foot, points: pts };
+}
+
+export type V3 = [number, number, number];
+export const dot3 = (p: V3, q: V3): number => p[0] * q[0] + p[1] * q[1] + p[2] * q[2];
+export const cross3 = (p: V3, q: V3): V3 => [p[1] * q[2] - p[2] * q[1], p[2] * q[0] - p[0] * q[2], p[0] * q[1] - p[1] * q[0]];
+export const sub3 = (p: V3, q: V3): V3 => [p[0] - q[0], p[1] - q[1], p[2] - q[2]];
+
+/** Mặt phẳng qua ba điểm: pháp tuyến = tích có hướng của hai cạnh, phương trình Ax+By+Cz+D=0. */
+export function planeThrough(P: V3, Q: V3, R: V3): { n: V3; D: number } {
+  const n = cross3(sub3(Q, P), sub3(R, P));
+  return { n, D: -dot3(n, P) };
+}
+
+export function distToPlane(plane: { n: V3; D: number }, p: V3): number {
+  return Math.abs(dot3(plane.n, p) + plane.D) / Math.hypot(...plane.n);
+}
+
+type P2 = { x: number; y: number };
+
+/** Bốn tâm của tam giác bằng toạ độ: trọng tâm, ngoại tiếp (giao hai trung trực), nội tiếp (trung bình có trọng số theo cạnh), trực tâm (giao hai đường cao, giải bằng Cramer). */
+export function triCenters(A: P2, B: P2, C: P2): { G: P2; O: P2; I: P2; H: P2; R: number; r: number; area: number } {
+  const a = Math.hypot(B.x - C.x, B.y - C.y);
+  const b = Math.hypot(A.x - C.x, A.y - C.y);
+  const c = Math.hypot(A.x - B.x, A.y - B.y);
+  const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+  const d = 2 * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y));
+  const sq = (P: P2) => P.x * P.x + P.y * P.y;
+  const O = { x: (sq(A) * (B.y - C.y) + sq(B) * (C.y - A.y) + sq(C) * (A.y - B.y)) / d, y: (sq(A) * (C.x - B.x) + sq(B) * (A.x - C.x) + sq(C) * (B.x - A.x)) / d };
+  const I = { x: (a * A.x + b * B.x + c * C.x) / (a + b + c), y: (a * A.y + b * B.y + c * C.y) / (a + b + c) };
+  // Đường cao từ A vuông góc BC: (P−A)·(C−B)=0; từ B vuông góc CA: (P−B)·(A−C)=0.
+  const h = cramer(C.x - B.x, C.y - B.y, A.x - C.x, A.y - C.y, A.x * (C.x - B.x) + A.y * (C.y - B.y), B.x * (A.x - C.x) + B.y * (A.y - C.y));
+  const area = Math.abs((B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x)) / 2;
+  return { G, O, I, H: h ? { x: h.x, y: h.y } : G, R: Math.hypot(O.x - A.x, O.y - A.y), r: (2 * area) / (a + b + c), area };
+}
+
+/** Điểm có nằm trong đa giác không (bắn tia sang phải, đếm số lần cắt cạnh). */
+export function insidePolygon(p: P2, poly: readonly P2[]): boolean {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const a = poly[i] as P2;
+    const b = poly[j] as P2;
+    if (a.y > p.y !== b.y > p.y && p.x < ((b.x - a.x) * (p.y - a.y)) / (b.y - a.y) + a.x) inside = !inside;
+  }
+  return inside;
+}
+
+/** Đếm ô vuông cạnh cell có tâm nằm trong đa giác: diện tích ≈ số ô × cell². */
+export function latticeArea(poly: readonly P2[], cell: number, extent: number): { cells: number; area: number } {
+  let cells = 0;
+  const n = Math.ceil(extent / cell);
+  for (let i = -n; i < n; i++) for (let j = -n; j < n; j++) if (insidePolygon({ x: (i + 0.5) * cell, y: (j + 0.5) * cell }, poly)) cells++;
+  return { cells, area: cells * cell * cell };
+}
+
+/** Lấy mẫu đều trong tứ diện S.ABC rồi đếm phần rơi vào tứ diện con S.A'B'C' (SA'/SA=ra, …): tỉ lệ → ra·rb·rc. */
+export function tetraRatioMC(ra: number, rb: number, rc: number, n: number, rng: () => number): { inside: number; fraction: number } {
+  let inside = 0;
+  for (let i = 0; i < n; i++) {
+    // Lấy mẫu đều trong tứ diện: bốn số mũ ngẫu nhiên rồi chuẩn hoá (phân phối Dirichlet(1,1,1,1)).
+    const e = [-Math.log(1 - rng()), -Math.log(1 - rng()), -Math.log(1 - rng()), -Math.log(1 - rng())];
+    const s = e[0]! + e[1]! + e[2]! + e[3]!;
+    const a = e[1]! / s;
+    const b = e[2]! / s;
+    const c = e[3]! / s;
+    if (a / ra + b / rb + c / rc <= 1) inside++;
+  }
+  return { inside, fraction: inside / n };
+}
+
+/** Diện tích hình quạt bán kính r, góc α, tính bằng cách cộng các tam giác nhỏ (toạ độ cực): Σ ½ r² dθ. */
+export function sectorAreaNumeric(r: number, alpha: number, n = 20000): number {
+  const dth = alpha / n;
+  let s = 0;
+  for (let i = 0; i < n; i++) s += 0.5 * r * r * dth;
+  return s;
+}
