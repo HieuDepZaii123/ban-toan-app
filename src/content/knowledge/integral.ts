@@ -10,10 +10,10 @@ export const integralKnowledge: TopicKnowledge = {
     lienHe: R`Nguyên hàm là phép ngược của đạo hàm, nên bảng đạo hàm đọc ngược lại là bảng nguyên hàm. Tích phân xác định là giới hạn của tổng diện tích các hình chữ nhật, nối với chuyên đề Giới hạn. Phần diện tích giữa hai đồ thị cần giải phương trình hoành độ giao điểm.`,
   },
   tuDau: [
-    R`Muốn tính diện tích một mảnh vườn hình chữ nhật thì nhân dài với rộng. Nhưng nếu một cạnh của mảnh vườn là bờ sông uốn cong thì sao? Cách làm tự nhiên là cắt mảnh vườn thành nhiều dải hẹp, coi mỗi dải gần như một hình chữ nhật, rồi cộng diện tích các dải lại. Dải càng hẹp, kết quả càng chính xác. Tích phân là phép cộng đó khi các dải hẹp vô cùng.`,
-    R`Cùng ý tưởng ấy trả lời nhiều câu hỏi khác. Xe chạy với tốc độ thay đổi liên tục thì đi được bao xa? Chia thời gian thành từng khoảnh khắc ngắn, trong mỗi khoảnh khắc coi tốc độ không đổi, lấy tốc độ nhân thời gian rồi cộng tất cả lại. Tích phân luôn là «cộng rất nhiều mẩu rất nhỏ».`,
-    R`Điều bất ngờ là phép cộng khổng lồ này có đường tắt. Đạo hàm đi từ quãng đường ra tốc độ; đi ngược lại, từ tốc độ về quãng đường, gọi là tìm nguyên hàm. Định lí cơ bản nói rằng tổng của mọi mẩu nhỏ đúng bằng «giá trị nguyên hàm ở cuối trừ giá trị ở đầu», giống như quãng đường đã đi bằng số trên đồng hồ cây số lúc đến trừ lúc xuất phát.`,
-    R`Vì vậy chuyên đề có hai nửa. Nửa đầu học cách đi ngược đạo hàm: mỗi công thức nguyên hàm chỉ là một công thức đạo hàm đọc từ phải sang trái, và luôn kiểm lại được bằng cách lấy đạo hàm. Nửa sau dùng nó để tính diện tích, thể tích và quãng đường.`,
+    R`Muốn tính diện tích một mảnh vườn hình chữ nhật thì nhân dài với rộng. Nhưng nếu một cạnh của mảnh vườn là bờ sông uốn cong thì sao? Cách tự nhiên nhất là cắt mảnh vườn thành nhiều dải hẹp, coi mỗi dải gần như một hình chữ nhật, rồi cộng diện tích các dải lại. Dải càng hẹp thì kết quả càng sát. Tích phân là phép cộng đó khi các dải hẹp vô cùng.`,
+    R`Cùng ý tưởng ấy trả lời được nhiều câu hỏi khác. Chẳng hạn, xe chạy với tốc độ thay đổi liên tục thì đi được bao xa? Chia thời gian thành từng khoảnh khắc ngắn, trong mỗi khoảnh khắc coi tốc độ không đổi, lấy tốc độ nhân thời gian rồi cộng tất cả lại. Tích phân luôn là «cộng rất nhiều mẩu rất nhỏ».`,
+    R`Điều bất ngờ là phép cộng khổng lồ ấy có một đường tắt. Đạo hàm đi từ quãng đường ra tốc độ; đi ngược lại, từ tốc độ về quãng đường, gọi là tìm nguyên hàm. Định lí cơ bản nói rằng tổng của mọi mẩu nhỏ đúng bằng «giá trị nguyên hàm ở cuối trừ giá trị ở đầu», giống như quãng đường đã đi bằng số trên đồng hồ cây số lúc đến trừ lúc xuất phát.`,
+    R`Vì thế chuyên đề chia làm hai nửa. Nửa đầu học cách đi ngược đạo hàm: mỗi công thức nguyên hàm chỉ là một công thức đạo hàm đọc từ phải sang trái, và luôn kiểm lại được bằng cách lấy đạo hàm. Nửa sau dùng nó để tính diện tích, thể tích và quãng đường.`,
   ],
   kyHieu: [
     { kh: R`$\int$`, doc: R`Dấu tích phân, là chữ S kéo dài, viết tắt của «tổng» (summa trong tiếng Latinh).` },
@@ -71,6 +71,16 @@ export const integralKnowledge: TopicKnowledge = {
             R`Lấy đạo hàm của $F(ax+b)$ theo quy tắc hàm hợp: đạo hàm lớp ngoài nhân đạo hàm phần bên trong, tức $F'(ax+b)\cdot a=a\,f(ax+b)$.`,
             R`Kết quả thừa một thừa số $a$. Chia sẵn cho $a$ để bù: $\left[\frac{1}{a}F(ax+b)\right]'=f(ax+b)$. Đó là lý do có hệ số $\frac{1}{a}$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng đổi biến",
+              buoc: [
+                R`Đặt $t=ax+b$. Khi $x$ tăng $dx$ thì $t$ tăng $dt=a\,dx$, tức $dx=\frac{dt}{a}$ (vì $a\neq 0$).`,
+                R`Thay vào: $\int f(ax+b)\,dx=\int f(t)\,\frac{dt}{a}=\frac{1}{a}\int f(t)\,dt$, vì hằng số $\frac{1}{a}$ đưa ra ngoài dấu nguyên hàm được.`,
+                R`Theo giả thiết $\int f(t)\,dt=F(t)+C$. Trả lại $t=ax+b$ được $\frac{1}{a}F(ax+b)+C$, đúng công thức cần chứng minh.`,
+              ],
+            },
+          ],
         },
         { kind: "luu-y", text: R`Đừng quên hằng số $C$ khi tìm nguyên hàm. Đừng viết $\int uv\,dx=\int u\,dx\cdot\int v\,dx$, quy tắc này sai. Cách tự kiểm tốt nhất là lấy đạo hàm kết quả và so với hàm dưới dấu tích phân.` },
         { kind: "vi-du", text: R`Có $\int(3x^2+2x)\,dx=x^3+x^2+C$ vì đạo hàm của $x^3+x^2$ là $3x^2+2x$. Có $\int\left(\frac{1}{x}+e^x\right)dx=\ln|x|+e^x+C$.` },
@@ -87,6 +97,17 @@ export const integralKnowledge: TopicKnowledge = {
             R`Gọi $A(x)$ là diện tích dưới đồ thị tính từ $a$ đến $x$. Khi $x$ tăng thêm một bước nhỏ $h$, diện tích có thêm một dải mỏng rộng $h$ và cao xấp xỉ $f(x)$, nên $A(x+h)-A(x)\approx f(x)\cdot h$.`,
             R`Chia cho $h$ rồi cho $h$ tiến về $0$ thì sai số biến mất: $A'(x)=f(x)$. Vậy hàm diện tích $A$ là một nguyên hàm của $f$.`,
             R`Với một nguyên hàm $F$ bất kì, $A(x)=F(x)+C$. Vì $A(a)=0$ (chưa quét được gì) nên $C=-F(a)$. Do đó diện tích tới $b$ là $A(b)=F(b)-F(a)$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng tổng Riemann và định lí giá trị trung bình",
+              buoc: [
+                R`Chia $[a;b]$ bởi các điểm $a=x_0<x_1<\dots<x_n=b$. Hiệu $F(b)-F(a)$ là một tổng lồng nhau: $F(b)-F(a)=\sum_{i=1}^{n}\bigl[F(x_i)-F(x_{i-1})\bigr]$, vì các số hạng ở giữa triệt tiêu từng đôi.`,
+                R`Trên mỗi đoạn $[x_{i-1};x_i]$, định lí giá trị trung bình (được công nhận) cho một điểm $c_i$ để $F(x_i)-F(x_{i-1})=F'(c_i)(x_i-x_{i-1})=f(c_i)\,\Delta x_i$, vì $F'=f$.`,
+                R`Vậy $F(b)-F(a)=\sum_{i=1}^{n}f(c_i)\,\Delta x_i$ với mọi cách chia. Vế phải là một tổng Riemann của $f$.`,
+                R`Cho các đoạn chia nhỏ dần về $0$ thì tổng Riemann tiến về $\int_a^b f(x)\,dx$, còn vế trái không đổi. Vậy $\int_a^b f(x)\,dx=F(b)-F(a)$.`,
+              ],
+            },
           ],
         },
         {
@@ -110,6 +131,16 @@ export const integralKnowledge: TopicKnowledge = {
             R`Lấy $n$ điểm cách đều trên đoạn và tính trung bình thông thường của các giá trị: $\frac{f(x_1)+\dots+f(x_n)}{n}$.`,
             R`Bề rộng mỗi dải là $\Delta x=\frac{b-a}{n}$, nên $\frac{1}{n}=\frac{\Delta x}{b-a}$. Trung bình trên viết lại thành $\frac{1}{b-a}\left[f(x_1)\Delta x+\dots+f(x_n)\Delta x\right]$.`,
             R`Biểu thức trong ngoặc vuông là tổng các hình chữ nhật, tiến về $\int_a^b f(x)\,dx$ khi $n$ tăng vô hạn. Vậy trung bình của vô số giá trị là $\frac{1}{b-a}\int_a^b f(x)\,dx$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng cân bằng phần dôi và phần thiếu",
+              buoc: [
+                R`Hỏi ngược lại: chiều cao $m$ nào làm cho phần đồ thị cao hơn đường $y=m$ bù đúng phần thấp hơn? Phần dôi trừ phần thiếu chính là diện tích có dấu $\int_a^b\bigl(f(x)-m\bigr)\,dx$, nên điều kiện bù đúng là $\int_a^b\bigl(f(x)-m\bigr)\,dx=0$.`,
+                R`Tách tích phân: $\int_a^b f(x)\,dx-\int_a^b m\,dx=0$. Mà $\int_a^b m\,dx=m(b-a)$, diện tích hình chữ nhật cao $m$ và rộng $b-a$.`,
+                R`Giải ra $m=\frac{1}{b-a}\int_a^b f(x)\,dx$. Vậy giá trị trung bình là chiều cao làm phần dôi và phần thiếu cân bằng nhau.`,
+              ],
+            },
           ],
         },
         { kind: "luu-y", title: "Diện tích có dấu", text: R`Tích phân có thể âm hoặc bằng $0$ dù hình có diện tích. Chẳng hạn $\int_{-1}^{1}x\,dx=0$ vì hai phần diện tích $\frac{1}{2}$ nằm ở hai phía trục hoành triệt tiêu nhau.` },
@@ -139,6 +170,16 @@ export const integralKnowledge: TopicKnowledge = {
             R`Bắt đầu từ quy tắc đạo hàm của tích: $(uv)'=u'v+uv'$.`,
             R`Lấy nguyên hàm hai vế: $uv=\int u'v\,dx+\int uv'\,dx$. Chuyển vế được $\int uv'\,dx=uv-\int u'v\,dx$.`,
             R`Viết gọn $du=u'\,dx$ và $dv=v'\,dx$ thì được $\int u\,dv=uv-\int v\,du$. Với tích phân xác định, áp dụng Newton–Leibniz cho $(uv)'$ được số hạng $\big[uv\big]_a^b$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng tích phân xác định và Newton–Leibniz",
+              buoc: [
+                R`Cho $u$, $v$ có đạo hàm liên tục trên $[a;b]$. Hàm $uv$ là một nguyên hàm của $(uv)'=u'v+uv'$, nên theo Newton–Leibniz $\int_a^b(u'v+uv')\,dx=\big[uv\big]_a^b$.`,
+                R`Tách tích phân của tổng thành hai tích phân: $\int_a^b u'v\,dx+\int_a^b uv'\,dx=\big[uv\big]_a^b$.`,
+                R`Chuyển vế: $\int_a^b uv'\,dx=\big[uv\big]_a^b-\int_a^b u'v\,dx$. Viết $dv=v'\,dx$ và $du=u'\,dx$ được $\int_a^b u\,dv=\big[uv\big]_a^b-\int_a^b v\,du$, không cần đi qua nguyên hàm bất định.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Chọn phần để lấy đạo hàm", text: R`Chọn $u$ là phần mà lấy đạo hàm làm đơn giản đi, như đa thức hoặc $\ln x$. Chọn $dv$ là phần dễ tìm nguyên hàm, như $e^x$, $\sin x$, $\cos x$. Mục tiêu là $\int v\,du$ đơn giản hơn $\int u\,dv$.` },
@@ -192,6 +233,16 @@ export const integralKnowledge: TopicKnowledge = {
             R`Vận tốc là đạo hàm của vị trí, nên vị trí $s(t)$ là một nguyên hàm của $v(t)$. Theo Newton–Leibniz, $\int_{t_1}^{t_2}v(t)\,dt=s(t_2)-s(t_1)$: vị trí cuối trừ vị trí đầu, tức độ dời.`,
             R`Khi $v<0$ vật đi lùi: độ dời bị trừ bớt, nhưng quãng đường thì vẫn cộng thêm. Quãng đường dùng tốc độ $|v|$, không quan tâm chiều, nên bằng $\int_{t_1}^{t_2}|v(t)|\,dt$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng cách chia đoạn tại các lúc vật đổi chiều",
+              buoc: [
+                R`Chia $[t_1;t_2]$ tại các lúc $v$ đổi dấu. Trên mỗi đoạn con, vật đi theo một chiều không đổi, nên quãng đường bằng độ lớn của độ dời trên đoạn đó.`,
+                R`Độ dời trên một đoạn con $[p;q]$ là $\int_p^q v\,dt$ theo cách thứ nhất. Khi $v\ge 0$ nó bằng $\int_p^q|v|\,dt$, khi $v\le 0$ nó bằng $-\int_p^q|v|\,dt$, nên độ lớn của nó đều là $\int_p^q|v|\,dt$.`,
+                R`Cộng quãng đường các đoạn con: $\sum\int_p^q|v|\,dt=\int_{t_1}^{t_2}|v(t)|\,dt$. Độ dời toàn chặng là tổng các độ dời có dấu, nên bị trừ bớt ở những đoạn $v<0$.`,
+              ],
+            },
+          ],
         },
         { kind: "vi-du", text: R`Quay $y=\sqrt{x}$ với $0\le x\le 4$ quanh trục hoành: $V=\pi\int_0^4 x\,dx=\pi\cdot 8=8\pi$. Quay đoạn $y=\frac{r}{h}x$ với $0\le x\le h$ thì được hình nón có $V=\pi\int_0^h\frac{r^2}{h^2}x^2\,dx=\frac{1}{3}\pi r^2h$, đúng công thức hình nón.` },
         { kind: "vi-du", text: R`Vận tốc $v(t)=3t^2$ m/s, nên từ $t=0$ đến $t=2$ giây vật đi được $\int_0^2 3t^2\,dt=t^3\Big|_0^2=8$ mét. Vì $v\ge 0$, độ dời cũng bằng quãng đường.` },
@@ -216,6 +267,11 @@ export const integralKnowledge: TopicKnowledge = {
     { id: "quadratic", vi: R`Giao điểm của parabol với đường thẳng cho các cận của tích phân tính diện tích giữa chúng.` },
   ],
   checks: [
+    { expr: "diff(sin(2*x+1)/2, x)", expect: "cos(2*x+1)" },
+    { expr: "integrate(x*exp(x), (x, 0, 1))", expect: "1" },
+    { expr: "integrate(x*exp(x), (x, 0, 1)) - (1*exp(1) - integrate(exp(x), (x, 0, 1)))", expect: "0" },
+    { expr: "integrate(x**2, (x, 0, 3))/3", expect: "3" },
+    { expr: "integrate(x**2 - 3, (x, 0, 3))", expect: "0" },
     { expr: "integrate(3*x**2+2*x, x)", expect: "x**3+x**2" },
     { expr: "diff(x**3+x**2, x)", expect: "3*x**2+2*x" },
     { expr: "integrate(1/x+exp(x), x)", expect: "log(x)+exp(x)" },

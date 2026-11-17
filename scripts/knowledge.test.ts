@@ -57,7 +57,7 @@ let plain = 0;
 let proofs = 0;
 let altProofs = 0;
 /** Chuyên đề đã viết xong cách chứng minh thứ hai cho mọi định lí; thêm id vào đây khi làm xong từng chuyên đề. */
-const MULTI_PROOF = new Set<string>(["trig", "derivative"]);
+const MULTI_PROOF = new Set<string>(["trig", "derivative", "integral"]);
 let wordTotal = 0;
 
 for (const id of ids) {
@@ -94,6 +94,7 @@ for (const id of ids) {
 
   const kinds = new Map<string, number>();
   let items = 0;
+  const altBefore = altProofs;
   for (const section of pack.sections) {
     assert(MARK.test(section.title) && !/[.]$/.test(section.title) && !section.title.includes("$"), `${id} tên phần «${section.title}» (không công thức, không chấm cuối)`);
     assert(section.items.length >= 3 && section.items.length <= 8, `${id} «${section.title}» cần 3–8 mục, có ${section.items.length}`);
@@ -143,6 +144,7 @@ for (const id of ids) {
     }
   }
   itemTotal += items;
+  if (MULTI_PROOF.has(id)) assert(altProofs - altBefore >= 3, `${id}: cần ít nhất 3 cách chứng minh khác, có ${altProofs - altBefore}`);
   assert(items >= 24, `${id}: cần ít nhất 24 mục, có ${items}`);
   assert((kinds.get("dinh-nghia") ?? 0) >= 2, `${id}: cần ít nhất 2 định nghĩa`);
   assert((kinds.get("dinh-ly") ?? 0) + (kinds.get("cong-thuc") ?? 0) >= 5, `${id}: cần ít nhất 5 định lí hoặc công thức`);
