@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { MathText } from "../../ui/MathText.tsx";
+import { AntiderivLab, AreaBetweenLab, AreaFunctionLab, DisplacementLab, MonteCarloAreaLab, PartsLab, SubstitutionLab, VolumeLab } from "./integralWidgets.tsx";
 import { BackpropLab, BoxLab, DerivCurveLab, ExtremaLab, KinkLab, MotionLab, RuleLab, TangentLab } from "./derivWidgets.tsx";
 import { AdditionLab, BeatLab, ReflectLab, SolveLab, TriangleLab, WaveLab } from "./trigWidgets.tsx";
 import { BallValley, BisectLab, CircleWalk, CompoundLab, CramerLab, DartLab, DiceLab, DotNeuron, EnumLab, EpsilonGame, HillClimbLab, NetFit, PartialSums, PerceptronLab, RiemannLab, SecantLab, type NetTarget } from "./widgets.tsx";
@@ -95,7 +96,19 @@ const SECTIONS: Record<string, { lead: string; parts: () => ReactNode }> = {
   },
   integral: {
     lead: "Tích phân là cộng vô số dải mỏng. Máy chỉ cộng được hữu hạn dải, và ta nhìn nó dồn về giá trị mà nguyên hàm cho ngay.",
-    parts: () => <RiemannLab />,
+    parts: () => (
+      <>
+        <RiemannLab />
+        <AntiderivLab />
+        <AreaFunctionLab />
+        <DisplacementLab />
+        <AreaBetweenLab />
+        <SubstitutionLab />
+        <PartsLab />
+        <VolumeLab />
+        <MonteCarloAreaLab />
+      </>
+    ),
   },
   vector: {
     lead: "Vectơ là chỉ dẫn di chuyển; tích vô hướng đo hai hướng ăn khớp đến đâu. Một nơ-ron của mạng chỉ làm đúng phép ấy. Định thức quyết định hệ phương trình có nghiệm.",

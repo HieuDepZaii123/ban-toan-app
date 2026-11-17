@@ -503,3 +503,62 @@ export function hasDerivativeAt(f: Fn, x: number): boolean {
   const close = (a: number, b: number) => Math.abs(a - b) <= 0.02 * (1 + Math.abs(b));
   return close(last.left, last.right) && rows.every((r) => close(r.left, last.left) && close(r.right, last.right));
 }
+
+/* ---------- Tích phân: các thuật toán bổ sung ---------- */
+
+/** Simpson: thay từng cặp dải bằng một parabol, chính xác hơn nhiều so với hình chữ nhật. n được làm chẵn. */
+export function simpson(f: Fn, a: number, b: number, n = 2000): number {
+  const m = n % 2 === 0 ? n : n + 1;
+  const h = (b - a) / m;
+  let s = f(a) + f(b);
+  for (let i = 1; i < m; i++) s += f(a + i * h) * (i % 2 === 0 ? 2 : 4);
+  return (s * h) / 3;
+}
+
+/** Hàm diện tích A(x) = ∫ từ a đến x của f, cộng dồn từng dải hình thang. Trả về cả đường (x; A). */
+export function cumulativeIntegral(f: Fn, a: number, b: number, n: number, start = 0): { x: number; y: number }[] {
+  const out = [{ x: a, y: start }];
+  const h = (b - a) / n;
+  let acc = start;
+  for (let i = 1; i <= n; i++) {
+    const x0 = a + (i - 1) * h;
+    acc += ((f(x0) + f(x0 + h)) / 2) * h;
+    out.push({ x: a + i * h, y: acc });
+  }
+  return out;
+}
+
+/** Diện tích hình giới hạn bởi hai đồ thị trên [a;b]: chia tại các giao điểm rồi cộng |f − g| từng đoạn. */
+export function areaBetween(f: Fn, g: Fn, a: number, b: number): { area: number; cuts: number[] } {
+  const cuts = [a, ...findRoots((x) => f(x) - g(x), a, b, 4000).filter((r) => r > a + 1e-9 && r < b - 1e-9), b];
+  let area = 0;
+  for (let i = 0; i + 1 < cuts.length; i++) area += Math.abs(simpson((x) => f(x) - g(x), cuts[i] as number, cuts[i + 1] as number, 400));
+  return { area, cuts };
+}
+
+/** Thể tích khối tròn xoay quanh trục hoành bằng n đĩa mỏng: Σ π·f(x)²·Δx (lấy chiều cao ở giữa dải). */
+export function diskVolume(f: Fn, a: number, b: number, n: number): number {
+  const h = (b - a) / n;
+  let v = 0;
+  for (let i = 0; i < n; i++) v += Math.PI * f(a + (i + 0.5) * h) ** 2 * h;
+  return v;
+}
+
+/** Đổi biến: ∫ f(u(x))·u'(x) dx trên [a;b] bằng ∫ f(u) du trên [u(a);u(b)]. Trả về hai vế. */
+export function substitutionBoth(f: Fn, u: Fn, du: Fn, a: number, b: number): { inX: number; inU: number } {
+  return { inX: simpson((x) => f(u(x)) * du(x), a, b), inU: simpson(f, u(a), u(b)) };
+}
+
+/** Từng phần: ∫ u dv = [uv] − ∫ v du, tính cả hai vế bằng số. u, v, du, dv là các hàm của x. */
+export function partsBoth(u: Fn, v: Fn, du: Fn, dv: Fn, a: number, b: number): { left: number; right: number } {
+  return { left: simpson((x) => u(x) * dv(x), a, b), right: u(b) * v(b) - u(a) * v(a) - simpson((x) => v(x) * du(x), a, b) };
+}
+
+/** Độ dời và quãng đường từ vận tốc: ∫v và ∫|v| (chia tại các lần đổi chiều). */
+export function displacementAndDistance(v: Fn, a: number, b: number): { displacement: number; distance: number; turns: number[] } {
+  const turns = findRoots(v, a, b, 4000).filter((r) => r > a + 1e-9 && r < b - 1e-9);
+  const cuts = [a, ...turns, b];
+  let distance = 0;
+  for (let i = 0; i + 1 < cuts.length; i++) distance += Math.abs(simpson(v, cuts[i] as number, cuts[i + 1] as number, 400));
+  return { displacement: simpson(v, a, b), distance, turns };
+}

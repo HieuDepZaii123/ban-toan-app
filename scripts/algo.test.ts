@@ -187,6 +187,39 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("x²·sin(1/x) tại 0 có (đạo hàm 0)", A.hasDerivativeAt((x) => (x === 0 ? 0 : x * x * Math.sin(1 / x)), 0));
 }
 
+// Tích phân bổ sung.
+{
+  near("Simpson ∫0..π sin", A.simpson(Math.sin, 0, Math.PI, 20), 2, 1e-4);
+  near("Simpson ∫0..2 x³ chính xác", A.simpson((x) => x ** 3, 0, 2, 2), 4, 1e-12);
+  const cum = A.cumulativeIntegral((x) => 2 * x, 0, 3, 3000);
+  near("A(3) của 2x là 9", cum[3000]!.y, 9, 1e-5);
+  near("A(x)=x² tại giữa", cum[1500]!.y, 2.25, 1e-5);
+  const withC = A.cumulativeIntegral(Math.cos, 0, 2, 4000, 5);
+  near("nguyên hàm cos qua C=5: sin x + 5", withC[4000]!.y, Math.sin(2) + 5, 1e-5);
+  // Định lí cơ bản: đạo hàm của hàm diện tích bằng hàm gốc.
+  const area = (x: number) => A.cumulativeIntegral(Math.sin, 0, x, 4000)[4000]!.y;
+  near("A'(1) = sin 1", A.diff(area, 1, 1e-3), Math.sin(1), 1e-4);
+  const p1 = A.areaBetween((x) => x, (x) => x * x, 0, 1);
+  near("giữa y=x và y=x²", p1.area, 1 / 6, 1e-9);
+  const p2 = A.areaBetween((x) => 4 - x * x, (x) => x + 2, -3, 3);
+  is("giao điểm −2 và 1", p2.cuts.length === 4 && Math.abs(p2.cuts[1]! + 2) < 1e-6 && Math.abs(p2.cuts[2]! - 1) < 1e-6);
+  near("hai đồ thị cắt nhau nhiều lần, tính theo |f−g|", A.areaBetween((x) => 4 - x * x, (x) => x + 2, -2, 1).area, 4.5, 1e-9);
+  near("giữa sin và cos", A.areaBetween(Math.sin, Math.cos, Math.PI / 4, (5 * Math.PI) / 4).area, 2 * Math.SQRT2, 1e-9);
+  near("thể tích nón", A.diskVolume((x) => x, 0, 3, 3000), 9 * Math.PI, 1e-4);
+  near("thể tích cầu", A.diskVolume((x) => Math.sqrt(Math.max(0, 4 - x * x)), -2, 2, 6000), (32 / 3) * Math.PI, 1e-3);
+  near("thể tích parabol", A.diskVolume(Math.sqrt, 0, 4, 4000), 8 * Math.PI, 1e-3);
+  const sub = A.substitutionBoth(Math.cos, (x) => x * x, (x) => 2 * x, 0, 1.5);
+  near("đổi biến hai vế bằng nhau", sub.inX, sub.inU, 1e-9);
+  near("đổi biến cho sin(2,25)", sub.inU, Math.sin(2.25), 1e-9);
+  const pr = A.partsBoth((x) => x, Math.exp, () => 1, Math.exp, 0, 2);
+  near("từng phần hai vế", pr.left, pr.right, 1e-9);
+  near("∫0..2 x eˣ = e²+1", pr.left, Math.E ** 2 + 1, 1e-9);
+  const dd = A.displacementAndDistance((t) => 4 - t * t, 0, 3);
+  near("độ dời ∫(4−t²)", dd.displacement, 3, 1e-9);
+  near("quãng đường = 23/3", dd.distance, 23 / 3, 1e-9);
+  is("đổi chiều tại t=2", dd.turns.length === 1 && Math.abs(dd.turns[0]! - 2) < 1e-9);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);
