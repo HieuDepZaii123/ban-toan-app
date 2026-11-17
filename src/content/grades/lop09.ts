@@ -7,6 +7,7 @@ export const lop09: GradeBook = {
   grade: 9,
   band: "thcs",
   title: "Căn bậc hai, hàm số bậc hai, bất phương trình, đường tròn và tần số tương đối.",
+  titleEn: "Square roots, quadratic functions, inequalities, circles and relative frequency.",
   chapters: [
     chuong("can", "Căn bậc hai", [
       bai(
@@ -27,6 +28,7 @@ export const lop09: GradeBook = {
           luyen(R`Tính $\sqrt{9}+\sqrt{16}$.`, R`Tổng bằng $7$.`, [{ expr: "sqrt(9)+sqrt(16)", expect: "7" }], "Mỗi căn của số chính phương là một số nguyên không âm. Cộng $3$ với $4$."),
           luyen(R`Rút gọn $\sqrt{(-3)^2\cdot 2}$.`, R`Dạng rút gọn là $3\sqrt{2}$.`, [{ expr: "sqrt((-3)**2*2)", expect: "Abs(-3)*sqrt(2)" }], "Vì $-3$ âm, thừa số đưa ra ngoài căn là $|-3|=3$, không phải $-3$."),
         ],
+        { titleEn: "Taking a factor out of a square root" },
       ),
       bai(
         "nhan-can",
@@ -46,8 +48,9 @@ export const lop09: GradeBook = {
           luyen(R`Tính $\sqrt{5}\cdot\sqrt{5}$.`, R`Tích bằng $5$.`, [{ expr: "sqrt(5)*sqrt(5)", expect: "5" }], "Tích hai căn cùng một số không âm bằng chính số đó."),
           luyen(R`Rút gọn $\sqrt{18}\cdot\sqrt{2}$.`, R`Tích bằng $6$.`, [{ expr: "sqrt(18)*sqrt(2)", expect: "6" }], "Tích trong căn bằng $36$. Căn số học bằng $6$."),
         ],
+        { titleEn: "Multiplying two square roots" },
       ),
-    ]),
+    ], "Square roots"),
     chuong("ham-b2", "Hàm số $y=ax^2$", [
       bai(
         "y-ax2",
@@ -67,6 +70,7 @@ export const lop09: GradeBook = {
           luyen(R`Tính $y=-x^2$ tại $x=5$.`, R`Tung độ bằng $-25$.`, [{ expr: "-(5**2)", expect: "-25" }], "Hệ số âm nên tung độ âm khi $x$ khác $0$. Bình phương $5$ bằng $25$."),
           luyen(R`Đỉnh của parabol $y=ax^2$ có tọa độ nào?`, R`Đỉnh là gốc $O(0;0)$.`, [{ expr: "0*0**2", expect: "0" }], "Công thức $y=ax^2$ không có hạng tử bậc nhất, nên trục đối xứng là trục tung và đỉnh nằm tại gốc."),
         ],
+        { titleEn: "The function $y=ax^2$" },
       ),
       bai(
         "doi-xung",
@@ -86,8 +90,9 @@ export const lop09: GradeBook = {
           luyen(R`Tính $y=\frac{1}{2}x^2$ tại $x=6$.`, R`Tung độ bằng $18$.`, [{ expr: "Rational(1,2)*6**2", expect: "18" }], "Bình phương $6$ bằng $36$. Một nửa của $36$ bằng $18$."),
           luyen(R`Hệ số $a$ của $y=-3x^2$ cho giá trị lớn nhất hay nhỏ nhất tại đỉnh?`, R`Cho giá trị lớn nhất, và giá trị đó bằng $0$.`, [{ expr: "(-3)*0**2", expect: "0" }], "Hệ số âm làm parabol quay bề lõm xuống. Đỉnh là điểm cao nhất."),
         ],
+        { titleEn: "Symmetry of the graph of $y=ax^2$" },
       ),
-    ]),
+    ], "The function $y=ax^2$"),
     chuong("he-pt", "Hệ phương trình bậc nhất hai ẩn", [
       bai(
         "he-hai-an",
@@ -107,6 +112,7 @@ export const lop09: GradeBook = {
           luyen(R`Từ $2x=8$, tìm $x$.`, R`Nghiệm là $x=4$.`, [{ expr: "solve(2*x-8, x)[0]", expect: "4" }], "Hệ số của $x$ khác $0$. Chia cả hai vế cho $2$."),
           luyen(R`Cặp $x=1$, $y=1$ có thỏa $x+2y=3$ không?`, R`Có, vì vế trái bằng $3$.`, [{ expr: "1+2*1", expect: "3" }], "Thay cả hai ẩn vào cùng một phương trình. Vế trái khớp vế phải."),
         ],
+        { titleEn: "Solving systems by elimination" },
       ),
       bai(
         "he-the",
@@ -126,8 +132,9 @@ export const lop09: GradeBook = {
           luyen(R`Từ $y=3x$ và $y=12$, tìm $x$.`, R`Nghiệm là $x=4$.`, [{ expr: "solve(3*x-12, x)[0]", expect: "4" }], "Hai biểu thức của $y$ bằng nhau. Chia $12$ cho hệ số $3$."),
           luyen(R`Cặp $x=2$, $y=5$ có thỏa $y=2x+1$ không?`, R`Có, vì vế phải bằng $5$.`, [{ expr: "2*2+1", expect: "5" }], "Thay hoành độ vào biểu thức. Kết quả trùng tung độ đã cho."),
         ],
+        { titleEn: "Solving systems by substitution" },
       ),
-    ]),
+    ], "Systems of two linear equations in two unknowns"),
     chuong("pt-b2", "Phương trình bậc hai", [
       bai(
         "delta",
@@ -151,6 +158,7 @@ export const lop09: GradeBook = {
           luyen(R`Tính $\Delta$ của $x^2+x+1=0$.`, R`Biệt thức bằng $-3$, nên $\Delta<0$ và phương trình vô nghiệm thực.`, [{ expr: "1**2-4*1*1", expect: "-3" }], "Bình phương hệ số bậc nhất trừ bốn lần tích hai hệ số còn lại. Kết quả âm nên không có nghiệm thực."),
           luyen(R`Phương trình $0\cdot x^2+2x-6=0$ có nghiệm nào?`, R`Vì hệ số bậc hai bằng $0$, đây là phương trình bậc nhất và nghiệm là $x=3$.`, [{ expr: "solve(2*x-6, x)[0]", expect: "3" }], "Công thức biệt thức không dùng khi $a=0$. Phương trình còn lại là bậc nhất một ẩn."),
         ],
+        { titleEn: "The discriminant and the three cases for roots" },
       ),
       bai(
         "viete",
@@ -173,8 +181,9 @@ export const lop09: GradeBook = {
           luyen(R`Cùng phương trình đó, tích hai nghiệm bằng bao nhiêu?`, R`Tích bằng $-4$.`, [{ expr: "solve(x**2+3*x-4, x)[0]*solve(x**2+3*x-4, x)[1]", expect: "-4" }], "Tích hai nghiệm bằng hạng tử tự do khi hệ số của $x^2$ bằng $1$."),
           luyen(R`Phương trình $2x^2-8x+6=0$ có tổng hai nghiệm bằng bao nhiêu?`, R`Tổng bằng $4$.`, [{ expr: "-(-8)/2", expect: "4" }], "Tổng bằng trừ hệ số bậc nhất, chia cho hệ số bậc hai. Mẫu $2$ khác $0$."),
         ],
+        { titleEn: "Vieta's theorem" },
       ),
-    ]),
+    ], "Quadratic equations"),
     chuong("bpt", "Bất phương trình bậc nhất một ẩn", [
       bai(
         "bpt-mot-an",
@@ -194,6 +203,7 @@ export const lop09: GradeBook = {
           luyen(R`Giải bất phương trình $x-1\ge 0$.`, R`Tập nghiệm là $[1;+\infty)$.`, [{ expr: "solve_univariate_inequality(x-1>=0, x, relational=False)", expect: "Interval(1, oo)" }], "Nghiệm biên $x=1$ làm vế trái bằng $0$ và được nhận vì bất phương trình không chặt."),
           luyen(R`Số $x=3$ có thuộc tập nghiệm của bất phương trình $2x-6>0$ không?`, R`Không thuộc. Bất phương trình chặt, dấu lớn hơn, nên $x=3$ không thuộc tập nghiệm.`, [{ expr: "solve_univariate_inequality(2*x-6>0, x, relational=False)", expect: "Interval.open(3, oo)" }], "Điểm biên của một bất phương trình chặt bị loại. Tập nghiệm là khoảng mở."),
         ],
+        { titleEn: "Solving linear inequalities in one unknown" },
       ),
       bai(
         "bpt-am",
@@ -213,8 +223,9 @@ export const lop09: GradeBook = {
           luyen(R`Giải bất phương trình $-x+1>0$.`, R`Tập nghiệm là $(-\infty;1)$.`, [{ expr: "solve_univariate_inequality(-x+1>0, x, relational=False)", expect: "Interval.open(-oo, 1)" }], "Đưa về $-x>-1$, rồi đổi chiều khi nhân với $-1$. Điểm $1$ không thuộc tập nghiệm."),
           luyen(R`Số $x=-4$ có thuộc tập nghiệm của $-x<4$ không?`, R`Không thuộc, vì bất phương trình chặt loại điểm làm hai vế bằng nhau.`, [{ expr: "solve_univariate_inequality(-x-4<0, x, relational=False)", expect: "Interval.open(-4, oo)" }], "Tại $x=-4$, hai vế cùng bằng $4$. Dấu nhỏ hơn không nhận trường hợp bằng."),
         ],
+        { titleEn: "Dividing by a negative number reverses the sign" },
       ),
-    ]),
+    ], "Linear inequalities in one unknown"),
     chuong("lg-vuong", "Tỉ số lượng giác của góc nhọn", [
       bai(
         "ti-so-lg",
@@ -234,7 +245,7 @@ export const lop09: GradeBook = {
           luyen(R`Góc nhọn có cạnh kề $8$ và cạnh huyền $10$. Côsin bằng bao nhiêu?`, R`Côsin bằng $\frac{4}{5}$.`, [{ expr: "Rational(8,10)", expect: "Rational(4,5)" }], "Chia cạnh kề cho cạnh huyền rồi rút gọn. Ước chung của $8$ và $10$ là $2$."),
           luyen(R`Sin của một góc nhọn bằng $\frac{5}{13}$ và cạnh huyền bằng $13$. Cạnh đối bằng bao nhiêu?`, R`Cạnh đối bằng $5$.`, [{ expr: "13*Rational(5,13)", expect: "5" }], "Cạnh đối bằng cạnh huyền nhân với sin của góc đó."),
         ],
-        { figure: "triangle" },
+        { titleEn: "Sine, cosine and tangent of an acute angle", figure: "triangle" },
       ),
       bai(
         "canh-lg",
@@ -254,8 +265,9 @@ export const lop09: GradeBook = {
           luyen(R`Cạnh đối bằng $6$ và tang bằng $\frac{3}{4}$. Cạnh kề bằng bao nhiêu?`, R`Cạnh kề bằng $8$.`, [{ expr: "6/Rational(3,4)", expect: "8" }], "Tang bằng đối chia kề, nên cạnh kề bằng cạnh đối chia cho tang."),
           luyen(R`Cạnh huyền $25$ và cạnh đối $7$. Sin của góc đối cạnh $7$ bằng bao nhiêu?`, R`Sin bằng $\frac{7}{25}$.`, [{ expr: "Rational(7,25)", expect: "7/25" }], "Sin là tỉ số cạnh đối trên cạnh huyền. Hai số đã cho chưa có ước chung lớn hơn $1$."),
         ],
+        { titleEn: "Finding sides with trigonometric ratios" },
       ),
-    ]),
+    ], "Trigonometric ratios of acute angles"),
     chuong("tron", "Đường tròn", [
       bai(
         "tiep-tuyen",
@@ -275,6 +287,7 @@ export const lop09: GradeBook = {
           luyen(R`Bán kính $9$ và đoạn tiếp tuyến $12$. Khoảng cách từ tâm đến điểm ngoài bằng bao nhiêu?`, R`Khoảng cách bằng $15$.`, [{ expr: "sqrt(9**2+12**2)", expect: "15" }], "Khoảng cách tới tâm là cạnh huyền của tam giác vuông tạo bởi bán kính và tiếp tuyến."),
           luyen(R`Bán kính $5$, tiếp tuyến $12$ và khoảng cách từ tâm đến điểm ngoài $13$. Hệ thức nào xác nhận góc tại tiếp điểm là góc vuông?`, R`Ta có $5^2+12^2=13^2$, nên góc tại tiếp điểm là góc vuông.`, [{ expr: "5**2+12**2-13**2", expect: "0" }], "Bán kính và tiếp tuyến là hai cạnh góc vuông, khoảng cách tới tâm là cạnh huyền. Hiệu bằng $0$ xác nhận góc vuông."),
         ],
+        { titleEn: "Tangents to a circle" },
       ),
       bai(
         "goc-noi-tiep",
@@ -294,9 +307,9 @@ export const lop09: GradeBook = {
           luyen(R`Góc nội tiếp chắn nửa đường tròn. Nửa đường tròn là cung $180^\circ$. Góc đó bằng bao nhiêu độ?`, R`Góc bằng $90^\circ$.`, [{ expr: "180/2", expect: "90" }], "Góc nội tiếp chắn nửa đường tròn là góc vuông. Nửa của $180^\\circ$ bằng $90^\\circ$."),
           luyen(R`Góc nội tiếp bằng $35^\circ$. Góc ở tâm cùng chắn cung đó bằng bao nhiêu độ?`, R`Góc ở tâm bằng $70^\circ$.`, [{ expr: "35*2", expect: "70" }], "Đảo hệ thức: góc ở tâm bằng hai lần góc nội tiếp cùng chắn một cung."),
         ],
-        { figure: "circle" },
+        { titleEn: "Inscribed angles and angles at the centre", figure: "circle" },
       ),
-    ]),
+    ], "Circles"),
     chuong("khoi", "Hình trụ, hình nón và hình cầu", [
       bai(
         "tru",
@@ -316,7 +329,7 @@ export const lop09: GradeBook = {
           luyen(R`Đường kính đáy bằng $6$. Bán kính bằng bao nhiêu?`, R`Bán kính bằng $3$.`, [{ expr: "6/2", expect: "3" }], "Bán kính là nửa đường kính. Công thức thể tích dùng bán kính, không dùng đường kính."),
           luyen(R`Hình trụ bán kính $3$ và chiều cao $2$ có thể tích bằng bao nhiêu?`, R`Thể tích bằng $18\pi$.`, [{ expr: "pi*3**2*2", expect: "18*pi" }], "Bình phương bán kính bằng $9$. Nhân với chiều cao $2$ và với $\\pi$."),
         ],
-        { figure: "circle" },
+        { titleEn: "Volume of a cylinder", figure: "circle" },
       ),
       bai(
         "non-cau",
@@ -336,8 +349,9 @@ export const lop09: GradeBook = {
           luyen(R`Hình cầu bán kính $1$ có thể tích bằng bao nhiêu?`, R`Thể tích bằng $\frac{4}{3}\pi$.`, [{ expr: "Rational(4,3)*pi*1**3", expect: "Rational(4,3)*pi" }], "Lập phương bán kính $1$ vẫn bằng $1$. Còn lại đúng hệ số của công thức."),
           luyen(R`Hình nón và hình trụ có cùng đáy bán kính $2$ và cùng chiều cao $3$. Thể tích nón bằng một phần mấy thể tích trụ?`, R`Thể tích nón bằng một phần ba thể tích trụ, tức $4\pi$ khi trụ là $12\pi$.`, [{ expr: "Rational(1,3)*pi*2**2*3", expect: "4*pi" }], "Cùng đáy và cùng chiều cao thì nón bằng một phần ba trụ. Phép tính cho đúng thể tích nón."),
         ],
+        { titleEn: "Volume of a cone and a sphere" },
       ),
-    ]),
+    ], "Cylinders, cones and spheres"),
     chuong("tan-so", "Tần số tương đối", [
       bai(
         "tan-so-tuong-doi",
@@ -357,7 +371,7 @@ export const lop09: GradeBook = {
           luyen(R`Ba nhóm có tần số $2$, $5$ và $3$. Cỡ mẫu bằng bao nhiêu?`, R`Cỡ mẫu bằng $10$.`, [{ expr: "2+5+3", expect: "10" }], "Tổng các tần số bằng cỡ mẫu. Mẫu số của mọi tần số tương đối là số này."),
           luyen(R`Tần số $4$ trên mẫu $20$ bạn. Tần số tương đối của nhóm còn lại, gồm $16$ bạn, bằng bao nhiêu?`, R`Tần số tương đối bằng $\frac{4}{5}$.`, [{ expr: "Rational(16,20)", expect: "Rational(4,5)" }], "Nhóm còn lại có tần số $16$. Chia cho cỡ mẫu $20$ rồi rút gọn."),
         ],
-        { figure: "bar" },
+        { titleEn: "Frequency and relative frequency", figure: "bar" },
       ),
       bai(
         "tong-tuong-doi",
@@ -377,7 +391,8 @@ export const lop09: GradeBook = {
           luyen(R`Tần số $2$, $3$ và $5$ trên mẫu $10$. Tổng ba tần số tương đối bằng bao nhiêu?`, R`Tổng bằng $1$.`, [{ expr: "Rational(2,10)+Rational(3,10)+Rational(5,10)", expect: "1" }], "Cộng các tỉ số tần số trên cùng một cỡ mẫu. Tử cộng lại đúng bằng mẫu."),
           luyen(R`Trung bình của các giá trị đại diện $1, 2, 3$ với tần số $1, 1, 2$ bằng bao nhiêu?`, R`Trung bình bằng $\frac{9}{4}$.`, [{ expr: "Rational(1*1+2*1+3*2,1+1+2)", expect: "Rational(9,4)" }], "Nhân mỗi giá trị với tần số của nó, cộng lại rồi chia cho tổng tần số."),
         ],
+        { titleEn: "The sum of relative frequencies" },
       ),
-    ]),
+    ], "Relative frequency"),
   ],
 };
