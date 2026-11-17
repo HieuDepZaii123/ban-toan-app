@@ -24,6 +24,7 @@ import { SangTao } from "./SangTao.tsx";
 
 const Research = lazy(() => import("./Research.tsx").then((mod) => ({ default: mod.Research })));
 
+const FromZero = lazy(() => import("./zero/FromZero.tsx"));
 const QuadraticLab = lazy(() => import("../labs/QuadraticLab.tsx").then((mod) => ({ default: mod.QuadraticLab })));
 const ExpLab = lazy(() => import("../labs/ExpLab.tsx").then((mod) => ({ default: mod.ExpLab })));
 const SequenceLab = lazy(() => import("../labs/SequenceLab.tsx").then((mod) => ({ default: mod.SequenceLab })));
@@ -172,6 +173,9 @@ export function TopicDesk({ id }: { id: string }) {
                   <p>{lang === "en" ? topic.soonEn : topic.soon}</p>
                 </>
               )}
+              <Suspense fallback={null}>
+                <FromZero topicId={topic.id} />
+              </Suspense>
               <KnowledgeRead topicId={topic.id} />
               <DangHoc topicId={topic.id} />
               <LectureVideos topicId={topic.id} />

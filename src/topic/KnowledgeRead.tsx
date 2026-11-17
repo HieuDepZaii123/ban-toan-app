@@ -15,6 +15,12 @@ const KIND_LABEL: Record<KnowKind, string> = {
   "vi-du": "Ví dụ",
 };
 
+/** Tên phần suy luận theo loại mục: định lí thì chứng minh, công thức thì suy ra, còn lại là giải thích. */
+const WHY_LABEL: Partial<Record<KnowKind, string>> = {
+  "dinh-ly": "Chứng minh từng bước",
+  "cong-thuc": "Công thức này từ đâu ra",
+};
+
 /** Kiến thức tổng quát và chi tiết của một chuyên đề, đặt giữa bài giảng ngắn và phần Dạng bài. */
 export function KnowledgeRead({ topicId }: { topicId: string }) {
   const [loaded, setLoaded] = useState<{ id: string; data: TopicKnowledge | null } | null>(null);
@@ -41,9 +47,28 @@ export function KnowledgeRead({ topicId }: { topicId: string }) {
     <section className="knowledge" aria-labelledby="knowledge-title">
       <h2 id="knowledge-title">Kiến thức tổng quát và chi tiết</h2>
       <div className="kn-general">
+        {pack.tuDau.length > 0 ? (
+          <div className="kn-start">
+            <h3>Bắt đầu từ con số không</h3>
+            {pack.tuDau.map((line) => <p key={line}><MathText text={line} /></p>)}
+          </div>
+        ) : null}
         <p><b>Là gì.</b> <MathText text={pack.tongQuat.la} /></p>
         <p><b>Dùng để làm gì.</b> <MathText text={pack.tongQuat.dungDe} /></p>
         <p><b>Nối với đâu.</b> <MathText text={pack.tongQuat.lienHe} /></p>
+        {pack.kyHieu.length > 0 ? (
+          <details className="kn-symbols">
+            <summary>Cách đọc các ký hiệu trong chuyên đề</summary>
+            <dl>
+              {pack.kyHieu.map((row) => (
+                <div key={row.kh}>
+                  <dt><MathText text={row.kh} /></dt>
+                  <dd><MathText text={row.doc} /></dd>
+                </div>
+              ))}
+            </dl>
+          </details>
+        ) : null}
         {pack.canBiet.length > 0 ? (
           <>
             <p className="lecture-note">Nên biết trước:</p>
@@ -63,6 +88,15 @@ export function KnowledgeRead({ topicId }: { topicId: string }) {
                 {item.title ? <b> <MathText text={item.title} />.</b> : null}{" "}
                 <MathText text={item.text} />
               </p>
+              {item.de ? <p className="kn-plain"><b>Nói dễ hiểu.</b> <MathText text={item.de} /></p> : null}
+              {item.suy && item.suy.length > 0 ? (
+                <details className="kn-why">
+                  <summary>{WHY_LABEL[item.kind] ?? "Vì sao đúng"}</summary>
+                  <ol>
+                    {item.suy.map((step) => <li key={step}><MathText text={step} /></li>)}
+                  </ol>
+                </details>
+              ) : null}
             </div>
           ))}
         </details>
