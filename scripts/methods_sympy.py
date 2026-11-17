@@ -6,6 +6,7 @@ import sympy as sp
 
 x = sp.symbols("x", real=True)
 t = sp.symbols("t", real=True)
+y = sp.symbols("y", real=True)
 ns = {
     "integrate": sp.integrate,
     "diff": sp.diff,
@@ -16,6 +17,10 @@ ns = {
     "cos": sp.cos,
     "pi": sp.pi,
     "Rational": sp.Rational,
+    "gcd": sp.gcd,
+    "lcm": sp.lcm,
+    "expand": sp.expand,
+    "y": y,
     "x": x,
     "t": t,
 }

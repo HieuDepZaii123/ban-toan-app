@@ -87,6 +87,54 @@
       "methodId": "tao-binh-phuong",
       "topicHref": "/t/quadratic",
       "topicLabel": "Hàm số bậc hai"
+    },
+    {
+      "when": "Cộng hoặc trừ qua $10$ trong phạm vi $20$ và chưa nhớ ngay kết quả.",
+      "methodId": "tach-so-lop-1",
+      "topicHref": "/kien-thuc/1/dang",
+      "topicLabel": "Dạng bài lớp 1"
+    },
+    {
+      "when": "Cộng hoặc trừ hai số có hai chữ số mà hàng đơn vị phải nhớ hoặc mượn.",
+      "methodId": "dat-tinh-co-nho",
+      "topicHref": "/kien-thuc/2/dang",
+      "topicLabel": "Dạng bài lớp 2"
+    },
+    {
+      "when": "Đề có \"gấp $n$ lần\", \"giảm đi $n$ lần\" hoặc \"gấp mấy lần\".",
+      "methodId": "gap-giam-so-lan",
+      "topicHref": "/kien-thuc/3/dang",
+      "topicLabel": "Dạng bài lớp 3"
+    },
+    {
+      "when": "Cộng, trừ hoặc so sánh các phân số khác mẫu số.",
+      "methodId": "quy-dong-phan-so",
+      "topicHref": "/kien-thuc/4/dang",
+      "topicLabel": "Dạng bài lớp 4"
+    },
+    {
+      "when": "Giảm giá, tăng giá, tỉ lệ phần trăm: tìm phần hoặc tìm tổng.",
+      "methodId": "phan-tram-tong-phan",
+      "topicHref": "/kien-thuc/5/dang",
+      "topicLabel": "Dạng bài lớp 5"
+    },
+    {
+      "when": "Chia đều thành nhiều nhóm nhất, hoặc hai việc lặp lại cùng lúc.",
+      "methodId": "uoc-boi-ung-dung",
+      "topicHref": "/kien-thuc/6/dang",
+      "topicLabel": "Dạng bài lớp 6"
+    },
+    {
+      "when": "Hai đại lượng cùng đổi: người và ngày, khối lượng và tiền, vận tốc và thời gian.",
+      "methodId": "ti-le-thuan-nghich",
+      "topicHref": "/kien-thuc/7/dang",
+      "topicLabel": "Dạng bài lớp 7"
+    },
+    {
+      "when": "Rút gọn phân thức hoặc giải phương trình tích cần phân tích đa thức.",
+      "methodId": "nhan-tu-hang-dang-thuc",
+      "topicHref": "/kien-thuc/8/dang",
+      "topicLabel": "Dạng bài lớp 8"
     }
   ],
   "methods": [
@@ -1496,6 +1544,852 @@
           "where": "bp-2",
           "lhs": "(x+2)**2-9",
           "rhs": "x**2+4*x-5"
+        }
+      ]
+    },
+    {
+      "id": "tach-so-lop-1",
+      "grade": 1,
+      "title": "Tách số để cộng, trừ qua chục",
+      "titleEn": "Splitting numbers to add and subtract across ten",
+      "blurb": "Lớp 1: bù cho đủ chục rồi mới cộng hoặc trừ phần còn lại.",
+      "spot": [
+        "Phép cộng hoặc trừ trong phạm vi $20$ mà kết quả đi qua $10$, như $9+6$ hoặc $14-8$.",
+        "Em chưa nhớ ngay kết quả và cần một cách chắc chắn thay cho việc đếm từng que."
+      ],
+      "thinking": [
+        "Cộng: nhìn số thứ nhất, tìm xem còn thiếu bao nhiêu để tròn $10$. Lấy phần thiếu đó từ số thứ hai, rồi cộng phần dư.",
+        "Trừ: tách số trừ thành hai phần, trừ phần đầu cho về đúng $10$, rồi trừ nốt phần sau.",
+        "Luôn viết hai bước, mỗi bước chỉ một phép tính nhỏ, để kiểm tra lại từng bước được."
+      ],
+      "care": [
+        "Hai phần sau khi tách phải cộng lại đúng bằng số ban đầu: $5=2+3$, không phải $2+2$.",
+        "Sau khi làm xong, thử phép tính ngược: nếu $9+6=15$ thì $15-6$ phải bằng $9$."
+      ],
+      "formulas": [
+        "$8+5=8+2+3=10+3=13.$",
+        "$15-7=15-5-2=10-2=8.$",
+        "Kiểm bằng phép ngược: $13-5=8$."
+      ],
+      "examples": [
+        {
+          "id": "l1-1",
+          "title": "Cộng qua chục",
+          "prompt": "Tính $9+6$.",
+          "steps": [
+            "Số $9$ cần thêm $1$ để thành $10$.",
+            "Tách $6=1+5$. Vậy $9+6=9+1+5$.",
+            "$9+1=10$, rồi $10+5=15$.",
+            "Kiểm: $15-6=9$."
+          ],
+          "result": "$15$"
+        },
+        {
+          "id": "l1-2",
+          "title": "Trừ qua chục",
+          "prompt": "Tính $14-8$.",
+          "steps": [
+            "Muốn về $10$ phải bớt $4$ từ $14$.",
+            "Tách $8=4+4$. Vậy $14-8=14-4-4$.",
+            "$14-4=10$, rồi $10-4=6$.",
+            "Kiểm: $6+8=14$."
+          ],
+          "result": "$6$"
+        }
+      ],
+      "mistakes": [
+        "Tách sai nên hai phần cộng lại không bằng số ban đầu, ví dụ tách $6=1+4$.",
+        "Làm một bước rồi quên bước hai, dừng ở $10$.",
+        "Cộng khi đề yêu cầu trừ vì chỉ nhìn hai số mà không nhìn dấu."
+      ],
+      "practice": [
+        {
+          "id": "l1-p1",
+          "prompt": "Tính $7+8$.",
+          "answer": "$15$",
+          "steps": [
+            "$7$ cần thêm $3$ để thành $10$, tách $8=3+5$.",
+            "$7+3=10$, rồi $10+5=15$."
+          ]
+        },
+        {
+          "id": "l1-p2",
+          "prompt": "Tính $13-6$.",
+          "answer": "$7$",
+          "steps": [
+            "Bớt $3$ để về $10$, tách $6=3+3$.",
+            "$13-3=10$, rồi $10-3=7$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/1",
+          "label": "Các bài lớp 1"
+        },
+        {
+          "href": "/kien-thuc/1/dang",
+          "label": "Dạng bài lớp 1"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l1-1",
+          "lhs": "9+6",
+          "rhs": "15"
+        },
+        {
+          "where": "l1-2",
+          "lhs": "14-8",
+          "rhs": "6"
+        },
+        {
+          "where": "l1-p1",
+          "lhs": "7+8",
+          "rhs": "15"
+        },
+        {
+          "where": "l1-p2",
+          "lhs": "13-6",
+          "rhs": "7"
+        }
+      ]
+    },
+    {
+      "id": "dat-tinh-co-nho",
+      "grade": 2,
+      "title": "Đặt tính cộng, trừ có nhớ",
+      "titleEn": "Column addition and subtraction with carrying",
+      "blurb": "Lớp 2: viết thẳng hàng, làm từ hàng đơn vị, nhớ hoặc mượn đúng chỗ.",
+      "spot": [
+        "Cộng hoặc trừ hai số có hai chữ số, trong đó hàng đơn vị cộng được hơn $10$ hoặc không đủ để trừ.",
+        "Đề cho số tiền, số quả, số trang cần tính chính xác, không ước lượng."
+      ],
+      "thinking": [
+        "Viết hai số thẳng hàng: đơn vị dưới đơn vị, chục dưới chục. Gạch ngang rồi làm từ phải sang trái.",
+        "Cộng: nếu tổng hàng đơn vị từ $10$ trở lên, viết chữ số đơn vị và nhớ $1$ sang hàng chục.",
+        "Trừ: nếu hàng đơn vị không đủ trừ, mượn $1$ chục, tức thêm $10$ cho hàng đơn vị, và nhớ bớt $1$ ở hàng chục."
+      ],
+      "care": [
+        "Số nhớ phải được cộng vào hàng chục, rất dễ quên.",
+        "Khi mượn, hàng chục của số bị trừ giảm $1$.",
+        "Thử lại: lấy kết quả phép trừ cộng với số trừ, phải ra số bị trừ."
+      ],
+      "formulas": [
+        "$47+38$: đơn vị $7+8=15$, viết $5$ nhớ $1$; chục $4+3+1=8$. Kết quả $85$.",
+        "$82-45$: đơn vị $2<5$, mượn thành $12-5=7$; chục $8-1-4=3$. Kết quả $37$."
+      ],
+      "examples": [
+        {
+          "id": "l2-1",
+          "title": "Cộng có nhớ",
+          "prompt": "Tính $47+38$.",
+          "steps": [
+            "Hàng đơn vị: $7+8=15$, viết $5$ và nhớ $1$.",
+            "Hàng chục: $4+3=7$, thêm số nhớ $1$ được $8$.",
+            "Kết quả là $85$. Kiểm: $85-38=47$."
+          ],
+          "result": "$85$"
+        },
+        {
+          "id": "l2-2",
+          "title": "Trừ có mượn",
+          "prompt": "Tính $82-45$.",
+          "steps": [
+            "Hàng đơn vị: $2$ không đủ trừ $5$, mượn $1$ chục. $12-5=7$.",
+            "Hàng chục: $8$ đã cho mượn nên còn $7$. $7-4=3$.",
+            "Kết quả là $37$. Kiểm: $37+45=82$."
+          ],
+          "result": "$37$"
+        }
+      ],
+      "mistakes": [
+        "Viết lệch hàng nên cộng chục với đơn vị.",
+        "Quên cộng số nhớ vào hàng chục.",
+        "Mượn $1$ chục nhưng vẫn giữ nguyên hàng chục của số bị trừ."
+      ],
+      "practice": [
+        {
+          "id": "l2-p1",
+          "prompt": "Tính $56+27$.",
+          "answer": "$83$",
+          "steps": [
+            "Đơn vị: $6+7=13$, viết $3$ nhớ $1$.",
+            "Chục: $5+2+1=8$. Kết quả $83$."
+          ]
+        },
+        {
+          "id": "l2-p2",
+          "prompt": "Tính $71-34$.",
+          "answer": "$37$",
+          "steps": [
+            "Đơn vị: mượn $1$ chục, $11-4=7$.",
+            "Chục: $7-1-3=3$. Kết quả $37$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/2",
+          "label": "Các bài lớp 2"
+        },
+        {
+          "href": "/kien-thuc/2/dang",
+          "label": "Dạng bài lớp 2"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l2-1",
+          "lhs": "47+38",
+          "rhs": "85"
+        },
+        {
+          "where": "l2-2",
+          "lhs": "82-45",
+          "rhs": "37"
+        },
+        {
+          "where": "l2-p1",
+          "lhs": "56+27",
+          "rhs": "83"
+        },
+        {
+          "where": "l2-p2",
+          "lhs": "71-34",
+          "rhs": "37"
+        }
+      ]
+    },
+    {
+      "id": "gap-giam-so-lan",
+      "grade": 3,
+      "title": "Gấp lên, giảm đi và so sánh số lần",
+      "titleEn": "Times as many, times fewer and comparing by a factor",
+      "blurb": "Lớp 3: nhận ra đề dùng phép nhân hay phép chia từ chữ \"gấp\" và \"giảm\".",
+      "spot": [
+        "Đề có cụm \"gấp $n$ lần\", \"giảm đi $n$ lần\" hoặc \"gấp mấy lần\".",
+        "Hai đại lượng cùng loại được so sánh bằng một con số, không phải bằng hiệu."
+      ],
+      "thinking": [
+        "\"Gấp $n$ lần\" là lấy $n$ nhóm bằng nhau: phép nhân. \"Giảm đi $n$ lần\" là chia thành $n$ phần bằng nhau: phép chia.",
+        "\"A gấp mấy lần B\" nghĩa là hỏi A chứa bao nhiêu lần B: lấy $A:B$.",
+        "Vẽ sơ đồ đoạn thẳng: một đoạn cho số bé, mấy đoạn như thế cho số lớn."
+      ],
+      "care": [
+        "\"Nhiều hơn $n$\" là cộng $n$, còn \"gấp $n$ lần\" là nhân với $n$. Hai ý này khác nhau.",
+        "Khi chia phải chia số lớn cho số bé trong bài \"gấp mấy lần\"."
+      ],
+      "formulas": [
+        "Gấp: $a\\times n$.",
+        "Giảm: $a:n$.",
+        "Số lần: $A:B$ khi $A$ lớn hơn $B$."
+      ],
+      "examples": [
+        {
+          "id": "l3-1",
+          "title": "Gấp lên",
+          "prompt": "Lan có $6$ cái bút, Mai có số bút gấp $4$ lần Lan. Mai có bao nhiêu cái?",
+          "steps": [
+            "Gấp $4$ lần nghĩa là $4$ nhóm, mỗi nhóm $6$ cái.",
+            "$6\\times4=24$."
+          ],
+          "result": "$24$ cái bút"
+        },
+        {
+          "id": "l3-2",
+          "title": "Giảm đi",
+          "prompt": "Bể có $36$ lít nước, đổ vào các chậu sao cho mỗi chậu bằng $36$ giảm đi $4$ lần. Mỗi chậu có mấy lít?",
+          "steps": [
+            "Giảm đi $4$ lần là chia $36$ thành $4$ phần bằng nhau.",
+            "$36:4=9$. Kiểm: $9\\times4=36$."
+          ],
+          "result": "$9$ lít"
+        }
+      ],
+      "mistakes": [
+        "Cộng thay vì nhân khi gặp \"gấp\".",
+        "Chia số bé cho số lớn khi hỏi \"gấp mấy lần\".",
+        "Quên kiểm lại bằng phép tính ngược."
+      ],
+      "practice": [
+        {
+          "id": "l3-p1",
+          "prompt": "Hàng trên có $8$ bông hoa, hàng dưới gấp $5$ lần. Hàng dưới có bao nhiêu bông?",
+          "answer": "$40$",
+          "steps": [
+            "Gấp $5$ lần là nhân.",
+            "$8\\times5=40$."
+          ]
+        },
+        {
+          "id": "l3-p2",
+          "prompt": "Bao gạo $48$ kg nặng gấp mấy lần bao $6$ kg?",
+          "answer": "$8$",
+          "steps": [
+            "Hỏi gấp mấy lần là chia số lớn cho số bé.",
+            "$48:6=8$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/3",
+          "label": "Các bài lớp 3"
+        },
+        {
+          "href": "/kien-thuc/3/dang",
+          "label": "Dạng bài lớp 3"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l3-1",
+          "lhs": "6*4",
+          "rhs": "24"
+        },
+        {
+          "where": "l3-2",
+          "lhs": "Rational(36,4)",
+          "rhs": "9"
+        },
+        {
+          "where": "l3-p1",
+          "lhs": "8*5",
+          "rhs": "40"
+        },
+        {
+          "where": "l3-p2",
+          "lhs": "Rational(48,6)",
+          "rhs": "8"
+        }
+      ]
+    },
+    {
+      "id": "quy-dong-phan-so",
+      "grade": 4,
+      "title": "Quy đồng để cộng, trừ và so sánh phân số",
+      "titleEn": "Common denominators to add, subtract and compare fractions",
+      "blurb": "Lớp 4: đưa các phân số về cùng mẫu số rồi mới cộng, trừ hoặc so sánh tử số.",
+      "spot": [
+        "Cộng, trừ hoặc so sánh hai phân số có mẫu số khác nhau.",
+        "Đề hỏi phân số nào lớn hơn, hoặc số phần còn lại sau khi lấy đi một phần."
+      ],
+      "thinking": [
+        "Tìm mẫu số chung nhỏ nhất, tức bội chung nhỏ nhất của các mẫu.",
+        "Nhân cả tử và mẫu của mỗi phân số với cùng một số để được mẫu chung. Giá trị phân số không đổi.",
+        "Khi mẫu đã bằng nhau, cộng hoặc trừ tử số và giữ nguyên mẫu, rồi rút gọn nếu được."
+      ],
+      "care": [
+        "Không cộng mẫu số với mẫu số: $\\frac{1}{3}+\\frac{1}{4}$ không bằng $\\frac{2}{7}$.",
+        "Nhân cả tử lẫn mẫu, không chỉ nhân mẫu.",
+        "Kết quả lớn hơn $1$ có thể viết hỗn số, nhưng đừng bỏ bước rút gọn."
+      ],
+      "formulas": [
+        "$\\frac{3}{4}+\\frac{5}{6}=\\frac{9}{12}+\\frac{10}{12}=\\frac{19}{12}.$",
+        "$\\frac{5}{6}-\\frac{3}{8}=\\frac{20}{24}-\\frac{9}{24}=\\frac{11}{24}.$"
+      ],
+      "examples": [
+        {
+          "id": "l4-1",
+          "title": "Cộng khác mẫu",
+          "prompt": "Tính $\\frac{3}{4}+\\frac{5}{6}$.",
+          "steps": [
+            "Bội chung nhỏ nhất của $4$ và $6$ là $12$.",
+            "$\\frac{3}{4}=\\frac{9}{12}$ và $\\frac{5}{6}=\\frac{10}{12}$.",
+            "Cộng tử số: $\\frac{9+10}{12}=\\frac{19}{12}$."
+          ],
+          "result": "$\\frac{19}{12}$"
+        },
+        {
+          "id": "l4-2",
+          "title": "Trừ khác mẫu",
+          "prompt": "Tính $\\frac{5}{6}-\\frac{3}{8}$.",
+          "steps": [
+            "Bội chung nhỏ nhất của $6$ và $8$ là $24$.",
+            "$\\frac{5}{6}=\\frac{20}{24}$ và $\\frac{3}{8}=\\frac{9}{24}$.",
+            "Trừ tử số: $\\frac{20-9}{24}=\\frac{11}{24}$."
+          ],
+          "result": "$\\frac{11}{24}$"
+        }
+      ],
+      "mistakes": [
+        "Cộng tử với tử và mẫu với mẫu.",
+        "Chỉ nhân mẫu để quy đồng mà quên nhân tử.",
+        "Chọn mẫu chung quá lớn rồi quên rút gọn."
+      ],
+      "practice": [
+        {
+          "id": "l4-p1",
+          "prompt": "Tính $\\frac{1}{2}+\\frac{3}{10}$.",
+          "answer": "$\\frac{4}{5}$",
+          "steps": [
+            "Mẫu chung là $10$: $\\frac{5}{10}+\\frac{3}{10}=\\frac{8}{10}$.",
+            "Rút gọn: $\\frac{8}{10}=\\frac{4}{5}$."
+          ]
+        },
+        {
+          "id": "l4-p2",
+          "prompt": "So sánh $\\frac{2}{3}$ và $\\frac{3}{5}$ rồi tìm hiệu.",
+          "answer": "$\\frac{1}{15}$",
+          "steps": [
+            "Mẫu chung $15$: $\\frac{10}{15}$ và $\\frac{9}{15}$.",
+            "$\\frac{2}{3}$ lớn hơn, hiệu là $\\frac{1}{15}$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/4",
+          "label": "Các bài lớp 4"
+        },
+        {
+          "href": "/kien-thuc/4/dang",
+          "label": "Dạng bài lớp 4"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l4-1",
+          "lhs": "Rational(3,4)+Rational(5,6)",
+          "rhs": "Rational(19,12)"
+        },
+        {
+          "where": "l4-2",
+          "lhs": "Rational(5,6)-Rational(3,8)",
+          "rhs": "Rational(11,24)"
+        },
+        {
+          "where": "l4-p1",
+          "lhs": "Rational(1,2)+Rational(3,10)",
+          "rhs": "Rational(4,5)"
+        },
+        {
+          "where": "l4-p2",
+          "lhs": "Rational(2,3)-Rational(3,5)",
+          "rhs": "Rational(1,15)"
+        }
+      ]
+    },
+    {
+      "id": "phan-tram-tong-phan",
+      "grade": 5,
+      "title": "Bài toán phần trăm: tìm phần, tìm tổng",
+      "titleEn": "Percentage problems: finding the part and the whole",
+      "blurb": "Lớp 5: đổi phần trăm thành số thập phân, rồi nhân để tìm phần hoặc chia để tìm tổng.",
+      "spot": [
+        "Đề có giảm giá, tăng giá, lãi, tỉ lệ đạt yêu cầu tính theo phần trăm.",
+        "Biết tổng và phần trăm, tìm phần; hoặc biết phần và phần trăm, tìm tổng."
+      ],
+      "thinking": [
+        "Đổi phần trăm thành số thập phân: $15\\%=0{,}15$.",
+        "Tìm phần: lấy tổng nhân với số thập phân đó.",
+        "Tìm tổng: lấy phần chia cho số thập phân đó. Tìm phần trăm: lấy phần chia cho tổng rồi nhân $100$."
+      ],
+      "care": [
+        "Giảm $15\\%$ nghĩa là còn $85\\%$, nhân với $0{,}85$.",
+        "Phần trăm tính trên giá hiện tại. Tăng $20\\%$ rồi giảm $20\\%$ không về giá cũ."
+      ],
+      "formulas": [
+        "Phần $=$ tổng $\\times$ tỉ số.",
+        "Tổng $=$ phần $:$ tỉ số.",
+        "Tỉ số phần trăm $=$ phần $:$ tổng $\\times100\\%$."
+      ],
+      "examples": [
+        {
+          "id": "l5-1",
+          "title": "Tìm giá sau giảm",
+          "prompt": "Áo giá $200\\,000$ đồng được giảm $15\\%$. Giá sau khi giảm là bao nhiêu?",
+          "steps": [
+            "Sau khi giảm còn $100\\%-15\\%=85\\%$ giá cũ.",
+            "$200\\,000\\times0{,}85=170\\,000$."
+          ],
+          "result": "$170\\,000$ đồng"
+        },
+        {
+          "id": "l5-2",
+          "title": "Tìm tổng",
+          "prompt": "Một lớp có $30$ bạn giỏi, chiếm $20\\%$ cả lớp. Cả lớp có bao nhiêu bạn?",
+          "steps": [
+            "$20\\%=0{,}2$.",
+            "Tổng $=30:0{,}2=150$.",
+            "Kiểm: $150\\times0{,}2=30$."
+          ],
+          "result": "$150$ bạn"
+        }
+      ],
+      "mistakes": [
+        "Lấy $200\\,000\\times0{,}15$ rồi trả lời đó là giá mới.",
+        "Nhân thay vì chia khi đi tìm tổng.",
+        "Cộng hai lần phần trăm liên tiếp thay vì nhân."
+      ],
+      "practice": [
+        {
+          "id": "l5-p1",
+          "prompt": "$12$ là bao nhiêu phần trăm của $48$?",
+          "answer": "$25\\%$",
+          "steps": [
+            "$12:48=0{,}25$.",
+            "$0{,}25=25\\%$."
+          ]
+        },
+        {
+          "id": "l5-p2",
+          "prompt": "Giá $50$ nghìn tăng $20\\%$. Giá mới?",
+          "answer": "$60$ nghìn",
+          "steps": [
+            "Còn thành $120\\%=1{,}2$ giá cũ.",
+            "$50\\times1{,}2=60$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/5",
+          "label": "Các bài lớp 5"
+        },
+        {
+          "href": "/kien-thuc/5/dang",
+          "label": "Dạng bài lớp 5"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l5-1",
+          "lhs": "200000*(1-Rational(15,100))",
+          "rhs": "170000"
+        },
+        {
+          "where": "l5-2",
+          "lhs": "30/Rational(20,100)",
+          "rhs": "150"
+        },
+        {
+          "where": "l5-p1",
+          "lhs": "Rational(12,48)",
+          "rhs": "Rational(1,4)"
+        },
+        {
+          "where": "l5-p2",
+          "lhs": "50*Rational(120,100)",
+          "rhs": "60"
+        }
+      ]
+    },
+    {
+      "id": "uoc-boi-ung-dung",
+      "grade": 6,
+      "title": "ƯCLN và BCNN trong bài toán thực tế",
+      "titleEn": "GCD and LCM in word problems",
+      "blurb": "Lớp 6: chia đều thành nhiều nhóm nhất dùng ƯCLN, việc lặp lại cùng lúc dùng BCNN.",
+      "spot": [
+        "Chia hai hay nhiều số lượng thành các nhóm bằng nhau với số nhóm hoặc số phần tử lớn nhất có thể: ƯCLN.",
+        "Hai việc lặp lại theo chu kỳ khác nhau, hỏi bao lâu thì gặp lại: BCNN."
+      ],
+      "thinking": [
+        "Phân tích mỗi số ra thừa số nguyên tố.",
+        "ƯCLN: lấy thừa số chung với số mũ nhỏ nhất. BCNN: lấy mọi thừa số với số mũ lớn nhất.",
+        "Đọc đề để chọn: \"lớn nhất\", \"chia đều\" nghĩa là ƯCLN; \"ít nhất\", \"lần sau cùng lúc\" nghĩa là BCNN. Rồi kiểm lại bằng chia hết."
+      ],
+      "care": [
+        "Không lấy ƯCLN khi đề hỏi thời điểm gặp lại.",
+        "Với hai số, tích ƯCLN và BCNN bằng tích hai số đó, dùng để kiểm kết quả.",
+        "Ghi rõ đơn vị: số tổ, số phút, số mét."
+      ],
+      "formulas": [
+        "$24=2^3\\cdot3$ và $36=2^2\\cdot3^2$ nên ƯCLN $=2^2\\cdot3=12$.",
+        "$15=3\\cdot5$ và $20=2^2\\cdot5$ nên BCNN $=2^2\\cdot3\\cdot5=60$."
+      ],
+      "examples": [
+        {
+          "id": "l6-1",
+          "title": "Chia tổ nhiều nhất",
+          "prompt": "Lớp có $24$ nam và $36$ nữ. Chia thành nhiều tổ nhất sao cho mỗi tổ có số nam bằng nhau và số nữ bằng nhau. Có mấy tổ?",
+          "steps": [
+            "Số tổ phải chia hết cả $24$ và $36$, và lớn nhất: đó là ƯCLN.",
+            "$24=2^3\\cdot3$, $36=2^2\\cdot3^2$ nên ƯCLN $=12$.",
+            "Mỗi tổ có $2$ nam và $3$ nữ."
+          ],
+          "result": "$12$ tổ"
+        },
+        {
+          "id": "l6-2",
+          "title": "Gặp lại cùng lúc",
+          "prompt": "Hai tuyến xe buýt xuất phát cùng lúc, tuyến A cách $15$ phút một chuyến, tuyến B cách $20$ phút. Sau ít nhất bao lâu lại cùng xuất phát?",
+          "steps": [
+            "Thời gian phải chia hết cho $15$ và $20$, và nhỏ nhất: đó là BCNN.",
+            "$15=3\\cdot5$, $20=2^2\\cdot5$ nên BCNN $=2^2\\cdot3\\cdot5=60$."
+          ],
+          "result": "$60$ phút"
+        }
+      ],
+      "mistakes": [
+        "Nhầm ƯCLN với BCNN vì cả hai đều tìm từ thừa số nguyên tố.",
+        "Lấy thừa số chung với số mũ lớn nhất khi tìm ƯCLN.",
+        "Quên nhân thêm thừa số riêng khi tìm BCNN."
+      ],
+      "practice": [
+        {
+          "id": "l6-p1",
+          "prompt": "Tìm ƯCLN của $30$ và $45$.",
+          "answer": "$15$",
+          "steps": [
+            "$30=2\\cdot3\\cdot5$ và $45=3^2\\cdot5$.",
+            "Thừa số chung nhỏ nhất: $3\\cdot5=15$."
+          ]
+        },
+        {
+          "id": "l6-p2",
+          "prompt": "Tìm BCNN của $6$ và $8$.",
+          "answer": "$24$",
+          "steps": [
+            "$6=2\\cdot3$ và $8=2^3$.",
+            "Lấy $2^3\\cdot3=24$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/6",
+          "label": "Các bài lớp 6"
+        },
+        {
+          "href": "/kien-thuc/6/dang",
+          "label": "Dạng bài lớp 6"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l6-1",
+          "lhs": "gcd(24,36)",
+          "rhs": "12"
+        },
+        {
+          "where": "l6-2",
+          "lhs": "lcm(15,20)",
+          "rhs": "60"
+        },
+        {
+          "where": "l6-p1",
+          "lhs": "gcd(30,45)",
+          "rhs": "15"
+        },
+        {
+          "where": "l6-p2",
+          "lhs": "lcm(6,8)",
+          "rhs": "24"
+        }
+      ]
+    },
+    {
+      "id": "ti-le-thuan-nghich",
+      "grade": 7,
+      "title": "Tỉ lệ thuận và tỉ lệ nghịch",
+      "titleEn": "Direct and inverse proportion",
+      "blurb": "Lớp 7: quyết định hai đại lượng tỉ lệ thuận hay nghịch rồi lập đẳng thức tỉ số.",
+      "spot": [
+        "Hai đại lượng cùng thay đổi và đề hỏi giá trị mới khi một đại lượng đổi.",
+        "Chia một số theo tỉ lệ cho trước, hoặc chia tỉ lệ với các số đã cho."
+      ],
+      "thinking": [
+        "Tự hỏi: đại lượng này tăng gấp đôi thì đại lượng kia thế nào? Cùng tăng là tỉ lệ thuận, một tăng một giảm là tỉ lệ nghịch.",
+        "Tỉ lệ thuận: $\\frac{y_1}{x_1}=\\frac{y_2}{x_2}$. Tỉ lệ nghịch: $x_1y_1=x_2y_2$.",
+        "Chia theo tỉ lệ: cộng các phần, chia để được giá trị một phần, rồi nhân."
+      ],
+      "care": [
+        "Năng suất không đổi: số người nhiều hơn thì số ngày ít hơn, đây là tỉ lệ nghịch.",
+        "Giá tiền theo khối lượng là tỉ lệ thuận, nhưng giá có phí cố định thì không còn tỉ lệ thuận.",
+        "Kiểm lại: đáp số có hợp lý theo chiều tăng giảm không."
+      ],
+      "formulas": [
+        "Thuận: $y=kx$, $\\frac{y_1}{x_1}=\\frac{y_2}{x_2}$.",
+        "Nghịch: $y=\\frac{k}{x}$, $x_1y_1=x_2y_2$.",
+        "Chia $S$ theo tỉ lệ $a:b:c$: phần một bằng $\\frac{S}{a+b+c}$."
+      ],
+      "examples": [
+        {
+          "id": "l7-1",
+          "title": "Tỉ lệ thuận",
+          "prompt": "$5$ kg gạo giá $90$ nghìn đồng. $8$ kg cùng loại giá bao nhiêu?",
+          "steps": [
+            "Khối lượng tăng thì tiền tăng: tỉ lệ thuận.",
+            "$\\frac{90}{5}=\\frac{y}{8}$ nên $y=\\frac{90\\cdot8}{5}=144$."
+          ],
+          "result": "$144$ nghìn đồng"
+        },
+        {
+          "id": "l7-2",
+          "title": "Tỉ lệ nghịch",
+          "prompt": "$12$ công nhân làm xong việc trong $10$ ngày. Hỏi $15$ công nhân (năng suất như nhau) làm trong mấy ngày?",
+          "steps": [
+            "Công nhân nhiều hơn thì ngày ít đi: tỉ lệ nghịch.",
+            "$12\\cdot10=15\\cdot y$ nên $y=\\frac{120}{15}=8$."
+          ],
+          "result": "$8$ ngày"
+        }
+      ],
+      "mistakes": [
+        "Dùng tỉ lệ thuận cho bài số người và số ngày.",
+        "Viết nhầm vế khi lập $x_1y_1=x_2y_2$.",
+        "Làm tròn quá sớm khi chia theo tỉ lệ."
+      ],
+      "practice": [
+        {
+          "id": "l7-p1",
+          "prompt": "Chia $90$ thành ba phần tỉ lệ với $2:3:4$.",
+          "answer": "$20,\\ 30,\\ 40$",
+          "steps": [
+            "Tổng phần là $2+3+4=9$, mỗi phần $90:9=10$.",
+            "Các phần là $20$, $30$, $40$."
+          ]
+        },
+        {
+          "id": "l7-p2",
+          "prompt": "Xe đi $40$ km/giờ hết $3$ giờ. Nếu đi $60$ km/giờ thì hết mấy giờ?",
+          "answer": "$2$ giờ",
+          "steps": [
+            "Vận tốc và thời gian tỉ lệ nghịch.",
+            "$40\\cdot3=60\\cdot t$ nên $t=2$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/7",
+          "label": "Các bài lớp 7"
+        },
+        {
+          "href": "/kien-thuc/7/dang",
+          "label": "Dạng bài lớp 7"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l7-1",
+          "lhs": "Rational(90*8,5)",
+          "rhs": "144"
+        },
+        {
+          "where": "l7-2",
+          "lhs": "Rational(12*10,15)",
+          "rhs": "8"
+        },
+        {
+          "where": "l7-p1",
+          "lhs": "Rational(90,2+3+4)*2",
+          "rhs": "20"
+        },
+        {
+          "where": "l7-p2",
+          "lhs": "Rational(40*3,60)",
+          "rhs": "2"
+        }
+      ]
+    },
+    {
+      "id": "nhan-tu-hang-dang-thuc",
+      "grade": 8,
+      "title": "Phân tích đa thức thành nhân tử",
+      "titleEn": "Factorising polynomials",
+      "blurb": "Lớp 8: đặt nhân tử chung, dùng hằng đẳng thức, rồi nhóm hạng tử.",
+      "spot": [
+        "Rút gọn phân thức, giải phương trình tích, hoặc tính nhanh một biểu thức đại số.",
+        "Có hiệu hai bình phương, bình phương một tổng hoặc nhiều hạng tử có thể ghép nhóm."
+      ],
+      "thinking": [
+        "Thứ tự thử: đặt nhân tử chung trước, rồi xem có hằng đẳng thức nào, cuối cùng mới nhóm hạng tử.",
+        "Khai triển lại bằng phép nhân để kiểm: nhân các nhân tử phải trả đúng đa thức ban đầu.",
+        "Sau khi phân tích, mỗi nhân tử nên không phân tích tiếp được nữa."
+      ],
+      "care": [
+        "Đặt nhân tử chung trước thường làm hằng đẳng thức hiện ra.",
+        "$x^2+9$ không phân tích được trong tập số thực.",
+        "Khi nhóm hạng tử, hai nhóm phải cho nhân tử chung giống nhau."
+      ],
+      "formulas": [
+        "$a^2-b^2=(a-b)(a+b).$",
+        "$a^2\\pm2ab+b^2=(a\\pm b)^2.$",
+        "Nhóm: $x^2-xy+x-y=x(x-y)+(x-y)=(x-y)(x+1).$"
+      ],
+      "examples": [
+        {
+          "id": "l8-1",
+          "title": "Hiệu hai bình phương",
+          "prompt": "Phân tích $4x^2-25$.",
+          "steps": [
+            "$4x^2=(2x)^2$ và $25=5^2$.",
+            "Áp dụng $a^2-b^2=(a-b)(a+b)$ với $a=2x$, $b=5$.",
+            "Được $(2x-5)(2x+5)$. Kiểm: khai triển lại cho $4x^2-25$."
+          ],
+          "result": "$(2x-5)(2x+5)$"
+        },
+        {
+          "id": "l8-2",
+          "title": "Nhóm hạng tử",
+          "prompt": "Phân tích $x^2-xy+x-y$.",
+          "steps": [
+            "Nhóm hai hạng tử đầu và hai hạng tử cuối: $x(x-y)+(x-y)$.",
+            "Cả hai nhóm có nhân tử chung $(x-y)$.",
+            "Kết quả $(x-y)(x+1)$."
+          ],
+          "result": "$(x-y)(x+1)$"
+        }
+      ],
+      "mistakes": [
+        "Viết $a^2-b^2=(a-b)^2$.",
+        "Không đặt nhân tử chung trước nên bỏ lỡ hằng đẳng thức.",
+        "Nhóm sai dấu nên hai nhóm không có nhân tử chung."
+      ],
+      "practice": [
+        {
+          "id": "l8-p1",
+          "prompt": "Phân tích $x^2+10x+25$.",
+          "answer": "$(x+5)^2$",
+          "steps": [
+            "$x^2$, $25=5^2$ và $10x=2\\cdot x\\cdot5$.",
+            "Đó là bình phương của $x+5$."
+          ]
+        },
+        {
+          "id": "l8-p2",
+          "prompt": "Phân tích $3x^2-12$.",
+          "answer": "$3(x-2)(x+2)$",
+          "steps": [
+            "Đặt nhân tử chung $3$: $3(x^2-4)$.",
+            "$x^2-4=(x-2)(x+2)$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/8",
+          "label": "Các bài lớp 8"
+        },
+        {
+          "href": "/kien-thuc/8/dang",
+          "label": "Dạng bài lớp 8"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l8-1",
+          "lhs": "expand((2*x-5)*(2*x+5))",
+          "rhs": "4*x**2-25"
+        },
+        {
+          "where": "l8-2",
+          "lhs": "expand((x-y)*(x+1))",
+          "rhs": "x**2-x*y+x-y"
+        },
+        {
+          "where": "l8-p1",
+          "lhs": "expand((x+5)**2)",
+          "rhs": "x**2+10*x+25"
+        },
+        {
+          "where": "l8-p2",
+          "lhs": "expand(3*(x-2)*(x+2))",
+          "rhs": "3*x**2-12"
         }
       ]
     }

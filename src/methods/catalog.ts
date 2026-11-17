@@ -8,6 +8,8 @@ export type GuideRow = { when: string; methodId: string; topicHref: string; topi
 
 export type Method = {
   id: string;
+  /** Lớp 1–8 cho các phương pháp của cấp tiểu học và THCS; để trống với phương pháp THPT. */
+  grade?: number;
   title: string;
   titleEn: string;
   blurb: string;

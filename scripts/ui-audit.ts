@@ -14,6 +14,7 @@
  *       npm run test:ui -- --report ui-report.md  (ghi báo cáo Markdown)
  *       BASE_URL=http://127.0.0.1:43991 npm run test:ui   (dùng máy chủ đang chạy)
  */
+import { methodsData } from "../src/methods/catalog.ts";
 import { spawn, type ChildProcess } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -54,6 +55,7 @@ function routes(): { path: string; shapes: Shape[] }[] {
     out.push({ path: `/t/${card.id}`, shapes: [PHONE, DESKTOP] });
     for (const tab of ["lam", "so", "nc", "tn"]) out.push({ path: `/t/${card.id}?tab=${tab}`, shapes: [PHONE] });
   }
+  for (const method of methodsData.methods) out.push({ path: `/phuong-phap/${method.id}`, shapes: [PHONE] });
   for (const area of sciences) out.push({ path: `/khoa-hoc/${area.id}`, shapes: [PHONE] });
   for (const book of gradeBooks) {
     out.push({ path: `/kien-thuc/${book.grade}`, shapes: [PHONE, DESKTOP] });

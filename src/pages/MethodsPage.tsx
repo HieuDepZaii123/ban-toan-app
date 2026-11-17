@@ -67,8 +67,18 @@ function Chooser() {
           ))}
         </p>
       </section>
+      <h2>{t(lang, "Phương pháp theo lớp 1–8", "Methods for grades 1 to 8")}</h2>
       <div className="study-list">
-        {methodsData.methods.map((item) => (
+        {methodsData.methods.filter((item) => item.grade !== undefined).map((item) => (
+          <A key={item.id} className="tool-card" href={`/phuong-phap/${item.id}`}>
+            <strong>{t(lang, `Lớp ${item.grade}. ${item.title}`, `Grade ${item.grade}. ${item.titleEn}`)}</strong>
+            <span>{t(lang, item.blurb, item.titleEn)}</span>
+          </A>
+        ))}
+      </div>
+      <h2>{t(lang, "Phương pháp nâng cao (lớp 10–12)", "Advanced methods (grades 10 to 12)")}</h2>
+      <div className="study-list">
+        {methodsData.methods.filter((item) => item.grade === undefined).map((item) => (
           <A key={item.id} className="tool-card" href={`/phuong-phap/${item.id}`}>
             <strong>{t(lang, item.title, item.titleEn)}</strong>
             <span>{t(lang, item.blurb, item.titleEn)}</span>
@@ -83,7 +93,7 @@ function MethodView({ method }: { method: NonNullable<ReturnType<typeof methodBy
   const lang = useLang();
   return (
     <PageFrame
-      kicker={t(lang, "Phương pháp giải", "Solving methods")}
+      kicker={method.grade ? t(lang, `Phương pháp giải · Lớp ${method.grade}`, `Solving methods · Grade ${method.grade}`) : t(lang, "Phương pháp giải", "Solving methods")}
       title={t(lang, method.title, method.titleEn)}
       lead={t(lang, method.blurb, method.titleEn)}
     >

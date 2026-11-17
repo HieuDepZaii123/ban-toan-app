@@ -12,14 +12,18 @@ const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêề�
 const IDS = new Set<string>(cards.map((card) => card.id));
 const methodIds = new Set(methodsData.methods.map((item) => item.id));
 
-assert.ok(methodsData.methods.length >= 14);
+assert.ok(methodsData.methods.length >= 22);
+for (let grade = 1; grade <= 8; grade += 1) {
+  assert.ok(methodsData.methods.some((item) => item.grade === grade), `thiếu phương pháp cho lớp ${grade}`);
+}
 assert.equal(methodIds.size, methodsData.methods.length);
 assert.ok(methodsData.guide.length >= methodsData.methods.length);
 
 for (const row of methodsData.guide) {
   assert.ok(methodIds.has(row.methodId), row.methodId);
   const topic = row.topicHref.match(/^\/t\/([^/]+)$/);
-  assert.ok(topic && IDS.has(topic[1] ?? ""), row.topicHref);
+  const gradePage = row.topicHref.match(/^\/kien-thuc\/(\d{1,2})\/dang$/);
+  assert.ok((topic && IDS.has(topic[1] ?? "")) || (gradePage && Number(gradePage[1]) >= 1 && Number(gradePage[1]) <= 12), row.topicHref);
 }
 
 for (const method of methodsData.methods) {
@@ -43,7 +47,8 @@ for (const method of methodsData.methods) {
   for (const link of method.links) {
     const topic = link.href.match(/^\/t\/([^/]+)$/);
     const self = link.href.match(/^\/phuong-phap\/([^/]+)$/);
-    assert.ok((topic && IDS.has(topic[1] ?? "")) || (self && methodIds.has(self[1] ?? "")), link.href);
+    const grade = link.href.match(/^\/kien-thuc\/(\d{1,2})(\/dang)?$/);
+    assert.ok((topic && IDS.has(topic[1] ?? "")) || (self && methodIds.has(self[1] ?? "")) || grade, link.href);
   }
   assert.ok(method.verify.length >= method.examples.length, method.id);
 }
