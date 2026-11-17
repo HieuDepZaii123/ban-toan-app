@@ -143,6 +143,50 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   near("S = abc/4R", (t.a * t.b * t.c) / (4 * t.R), t.area, 1e-9);
 }
 
+// Đạo hàm bổ sung.
+{
+  near("diff x³ tại 2", A.diff((x) => x ** 3, 2), 12, 1e-6);
+  near("diff sin tại 1", A.diff(Math.sin, 1), Math.cos(1), 1e-9);
+  near("diff ln tại 2", A.diff(Math.log, 2), 0.5, 1e-9);
+  const k = A.oneSided(Math.abs, 0, 1e-6);
+  is("|x| tại 0: hai bên lệch", Math.abs(k.left + 1) < 1e-6 && Math.abs(k.right - 1) < 1e-6);
+  const k2 = A.oneSided((x) => x * x, 3, 1e-6);
+  near("x² hai bên cùng 6 (trái)", k2.left, 6, 1e-4);
+  near("x² hai bên cùng 6 (phải)", k2.right, 6, 1e-4);
+  const cp = A.criticalPoints((x) => x ** 3 - 3 * x, -3, 3);
+  is("x³−3x có 2 điểm tới hạn", cp.length === 2);
+  near("cực đại tại −1", cp[0]!.x, -1, 1e-4);
+  is("−1 là cực đại, 1 là cực tiểu", cp[0]!.kind === "max" && cp[1]!.kind === "min");
+  near("giá trị cực đại", cp[0]!.y, 2, 1e-6);
+  const f3 = (x: number) => x ** 3 - 3 * x;
+  const tg = A.tangentsThrough(f3, 2, 0, -4, 4);
+  is("3 tiếp tuyến qua (2;0)", tg.length === 3);
+  for (const x0 of tg) near("tiếp tuyến qua điểm", f3(x0) + A.diff(f3, x0, 1e-4) * (2 - x0), 0, 1e-5);
+  // Từ gia tốc −10 dựng lại vận tốc, vị trí; đạo hàm số của vị trí phải ra vận tốc.
+  const mo = A.eulerMotion(() => -10, 0, 20, 1e-4, 40000);
+  near("s(2)", mo[20000]!.s, 20, 1e-2);
+  near("v(2)=0", mo[20000]!.v, 0, 1e-6);
+  const sAt = (t: number) => mo[Math.round(t * 1e4)]!.s;
+  near("đạo hàm của s = v", A.diff(sAt, 1, 1e-3), 20 - 10 * 1, 1e-2);
+  near("V lớn nhất của hộp 12 cm", A.criticalPoints((x) => A.boxVolume(x, 12), 0.1, 5.9).find((c) => c.kind === "max")!.x, 2, 1e-3);
+  near("V(2)=128", A.boxVolume(2, 12), 128, 1e-12);
+  const g = A.chainBackprop(0.7, 1.3, -0.8);
+  near("lan truyền ngược dy/dx", g.dy_dx, A.diff((x) => -0.8 * Math.tanh(1.3 * x), 0.7), 1e-8);
+  near("lan truyền ngược dy/dw1", g.dy_dw1, A.diff((w) => -0.8 * Math.tanh(w * 0.7), 1.3), 1e-8);
+  near("lan truyền ngược dy/dw2", g.dy_dw2, A.diff((w) => w * Math.tanh(1.3 * 0.7), -0.8), 1e-8);
+}
+
+// Có đạo hàm hay không.
+{
+  is("x² có đạo hàm tại 0", A.hasDerivativeAt((x) => x * x, 0));
+  is("sin có đạo hàm tại 1", A.hasDerivativeAt(Math.sin, 1));
+  is("|x| tại 1 có đạo hàm", A.hasDerivativeAt(Math.abs, 1));
+  is("|x| tại 0 không", !A.hasDerivativeAt(Math.abs, 0));
+  is("∛x tại 0 không (tiếp tuyến đứng)", !A.hasDerivativeAt(Math.cbrt, 0));
+  is("x·sin(1/x) tại 0 không", !A.hasDerivativeAt((x) => (x === 0 ? 0 : x * Math.sin(1 / x)), 0));
+  is("x²·sin(1/x) tại 0 có (đạo hàm 0)", A.hasDerivativeAt((x) => (x === 0 ? 0 : x * x * Math.sin(1 / x)), 0));
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

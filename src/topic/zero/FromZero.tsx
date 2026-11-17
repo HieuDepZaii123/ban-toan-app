@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { MathText } from "../../ui/MathText.tsx";
+import { BackpropLab, BoxLab, DerivCurveLab, ExtremaLab, KinkLab, MotionLab, RuleLab, TangentLab } from "./derivWidgets.tsx";
 import { AdditionLab, BeatLab, ReflectLab, SolveLab, TriangleLab, WaveLab } from "./trigWidgets.tsx";
 import { BallValley, BisectLab, CircleWalk, CompoundLab, CramerLab, DartLab, DiceLab, DotNeuron, EnumLab, EpsilonGame, HillClimbLab, NetFit, PartialSums, PerceptronLab, RiemannLab, SecantLab, type NetTarget } from "./widgets.tsx";
 
@@ -71,6 +72,14 @@ const SECTIONS: Record<string, { lead: string; parts: () => ReactNode }> = {
     parts: () => (
       <>
         <SecantLab />
+        <DerivCurveLab />
+        <KinkLab />
+        <RuleLab />
+        <BackpropLab />
+        <MotionLab />
+        <TangentLab />
+        <ExtremaLab />
+        <BoxLab />
         <BallValley kind="w" />
       </>
     ),

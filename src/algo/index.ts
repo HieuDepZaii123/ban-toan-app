@@ -438,3 +438,68 @@ export function triangleSAS(b: number, c: number, angleA: number): Tri {
   const uy = ((A.x ** 2 + A.y ** 2) * (C.x - B.x) + (B.x ** 2 + B.y ** 2) * (A.x - C.x) + (C.x ** 2 + C.y ** 2) * (B.x - A.x)) / d;
   return { A, B, C, a, b, c, angA: ang(A, B, C), angB: ang(B, A, C), angC: ang(C, A, B), area, R: Math.hypot(ux - A.x, uy - A.y), O: { x: ux, y: uy } };
 }
+
+/* ---------- Đạo hàm: các thuật toán bổ sung ---------- */
+
+/** Đạo hàm số bằng cát tuyến hai phía: độ dốc đường nối (x−h) với (x+h). */
+export function diff(f: Fn, x: number, h = 1e-5): number {
+  return (f(x + h) - f(x - h)) / (2 * h);
+}
+
+/** Độ dốc cát tuyến từ bên trái và từ bên phải: có đạo hàm khi hai số này dồn về cùng một số. */
+export function oneSided(f: Fn, x: number, h: number): { left: number; right: number } {
+  return { left: (f(x) - f(x - h)) / h, right: (f(x + h) - f(x)) / h };
+}
+
+/** Điểm tới hạn: nghiệm của f' = 0, phân loại bằng dấu của f'' (đạo hàm của đạo hàm). */
+export function criticalPoints(f: Fn, a: number, b: number): { x: number; y: number; kind: "min" | "max" | "flat" }[] {
+  return findRoots((x) => diff(f, x, 1e-4), a, b, 3000).map((x) => {
+    const second = (diff(f, x + 1e-3, 1e-4) - diff(f, x - 1e-3, 1e-4)) / 2e-3;
+    return { x, y: f(x), kind: second > 1e-3 ? "min" : second < -1e-3 ? "max" : "flat" };
+  });
+}
+
+/** Các tiếp điểm mà tiếp tuyến tại đó đi qua điểm P: nghiệm của f(x0) + f'(x0)(px − x0) = py. */
+export function tangentsThrough(f: Fn, px: number, py: number, a: number, b: number): number[] {
+  return findRoots((x0) => f(x0) + diff(f, x0, 1e-4) * (px - x0) - py, a, b, 3000);
+}
+
+/** Tích phân số của gia tốc: v += a·dt, s += v·dt. Từ gia tốc dựng lại vận tốc và vị trí. */
+export function eulerMotion(accel: (t: number, v: number) => number, s0: number, v0: number, dt: number, steps: number): { t: number; s: number; v: number }[] {
+  const out = [{ t: 0, s: s0, v: v0 }];
+  let s = s0;
+  let v = v0;
+  for (let i = 1; i <= steps; i++) {
+    const t = (i - 1) * dt;
+    v += accel(t, v) * dt;
+    s += v * dt;
+    out.push({ t: i * dt, s, v });
+  }
+  return out;
+}
+
+/** Hộp không nắp: cắt bốn góc vuông cạnh x từ tấm vuông cạnh side rồi gấp lại. */
+export function boxVolume(x: number, side: number): number {
+  return x * (side - 2 * x) ** 2;
+}
+
+/** Lan truyền ngược trên chuỗi y = w2·tanh(w1·x): đạo hàm là tích các đạo hàm cục bộ dọc chuỗi. */
+export function chainBackprop(x: number, w1: number, w2: number): { z: number; a: number; y: number; dz: number; da: number; dy_dx: number; dy_dw1: number; dy_dw2: number } {
+  const z = w1 * x;
+  const a = Math.tanh(z);
+  const y = w2 * a;
+  const da = 1 - a * a; // đạo hàm của tanh tại z
+  return { z, a, y, dz: w1, da, dy_dx: w2 * da * w1, dy_dw1: w2 * da * x, dy_dw2: a };
+}
+
+/**
+ * Có đạo hàm tại x không? Có khi độ dốc cát tuyến từ cả hai phía dồn về cùng một số hữu hạn:
+ * hai bên gần nhau, và các độ dốc ở ba bước nhỏ nhất gần nhau (không còn trôi đi hay rung).
+ */
+export function hasDerivativeAt(f: Fn, x: number): boolean {
+  const rows = [3, 4, 5, 6].map((k) => oneSided(f, x, 10 ** -(k * 0.9)));
+  const last = rows[rows.length - 1] as { left: number; right: number };
+  if (![last.left, last.right].every(Number.isFinite)) return false;
+  const close = (a: number, b: number) => Math.abs(a - b) <= 0.02 * (1 + Math.abs(b));
+  return close(last.left, last.right) && rows.every((r) => close(r.left, last.left) && close(r.right, last.right));
+}
