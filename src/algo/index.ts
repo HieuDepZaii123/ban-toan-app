@@ -359,3 +359,82 @@ export function walkCircle(angle: number, steps: number): { x: number; y: number
   }
   return { x, y };
 }
+
+/* ---------- Lượng giác: các thuật toán bổ sung ---------- */
+
+/** Tìm mọi nghiệm của f trên [a;b]: quét tìm chỗ đổi dấu rồi chia đôi. Bỏ chỗ nhảy (như tang) bằng cách kiểm lại |f| nhỏ. */
+export function findRoots(f: Fn, a: number, b: number, scan = 4000): number[] {
+  const roots: number[] = [];
+  let x0 = a;
+  let y0 = f(x0);
+  for (let i = 1; i <= scan; i++) {
+    const x1 = a + ((b - a) * i) / scan;
+    const y1 = f(x1);
+    if (Number.isFinite(y0) && Number.isFinite(y1) && y0 * y1 <= 0) {
+      let lo = x0;
+      let hi = x1;
+      for (let k = 0; k < 60; k++) {
+        const mid = (lo + hi) / 2;
+        if (f(lo) * f(mid) <= 0) hi = mid;
+        else lo = mid;
+      }
+      const r = (lo + hi) / 2;
+      if (Math.abs(f(r)) < 1e-6 && (roots.length === 0 || Math.abs(r - (roots[roots.length - 1] as number)) > 1e-6)) roots.push(r);
+    }
+    x0 = x1;
+    y0 = y1;
+  }
+  return roots;
+}
+
+/** Đo biên độ, mức giữa và chu kì của một sóng chỉ bằng cách lấy mẫu: không dùng công thức. */
+export function measureWave(f: Fn, x0: number, x1: number, n = 6000): { amplitude: number; centre: number; period: number | null } {
+  let max = -Infinity;
+  let min = Infinity;
+  for (let i = 0; i <= n; i++) {
+    const y = f(x0 + ((x1 - x0) * i) / n);
+    if (y > max) max = y;
+    if (y < min) min = y;
+  }
+  const centre = (max + min) / 2;
+  const ups: number[] = [];
+  let prev = f(x0) - centre;
+  for (let i = 1; i <= n; i++) {
+    const x = x0 + ((x1 - x0) * i) / n;
+    const cur = f(x) - centre;
+    if (prev < 0 && cur >= 0) ups.push(x - ((x1 - x0) / n) * (cur / (cur - prev)));
+    prev = cur;
+  }
+  const period = ups.length >= 2 ? ((ups[ups.length - 1] as number) - (ups[0] as number)) / (ups.length - 1) : null;
+  return { amplitude: (max - min) / 2, centre, period };
+}
+
+/** Quay điểm quanh gốc một góc bằng phép nhân ma trận [[c, -s], [s, c]] với c, s lấy từ chính hai số cho trước. */
+export function rotateBy(p: { x: number; y: number }, c: number, s: number): { x: number; y: number } {
+  return { x: p.x * c - p.y * s, y: p.x * s + p.y * c };
+}
+
+export type Tri = {
+  A: { x: number; y: number }; B: { x: number; y: number }; C: { x: number; y: number };
+  a: number; b: number; c: number;
+  angA: number; angB: number; angC: number;
+  area: number; R: number; O: { x: number; y: number };
+};
+
+/** Dựng tam giác từ hai cạnh b, c và góc A xen giữa bằng toạ độ, rồi đo mọi thứ còn lại bằng khoảng cách và tích vô hướng. */
+export function triangleSAS(b: number, c: number, angleA: number): Tri {
+  const A = { x: 0, y: 0 };
+  const B = { x: c, y: 0 };
+  const C = { x: b * Math.cos(angleA), y: b * Math.sin(angleA) };
+  const a = Math.hypot(B.x - C.x, B.y - C.y);
+  const ang = (P: { x: number; y: number }, Q: { x: number; y: number }, S: { x: number; y: number }) => {
+    const ux = Q.x - P.x; const uy = Q.y - P.y; const vx = S.x - P.x; const vy = S.y - P.y;
+    return Math.acos((ux * vx + uy * vy) / (Math.hypot(ux, uy) * Math.hypot(vx, vy)));
+  };
+  const area = Math.abs(B.x * C.y - B.y * C.x) / 2;
+  // Tâm ngoại tiếp: giao của hai đường trung trực, giải bằng định thức (Cramer).
+  const d = 2 * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y));
+  const ux = ((A.x ** 2 + A.y ** 2) * (B.y - C.y) + (B.x ** 2 + B.y ** 2) * (C.y - A.y) + (C.x ** 2 + C.y ** 2) * (A.y - B.y)) / d;
+  const uy = ((A.x ** 2 + A.y ** 2) * (C.x - B.x) + (B.x ** 2 + B.y ** 2) * (A.x - C.x) + (C.x ** 2 + C.y ** 2) * (B.x - A.x)) / d;
+  return { A, B, C, a, b, c, angA: ang(A, B, C), angB: ang(B, A, C), angC: ang(C, A, B), area, R: Math.hypot(ux - A.x, uy - A.y), O: { x: ux, y: uy } };
+}

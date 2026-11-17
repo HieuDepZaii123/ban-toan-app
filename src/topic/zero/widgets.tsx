@@ -1,22 +1,21 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import {
   atLeastOneSimulate, bisection, combinations, compoundOne, cramer, descendQuadratic, estimateBallVolume, estimatePi,
   factorial, firstIndexWithin, geometricPartialSums, gradientDescent, hillClimbMin, makeNet, netForward, netTrainEpoch,
   pascalRows, perceptronTrain, permutations, riemann, signedDistance, slopeSequence, twoDiceExact, twoDiceSimulate, walkCircle,
   type Fn, type Net, type Pt,
 } from "../../algo/index.ts";
-import { dashed, dot, drawAxes, drawGrid, makeMap, paintBase, readColors, strokeFn, } from "../../labs/draw.ts";
+import { dashed, dot, strokeFn } from "../../labs/draw.ts";
 import { Graph } from "../../labs/Graph.tsx";
 import { fmt } from "../../lib/format.ts";
 import { freshSeed, mulberry32 } from "../../lib/prng.ts";
+import { at, frame, label, line, useTicker } from "./kit.ts";
 import { MathText } from "../../ui/MathText.tsx";
 import { Slider } from "../../ui/Slider.tsx";
 
-const at = <T,>(list: readonly T[], i: number): T => list[Math.max(0, Math.min(list.length - 1, i))] as T;
-
 /* ---------- Khung chung ---------- */
 
-function Stage({ title, story, read, why, children }: { title: string; story: string; read: string; why: string; children: ReactNode }) {
+export function Stage({ title, story, read, why, children }: { title: string; story: string; read: string; why: string; children: ReactNode }) {
   return (
     <figure className="fz-card">
       <h3><MathText text={title} /></h3>
@@ -28,45 +27,8 @@ function Stage({ title, story, read, why, children }: { title: string; story: st
   );
 }
 
-/** Gọi tick đều đặn khi running; dọn khi tắt hoặc gỡ. */
-function useTicker(running: boolean, ms: number, tick: () => void): void {
-  const ref = useRef(tick);
-  useEffect(() => { ref.current = tick; });
-  useEffect(() => {
-    if (!running) return;
-    const id = window.setInterval(() => ref.current(), ms);
-    return () => window.clearInterval(id);
-  }, [running, ms]);
-}
-
-function Buttons({ children }: { children: ReactNode }) {
+export function Buttons({ children }: { children: ReactNode }) {
   return <div className="fz-buttons">{children}</div>;
-}
-
-/** Dựng nền đồ thị: lưới, trục, trả về bản đồ tọa độ. */
-function frame(ctx: CanvasRenderingContext2D, w: number, h: number, x0: number, x1: number, y0: number, y1: number, xl = "x", yl = "y") {
-  const colors = readColors();
-  const pad = 28;
-  paintBase(ctx, w, h, colors);
-  const map = makeMap(w, h, pad, x0, x1, y0, y1);
-  drawGrid(ctx, map, x0, x1, y0, y1, colors);
-  drawAxes(ctx, map, x0, x1, y0, y1, colors, xl, yl, w, pad);
-  return { colors, map, pad };
-}
-
-function line(ctx: CanvasRenderingContext2D, ax: number, ay: number, bx: number, by: number, color: string, lw = 1.6) {
-  ctx.beginPath();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = lw;
-  ctx.moveTo(ax, ay);
-  ctx.lineTo(bx, by);
-  ctx.stroke();
-}
-
-function label(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, color: string) {
-  ctx.fillStyle = color;
-  ctx.font = "12px system-ui, sans-serif";
-  ctx.fillText(text, x, y);
 }
 
 /* ---------- 1. Bóng lăn xuống thung lũng (hạ gradient) ---------- */

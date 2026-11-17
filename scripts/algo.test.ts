@@ -118,6 +118,31 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   near("sin 1 bằng bước nhỏ", p.y, Math.sin(1), 1e-3);
 }
 
+// Lượng giác bổ sung.
+{
+  const roots = A.findRoots((x) => Math.sin(x) - 0.5, -2 * Math.PI, 2 * Math.PI);
+  const want = [-11 * Math.PI / 6, -7 * Math.PI / 6, Math.PI / 6, 5 * Math.PI / 6].sort((a, b) => a - b);
+  is("sin x = 1/2 có 4 nghiệm trong [−2π;2π]", roots.length === 4);
+  roots.forEach((r, i) => near(`nghiệm ${i}`, r, want[i]!, 1e-9));
+  is("tan x = 1 bỏ chỗ nhảy", A.findRoots((x) => Math.tan(x) - 1, -1.5, 1.5).length === 1);
+  const w = A.measureWave((x) => 2 * Math.sin(3 * x + 1) + 0.5, 0, 20);
+  near("biên độ đo được", w.amplitude, 2, 1e-4);
+  near("mức giữa đo được", w.centre, 0.5, 1e-4);
+  near("chu kì đo được = 2π/3", w.period!, (2 * Math.PI) / 3, 1e-3);
+  // Công thức cộng bằng phép quay: quay (cos a; sin a) một góc b cho (cos(a+b); sin(a+b)).
+  const rot = A.rotateBy({ x: Math.cos(0.7), y: Math.sin(0.7) }, Math.cos(1.1), Math.sin(1.1));
+  near("cos(a+b) bằng quay", rot.x, Math.cos(1.8), 1e-12);
+  near("sin(a+b) bằng quay", rot.y, Math.sin(1.8), 1e-12);
+  const t = A.triangleSAS(5, 7, 1.0);
+  near("định lí cosin", t.a * t.a, 25 + 49 - 2 * 5 * 7 * Math.cos(1.0), 1e-9);
+  near("định lí sin: a/sin A = 2R", t.a / Math.sin(t.angA), 2 * t.R, 1e-9);
+  near("b/sin B = 2R", t.b / Math.sin(t.angB), 2 * t.R, 1e-9);
+  near("tổng ba góc = π", t.angA + t.angB + t.angC, Math.PI, 1e-9);
+  const p = (t.a + t.b + t.c) / 2;
+  near("Heron = nửa tích có hướng", Math.sqrt(p * (p - t.a) * (p - t.b) * (p - t.c)), t.area, 1e-9);
+  near("S = abc/4R", (t.a * t.b * t.c) / (4 * t.R), t.area, 1e-9);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

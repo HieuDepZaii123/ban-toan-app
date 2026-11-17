@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { MathText } from "../../ui/MathText.tsx";
+import { AdditionLab, BeatLab, ReflectLab, SolveLab, TriangleLab, WaveLab } from "./trigWidgets.tsx";
 import { BallValley, BisectLab, CircleWalk, CompoundLab, CramerLab, DartLab, DiceLab, DotNeuron, EnumLab, EpsilonGame, HillClimbLab, NetFit, PartialSums, PerceptronLab, RiemannLab, SecantLab, type NetTarget } from "./widgets.tsx";
 
 const PARABOLA: NetTarget = { name: "parabol", fn: (x) => 0.5 * x * x - 1, x0: -3, x1: 3, y0: -2, y1: 5 };
@@ -46,6 +47,12 @@ const SECTIONS: Record<string, { lead: string; parts: () => ReactNode }> = {
     parts: () => (
       <>
         <CircleWalk />
+        <ReflectLab />
+        <AdditionLab />
+        <WaveLab />
+        <SolveLab />
+        <TriangleLab />
+        <BeatLab />
         <NetFit target={SINE} story="Cho mạng xem một chu kì của sin x. Một sóng cần ít nhất vài nơ-ron: mỗi nơ-ron tạo một chữ S, ghép chữ S lên xuống thành sóng." why={NET_WHY} />
       </>
     ),

@@ -1544,3 +1544,4 @@ html[data-lamp="on"] body::before {
 .fz-prow { display: flex; gap: 10px; }
 .fz-prow.cur { font-weight: 700; color: var(--accent); }
 .fz-prow .hit { background: var(--accent-soft); outline: 2px solid var(--accent); border-radius: 4px; padding: 0 3px; }
+.fz-pick input[type="checkbox"] { width: 22px; height: 22px; justify-self: start; }
