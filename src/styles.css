@@ -1801,3 +1801,14 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .cmp th, .cmp td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line); }
 .cmp tr.changed td:last-child { background: var(--accent-soft); font-weight: 600; }
 .lab-keys ul { margin: 6px 0 0; padding-left: 1.1rem; }
+
+.think-set { display: grid; gap: 14px; margin-top: 1.5rem; }
+.think-set h2 { margin: 0; }
+.think-card { display: grid; gap: 8px; }
+.think-card h3 { margin: 0; font-size: 1.02rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
+.think-prompt { margin: 0; }
+.think-hint { margin: 0; padding: 6px 10px; border-left: 3px solid var(--accent); }
+.think-kind { padding: 1px 9px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; background: var(--accent-soft); color: var(--accent); }
+.kind-error { background: var(--clay-soft); color: var(--clay); }
+.kind-counter { background: var(--clay-soft); color: var(--clay); }
+.kind-design { background: var(--ok-soft); color: var(--ok); }

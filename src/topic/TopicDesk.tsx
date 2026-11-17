@@ -21,6 +21,7 @@ import { FocusBar } from "./FocusBar.tsx";
 import { LectureVideos } from "./LectureVideos.tsx";
 import { LabChallenges } from "../labs/LabChallenges.tsx";
 import { LabTools } from "../labs/LabTools.tsx";
+import { ThinkSet } from "./ThinkSet.tsx";
 import { writeParams } from "../lib/store.ts";
 import { SangTao } from "./SangTao.tsx";
 
@@ -240,7 +241,10 @@ export function TopicDesk({ id }: { id: string }) {
           ) : ready.failed ? (
             <p className="empty">{t(lang, "Không mở được nội dung tờ này.", "This sheet's contents did not open.")}</p>
           ) : questions.length > 0 ? (
-            <Practice key={topic.id} topicId={topic.id} questions={questions} vary={vary} />
+            <>
+              <Practice key={topic.id} topicId={topic.id} questions={questions} vary={vary} />
+              <ThinkSet topicId={topic.id} />
+            </>
           ) : (
             <div className="stub-stage" role="note">
               <b>{t(lang, "Đề đang soạn", "Questions still being written")}</b>

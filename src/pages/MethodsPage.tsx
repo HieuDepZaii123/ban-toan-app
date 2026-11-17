@@ -59,6 +59,13 @@ function Chooser() {
             <span key={grade}><A href={`/kien-thuc/${grade}/dang`}>{t(lang, `Lớp ${grade}`, `Grade ${grade}`)}</A>{grade < 12 ? " · " : ""}</span>
           ))}
         </p>
+        <h2>{t(lang, "Tư duy và sáng tạo theo lớp", "Thinking and creating by grade")}</h2>
+        <p className="lecture-note">{t(lang, "Mỗi lớp có năm bài để nghĩ kỹ: đố mẹo, tìm lỗi sai, phản ví dụ, tự ra đề.", "Each grade has five problems to think hard about: puzzles, spotting errors, counterexamples, posing your own.")}</p>
+        <p>
+          {Array.from({ length: 12 }, (_, i) => i + 1).map((grade) => (
+            <span key={grade}><A href={`/kien-thuc/${grade}/tu-duy`}>{t(lang, `Lớp ${grade}`, `Grade ${grade}`)}</A>{grade < 12 ? " · " : ""}</span>
+          ))}
+        </p>
       </section>
       <div className="study-list">
         {methodsData.methods.map((item) => (
