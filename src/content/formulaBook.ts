@@ -1,7 +1,7 @@
 import { fold } from "../lib/text.ts";
 
-export type FormulaItem = { name: string; tex: string };
-export type FormulaGroup = { title: string; items: FormulaItem[] };
+type FormulaItem = { name: string; tex: string };
+type FormulaGroup = { title: string; items: FormulaItem[] };
 
 export const formulaGroups: FormulaGroup[] = [
   {

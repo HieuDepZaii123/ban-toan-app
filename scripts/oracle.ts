@@ -51,7 +51,7 @@ import {
   yearsToDouble,
 } from "../src/lib/math.ts";
 
-export type Choice = { vi: string; en: string };
+type Choice = { vi: string; en: string };
 
 const FIXED: Record<string, Choice> = {
   "quad-delta": {

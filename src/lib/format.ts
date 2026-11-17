@@ -1,3 +1,8 @@
+/** A score as written in each language: 7,25 in Vietnamese, 7.25 in English. */
+export function decimalComma(value: number, lang: "vi" | "en"): string {
+  return lang === "vi" ? String(value).replace(".", ",") : String(value);
+}
+
 /** Plain-text numbers for the desk: Vietnamese comma, true minus, trimmed zeros. */
 
 export function fmt(n: number, digits = 2): string {

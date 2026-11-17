@@ -1,24 +1,25 @@
 import { useSyncExternalStore } from "react";
 import { snap } from "./format.ts";
+import { isRecord } from "./isRecord.ts";
 import { nextPos, slotRng } from "./prng.ts";
 import type { Range } from "../content/params.ts";
 
-export type ThemeName = "paper" | "night";
-export type LangName = "vi" | "en";
+type ThemeName = "paper" | "night";
+type LangName = "vi" | "en";
 
-export type ThinkFlags = { nhin: boolean; lam: boolean; ket: boolean };
+type ThinkFlags = { nhin: boolean; lam: boolean; ket: boolean };
 
 /**
  * One draw of a question. `done` marks that this draw was answered; a miss stays in
  * `wrong` across new draws until a later draw is answered correctly.
  */
-export type Attempt = { seed: number; pos: number; done?: boolean };
+type Attempt = { seed: number; pos: number; done?: boolean };
 
 /** Four Đúng/Sai/Chưa đủ picks (0, 1, 2) and how many matched. */
-export type DssMark = { picks: [number, number, number, number]; score: number };
+type DssMark = { picks: [number, number, number, number]; score: number };
 
 /** One recorded row from Ghi. Keys are short names; values are finite measurements. */
-export type StudyRow = Record<string, number>;
+type StudyRow = Record<string, number>;
 
 /** What the learner keeps for one investigation. */
 export type StudyLog = {
@@ -29,7 +30,7 @@ export type StudyLog = {
   revealed: boolean;
 };
 
-export type Stamps = {
+type Stamps = {
   theme: number;
   lang: number;
   lastId: number;
@@ -90,10 +91,6 @@ function blank(): Data {
     studies: {},
     at: emptyAt(),
   };
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function stringMap(value: unknown): Record<string, string> {
@@ -504,7 +501,7 @@ export function getData(): Data {
   return data;
 }
 
-export function subscribe(listener: () => void): () => void {
+function subscribe(listener: () => void): () => void {
   listeners.add(listener);
   return () => listeners.delete(listener);
 }

@@ -4,7 +4,7 @@ export type FigureKind = "count" | "segment" | "angle" | "triangle" | "rect" | "
 
 export type GradeCheck = { expr: string; expect: string };
 
-export type GradeStep = { claim: string; why: string };
+type GradeStep = { claim: string; why: string };
 
 export type GradeExample = {
   prompt: string;
@@ -13,8 +13,8 @@ export type GradeExample = {
   checks: GradeCheck[];
 };
 
-export type AskNumber = { kind: "number"; value: number; tolerance?: number };
-export type AskChoice = { kind: "choice"; options: string[]; correct: number };
+type AskNumber = { kind: "number"; value: number; tolerance?: number };
+type AskChoice = { kind: "choice"; options: string[]; correct: number };
 export type GradeAsk = AskNumber | AskChoice;
 
 export type GradeWidget = "fraction" | "line" | "linear" | "quadratic";
@@ -51,9 +51,9 @@ export type GradeLesson = {
   topicId?: string;
 };
 
-export type GradeChapter = { id: string; title: string; titleEn?: string; lessons: GradeLesson[] };
+type GradeChapter = { id: string; title: string; titleEn?: string; lessons: GradeLesson[] };
 
-export type GradeBand = "tieu-hoc" | "thcs" | "thpt";
+type GradeBand = "tieu-hoc" | "thcs" | "thpt";
 
 export type GradeBook = {
   grade: number;

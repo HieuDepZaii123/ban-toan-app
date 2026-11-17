@@ -3,7 +3,6 @@
  * Sai needs a fitting counterexample. Chưa đủ needs two fitting worlds that disagree.
  * Run with: tsx scripts/dss.test.ts
  */
-import katex from "katex";
 import { analyticDssItems } from "../src/content/vary/dss/analytic.ts";
 import { comboDssItems } from "../src/content/vary/dss/combo.ts";
 import { derivativeDssItems } from "../src/content/vary/dss/derivative.ts";
@@ -21,9 +20,8 @@ import { triangleDssItems } from "../src/content/vary/dss/triangle.ts";
 import { trigDssItems } from "../src/content/vary/dss/trig.ts";
 import { vectorDssItems } from "../src/content/vary/dss/vector.ts";
 import { mulberry32 } from "../src/lib/prng.ts";
+import { BARE, MARK, mathProblems } from "./testkit.ts";
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
-const BARE = /\b(khong|duoc|dinh|nghiem|phuong trinh|ham so)\b/i;
 const SEEDS = 200;
 const fails: string[] = [];
 
@@ -32,17 +30,7 @@ function assert(cond: boolean, message: string): void {
 }
 
 function checkTex(label: string, text: string): void {
-  const re = /\$([^$]+)\$/g;
-  let match: RegExpExecArray | null;
-  while ((match = re.exec(text))) {
-    const tex = match[1] ?? "";
-    try {
-      katex.renderToString(tex, { throwOnError: true });
-    } catch (error) {
-      assert(false, `${label} KaTeX: ${tex} (${error instanceof Error ? error.message : "fail"})`);
-    }
-    assert(!MARK.test(tex), `${label} unicode in math: ${tex.slice(0, 160)}`);
-  }
+  for (const problem of mathProblems(label, text)) assert(false, problem);
 }
 
 const banks: readonly (readonly DssItem[])[] = [

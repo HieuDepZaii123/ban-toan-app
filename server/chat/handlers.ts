@@ -43,7 +43,7 @@ export function readImage(value: unknown): ChatImage | null | "bad" {
   return { mediaType: m[1] as ChatImage["mediaType"], data: new Uint8Array(Buffer.from(m[2]!, "base64")) };
 }
 
-export type ChatJson = {
+type ChatJson = {
   reply?: string;
   mode?: "live" | "demo";
   remaining?: number;

@@ -2,7 +2,7 @@
  * Một nguồn cho điều hướng: thanh trên cùng hiện các nhóm, hàng dưới hiện các trang trong nhóm đang mở,
  * và Mục lục bên phải liệt kê đủ mọi trang theo nhóm.
  */
-export type NavPage = {
+type NavPage = {
   href: string;
   id: string;
   label: string;
@@ -13,7 +13,7 @@ export type NavPage = {
   also?: string[];
 };
 
-export type NavGroup = {
+type NavGroup = {
   id: "learn" | "practice" | "tools" | "premium" | "more";
   label: string;
   en: string;

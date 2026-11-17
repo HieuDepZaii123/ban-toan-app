@@ -19,7 +19,7 @@ function inMath(text: string): string[] {
   return [...text.matchAll(/\$([^$]*)\$/g)].map((m) => m[1] ?? "");
 }
 
-export function textProblems(text: string): string[] {
+function textProblems(text: string): string[] {
   const out: string[] = [];
   for (const math of inMath(text)) {
     if (/[\u0000-\u001f]/.test(math) || /\n/.test(math)) out.push("control character inside $…$ (lost backslash?)");

@@ -8,7 +8,7 @@ import { generatePractice, templateKeyOf, thptTopics } from "../grades/practiceG
 export const THPT_GRADES = [10, 11, 12] as const;
 
 export type ThptQuestion = GradeQuestion & { topic: string };
-export type ThptTopic = (typeof thptTopics)[number];
+type ThptTopic = (typeof thptTopics)[number];
 
 export { thptTopics };
 

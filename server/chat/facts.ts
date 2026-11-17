@@ -70,7 +70,7 @@ function normalize(text: string): string {
     .replace(/X/g, "x");
 }
 
-export type Equation = { a: Frac; b: Frac; c: Frac };
+type Equation = { a: Frac; b: Frac; c: Frac };
 
 /** The first linear or quadratic equation in x found in the text. */
 export function findEquation(text: string): Equation | null {

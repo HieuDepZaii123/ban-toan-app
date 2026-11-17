@@ -2,7 +2,6 @@
  * Pins the numbers the open desks teach. Run with:
  *   tsx scripts/check-math.ts
  */
-import katex from "katex";
 import { analyticQuestions } from "../src/content/analytic.ts";
 import { lessonFor, questionsFor } from "./banks.ts";
 import { QUESTION_TOTAL, topics } from "../src/content/catalog.ts";
@@ -125,6 +124,7 @@ import {
 import { loadClip } from "../src/motion/load.ts";
 import { fold } from "../src/lib/text.ts";
 import type { Question } from "../src/content/types.ts";
+import { BARE, MARK, mathProblems } from "./testkit.ts";
 
 const fails: string[] = [];
 
@@ -138,25 +138,9 @@ function near(actual: number, expected: number, message: string, eps = 1e-9): vo
   }
 }
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
-const BARE = /\b(khong|duoc|dinh|nghiem|phuong trinh|ham so)\b/i;
-
-function texOf(text: string): string[] {
-  const out: string[] = [];
-  const re = /\$([^$]+)\$/g;
-  let match: RegExpExecArray | null;
-  while ((match = re.exec(text))) out.push(match[1] ?? "");
-  return out;
-}
 
 function checkTex(label: string, text: string): void {
-  for (const tex of texOf(text)) {
-    try {
-      katex.renderToString(tex, { throwOnError: true });
-    } catch (error) {
-      fails.push(`${label} KaTeX: ${tex} (${error instanceof Error ? error.message : "fail"})`);
-    }
-  }
+  fails.push(...mathProblems(label, text, { marks: false }));
 }
 
 function checkQuestion(q: Question, correct: string): void {

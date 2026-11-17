@@ -24,9 +24,9 @@ export type CheckEnv = ChatEnv & {
   premiumChecksDaily: number;
 };
 
-export type CheckVerdict = "ok" | "wrong" | "unclear";
+type CheckVerdict = "ok" | "wrong" | "unclear";
 
-export type CheckJson = {
+type CheckJson = {
   verdict?: CheckVerdict;
   /** 1-based index of the first wrong step, when verdict is "wrong". */
   step?: number | null;
@@ -50,7 +50,7 @@ function reply(status: number, body: CheckJson): Response {
   });
 }
 
-export const CHECK_INSTRUCTIONS = `Bạn là người chấm bài toán của app Bàn Toán. You mark a school student's maths working.
+const CHECK_INSTRUCTIONS = `Bạn là người chấm bài toán của app Bàn Toán. You mark a school student's maths working.
 You get the problem and the student's numbered steps. Find the FIRST step that is mathematically wrong: a calculation error, a wrong rule, a lost sign, a wrong transformation, or a conclusion that does not follow. Judge each step from the previous ones, not from the final answer. A step that is correct but different from your own method is correct.
 Reply with ONE JSON object and nothing else, no code fence:
 {"verdict":"ok"|"wrong"|"unclear","step":<number of the first wrong step, or null>,"why":"<one or two short sentences: what is wrong in that step>","hint":"<one question or hint that lets the student find the fix themselves, without giving it>","fix":"<the corrected version of that one step only>"}

@@ -19,7 +19,7 @@ export const gradeBooks: GradeBook[] = [
   lop10, lop11, lop12,
 ].map(deepen);
 
-export function bookByGrade(grade: number): GradeBook | undefined {
+function bookByGrade(grade: number): GradeBook | undefined {
   return gradeBooks.find((book) => book.grade === grade);
 }
 

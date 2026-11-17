@@ -5,7 +5,7 @@ import { FREE_CATALOG, type FreeCatalogEntry } from "./freeCatalog.ts";
  * a free key. Keyless or anonymous endpoints are left out on purpose: they rotate too often to be a
  * tutor's backend. The catalog (base URL, live model ids) is generated from the vendored data.json.
  */
-export type FreeProvider = {
+type FreeProvider = {
   id: string;
   /** `name` of the provider in data.json. */
   catalogName: string;
@@ -59,7 +59,7 @@ export const FREE_PROVIDERS: readonly FreeProvider[] = [
   },
 ];
 
-export type FreeCandidate = { id: string; baseURL: string; apiKey: string; model: string };
+type FreeCandidate = { id: string; baseURL: string; apiKey: string; model: string };
 
 function entryFor(provider: FreeProvider, catalog: readonly FreeCatalogEntry[]): FreeCatalogEntry | undefined {
   return catalog.find((entry) => entry.name === provider.catalogName);

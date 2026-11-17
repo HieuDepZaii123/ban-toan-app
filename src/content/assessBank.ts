@@ -9,7 +9,7 @@ export type AssessQuestion = {
   steps: string[];
 };
 
-export type AssessBank = {
+type AssessBank = {
   id: "tuduy" | "tonghop" | "hsg";
   name: string;
   desc: string;

@@ -1,3 +1,4 @@
+import { isRecord } from "../lib/isRecord.ts";
 /**
  * The weekly progress report a child shares with a parent by link.
  * Everything is built on the child's device from data already stored there, and the report travels
@@ -7,12 +8,12 @@
 /** Where the mock-exam page keeps its history (src/pages/ExamPage.tsx). */
 export const EXAM_KEY = "ban-toan-thi2025-v1";
 /** Where the marking page logs each result (src/check/CheckPage.tsx). */
-export const CHECK_LOG_KEY = "ban-toan-checks";
+const CHECK_LOG_KEY = "ban-toan-checks";
 const CHECK_LOG_MAX = 200;
 const WEEK_MS = 7 * 86_400_000;
 
-export type ExamRow = { at: number; total: number };
-export type CheckRow = { at: number; key: string; verdict: "ok" | "wrong" | "unclear"; step: number | null };
+type ExamRow = { at: number; total: number };
+type CheckRow = { at: number; key: string; verdict: "ok" | "wrong" | "unclear"; step: number | null };
 
 export type Report = {
   v: 1;
@@ -30,7 +31,6 @@ export type Report = {
   parent: boolean;
 };
 
-const isObj = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 
 /** A short, stable key for a problem so a later re-check of the same problem can count as a fix. */
 export function problemKey(problem: string): string {
@@ -46,9 +46,9 @@ export function problemKey(problem: string): string {
 export function readExamRows(raw: string | null): ExamRow[] {
   try {
     const parsed: unknown = JSON.parse(raw || "null");
-    if (!isObj(parsed) || !Array.isArray(parsed.history)) return [];
+    if (!isRecord(parsed) || !Array.isArray(parsed.history)) return [];
     return parsed.history
-      .filter((row): row is ExamRow => isObj(row) && typeof row.at === "number" && typeof row.total === "number")
+      .filter((row): row is ExamRow => isRecord(row) && typeof row.at === "number" && typeof row.total === "number")
       .map((row) => ({ at: row.at, total: row.total }));
   } catch {
     return [];
@@ -60,7 +60,7 @@ export function readCheckRows(raw: string | null): CheckRow[] {
     const parsed: unknown = JSON.parse(raw || "[]");
     if (!Array.isArray(parsed)) return [];
     return parsed.filter((row): row is CheckRow =>
-      isObj(row) && typeof row.at === "number" && typeof row.key === "string"
+      isRecord(row) && typeof row.at === "number" && typeof row.key === "string"
       && (row.verdict === "ok" || row.verdict === "wrong" || row.verdict === "unclear")
       && (row.step === null || typeof row.step === "number"));
   } catch {
@@ -116,13 +116,13 @@ const count = (value: unknown) => typeof value === "number" && Number.isInteger(
 export function decodeReport(code: string): Report | null {
   try {
     const raw: unknown = JSON.parse(fromBase64Url(code));
-    if (!isObj(raw) || raw.v !== 1) return null;
+    if (!isRecord(raw) || raw.v !== 1) return null;
     if (typeof raw.from !== "number" || typeof raw.to !== "number" || raw.to < raw.from) return null;
     if (!count(raw.checks) || !count(raw.wrong) || !count(raw.fixed) || typeof raw.parent !== "boolean") return null;
     if (!Array.isArray(raw.papers) || raw.papers.length > 100) return null;
     const papers: ExamRow[] = [];
     for (const row of raw.papers) {
-      if (!isObj(row) || typeof row.at !== "number" || typeof row.total !== "number" || row.total < 0 || row.total > 10) return null;
+      if (!isRecord(row) || typeof row.at !== "number" || typeof row.total !== "number" || row.total < 0 || row.total > 10) return null;
       papers.push({ at: row.at, total: row.total });
     }
     return { v: 1, from: raw.from, to: raw.to, papers, checks: raw.checks as number, wrong: raw.wrong as number, fixed: raw.fixed as number, parent: raw.parent };

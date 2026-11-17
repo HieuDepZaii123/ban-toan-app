@@ -14,7 +14,7 @@ function integer(value: string | undefined, fallback: number): number {
   return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback;
 }
 
-export async function premiumNow(license: string, now = Date.now()): Promise<boolean> {
+async function premiumNow(license: string, now = Date.now()): Promise<boolean> {
   try {
     const order = await storeFor(payEnv()).getByLicense(licenseHash(license));
     if (!order?.paidAt) return false;
@@ -26,7 +26,7 @@ export async function premiumNow(license: string, now = Date.now()): Promise<boo
 }
 
 /** Có Postgres thì đếm lượt chung cho mọi instance; không thì đếm trong bộ nhớ của tiến trình. */
-export function quotaFor(source: NodeJS.ProcessEnv): Quota {
+function quotaFor(source: NodeJS.ProcessEnv): Quota {
   const url = source.DATABASE_URL?.trim() || source.POSTGRES_URL?.trim() || "";
   return url ? pgQuota(sharedClient(url)) : sharedQuota;
 }

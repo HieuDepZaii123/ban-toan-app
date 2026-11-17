@@ -2,26 +2,16 @@
  * Every revealed formula matches an independent measurement on sample points.
  * Run with: tsx scripts/research.test.ts
  */
-import katex from "katex";
 import { cards } from "../src/content/cards.ts";
 import { geomPartial, medianOf } from "../src/lib/math.ts";
 import { studyBriefs } from "../src/research/briefs.ts";
 import { allStudies } from "../src/research/index.ts";
+import { BARE, MARK, mathProblems } from "./testkit.ts";
 
 const fails: string[] = [];
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
-const BARE = /\b(khong|duoc|dinh|nghiem|phuong trinh|ham so)\b/i;
 
 function assert(cond: boolean, message: string): void {
   if (!cond) fails.push(message);
-}
-
-function texOf(text: string): string[] {
-  const out: string[] = [];
-  const re = /\$([^$]+)\$/g;
-  let match: RegExpExecArray | null;
-  while ((match = re.exec(text))) out.push(match[1] ?? "");
-  return out;
 }
 
 assert(allStudies.length === 28, `expected 28 investigations, found ${allStudies.length}`);
@@ -61,16 +51,7 @@ for (const study of allStudies) {
     ...study.guesses.flatMap((guess) => [guess.vi, guess.en]),
     ...study.columns.flatMap((column) => [column.vi, column.en]),
   ];
-  for (const blob of blobs) {
-    for (const tex of texOf(blob)) {
-      assert(!MARK.test(tex), `${study.id} has Vietnamese inside math: ${tex}`);
-      try {
-        katex.renderToString(tex, { throwOnError: true });
-      } catch (error) {
-        fails.push(`${study.id} KaTeX: ${tex} (${error instanceof Error ? error.message : "fail"})`);
-      }
-    }
-  }
+  for (const blob of blobs) fails.push(...mathProblems(study.id, blob));
   for (const sample of study.samples) {
     const params = { ...study.preset, ...sample };
     const row = study.measure(params);

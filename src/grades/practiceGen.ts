@@ -5,7 +5,7 @@
  */
 import type { GradeQuestion } from "./practiceBank.ts";
 
-export const PER_TEMPLATE = 10;
+const PER_TEMPLATE = 10;
 
 type Steps = [string, string, string];
 type Made = { prompt: string; right: string; wrong: string[]; steps: Steps; check: string; expect: string };
@@ -1136,7 +1136,7 @@ export const thptTopics: { id: string; grade: number; vi: string; en: string; ke
 
 /* ---------- lắp ráp ---------- */
 
-export const gradeTemplates: Record<number, Template[]> = {
+const gradeTemplates: Record<number, Template[]> = {
   1: grade1, 2: grade2, 3: grade3, 4: grade4, 5: grade5, 6: grade6,
   7: grade7, 8: grade8, 9: grade9,
   10: [...grade10, ...grade10More], 11: [...grade11, ...grade11More], 12: [...grade12, ...grade12More],

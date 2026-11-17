@@ -30,4 +30,3 @@ export const studyBriefs = [
   { id: "prob-r-bayes", topic: "probability", title: "Xác suất sau khi dương tính", titleEn: "Probability after a positive test" },
 ] as const;
 
-export type StudyBrief = (typeof studyBriefs)[number];

@@ -92,7 +92,7 @@ export function drawPool(pool: Pool, rng: () => number): Draw {
   return { params: { t: ti, skip }, stem: stemFrom(pool, correct, three(falses, skip)) };
 }
 
-export type Combo = { correct: Claim; wrong: readonly [Claim, Claim, Claim] };
+type Combo = { correct: Claim; wrong: readonly [Claim, Claim, Claim] };
 
 /** Every shown set: one true claim and one 3-subset of the false claims. */
 export function combinations(pool: Pool): Combo[] {

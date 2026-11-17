@@ -4,7 +4,6 @@
  * Run with: tsx scripts/concept.test.ts
  */
 import { execFileSync } from "node:child_process";
-import katex from "katex";
 import { analyticPools } from "../src/content/vary/concept/analytic.ts";
 import { comboPools } from "../src/content/vary/concept/combo.ts";
 import { derivativePools } from "../src/content/vary/concept/derivative.ts";
@@ -20,9 +19,8 @@ import { trianglePools } from "../src/content/vary/concept/triangle.ts";
 import { trigPools } from "../src/content/vary/concept/trig.ts";
 import { vectorPools } from "../src/content/vary/concept/vector.ts";
 import { combinations, drawPool, type Pool } from "../src/content/vary/pool.ts";
+import { BARE, MARK, mathProblems } from "./testkit.ts";
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
-const BARE = /\b(khong|duoc|dinh|nghiem|phuong trinh|ham so)\b/i;
 const pools: Pool[] = [
   ...quadraticPools,
   ...ineqPools,
@@ -46,23 +44,8 @@ function assert(cond: boolean, message: string): void {
   if (!cond && fails.length < 40) fails.push(message);
 }
 
-function texOf(text: string): string[] {
-  const out: string[] = [];
-  const re = /\$([^$]+)\$/g;
-  let match: RegExpExecArray | null;
-  while ((match = re.exec(text))) out.push(match[1] ?? "");
-  return out;
-}
-
 function checkTex(label: string, text: string): void {
-  for (const tex of texOf(text)) {
-    try {
-      katex.renderToString(tex, { throwOnError: true, strict: "ignore" });
-    } catch (error) {
-      assert(false, `${label} KaTeX: ${tex} (${error instanceof Error ? error.message : "fail"})`);
-    }
-    if (MARK.test(tex)) assert(false, `${label} unicode in math: ${tex}`);
-  }
+  for (const problem of mathProblems(label, text, { strict: "ignore" })) assert(false, problem);
 }
 
 const proved = JSON.parse(execFileSync("python3", ["scripts/concept_sympy.py"], { encoding: "utf8" })) as Record<string, boolean>;

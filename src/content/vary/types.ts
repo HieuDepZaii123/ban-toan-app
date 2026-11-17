@@ -31,7 +31,7 @@ export type Vary = {
   draw: (rng: () => number) => Draw;
 };
 
-export function stemOf(question: Question): Stem {
+function stemOf(question: Question): Stem {
   return {
     id: question.id,
     ...(question.kind ? { kind: question.kind } : {}),

@@ -24,7 +24,7 @@ import { buildVietQr, emvName } from "./vietqr.ts";
 
 const ORDER_TTL_MS = 15 * 60 * 1000;
 
-export type OpenMethods = { wallet: boolean; qr: boolean; bank: boolean; crypto: Record<CryptoChainId, boolean> };
+type OpenMethods = { wallet: boolean; qr: boolean; bank: boolean; crypto: Record<CryptoChainId, boolean> };
 
 /**
  * Which ways to pay can take real money. On a live deploy a method whose destination is still a
@@ -42,7 +42,7 @@ function showBank(env: PayEnv): boolean {
 }
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export type Json = Record<string, unknown>;
+type Json = Record<string, unknown>;
 
 export function json(status: number, body: Json, extra?: Record<string, string>): Response {
   const headers = new Headers(extra);

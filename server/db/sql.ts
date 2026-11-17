@@ -17,7 +17,7 @@ export type SqlClient = SqlQuery & {
 };
 
 /** Mã lỗi Postgres khi vi phạm ràng buộc UNIQUE. */
-export const UNIQUE_VIOLATION = "23505";
+const UNIQUE_VIOLATION = "23505";
 
 export function isUniqueViolation(error: unknown, constraint?: string): boolean {
   if (!error || typeof error !== "object") return false;
@@ -38,7 +38,7 @@ export function numOrNull(value: unknown): number | null {
 
 const INT8 = 20;
 
-export type PgOptions = {
+type PgOptions = {
   max?: number;
   idleTimeoutMillis?: number;
   /** Đặt search_path cho mọi kết nối (test dùng một schema riêng cho mỗi lần chạy). */

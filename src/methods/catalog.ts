@@ -1,10 +1,10 @@
 import raw from "./methods.json" with { type: "json" };
 
-export type MethodLink = { href: string; label: string };
+type MethodLink = { href: string; label: string };
 export type Worked = { id: string; title: string; prompt: string; steps: string[]; result: string };
 export type PracticeItem = { id: string; prompt: string; answer: string; steps: string[] };
-export type VerifyRow = { where: string; lhs: string; rhs: string };
-export type GuideRow = { when: string; methodId: string; topicHref: string; topicLabel: string };
+type VerifyRow = { where: string; lhs: string; rhs: string };
+type GuideRow = { when: string; methodId: string; topicHref: string; topicLabel: string };
 
 export type Method = {
   id: string;
@@ -22,7 +22,7 @@ export type Method = {
   verify: VerifyRow[];
 };
 
-export type MethodsFile = {
+type MethodsFile = {
   title: string;
   titleEn: string;
   lead: string;

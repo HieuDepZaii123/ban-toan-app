@@ -7,9 +7,8 @@ import katex from "katex";
 import { studyBriefs } from "../src/research/briefs.ts";
 import { researchIdeas } from "../src/research/ideas.ts";
 import { MENU_LINKS } from "../src/ui/navLinks.ts";
+import { BARE, MARK } from "./testkit.ts";
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
-const BARE = /\b(khong|duoc|dinh|nghiem|phuong trinh|ham so)\b/i;
 const ROUTES = new Set([
   "/",
   "/kien-thuc",

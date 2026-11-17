@@ -2,7 +2,7 @@ import { categoryById, trackIn, type StudyCategory, type StudyTrack } from "./ca
 
 export type RepeatMode = "off" | "all" | "one";
 
-export type StudyPrefs = {
+type StudyPrefs = {
   categoryId: string;
   trackId: string;
   volume: number;
@@ -79,11 +79,6 @@ export function clampVolume(value: number): number {
   return Math.min(100, Math.max(0, Math.round(value)));
 }
 
-export function trackIndex(category: StudyCategory, trackId: string): number {
-  const index = category.tracks.findIndex((track) => track.id === trackId);
-  return index >= 0 ? index : 0;
-}
-
 /** Bước khi bài kết thúc. Lặp một bài thì giữ nguyên để phát lại. Hết danh sách mà không lặp thì dừng. */
 export function stepIndex(length: number, index: number, delta: 1 | -1, repeat: RepeatMode): { index: number; stop: boolean } {
   if (length <= 0) return { index: 0, stop: true };
@@ -110,7 +105,7 @@ export function shuffledIndex(length: number, index: number, rng: () => number):
   return pick === index ? (index + 1) % length : pick;
 }
 
-export type NextPick = { id: string; stop: boolean; restart: boolean };
+type NextPick = { id: string; stop: boolean; restart: boolean };
 
 /**
  * Chọn bài kế tiếp cho nút trước/sau (auto = false) hoặc khi bài tự kết thúc (auto = true).

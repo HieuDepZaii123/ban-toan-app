@@ -9,7 +9,7 @@ const TOTAL_MS = 25_000;
 /** Room for reasoning models (e.g. gpt-oss on Groq), which count hidden reasoning against this budget. */
 const MAX_OUTPUT_TOKENS = 1_500;
 
-export type LiveCandidate = { id: string; model: LanguageModel };
+type LiveCandidate = { id: string; model: LanguageModel };
 
 /** A photo attached to the latest question: raw bytes and their media type. */
 export type ChatImage = { data: Uint8Array; mediaType: "image/jpeg" | "image/png" | "image/webp" };

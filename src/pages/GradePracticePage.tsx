@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { gradePractice, questionsForGrade, type GradeQuestion } from "../grades/practiceBank.ts";
+import { questionsForGrade, type GradeQuestion } from "../grades/practiceBank.ts";
 import {
   GRADE_PRACTICE_KEY,
   answerGrade,
@@ -160,4 +160,3 @@ function QuestionCard({ question, picked, onChoose, footer }: { question: GradeQ
   );
 }
 
-export const gradePracticeCount = gradePractice.length;

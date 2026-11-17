@@ -3,8 +3,8 @@ import type { PayEnv } from "./env.ts";
 
 export const CRYPTO_CHAIN_IDS = ["tron-usdt", "bsc-usdt", "bsc-usdc", "sol-usdc"] as const;
 export type CryptoChainId = (typeof CRYPTO_CHAIN_IDS)[number];
-export type CryptoAsset = "USDT" | "USDC";
-export type RateSource = "live" | "config";
+type CryptoAsset = "USDT" | "USDC";
+type RateSource = "live" | "config";
 
 /** keccak256("Transfer(address,address,uint256)") */
 export const TRANSFER_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
@@ -15,7 +15,7 @@ const SAMPLE_TRON_HEX = `41${"0000000000000000000000000000000000ba7010"}`;
 
 const B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
-export type ChainSpec = {
+type ChainSpec = {
   id: CryptoChainId;
   family: "tron" | "evm" | "solana";
   asset: CryptoAsset;
@@ -83,7 +83,7 @@ export type CryptoQuote = {
   decimals: number;
 };
 
-export type VerifyResult =
+type VerifyResult =
   | { ok: true; confirmations: number }
   | {
       ok: false;
@@ -105,7 +105,7 @@ function sha256(bytes: Uint8Array): Buffer {
   return createHash("sha256").update(bytes).digest();
 }
 
-export function base58Encode(bytes: Uint8Array): string {
+function base58Encode(bytes: Uint8Array): string {
   let zeros = 0;
   while (zeros < bytes.length && bytes[zeros] === 0) zeros += 1;
   if (zeros === bytes.length) return "1".repeat(bytes.length);
@@ -127,7 +127,7 @@ export function base58Encode(bytes: Uint8Array): string {
   return out;
 }
 
-export function base58Decode(text: string): Uint8Array | null {
+function base58Decode(text: string): Uint8Array | null {
   if (!text || [...text].some((char) => !B58.includes(char))) return null;
   let zeros = 0;
   while (zeros < text.length && text[zeros] === "1") zeros += 1;
@@ -157,7 +157,7 @@ function hexToBytes(hex: string): Uint8Array {
   return out;
 }
 
-export function tronBase58(payload21: Uint8Array): string {
+function tronBase58(payload21: Uint8Array): string {
   const check = sha256(sha256(payload21)).subarray(0, 4);
   const full = new Uint8Array(payload21.length + 4);
   full.set(payload21, 0);
@@ -178,7 +178,7 @@ export function tronTo20(address: string): string | null {
 
 export const SAMPLE_TRON_ADDRESS = tronBase58(hexToBytes(SAMPLE_TRON_HEX));
 
-export function formatUnits6(units: bigint): string {
+function formatUnits6(units: bigint): string {
   const neg = units < 0n;
   const abs = neg ? -units : units;
   const whole = abs / 1_000_000n;
@@ -208,7 +208,7 @@ export function displayFromSmallest(smallest: bigint, decimals: number): string 
   return formatUnits6(smallest / scale);
 }
 
-export function readVndRate(value: unknown): number | null {
+function readVndRate(value: unknown): number | null {
   if (!value || typeof value !== "object") return null;
   const body = value as Record<string, unknown>;
   if (typeof body.vndPerUsd === "number" && Number.isFinite(body.vndPerUsd)) return Math.round(body.vndPerUsd);
@@ -219,7 +219,7 @@ export function readVndRate(value: unknown): number | null {
   return Math.round(vnd);
 }
 
-export async function resolveRate(env: PayEnv): Promise<{ rate: number; source: RateSource }> {
+async function resolveRate(env: PayEnv): Promise<{ rate: number; source: RateSource }> {
   const fallback = env.cryptoVndPerUsd;
   if (!env.cryptoRateUrl) return { rate: fallback, source: "config" };
   try {
@@ -248,7 +248,7 @@ export function chainSample(env: PayEnv, id: CryptoChainId): boolean {
   return got === SAMPLE_TRON_ADDRESS;
 }
 
-export function addressOk(spec: ChainSpec, address: string): boolean {
+function addressOk(spec: ChainSpec, address: string): boolean {
   if (spec.family === "evm") return /^0x[0-9a-fA-F]{40}$/.test(address);
   if (spec.family === "tron") return tronTo20(address) !== null;
   const raw = base58Decode(address);

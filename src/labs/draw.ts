@@ -257,7 +257,7 @@ export function clipLine(
 }
 
 /** +z is up. x runs up-right, y runs up-left. */
-export function projectIso(x: number, y: number, z: number): { x: number; y: number } {
+function projectIso(x: number, y: number, z: number): { x: number; y: number } {
   return { x: (x - y) * Math.cos(Math.PI / 6), y: -z - (x + y) * 0.5 };
 }
 

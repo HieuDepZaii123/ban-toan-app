@@ -16,7 +16,7 @@ function tlv(tag: string, value: string): string {
   return `${tag}${String(value.length).padStart(2, "0")}${value}`;
 }
 
-export type VietQrInput = {
+type VietQrInput = {
   bin: string;
   account: string;
   amount: number;
@@ -25,7 +25,7 @@ export type VietQrInput = {
   city?: string;
 };
 
-export type VietQrDecoded = {
+type VietQrDecoded = {
   bin: string;
   account: string;
   amount: string;
@@ -41,7 +41,7 @@ export function emvName(name: string): string {
   return ascii.slice(0, 25) || "NGUOI NHAN";
 }
 
-export function parseTlv(payload: string): Map<string, string> {
+function parseTlv(payload: string): Map<string, string> {
   const out = new Map<string, string>();
   let index = 0;
   while (index + 4 <= payload.length) {

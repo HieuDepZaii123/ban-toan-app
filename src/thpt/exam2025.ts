@@ -23,10 +23,9 @@ import { surveyDssItems } from "../content/vary/dss/survey.ts";
 import { triangleDssItems } from "../content/vary/dss/triangle.ts";
 import { trigDssItems } from "../content/vary/dss/trig.ts";
 import { vectorDssItems } from "../content/vary/dss/vector.ts";
-import { thptBank, thptById, type ThptQuestion } from "./bank.ts";
+import { thptBank, thptById, topicById, type ThptQuestion } from "./bank.ts";
 
 export const EXAM_MINUTES_2025 = 90;
-export const PART_POINTS = { mcq: 3, tf: 4, short: 3 } as const;
 
 /** Grade mix of the real paper: mostly grade 12, some grade 11, a little grade 10. */
 const MCQ_GRADES = [12, 12, 12, 12, 12, 12, 12, 11, 11, 11, 11, 10] as const;
@@ -50,8 +49,8 @@ const TF_SOURCES: { topic: string; vi: string; en: string; items: readonly DssIt
   { topic: "ineq", vi: "Bất đẳng thức", en: "Inequalities", items: ineqDssItems },
 ];
 
-export type TfStatement = { vi: string; en: string; truth: boolean; whyVi: string; whyEn: string };
-export type TfQuestion = {
+type TfStatement = { vi: string; en: string; truth: boolean; whyVi: string; whyEn: string };
+type TfQuestion = {
   id: string;
   topic: string;
   topicVi: string;
@@ -200,7 +199,7 @@ export function tfPoints(correct: number): number {
   return correct >= 4 ? 1 : correct === 3 ? 0.5 : correct === 2 ? 0.25 : correct === 1 ? 0.1 : 0;
 }
 
-export type TopicLoss = { topic: string; vi: string; en: string; lost: number };
+type TopicLoss = { topic: string; vi: string; en: string; lost: number };
 export type PaperScore = {
   mcq: number;
   tf: number;
@@ -251,3 +250,9 @@ export function scorePaper(paper: Paper, answers: Answers, topicName: (id: strin
 }
 
 export const TF_TOPIC_NAMES = new Map(TF_SOURCES.map((source) => [source.topic, { vi: source.vi, en: source.en }]));
+
+/** Display name of any topic a paper can draw from, in both languages; unknown ids show as themselves. */
+export function thptTopicName(id: string): { vi: string; en: string } {
+  const topic = topicById(id);
+  return topic ? { vi: topic.vi, en: topic.en } : TF_TOPIC_NAMES.get(id) ?? { vi: id, en: id };
+}

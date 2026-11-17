@@ -3,7 +3,7 @@ import type { Check } from "../dang/types.ts";
 /** Loại mục kiến thức, để học sinh phân biệt điều phải thuộc với điều chỉ để hiểu. */
 export type KnowKind = "dinh-nghia" | "dinh-ly" | "cong-thuc" | "tinh-chat" | "cach-lam" | "luu-y" | "vi-du";
 
-export type KnowItem = {
+type KnowItem = {
   kind: KnowKind;
   /** Tên ngắn của mục, ví dụ «Hệ thức Viète». */
   title?: string;
@@ -11,7 +11,7 @@ export type KnowItem = {
   text: string;
 };
 
-export type KnowSection = {
+type KnowSection = {
   title: string;
   items: KnowItem[];
 };

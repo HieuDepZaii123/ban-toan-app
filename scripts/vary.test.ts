@@ -3,7 +3,6 @@
  * The correct slot never repeats, and over a long run it stays near uniform.
  * Run with: tsx scripts/vary.test.ts
  */
-import katex from "katex";
 import { analyticQuestions } from "../src/content/analytic.ts";
 import { comboQuestions } from "../src/content/combo.ts";
 import { derivativeQuestions } from "../src/content/derivative.ts";
@@ -65,8 +64,8 @@ import { vectorDssQuestions, vectorDssVary } from "../src/content/vary/dss/vecto
 import { mulberry32, nextPos, slotRng } from "../src/lib/prng.ts";
 import { sessionQuestions } from "../src/topic/show.ts";
 import { expectCorrect } from "./oracle.ts";
+import { MARK, mathProblems } from "./testkit.ts";
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
 const SEEDS = 500;
 const fails: string[] = [];
 
@@ -74,29 +73,10 @@ function assert(cond: boolean, message: string): void {
   if (!cond && fails.length < 40) fails.push(message);
 }
 
-function texOf(text: string): string[] {
-  const out: string[] = [];
-  const re = /\$([^$]+)\$/g;
-  let match: RegExpExecArray | null;
-  while ((match = re.exec(text))) out.push(match[1] ?? "");
-  return out;
-}
-
 function checkTex(label: string, text: string): boolean {
-  let bad = false;
-  for (const tex of texOf(text)) {
-    try {
-      katex.renderToString(tex, { throwOnError: true, strict: "ignore" });
-    } catch (error) {
-      assert(false, `${label} KaTeX: ${tex} (${error instanceof Error ? error.message : "fail"})`);
-      bad = true;
-    }
-    if (MARK.test(tex)) {
-      assert(false, `${label} unicode in math: ${tex.slice(0, 160)}`);
-      bad = true;
-    }
-  }
-  return bad;
+  const problems = mathProblems(label, text, { strict: "ignore" });
+  for (const problem of problems) assert(false, problem);
+  return problems.length > 0;
 }
 
 const banks: { questions: Question[]; vary: Vary[] }[] = [

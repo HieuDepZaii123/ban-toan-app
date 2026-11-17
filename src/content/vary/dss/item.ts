@@ -7,7 +7,7 @@ export type Verdict = "dung" | "sai" | "thieu";
 
 export const VERDICT_CODE: Record<Verdict, 0 | 1 | 2> = { dung: 0, sai: 1, thieu: 2 };
 
-export type Axis = { name: string; values: readonly number[] };
+type Axis = { name: string; values: readonly number[] };
 
 export function fact(
   id: string,
@@ -22,7 +22,7 @@ export function fact(
   return { id, verdict, vi, en, reasonVi, reasonEn, claim, ...extra };
 }
 
-export type Fact = {
+type Fact = {
   id: string;
   verdict: Verdict;
   vi: string;
@@ -144,7 +144,7 @@ function stemFrom(item: DssItem, params: Params, facts: readonly [Fact, Fact, Fa
   };
 }
 
-export function publishItem(item: DssItem): Question {
+function publishItem(item: DssItem): Question {
   const drawn = drawFacts(item, () => 0);
   const stem = stemFrom(item, drawn.params, drawn.facts);
   return {
@@ -165,7 +165,7 @@ export function publishItem(item: DssItem): Question {
   };
 }
 
-export function varyItem(item: DssItem): Vary {
+function varyItem(item: DssItem): Vary {
   return {
     id: item.id,
     fixed: false,

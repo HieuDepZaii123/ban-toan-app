@@ -1,18 +1,18 @@
 /** Numbers the topic loops draw. Tests pin these against src/lib/math.ts. */
 
-export function wrap01(u: number): number {
+function wrap01(u: number): number {
   return ((u % 1) + 1) % 1;
 }
 
-export function ping(u: number): number {
+function ping(u: number): number {
   return 0.5 - 0.5 * Math.cos(wrap01(u) * Math.PI * 2);
 }
 
-export function lerp(a: number, b: number, t: number): number {
+function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
 }
 
-export function smooth(t: number): number {
+function smooth(t: number): number {
   const x = Math.min(1, Math.max(0, t));
   return x * x * (3 - 2 * x);
 }

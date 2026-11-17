@@ -17,7 +17,7 @@ export function ownerSecret(): string {
   return next;
 }
 
-export function ownCode(): string {
+function ownCode(): string {
   return localStorage.getItem(CODE) || "";
 }
 
@@ -26,7 +26,7 @@ export function rememberCode(code: string): void {
   if (localStorage.getItem(REF) === code) localStorage.removeItem(REF);
 }
 
-export function storedRef(): string {
+function storedRef(): string {
   const ref = (localStorage.getItem(REF) || "").toUpperCase();
   if (!/^[A-Z0-9]{6,12}$/.test(ref) || ref === ownCode()) return "";
   return ref;

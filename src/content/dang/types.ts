@@ -34,7 +34,7 @@ export type Drill = {
 };
 
 /** Một dạng bài trong chủ đề. */
-export type Dang = {
+type Dang = {
   name: string;
   nhanDang: string;
   phuongPhap: string;

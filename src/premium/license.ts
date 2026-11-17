@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export const LICENSE_KEY = "ban-toan-license";
 const CACHE_KEY = "ban-toan-premium-cache";
 
-export type PremiumState =
+type PremiumState =
   | { kind: "none" }
   | { kind: "checking" }
   | { kind: "active"; until: number }
@@ -40,7 +40,7 @@ function writeCache(key: string, until: number | null): void {
 }
 
 /** Ask the server whether a key is a paid, unexpired, unrefunded licence. */
-export async function checkLicense(key: string): Promise<{ active: boolean; until: number | null } | "offline"> {
+async function checkLicense(key: string): Promise<{ active: boolean; until: number | null } | "offline"> {
   try {
     const res = await fetch(`/api/premium/status?license=${encodeURIComponent(key)}`, { headers: { accept: "application/json" } });
     if (!res.ok) return "offline";

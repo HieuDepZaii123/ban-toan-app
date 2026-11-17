@@ -8,7 +8,7 @@ export type LectureLevel = "basic" | "exam";
  * (phần sau `youtube.com/embed/`). Để chuỗi rỗng `""` thì trang hiện «Sắp có» và không nhúng iframe.
  * `SAMPLE_YOUTUBE_ID` là video mẫu chung — thay từng dòng khi đã có bài thật.
  */
-export type LectureVideo = {
+type LectureVideo = {
   slot: string;
   youtubeId: string;
   title: string;

@@ -41,7 +41,7 @@ export const all = (preds: Pred[]): Claim => ({ all: preds });
 
 const EPS = 1e-8;
 
-export function evalE(expr: E, params: Params, world: World): number {
+function evalE(expr: E, params: Params, world: World): number {
   if (expr.t === "n") return expr.v;
   if (expr.t === "p") {
     const value = params[expr.n];
@@ -66,7 +66,7 @@ export function evalE(expr: E, params: Params, world: World): number {
   return right === 0 ? Number.NaN : left / right;
 }
 
-export function predsOf(claim: Claim): Pred[] {
+function predsOf(claim: Claim): Pred[] {
   return "all" in claim ? claim.all : [claim];
 }
 

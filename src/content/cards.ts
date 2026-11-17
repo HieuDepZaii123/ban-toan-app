@@ -23,7 +23,7 @@ export const streams: { id: StreamId; vi: string; en: string }[] = [
   }
 ];
 
-export type Card = {
+type Card = {
   id: string;
   n: string;
   stream: StreamId;

@@ -54,7 +54,7 @@ export function checkMarked(rows: readonly GradeQuestion[]): number {
   return compared;
 }
 
-export type SympyRow = { where: string; lhs: string; rhs: string };
+type SympyRow = { where: string; lhs: string; rhs: string };
 
 export function sympyRows(rows: readonly GradeQuestion[]): SympyRow[] {
   return rows.map((item) => ({ where: item.id, lhs: item.check, rhs: item.expect }));
