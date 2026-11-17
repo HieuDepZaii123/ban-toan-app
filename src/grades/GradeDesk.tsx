@@ -20,7 +20,7 @@ export function GradeDesk() {
     const book = parsed.grade ? gradeBooks.find((item) => item.grade === parsed.grade) : undefined;
     const found = parsed.grade && parsed.lesson ? lessonAt(parsed.grade, parsed.lesson) : undefined;
     const gradeWord = lang === "en" ? "Grade" : "Lớp";
-    document.title = found ? `${found.lesson.title} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
+    document.title = found ? `${tr(lang, found.lesson)} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
   }, [parsed.grade, parsed.lesson, lang]);
 
   if (!parsed.grade) return <GradeHome />;
@@ -41,7 +41,7 @@ export function GradeDesk() {
       </PageFrame>
     );
   }
-  return <LessonView book={book} chapterTitle={found.chapter.title} lesson={found.lesson} />;
+  return <LessonView book={book} chapterTitle={tr(lang, found.chapter)} lesson={found.lesson} />;
 }
 
 function useDone(): string[] {
@@ -97,7 +97,7 @@ function GradeHome() {
                 <A key={book.grade} className="study-card" href={`/kien-thuc/${book.grade}`}>
                   <span>
                     <strong>{t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)}</strong>
-                    <small className="lecture-note">{book.title}</small>
+                    <small className="lecture-note">{tr(lang, book)}</small>
                     <ProgressBar done={count} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
                   </span>
                 </A>
@@ -115,19 +115,19 @@ function GradeIndex({ book }: { book: GradeBook }) {
   const done = useDone();
   const ids = lessonsOf(book).map((item) => item.lesson.id);
   return (
-    <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={book.title}>
+    <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={tr(lang, book)}>
       <p><A href="/kien-thuc">{t(lang, "Tất cả các lớp", "All grades")}</A>{" · "}{book.grade <= 9 ? <A href={`/luyen-lop/${book.grade}`}>{t(lang, "Luyện nhanh lớp này", "Quick practice")}</A> : <A href="/luyen-thpt">{t(lang, "Luyện THPT", "Upper-secondary practice")}</A>}</p>
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
       {book.chapters.map((chapter) => (
         <section key={chapter.id} className="stream">
-          <h2>{chapter.title}</h2>
+          <h2>{tr(lang, chapter)}</h2>
           <div className="study-list">
             {chapter.lessons.map((lesson) => {
               const ready = done.includes(`${book.grade}/${lesson.id}`);
               return (
                 <A key={lesson.id} className="study-card" href={`/kien-thuc/${book.grade}/${lesson.id}`}>
                   <span>
-                    <strong>{lesson.title}</strong>
+                    <strong>{tr(lang, lesson)}</strong>
                     {lesson.topicId ? <small className="lecture-note">{t(lang, "Nối sang chuyên đề đã có", "Links to an existing topic")}</small> : null}
                   </span>
                   {ready ? <span aria-label={t(lang, "Đã xong", "Done")}>✓</span> : null}
@@ -142,40 +142,41 @@ function GradeIndex({ book }: { book: GradeBook }) {
 }
 
 function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTitle: string; lesson: GradeBook["chapters"][number]["lessons"][number] }) {
+  const lang = useLang();
   const topic = lesson.topicId ? cards.find((card) => card.id === lesson.topicId) : undefined;
   const [correct, setCorrect] = useState<boolean[]>(() => lesson.drills.map(() => false));
   useEffect(() => {
     if (correct.length === lesson.drills.length && correct.every(Boolean)) markDone(book.grade, lesson.id);
   }, [book.grade, correct, lesson.drills.length, lesson.id]);
   return (
-    <PageFrame kicker={`Lớp ${book.grade} · ${chapterTitle}`} title={lesson.title}>
-      <p><A href={`/kien-thuc/${book.grade}`}>Về các bài lớp {book.grade}</A></p>
+    <PageFrame kicker={`${t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} · ${chapterTitle}`} title={tr(lang, lesson)}>
+      <p><A href={`/kien-thuc/${book.grade}`}>{t(lang, `Về các bài lớp ${book.grade}`, `Back to grade ${book.grade} lessons`)}</A></p>
       <article className="tool-card">
-        <h2>Tóm tắt</h2>
+        <h2>{t(lang, "Tóm tắt", "Summary")}</h2>
         {lesson.dataNote ? <p className="lecture-note">{lesson.dataNote}</p> : null}
         <p><MathText text={lesson.summary} /></p>
         {lesson.whyTrue ? (
           <>
-            <h3>Vì sao đúng</h3>
+            <h3>{t(lang, "Vì sao đúng", "Why it works")}</h3>
             <p><MathText text={lesson.whyTrue} /></p>
           </>
         ) : null}
         {lesson.pitfalls ? (
           <>
-            <h3>Lỗi hay gặp</h3>
+            <h3>{t(lang, "Lỗi hay gặp", "Common mistake")}</h3>
             <p><MathText text={lesson.pitfalls} /></p>
           </>
         ) : null}
         {lesson.figure ? <GradeFigure kind={lesson.figure} /> : null}
         {lesson.widget ? <GradeWidgetView kind={lesson.widget} /> : null}
-        {topic ? <p><A href={`/t/${topic.id}`}>Mở chuyên đề {topic.title}</A></p> : null}
+        {topic ? <p><A href={`/t/${topic.id}`}>{t(lang, `Mở chuyên đề ${topic.title}`, `Open the topic: ${topic.titleEn}`)}</A></p> : null}
       </article>
       {lesson.examples.map((example, index) => (
         <ExampleBlock key={example.prompt} example={example} index={index} />
       ))}
       <article className="tool-card">
-        <h2>Tự luyện</h2>
-        <p className="lecture-note">Điểm {correct.filter(Boolean).length}/{lesson.drills.length}</p>
+        <h2>{t(lang, "Tự luyện", "Practice")}</h2>
+        <p className="lecture-note">{t(lang, "Điểm", "Score")} {correct.filter(Boolean).length}/{lesson.drills.length}</p>
         {lesson.drills.map((drill, index) => (
           <DrillBlock
             key={drill.prompt}
@@ -191,23 +192,24 @@ function LessonView({ book, chapterTitle, lesson }: { book: GradeBook; chapterTi
 }
 
 function ExampleBlock({ example, index }: { example: GradeExample; index: number }) {
+  const lang = useLang();
   const [shown, setShown] = useState(0);
   const done = shown >= example.steps.length;
   return (
     <article className="tool-card">
-      <h2>Ví dụ {index + 1}</h2>
+      <h2>{t(lang, `Ví dụ ${index + 1}`, `Example ${index + 1}`)}</h2>
       <p><MathText text={example.prompt} /></p>
       <ol className="steps">
         {example.steps.slice(0, shown).map((step) => (
           <li key={step.claim}>
             <MathText text={step.claim} />
-            <span className="lecture-note"> Lý do: <MathText text={step.why} /></span>
+            <span className="lecture-note"> {t(lang, "Lý do:", "Why:")} <MathText text={step.why} /></span>
           </li>
         ))}
       </ol>
-      {done ? <p><b>Kết luận.</b> <MathText text={example.ket} /></p> : (
+      {done ? <p><b>{t(lang, "Kết luận.", "Conclusion.")}</b> <MathText text={example.ket} /></p> : (
         <button type="button" className="text-btn" aria-expanded={false} onClick={() => setShown((value) => value + 1)}>
-          Hiện bước {shown + 1}
+          {t(lang, `Hiện bước ${shown + 1}`, `Show step ${shown + 1}`)}
         </button>
       )}
     </article>
@@ -215,30 +217,31 @@ function ExampleBlock({ example, index }: { example: GradeExample; index: number
 }
 
 function DrillBlock({ drill, index, correct, onCorrect }: { drill: GradeDrill; index: number; correct: boolean; onCorrect: () => void }) {
+  const lang = useLang();
   const [open, setOpen] = useState(false);
   const [hints, setHints] = useState(0);
   const [note, setNote] = useState("");
   return (
     <div className="fitem">
       <p>
-        <b>Bài {index + 1}.</b> {drill.stars ? <span aria-label={`Độ khó ${drill.stars} trên 3`}>{"★".repeat(drill.stars)} </span> : null}
+        <b>{t(lang, `Bài ${index + 1}.`, `Exercise ${index + 1}.`)}</b> {drill.stars ? <span aria-label={t(lang, `Độ khó ${drill.stars} trên 3`, `Difficulty ${drill.stars} of 3`)}>{"★".repeat(drill.stars)} </span> : null}
         <MathText text={drill.prompt} />
       </p>
       {drill.ask ? <AskForm ask={drill.ask} index={index} correct={correct} onCorrect={onCorrect} onNote={setNote} /> : null}
       {note ? <p role="status">{note}</p> : null}
       {drill.hints && hints < drill.hints.length ? (
         <button type="button" className="text-btn" aria-expanded={hints > 0} onClick={() => setHints((value) => value + 1)}>
-          Gợi ý {hints + 1}
+          {t(lang, `Gợi ý ${hints + 1}`, `Hint ${hints + 1}`)}
         </button>
       ) : null}
-      {drill.hints?.slice(0, hints).map((hint) => <p key={hint} className="lecture-note">Gợi ý: <MathText text={hint} /></p>)}
+      {drill.hints?.slice(0, hints).map((hint) => <p key={hint} className="lecture-note">{t(lang, "Gợi ý:", "Hint:")} <MathText text={hint} /></p>)}
       <button type="button" className="text-btn" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
-        {open ? "Ẩn đáp án" : "Xem đáp án"}
+        {open ? t(lang, "Ẩn đáp án", "Hide the answer") : t(lang, "Xem đáp án", "Show the answer")}
       </button>
       {open ? (
         <>
-          <p><b>Đáp án.</b> <MathText text={drill.answer} /></p>
-          {drill.why ? <p className="lecture-note">Lý do: <MathText text={drill.why} /></p> : null}
+          <p><b>{t(lang, "Đáp án.", "Answer.")}</b> <MathText text={drill.answer} /></p>
+          {drill.why ? <p className="lecture-note">{t(lang, "Lý do:", "Why:")} <MathText text={drill.why} /></p> : null}
         </>
       ) : null}
     </div>
@@ -246,36 +249,42 @@ function DrillBlock({ drill, index, correct, onCorrect }: { drill: GradeDrill; i
 }
 
 function AskForm({ ask, index, correct, onCorrect, onNote }: { ask: GradeAsk; index: number; correct: boolean; onCorrect: () => void; onNote: (text: string) => void }) {
+  const lang = useLang();
   const [text, setText] = useState("");
   const [choice, setChoice] = useState(-1);
   function check() {
     const ok = ask.kind === "number" ? near(text, ask.value, ask.tolerance ?? 0.001) : choice === ask.correct;
-    onNote(ok ? "Đúng." : "Chưa đúng. Hãy xem gợi ý rồi thử lại.");
+    onNote(ok ? t(lang, "Đúng.", "Correct.") : t(lang, "Chưa đúng. Hãy xem gợi ý rồi thử lại.", "Not yet. Read a hint and try again."));
     if (ok) onCorrect();
   }
   if (ask.kind === "choice") {
     return (
       <fieldset className="grade-ask">
-        <legend>Chọn một kết luận cho bài {index + 1}</legend>
+        <legend>{t(lang, `Chọn một kết luận cho bài ${index + 1}`, `Choose a conclusion for exercise ${index + 1}`)}</legend>
         {ask.options.map((option, optionIndex) => (
           <label key={option}>
             <input type="radio" name={`ask-${index}`} checked={choice === optionIndex} onChange={() => setChoice(optionIndex)} />
             <MathText text={option} />
           </label>
         ))}
-        <button type="button" className="text-btn" onClick={check} disabled={correct}>Kiểm tra</button>
+        <button type="button" className="text-btn" onClick={check} disabled={correct}>{t(lang, "Kiểm tra", "Check")}</button>
       </fieldset>
     );
   }
   return (
     <form className="grade-ask" onSubmit={(event) => { event.preventDefault(); check(); }}>
       <label>
-        Nhập đáp số cho bài {index + 1}
-        <input inputMode="decimal" aria-label={`Đáp số bài ${index + 1}`} value={text} onChange={(event) => setText(event.target.value)} />
+        {t(lang, `Nhập đáp số cho bài ${index + 1}`, `Enter the answer to exercise ${index + 1}`)}
+        <input inputMode="decimal" aria-label={t(lang, `Đáp số bài ${index + 1}`, `Answer to exercise ${index + 1}`)} value={text} onChange={(event) => setText(event.target.value)} />
       </label>
-      <button type="submit" className="text-btn" disabled={correct}>Kiểm tra</button>
+      <button type="submit" className="text-btn" disabled={correct}>{t(lang, "Kiểm tra", "Check")}</button>
     </form>
   );
+}
+
+/** The English title when the language is English and one exists, else the Vietnamese one. */
+function tr(lang: "vi" | "en", item: { title: string; titleEn?: string }): string {
+  return lang === "en" && item.titleEn ? item.titleEn : item.title;
 }
 
 function near(raw: string, value: number, tolerance: number): boolean {
