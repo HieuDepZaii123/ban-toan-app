@@ -7,6 +7,7 @@ export const lop03: GradeBook = {
   grade: 3,
   band: "tieu-hoc",
   title: "Số đến 100 000, nhân, một phần mấy, đo lường và hình tròn.",
+  titleEn: "Numbers to 100 000, multiplication, unit fractions, measurement and circles.",
   chapters: [
     chuong("so-100000", "Các số đến 100 000", [
       bai(
@@ -27,7 +28,7 @@ export const lop03: GradeBook = {
           luyen(R`Tính $60\,000+4\,000$.`, R`Tổng bằng $64\,000$.`, [{ expr: "60000+4000", expect: "64000" }], "Sáu chục nghìn thêm bốn nghìn. Các hàng còn lại là $0$."),
           luyen(R`Số $100\,000$ hơn $99\,999$ bao nhiêu đơn vị?`, R`Hơn $1$ đơn vị.`, [{ expr: "100000-99999", expect: "1" }], "Số đứng ngay sau $99\\,999$ trong phạm vi đã học là $100\\,000$."),
         ],
-        { figure: "segment" },
+        { titleEn: "Reading and writing numbers to 100 000", figure: "segment" },
       ),
       bai(
         "lam-tron-3",
@@ -47,6 +48,7 @@ export const lop03: GradeBook = {
           luyen(R`Làm tròn $820$ đến hàng trăm.`, R`Kết quả là $800$.`, [{ expr: "round(820,-2)", expect: "800" }], "Chữ số hàng chục là $2$, nhỏ hơn $5$, nên giữ hàng trăm."),
           luyen(R`Làm tròn $74$ đến hàng chục.`, R`Kết quả là $70$.`, [{ expr: "round(74,-1)", expect: "70" }], "Chữ số đơn vị là $4$, nên số tròn chục gần nhất theo quy tắc này là $70$."),
         ],
+        { titleEn: "Rounding numbers" },
       ),
       bai(
         "so-la-ma",
@@ -66,8 +68,9 @@ export const lop03: GradeBook = {
           luyen(R`Số La Mã $IX$ bằng bao nhiêu?`, R`Bằng $9$.`, [{ expr: "10-1", expect: "9" }], "Chữ $I$ đứng trước $X$ nên lấy mười trừ một."),
           luyen(R`Số La Mã $XV$ bằng bao nhiêu?`, R`Bằng $15$.`, [{ expr: "10+5", expect: "15" }], "Chữ $V$ đứng sau $X$ nên cộng $10$ với $5$."),
         ],
+        { titleEn: "Roman numerals" },
       ),
-    ]),
+    ], "Numbers to 100 000"),
     chuong("nhan-chia", "Nhân và chia", [
       bai(
         "nhan-hai-chu",
@@ -87,6 +90,7 @@ export const lop03: GradeBook = {
           luyen(R`Tính $15\times 4$.`, R`Tích bằng $60$.`, [{ expr: "15*4", expect: "60" }], "Bốn lần $15$ bằng $60$. Có thể tính $10\\times 4$ rồi cộng $5\\times 4$."),
           luyen(R`Tính $25\times 4$.`, R`Tích bằng $100$.`, [{ expr: "25*4", expect: "100" }], "Bốn lần $25$ bằng một trăm."),
         ],
+        { titleEn: "Multiplying two-digit numbers" },
       ),
       bai(
         "chia-du",
@@ -106,8 +110,9 @@ export const lop03: GradeBook = {
           luyen(R`Tính $25:4$. Số dư bằng bao nhiêu?`, R`Thương bằng $6$ và số dư bằng $1$.`, [{ expr: "25-4*6", expect: "1" }], "Bốn nhân $6$ bằng $24$. Hiệu $25-24$ là số dư."),
           luyen(R`Tính $18:5$.`, R`Thương bằng $3$ và dư $3$, vì $5\times 3+3=18$.`, [{ expr: "5*3+3", expect: "18" }], "Số bị chia bằng thương nhân số chia, rồi cộng số dư."),
         ],
+        { titleEn: "Exact division and division with remainders" },
       ),
-    ]),
+    ], "Multiplication and division"),
     chuong("mot-phan", "Một phần mấy", [
       bai(
         "phan-nho",
@@ -127,6 +132,7 @@ export const lop03: GradeBook = {
           luyen(R`Một phần tư của $20$ bằng bao nhiêu?`, R`Kết quả bằng $5$.`, [{ expr: "20/4", expect: "5" }], "Chia $20$ cho $4$. Mỗi phần là $5$."),
           luyen(R`Một phần hai của $10$ bằng bao nhiêu?`, R`Kết quả bằng $5$.`, [{ expr: "10/2", expect: "5" }], "Chia $10$ thành hai phần bằng nhau. Mỗi phần là $5$."),
         ],
+        { titleEn: "One half, one third and one quarter" },
       ),
       bai(
         "phan-lon",
@@ -146,8 +152,9 @@ export const lop03: GradeBook = {
           luyen(R`Một phần tám của $16$ bằng bao nhiêu?`, R`Kết quả bằng $2$.`, [{ expr: "16/8", expect: "2" }], "Chia $16$ cho $8$. Mỗi phần là $2$."),
           luyen(R`Một phần bảy của $21$ bằng bao nhiêu?`, R`Kết quả bằng $3$.`, [{ expr: "21/7", expect: "3" }], "Chia $21$ cho $7$. Mỗi phần là $3$."),
         ],
+        { titleEn: "From one fifth to one ninth" },
       ),
-    ]),
+    ], "Unit fractions"),
     chuong("do", "Đơn vị đo và chu vi", [
       bai(
         "don-vi-do",
@@ -167,7 +174,7 @@ export const lop03: GradeBook = {
           luyen(R`Đổi $500$ xentimét ra mét bằng $500:100$.`, R`Bằng $5$ mét.`, [{ expr: "500/100", expect: "5" }], "Một mét có $100$ xentimét. Chia số xentimét cho $100$."),
           luyen(R`Đoạn $1$ mét nối với đoạn $20$ xentimét. Cả đoạn dài bao nhiêu xentimét?`, R`Dài $120$ xentimét.`, [{ expr: "100+20", expect: "120" }], "Đổi mét ra xentimét trước khi cộng."),
         ],
-        { figure: "segment" },
+        { titleEn: "Units of length", figure: "segment" },
       ),
       bai(
         "chu-vi-3",
@@ -187,9 +194,9 @@ export const lop03: GradeBook = {
           luyen(R`Hình chữ nhật dài $9$ và rộng $2$ có diện tích bằng bao nhiêu?`, R`Diện tích bằng $18$.`, [{ expr: "9*2", expect: "18" }], "Diện tích là số ô vuông phủ kín hình, tính bằng dài nhân rộng."),
           luyen(R`Hình chữ nhật dài $6$ và rộng $1$ có chu vi bằng bao nhiêu?`, R`Chu vi bằng $14$.`, [{ expr: "(6+1)*2", expect: "14" }], "Cộng dài với rộng được $7$, rồi nhân $2$."),
         ],
-        { figure: "rect" },
+        { titleEn: "Perimeter of a rectangle", figure: "rect" },
       ),
-    ]),
+    ], "Units of measurement and perimeter"),
     chuong("hinh-3", "Trung điểm, hình tròn và bảng số liệu", [
       bai(
         "trung-diem",
@@ -209,7 +216,7 @@ export const lop03: GradeBook = {
           luyen(R`Mỗi đoạn từ đầu mút đến trung điểm dài $5$ xentimét. Cả đoạn dài bao nhiêu?`, R`Cả đoạn dài $10$ xentimét.`, [{ expr: "5*2", expect: "10" }], "Hai phần bằng nhau cộng lại thành cả đoạn."),
           luyen(R`Đoạn $10$ xentimét, trung điểm $M$. Đoạn còn lại sau $AM$ dài bao nhiêu?`, R`Dài $5$ xentimét.`, [{ expr: "10-5", expect: "5" }], "Đoạn còn lại bằng nửa kia, cũng là cả đoạn trừ một nửa."),
         ],
-        { figure: "segment" },
+        { titleEn: "The midpoint of a line segment", figure: "segment" },
       ),
       bai(
         "hinh-tron-3",
@@ -229,7 +236,7 @@ export const lop03: GradeBook = {
           luyen(R`Bán kính $6$ xentimét. Đường kính bằng bao nhiêu?`, R`Đường kính bằng $12$ xentimét.`, [{ expr: "6*2", expect: "12" }], "Đường kính gấp đôi bán kính."),
           luyen(R`Đường kính dài $8$ xentimét. Bán kính của hình tròn đó bằng bao nhiêu?`, R`Bán kính bằng $4$ xentimét.`, [{ expr: "8/2", expect: "4" }], "Bán kính là nửa đường kính. Phép $8:2$ cho độ dài bán kính."),
         ],
-        { figure: "circle" },
+        { titleEn: "Circles: centre and radius", figure: "circle" },
       ),
       bai(
         "bang-so-lieu",
@@ -249,9 +256,9 @@ export const lop03: GradeBook = {
           luyen(R`Trong các số $12$, $8$ và $15$, số lớn nhất là số nào?`, R`Số lớn nhất là $15$.`, [{ expr: "Max(12,8,15)", expect: "15" }], "Ô có số lớn nhất là ô nổi bật của bảng khi hỏi giá trị cao nhất."),
           luyen(R`Ô $14$ hơn ô $9$ bao nhiêu?`, R`Hơn $5$.`, [{ expr: "14-9", expect: "5" }], "Hiệu hai ô trong cùng bảng cho phần chênh lệch."),
         ],
-        { figure: "bar" },
+        { titleEn: "Data tables", figure: "bar" },
       ),
-    ]),
+    ], "Midpoints, circles and data tables"),
     chuong("kha-nang", "Khả năng xảy ra", [
       bai(
         "chan-chan",
@@ -271,6 +278,7 @@ export const lop03: GradeBook = {
           luyen(R`Gieo một xúc xắc cân đối. Ra một số từ $1$ đến $6$ là việc gì?`, R`Đó là việc chắc chắn.`, [{ expr: "6/6", expect: "1" }], "Cả sáu mặt đều là một số từ $1$ đến $6$. Mọi kết quả đều thuận."),
           luyen(R`Túi chỉ có bi đỏ. Rút được bi xanh là việc gì?`, R`Đó là việc không thể xảy ra.`, [{ expr: "0/4", expect: "0" }], "Không có bi xanh nên không có kết quả thuận."),
         ],
+        { titleEn: "Certain, possible and impossible" },
       ),
       bai(
         "so-kha-nang",
@@ -290,7 +298,8 @@ export const lop03: GradeBook = {
           luyen(R`Túi có $3$ bi đỏ và $3$ bi xanh. Hai việc rút đỏ và rút xanh có cùng khả năng không?`, R`Có, hai việc cùng khả năng.`, [{ expr: "3-3", expect: "0" }], "Hai màu có cùng số viên thì không màu nào dễ hơn."),
           luyen(R`Túi có $1$ bi đỏ và $8$ bi xanh. Hiệu số bi xanh trừ bi đỏ bằng bao nhiêu?`, R`Hiệu bằng $7$, nên bi xanh dễ được rút hơn.`, [{ expr: "8-1", expect: "7" }], "Hiệu dương cho biết màu đứng trước trong phép trừ ít hơn màu đứng sau."),
         ],
+        { titleEn: "Comparing two likelihoods" },
       ),
-    ]),
+    ], "Likelihood"),
   ],
 };
