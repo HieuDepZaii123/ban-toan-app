@@ -562,3 +562,73 @@ export function displacementAndDistance(v: Fn, a: number, b: number): { displace
   for (let i = 0; i + 1 < cuts.length; i++) distance += Math.abs(simpson(v, cuts[i] as number, cuts[i + 1] as number, 400));
   return { displacement: simpson(v, a, b), distance, turns };
 }
+
+/* ---------- Hàm bậc hai: các thuật toán bổ sung ---------- */
+
+/** Hoàn thiện bình phương: ax²+bx+c = a(x−h)²+k. */
+export function completeSquare(a: number, b: number, c: number): { h: number; k: number } {
+  return { h: -b / (2 * a), k: c - (b * b) / (4 * a) };
+}
+
+/** Phương pháp Newton: từ x, dựng tiếp tuyến rồi nhảy tới chỗ tiếp tuyến cắt trục hoành. Trả về mọi bước. */
+export function newtonPath(f: Fn, x0: number, steps: number): { x: number; fx: number; slope: number }[] {
+  const out: { x: number; fx: number; slope: number }[] = [];
+  let x = x0;
+  for (let i = 0; i <= steps; i++) {
+    const slope = diff(f, x, 1e-6);
+    out.push({ x, fx: f(x), slope });
+    if (Math.abs(slope) < 1e-12 || !Number.isFinite(x)) break;
+    x -= f(x) / slope;
+  }
+  return out;
+}
+
+/**
+ * Một nơ-ron học hệ số a, b, c từ các điểm đo (có nhiễu): dự đoán ŷ = A·s² + B·s + C với s = x/xs,
+ * sai số bình phương trung bình, hạ gradient. Trả về hệ số (đã đổi về theo x) sau mỗi vòng.
+ */
+export function fitQuadratic(points: readonly { x: number; y: number }[], epochs: number, lr: number): { a: number; b: number; c: number; loss: number }[] {
+  const xs = Math.max(1e-9, ...points.map((p) => Math.abs(p.x)));
+  let A = 0;
+  let B = 0;
+  let C = 0;
+  const out: { a: number; b: number; c: number; loss: number }[] = [];
+  for (let e = 0; e < epochs; e++) {
+    let gA = 0; let gB = 0; let gC = 0; let loss = 0;
+    for (const p of points) {
+      const s = p.x / xs;
+      const err = A * s * s + B * s + C - p.y;
+      loss += err * err;
+      gA += (2 * err * s * s) / points.length;
+      gB += (2 * err * s) / points.length;
+      gC += (2 * err) / points.length;
+    }
+    out.push({ a: A / (xs * xs), b: B / xs, c: C, loss: loss / points.length });
+    A -= lr * gA; B -= lr * gB; C -= lr * gC;
+  }
+  return out;
+}
+
+/** Tập nghiệm của ax²+bx+c ⋛ 0 dưới dạng các khoảng, tìm bằng nghiệm + thử điểm giữa (không dùng quy tắc «trong trái ngoài cùng»). */
+export function solveInequality(f: Fn, rel: ">" | "<" | ">=" | "<=", bound = 1000): { lo: number; hi: number }[] {
+  const roots = findRoots(f, -bound, bound, 20000);
+  const cuts = [-Infinity, ...roots, Infinity];
+  const ok = (y: number) => (rel === ">" ? y > 0 : rel === "<" ? y < 0 : rel === ">=" ? y >= 0 : y <= 0);
+  const out: { lo: number; hi: number }[] = [];
+  for (let i = 0; i + 1 < cuts.length; i++) {
+    const lo = cuts[i] as number;
+    const hi = cuts[i + 1] as number;
+    const mid = Number.isFinite(lo) && Number.isFinite(hi) ? (lo + hi) / 2 : Number.isFinite(lo) ? lo + 1 : Number.isFinite(hi) ? hi - 1 : 0;
+    if (ok(f(mid))) out.push({ lo, hi });
+  }
+  if (rel === ">=" || rel === "<=") for (const r of roots) if (!out.some((o) => r >= o.lo - 1e-9 && r <= o.hi + 1e-9)) out.push({ lo: r, hi: r });
+  out.sort((p, q) => p.lo - q.lo);
+  // Gộp các khoảng kề nhau (khi lấy cả nghiệm).
+  const merged: { lo: number; hi: number }[] = [];
+  for (const o of out) {
+    const last = merged[merged.length - 1];
+    if (last && o.lo <= last.hi + 1e-9) last.hi = Math.max(last.hi, o.hi);
+    else merged.push({ ...o });
+  }
+  return merged;
+}

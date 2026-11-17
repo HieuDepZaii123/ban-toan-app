@@ -220,6 +220,38 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("đổi chiều tại t=2", dd.turns.length === 1 && Math.abs(dd.turns[0]! - 2) < 1e-9);
 }
 
+// Hàm bậc hai bổ sung.
+{
+  const cs = A.completeSquare(2, -8, 3);
+  near("hoàn thiện bình phương h", cs.h, 2, 1e-12);
+  near("hoàn thiện bình phương k", cs.k, 3 - 64 / 8, 1e-12);
+  for (const x of [-3, 0, 1.7, 5]) near("a(x−h)²+k = ax²+bx+c", 2 * (x - cs.h) ** 2 + cs.k, 2 * x * x - 8 * x + 3, 1e-9);
+  const nw = A.newtonPath((x) => x * x - 2, 3, 8);
+  near("Newton → √2", nw[nw.length - 1]!.x, Math.SQRT2, 1e-9);
+  is("Newton hội tụ rất nhanh (số chữ số tăng gấp đôi)", Math.abs(nw[4]!.x - Math.SQRT2) < 1e-6);
+  // Nơ-ron học parabol h = −5t² + 20t + 1 từ 25 điểm nhiễu.
+  const r = mulberry32(21);
+  const pts = Array.from({ length: 25 }, (_, i) => { const x = (i / 24) * 4; return { x, y: -5 * x * x + 20 * x + 1 + (r() - 0.5) * 1.2 }; });
+  const hist = A.fitQuadratic(pts, 6000, 0.3);
+  const last = hist[hist.length - 1]!;
+  near("học ra a ≈ −5", last.a, -5, 0.3);
+  near("học ra b ≈ 20", last.b, 20, 0.8);
+  near("học ra c ≈ 1", last.c, 1, 0.4);
+  is("sai số giảm", last.loss < hist[0]!.loss / 100);
+  near("đỉnh của đường học được ≈ 2", -last.b / (2 * last.a), 2, 0.1);
+  // Giải bất phương trình bằng nghiệm và thử điểm, đối chiếu quy tắc.
+  const i1 = A.solveInequality((x) => x * x - 5 * x + 6, "<");
+  is("x²−5x+6<0 là (2;3)", i1.length === 1 && Math.abs(i1[0]!.lo - 2) < 1e-6 && Math.abs(i1[0]!.hi - 3) < 1e-6);
+  const i2 = A.solveInequality((x) => x * x + x + 1, ">");
+  is("x²+x+1>0 với mọi x", i2.length === 1 && i2[0]!.lo === -Infinity && i2[0]!.hi === Infinity);
+  const i3 = A.solveInequality((x) => -x * x + 4, ">=");
+  is("−x²+4≥0 là [−2;2]", i3.length === 1 && Math.abs(i3[0]!.lo + 2) < 1e-6 && Math.abs(i3[0]!.hi - 2) < 1e-6);
+  const i4 = A.solveInequality((x) => x * x - 5 * x + 6, ">");
+  is("x²−5x+6>0 là hai khoảng ngoài", i4.length === 2 && i4[0]!.lo === -Infinity && i4[1]!.hi === Infinity);
+  const i5 = A.solveInequality((x) => (x - 1) ** 2, "<=");
+  is("(x−1)²≤0 chỉ có x=1", i5.length === 1 && Math.abs(i5[0]!.lo - 1) < 1e-6 && Math.abs(i5[0]!.hi - 1) < 1e-6);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

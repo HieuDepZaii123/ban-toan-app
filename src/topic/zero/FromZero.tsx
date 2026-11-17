@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { MathText } from "../../ui/MathText.tsx";
+import { AlphaLab, CompleteSquareLab, FitLab, IntervalLab, LineIntersectLab, RootsLab, ShapeLab, SignLab, TranslateLab } from "./quadWidgets.tsx";
 import { AntiderivLab, AreaBetweenLab, AreaFunctionLab, DisplacementLab, MonteCarloAreaLab, PartsLab, SubstitutionLab, VolumeLab } from "./integralWidgets.tsx";
 import { BackpropLab, BoxLab, DerivCurveLab, ExtremaLab, KinkLab, MotionLab, RuleLab, TangentLab } from "./derivWidgets.tsx";
 import { AdditionLab, BeatLab, ReflectLab, SolveLab, TriangleLab, WaveLab } from "./trigWidgets.tsx";
@@ -17,7 +18,16 @@ const SECTIONS: Record<string, { lead: string; parts: () => ReactNode }> = {
     lead: "Muốn tìm đỉnh parabol, bạn có thể thuộc công thức $-\\frac{b}{2a}$, hoặc để một thuật toán tự mò đáy rồi so với công thức. Dưới đây là cả hai, và một mạng nơ-ron học lại đường parabol từ các điểm mẫu.",
     parts: () => (
       <>
+        <ShapeLab />
+        <CompleteSquareLab />
+        <TranslateLab />
         <BallValley kind="quad" />
+        <RootsLab />
+        <SignLab />
+        <LineIntersectLab />
+        <AlphaLab />
+        <IntervalLab />
+        <FitLab />
         <NetFit target={PARABOLA} story="Cho mạng xem 41 chấm nằm trên một parabol, không cho biết công thức. Mạng bắt đầu với các số ngẫu nhiên nên đường cong ban đầu vô nghĩa. Bấm học và quan sát nó uốn dần về các chấm." why={NET_WHY} />
       </>
     ),
