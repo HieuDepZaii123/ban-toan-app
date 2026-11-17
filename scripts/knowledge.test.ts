@@ -55,6 +55,9 @@ const checks: { where: string; expr: string; expect: string }[] = [];
 let itemTotal = 0;
 let plain = 0;
 let proofs = 0;
+let altProofs = 0;
+/** Chuyên đề đã viết xong cách chứng minh thứ hai cho mọi định lí; thêm id vào đây khi làm xong từng chuyên đề. */
+const MULTI_PROOF = new Set<string>(["trig"]);
 let wordTotal = 0;
 
 for (const id of ids) {
@@ -123,6 +126,19 @@ for (const id of ids) {
         });
         proofs += 1;
       }
+      for (const other of item.suyKhac ?? []) {
+        assert(Boolean(item.suy), `${here}: cách chứng minh khác cần có cách thứ nhất (suy)`);
+        assert(other.cach.trim().length >= 6 && other.cach.length <= 60 && !/[$\\]/.test(other.cach), `${here}: tên cách chứng minh khác: «${other.cach}»`);
+        assert(other.buoc.length >= 2 && other.buoc.length <= 7, `${here} «${other.cach}»: cần 2–7 bước, có ${other.buoc.length}`);
+        assert(new Set(other.buoc).size === other.buoc.length, `${here} «${other.cach}»: trùng bước`);
+        assert(!other.buoc.some((step) => item.suy?.includes(step)), `${here} «${other.cach}»: chép lại bước của cách thứ nhất`);
+        other.buoc.forEach((step, i) => {
+          prose(`${here} «${other.cach}» bước ${i + 1}`, step, true);
+          assert(step.length >= 40 && step.length <= 600, `${here} «${other.cach}» bước ${i + 1}: cần 40–600 ký tự, có ${step.length}`);
+        });
+        altProofs += 1;
+      }
+      if (MULTI_PROOF.has(id) && item.kind === "dinh-ly") assert((item.suyKhac?.length ?? 0) >= 1, `${here}: định lí cần ít nhất hai cách chứng minh`);
       if (item.kind === "vi-du") assert(/\d/.test(item.text), `${id} ví dụ không có số: ${item.text.slice(0, 40)}`);
     }
   }
@@ -159,4 +175,4 @@ if (fails.length > 0) {
 }
 
 execFileSync("python3", ["scripts/dang_sympy.py"], { input: JSON.stringify(checks), stdio: ["pipe", "inherit", "inherit"] });
-console.log(`knowledge ok: ${ids.length} chuyên đề, ${itemTotal} mục, ${plain} lời giải thích đời thường, ${proofs} chuỗi suy luận, ${wordTotal} chữ, ${checks.length} phép kiểm`);
+console.log(`knowledge ok: ${ids.length} chuyên đề, ${itemTotal} mục, ${plain} lời giải thích đời thường, ${proofs} chuỗi suy luận, ${altProofs} cách chứng minh khác, ${wordTotal} chữ, ${checks.length} phép kiểm`);

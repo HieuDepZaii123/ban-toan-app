@@ -16,6 +16,11 @@ export type KnowItem = {
    * Bắt buộc với định lí, công thức và tính chất, để người đọc tự suy ra được chứ không phải thuộc lòng.
    */
   suy?: string[];
+  /**
+   * Những cách chứng minh khác, đi theo hướng khác hẳn `suy` (đại số và hình học, trực tiếp và phản chứng...).
+   * `cach` là tên hướng, ví dụ «Bằng hình học»; `buoc` là các bước, mỗi bước một ý, như `suy`.
+   */
+  suyKhac?: { cach: string; buoc: string[] }[];
 };
 
 export type KnowSection = {

@@ -10,10 +10,10 @@ export const trigKnowledge: TopicKnowledge = {
     lienHe: R`Định lí cosin là mở rộng của định lí Pythagore ở chuyên đề Hình phẳng, và tích vô hướng ở chuyên đề Vectơ chứa $\cos$ của góc giữa hai vectơ. Giới hạn $\lim_{x\to 0}\frac{\sin x}{x}=1$ là nền để tính đạo hàm của hàm lượng giác.`,
   },
   tuDau: [
-    R`Ngồi trên đu quay: khi vòng quay chuyển động, độ cao của bạn lên rồi xuống, rồi lại lên, lặp đi lặp lại. Lượng giác là môn học về đúng chuyển động đó: một điểm chạy quanh một đường tròn, và ta ghi lại nó đang ở cao bao nhiêu, lệch ngang bao nhiêu. Sóng biển, âm thanh, dòng điện xoay chiều đều lên xuống theo kiểu này.`,
-    R`Lấy đường tròn bán kính $1$, tâm đặt ở gốc tọa độ. Cho một điểm xuất phát từ vị trí ngoài cùng bên phải rồi chạy ngược chiều kim đồng hồ. Khi nó đã quay được một góc, vị trí ngang của nó gọi là cosin của góc, còn độ cao của nó gọi là sin của góc. Hai cái tên này chỉ là «ngang» và «cao» của một điểm trên đường tròn.`,
+    R`Hãy tưởng tượng bạn ngồi trên một vòng đu quay: độ cao của bạn lên rồi xuống, rồi lại lên, cứ thế lặp đi lặp lại. Lượng giác là môn học về đúng chuyển động ấy: một điểm chạy quanh đường tròn, còn ta ghi lại lúc nó cao bao nhiêu và lệch ngang bao nhiêu. Sóng biển, âm thanh, dòng điện xoay chiều đều lên xuống theo kiểu này.`,
+    R`Lấy đường tròn bán kính $1$, tâm đặt ở gốc tọa độ. Cho một điểm xuất phát từ vị trí ngoài cùng bên phải rồi chạy ngược chiều kim đồng hồ. Khi nó đã quay được một góc, vị trí ngang của nó gọi là cosin của góc, còn độ cao của nó gọi là sin của góc. Hai cái tên ấy chỉ là cách gọi «độ ngang» và «độ cao» của một điểm trên đường tròn.`,
     R`Vì bán kính bằng $1$ nên trong tam giác vuông tạo bởi bán kính, đoạn ngang và đoạn cao, cạnh huyền bằng $1$. Do đó sin đúng bằng «cạnh đối chia cạnh huyền» và cosin đúng bằng «cạnh kề chia cạnh huyền» quen thuộc của tam giác vuông. Đường tròn chỉ mở rộng hai tỉ số này cho mọi góc, kể cả góc tù, góc âm hay góc lớn hơn một vòng.`,
-    R`Gần như mọi công thức trong chuyên đề đều đọc ra được từ hình vẽ đường tròn bằng hai công cụ: phép đối xứng (lật hình qua một trục thì tọa độ đổi dấu) và định lí Pythagore (bình phương cạnh huyền bằng tổng bình phương hai cạnh góc vuông). Khi quên một công thức, hãy vẽ lại đường tròn thay vì cố nhớ.`,
+    R`Gần như mọi công thức trong chuyên đề đều đọc ra được từ hình vẽ đường tròn bằng hai công cụ: phép đối xứng (lật hình qua một trục thì tọa độ đổi dấu) và định lí Pythagore (bình phương cạnh huyền bằng tổng bình phương hai cạnh góc vuông). Nên khi quên một công thức, bạn chỉ cần vẽ lại đường tròn thay vì cố nhớ.`,
   ],
   kyHieu: [
     { kh: R`$\alpha$`, doc: R`Chữ Hy Lạp «an-pha», thường dùng để đặt tên cho một góc.` },
@@ -90,6 +90,16 @@ export const trigKnowledge: TopicKnowledge = {
             R`Chia hai vế cho $\cos^2\alpha$ (khi khác $0$): $\frac{\sin^2\alpha}{\cos^2\alpha}+1=\frac{1}{\cos^2\alpha}$, tức $\tan^2\alpha+1=\frac{1}{\cos^2\alpha}$.`,
             R`Chia hai vế cho $\sin^2\alpha$ (khi khác $0$) theo cùng cách được $1+\cot^2\alpha=\frac{1}{\sin^2\alpha}$.`,
             R`Cuối cùng $\tan\alpha\cdot\cot\alpha=\frac{\sin\alpha}{\cos\alpha}\cdot\frac{\cos\alpha}{\sin\alpha}=1$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng đạo hàm",
+              buoc: [
+                R`Đặt $f(\alpha)=\sin^2\alpha+\cos^2\alpha$. Ta chỉ cần chứng tỏ $f$ không đổi, rồi tính giá trị tại một điểm.`,
+                R`Dùng $(\sin\alpha)'=\cos\alpha$ và $(\cos\alpha)'=-\sin\alpha$ (xem chuyên đề Đạo hàm), được $f'(\alpha)=2\sin\alpha\cos\alpha+2\cos\alpha\cdot(-\sin\alpha)=0$ với mọi $\alpha$.`,
+                R`Hàm có đạo hàm bằng $0$ trên cả trục số thì không đổi. Tại $\alpha=0$ có $f(0)=0^2+1^2=1$, nên $\sin^2\alpha+\cos^2\alpha=1$ với mọi $\alpha$.`,
+              ],
+            },
           ],
         },
         {
@@ -252,6 +262,17 @@ export const trigKnowledge: TopicKnowledge = {
             R`Tính bình phương khoảng cách $BC$: $a^2=(b\cos A-c)^2+(b\sin A)^2=b^2\cos^2A-2bc\cos A+c^2+b^2\sin^2A$.`,
             R`Gom $b^2\cos^2A+b^2\sin^2A=b^2$ nhờ hệ thức cơ bản, được $a^2=b^2+c^2-2bc\cos A$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng hình chiếu các cạnh",
+              buoc: [
+                R`Hạ đường cao từ mỗi đỉnh xuống cạnh đối diện rồi chiếu hai cạnh còn lại lên cạnh đó. Cạnh $a$ bằng tổng hai hình chiếu của $b$ và $c$ lên nó: $a=b\cos C+c\cos B$. Tương tự $b=c\cos A+a\cos C$ và $c=a\cos B+b\cos A$.`,
+                R`Nhân đẳng thức thứ nhất với $a$, thứ hai với $b$, thứ ba với $c$: $a^2=ab\cos C+ac\cos B$, $b^2=bc\cos A+ab\cos C$, $c^2=ac\cos B+bc\cos A$.`,
+                R`Lấy $b^2+c^2-a^2$: các số hạng $ab\cos C$ và $ac\cos B$ xuất hiện một lần dương, một lần âm nên triệt tiêu, chỉ còn $2bc\cos A$.`,
+                R`Vậy $b^2+c^2-a^2=2bc\cos A$, tức $a^2=b^2+c^2-2bc\cos A$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Định lí sin",
@@ -260,6 +281,16 @@ export const trigKnowledge: TopicKnowledge = {
             R`Kẻ đường cao từ $C$ xuống cạnh $AB$, gọi độ dài là $h$. Trong tam giác vuông chứa góc $A$ có $h=b\sin A$, trong tam giác vuông chứa góc $B$ có $h=a\sin B$. Khi một góc tù, kết quả vẫn đúng vì hai góc bù nhau có cùng sin.`,
             R`Vậy $b\sin A=a\sin B$, tức $\frac{a}{\sin A}=\frac{b}{\sin B}$. Kẻ đường cao từ đỉnh khác được đẳng thức với $\frac{c}{\sin C}$.`,
             R`Tỉ số chung bằng $2R$: vẽ đường kính $BD$ của đường tròn ngoại tiếp. Tam giác $BCD$ vuông tại $C$ vì góc nội tiếp chắn nửa đường tròn là góc vuông, và góc $D$ bằng góc $A$ vì cùng chắn cung $BC$. Do đó $a=BC=BD\sin D=2R\sin A$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng diện tích",
+              buoc: [
+                R`Diện tích tam giác tính được theo ba cách, mỗi cách dùng hai cạnh và góc xen giữa: $S=\frac{1}{2}bc\sin A=\frac{1}{2}ca\sin B=\frac{1}{2}ab\sin C$.`,
+                R`Chia cả ba biểu thức cho $\frac{1}{2}abc$: $\frac{\sin A}{a}=\frac{\sin B}{b}=\frac{\sin C}{c}$.`,
+                R`Lấy nghịch đảo từng tỉ số được $\frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}$. Giá trị chung này bằng $2R$ theo bước vẽ đường kính ở cách thứ nhất.`,
+              ],
+            },
           ],
         },
         {
@@ -292,6 +323,8 @@ export const trigKnowledge: TopicKnowledge = {
     { id: "limit", vi: R`Giới hạn $\lim_{x\to 0}\frac{\sin x}{x}=1$ là giới hạn đặc biệt đầu tiên, và là cơ sở của đạo hàm hàm lượng giác.` },
   ],
   checks: [
+    { expr: "diff(sin(x)**2 + cos(x)**2, x)", expect: "0" },
+    { expr: "expand((b*cos(C) + c*cos(B))*a)", expect: "a*b*cos(C) + a*c*cos(B)" },
     { expr: "sin(pi/3)", expect: "sqrt(3)/2" },
     { expr: "cos(pi/3)", expect: "1/2" },
     { expr: "tan(pi/4)", expect: "1" },

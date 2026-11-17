@@ -97,6 +97,14 @@ export function KnowledgeRead({ topicId }: { topicId: string }) {
                   </ol>
                 </details>
               ) : null}
+              {item.suyKhac?.map((other) => (
+                <details key={other.cach} className="kn-why kn-alt">
+                  <summary>Cách khác: <MathText text={other.cach} /></summary>
+                  <ol>
+                    {other.buoc.map((step) => <li key={step}><MathText text={step} /></li>)}
+                  </ol>
+                </details>
+              ))}
             </div>
           ))}
         </details>
