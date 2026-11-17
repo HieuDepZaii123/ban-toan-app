@@ -14,8 +14,10 @@ export function ScienceDesk({ path }: { path: string }) {
   const topic = id ? scienceById(id) : undefined;
 
   useEffect(() => {
-    document.title = topic ? `${topic.title} · Bàn Toán` : "Khoa học · Bàn Toán";
-  }, [topic]);
+    document.title = topic
+      ? `${t(lang, topic.title, topic.titleEn)} · Bàn Toán`
+      : t(lang, "Khoa học · Bàn Toán", "Science · Bàn Toán");
+  }, [topic, lang]);
 
   return (
     <div className="desk">
@@ -23,7 +25,11 @@ export function ScienceDesk({ path }: { path: string }) {
       <SiteHeader />
       <main id="content">
         {!id ? <ScienceHome /> : topic ? (
-          <ScienceTopic id={topic.id} title={topic.title} blurb={topic.blurb} />
+          <ScienceTopic
+            id={topic.id}
+            title={t(lang, topic.title, topic.titleEn)}
+            blurb={t(lang, topic.blurb, topic.blurbEn)}
+          />
         ) : (
           <p className="empty">
             {t(lang, "Không có mảng này.", "This area is not on the desk.")}{" "}
@@ -53,8 +59,8 @@ function ScienceHome() {
         {sciences.map((item) => (
           <A key={item.id} className="study-card" href={`/khoa-hoc/${item.id}`}>
             <span>
-              <strong>{item.title}</strong>
-              <small className="lecture-note">{item.blurb}</small>
+              <strong>{t(lang, item.title, item.titleEn)}</strong>
+              <small className="lecture-note">{t(lang, item.blurb, item.blurbEn)}</small>
             </span>
           </A>
         ))}
