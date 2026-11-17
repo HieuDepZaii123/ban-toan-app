@@ -4,6 +4,7 @@
  * sai thì về hộp đầu, hẹn ngày mai. Đúng ở hộp cuối là thuộc bài, câu rời kế hoạch.
  * Chỉ là hàm thuần và localStorage, để test được không cần trình duyệt.
  */
+import { isRecord } from "../lib/isRecord.ts";
 import { thptById } from "./bank.ts";
 import { shortRight, type Answers, type Paper } from "./exam2025.ts";
 
@@ -37,17 +38,16 @@ export function emptyReview(): ReviewState {
   return { cards: [], mastered: 0, lost: {}, papers: 0 };
 }
 
-const isObj = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 const finite = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value);
 
 /** Read saved state, dropping anything malformed or pointing at a question no longer in the bank. */
 export function readReview(raw: unknown): ReviewState {
-  if (!isObj(raw)) return emptyReview();
+  if (!isRecord(raw)) return emptyReview();
   const cards: ReviewCard[] = [];
   const seen = new Set<string>();
   if (Array.isArray(raw.cards)) {
     for (const item of raw.cards) {
-      if (!isObj(item) || typeof item.id !== "string" || seen.has(item.id) || !thptById.has(item.id)) continue;
+      if (!isRecord(item) || typeof item.id !== "string" || seen.has(item.id) || !thptById.has(item.id)) continue;
       if (item.kind !== "mcq" && item.kind !== "short") continue;
       if (!finite(item.box) || !finite(item.due) || !finite(item.added)) continue;
       seen.add(item.id);
@@ -63,7 +63,7 @@ export function readReview(raw: unknown): ReviewState {
     }
   }
   const lost: Record<string, number> = {};
-  if (isObj(raw.lost)) for (const [topic, points] of Object.entries(raw.lost)) if (finite(points) && points > 0) lost[topic] = points;
+  if (isRecord(raw.lost)) for (const [topic, points] of Object.entries(raw.lost)) if (finite(points) && points > 0) lost[topic] = points;
   return {
     cards: cards.slice(0, MAX_CARDS),
     mastered: finite(raw.mastered) ? Math.max(0, Math.floor(raw.mastered)) : 0,

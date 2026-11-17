@@ -7,8 +7,8 @@ import katex from "katex";
 import { docSamples } from "../src/docs/samples.ts";
 import { renderDoc } from "../src/docs/render.ts";
 import { MENU_LINKS } from "../src/ui/navLinks.ts";
+import { MARK } from "./testkit.ts";
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
 
 assert.ok(docSamples.length >= 10, "ít nhất 10 mẫu");
 assert.ok(docSamples.some((item) => item.band === "tieu-hoc"));

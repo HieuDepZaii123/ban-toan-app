@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { decimalComma } from "../lib/format.ts";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { usePremium } from "../premium/license.ts";
-import { thptById, topicById } from "../thpt/bank.ts";
-import { shortRight, TF_TOPIC_NAMES } from "../thpt/exam2025.ts";
+import { thptById } from "../thpt/bank.ts";
+import { shortRight, thptTopicName } from "../thpt/exam2025.ts";
 import { answerCard, DAY_MS, dueCards, INTERVAL_DAYS, loadReview, saveReview, schedule, weakTopics, type ReviewKind, type ReviewState } from "../thpt/review.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { PageFrame } from "../ui/PageFrame.tsx";
@@ -13,14 +14,13 @@ import { useLang } from "../ui/useLang.ts";
 type Shown = { id: string; kind: ReviewKind; right: boolean; picked?: number; typed?: string; days: number | null };
 
 function topicName(id: string, lang: "vi" | "en"): string {
-  const topic = topicById(id) ?? TF_TOPIC_NAMES.get(id);
-  return topic ? (lang === "en" ? topic.en : topic.vi) : id;
+  const name = thptTopicName(id);
+  return lang === "en" ? name.en : name.vi;
 }
 
 /** Wall clock for event handlers (answers and "Next"), kept out of render. */
 const clockNow = (): number => Date.now();
 
-const fmt = (value: number, lang: "vi" | "en") => (lang === "vi" ? String(value).replace(".", ",") : String(value));
 
 export function ReviewPage() {
   const lang = useLang();
@@ -159,7 +159,7 @@ export function ReviewPage() {
               <ul className="exam-losses">
                 {weak.map((item) => (
                   <li key={item.topic}>
-                    {topicName(item.topic, lang)}: −{fmt(item.lost, lang)} {t(lang, "điểm", "points")}
+                    {topicName(item.topic, lang)}: −{decimalComma(item.lost, lang)} {t(lang, "điểm", "points")}
                     {item.waiting > 0 ? t(lang, `, ${item.waiting} câu đang chờ ôn`, `, ${item.waiting} waiting for review`) : ""}
                   </li>
                 ))}

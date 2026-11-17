@@ -5,13 +5,13 @@
 import { execFileSync } from "node:child_process";
 import { collectGradeChecks, gradeBooks, lessonsOf } from "../src/content/grades/index.ts";
 import { cards } from "../src/content/cards.ts";
+import { MARK } from "./testkit.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
   if (!cond) fails.push(message);
 }
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
 const BAD = /dễ thấy|hiển nhiên|\\dfrac/i;
 const VOCATIVE = /(^|[^\p{L}\p{N}_])em(?=[^\p{L}\p{N}_]|$)/iu;
 

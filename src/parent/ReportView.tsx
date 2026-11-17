@@ -1,8 +1,8 @@
+import { decimalComma } from "../lib/format.ts";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 import type { Report } from "./report.ts";
 
-const fmt = (value: number, lang: "vi" | "en") => (lang === "vi" ? String(value).replace(".", ",") : String(value));
 
 export function ReportView({ report }: { report: Report }) {
   const lang = useLang();
@@ -17,7 +17,7 @@ export function ReportView({ report }: { report: Report }) {
         <div><dt>{t(lang, "Đề thi thử đã làm", "Mock papers done")}</dt><dd>{report.papers.length}</dd></div>
         <div>
           <dt>{t(lang, "Điểm thay đổi", "Score change")}</dt>
-          <dd>{change === null ? "—" : `${change > 0 ? "+" : ""}${fmt(change, lang)}`}</dd>
+          <dd>{change === null ? "—" : `${change > 0 ? "+" : ""}${decimalComma(change, lang)}`}</dd>
         </div>
         <div><dt>{t(lang, "Lượt chấm bài làm", "Markings of own working")}</dt><dd>{report.checks}</dd></div>
         <div><dt>{t(lang, "Bước sai tìm ra", "Wrong steps found")}</dt><dd>{report.wrong}</dd></div>
@@ -39,7 +39,7 @@ export function ReportView({ report }: { report: Report }) {
             {report.papers.map((row) => (
               <tr key={row.at}>
                 <td>{day(row.at)}</td>
-                <td><b>{fmt(row.total, lang)}</b></td>
+                <td><b>{decimalComma(row.total, lang)}</b></td>
               </tr>
             ))}
           </tbody>

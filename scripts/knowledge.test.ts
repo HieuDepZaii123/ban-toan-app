@@ -9,13 +9,13 @@ import katex from "katex";
 import { cards } from "../src/content/cards.ts";
 import { KNOWLEDGE_IDS, loadKnowledge } from "../src/content/knowledge/index.ts";
 import type { TopicKnowledge } from "../src/content/knowledge/types.ts";
+import { MARK } from "./testkit.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
   if (!cond) fails.push(message);
 }
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
 const BAD = /dễ thấy|hiển nhiên|\bem\b|\\dfrac|\$\$|\n/i;
 
 /** Mục công thức và ví dụ được mở câu bằng ký hiệu; mọi văn xuôi khác thì không. */

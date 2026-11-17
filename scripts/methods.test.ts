@@ -7,8 +7,8 @@ import { execFileSync } from "node:child_process";
 import katex from "katex";
 import { cards } from "../src/content/cards.ts";
 import { methodsData } from "../src/methods/catalog.ts";
+import { MARK } from "./testkit.ts";
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
 const IDS = new Set<string>(cards.map((card) => card.id));
 const methodIds = new Set(methodsData.methods.map((item) => item.id));
 

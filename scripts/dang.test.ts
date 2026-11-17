@@ -8,13 +8,13 @@ import { join } from "node:path";
 import { cards } from "../src/content/cards.ts";
 import { allDang, collectChecks } from "../src/content/dang/index.ts";
 import type { TopicDang } from "../src/content/dang/types.ts";
+import { MARK } from "./testkit.ts";
 
 const fails: string[] = [];
 function assert(cond: boolean, message: string): void {
   if (!cond) fails.push(message);
 }
 
-const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
 const BAD = /dễ thấy|hiển nhiên|\bem\b|\\dfrac/i;
 
 function sentences(text: string): string[] {

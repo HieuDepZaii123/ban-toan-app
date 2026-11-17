@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import { isRecord } from "../lib/isRecord.ts";
+import { decimalComma } from "../lib/format.ts";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
 import { usePremium } from "../premium/license.ts";
 import { useParentMode } from "../parent/parentMode.ts";
 import { EXAM_KEY } from "../parent/report.ts";
-import { thptById, topicById } from "../thpt/bank.ts";
+import { thptById } from "../thpt/bank.ts";
 import {
   buildPaper,
   emptyAnswers,
@@ -12,7 +14,7 @@ import {
   scorePaper,
   shortRight,
   shortValue,
-  TF_TOPIC_NAMES,
+  thptTopicName,
   type Answers,
   type Paper,
   type PaperScore,
@@ -31,30 +33,29 @@ type Finished = Sitting & { finishedAt: number };
 type HistoryRow = { at: number; total: number; mcq: number; tf: number; short: number };
 type Saved = { active: Sitting | null; last: Finished | null; history: HistoryRow[] };
 
-const isObj = (value: unknown): value is { [key: string]: unknown } => !!value && typeof value === "object" && !Array.isArray(value);
 
 function readAnswers(value: unknown): Answers {
   const out = emptyAnswers();
-  if (!isObj(value)) return out;
-  if (isObj(value.mcq)) for (const [k, v] of Object.entries(value.mcq)) if (typeof v === "number" && v >= 0 && v <= 3) out.mcq[k] = v;
-  if (isObj(value.tf)) for (const [k, v] of Object.entries(value.tf)) if (typeof v === "boolean") out.tf[k] = v;
-  if (isObj(value.short)) for (const [k, v] of Object.entries(value.short)) if (typeof v === "string") out.short[k] = v.slice(0, 8);
+  if (!isRecord(value)) return out;
+  if (isRecord(value.mcq)) for (const [k, v] of Object.entries(value.mcq)) if (typeof v === "number" && v >= 0 && v <= 3) out.mcq[k] = v;
+  if (isRecord(value.tf)) for (const [k, v] of Object.entries(value.tf)) if (typeof v === "boolean") out.tf[k] = v;
+  if (isRecord(value.short)) for (const [k, v] of Object.entries(value.short)) if (typeof v === "string") out.short[k] = v.slice(0, 8);
   return out;
 }
 
 function readSitting(value: unknown): Sitting | null {
-  if (!isObj(value) || typeof value.seed !== "number" || typeof value.startedAt !== "number") return null;
+  if (!isRecord(value) || typeof value.seed !== "number" || typeof value.startedAt !== "number") return null;
   return { seed: value.seed >>> 0, startedAt: value.startedAt, answers: readAnswers(value.answers) };
 }
 
 function load(): Saved {
   try {
     const raw: unknown = JSON.parse(localStorage.getItem(KEY) || "null");
-    if (!isObj(raw)) return { active: null, last: null, history: [] };
+    if (!isRecord(raw)) return { active: null, last: null, history: [] };
     const last = readSitting(raw.last);
-    const finishedAt = isObj(raw.last) && typeof raw.last.finishedAt === "number" ? raw.last.finishedAt : null;
+    const finishedAt = isRecord(raw.last) && typeof raw.last.finishedAt === "number" ? raw.last.finishedAt : null;
     const history = Array.isArray(raw.history)
-      ? raw.history.filter((row): row is HistoryRow => isObj(row) && typeof row.at === "number" && typeof row.total === "number" && typeof row.mcq === "number" && typeof row.tf === "number" && typeof row.short === "number")
+      ? raw.history.filter((row): row is HistoryRow => isRecord(row) && typeof row.at === "number" && typeof row.total === "number" && typeof row.mcq === "number" && typeof row.tf === "number" && typeof row.short === "number")
       : [];
     return { active: readSitting(raw.active), last: last && finishedAt ? { ...last, finishedAt } : null, history: history.slice(0, HISTORY) };
   } catch {
@@ -70,11 +71,6 @@ function save(next: Saved): void {
   }
 }
 
-function topicName(id: string): { vi: string; en: string } {
-  const topic = topicById(id);
-  return topic ? { vi: topic.vi, en: topic.en } : TF_TOPIC_NAMES.get(id) ?? { vi: id, en: id };
-}
-
 function clock(ms: number): string {
   const total = Math.max(0, Math.ceil(ms / 1000));
   const h = Math.floor(total / 3600);
@@ -83,7 +79,6 @@ function clock(ms: number): string {
   return `${h > 0 ? `${h}:` : ""}${String(m).padStart(h > 0 ? 2 : 1, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-const fmt = (value: number, lang: "vi" | "en") => (lang === "vi" ? String(value).replace(".", ",") : String(value));
 
 export function ExamPage() {
   const lang = useLang();
@@ -109,7 +104,7 @@ export function ExamPage() {
 
   function finish(sitting: Sitting) {
     const paper = buildPaper(sitting.seed);
-    const score = scorePaper(paper, sitting.answers, topicName);
+    const score = scorePaper(paper, sitting.answers, thptTopicName);
     const finishedAt = Math.min(Date.now(), sitting.startedAt + LIMIT_MS);
     // Missed questions go into the review plan (kept for everyone; reviewing them is Premium).
     saveReview(addPaper(loadReview(), paper, sitting.answers, score.losses, Date.now()));
@@ -176,10 +171,10 @@ export function ExamPage() {
               {saved.history.map((row) => (
                 <tr key={row.at}>
                   <td>{new Date(row.at).toLocaleDateString(lang === "vi" ? "vi-VN" : "en-GB")}</td>
-                  <td><b>{fmt(row.total, lang)}</b></td>
-                  <td>{fmt(row.mcq, lang)}</td>
-                  <td>{fmt(row.tf, lang)}</td>
-                  <td>{fmt(row.short, lang)}</td>
+                  <td><b>{decimalComma(row.total, lang)}</b></td>
+                  <td>{decimalComma(row.mcq, lang)}</td>
+                  <td>{decimalComma(row.tf, lang)}</td>
+                  <td>{decimalComma(row.short, lang)}</td>
                 </tr>
               ))}
             </tbody>
@@ -308,17 +303,17 @@ function Result({ finished }: { finished: Finished }) {
   const lang = useLang();
   const premium = usePremium();
   const paper: Paper = useMemo(() => buildPaper(finished.seed), [finished.seed]);
-  const score: PaperScore = useMemo(() => scorePaper(paper, finished.answers, topicName), [paper, finished.answers]);
+  const score: PaperScore = useMemo(() => scorePaper(paper, finished.answers, thptTopicName), [paper, finished.answers]);
   const { answers } = finished;
   const parent = useParentMode();
   const locked = <p className="exam-locked">{t(lang, "Chế độ phụ huynh: lời giải chỉ mở ở câu con đã làm.", "Parent mode: solutions open only for questions you attempted.")}</p>;
   const minutes = Math.round((finished.finishedAt - finished.startedAt) / 60000);
   return (
     <section className="exam-result" aria-labelledby="exam-score">
-      <h2 id="exam-score">{t(lang, `Điểm lần gần nhất: ${fmt(score.total, lang)}/10`, `Last score: ${fmt(score.total, lang)}/10`)}</h2>
+      <h2 id="exam-score">{t(lang, `Điểm lần gần nhất: ${decimalComma(score.total, lang)}/10`, `Last score: ${decimalComma(score.total, lang)}/10`)}</h2>
       <p>
         {t(lang,
-          `Phần I ${fmt(score.mcq, lang)}/3 (${score.mcqRight}/12 câu) · Phần II ${fmt(score.tf, lang)}/4 (${score.tfStatementsRight}/16 ý) · Phần III ${fmt(score.short, lang)}/3 (${score.shortRight}/6 câu) · ${minutes} phút`,
+          `Phần I ${decimalComma(score.mcq, lang)}/3 (${score.mcqRight}/12 câu) · Phần II ${decimalComma(score.tf, lang)}/4 (${score.tfStatementsRight}/16 ý) · Phần III ${decimalComma(score.short, lang)}/3 (${score.shortRight}/6 câu) · ${minutes} phút`,
           `Part I ${score.mcq}/3 (${score.mcqRight}/12) · Part II ${score.tf}/4 (${score.tfStatementsRight}/16 statements) · Part III ${score.short}/3 (${score.shortRight}/6) · ${minutes} min`)}
       </p>
       {score.losses.length > 0 ? (
@@ -326,7 +321,7 @@ function Result({ finished }: { finished: Finished }) {
           <h3>{t(lang, "Mất điểm nhiều nhất ở", "Most points lost in")}</h3>
           <ul className="exam-losses">
             {score.losses.slice(0, 5).map((loss) => (
-              <li key={loss.topic}>{lang === "en" ? loss.en : loss.vi}: −{fmt(loss.lost, lang)}</li>
+              <li key={loss.topic}>{lang === "en" ? loss.en : loss.vi}: −{decimalComma(loss.lost, lang)}</li>
             ))}
           </ul>
         </>
@@ -388,7 +383,7 @@ function Result({ finished }: { finished: Finished }) {
             <article key={id} className={`exam-q ${right ? "is-right" : "is-wrong"}`}>
               <h4>{right ? "✓" : "✗"} {t(lang, `Câu ${index + 1}.`, `Q${index + 1}.`)} <MathText text={question.prompt} /></h4>
               <p>
-                {t(lang, "Đáp số: ", "Answer: ")}<b>{fmt(shortValue(question) ?? 0, lang)}</b>
+                {t(lang, "Đáp số: ", "Answer: ")}<b>{decimalComma(shortValue(question) ?? 0, lang)}</b>
                 {" · "}{typed.trim() ? t(lang, `Bạn ghi ${typed.trim()}`, `You wrote ${typed.trim()}`) : t(lang, "Bỏ trống", "Left blank")}
               </p>
               {parent && !typed.trim() ? locked : <ol>{question.steps.map((step) => <li key={step}><MathText text={step} /></li>)}</ol>}

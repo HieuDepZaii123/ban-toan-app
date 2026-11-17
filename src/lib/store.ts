@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { snap } from "./format.ts";
+import { isRecord } from "./isRecord.ts";
 import { nextPos, slotRng } from "./prng.ts";
 import type { Range } from "../content/params.ts";
 
@@ -90,10 +91,6 @@ function blank(): Data {
     studies: {},
     at: emptyAt(),
   };
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function stringMap(value: unknown): Record<string, string> {

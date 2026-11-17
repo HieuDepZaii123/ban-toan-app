@@ -23,10 +23,9 @@ import { surveyDssItems } from "../content/vary/dss/survey.ts";
 import { triangleDssItems } from "../content/vary/dss/triangle.ts";
 import { trigDssItems } from "../content/vary/dss/trig.ts";
 import { vectorDssItems } from "../content/vary/dss/vector.ts";
-import { thptBank, thptById, type ThptQuestion } from "./bank.ts";
+import { thptBank, thptById, topicById, type ThptQuestion } from "./bank.ts";
 
 export const EXAM_MINUTES_2025 = 90;
-export const PART_POINTS = { mcq: 3, tf: 4, short: 3 } as const;
 
 /** Grade mix of the real paper: mostly grade 12, some grade 11, a little grade 10. */
 const MCQ_GRADES = [12, 12, 12, 12, 12, 12, 12, 11, 11, 11, 11, 10] as const;
@@ -251,3 +250,9 @@ export function scorePaper(paper: Paper, answers: Answers, topicName: (id: strin
 }
 
 export const TF_TOPIC_NAMES = new Map(TF_SOURCES.map((source) => [source.topic, { vi: source.vi, en: source.en }]));
+
+/** Display name of any topic a paper can draw from, in both languages; unknown ids show as themselves. */
+export function thptTopicName(id: string): { vi: string; en: string } {
+  const topic = topicById(id);
+  return topic ? { vi: topic.vi, en: topic.en } : TF_TOPIC_NAMES.get(id) ?? { vi: id, en: id };
+}

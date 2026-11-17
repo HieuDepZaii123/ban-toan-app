@@ -2,7 +2,9 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { freshSeed } from "../lib/prng.ts";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
+import { decimalComma } from "../lib/format.ts";
 import type { Lang } from "../lib/math.ts";
+import { thptTopicName } from "../thpt/exam2025.ts";
 import { THPT_GRADES, inScope, thptBank, thptById, thptTopics, topicById, type ThptQuestion } from "../thpt/bank.ts";
 import {
   EXAM_MINUTES,
@@ -42,14 +44,14 @@ function saveBag(bag: ThptBag) {
 }
 
 const topicName = (lang: Lang, id: string) => {
-  const topic = topicById(id);
-  return topic ? (lang === "en" ? topic.en : topic.vi) : id;
+  const name = thptTopicName(id);
+  return lang === "en" ? name.en : name.vi;
 };
 const percent = (item: Tally) => (item.done ? `${Math.round((item.right / item.done) * 100)}%` : "–");
 const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
 const score10 = (lang: Lang, right: number, total: number) => {
   const value = scoreOf10(right, total);
-  return lang === "en" ? String(value) : String(value).replace(".", ",");
+  return decimalComma(value, lang);
 };
 
 export function ThptPracticePage() {

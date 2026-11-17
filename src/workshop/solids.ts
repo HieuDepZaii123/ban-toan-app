@@ -26,15 +26,6 @@ export function solidVolume(kind: SolidKind, p: SolidParams): number {
   return p.a * p.b * p.h;
 }
 
-export function solidBase(kind: SolidKind, p: SolidParams): number | null {
-  if (kind === "tru" || kind === "non") return Math.PI * p.a * p.a;
-  if (kind === "lang") return (p.a * p.b) / 2;
-  if (kind === "chop") return p.a * p.a;
-  if (kind === "hop") return p.a * p.b;
-  if (kind === "lap") return p.a * p.a;
-  return null;
-}
-
 /** Công thức đang dùng, số lấy từ thanh trượt. */
 function tex(body: string): string {
   return `$${body}$`;
