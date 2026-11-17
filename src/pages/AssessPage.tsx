@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { assessBanks, gradeNumber, shownLetter, type AssessQuestion } from "../content/assessBank.ts";
 import { displayOrder } from "../lib/prng.ts";
 import { t } from "../lib/text.ts";
@@ -27,6 +27,9 @@ function load(): Saved {
 
 export function AssessPage() {
   const lang = useLang();
+  useEffect(() => {
+    document.title = t(lang, "Đánh giá · Bàn Toán", "Assess · Bàn Toán");
+  }, [lang]);
   const [state, setState] = useState<Saved>(load);
   const bank = assessBanks.find((item) => item.id === state.bank) ?? assessBanks[0]!;
   const index = clamp(state.pos[bank.id] ?? 0, bank.questions.length);

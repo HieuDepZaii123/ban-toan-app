@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { methodById, methodsData, type PracticeItem } from "../methods/catalog.ts";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
@@ -10,6 +10,13 @@ export function MethodsPage({ path }: { path: string }) {
   const lang = useLang();
   const id = path === "/phuong-phap" ? "" : decodeURIComponent(path.slice("/phuong-phap/".length).split("/")[0] ?? "");
   const method = id ? methodById(id) : undefined;
+  const pageTitle =
+    method ? t(lang, method.title, method.titleEn)
+    : id ? t(lang, "Không thấy cách này", "This method is missing")
+    : t(lang, "Phương pháp giải", "Methods");
+  useEffect(() => {
+    document.title = `${pageTitle} · Bàn Toán`;
+  }, [pageTitle]);
   if (id && !method) {
     return (
       <PageFrame

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cards } from "../content/cards.ts";
 import { loadMisses, withoutMiss, writeMisses, type MissRow } from "../lib/missBook.ts";
 import { A } from "../lib/route.tsx";
@@ -9,6 +9,9 @@ import { useLang } from "../ui/useLang.ts";
 
 export function MissPage() {
   const lang = useLang();
+  useEffect(() => {
+    document.title = t(lang, "Sổ lỗi · Bàn Toán", "Miss book · Bàn Toán");
+  }, [lang]);
   const [rows, setRows] = useState<MissRow[]>(loadMisses);
   const wrong = useSlice((data) => data.wrong);
   const byTopic = new Map<string, number>();
