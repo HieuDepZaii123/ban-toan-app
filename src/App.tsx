@@ -59,9 +59,10 @@ export default function App() {
 
 function Guarded() {
   const { path } = useRoute();
+  const lang = useLang();
   return (
     <Boundary key={path}>
-      <Suspense fallback={<p className="loading">Đang mở tờ…</p>}>
+      <Suspense fallback={<p className="loading">{t(lang, "Đang mở tờ…", "Opening this page…")}</p>}>
         <Shell />
       </Suspense>
     </Boundary>
