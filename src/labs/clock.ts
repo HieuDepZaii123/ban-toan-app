@@ -4,6 +4,29 @@ export function reducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+const SPEED_KEY = "ban-toan:lab-speed";
+let labSpeed = 1;
+try {
+  const saved = Number(window.localStorage.getItem(SPEED_KEY));
+  if (saved === 0.5 || saved === 1 || saved === 2) labSpeed = saved;
+} catch {
+  /* private window: speed stays 1 */
+}
+
+export function getLabSpeed(): number {
+  return labSpeed;
+}
+
+/** Play speed shared by every lab: 0.5, 1 or 2 times. */
+export function setLabSpeed(next: number): void {
+  labSpeed = next;
+  try {
+    window.localStorage.setItem(SPEED_KEY, String(next));
+  } catch {
+    /* ignore */
+  }
+}
+
 export function useClock(
   running: boolean,
   ms: number,
@@ -28,16 +51,17 @@ export function useClock(
       return;
     }
     let raf = 0;
-    let start = 0;
-    let hiddenAt = 0;
+    let last = 0;
+    let elapsed = 0;
     const tick = (now: number) => {
       if (document.hidden) {
-        hiddenAt = now;
+        last = 0;
         raf = 0;
         return;
       }
-      if (!start) start = now;
-      const raw = (now - start) / ms;
+      if (last) elapsed += (now - last) * labSpeed;
+      last = now;
+      const raw = elapsed / ms;
       if (!loop && raw >= 1) {
         frameRef.current(1);
         doneRef.current?.();
@@ -48,15 +72,12 @@ export function useClock(
     };
     const onVis = () => {
       if (document.hidden) {
-        hiddenAt = performance.now();
+        last = 0;
         cancelAnimationFrame(raf);
         raf = 0;
         return;
       }
-      if (hiddenAt) {
-        if (start) start += performance.now() - hiddenAt;
-        hiddenAt = 0;
-      }
+      last = 0;
       if (raf === 0) raf = requestAnimationFrame(tick);
     };
     document.addEventListener("visibilitychange", onVis);

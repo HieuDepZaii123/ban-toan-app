@@ -356,15 +356,15 @@ export const extra: Record<string, Challenge[]> = {
   vector: [
     {
       id: "w-parallel", level: 1,
-      vi: "Chọn $\\vec u$ và $\\vec v$ khác $\\vec 0$ để tích có hướng $\\vec u\\times\\vec v=\\vec 0$.",
-      en: "Choose nonzero $\\vec u$ and $\\vec v$ with cross product $\\vec u\\times\\vec v=\\vec 0$.",
+      vi: "Chọn $\\vec u$ và $\\vec v$ khác $\\vec 0$ để tích có hướng $[\\vec u,\\ \\vec v]=\\vec 0$.",
+      en: "Choose nonzero $\\vec u$ and $\\vec v$ with cross product $[\\vec u,\\ \\vec v]=\\vec 0$.",
       hint: B("Hai vectơ cùng phương.", "The two vectors are parallel."),
       set: { scene: 0, ux: 2, uy: 1, uz: 2, vx: 1, vy: -1, vz: 2 }, sol: { scene: 0, ux: 2, uy: 1, uz: 2, vx: 4, vy: 2, vz: 4 },
       check: (v, say) => {
         const u: [number, number, number] = [v.ux, v.uy, v.uz];
         const w: [number, number, number] = [v.vx, v.vy, v.vz];
         const cr = vec3Cross(u, w);
-        return judge(say, [[u.some((x) => x !== 0) && w.some((x) => x !== 0), `Một vectơ là $\\vec 0$.`, `One vector is $\\vec 0$.`], [cr.every((x) => near(x, 0, 1e-9)), `$\\vec u\\times\\vec v=(${cr.map((x) => say.n(x)).join(say.en ? ", " : ";\\ ")})\\ne\\vec 0$.`, `$\\vec u\\times\\vec v=(${cr.map((x) => say.n(x)).join(", ")})\\ne\\vec 0$.`]], [`Hai vectơ cùng phương nên tích có hướng bằng $\\vec 0$.`, `The vectors are parallel, so the cross product is $\\vec 0$.`]);
+        return judge(say, [[u.some((x) => x !== 0) && w.some((x) => x !== 0), `Một vectơ là $\\vec 0$.`, `One vector is $\\vec 0$.`], [cr.every((x) => near(x, 0, 1e-9)), `$[\\vec u,\\ \\vec v]=(${cr.map((x) => say.n(x)).join(say.en ? ", " : ";\\ ")})\\ne\\vec 0$.`, `$[\\vec u,\\ \\vec v]=(${cr.map((x) => say.n(x)).join(", ")})\\ne\\vec 0$.`]], [`Hai vectơ cùng phương nên tích có hướng bằng $\\vec 0$.`, `The vectors are parallel, so the cross product is $\\vec 0$.`]);
       },
     },
     {

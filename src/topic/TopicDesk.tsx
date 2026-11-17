@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, type ComponentType } from "react";
+import { lazy, Suspense, useEffect, useRef, useState, type ComponentType } from "react";
 import type { CardId } from "../content/cards.ts";
 import { streamName, topicById } from "../content/catalog.ts";
 import { loadTopic } from "../content/loadTopic.ts";
@@ -20,6 +20,8 @@ import { DangHoc } from "./DangHoc.tsx";
 import { FocusBar } from "./FocusBar.tsx";
 import { LectureVideos } from "./LectureVideos.tsx";
 import { LabChallenges } from "../labs/LabChallenges.tsx";
+import { LabTools } from "../labs/LabTools.tsx";
+import { writeParams } from "../lib/store.ts";
 import { SangTao } from "./SangTao.tsx";
 
 const Research = lazy(() => import("./Research.tsx").then((mod) => ({ default: mod.Research })));
@@ -75,6 +77,25 @@ export function TopicDesk({ id }: { id: string }) {
   useEffect(() => {
     if (topic) setLast(topic.id);
   }, [topic]);
+
+  const shared = new URLSearchParams(search).get("p");
+  const appliedShare = useRef("");
+  useEffect(() => {
+    if (!topic || !shared) return;
+    const key = `${topic.id}|${shared}`;
+    if (appliedShare.current === key) return;
+    appliedShare.current = key;
+    void import("../content/labSpecs.ts").then(async ({ allLabSpecs }) => {
+      const spec = allLabSpecs[topic.id];
+      if (!spec) return;
+      const { decodeParams } = await import("../labs/shared.ts");
+      const params = decodeParams(shared, spec.init, spec.range);
+      if (params) {
+        writeParams(topic.id, params);
+        setLabRun((n) => n + 1);
+      }
+    });
+  }, [topic, shared]);
 
   useEffect(() => {
     if (!topic) return;
@@ -196,9 +217,14 @@ export function TopicDesk({ id }: { id: string }) {
         {tab === "tn" ? (
           Lab ? (
             <div className="lab-desk">
-              <Suspense fallback={<div className="graph-wrap skeleton" aria-hidden="true" />}>
-                <Lab key={`${topic.id}:${labRun}`} />
-              </Suspense>
+              <div className="lab-col">
+                <div className="lab-main">
+                  <Suspense fallback={<div className="graph-wrap skeleton" aria-hidden="true" />}>
+                    <Lab key={`${topic.id}:${labRun}`} />
+                  </Suspense>
+                </div>
+                <LabTools key={topic.id} id={topic.id} onPreset={() => setLabRun((n) => n + 1)} />
+              </div>
               <LabChallenges key={topic.id} id={topic.id} onPreset={() => setLabRun((n) => n + 1)} />
             </div>
           ) : (
