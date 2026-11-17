@@ -10,10 +10,10 @@ export const derivativeKnowledge: TopicKnowledge = {
     lienHe: R`Đạo hàm xây trên giới hạn, nhất là giới hạn dạng $\frac{0}{0}$. Khảo sát hàm số dùng dấu của đạo hàm, còn tích phân là phép toán ngược của đạo hàm. Với hàm bậc hai, đạo hàm cho lại đỉnh của parabol ở chỗ $y'=0$.`,
   },
   tuDau: [
-    R`Trên xe máy có hai đồng hồ: một cái đếm quãng đường đã đi, một cái chỉ tốc độ lúc này. Hai con số liên quan chặt với nhau: tốc độ cho biết quãng đường đang tăng nhanh hay chậm. Đạo hàm chính là cái đồng hồ tốc độ, nhưng dùng được cho mọi đại lượng đang thay đổi: giá cả, nhiệt độ, dân số, độ cao của một đường cong.`,
-    R`Tốc độ trung bình thì dễ: đi $100$ km trong $2$ giờ là $50$ km mỗi giờ. Nhưng tốc độ «ngay lúc này» thì sao? Trong một khoảnh khắc không có thời gian trôi và cũng không có quãng đường nào, phép chia thành $0$ chia $0$. Lối thoát là đo trên những khoảng thời gian ngắn dần, một giây, một phần trăm giây, rồi xem kết quả tiến sát con số nào.`,
+    R`Trên xe máy có hai đồng hồ: một cái đếm quãng đường đã đi, một cái chỉ tốc độ lúc này. Hai con số ấy gắn chặt với nhau: tốc độ cho biết quãng đường đang tăng nhanh hay chậm. Đạo hàm chính là cái đồng hồ tốc độ, nhưng dùng được cho mọi đại lượng đang thay đổi: giá cả, nhiệt độ, dân số, độ cao của một đường cong.`,
+    R`Tốc độ trung bình thì dễ: đi $100$ km trong $2$ giờ là $50$ km mỗi giờ. Còn tốc độ «ngay lúc này» thì sao? Trong một khoảnh khắc không có thời gian trôi và cũng không có quãng đường nào, nên phép chia thành $0$ chia $0$. Lối thoát là đo trên những khoảng thời gian ngắn dần, một giây, một phần trăm giây, rồi xem kết quả tiến sát con số nào.`,
     R`Trên đồ thị, tốc độ thay đổi chính là độ dốc. Nối hai điểm của đường cong bằng một đường thẳng, độ dốc của nó là «lên bao nhiêu chia cho sang ngang bao nhiêu». Kéo điểm thứ hai trượt dần về điểm thứ nhất, đường thẳng xoay dần thành đường chỉ chạm đường cong tại một điểm, gọi là tiếp tuyến. Độ dốc của tiếp tuyến là đạo hàm.`,
-    R`Biết độ dốc ở mọi điểm là biết hầu hết về đường cong: dốc lên thì hàm đang tăng, dốc xuống thì đang giảm, nằm ngang thì có thể đang ở đỉnh đồi hoặc đáy thung lũng. Vì vậy đạo hàm là công cụ để tìm giá trị lớn nhất và nhỏ nhất. Các quy tắc bên dưới giúp tính đạo hàm mà không phải làm lại phép «thu nhỏ dần» mỗi lần.`,
+    R`Biết độ dốc ở mọi điểm là biết hầu hết về đường cong: dốc lên thì hàm đang tăng, dốc xuống thì đang giảm, nằm ngang thì có thể đang ở đỉnh đồi hoặc đáy thung lũng. Nhờ thế, đạo hàm trở thành công cụ để tìm giá trị lớn nhất và nhỏ nhất. Các quy tắc bên dưới giúp tính đạo hàm mà không phải làm lại phép «thu nhỏ dần» mỗi lần.`,
   ],
   kyHieu: [
     { kh: R`$f'(a)$`, doc: R`Đọc là «f phẩy của a»: đạo hàm của hàm $f$ tại điểm $a$, tức độ dốc của đồ thị tại đó.` },
@@ -63,6 +63,16 @@ export const derivativeKnowledge: TopicKnowledge = {
             R`Viết độ thay đổi của hàm thành một tích: $f(a+h)-f(a)=\frac{f(a+h)-f(a)}{h}\cdot h$.`,
             R`Khi $h$ tiến về $0$, thừa số đầu tiến về số hữu hạn $f'(a)$ còn thừa số sau tiến về $0$, nên tích tiến về $0$. Vậy $f(a+h)$ tiến về $f(a)$, tức hàm liên tục tại $a$.`,
             R`Chiều ngược sai: với $f(x)=|x|$ tại $0$, tỉ số là $\frac{|h|}{h}$, bằng $1$ khi $h>0$ và bằng $-1$ khi $h<0$. Hai phía cho hai độ dốc khác nhau nên không có một tiếp tuyến chung.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng định nghĩa ε–δ",
+              buoc: [
+                R`Cho trước một số $\varepsilon>0$. Vì $\frac{f(a+h)-f(a)}{h}$ tiến về $f'(a)$ khi $h\to 0$, nên có $\delta_1>0$ để mọi $h$ với $0<|h|<\delta_1$ cho $\left|\frac{f(a+h)-f(a)}{h}\right|<|f'(a)|+1$.`,
+                R`Nhân hai vế với $|h|$: khi $0<|h|<\delta_1$ thì $|f(a+h)-f(a)|<(|f'(a)|+1)\,|h|$. Độ thay đổi của hàm bị chặn bởi một hằng số nhân với bước $h$.`,
+                R`Chọn $\delta=\min\left\{\delta_1,\frac{\varepsilon}{|f'(a)|+1}\right\}$. Khi $0<|h|<\delta$ thì $|f(a+h)-f(a)|<(|f'(a)|+1)\cdot\frac{\varepsilon}{|f'(a)|+1}=\varepsilon$, còn khi $h=0$ thì hiệu bằng $0<\varepsilon$. Đó đúng là định nghĩa $f$ liên tục tại $a$.`,
+              ],
+            },
           ],
         },
         { kind: "luu-y", text: R`Đạo hàm tại một điểm là một số, còn khi tính ở mọi điểm ta được hàm số $f'(x)$. Đề bài hỏi «đạo hàm tại $x=2$» thì phải thay số vào cuối.` },
@@ -127,6 +137,16 @@ export const derivativeKnowledge: TopicKnowledge = {
             R`Chia phần tăng thêm cho $h$: $\frac{\Delta u}{h}\cdot v+u\cdot\frac{\Delta v}{h}+\frac{\Delta u}{h}\cdot\Delta v$.`,
             R`Cho $h$ tiến về $0$: $\frac{\Delta u}{h}$ tiến về $u'$, $\frac{\Delta v}{h}$ tiến về $v'$, còn $\Delta v$ tiến về $0$ nên số hạng cuối biến mất. Kết quả là $u'v+uv'$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng hằng đẳng thức bình phương",
+              buoc: [
+                R`Viết tích thành hiệu các bình phương: $uv=\frac{(u+v)^2-u^2-v^2}{2}$. Đây là hằng đẳng thức, kiểm bằng cách khai triển $(u+v)^2$.`,
+                R`Quy tắc hàm hợp cho $(w^2)'=2ww'$ với mọi hàm $w$. Áp dụng cho $w=u+v$, $w=u$ và $w=v$: $(uv)'=\frac{2(u+v)(u'+v')-2uu'-2vv'}{2}$.`,
+                R`Khai triển tử số: $2(u+v)(u'+v')=2uu'+2uv'+2vu'+2vv'$. Trừ đi $2uu'+2vv'$ còn $2uv'+2vu'$, chia $2$ được $(uv)'=u'v+uv'$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Thương",
@@ -134,6 +154,16 @@ export const derivativeKnowledge: TopicKnowledge = {
           suy: [
             R`Đặt $w=\frac{u}{v}$, khi đó $u=w\cdot v$. Lấy đạo hàm hai vế theo quy tắc tích: $u'=w'v+wv'$.`,
             R`Giải ra $w'$: $w'=\frac{u'-wv'}{v}$. Thay $w=\frac{u}{v}$ rồi quy đồng: $w'=\frac{u'-\frac{u}{v}v'}{v}=\frac{u'v-uv'}{v^2}$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng quy tắc tích và hàm hợp",
+              buoc: [
+                R`Viết thương thành tích: $\frac{u}{v}=u\cdot\frac{1}{v}$. Chỉ còn cần đạo hàm của $\frac{1}{v}$, tức hàm hợp của $t\mapsto\frac{1}{t}$ với $t=v(x)$.`,
+                R`Theo bảng đạo hàm, $\left(\frac{1}{t}\right)'=-\frac{1}{t^2}$ với $t\neq 0$, nên quy tắc hàm hợp cho $\left(\frac{1}{v}\right)'=-\frac{v'}{v^2}$.`,
+                R`Áp dụng quy tắc tích cho $u\cdot\frac{1}{v}$: $\left(\frac{u}{v}\right)'=u'\cdot\frac{1}{v}+u\cdot\left(-\frac{v'}{v^2}\right)=\frac{u'v-uv'}{v^2}$.`,
+              ],
+            },
           ],
         },
         {
@@ -144,6 +174,17 @@ export const derivativeKnowledge: TopicKnowledge = {
             R`Viết tỉ số thành tích của hai tỉ số: $\frac{f(g(x+h))-f(g(x))}{h}=\frac{f(g(x+h))-f(g(x))}{g(x+h)-g(x)}\cdot\frac{g(x+h)-g(x)}{h}$, khi $g(x+h)\neq g(x)$.`,
             R`Khi $h$ tiến về $0$, $g(x+h)$ tiến về $g(x)$ nên thừa số đầu tiến về $f'(g(x))$, còn thừa số sau tiến về $g'(x)$.`,
             R`Các dạng thường dùng chỉ là thay $f$ bằng lũy thừa, sin, hàm mũ hay logarit: lấy đạo hàm của lớp ngoài, giữ nguyên phần bên trong, rồi nhân với đạo hàm của phần bên trong.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng xấp xỉ tuyến tính",
+              buoc: [
+                R`Đặt $k=g(x+h)-g(x)$. Đạo hàm của $g$ nghĩa là $k=\bigl(g'(x)+\varepsilon_1\bigr)h$ với $\varepsilon_1\to 0$ khi $h\to 0$. Vậy $k\to 0$ khi $h\to 0$.`,
+                R`Tương tự với $f$ tại điểm $g(x)$: $f(g(x)+k)-f(g(x))=\bigl(f'(g(x))+\varepsilon_2\bigr)k$, với $\varepsilon_2\to 0$ khi $k\to 0$ (đặt $\varepsilon_2=0$ khi $k=0$). Cách viết này đúng cả khi $k=0$.`,
+                R`Thay $k$ vào rồi chia cho $h$: $\frac{f(g(x+h))-f(g(x))}{h}=\bigl(f'(g(x))+\varepsilon_2\bigr)\bigl(g'(x)+\varepsilon_1\bigr)$.`,
+                R`Cho $h\to 0$ thì $\varepsilon_1\to 0$ và $\varepsilon_2\to 0$, nên vế phải tiến về $f'(g(x))\cdot g'(x)$. Cách này không cần giả thiết $g(x+h)\neq g(x)$ như cách chia ở trên, chỉ cần $g$ có đạo hàm tại $x$ và $f$ có đạo hàm tại $g(x)$.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Nhận ra cấu trúc", text: R`Nhìn phép toán ngoài cùng của biểu thức: là tổng thì lấy đạo hàm từng hạng tử, là tích thì dùng quy tắc tích, là thương thì dùng quy tắc thương, là hàm hợp thì đạo hàm hàm ngoài rồi nhân đạo hàm hàm trong. Làm từ ngoài vào trong.` },
@@ -182,6 +223,17 @@ export const derivativeKnowledge: TopicKnowledge = {
             R`Để chặt chẽ cần định lí giá trị trung bình, được công nhận: với $x_1<x_2$ luôn có một điểm $c$ ở giữa mà $\frac{f(x_2)-f(x_1)}{x_2-x_1}=f'(c)$. Nôm na: nếu cả chuyến đi có tốc độ trung bình $50$ km mỗi giờ thì có lúc đồng hồ chỉ đúng $50$.`,
             R`Vì $f'(c)>0$ và $x_2-x_1>0$ nên $f(x_2)-f(x_1)>0$, tức $f(x_2)>f(x_1)$: hàm đồng biến. Với $f'<0$ lập luận y hệt cho hàm nghịch biến.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng phản chứng với giá trị nhỏ nhất",
+              buoc: [
+                R`Giả sử $f'>0$ trên khoảng $I$ nhưng có $x_1<x_2$ trong $I$ với $f(x_2)\le f(x_1)$. Hàm có đạo hàm nên liên tục, mà hàm liên tục trên đoạn $[x_1;x_2]$ thì đạt giá trị nhỏ nhất tại một điểm $m$ của đoạn (định lí được công nhận).`,
+                R`Nếu $m$ nằm giữa $x_1$ và $x_2$ thì $f$ có cực tiểu tại $m$, nên tiếp tuyến nằm ngang: $f'(m)=0$ (định lí Fermat, được công nhận). Điều này mâu thuẫn với $f'>0$.`,
+                R`Nếu $m=x_2$: vì $f'(x_2)>0$ nên với $h>0$ đủ nhỏ có $f(x_2-h)<f(x_2)$, tức có điểm trong đoạn thấp hơn $f(x_2)$. Mâu thuẫn với việc $m=x_2$ là điểm thấp nhất.`,
+                R`Nếu $m=x_1$: vì $f(x_2)\le f(x_1)$ và $f(x_1)$ đã là giá trị nhỏ nhất nên $f(x_2)=f(x_1)$, tức $x_2$ cũng là điểm thấp nhất. Rơi về trường hợp vừa rồi, lại mâu thuẫn. Vậy $f(x_2)>f(x_1)$, và $f'<0$ cho kết quả ngược lại bằng lập luận tương tự.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Điều kiện cực trị",
@@ -190,6 +242,16 @@ export const derivativeKnowledge: TopicKnowledge = {
             R`Nếu $f'>0$ ở bên trái $x_0$ thì hàm đi lên cho tới $x_0$; nếu $f'<0$ ở bên phải thì hàm đi xuống sau $x_0$. Lên rồi xuống nghĩa là $f(x_0)$ lớn hơn các giá trị lân cận: đó là cực đại.`,
             R`Ngược lại, xuống rồi lên thì $f(x_0)$ nhỏ hơn các giá trị lân cận: đó là cực tiểu.`,
             R`Vì sao phải có đổi dấu: hàm $y=x^3$ có $y'=3x^2$ bằng $0$ tại $x=0$, nhưng $y'$ dương ở cả hai phía. Hàm tăng suốt, chỉ nằm ngang một thoáng, nên không có cực trị tại đó.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng định lí giá trị trung bình",
+              buoc: [
+                R`Giả sử $f$ liên tục tại $x_0$, và có $\delta>0$ để $f'>0$ trên $(x_0-\delta;x_0)$, $f'<0$ trên $(x_0;x_0+\delta)$. Với $0<|x-x_0|<\delta$, định lí giá trị trung bình (được công nhận) cho một điểm $c$ nằm giữa $x$ và $x_0$ sao cho $f(x)-f(x_0)=f'(c)(x-x_0)$.`,
+                R`Nếu $f'$ đổi dấu từ dương sang âm khi qua $x_0$: với $x<x_0$ có $c<x_0$ nên $f'(c)>0$ và $x-x_0<0$, tích âm, tức $f(x)<f(x_0)$.`,
+                R`Với $x>x_0$ có $c>x_0$ nên $f'(c)<0$ và $x-x_0>0$, tích cũng âm, tức $f(x)<f(x_0)$. Vậy $f(x_0)$ lớn hơn mọi giá trị lân cận: đó là cực đại. Trường hợp $f'$ đổi dấu từ âm sang dương cho cực tiểu theo cách y hệt.`,
+              ],
+            },
           ],
         },
         {
@@ -229,6 +291,11 @@ export const derivativeKnowledge: TopicKnowledge = {
     { id: "integral", vi: R`Tích phân là phép toán ngược của đạo hàm: nguyên hàm của $f$ là hàm có đạo hàm bằng $f$.` },
   ],
   checks: [
+    { expr: "simplify(((sin(x)+exp(x))**2 - sin(x)**2 - exp(x)**2)/2 - sin(x)*exp(x))", expect: "0" },
+    { expr: "simplify(diff(sin(x)/exp(x), x) - (cos(x)*exp(x) - sin(x)*exp(x))/exp(x)**2)", expect: "0" },
+    { expr: "simplify(diff(sin(x)*exp(-x), x) - diff(sin(x)/exp(x), x))", expect: "0" },
+    { expr: "diff(sin(x**2), x)", expect: "2*x*cos(x**2)" },
+    { expr: "diff(1/x, x)", expect: "-1/x**2" },
     { expr: "limit(((1+h)**2-1)/h, h, 0)", expect: "2" },
     { expr: "expand(((1+h)**2-1)/h)", expect: "h+2" },
     { expr: "diff(x**2, x).subs(x,1)", expect: "2" },
