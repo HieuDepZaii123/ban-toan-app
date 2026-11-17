@@ -29,7 +29,16 @@ function saveBag(bag: GradePracticeBag) {
 }
 
 export function GradePracticePage({ path }: { path: string }) {
+  const lang = useLang();
   const grade = Number(path.slice("/luyen-lop/".length));
+  const known = Number.isInteger(grade) && grade >= 1 && grade <= 9 && questionsForGrade(grade).length > 0;
+  const pageTitle =
+    path === "/luyen-lop" ? t(lang, "Lớp 1–9", "Grades 1–9")
+    : known ? t(lang, `Luyện lớp ${grade}`, `Grade ${grade} practice`)
+    : t(lang, "Không thấy lớp này", "This grade is missing");
+  useEffect(() => {
+    document.title = `${pageTitle} · Bàn Toán`;
+  }, [pageTitle]);
   if (path === "/luyen-lop") return <Picker />;
   if (!Number.isInteger(grade) || grade < 1 || grade > 9) {
     return <Picker missing />;

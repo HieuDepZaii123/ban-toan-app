@@ -27,6 +27,9 @@ export function DrillPage() {
   const [picks, setPicks] = useState(loadPicks);
   const [onlyWrong, setOnlyWrong] = useState(false);
   const lang = useLang();
+  useEffect(() => {
+    document.title = t(lang, "Đề luyện · Bàn Toán", "Mixed drill · Bàn Toán");
+  }, [lang]);
   const question = sharedDrill[index]!;
   const picked = picks[question.id];
   const right = sharedDrill.filter((item, at) => isSharedCorrect(at, picks[item.id] ?? -1)).length;

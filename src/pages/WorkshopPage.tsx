@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { t } from "../lib/text.ts";
 import { PageFrame } from "../ui/PageFrame.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -7,6 +7,9 @@ import { SolidBench } from "../workshop/SolidBench.tsx";
 
 export function WorkshopPage() {
   const lang = useLang();
+  useEffect(() => {
+    document.title = t(lang, "Xưởng hình · Bàn Toán", "Workshop · Bàn Toán");
+  }, [lang]);
   const [tab, setTab] = useState<"phang" | "khoi">("phang");
   return (
     <PageFrame

@@ -54,6 +54,9 @@ const score10 = (lang: Lang, right: number, total: number) => {
 
 export function ThptPracticePage() {
   const lang = useLang();
+  useEffect(() => {
+    document.title = t(lang, "THPT 10–12 · Bàn Toán", "Grades 10–12 · Bàn Toán");
+  }, [lang]);
   const [bag, setBag] = useState(loadBag);
   const [view, setView] = useState<View>(() => (loadBag().active ? { kind: "exam" } : { kind: "home" }));
   const update = (next: ThptBag) => {
