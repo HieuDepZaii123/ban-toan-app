@@ -2,7 +2,7 @@ import { categoryById, trackIn, type StudyCategory, type StudyTrack } from "./ca
 
 export type RepeatMode = "off" | "all" | "one";
 
-export type StudyPrefs = {
+type StudyPrefs = {
   categoryId: string;
   trackId: string;
   volume: number;
@@ -105,7 +105,7 @@ export function shuffledIndex(length: number, index: number, rng: () => number):
   return pick === index ? (index + 1) % length : pick;
 }
 
-export type NextPick = { id: string; stop: boolean; restart: boolean };
+type NextPick = { id: string; stop: boolean; restart: boolean };
 
 /**
  * Chọn bài kế tiếp cho nút trước/sau (auto = false) hoặc khi bài tự kết thúc (auto = true).

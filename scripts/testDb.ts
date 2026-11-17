@@ -14,9 +14,9 @@ import { pgStore } from "../server/pay/pgStore.ts";
 
 const INT8 = 20;
 
-export type TestStore = "sqlite" | "pglite" | "postgres";
+type TestStore = "sqlite" | "pglite" | "postgres";
 
-export const TEST_STORE: TestStore =
+const TEST_STORE: TestStore =
   process.env.PAY_TEST_STORE === "pglite" ? "pglite" : process.env.PAY_TEST_STORE === "postgres" ? "postgres" : "sqlite";
 
 type Runner = PGlite | Transaction;
@@ -27,7 +27,7 @@ async function run<T>(db: Runner, text: string, params?: readonly unknown[]): Pr
 }
 
 /** Client PGlite trong bộ nhớ; khởi động ở truy vấn đầu tiên nên dựng được đồng bộ. */
-export function pgliteClient(): SqlClient {
+function pgliteClient(): SqlClient {
   let db: PGlite | null = null;
   const open = () => (db ??= new PGlite({ parsers: { [INT8]: (value: string) => Number(value) } }));
   const asQuery = (target: Runner): SqlQuery => ({ query: (text, params) => run(target, text, params) });
@@ -43,7 +43,7 @@ export function pgliteClient(): SqlClient {
 const opened: SqlClient[] = [];
 
 /** Client `pg` trên một schema mới, tạo ở truy vấn đầu tiên. */
-export function serverClient(url: string): SqlClient {
+function serverClient(url: string): SqlClient {
   const schema = `t_${randomBytes(6).toString("hex")}`;
   let ready: Promise<SqlClient> | null = null;
   const open = () =>

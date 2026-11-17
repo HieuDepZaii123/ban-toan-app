@@ -1,6 +1,6 @@
-export type DocBand = "tieu-hoc" | "thcs" | "thpt";
+type DocBand = "tieu-hoc" | "thcs" | "thpt";
 
-export type DocSample = {
+type DocSample = {
   id: string;
   band: DocBand;
   grade: string;

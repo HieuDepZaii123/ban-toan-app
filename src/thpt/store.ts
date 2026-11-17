@@ -9,7 +9,7 @@ export const EXAM_SIZES = [10, 20, 30, 40] as const;
 export const EXAM_MINUTES = [0, 15, 30, 45, 60] as const;
 const HISTORY = 20;
 
-export type ExamRecord = {
+type ExamRecord = {
   at: string;
   grades: number[];
   total: number;
@@ -26,7 +26,7 @@ export type Exam = {
   grades: number[];
 };
 
-export type FinishedExam = Exam & { record: ExamRecord };
+type FinishedExam = Exam & { record: ExamRecord };
 
 export type ThptBag = {
   picks: Record<string, number>;
@@ -38,7 +38,7 @@ export type ThptBag = {
   exams: ExamRecord[];
 };
 
-export type Scored = { id: string; answer: number; topic: string };
+type Scored = { id: string; answer: number; topic: string };
 
 export function emptyThptBag(): ThptBag {
   return { picks: {}, at: null, grades: [10, 11, 12], topics: [], active: null, last: null, exams: [] };

@@ -5,9 +5,9 @@
 import { randomUUID } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
 
-export type FetchHandler = (request: Request) => Promise<Response>;
+type FetchHandler = (request: Request) => Promise<Response>;
 
-export type BridgeOptions = {
+type BridgeOptions = {
   /** Tên ngắn trong log, ví dụ "pay" hoặc "chat". */
   name: string;
   /** Số byte tối đa của thân request; vượt quá thì trả 413. */
@@ -18,7 +18,7 @@ export type BridgeOptions = {
 
 type WithBody = IncomingMessage & { body?: unknown };
 
-export class BodyTooLarge extends Error {
+class BodyTooLarge extends Error {
   readonly limit: number;
   constructor(limit: number) {
     super(`body over ${limit} bytes`);
@@ -41,7 +41,7 @@ function headerPairs(headers: IncomingMessage["headers"]): [string, string][] {
 }
 
 /** Đọc thân request, dừng sớm khi quá `maxBytes`. Vercel có thể đã đọc sẵn vào `req.body`. */
-export async function readBody(req: IncomingMessage, maxBytes: number): Promise<Buffer<ArrayBufferLike>> {
+async function readBody(req: IncomingMessage, maxBytes: number): Promise<Buffer<ArrayBufferLike>> {
   const declared = Number(headerValue(req.headers["content-length"]));
   if (Number.isFinite(declared) && declared > maxBytes) throw new BodyTooLarge(maxBytes);
   const chunks: Buffer<ArrayBufferLike>[] = [];
@@ -63,7 +63,7 @@ export async function readBody(req: IncomingMessage, maxBytes: number): Promise<
   return raw;
 }
 
-export async function toRequest(req: IncomingMessage, maxBytes: number): Promise<Request> {
+async function toRequest(req: IncomingMessage, maxBytes: number): Promise<Request> {
   const host = headerValue(req.headers["x-forwarded-host"]) || headerValue(req.headers.host) || "127.0.0.1:43123";
   const proto = headerValue(req.headers["x-forwarded-proto"]) || "http";
   const url = new URL(req.url || "/", `${proto}://${host}`);

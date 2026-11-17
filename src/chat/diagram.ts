@@ -2,7 +2,7 @@
 
 const BLOCK = /```(mermaid|svg|text)\s*\n([\s\S]*?)```/gi;
 
-export type DiagramBlock =
+type DiagramBlock =
   | { kind: "prose"; text: string }
   | { kind: "mermaid" | "svg" | "ascii"; text: string };
 

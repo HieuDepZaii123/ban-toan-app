@@ -4,9 +4,9 @@ import { ensureSchema } from "../server/db/schema.ts";
 import type { SqlClient } from "../server/db/sql.ts";
 import { openStore } from "../server/pay/store.ts";
 
-export const COPY_TABLES = ["orders", "payment_events", "affiliates", "affiliate_visits", "affiliate_commissions"] as const;
+const COPY_TABLES = ["orders", "payment_events", "affiliates", "affiliate_visits", "affiliate_commissions"] as const;
 
-export type CopyReport = Record<(typeof COPY_TABLES)[number], { read: number; inserted: number }>;
+type CopyReport = Record<(typeof COPY_TABLES)[number], { read: number; inserted: number }>;
 
 export async function copySqliteToPg(sqlitePath: string, client: SqlClient): Promise<CopyReport> {
   openStore(sqlitePath); // nâng lược đồ SQLite cũ lên đủ cột trước khi đọc

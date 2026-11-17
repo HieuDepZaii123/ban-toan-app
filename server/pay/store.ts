@@ -8,7 +8,7 @@ import { newAffiliateCode } from "./affiliate.ts";
 import { pgStore } from "./pgStore.ts";
 import type { PayMethod, PlanId } from "./env.ts";
 
-export type OrderStatus = "pending" | "paid" | "expired" | "refunded";
+type OrderStatus = "pending" | "paid" | "expired" | "refunded";
 
 export type OrderRow = {
   orderId: string;
@@ -39,7 +39,7 @@ export type OrderRow = {
   refBps: number | null;
 };
 
-export type CryptoQuoteRow = {
+type CryptoQuoteRow = {
   chain: string;
   asset: string;
   units: string;
@@ -132,7 +132,7 @@ export type AffiliateStats = {
   commissionApproved: number;
 };
 
-export type AffiliateAdminRow = AffiliateStats & { code: string; email: string | null; createdAt: number };
+type AffiliateAdminRow = AffiliateStats & { code: string; email: string | null; createdAt: number };
 
 export function hashKey(key: string): string {
   return createHash("sha256").update(key).digest("hex");
@@ -533,7 +533,7 @@ function openSqlite(dbPath: string): SyncStore {
   }
 }
 
-export type StoreConfig = { databaseUrl: string; dbPath: string };
+type StoreConfig = { databaseUrl: string; dbPath: string };
 
 const stores = new Map<string, PayStore>();
 

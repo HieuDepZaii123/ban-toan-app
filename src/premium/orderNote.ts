@@ -1,4 +1,4 @@
-export type CheckoutMethod = "wallet" | "qr" | "bank" | "crypto";
+type CheckoutMethod = "wallet" | "qr" | "bank" | "crypto";
 
 /**
  * Đơn hết 15 phút. Chuyển khoản, QR và MoMo vẫn ghi nhận tiền đến muộn vào đúng đơn.

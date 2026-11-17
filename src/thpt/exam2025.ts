@@ -49,8 +49,8 @@ const TF_SOURCES: { topic: string; vi: string; en: string; items: readonly DssIt
   { topic: "ineq", vi: "Bất đẳng thức", en: "Inequalities", items: ineqDssItems },
 ];
 
-export type TfStatement = { vi: string; en: string; truth: boolean; whyVi: string; whyEn: string };
-export type TfQuestion = {
+type TfStatement = { vi: string; en: string; truth: boolean; whyVi: string; whyEn: string };
+type TfQuestion = {
   id: string;
   topic: string;
   topicVi: string;
@@ -199,7 +199,7 @@ export function tfPoints(correct: number): number {
   return correct >= 4 ? 1 : correct === 3 ? 0.5 : correct === 2 ? 0.25 : correct === 1 ? 0.1 : 0;
 }
 
-export type TopicLoss = { topic: string; vi: string; en: string; lost: number };
+type TopicLoss = { topic: string; vi: string; en: string; lost: number };
 export type PaperScore = {
   mcq: number;
   tf: number;

@@ -59,7 +59,7 @@ function trim(n: number): string {
   return String(rounded).replace(".", "{,}");
 }
 
-export type Pt3 = readonly [number, number, number];
+type Pt3 = readonly [number, number, number];
 
 export function solidMesh(kind: SolidKind, p: SolidParams): { verts: Pt3[]; edges: [number, number][] } {
   if (kind === "tru" || kind === "non") return roundMesh(kind, p.a, p.b);

@@ -44,7 +44,7 @@ export type Question = {
 
 export type LessonKind = "mo" | "vd" | "dinh" | "loi" | "kiem";
 
-export type LessonBit = {
+type LessonBit = {
   k: LessonKind;
   vi: string;
   en: string;

@@ -82,7 +82,7 @@ export function mathDec(n: number, lang: "vi" | "en"): string {
   return lang === "vi" ? text.replace(".", "{,}") : text;
 }
 
-export function money2(n: number, lang: "vi" | "en"): string {
+function money2(n: number, lang: "vi" | "en"): string {
   return (Math.round(n * 100) / 100).toFixed(2).replace(".", lang === "vi" ? "," : ".");
 }
 

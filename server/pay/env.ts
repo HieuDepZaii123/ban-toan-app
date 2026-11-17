@@ -50,7 +50,7 @@ export type PayEnv = {
 };
 
 /** Public sandbox keys published by MoMo for test-payment.momo.vn. Not a live merchant secret. */
-export const MOMO_SANDBOX = {
+const MOMO_SANDBOX = {
   partnerCode: "MOMO",
   accessKey: "F8BBA842ECF85",
   secretKey: "K951B6PE1waDMi640xX08PD3vg6EkVlz",
@@ -70,7 +70,7 @@ function secret(value: string | undefined, live: boolean): string {
   return text;
 }
 
-export function isLive(source: NodeJS.ProcessEnv): boolean {
+function isLive(source: NodeJS.ProcessEnv): boolean {
   if (source.PAY_LIVE === "0") return false;
   return source.PAY_LIVE === "1" || source.VERCEL_ENV === "production" || source.NODE_ENV === "production";
 }

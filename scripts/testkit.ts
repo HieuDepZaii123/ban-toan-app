@@ -8,7 +8,7 @@ export const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻ�
 export const BARE = /\b(khong|duoc|dinh|nghiem|phuong trinh|ham so)\b/i;
 
 /** The bodies of every inline `$…$` in a string. */
-export function texOf(text: string): string[] {
+function texOf(text: string): string[] {
   return [...text.matchAll(/\$([^$]+)\$/g)].map((match) => match[1] ?? "");
 }
 

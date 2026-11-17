@@ -8,12 +8,12 @@ import { isRecord } from "../lib/isRecord.ts";
 /** Where the mock-exam page keeps its history (src/pages/ExamPage.tsx). */
 export const EXAM_KEY = "ban-toan-thi2025-v1";
 /** Where the marking page logs each result (src/check/CheckPage.tsx). */
-export const CHECK_LOG_KEY = "ban-toan-checks";
+const CHECK_LOG_KEY = "ban-toan-checks";
 const CHECK_LOG_MAX = 200;
 const WEEK_MS = 7 * 86_400_000;
 
-export type ExamRow = { at: number; total: number };
-export type CheckRow = { at: number; key: string; verdict: "ok" | "wrong" | "unclear"; step: number | null };
+type ExamRow = { at: number; total: number };
+type CheckRow = { at: number; key: string; verdict: "ok" | "wrong" | "unclear"; step: number | null };
 
 export type Report = {
   v: 1;

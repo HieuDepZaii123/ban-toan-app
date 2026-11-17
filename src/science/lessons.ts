@@ -1,8 +1,8 @@
 import type { ScienceId } from "./catalog.ts";
 
-export type ScienceDrill = { q: string; answer: string; steps: string[] };
+type ScienceDrill = { q: string; answer: string; steps: string[] };
 export type ScienceLayer = { bits: string[]; code?: string; drill: ScienceDrill };
-export type ScienceLesson = { basic: ScienceLayer; exam: ScienceLayer; adv: ScienceLayer };
+type ScienceLesson = { basic: ScienceLayer; exam: ScienceLayer; adv: ScienceLayer };
 
 export const scienceLessons: Record<ScienceId, ScienceLesson> = {
   python: {

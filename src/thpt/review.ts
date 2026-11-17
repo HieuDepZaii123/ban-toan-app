@@ -15,7 +15,7 @@ export const INTERVAL_DAYS = [1, 3, 7, 14] as const;
 const MAX_CARDS = 200;
 
 export type ReviewKind = "mcq" | "short";
-export type ReviewCard = {
+type ReviewCard = {
   id: string;
   kind: ReviewKind;
   topic: string;
@@ -148,7 +148,7 @@ function startOfDay(at: number): number {
   return day.getTime();
 }
 
-export type ReviewSchedule = { today: number; tomorrow: number; week: number; later: number; total: number };
+type ReviewSchedule = { today: number; tomorrow: number; week: number; later: number; total: number };
 
 /** How many cards fall due today (including overdue), tomorrow, in the rest of the next 7 days, and later. */
 export function schedule(state: ReviewState, now: number): ReviewSchedule {

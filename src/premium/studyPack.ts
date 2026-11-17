@@ -7,7 +7,7 @@
 import type { Lesson, LessonKind, Question, TopicMeta } from "../content/types.ts";
 
 export type Lang = "vi" | "en";
-export type PackSource = { meta: TopicMeta; lesson: Lesson; questions: readonly Question[] };
+type PackSource = { meta: TopicMeta; lesson: Lesson; questions: readonly Question[] };
 
 /** Worked examples shown with full steps; the remaining plain questions go to the self-test. */
 export const PACK_EXAMPLES = 3;

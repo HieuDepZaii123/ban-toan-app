@@ -61,12 +61,12 @@ export function cost(x: number): number {
   return 2 * x * x - 8 * x + 11;
 }
 
-export function wrapDeg(deg: number): number {
+function wrapDeg(deg: number): number {
   const a = deg % 360;
   return a < 0 ? a + 360 : a;
 }
 
-export function degToRad(deg: number): number {
+function degToRad(deg: number): number {
   return (deg * Math.PI) / 180;
 }
 
@@ -88,11 +88,11 @@ const COS: Record<number, string> = {
   180: "−1", 210: "−√3/2", 225: "−√2/2", 270: "0", 300: "1/2", 330: "√3/2", 360: "1",
 };
 
-export function exactSin(deg: number): string | null {
+function exactSin(deg: number): string | null {
   return SIN[wrapDeg(Math.round(deg))] ?? null;
 }
 
-export function exactCos(deg: number): string | null {
+function exactCos(deg: number): string | null {
   return COS[wrapDeg(Math.round(deg))] ?? null;
 }
 
@@ -246,7 +246,7 @@ export function diceCondition(face: number): { remain: number; both: number } {
   return { remain, both };
 }
 
-export const BAYES_POP = 10000;
+const BAYES_POP = 10000;
 
 /**
  * Counts for a test on a town of `pop` people.

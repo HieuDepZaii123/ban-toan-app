@@ -217,7 +217,7 @@ function agree(a: Node, b: Node): { same: boolean; left: string; right: string }
   return { same: true, left: "", right: "" };
 }
 
-export type StepCheck =
+type StepCheck =
   | { kind: "ok" }
   | { kind: "wrong"; step: number; left: string; right: string }
   | { kind: "unknown" };

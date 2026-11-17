@@ -1,6 +1,6 @@
-export type StudyGuess = { id: string; vi: string; en: string };
+type StudyGuess = { id: string; vi: string; en: string };
 
-export type StudyColumn = { key: string; vi: string; en: string };
+type StudyColumn = { key: string; vi: string; en: string };
 
 /** One guided investigation. `formula` is the closed form the plot and the tests check. */
 export type Study = {

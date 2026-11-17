@@ -1,6 +1,6 @@
 const R = String.raw;
 
-export type IdeaKind = "y-tuong" | "chu-de";
+type IdeaKind = "y-tuong" | "chu-de";
 
 export type ResearchIdea = {
   id: string;

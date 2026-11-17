@@ -2,7 +2,7 @@ export type CalcMode = "deg" | "rad";
 
 export type CalcCode = "syntax" | "div0" | "sqrt" | "log" | "tan" | "overflow" | "ans";
 
-export type CalcOutcome = { ok: true; value: number } | { ok: false; code: CalcCode };
+type CalcOutcome = { ok: true; value: number } | { ok: false; code: CalcCode };
 
 const FUNCS = new Set(["sin", "cos", "tan", "sqrt", "abs", "ln", "log"]);
 

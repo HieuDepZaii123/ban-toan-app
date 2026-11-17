@@ -1,7 +1,7 @@
 import { CREATE_FIELDS, CREATE_RESPONSE_FIELDS, IPN_FIELDS, safeEqualHex, signFields } from "./sign.ts";
 import type { PayEnv, PayMethod } from "./env.ts";
 
-export type MomoCreate = {
+type MomoCreate = {
   orderId: string;
   requestId: string;
   amount: number;
@@ -9,7 +9,7 @@ export type MomoCreate = {
   method: PayMethod;
 };
 
-export type MomoSession = {
+type MomoSession = {
   resultCode: number;
   message: string;
   payUrl: string;
@@ -24,7 +24,7 @@ function requestType(method: PayMethod): string {
   return "captureWallet";
 }
 
-export function createRaw(env: PayEnv, input: MomoCreate): Record<string, string> {
+function createRaw(env: PayEnv, input: MomoCreate): Record<string, string> {
   return {
     accessKey: env.accessKey,
     amount: String(input.amount),
@@ -98,7 +98,7 @@ export async function createMomoPayment(env: PayEnv, input: MomoCreate): Promise
   };
 }
 
-export type IpnBody = {
+type IpnBody = {
   amount: number;
   extraData: string;
   message: string;
