@@ -11,7 +11,7 @@ function load(): { index: number; ok: Record<string, boolean> } {
     const parsed: unknown = JSON.parse(localStorage.getItem(KEY) || "{}");
     if (!parsed || typeof parsed !== "object") return { index: 0, ok: {} };
     const row = parsed as { index?: unknown; ok?: unknown };
-    const index = typeof row.index === "number" && row.index >= 0 && row.index < GEO_QUIZ.length ? row.index : 0;
+    const index = Number.isInteger(row.index) && typeof row.index === "number" && row.index >= 0 && row.index < GEO_QUIZ.length ? row.index : 0;
     const ok: Record<string, boolean> = {};
     if (row.ok && typeof row.ok === "object") {
       for (const [id, value] of Object.entries(row.ok)) {
@@ -32,7 +32,9 @@ export function GeoQuiz({ onShow }: { onShow: (item: GeoItem) => void }) {
   const [draft, setDraft] = useState("");
   const lang = useLang();
   const show = useRef(onShow);
-  show.current = onShow;
+  useEffect(() => {
+    show.current = onShow;
+  });
   const item = GEO_QUIZ[index]!;
   const score = GEO_QUIZ.filter((row) => ok[row.id]).length;
 
