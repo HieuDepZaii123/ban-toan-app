@@ -208,8 +208,6 @@ function Bench({ title, view, setView }: { title: string; view: View; setView: (
   const [labels, setLabels] = useState(true);
   const [axes, setAxes] = useState(true);
   const [spin, setSpin] = useState(false);
-  const yawRef = useRef(yaw);
-  yawRef.current = yaw;
 
   useEffect(() => {
     if (!spin) return;
@@ -218,7 +216,7 @@ function Bench({ title, view, setView }: { title: string; view: View; setView: (
     const step = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
-      setYaw(yawRef.current + dt * 0.7);
+      setYaw((value) => value + dt * 0.7);
       frame = requestAnimationFrame(step);
     };
     frame = requestAnimationFrame(step);
