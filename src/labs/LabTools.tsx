@@ -5,7 +5,7 @@ import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 import { getLabSpeed, setLabSpeed } from "./clock.ts";
 import { History, type Params } from "./history.ts";
-import { encodeParams } from "./shared.ts";
+import { encodeParams, sanitizeParams } from "./shared.ts";
 
 type Saved = { name: string; params: Params; at: number };
 type Row = { key: string; label: string; value: string; text: string };
@@ -17,7 +17,10 @@ function loadSaved(id: string): Saved[] {
   try {
     const raw = JSON.parse(window.localStorage.getItem(`${SAVED_KEY}:${id}`) ?? "[]") as unknown;
     if (!Array.isArray(raw)) return [];
-    return raw.filter((item): item is Saved => !!item && typeof item === "object" && typeof (item as Saved).name === "string" && typeof (item as Saved).params === "object");
+    return raw
+      .filter((item): item is Saved => !!item && typeof item === "object" && typeof (item as Saved).name === "string" && !!(item as Saved).params && typeof (item as Saved).params === "object" && !Array.isArray((item as Saved).params))
+      .map((item) => ({ name: item.name.slice(0, 40), params: item.params, at: Number(item.at) || 0 }))
+      .slice(0, 12);
   } catch {
     return [];
   }
@@ -218,6 +221,15 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
     setName("");
     setStatus(t(lang, `Đã lưu "${label}".`, `Saved "${label}".`));
   };
+  const openSaved = (item: Saved) => {
+    const clean = sanitizeParams(item.params, spec.init, spec.range);
+    if (!clean) {
+      setStatus(t(lang, "Cấu hình này bị hỏng nên đã bỏ khỏi danh sách.", "This saved setup is damaged, so it was removed from the list."));
+      drop(item.at);
+      return;
+    }
+    apply(clean);
+  };
   const drop = (at: number) => {
     const next = saved.filter((item) => item.at !== at);
     setSaved(next);
@@ -272,7 +284,7 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
           {saved.map((item) => (
             <li key={item.at}>
               <span>{item.name}</span>
-              <button type="button" className="text-btn" onClick={() => apply({ ...(spec.init), ...item.params })}>{t(lang, "Mở", "Open")}</button>
+              <button type="button" className="text-btn" onClick={() => openSaved(item)}>{t(lang, "Mở", "Open")}</button>
               <button type="button" className="text-btn" onClick={() => drop(item.at)} aria-label={t(lang, `Xóa ${item.name}`, `Delete ${item.name}`)}>{t(lang, "Xóa", "Delete")}</button>
             </li>
           ))}
@@ -282,7 +294,7 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
         <div className="lab-compare">
           <div className="lab-tools-row">
             <b>{t(lang, "So sánh với ảnh chụp", "Compare with the snapshot")}</b>
-            <button type="button" className="text-btn" onClick={() => apply({ ...spec.init, ...snapshot.params })}>{t(lang, "Quay về ảnh chụp", "Go back to snapshot")}</button>
+            <button type="button" className="text-btn" onClick={() => apply(snapshot.params)}>{t(lang, "Quay về ảnh chụp", "Go back to snapshot")}</button>
             <button type="button" className="text-btn" onClick={() => setSnapshot(null)}>{t(lang, "Bỏ ảnh chụp", "Drop snapshot")}</button>
           </div>
           <table className="cmp">

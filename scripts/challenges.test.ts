@@ -70,6 +70,20 @@ for (const id of TOPICS) {
       style(`${at} gợi ý en`, c.hint.en, true);
     }
     if (![1, 2, 3].includes(c.level ?? 0)) fail(at, "thiếu mức độ Dễ/Vừa/Khó");
+    // Hợp đồng độ chính xác: đổi một bước thanh trượt khỏi đáp án mẫu thì đề đóng phải trượt; đề mở phải thật sự có nhiều lời giải.
+    const base = { ...spec.init, ...c.sol } as Record<string, number>;
+    const accepted: string[] = [];
+    for (const key of Object.keys(c.sol)) {
+      const range = spec.range[key];
+      if (key === "scene" || c.sol[key] === c.set[key] || !range) continue;
+      for (const dir of [-1, 1]) {
+        const value = Math.round(((base[key] ?? 0) + dir * range[2]) * 1e6) / 1e6;
+        if (value < range[0] - 1e-9 || value > range[1] + 1e-9) continue;
+        if (c.check({ ...base, [key]: value } as Dense, makeSay(false)).ok) accepted.push(`${key}${dir > 0 ? "+" : "-"}`);
+      }
+    }
+    if (!c.open && accepted.length) fail(at, `đề đóng mà đổi một bước vẫn đạt (${accepted.join(" ")}): siết điều kiện hoặc khai open: true`);
+    if (c.open && accepted.length === 0) fail(at, "khai open: true nhưng không có lời giải lân cận: bỏ cờ open");
     if (c.guess) {
       style(`${at} đoán vi`, c.guess.vi, false);
       style(`${at} đoán en`, c.guess.en, true);

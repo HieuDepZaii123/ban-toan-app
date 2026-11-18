@@ -25,7 +25,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "q-counter", level: 2,
+      id: "q-counter", level: 2, open: true,
       vi: "Tìm phản ví dụ cho câu \"parabol bề lõm lên thì luôn cắt trục $Ox$\".",
       en: "Find a counterexample to \"a parabola opening upward always crosses the $Ox$ axis\".",
       hint: B("Đưa đỉnh lên phía trên $Ox$ khi $a>0$.", "Lift the vertex above $Ox$ while $a>0$."),
@@ -53,7 +53,7 @@ export const extra: Record<string, Challenge[]> = {
   ],
   ineq: [
     {
-      id: "i-gap", level: 2,
+      id: "i-gap", level: 2, open: true,
       vi: "Chọn $a$, $b$ dương để trung bình cộng hơn trung bình nhân hơn $3$ đơn vị.",
       en: "Choose positive $a$ and $b$ so the arithmetic mean exceeds the geometric mean by more than $3$.",
       hint: B("Hai số càng lệch nhau thì hiệu càng lớn.", "The further apart the two numbers, the bigger the gap."),
@@ -66,7 +66,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "i-cauchy-gap", level: 3,
+      id: "i-cauchy-gap", level: 3, open: true,
       vi: "Chọn bốn số để vế trái hơn vế phải ít nhất $50$ trong bất đẳng thức Bu-nhi-a-cốp-xki.",
       en: "Choose four numbers so the left-hand side exceeds the right-hand side by at least $50$ in Cauchy-Schwarz.",
       hint: B("Hiệu hai vế bằng $(ad-bc)^2$; làm $ad-bc$ lớn.", "The difference of the sides is $(ad-bc)^2$; make $ad-bc$ large."),
@@ -105,7 +105,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "e-gap", level: 2,
+      id: "e-gap", level: 2, open: true,
       vi: "Chọn lãi suất và số năm để lãi kép hơn lãi đơn ít nhất $5$ triệu trên $10$ triệu gốc.",
       en: "Choose a rate and years so compound interest beats simple interest by at least $5$ million on a $10$ million deposit.",
       hint: B("Chênh lệch lớn dần khi cả lãi suất và thời gian tăng.", "The gap grows as both rate and time grow."),
@@ -116,7 +116,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "e-fast-double", level: 3,
+      id: "e-fast-double", level: 3, open: true,
       vi: "Tìm lãi suất để $10$ triệu gấp đôi trong đúng $5$ năm hoặc ít hơn.",
       en: "Find a rate that doubles $10$ million in $5$ years or fewer.",
       hint: B("Cần $(1+r)^5\\ge2$, tức $r\\ge14{,}9\\%$.", "Need $(1+r)^5\\ge2$, that is $r\\ge14.9\\%$."),
@@ -166,7 +166,7 @@ export const extra: Record<string, Challenge[]> = {
   ],
   trig: [
     {
-      id: "t-quad4", level: 1,
+      id: "t-quad4", level: 1, open: true,
       vi: "Tìm góc có $\\sin\\alpha<0$ và $\\cos\\alpha>0$.",
       en: "Find an angle with $\\sin\\alpha<0$ and $\\cos\\alpha>0$.",
       hint: B("Đó là góc phần tư thứ tư.", "That is the fourth quadrant."),
@@ -197,7 +197,7 @@ export const extra: Record<string, Challenge[]> = {
   ],
   limit: [
     {
-      id: "l-two-sided", level: 1,
+      id: "l-two-sided", level: 1, open: true,
       vi: "Chọn giá trị trái và phải để giới hạn tại $0$ không tồn tại.",
       en: "Choose the left and right values so the limit at $0$ does not exist.",
       hint: B("Hai giới hạn một phía phải khác nhau.", "The two one-sided limits must differ."),
@@ -216,7 +216,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "l-tea-close", level: 3,
+      id: "l-tea-close", level: 3, open: true,
       vi: "Tìm $t$ để trà chỉ còn cao hơn nhiệt độ phòng ($25^\\circ\\mathrm{C}$) dưới $1^\\circ\\mathrm{C}$.",
       en: "Find $t$ so the tea is less than $1^\\circ\\mathrm{C}$ above room temperature ($25^\\circ\\mathrm{C}$).",
       hint: B("Cần $60e^{-t/4}<1$.", "Need $60e^{-t/4}<1$."),
@@ -240,7 +240,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "d-falling-high", level: 2,
+      id: "d-falling-high", level: 2, open: true,
       vi: "Chọn $v_0$ và $t$ để vật đang rơi xuống ($v<0$) mà vẫn cao ít nhất $10$ m.",
       en: "Choose $v_0$ and $t$ so the ball is falling ($v<0$) yet still at least $10$ m high.",
       hint: B("Chọn $t$ sau thời điểm đỉnh nhưng trước khi chạm đất.", "Pick $t$ after the top but before landing."),
@@ -272,7 +272,7 @@ export const extra: Record<string, Challenge[]> = {
       check: (v, say) => judge(say, [[near(cubicSlope(v.x), 0, 0.01), `$y'=${say.n(cubicSlope(v.x))}$, chưa bằng $0$.`, `$y'=${say.n(cubicSlope(v.x))}$, not $0$ yet.`], [cubicSecond(v.x) > 0, `Đây là cực đại.`, `This is the maximum.`]], [`$y'=0$, $y''>0$ tại $x=1$: $y=-2$.`, `$y'=0$, $y''>0$ at $x=1$: $y=-2$.`]),
     },
     {
-      id: "v-decreasing", level: 1,
+      id: "v-decreasing", level: 1, open: true,
       vi: "Tìm $x$ trong khoảng $(-1;\\ 1)$ để hàm đang nghịch biến.",
       en: "Find $x$ in $(-1,\\ 1)$ where the function is decreasing.",
       hint: B("Nghịch biến khi $y'=3x^2-3<0$.", "Decreasing when $y'=3x^2-3<0$."),
@@ -298,7 +298,7 @@ export const extra: Record<string, Challenge[]> = {
       check: (v, say) => judge(say, [[v.upper >= 1.999, `Với $b=${say.n(v.upper)}$ diện tích mới $${say.n(archIntegral(v.upper))}$, còn tăng được.`, `With $b=${say.n(v.upper)}$ the area is $${say.n(archIntegral(v.upper))}$, it can still grow.`]], [`$b=2$ cho diện tích $\\frac{4}{3}$.`, `$b=2$ gives area $\\frac{4}{3}$.`]),
     },
     {
-      id: "g-overestimate", level: 2,
+      id: "g-overestimate", level: 2, open: true,
       vi: "Với $b=2$, chọn $n$ để tổng hình chữ nhật lớn hơn diện tích thật nhưng lệch dưới $0{,}2$.",
       en: "With $b=2$, choose $n$ so the rectangle sum is above the true area but off by less than $0.2$.",
       hint: B("Dải rộng thì lệch nhiều, dải hẹp thì lệch ít.", "Wide strips miss a lot, narrow ones less."),
@@ -319,7 +319,7 @@ export const extra: Record<string, Challenge[]> = {
   ],
   probability: [
     {
-      id: "p-bayes-90", level: 3,
+      id: "p-bayes-90", level: 3, open: true,
       vi: "Chọn tỉ lệ bệnh, độ nhạy và dương giả để người dương tính bệnh thật với xác suất ít nhất $90\\%$.",
       en: "Choose prevalence, sensitivity and false positives so a positive person is truly sick with probability at least $90\\%$.",
       hint: B("Tăng tỉ lệ bệnh và hạ dương giả cùng lúc.", "Raise the prevalence and lower the false positives together."),
@@ -342,7 +342,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "p-at-least", level: 2,
+      id: "p-at-least", level: 2, open: true,
       vi: "Chọn $n$ và $p$ để xác suất có ít nhất một lần thành công vượt $90\\%$.",
       en: "Choose $n$ and $p$ so the probability of at least one success exceeds $90\\%$.",
       hint: B("$1-(1-p)^n$ tăng theo $n$.", "$1-(1-p)^n$ grows with $n$."),
@@ -368,7 +368,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "w-det-neg", level: 2,
+      id: "w-det-neg", level: 2, open: true,
       vi: "Chọn ma trận $2\\times2$ có định thức nhỏ hơn $-5$.",
       en: "Choose a $2\\times2$ matrix with determinant below $-5$.",
       hint: B("Định thức $ad-bc$: làm $bc$ lớn.", "Determinant $ad-bc$: make $bc$ large."),
@@ -387,7 +387,7 @@ export const extra: Record<string, Challenge[]> = {
       check: (v, say) => {
         const d = det2(v.s11, v.s12, v.s21, v.s22);
         const incons = v.s11 * v.t2 - v.s21 * v.t1 !== 0 || v.s12 * v.t2 - v.s22 * v.t1 !== 0;
-        return judge(say, [[near(d, 0, 1e-9), `Định thức $${say.n(d)}\\ne0$ nên có nghiệm duy nhất.`, `The determinant $${say.n(d)}\\ne0$ so there is exactly one solution.`], [incons, `Hai đường thẳng trùng nhau: vô số nghiệm.`, `The two lines coincide: infinitely many solutions.`], [v.s11 !== 0 || v.s12 !== 0, `Phương trình thứ nhất suy biến.`, `The first equation is degenerate.`]], [`Định thức $0$ và vế phải không tỉ lệ: không có nghiệm.`, `Determinant $0$ and right sides not proportional: no solution.`]);
+        return judge(say, [[near(d, 0, 1e-9), `Định thức $${say.n(d)}\\ne0$ nên có nghiệm duy nhất.`, `The determinant $${say.n(d)}\\ne0$ so there is exactly one solution.`], [incons, `Hai đường thẳng trùng nhau: vô số nghiệm.`, `The two lines coincide: infinitely many solutions.`], [v.s11 !== 0 || v.s12 !== 0, `Phương trình thứ nhất suy biến.`, `The first equation is degenerate.`], [v.s21 !== 0 || v.s22 !== 0, `Phương trình thứ hai suy biến, không phải một đường thẳng.`, `The second equation is degenerate, not a line.`]], [`Định thức $0$ và vế phải không tỉ lệ: không có nghiệm.`, `Determinant $0$ and right sides not proportional: no solution.`]);
       },
     },
   ],
@@ -415,7 +415,7 @@ export const extra: Record<string, Challenge[]> = {
       },
     },
     {
-      id: "n-circle-in", level: 1,
+      id: "n-circle-in", level: 1, open: true,
       vi: "Chỉnh bán kính để điểm $(6;\\ 0)$ nằm trong đường tròn.",
       en: "Adjust the radius so the point $(6,\\ 0)$ lies inside the circle.",
       hint: B("Điểm nằm trong khi $OM<R$.", "A point is inside when $OM<R$."),

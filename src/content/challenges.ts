@@ -29,8 +29,10 @@ export type Challenge = {
   set: Values;
   /** Optional predict-first question. `answer` indexes `options`. */
   guess?: { vi: string; en: string; options: Bi[]; answer: number; why: Bi };
-  /** 1 easy, 2 medium, 3 hard. Older challenges leave it out. */
+  /** 1 easy, 2 medium, 3 hard. */
   level?: 1 | 2 | 3;
+  /** True when many setups are right (a family of solutions). False means one-step changes to the sample answer must fail. */
+  open?: boolean;
   /** One nudge shown on request, without giving the answer. */
   hint?: Bi;
   /** A solution, used for the hint and by the tests. */
@@ -61,6 +63,7 @@ const quadratic: Challenge[] = [
   {
     id: "q-down-two",
     level: 1,
+    open: true,
     vi: "Chỉnh $a$, $b$, $c$ để parabol bề lõm xuống và cắt trục $Ox$ tại hai điểm phân biệt.",
     en: "Set $a$, $b$ and $c$ so the parabola opens downward and crosses the $Ox$ axis at two different points.",
     set: { scene: 0, a: 1, b: -2, c: -3 },
@@ -99,8 +102,8 @@ const quadratic: Challenge[] = [
         say,
         [
           [v.a < 0, `Bề lõm chưa hướng xuống: $a=${say.n(v.a)}$.`, `It does not open downward yet: $a=${say.n(v.a)}$.`],
-          [near(vx, 2, 0.06), `Hoành độ đỉnh $-\\frac{b}{2a}=${say.n(vx)}$, cần bằng $2$.`, `The vertex abscissa $-\\frac{b}{2a}=${say.n(vx)}$ should be $2$.`],
-          [near(vy, 1, 0.06), `Tung độ đỉnh bằng $${say.n(vy)}$, cần bằng $1$.`, `The vertex ordinate is $${say.n(vy)}$, it should be $1$.`],
+          [near(vx, 2, 1e-6), `Hoành độ đỉnh $-\\frac{b}{2a}=${say.n(vx)}$, cần bằng $2$.`, `The vertex abscissa $-\\frac{b}{2a}=${say.n(vx)}$ should be $2$.`],
+          [near(vy, 1, 1e-6), `Tung độ đỉnh bằng $${say.n(vy)}$, cần bằng $1$.`, `The vertex ordinate is $${say.n(vy)}$, it should be $1$.`],
         ],
         [`Đỉnh $(${say.n(vx)};\\ ${say.n(vy)})$ và $a<0$.`, `Vertex $(${say.n(vx)},\\ ${say.n(vy)})$ with $a<0$.`],
       );
@@ -109,6 +112,7 @@ const quadratic: Challenge[] = [
   {
     id: "q-vertex-form",
     level: 2,
+    open: true,
     vi: "Ở dạng đỉnh, đưa đỉnh về $(-2;\\ 3)$ và chọn $a$ để parabol vẫn cắt $Ox$.",
     en: "In vertex form, move the vertex to $(-2,\\ 3)$ and choose $a$ so the parabola still crosses $Ox$.",
     set: { scene: 1, va: 1, vh: 1, vk: -4 },
@@ -117,7 +121,7 @@ const quadratic: Challenge[] = [
       judge(
         say,
         [
-          [near(v.vh, -2, 0.06) && near(v.vk, 3, 0.06), `Đỉnh đang ở $(${say.n(v.vh)};\\ ${say.n(v.vk)})$, cần ở $(-2;\\ 3)$.`, `The vertex is at $(${say.n(v.vh)},\\ ${say.n(v.vk)})$, it should be at $(-2,\\ 3)$.`],
+          [near(v.vh, -2, 1e-6) && near(v.vk, 3, 1e-6), `Đỉnh đang ở $(${say.n(v.vh)};\\ ${say.n(v.vk)})$, cần ở $(-2;\\ 3)$.`, `The vertex is at $(${say.n(v.vh)},\\ ${say.n(v.vk)})$, it should be at $(-2,\\ 3)$.`],
           [v.va < 0, `Đỉnh nằm phía trên $Ox$ nên phải có $a<0$ để đồ thị đi xuống cắt trục. Hiện $a=${say.n(v.va)}$.`, `The vertex lies above $Ox$, so $a<0$ is needed for the graph to come down and cross it. Now $a=${say.n(v.va)}$.`],
         ],
         [`Đỉnh $(-2;\\ 3)$ nằm trên $Ox$ và $a<0$, nên có hai giao điểm.`, `The vertex $(-2,\\ 3)$ is above $Ox$ and $a<0$, so there are two intersections.`],
@@ -225,6 +229,7 @@ const ineq: Challenge[] = [
   {
     id: "i-workshop-out",
     level: 3,
+    open: true,
     vi: "Tìm một điểm ngoài miền mà $P$ lớn hơn $42$; lời báo sẽ cho thấy vì sao điểm đó không dùng được.",
     en: "Find a point outside the region with $P$ above $42$; the feedback will show why it cannot be used.",
     set: { scene: 2, x: 2, y: 2 },
@@ -245,6 +250,7 @@ const exp: Challenge[] = [
   {
     id: "e-decreasing",
     level: 1,
+    open: true,
     vi: "Chọn cơ số $a$ hợp lệ để hàm $y=a^x$ nghịch biến.",
     en: "Choose a valid base $a$ so that $y=a^x$ is decreasing.",
     set: { scene: 0, base: 2, x: 2 },
@@ -288,6 +294,7 @@ const exp: Challenge[] = [
   {
     id: "e-double",
     level: 2,
+    open: true,
     vi: "Chọn lãi suất và số năm (không quá $8$ năm) để $10$ triệu lãi kép tăng gấp đôi.",
     en: "Choose a rate and a number of years (at most $8$) so that $10$ million at compound interest doubles.",
     set: { scene: 1, rate: 5, years: 4 },
@@ -388,7 +395,7 @@ const sequence: Challenge[] = [
       const path = bouncePath(v.drop, v.ratio);
       return judge(
         say,
-        [[path !== null && near(path, 24, 1e-6), `Quãng đường là $${say.n(path ?? 0)}$ m, cần $24$ m.`, `The path is $${say.n(path ?? 0)}$ m, it should be $24$ m.`]],
+        [[near(v.ratio, 0.5, 1e-9), `Đề cho bóng nảy lên một nửa độ cao trước, nên tỉ số phải là $0{,}5$, hiện là $${say.n(v.ratio)}$.`, `The ball rebounds to half its previous height, so the ratio must be $0.5$, now $${say.n(v.ratio)}$.`], [path !== null && near(path, 24, 1e-6), `Quãng đường là $${say.n(path ?? 0)}$ m, cần $24$ m.`, `The path is $${say.n(path ?? 0)}$ m, it should be $24$ m.`]],
         [`$${say.n(v.drop)}+2\\cdot\\frac{${say.n(v.drop * v.ratio)}}{1-${say.n(v.ratio)}}=24$ m.`, `$${say.n(v.drop)}+2\\cdot\\frac{${say.n(v.drop * v.ratio)}}{1-${say.n(v.ratio)}}=24$ m.`],
       );
     },
@@ -470,6 +477,7 @@ const limit: Challenge[] = [
   {
     id: "l-limit-not-cont",
     level: 2,
+    open: true,
     vi: "Chọn giá trị trái, phải và $f(0)$ để giới hạn tại $0$ tồn tại nhưng hàm không liên tục.",
     en: "Choose the left value, the right value and $f(0)$ so the limit at $0$ exists but the function is not continuous.",
     set: { scene: 1, left: -1, right: 1, at: 0 },
@@ -508,6 +516,7 @@ const limit: Challenge[] = [
   {
     id: "l-tea",
     level: 2,
+    open: true,
     vi: "Tìm $t$ để trà nguội xuống dưới $30^\\circ\\mathrm{C}$ (nhiệt độ phòng $25^\\circ\\mathrm{C}$).",
     en: "Find $t$ so the tea cools below $30^\\circ\\mathrm{C}$ (room temperature $25^\\circ\\mathrm{C}$).",
     set: { scene: 2, time: 0 },
@@ -662,6 +671,7 @@ const integral: Challenge[] = [
   {
     id: "g-riemann",
     level: 2,
+    open: true,
     vi: "Với $b=2$, chọn số dải $n$ để tổng hình chữ nhật chỉ lệch diện tích đúng $\\frac{4}{3}$ chưa tới $0{,}02$.",
     en: "With $b=2$, choose the number of strips $n$ so the rectangle sum is within $0.02$ of the exact area $\\frac{4}{3}$.",
     set: { scene: 0, upper: 2, strips: 1 },
@@ -732,6 +742,7 @@ const probability: Challenge[] = [
   {
     id: "p-bayes-up",
     level: 2,
+    open: true,
     vi: "Với độ nhạy $99\\%$ và dương giả $5\\%$, chọn tỉ lệ bệnh để người dương tính thật sự bệnh với xác suất trên $50\\%$.",
     en: "With sensitivity $99\\%$ and false positives $5\\%$, choose the prevalence so a positive person is actually sick with probability above $50\\%$.",
     set: { scene: 1, prev: 1, sens: 99, fpr: 5 },
@@ -1061,6 +1072,7 @@ const combo: Challenge[] = [
   {
     id: "c-outlier",
     level: 2,
+    open: true,
     vi: "Giữ trung vị bằng $4$ nhưng kéo trung bình lên ít nhất $6$ bằng điểm lệch.",
     en: "Keep the median at $4$ but pull the mean up to at least $6$ with the outlier.",
     set: { scene: 2, outlier: 6 },

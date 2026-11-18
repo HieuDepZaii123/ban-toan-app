@@ -5,7 +5,7 @@
 import { allLabSpecs } from "../src/content/labSpecs.ts";
 import { History, sig } from "../src/labs/history.ts";
 import { toTex } from "../src/lib/tex.ts";
-import { decodeParams, encodeParams } from "../src/labs/shared.ts";
+import { decodeParams, encodeParams, sanitizeParams } from "../src/labs/shared.ts";
 
 const fails: string[] = [];
 const expect = (cond: boolean, what: string): void => {
@@ -41,6 +41,15 @@ const tex: [string, string][] = [
   ["Bằng", "Bằng"],
 ];
 for (const [input, want] of tex) expect(toTex(input) === want, `toTex(${input}) = ${toTex(input)}, cần ${want}`);
+
+{
+  const spec = allLabSpecs.ineq!;
+  expect(sanitizeParams(null, spec.init, spec.range) === null, "sanitizeParams: null phải bị từ chối");
+  expect(sanitizeParams([1, 2], spec.init, spec.range) === null, "sanitizeParams: mảng phải bị từ chối");
+  expect(sanitizeParams({ a: "x", zzz: 5 }, spec.init, spec.range) === null, "sanitizeParams: giá trị không phải số, khóa lạ");
+  const wild = sanitizeParams({ scene: 99, a: Number.NaN, b: 1e9, zzz: 5 }, spec.init, spec.range);
+  expect(wild !== null && (wild.scene ?? 0) <= 2 && wild.a === spec.init.a && !("zzz" in wild), "sanitizeParams: kẹp khoảng, bỏ NaN và khóa lạ");
+}
 
 for (const [id, spec] of Object.entries(allLabSpecs)) {
   const code = encodeParams(spec.init);

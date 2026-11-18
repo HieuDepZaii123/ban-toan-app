@@ -100,6 +100,9 @@ export function TopicDesk({ id }: { id: string }) {
         writeParams(topic.id, params);
         setLabRun((n) => n + 1);
         setShareBad(false);
+        const here = new URL(window.location.href);
+        here.searchParams.delete("p");
+        window.history.replaceState(window.history.state, "", here.toString());
       } else {
         setShareBad(true);
       }

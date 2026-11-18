@@ -17,6 +17,25 @@ function loadDone(id: string): string[] {
   }
 }
 
+const PEEK_KEY = "ban-toan:lab-peeked";
+
+function loadPeeked(id: string): string[] {
+  try {
+    const raw = JSON.parse(window.localStorage.getItem(`${PEEK_KEY}:${id}`) ?? "[]") as unknown;
+    return Array.isArray(raw) ? raw.filter((x): x is string => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function savePeeked(id: string, list: string[]): void {
+  try {
+    window.localStorage.setItem(`${PEEK_KEY}:${id}`, JSON.stringify(list));
+  } catch {
+    /* private window: remembered on screen only */
+  }
+}
+
 function saveDone(id: string, done: string[]): void {
   try {
     window.localStorage.setItem(`${KEY}:${id}`, JSON.stringify(done));
@@ -36,7 +55,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
   const [done, setDone] = useState<string[]>(() => loadDone(id));
   const [guess, setGuess] = useState<number | null>(null);
   const [hintOpen, setHintOpen] = useState(false);
-  const [revealed, setRevealed] = useState<string[]>([]);
+  const [revealed, setRevealed] = useState<string[]>(() => loadPeeked(id));
   const [checked, setChecked] = useState<{ verdict: Verdict; at: string; guess: number | null } | null>(null);
 
   useEffect(() => {
@@ -44,7 +63,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
     setDone(loadDone(id));
     setGuess(null);
     setHintOpen(false);
-    setRevealed([]);
+    setRevealed(loadPeeked(id));
     setChecked(null);
   }, [id]);
 
@@ -90,7 +109,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
       <div className="chips" role="group" aria-label={t(lang, "Chọn thử thách", "Pick a challenge")}>
         {spec.challenges.map((c, i) => (
           <button key={c.id} type="button" aria-pressed={i === index} onClick={() => pick(i)}>
-            {done.includes(c.id) ? "✓ " : ""}
+            {done.includes(c.id) ? "✓ " : revealed.includes(c.id) ? "👁 " : ""}
             {t(lang, `Thử thách ${i + 1}`, `Challenge ${i + 1}`)}
           </button>
         ))}
@@ -120,7 +139,6 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
           type="button"
           className="text-btn"
           onClick={() => {
-            setRevealed((list) => list.filter((item) => item !== challenge.id));
             preset(challenge.set);
           }}
         >
@@ -134,7 +152,9 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
           type="button"
           className="text-btn"
           onClick={() => {
-            setRevealed((list) => (list.includes(challenge.id) ? list : [...list, challenge.id]));
+            const next = revealed.includes(challenge.id) ? revealed : [...revealed, challenge.id];
+            setRevealed(next);
+            savePeeked(id, next);
             preset(challenge.sol);
           }}
         >
@@ -164,7 +184,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
               </p>
             ) : null}
             {result.verdict.ok && revealed.includes(challenge.id) && !done.includes(challenge.id) ? (
-              <p className="note">{t(lang, "Bạn đã xem đáp án mẫu nên thử thách này chưa được tính vào tiến độ. Hãy tự làm lại.", "You looked at the sample answer, so this challenge does not count towards progress. Try it again yourself.")}</p>
+              <p className="note">{t(lang, "Bạn đã xem đáp án mẫu nên thử thách này không được tính vào tiến độ. Hãy thử các thử thách khác.", "You looked at the sample answer, so this challenge does not count towards progress. Try the other challenges.")}</p>
             ) : null}
             {result.verdict.ok && index + 1 < spec.challenges.length ? (
               <button type="button" className="text-btn" onClick={() => pick(index + 1)}>{t(lang, "Thử thách tiếp theo", "Next challenge")}</button>
