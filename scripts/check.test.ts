@@ -3,7 +3,7 @@
  * Run with: tsx scripts/check.test.ts
  */
 import { firstWrongStep } from "../src/check/arith.ts";
-import { demoVerdict, handleCheck, parseVerdict, WEEK_MS, type CheckEnv } from "../server/chat/check.ts";
+import { demoVerdict, handleCheck, parseVerdict, PARENT_CHECK_NOTE, WEEK_MS, withholdFix, type CheckEnv } from "../server/chat/check.ts";
 import { handleChat, PARENT_NOTE, type ChatEnv } from "../server/chat/handlers.ts";
 import { createQuota } from "../server/chat/limit.ts";
 import { appendCheck, buildReport, decodeReport, encodeReport, problemKey, readCheckRows, readExamRows } from "../src/parent/report.ts";
@@ -235,6 +235,38 @@ const work = { problem: "Giải 2x + 6 = 0", steps: ["2x = 6", "x = 3"], device:
     return readdirSync(dir, { withFileTypes: true }).reduce((n, entry) => n + (entry.isDirectory() ? count(`${dir}/${entry.name}`) : /\.(ts|js)$/.test(entry.name) ? 1 : 0), 0);
   })("api");
   assert(functions <= 12, `api/ has ${functions} serverless functions; Vercel Hobby allows 12 per deployment`);
+}
+
+// --- review fixes: unverifiable lines, parent-mode leaks, failing release
+{
+  for (const lines of [["1/0 = 1/0"], ["9^9^9 = 9^9^9"], ["1/(x-x) = 2/(x-x)"], ["2x + 6 = 0", "= 2(x+3)"], ["x^2 = 4", "= 2^2"]]) {
+    assert(firstWrongStep(lines).kind === "unknown", `unverifiable ${JSON.stringify(lines)} is unknown, not ok`);
+  }
+  const later = firstWrongStep(["2x + 6 = 0", "= 2(x+3)", "2 + 2 = 5"]);
+  assert(later.kind === "wrong" && later.step === 3, "a later step is still checked after an unverifiable one");
+
+  const leak = withholdFix({ verdict: "wrong", step: 1, why: "Phải là $2x = -6$.", hint: "Thử 2x=-6 xem", fix: "2x = -6" }, "vi");
+  assert(!("fix" in leak) && !/2x/.test(`${leak.why}${leak.hint}`), "parent mode redacts a fix repeated in why/hint");
+  const clean = withholdFix({ verdict: "wrong", step: 1, why: "Sai dấu.", hint: "Xem lại dấu.", fix: "2x = -6" }, "vi");
+  assert(clean.why === "Sai dấu." && clean.hint === "Xem lại dấu.", "text without the fix is kept");
+  const offline = demoVerdict(["2 + 2 = 5"], "en", true);
+  assert(!/≠|4|5/.test(offline.why ?? ""), "offline parent verdict shows no evaluated values");
+
+  const seen: string[] = [];
+  const spy = env({ complete: async (instructions) => { seen.push(instructions); return '{"verdict":"wrong","step":1,"why":"Phải là 2x = -6.","hint":"Làm lại.","fix":"2x = -6"}'; } });
+  const asParent = await post(spy, { ...work, device: "device-par-0001", parent: true });
+  const asChild = await post(spy, { ...work, device: "device-par-0002" });
+  assert(seen[0]?.includes(PARENT_CHECK_NOTE) === true && seen[1]?.includes(PARENT_CHECK_NOTE) === false, "the parent note is sent only in parent mode");
+  assert(!JSON.stringify(asParent.json).includes("-6") && asChild.json.fix === "2x = -6", "parent reply carries no fix, child reply does");
+
+  const quota = createQuota();
+  const errors: unknown[][] = [];
+  const realError = console.error;
+  console.error = (...args: unknown[]) => { errors.push(args); };
+  const broken = env({ complete: async () => "garbled", quota: { ...quota, release: async () => { throw new Error("store down"); } } });
+  const failed = await post(broken, { ...work, device: "device-bad-0001" });
+  console.error = realError;
+  assert(failed.status === 502 && errors.length === 1, "a failing release still answers 502 and is logged");
 }
 
 if (fails.length > 0) {

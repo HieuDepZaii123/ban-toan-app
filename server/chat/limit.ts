@@ -97,11 +97,16 @@ export function pgQuota(client: SqlClient): Quota {
         return { ok: true as const, used };
       });
     },
+    // One transaction, so a failure part-way gives back every hit or none: a marking never ends up with its
+    // `win:` hit returned and its `chk:` hit kept. Two requests that claimed in the same millisecond have
+    // identical `at`; removing any one row for the key is correct because the rows are interchangeable.
     async release(keys, now) {
       await ensureSchema(client);
-      for (const key of keys) {
-        await client.query("DELETE FROM chat_hits WHERE ctid IN (SELECT ctid FROM chat_hits WHERE key = $1 AND at = $2 LIMIT 1)", [key, now]);
-      }
+      await client.transaction(async (tx) => {
+        for (const key of [...new Set(keys)].sort()) {
+          await tx.query("DELETE FROM chat_hits WHERE ctid IN (SELECT ctid FROM chat_hits WHERE key = $1 AND at = $2 LIMIT 1)", [key, now]);
+        }
+      });
     },
   };
 }

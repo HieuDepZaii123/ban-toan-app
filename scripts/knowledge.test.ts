@@ -1,5 +1,6 @@
 /**
- * Kiến thức tổng quát và chi tiết của 14 chuyên đề: cấu trúc, văn phong, công thức KaTeX đọc được,
+ * Kiến thức tổng quát và chi tiết của 14 chuyên đề: cấu trúc, phần dẫn từ con số không, lời giải thích
+ * đời thường cho mọi định nghĩa, suy luận từng bước cho mọi định lí, công thức và tính chất, văn phong, công thức KaTeX đọc được,
  * liên kết đúng tờ, và mọi số liệu qua SymPy.
  * Chạy: tsx scripts/knowledge.test.ts            (đủ 14 chuyên đề)
  *       tsx scripts/knowledge.test.ts quadratic   (một vài chuyên đề, khi đang soạn)
@@ -52,6 +53,11 @@ if (only.length === 0) {
 
 const checks: { where: string; expr: string; expect: string }[] = [];
 let itemTotal = 0;
+let plain = 0;
+let proofs = 0;
+let altProofs = 0;
+/** Chuyên đề đã viết xong cách chứng minh thứ hai cho mọi định lí; thêm id vào đây khi làm xong từng chuyên đề. */
+const MULTI_PROOF = new Set<string>(["trig", "derivative", "integral", "quadratic", "ineq", "exp"]);
 let wordTotal = 0;
 
 for (const id of ids) {
@@ -65,6 +71,22 @@ for (const id of ids) {
     prose(`${id} tổng quát ${key}`, pack.tongQuat[key]);
     assert(pack.tongQuat[key].length >= 80, `${id} tổng quát ${key} quá ngắn`);
   }
+  assert(pack.tuDau.length >= 3 && pack.tuDau.length <= 5, `${id}: cần 3–5 đoạn «bắt đầu từ con số không», có ${pack.tuDau.length}`);
+  pack.tuDau.forEach((line, i) => {
+    prose(`${id} từ đầu ${i + 1}`, line);
+    assert(line.length >= 150 && line.length <= 700, `${id} từ đầu ${i + 1}: cần 150–700 ký tự, có ${line.length}`);
+  });
+  assert(pack.kyHieu.length >= 5 && pack.kyHieu.length <= 10, `${id}: cần 5–10 ký hiệu được giải nghĩa, có ${pack.kyHieu.length}`);
+  assert(new Set(pack.kyHieu.map((row) => row.kh)).size === pack.kyHieu.length, `${id}: trùng ký hiệu`);
+  for (const row of pack.kyHieu) {
+    assert(/^\$[^$]+\$$/.test(row.kh), `${id} ký hiệu phải là một công thức trong $...$: ${row.kh}`);
+    prose(`${id} ký hiệu ${row.kh}`, row.doc, true);
+    try {
+      katex.renderToString(row.kh.slice(1, -1), { throwOnError: true });
+    } catch {
+      assert(false, `${id} ký hiệu KaTeX lỗi: ${row.kh}`);
+    }
+  }
   assert(pack.canBiet.length >= 1 && pack.canBiet.length <= 5, `${id}: cần 1–5 điều nên biết trước`);
   pack.canBiet.forEach((line, i) => prose(`${id} biết trước ${i + 1}`, line));
   assert(pack.sections.length >= 5 && pack.sections.length <= 8, `${id}: cần 5–8 phần, có ${pack.sections.length}`);
@@ -72,6 +94,7 @@ for (const id of ids) {
 
   const kinds = new Map<string, number>();
   let items = 0;
+  const altBefore = altProofs;
   for (const section of pack.sections) {
     assert(MARK.test(section.title) && !/[.]$/.test(section.title) && !section.title.includes("$"), `${id} tên phần «${section.title}» (không công thức, không chấm cuối)`);
     assert(section.items.length >= 3 && section.items.length <= 8, `${id} «${section.title}» cần 3–8 mục, có ${section.items.length}`);
@@ -85,10 +108,43 @@ for (const id of ids) {
         assert(item.title.length <= 60 && !item.title.endsWith("."), `${id} tiêu đề mục: ${item.title}`);
         assert(!/[$\\]/.test(item.title), `${id} tiêu đề không được có công thức: ${item.title}`);
       }
+      const here = `${id} «${section.title}» ${item.title ?? item.kind}`;
+      if (item.kind === "dinh-nghia") assert(Boolean(item.de), `${here}: định nghĩa cần phần «nói dễ hiểu»`);
+      if (item.de !== undefined) {
+        prose(`${here} (nói dễ hiểu)`, item.de);
+        assert(item.de.length >= 80 && item.de.length <= 700, `${here}: «nói dễ hiểu» cần 80–700 ký tự, có ${item.de.length}`);
+        plain += 1;
+      }
+      if (item.kind === "dinh-ly" || item.kind === "cong-thuc" || item.kind === "tinh-chat") {
+        assert((item.suy?.length ?? 0) >= 2, `${here}: định lí, công thức, tính chất cần ít nhất 2 bước «vì sao đúng»`);
+      }
+      if (item.suy !== undefined) {
+        assert(item.suy.length <= 7, `${here}: quá 7 bước suy luận`);
+        assert(new Set(item.suy).size === item.suy.length, `${here}: trùng bước suy luận`);
+        item.suy.forEach((step, i) => {
+          prose(`${here} bước ${i + 1}`, step, true);
+          assert(step.length >= 40 && step.length <= 600, `${here} bước ${i + 1}: cần 40–600 ký tự, có ${step.length}`);
+        });
+        proofs += 1;
+      }
+      for (const other of item.suyKhac ?? []) {
+        assert(Boolean(item.suy), `${here}: cách chứng minh khác cần có cách thứ nhất (suy)`);
+        assert(other.cach.trim().length >= 6 && other.cach.length <= 60 && !/[$\\]/.test(other.cach), `${here}: tên cách chứng minh khác: «${other.cach}»`);
+        assert(other.buoc.length >= 2 && other.buoc.length <= 7, `${here} «${other.cach}»: cần 2–7 bước, có ${other.buoc.length}`);
+        assert(new Set(other.buoc).size === other.buoc.length, `${here} «${other.cach}»: trùng bước`);
+        assert(!other.buoc.some((step) => item.suy?.includes(step)), `${here} «${other.cach}»: chép lại bước của cách thứ nhất`);
+        other.buoc.forEach((step, i) => {
+          prose(`${here} «${other.cach}» bước ${i + 1}`, step, true);
+          assert(step.length >= 40 && step.length <= 600, `${here} «${other.cach}» bước ${i + 1}: cần 40–600 ký tự, có ${step.length}`);
+        });
+        altProofs += 1;
+      }
+      if (MULTI_PROOF.has(id) && item.kind === "dinh-ly") assert((item.suyKhac?.length ?? 0) >= 1, `${here}: định lí cần ít nhất hai cách chứng minh`);
       if (item.kind === "vi-du") assert(/\d/.test(item.text), `${id} ví dụ không có số: ${item.text.slice(0, 40)}`);
     }
   }
   itemTotal += items;
+  if (MULTI_PROOF.has(id)) assert(altProofs - altBefore >= 3, `${id}: cần ít nhất 3 cách chứng minh khác, có ${altProofs - altBefore}`);
   assert(items >= 24, `${id}: cần ít nhất 24 mục, có ${items}`);
   assert((kinds.get("dinh-nghia") ?? 0) >= 2, `${id}: cần ít nhất 2 định nghĩa`);
   assert((kinds.get("dinh-ly") ?? 0) + (kinds.get("cong-thuc") ?? 0) >= 5, `${id}: cần ít nhất 5 định lí hoặc công thức`);
@@ -121,4 +177,4 @@ if (fails.length > 0) {
 }
 
 execFileSync("python3", ["scripts/dang_sympy.py"], { input: JSON.stringify(checks), stdio: ["pipe", "inherit", "inherit"] });
-console.log(`knowledge ok: ${ids.length} chuyên đề, ${itemTotal} mục, ${wordTotal} chữ, ${checks.length} phép kiểm`);
+console.log(`knowledge ok: ${ids.length} chuyên đề, ${itemTotal} mục, ${plain} lời giải thích đời thường, ${proofs} chuỗi suy luận, ${altProofs} cách chứng minh khác, ${wordTotal} chữ, ${checks.length} phép kiểm`);

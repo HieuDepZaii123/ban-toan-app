@@ -192,14 +192,21 @@ function show(value: number): string {
   return String(Number(value.toPrecision(8)));
 }
 
-/** Do two expressions agree? Numbers are compared directly, letters at several sample points. */
-function agree(a: Node, b: Node): { same: boolean; left: string; right: string } {
+/**
+ * Do two expressions agree? Numbers are compared directly, letters at several sample points.
+ * `verified` is false when nothing could be compared: `1/0` has no value, and an expression such as
+ * `1/(x-x)` is undefined at every sample point. That is neither right nor wrong, so the caller must not
+ * report it either way.
+ */
+function agree(a: Node, b: Node): { same: boolean; verified: boolean; left: string; right: string } {
   const names = [...letters(a), ...letters(b)];
   if (names.length === 0) {
     const left = evaluate(a, {});
     const right = evaluate(b, {});
-    return { same: same(left, right), left: show(left), right: show(right) };
+    if (!Number.isFinite(left) || !Number.isFinite(right)) return { same: false, verified: false, left: show(left), right: show(right) };
+    return { same: same(left, right), verified: true, left: show(left), right: show(right) };
   }
+  let compared = 0;
   for (const seed of SAMPLES) {
     const vars: Record<string, number> = {};
     names.forEach((name, index) => {
@@ -209,12 +216,13 @@ function agree(a: Node, b: Node): { same: boolean; left: string; right: string }
     const right = evaluate(b, vars);
     // A division by zero at one sample point says nothing; try the next.
     if (!Number.isFinite(left) || !Number.isFinite(right)) continue;
+    compared += 1;
     if (!same(left, right)) {
       const at = names.map((name) => `${name}=${show(vars[name] as number)}`).join(", ");
-      return { same: false, left: `${show(left)} (${at})`, right: show(right) };
+      return { same: false, verified: true, left: `${show(left)} (${at})`, right: show(right) };
     }
   }
-  return { same: true, left: "", right: "" };
+  return { same: compared > 0, verified: compared > 0, left: "", right: "" };
 }
 
 type StepCheck =
@@ -247,15 +255,23 @@ export function firstWrongStep(steps: string[]): StepCheck {
     // `2x + 6 = 0` is an equation, not an identity: only chains and continuations are claims of equality.
     const claim = chain.length >= 2 && (!hasLetters || continues || chain.length >= 3);
     if (!claim) {
+      // An equation is not a value: in `2x + 6 = 0` the `0` is not the working expression, so a following
+      // `= 2(x+3)` has nothing to be compared with. Leave it unchecked rather than judge it against `0`.
       checkedAll = false;
-      previous = chain.at(-1) ?? null;
+      previous = null;
       continue;
     }
+    let verifiedChain = true;
     for (let at = 1; at < chain.length; at += 1) {
       const result = agree(chain[at - 1] as Node, chain[at] as Node);
+      if (!result.verified) {
+        verifiedChain = false;
+        continue;
+      }
       if (!result.same) return { kind: "wrong", step: index + 1, left: result.left, right: result.right };
     }
-    previous = chain.at(-1) ?? null;
+    if (!verifiedChain) checkedAll = false;
+    previous = verifiedChain ? chain.at(-1) ?? null : null;
   }
   return checkedAll ? { kind: "ok" } : { kind: "unknown" };
 }

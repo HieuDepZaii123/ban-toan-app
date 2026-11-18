@@ -9,6 +9,18 @@ type KnowItem = {
   title?: string;
   /** Một mục là một ý, viết trong một đoạn. Công thức nằm trong $...$ trên cùng một dòng. */
   text: string;
+  /** Nói dễ hiểu: cùng ý đó bằng lời đời thường, cho người chưa học gì về toán. Bắt buộc với định nghĩa. */
+  de?: string;
+  /**
+   * Vì sao đúng: các bước suy luận đi từ điều đã biết tới kết luận của mục, mỗi bước một ý.
+   * Bắt buộc với định lí, công thức và tính chất, để người đọc tự suy ra được chứ không phải thuộc lòng.
+   */
+  suy?: string[];
+  /**
+   * Những cách chứng minh khác, đi theo hướng khác hẳn `suy` (đại số và hình học, trực tiếp và phản chứng...).
+   * `cach` là tên hướng, ví dụ «Bằng hình học»; `buoc` là các bước, mỗi bước một ý, như `suy`.
+   */
+  suyKhac?: { cach: string; buoc: string[] }[];
 };
 
 type KnowSection = {
@@ -21,6 +33,10 @@ export type TopicKnowledge = {
   id: string;
   /** Tổng quát: là gì, dùng để làm gì, nối với chuyên đề nào. */
   tongQuat: { la: string; dungDe: string; lienHe: string };
+  /** Bắt đầu từ con số không: vài đoạn đi từ chuyện đời thường tới khái niệm chính của chuyên đề. */
+  tuDau: string[];
+  /** Cách đọc ký hiệu: ký hiệu (trong $...$) và nghĩa của nó bằng lời. */
+  kyHieu: { kh: string; doc: string }[];
   /** Cần biết trước khi học. */
   canBiet: string[];
   sections: KnowSection[];

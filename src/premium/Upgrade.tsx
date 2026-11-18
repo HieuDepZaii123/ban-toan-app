@@ -80,8 +80,8 @@ export function Upgrade() {
   const [email, setEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [plan, setPlan] = useState<PlanId>("month");
-  const [method, setMethod] = useState<PayMethod>("wallet");
-  const [chain, setChain] = useState<CryptoChainId>("tron-usdt");
+  const [pickedMethod, setMethod] = useState<PayMethod | null>(null);
+  const [pickedChain, setChain] = useState<CryptoChainId | null>(null);
   const [order, setOrder] = useState<OrderView | null>(null);
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState("");
@@ -102,14 +102,6 @@ export function Upgrade() {
       }
       const loaded = await res.json() as Plans;
       setPlans(loaded);
-      if (loaded.open) {
-        const first = (["wallet", "qr", "bank", "crypto"] as const).find((id) => id === "crypto"
-          ? Object.values(loaded.open?.crypto ?? {}).some(Boolean)
-          : loaded.open?.[id]);
-        if (first) setMethod(first);
-        const chainOpen = Object.entries(loaded.open.crypto).find(([, ok]) => ok)?.[0];
-        if (chainOpen) setChain(chainOpen as CryptoChainId);
-      }
     }).catch(() => {
       if (live) setLoadError(true);
     });
@@ -182,7 +174,10 @@ export function Upgrade() {
   const methodOpen = (id: PayMethod): boolean => !open || (id === "crypto" ? Object.values(open.crypto).some(Boolean) : open[id]);
   const chainOpen = (id: string): boolean => !open || open.crypto[id] === true;
   const nothingOpen = !!open && !(["wallet", "qr", "bank", "crypto"] as const).some(methodOpen);
-  const canPay = methodOpen(method) && (method !== "crypto" || chainOpen(chain));
+  // Derived while rendering: the learner's pick if it is still open, else the first method/chain that is.
+  const method: PayMethod = pickedMethod && methodOpen(pickedMethod) ? pickedMethod : (["wallet", "qr", "bank", "crypto"] as const).find(methodOpen) ?? "wallet";
+  const chain = (pickedChain && chainOpen(pickedChain) ? pickedChain : (Object.entries(open?.crypto ?? {}).find(([, ok]) => ok)?.[0] ?? "tron-usdt")) as CryptoChainId;
+  const canPay = !nothingOpen && methodOpen(method) && (method !== "crypto" || chainOpen(chain));
   const month = plans?.plans.find((item) => item.id === "month");
   const year = plans?.plans.find((item) => item.id === "year");
   const waiting = order?.status === "pending";

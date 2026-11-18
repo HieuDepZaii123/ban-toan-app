@@ -9,10 +9,10 @@ export const integralLesson: Lesson = {
     { k: "vd", vi: R`Tính $\int_0^2(2x-x^2)\,dx=\left[x^2-\dfrac{x^3}{3}\right]_0^2=4-\dfrac{8}{3}=\dfrac{4}{3}$.`, en: R`Compute $\int_0^2(2x-x^2)\,dx=\left[x^2-\dfrac{x^3}{3}\right]_0^2=4-\dfrac{8}{3}=\dfrac{4}{3}$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Hai đồ thị: lấy hàm trên trừ hàm dưới. Quay quanh Ox: $\pi\int_a^b y^2\,dx$.`, en: R`Two graphs: upper minus lower. Revolution about the $x$-axis: $\pi\int_a^b y^2\,dx$.` },
+    { k: "dinh", vi: R`Diện tích giữa hai đồ thị: lấy hàm trên trừ hàm dưới. Thể tích khối quay quanh Ox: $\pi\int_a^b y^2\,dx$.`, en: R`Area between two graphs: upper minus lower. Volume of the solid of revolution about the $x$-axis: $\pi\int_a^b y^2\,dx$.` },
     { k: "vd", vi: R`Trên $[0;1]$, $x\ge x^2$. $\int_0^1(x-x^2)\,dx=\left[\dfrac{x^2}{2}-\dfrac{x^3}{3}\right]_0^1=\dfrac16$.`, en: R`On $[0;1]$, $x\ge x^2$. $\int_0^1(x-x^2)\,dx=\left[\dfrac{x^2}{2}-\dfrac{x^3}{3}\right]_0^1=\dfrac16$.` },
-    { k: "loi", vi: R`Nón $r=3$, $h=6$: $V=\dfrac13\pi r^2 h=18\pi$. Bỏ $\dfrac13$ thì ra $54\pi$, là thể tích trụ.`, en: R`Cone $r=3$, $h=6$: $V=\dfrac13\pi r^2 h=18\pi$. Dropping $\dfrac13$ gives $54\pi$, the cylinder.` },
-    { k: "kiem", vi: R`Trung điểm của $[0;2]$ cho $y=x^2$ là $x=1$. Diện tích hình chữ nhật $2\cdot 1^2=2$, trong khi $\int_0^2 x^2\,dx=\dfrac83$.`, en: R`The midpoint of $[0;2]$ for $y=x^2$ is $x=1$. The rectangle has area $2\cdot 1^2=2$, while $\int_0^2 x^2\,dx=\dfrac83$.` },
+    { k: "loi", vi: R`Nón $r=3$, $h=6$: $V=\dfrac13\pi r^2 h=18\pi$. Nếu bỏ sót $\dfrac13$ thì được $54\pi$, đó là thể tích hình trụ.`, en: R`Cone $r=3$, $h=6$: $V=\dfrac13\pi r^2 h=18\pi$. If you drop the $\dfrac13$ you get $54\pi$, the volume of the cylinder.` },
+    { k: "kiem", vi: R`Với $y=x^2$ trên $[0;2]$, điểm giữa là $x=1$. Hình chữ nhật cao $1^2$ có diện tích $2\cdot 1^2=2$, trong khi $\int_0^2 x^2\,dx=\dfrac83$.`, en: R`For $y=x^2$ on $[0;2]$ the midpoint is $x=1$. A rectangle of height $1^2$ has area $2\cdot 1^2=2$, while $\int_0^2 x^2\,dx=\dfrac83$.` },
   ],
 };
 

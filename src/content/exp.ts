@@ -10,8 +10,8 @@ export const expLesson: Lesson = {
   ],
   exam: [
     { k: "dinh", vi: R`Gấp đôi với lãi $r$: $(1+r)^t=2$, nên $t=\dfrac{\ln 2}{\ln(1+r)}$.`, en: R`Doubling at rate $r$: $(1+r)^t=2$, so $t=\dfrac{\ln 2}{\ln(1+r)}$.` },
-    { k: "vd", vi: R`$r=0{,}08$: $t=\dfrac{\ln 2}{\ln 1{,}08}\approx 9{,}01$. Quy tắc $\dfrac{72}{8}=9$ chỉ là xấp xỉ.`, en: R`$r=0{,}08$: $t=\dfrac{\ln 2}{\ln 1{,}08}\approx 9{,}01$. The rule $\dfrac{72}{8}=9$ is only an approximation.` },
-    { k: "loi", vi: R`$\log_2(4+4)=\log_2 8=3$, nhưng $\log_2 4+\log_2 4=4$. Tổng log không phải log của tổng.`, en: R`$\log_2(4+4)=\log_2 8=3$, but $\log_2 4+\log_2 4=4$. A sum of logs is not the log of the sum.` },
+    { k: "vd", vi: R`$r=0{,}08$: $t=\dfrac{\ln 2}{\ln 1{,}08}\approx 9{,}01$. Quy tắc $\dfrac{72}{8}=9$ chỉ cho kết quả xấp xỉ.`, en: R`$r=0{,}08$: $t=\dfrac{\ln 2}{\ln 1{,}08}\approx 9{,}01$. The rule $\dfrac{72}{8}=9$ gives only an approximation.` },
+    { k: "loi", vi: R`$\log_2(4+4)=\log_2 8=3$, nhưng $\log_2 4+\log_2 4=4$. Tổng các logarit không phải là logarit của tổng.`, en: R`$\log_2(4+4)=\log_2 8=3$, but $\log_2 4+\log_2 4=4$. A sum of logarithms is not the logarithm of the sum.` },
     { k: "kiem", vi: R`Bán rã $10$ năm, khối lượng $80$ g. Sau $20$ năm: $80\cdot\left(\dfrac12\right)^2=20$ g.`, en: R`Half-life $10$ years, mass $80$ g. After $20$ years: $80\cdot\left(\dfrac12\right)^2=20$ g.` },
   ],
 };
