@@ -5,6 +5,7 @@ import { cubic, cubicSecond, cubicSlope, pureCubic, pureCubicSlope, rationalObli
 import { writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { Live } from "../ui/Live.tsx";
+import { MathLabel } from "../ui/MathLabel.tsx";
 import { Readout } from "../ui/Readout.tsx";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -156,7 +157,7 @@ export function SurveyLab() {
               [1, "x = 1"],
             ].map(([value, label]) => (
               <button key={label} type="button" aria-pressed={Math.abs(x - Number(value)) < 0.02} onClick={() => { stop(); patch({ x: Number(value) }); }}>
-                {label}
+                <MathLabel text={String(label)} />
               </button>
             ))}
           </div>

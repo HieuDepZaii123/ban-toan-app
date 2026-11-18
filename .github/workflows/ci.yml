@@ -94,6 +94,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run build
       - run: npm run test:ui:full -- --report ui-report.md
+      - run: npm run test:labs
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

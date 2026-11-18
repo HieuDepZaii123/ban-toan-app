@@ -1,4 +1,5 @@
 import { t } from "../lib/text.ts";
+import { MathLabel } from "../ui/MathLabel.tsx";
 import type { Lang } from "../lib/math.ts";
 
 export function SceneBar({
@@ -23,7 +24,7 @@ export function SceneBar({
       <div className="chips" role="group" aria-label={t(lang, "Hình", "Figure")}>
         {scenes.map((item) => (
           <button key={item.id} type="button" aria-pressed={scene === item.id} onClick={() => onScene(item.id)}>
-            {lang === "en" ? item.en : item.vi}
+            <MathLabel text={lang === "en" ? item.en : item.vi} />
           </button>
         ))}
       </div>
