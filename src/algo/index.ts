@@ -920,3 +920,39 @@ export function crossoverIndex(g: (n: number) => number, h: (n: number) => numbe
   for (let n = 1; n <= nMax; n++) if (h(n) <= g(n)) last = n;
   return last < nMax ? last + 1 : null;
 }
+
+/** Hai hình vuông cạnh a, b và hai hình chữ nhật a×b: tổng diện tích hai hình vuông trừ hai lần hình chữ nhật là (a−b)². */
+export function squaresVsRectangles(a: number, b: number): { squares: number; rectangles: number; excess: number } {
+  return { squares: a * a + b * b, rectangles: 2 * a * b, excess: a * a + b * b - 2 * a * b };
+}
+
+/** Chuỗi bốn trung bình của m+d và m−d (m là trung bình cộng, d là nửa hiệu): cả bốn nhập làm một khi d → 0. */
+export function meanChainAround(m: number, d: number): { hm: number; gm: number; am: number; qm: number } {
+  return meanChain(m + d, m - d);
+}
+
+/** Tam thức g(t) = (at−x)² + (bt−y)² của bất đẳng thức Cauchy: cực tiểu (ay−bx)²/(a²+b²) tại t = (ax+by)/(a²+b²). */
+export function cauchyQuadratic(a: number, b: number, x: number, y: number): { g: (t: number) => number; tMin: number; minValue: number; discriminant: number } {
+  const s = a * a + b * b;
+  const g = (t: number) => (a * t - x) ** 2 + (b * t - y) ** 2;
+  // Biệt thức thu gọn của g(t) = s·t² − 2(ax+by)t + (x²+y²): (ax+by)² − s(x²+y²) = −(ay−bx)².
+  return { g, tMin: (a * x + b * y) / s, minValue: (a * y - b * x) ** 2 / s, discriminant: (a * x + b * y) ** 2 - s * (x * x + y * y) };
+}
+
+/** Hạ gradient trên g(t): trả về từng giá trị t, để thấy máy tự tìm đáy của tam thức mà không dùng công thức. */
+export function cauchyDescent(a: number, b: number, x: number, y: number, steps = 60, rate = 0.1, t0 = 0): number[] {
+  const path = [t0];
+  let t = t0;
+  for (let i = 0; i < steps; i++) {
+    const grad = 2 * a * (a * t - x) + 2 * b * (b * t - y);
+    t -= rate * grad;
+    path.push(t);
+  }
+  return path;
+}
+
+/** Hai vectơ độ dài la, lb hợp góc theta: độ dài tổng và khoảng cách tới la+lb (bất đẳng thức tam giác). */
+export function vectorSumLength(la: number, lb: number, theta: number): { sum: number; bound: number; gap: number } {
+  const sum = Math.sqrt(Math.max(0, la * la + lb * lb + 2 * la * lb * Math.cos(theta)));
+  return { sum, bound: la + lb, gap: la + lb - sum };
+}

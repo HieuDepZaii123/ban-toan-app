@@ -80,6 +80,16 @@ export const ineqKnowledge: TopicKnowledge = {
             R`Áp dụng cho số $a-b$: $(a-b)^2\ge 0$. Khai triển vế trái được $a^2-2ab+b^2\ge 0$.`,
             R`Cộng $2ab$ vào hai vế được $a^2+b^2\ge 2ab$. Dấu bằng xảy ra khi $(a-b)^2=0$, tức $a=b$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng diện tích",
+              buoc: [
+                R`Với $a,b>0$, xếp bốn hình chữ nhật $a\times b$ thành một khung vuông có cạnh ngoài $a+b$. Phần trống ở giữa là một hình vuông cạnh $|a-b|$. Hình «Hai hình vuông luôn phủ được hai hình chữ nhật» ở phần Suy từ số 0 cũng chia hình vuông lớn cạnh $a+b$ theo cách gần với ý này.`,
+                R`Diện tích toàn khung là tổng diện tích bốn hình chữ nhật và phần trống: $(a+b)^2=4ab+(a-b)^2$. Diện tích hình vuông ở giữa không âm nên $(a+b)^2\ge 4ab$, tức $a^2+b^2+2ab\ge 4ab$.`,
+                R`Trừ $2ab$ hai vế được $a^2+b^2\ge 2ab$, dấu bằng khi phần trống không còn, tức $a=b$. Nếu $a=0$ hoặc $b=0$ thì $a^2+b^2\ge 0=2ab$. Với số thực bất kì, dùng $a^2+b^2=|a|^2+|b|^2\ge 2|a|\,|b|\ge 2ab$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Bình phương ba số",
@@ -98,6 +108,17 @@ export const ineqKnowledge: TopicKnowledge = {
             R`So sánh hai bình phương: $(|a|+|b|)^2-(a+b)^2=2|a|\,|b|-2ab\ge 0$. Vậy $(a+b)^2\le(|a|+|b|)^2$.`,
             R`Lấy căn hai vế (cả hai căn đều không âm) được $|a+b|\le|a|+|b|$. Dấu bằng khi $ab=|a|\,|b|$, tức $ab\ge 0$: hai số cùng dấu hoặc có một số bằng $0$.`,
             R`Phần sau: viết $a=(a-b)+b$ rồi dùng phần đầu, $|a|\le|a-b|+|b|$, nên $|a|-|b|\le|a-b|$. Đổi vai $a$ và $b$ được $|b|-|a|\le|a-b|$. Hai điều này gộp lại là $\big||a|-|b|\big|\le|a-b|$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng cách kẹp giữa hai số đối nhau",
+              buoc: [
+                R`Mọi số thực $x$ đều thỏa $-|x|\le x\le|x|$, vì $x$ bằng $|x|$ hoặc bằng $-|x|$. Áp dụng cho $a$ và $b$: $-|a|\le a\le|a|$ và $-|b|\le b\le|b|$.`,
+                R`Cộng vế theo vế: $-(|a|+|b|)\le a+b\le|a|+|b|$. Một số nằm giữa $-M$ và $M$ (với $M=|a|+|b|\ge 0$) thì có độ lớn không vượt $M$.`,
+                R`Vậy $|a+b|\le|a|+|b|$ (xem hình «Đi thẳng không bao giờ dài hơn đi vòng»). Dấu bằng khi $a+b=|a|+|b|$ hoặc $a+b=-(|a|+|b|)$. Trường hợp đầu cùng với $a\le|a|$, $b\le|b|$ buộc $a=|a|$ và $b=|b|$, tức $a,b\ge 0$; trường hợp sau cho $a,b\le 0$. Vậy hai số cùng dấu hoặc có một số bằng $0$.`,
+                R`Phần sau của định lí: viết $a=(a-b)+b$ rồi áp dụng bất đẳng thức vừa chứng minh, $|a|\le|a-b|+|b|$, nên $|a|-|b|\le|a-b|$. Đổi vai $a$ và $b$ được $|b|-|a|\le|a-b|$, gộp lại là $\big||a|-|b|\big|\le|a-b|$.`,
+              ],
+            },
           ],
         },
         {
@@ -123,6 +144,16 @@ export const ineqKnowledge: TopicKnowledge = {
             R`Bình phương không âm: $(x-y)^2\ge 0$, khai triển được $x^2+y^2\ge 2xy$. Viết lại theo $a,b$: $a+b\ge 2\sqrt{ab}$. Chia hai vế cho $2$ là xong.`,
             R`Dấu bằng khi $x=y$, tức $\sqrt{a}=\sqrt{b}$, tức $a=b$.`,
             R`Với nhiều số hơn, cách chứng minh là đi từ $2$ số lên $4$ số rồi lùi về $3$ số; các bước đó nằm ở mục «Các dạng hay dùng» ngay dưới.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng nửa đường tròn",
+              buoc: [
+                R`Nếu $a=0$ hoặc $b=0$ thì $\sqrt{ab}=0\le\frac{a+b}{2}$. Với $a,b>0$, vẽ đoạn $AB$ dài $a+b$ gồm $AH=a$ và $HB=b$. Nửa đường tròn đường kính $AB$ có tâm $O$ và bán kính $\frac{a+b}{2}$. Dựng đường vuông góc với $AB$ tại $H$ cắt nửa đường tròn tại $C$ (xem hình «Điểm nối trượt»).`,
+                R`Góc nội tiếp chắn nửa đường tròn là góc vuông, nên tam giác $ACB$ vuông tại $C$ và $CH$ là đường cao ứng với cạnh huyền. Do đó $CH^2=AH\cdot HB=ab$, tức $CH=\sqrt{ab}$.`,
+                R`Với $OC^2=OH^2+CH^2$ (Pythagore trong tam giác $OHC$ vuông tại $H$, hoặc $CH=OC$ khi $H$ trùng $O$) ta có $CH\le OC$, mà $OC$ là bán kính. Vậy $\sqrt{ab}\le\frac{a+b}{2}$, dấu bằng khi $OH=0$, tức $a=b$.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Vì sao đúng", text: R`Xét hiệu: $a+b-2\sqrt{ab}=(\sqrt{a}-\sqrt{b})^2\ge 0$. Bình phương nên không âm, và bằng $0$ đúng khi $\sqrt{a}=\sqrt{b}$.` },
@@ -161,6 +192,17 @@ export const ineqKnowledge: TopicKnowledge = {
             R`Khai triển vế phải: $(a^2+b^2)(x^2+y^2)=a^2x^2+a^2y^2+b^2x^2+b^2y^2$. Khai triển vế trái: $(ax+by)^2=a^2x^2+2abxy+b^2y^2$.`,
             R`Lấy vế phải trừ vế trái, hai số hạng $a^2x^2$ và $b^2y^2$ triệt tiêu, còn lại $a^2y^2-2abxy+b^2x^2=(ay-bx)^2$.`,
             R`Một bình phương thì không âm, nên vế phải không nhỏ hơn vế trái. Dấu bằng khi $ay-bx=0$, tức $ay=bx$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng tam thức bậc hai",
+              buoc: [
+                R`Xét $g(t)=(at-x)^2+(bt-y)^2$. Đây là tổng hai bình phương nên $g(t)\ge 0$ với mọi số thực $t$ (xem hình «Tam thức không bao giờ âm»).`,
+                R`Khai triển: $g(t)=(a^2+b^2)t^2-2(ax+by)t+(x^2+y^2)$. Nếu $a=b=0$ thì bất đẳng thức cần chứng minh là $0\le 0$, đúng ngay. Nếu không, đây là tam thức bậc hai có hệ số cao nhất $a^2+b^2>0$.`,
+                R`Một tam thức bậc hai luôn không âm thì không có hai nghiệm phân biệt, nên biệt thức thu gọn không dương: $(ax+by)^2-(a^2+b^2)(x^2+y^2)\le 0$. Chuyển vế được $(ax+by)^2\le(a^2+b^2)(x^2+y^2)$.`,
+                R`Dấu bằng khi $g$ có nghiệm: có $t$ để $at=x$ và $bt=y$, tức $(x;y)$ tỉ lệ với $(a;b)$, hay $ay=bx$.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Vì sao đúng", text: R`Hiệu hai vế là $(a^2+b^2)(x^2+y^2)-(ax+by)^2=(ay-bx)^2$. Đẳng thức này kiểm được bằng khai triển, và vế phải là bình phương nên không âm.` },
@@ -205,6 +247,16 @@ export const ineqKnowledge: TopicKnowledge = {
             R`Mắt xích phải: xét hiệu hai bình phương, $\frac{a^2+b^2}{2}-\left(\frac{a+b}{2}\right)^2=\frac{2a^2+2b^2-a^2-2ab-b^2}{4}=\frac{(a-b)^2}{4}\ge 0$. Hai số không âm mà bình phương lớn hơn thì số đó lớn hơn, nên $\frac{a+b}{2}\le\sqrt{\frac{a^2+b^2}{2}}$.`,
             R`Ở cả ba mắt xích, dấu bằng đều xảy ra khi $(a-b)^2=0$ hoặc $\sqrt{a}=\sqrt{b}$, tức $a=b$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng đặt trung bình cộng và nửa hiệu",
+              buoc: [
+                R`Đặt $m=\frac{a+b}{2}>0$ và $d=\frac{a-b}{2}$, nên $a=m+d$ và $b=m-d$. Khai triển cho $ab=m^2-d^2$ và $\frac{a^2+b^2}{2}=m^2+d^2$ (xem hình «Bốn loại trung bình dồn về một»).`,
+                R`Vì $d^2\ge 0$ nên $ab\le m^2$, suy ra $\sqrt{ab}\le m$. Cũng vì $d^2\ge 0$ nên $\frac{a^2+b^2}{2}\ge m^2$, suy ra $m\le\sqrt{\frac{a^2+b^2}{2}}$.`,
+                R`Trung bình điều hòa là $\frac{2ab}{a+b}=\frac{ab}{m}$. Chia hai vế của $\sqrt{ab}\le m$ cho số dương $m$ rồi nhân với $\sqrt{ab}$ được $\frac{ab}{m}\le\sqrt{ab}$, vậy cả chuỗi đã đủ. Cả ba dấu bằng cùng xảy ra khi $d=0$, tức $a=b$.`,
+              ],
+            },
+          ],
         },
         { kind: "vi-du", text: R`Với $a=4$ và $b=9$: điều hòa $\frac{72}{13}\approx 5{,}54$, nhân $6$, cộng $6{,}5$, bình phương $\sqrt{\frac{97}{2}}\approx 6{,}96$. Các giá trị tăng dần đúng như chuỗi trên.` },
         {
@@ -236,6 +288,11 @@ export const ineqKnowledge: TopicKnowledge = {
     { id: "sequence", vi: R`Trung bình cộng và trung bình nhân chính là số hạng giữa của cấp số cộng và cấp số nhân.` },
   ],
   checks: [
+    { expr: "expand((a+b)**2) - 4*a*b - (a-b)**2", expect: "0" },
+    { expr: "expand((a*x+b*y)**2 - (a**2+b**2)*(x**2+y**2) + (a*y-b*x)**2)", expect: "0" },
+    { expr: "expand((m+d)*(m-d)) - (m**2 - d**2)", expect: "0" },
+    { expr: "expand(((m+d)**2+(m-d)**2)/2) - (m**2 + d**2)", expect: "0" },
+    { expr: "expand((a*t-x)**2+(b*t-y)**2) - ((a**2+b**2)*t**2 - 2*(a*x+b*y)*t + (x**2+y**2))", expect: "0" },
     { expr: "3**2+5**2-2*3*5", expect: "4" },
     { expr: "(-3)**2", expect: "9" },
     { expr: "(-2)**2", expect: "4" },

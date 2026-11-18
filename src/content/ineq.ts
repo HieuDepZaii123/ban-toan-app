@@ -11,7 +11,7 @@ export const ineqLesson: Lesson = {
   exam: [
     { k: "dinh", vi: R`Cauchy: $(a^2+b^2)(c^2+d^2)\ge(ac+bd)^2$, đẳng thức khi $(a;b)$ và $(c;d)$ tỉ lệ.`, en: R`Cauchy: $(a^2+b^2)(c^2+d^2)\ge(ac+bd)^2$, with equality when $(a;b)$ and $(c;d)$ are proportional.` },
     { k: "vd", vi: R`$a+b=10$, $a,b>0$. $ab\le\left(\dfrac{10}{2}\right)^2=25$, đạt tại $a=b=5$.`, en: R`$a+b=10$, $a,b>0$. $ab\le\left(\dfrac{10}{2}\right)^2=25$, reached at $a=b=5$.` },
-    { k: "loi", vi: R`Chia $-2x\le 4$ cho $-2$ mà giữ $\le$ thì ra $x\le -2$. Đúng là $x\ge -2$.`, en: R`Dividing $-2x\le 4$ by $-2$ and keeping $\le$ gives $x\le -2$. The correct result is $x\ge -2$.` },
+    { k: "loi", vi: R`Chia $-2x\le 4$ cho $-2$ mà giữ nguyên $\le$ thì được $x\le -2$, là sai. Kết quả đúng là $x\ge -2$.`, en: R`Dividing $-2x\le 4$ by $-2$ and keeping $\le$ gives $x\le -2$, which is wrong. The correct result is $x\ge -2$.` },
     { k: "kiem", vi: R`$a=2$, $b=3$, $c=1$, $d=1$: vế trái $(4+9)(1+1)=26$, vế phải $(2+3)^2=25$.`, en: R`$a=2$, $b=3$, $c=1$, $d=1$: left side $(4+9)(1+1)=26$, right side $(2+3)^2=25$.` },
   ],
 };

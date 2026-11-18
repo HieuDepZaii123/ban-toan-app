@@ -50,8 +50,8 @@ export function DiffHeatLab() {
     <Stage
       title={tt("Xét hiệu: bản đồ «vế trái trừ vế phải»", "Look at the difference: a map of «left side minus right side»")}
       story={tt(
-        R`Mọi bất đẳng thức đều quy về một câu hỏi: hiệu hai vế có bao giờ âm không? Máy tô mỗi điểm $(a;b)$ trên mặt phẳng: xanh nếu hiệu dương, cam nếu hiệu âm, và đường sáng là chỗ hiệu bằng 0. Nếu bất đẳng thức đúng thì cả bản đồ không có màu cam, và chỗ hiệu bằng 0 là dấu bằng. Hãy thử bật «chỉ xét a, b không âm» với bất đẳng thức bậc ba để thấy điều kiện quan trọng thế nào.`,
-        R`Every inequality reduces to one question: is the difference of the two sides ever negative? The machine colours every point $(a;b)$ of the plane: green where the difference is positive, orange where it is negative, and the bright line is where it is zero. If the inequality is true the whole map has no orange, and the zero set is the equality case. Try switching on «only a, b ≥ 0» for the cubic inequality to see how much the condition matters.`,
+        R`Mọi bất đẳng thức đều quy về một câu hỏi: hiệu hai vế có bao giờ âm không? Máy tô màu mỗi điểm $(a;b)$ trên mặt phẳng: xanh nếu hiệu dương, cam nếu hiệu âm, và đường sáng là chỗ hiệu bằng 0. Nếu bất đẳng thức đúng thì cả bản đồ không có màu cam, và chỗ hiệu bằng 0 là dấu bằng. Hãy thử bật «chỉ xét a, b không âm» với bất đẳng thức bậc ba để thấy điều kiện ấy quan trọng đến đâu.`,
+        R`Every inequality comes down to one question: is the difference of the two sides ever negative? The machine colours every point $(a;b)$ of the plane: green where the difference is positive, orange where it is negative, and the bright line is where it is zero. If the inequality is true the whole map has no orange, and the zero set is the equality case. Try switching on «only a, b ≥ 0» for the cubic inequality to see how much the condition matters.`,
       )}
       read={tt(
         `Hiệu $${s.tex}$. Trên ${cells.length} điểm đã thử: nhỏ nhất $${fmt(min, 4)}$ tại $(${fmt(argA, 2)};\\ ${fmt(argB, 2)})$; ${neg === 0 ? "không có điểm nào cho hiệu âm: bất đẳng thức đúng trên vùng này." : `có ${neg} điểm cho hiệu âm: bất đẳng thức SAI ở những chỗ này (vùng cam).`}`,
@@ -103,7 +103,7 @@ export function MeansLab() {
     <Stage
       title={tt("Bốn loại trung bình nằm trên một nửa đường tròn", "Four kinds of mean on one semicircle")}
       story={tt(
-        R`Đặt hai đoạn nối nhau, dài $a$ và $b$, thành đường kính $a+b$ của một nửa đường tròn. Bán kính chính là trung bình cộng $\frac{a+b}{2}$. Từ điểm nối, dựng đoạn vuông góc lên tới đường tròn: độ cao đo được chính là trung bình nhân $\sqrt{ab}$. Đoạn vuông góc luôn thấp hơn bán kính, nên trung bình nhân không vượt trung bình cộng. Máy tính độ cao bằng phương trình đường tròn, không dùng $\sqrt{ab}$.`,
+        R`Đặt hai đoạn nối nhau, dài $a$ và $b$, thành đường kính $a+b$ của một nửa đường tròn. Bán kính chính là trung bình cộng $\frac{a+b}{2}$. Từ điểm nối, dựng đoạn vuông góc lên tới đường tròn: độ cao đo được chính là trung bình nhân $\sqrt{ab}$. Đoạn vuông góc không bao giờ cao hơn bán kính, nên trung bình nhân không vượt trung bình cộng. Máy tính độ cao bằng phương trình đường tròn, không dùng $\sqrt{ab}$.`,
         R`Place two segments end to end, of lengths $a$ and $b$, to form the diameter $a+b$ of a semicircle. The radius is the arithmetic mean $\frac{a+b}{2}$. At the joint, raise a perpendicular up to the circle: its measured height is the geometric mean $\sqrt{ab}$. The perpendicular is never higher than the radius, so the geometric mean never exceeds the arithmetic mean. The machine computes the height from the circle equation, without using $\sqrt{ab}$.`,
       )}
       read={tt(
@@ -165,8 +165,8 @@ export function RectangleLab() {
     <Stage
       title={tt("Hình chữ nhật: cùng chu vi thì hình nào rộng nhất?", "Rectangles: with the same perimeter, which is the biggest?")}
       story={tt(
-        R`Có một sợi dây dài cố định, uốn thành hình chữ nhật. Kéo một cạnh dài ra thì cạnh kia ngắn lại, diện tích lúc tăng lúc giảm. Người leo đồi bịt mắt tìm chỗ diện tích lớn nhất: nó dừng đúng khi hai cạnh bằng nhau, tức hình vuông. Chế độ thứ hai làm ngược lại: cố định diện tích và tìm chu vi nhỏ nhất.`,
-        R`Take a fixed length of string and bend it into a rectangle. Stretch one side and the other shrinks, so the area goes up and down. A blindfolded hill climber looking for the largest area stops exactly when the two sides are equal: a square. The second mode does the reverse: fix the area and look for the smallest perimeter.`,
+        R`Có một sợi dây dài cố định, uốn thành hình chữ nhật. Kéo một cạnh dài ra thì cạnh kia ngắn lại, diện tích lúc tăng lúc giảm. Một người leo đồi bịt mắt đi tìm chỗ diện tích lớn nhất sẽ dừng đúng khi hai cạnh bằng nhau, tức là hình vuông. Chế độ thứ hai làm ngược lại: cố định diện tích và tìm chu vi nhỏ nhất.`,
+        R`Take a fixed length of string and bend it into a rectangle. Stretch one side and the other shrinks, so the area goes up and down. A blindfolded hill climber searching for the largest area stops exactly when the two sides are equal: a square. The second mode does the reverse: fix the area and look for the smallest perimeter.`,
       )}
       read={mode === "area"
         ? tt(
@@ -308,7 +308,7 @@ export function TriIneqLab() {
     <Stage
       title={tt("Đường thẳng là đường ngắn nhất: bất đẳng thức tam giác", "A straight line is the shortest path: the triangle inequality")}
       story={tt(
-        R`Đi từ gốc theo vectơ $u$ rồi theo vectơ $v$ (nối đuôi). Đi thẳng từ gốc tới đích là vectơ $u+v$. Hiển nhiên đi thẳng ngắn hơn đi vòng, nên $|u+v|\le|u|+|v|$. Chỉ khi hai vectơ cùng hướng thì đường vòng chính là đường thẳng. Kéo góc về 0 để thấy dấu bằng, kéo về 180° để thấy hai bước triệt tiêu nhau.`,
+        R`Đi từ gốc theo vectơ $u$ rồi theo vectơ $v$ (nối đuôi). Đi thẳng từ gốc tới đích là vectơ $u+v$. Đi thẳng thì không dài hơn đi vòng, nên $|u+v|\le|u|+|v|$. Chỉ khi hai vectơ cùng hướng thì đường vòng chính là đường thẳng. Kéo góc về 0 để thấy dấu bằng, kéo về 180° để thấy hai bước triệt tiêu nhau.`,
         R`Walk from the origin along $u$, then along $v$ (end to end). Going straight from the start to the finish is the vector $u+v$. Walking straight is obviously shorter than taking the detour, so $|u+v|\le|u|+|v|$. Only when the two vectors point the same way does the detour coincide with the straight line. Drag the angle to 0 to see equality, and to 180° to see the two steps cancel.`,
       )}
       read={tt(

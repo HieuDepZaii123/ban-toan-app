@@ -343,6 +343,31 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("không vượt trong giới hạn thì null", A.crossoverIndex((n) => 100 * n, (n) => 2 ** n, 8) === null);
 }
 
+// Bất đẳng thức: hình vuông và chữ nhật, bốn trung bình quanh m, tam thức Cauchy, độ dài tổng hai vectơ.
+{
+  const sq = A.squaresVsRectangles(7, 3);
+  near("hình vuông − chữ nhật = (a−b)²", sq.excess, 16, 1e-12);
+  is("hình vuông luôn ≥ chữ nhật", sq.squares >= sq.rectangles);
+  const mc = A.meanChainAround(5, 3);
+  near("a=8, b=2: trung bình nhân", mc.gm, 4, 1e-12);
+  near("a=8, b=2: điều hòa", mc.hm, 3.2, 1e-12);
+  is("chuỗi bốn trung bình đúng thứ tự", mc.hm <= mc.gm && mc.gm <= mc.am && mc.am <= mc.qm);
+  const flat = A.meanChainAround(5, 0);
+  is("d = 0 thì cả bốn bằng nhau", [flat.hm, flat.gm, flat.qm].every((v) => Math.abs(v - 5) < 1e-12));
+  const cq = A.cauchyQuadratic(3, 1, 2, 5);
+  near("cực tiểu tam thức Cauchy", cq.minValue, 169 / 10, 1e-12);
+  near("g tại tMin bằng cực tiểu", cq.g(cq.tMin), cq.minValue, 1e-9);
+  is("biệt thức ≤ 0", cq.discriminant <= 0);
+  near("biệt thức = −(ay−bx)²", cq.discriminant, -((3 * 5 - 1 * 2) ** 2), 1e-9);
+  const path = A.cauchyDescent(3, 1, 2, 5, 200, 0.05);
+  near("hạ gradient tới tMin", path[path.length - 1]!, cq.tMin, 1e-6);
+  const par = A.cauchyQuadratic(3, 1, 6, 2);
+  near("hai cặp tỉ lệ thì cực tiểu bằng 0", par.minValue, 0, 1e-12);
+  near("cùng hướng: |a+b| = |a|+|b|", A.vectorSumLength(3, 2, 0).gap, 0, 1e-12);
+  near("ngược hướng: |a+b| = |a|−|b|", A.vectorSumLength(3, 2, Math.PI).sum, 1, 1e-12);
+  is("|a+b| ≤ |a|+|b| mọi góc", Array.from({ length: 50 }, (_, i) => A.vectorSumLength(3, 2, (i * Math.PI) / 49).gap >= -1e-12).every(Boolean));
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);
