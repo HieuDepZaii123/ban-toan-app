@@ -142,4 +142,4 @@ Service worker đăng ký sau khi trang đã hiện, chỉ ở bản production.
 
 ## Gói
 
-React 19, TypeScript, Vite. Công thức vẽ bằng KaTeX. Mermaid (sơ đồ trong trợ lý) và pdf-lib (xuất PDF) chỉ tải khi dùng tới. Đồ thị là canvas, không có thư viện biểu đồ. Không Tailwind. Font Be Vietnam Pro tự host, chỉ hai độ đậm.
+React 19, TypeScript, Vite. Lần mở trang chủ tải khoảng 105 KB (gzip). Thư viện nặng chỉ tải ở trang cần chúng: KaTeX ở trang có công thức, Mermaid khi trợ lý vẽ sơ đồ, pdf-lib khi xuất PDF, SDK Supabase khi đề luyện ghi tiến độ lần đầu. Nội dung cũng tải theo phần đang mở: trang một tờ chỉ tải bài, dạng bài và kiến thức của tờ đó, trang một lớp chỉ tải sách của lớp đó. Đồ thị là canvas, không có thư viện biểu đồ. Không Tailwind. Font Be Vietnam Pro tự host, chỉ hai độ đậm.
