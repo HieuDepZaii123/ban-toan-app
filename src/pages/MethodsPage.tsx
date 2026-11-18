@@ -69,7 +69,7 @@ function Chooser() {
       </section>
       <h2>{t(lang, "Phương pháp theo lớp 1–8", "Methods for grades 1 to 8")}</h2>
       <div className="study-list">
-        {methodsData.methods.filter((item) => item.grade !== undefined).map((item) => (
+        {methodsData.methods.filter((item) => item.grade !== undefined).sort((a, b) => (a.grade ?? 0) - (b.grade ?? 0)).map((item) => (
           <A key={item.id} className="tool-card" href={`/phuong-phap/${item.id}`}>
             <strong>{t(lang, `Lớp ${item.grade}. ${item.title}`, `Grade ${item.grade}. ${item.titleEn}`)}</strong>
             <span>{t(lang, item.blurb, item.titleEn)}</span>

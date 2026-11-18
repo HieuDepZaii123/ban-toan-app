@@ -1,8 +1,8 @@
 {
   "title": "Phương pháp giải",
   "titleEn": "Solving methods",
-  "lead": "22 phương pháp: mỗi lớp từ 1 đến 8 một phương pháp, và 14 phương pháp nâng cao từ lớp 9 đến lớp 12. Nhận dạng trước, rồi mới tính. Mỗi phương pháp nêu khi nào dùng, cách nghĩ, điều kiện cần giữ, hai ví dụ đủ bước, lỗi hay gặp và bài tự luyện.",
-  "leadEn": "22 methods: one for each grade from 1 to 8, plus 14 advanced methods for grades 9 to 12. Recognise the shape first, then compute. Each method says when to use it, how to think, which conditions to keep, two fully worked examples, common mistakes and practice.",
+  "lead": "29 phương pháp: 15 phương pháp cho lớp 1 đến lớp 8 (có lớp hai phương pháp) và 14 phương pháp nâng cao từ lớp 9 đến lớp 12. Nhận dạng trước, rồi mới tính. Mỗi phương pháp nêu khi nào dùng, cách nghĩ, điều kiện cần giữ, hai ví dụ đủ bước, lỗi hay gặp và bài tự luyện.",
+  "leadEn": "29 methods: 15 for grades 1 to 8 (two for some grades) and 14 advanced methods for grades 9 to 12. Recognise the shape first, then compute. Each method says when to use it, how to think, which conditions to keep, two fully worked examples, common mistakes and practice.",
   "guide": [
     {
       "when": "Có $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ hoặc $\\sqrt{x^2-a^2}$, và không thấy sẵn đạo hàm của phần trong căn.",
@@ -133,6 +133,48 @@
     {
       "when": "Rút gọn phân thức hoặc giải phương trình tích cần phân tích đa thức.",
       "methodId": "nhan-tu-hang-dang-thuc",
+      "topicHref": "/kien-thuc/8/dang",
+      "topicLabel": "Dạng bài lớp 8"
+    },
+    {
+      "when": "Đề cho bảng hoặc biểu đồ tranh, cột và hỏi tổng, hơn kém, gấp mấy lần.",
+      "methodId": "doc-bang-so-lieu",
+      "topicHref": "/kien-thuc/3/dang",
+      "topicLabel": "Dạng bài lớp 3"
+    },
+    {
+      "when": "Hỏi trung bình mỗi, hoặc biết trung bình rồi tìm số còn thiếu.",
+      "methodId": "trung-binh-cong",
+      "topicHref": "/kien-thuc/4/dang",
+      "topicLabel": "Dạng bài lớp 4"
+    },
+    {
+      "when": "Biểu đồ hình quạt chia thành các phần trăm.",
+      "methodId": "bieu-do-hinh-quat",
+      "topicHref": "/kien-thuc/5/dang",
+      "topicLabel": "Dạng bài lớp 5"
+    },
+    {
+      "when": "Có kết quả của nhiều lần tung, rút, gieo và hỏi xác suất.",
+      "methodId": "xac-suat-thuc-nghiem",
+      "topicHref": "/kien-thuc/6/dang",
+      "topicLabel": "Dạng bài lớp 6"
+    },
+    {
+      "when": "So sánh tỉ lệ của hai nhóm có tổng khác nhau.",
+      "methodId": "tan-so-tuong-doi",
+      "topicHref": "/kien-thuc/7/dang",
+      "topicLabel": "Dạng bài lớp 7"
+    },
+    {
+      "when": "Chứng minh hai tam giác bằng nhau, hoặc hai đoạn, hai góc bằng nhau.",
+      "methodId": "tam-giac-bang-nhau",
+      "topicHref": "/kien-thuc/7/dang",
+      "topicLabel": "Dạng bài lớp 7"
+    },
+    {
+      "when": "Xác suất của biến cố khi các kết quả đồng khả năng.",
+      "methodId": "xac-suat-bien-co",
       "topicHref": "/kien-thuc/8/dang",
       "topicLabel": "Dạng bài lớp 8"
     }
@@ -2390,6 +2432,738 @@
           "where": "l8-p2",
           "lhs": "expand(3*(x-2)*(x+2))",
           "rhs": "3*x**2-12"
+        }
+      ]
+    },
+    {
+      "id": "doc-bang-so-lieu",
+      "grade": 3,
+      "title": "Đọc bảng số liệu và biểu đồ tranh",
+      "titleEn": "Reading tables and picture charts",
+      "blurb": "Lớp 3: đọc đơn vị của biểu đồ trước, rồi mới cộng, trừ hoặc chia.",
+      "spot": [
+        "Đề cho một bảng hoặc biểu đồ tranh, biểu đồ cột rồi hỏi số lượng, hơn kém hoặc tổng.",
+        "Số cần dùng nằm trong hình, không nằm trong lời đề."
+      ],
+      "thinking": [
+        "Đọc tiêu đề và đơn vị trước: mỗi hình tranh hoặc mỗi vạch ứng với bao nhiêu.",
+        "Tìm đúng hàng hoặc cột đề hỏi và ghi giá trị thành một phép tính.",
+        "Hỏi nhiều hơn bao nhiêu thì trừ, hỏi tất cả thì cộng, hỏi gấp mấy lần thì chia."
+      ],
+      "care": [
+        "Một hình tranh có thể ứng với nhiều đơn vị, ví dụ $1$ hình là $5$ quả.",
+        "Đọc đúng hàng hoặc cột, đừng lấy nhầm lớp hoặc nhầm bạn."
+      ],
+      "formulas": [
+        "Số lượng $=$ số hình tranh $\\times$ giá trị mỗi hình.",
+        "Hơn kém $=$ số lớn $-$ số bé."
+      ],
+      "examples": [
+        {
+          "id": "l3b-1",
+          "title": "Biểu đồ tranh",
+          "prompt": "Mỗi hình tượng trưng cho $5$ quả táo. Hàng của An có $4$ hình, hàng của Bình có $7$ hình. Bình hơn An bao nhiêu quả?",
+          "steps": [
+            "An có $4\\times5=20$ quả.",
+            "Bình có $7\\times5=35$ quả.",
+            "Hơn kém: $35-20=15$."
+          ],
+          "result": "$15$ quả"
+        },
+        {
+          "id": "l3b-2",
+          "title": "Bảng số liệu",
+          "prompt": "Bảng cho số học sinh ba lớp: lớp $3A$ có $32$, lớp $3B$ có $28$, lớp $3C$ có $30$. Cả ba lớp có bao nhiêu học sinh?",
+          "steps": [
+            "Hỏi tất cả nên cộng.",
+            "$32+28+30=90$."
+          ],
+          "result": "$90$ học sinh"
+        }
+      ],
+      "mistakes": [
+        "Quên nhân với giá trị của mỗi hình tranh.",
+        "Lấy số hình thay cho số quả.",
+        "Trừ ngược chiều khi hỏi hơn kém."
+      ],
+      "practice": [
+        {
+          "id": "l3b-p1",
+          "prompt": "Mỗi hình là $10$ cái bánh. Hàng thứ nhất có $6$ hình. Hàng đó có bao nhiêu cái bánh?",
+          "answer": "$60$",
+          "steps": [
+            "Mỗi hình $10$ cái nên nhân.",
+            "$6\\times10=60$."
+          ]
+        },
+        {
+          "id": "l3b-p2",
+          "prompt": "Cột A cao $45$, cột B cao $15$. Cột A gấp mấy lần cột B?",
+          "answer": "$3$",
+          "steps": [
+            "Hỏi gấp mấy lần thì chia số lớn cho số bé.",
+            "$45:15=3$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/3",
+          "label": "Các bài lớp 3"
+        },
+        {
+          "href": "/kien-thuc/3/dang",
+          "label": "Dạng bài lớp 3"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l3b-1",
+          "lhs": "7*5-4*5",
+          "rhs": "15"
+        },
+        {
+          "where": "l3b-2",
+          "lhs": "32+28+30",
+          "rhs": "90"
+        },
+        {
+          "where": "l3b-p1",
+          "lhs": "6*10",
+          "rhs": "60"
+        },
+        {
+          "where": "l3b-p2",
+          "lhs": "Rational(45,15)",
+          "rhs": "3"
+        }
+      ]
+    },
+    {
+      "id": "trung-binh-cong",
+      "grade": 4,
+      "title": "Trung bình cộng",
+      "titleEn": "The mean",
+      "blurb": "Lớp 4: trung bình bằng tổng chia cho số số hạng; biết trung bình thì tìm được tổng.",
+      "spot": [
+        "Đề hỏi trung bình mỗi, hoặc cho trung bình rồi tìm số còn thiếu.",
+        "Có một dãy số liệu cần so với mức trung bình."
+      ],
+      "thinking": [
+        "Trung bình cộng bằng tổng chia cho số số hạng.",
+        "Biết trung bình và số số hạng thì tổng bằng trung bình nhân số số hạng.",
+        "Tìm số còn thiếu: lấy tổng cần có trừ tổng các số đã biết."
+      ],
+      "care": [
+        "Chia cho đúng số số hạng, đếm cả số $0$ nếu có.",
+        "Trung bình luôn nằm giữa số bé nhất và số lớn nhất; ra ngoài khoảng đó là sai."
+      ],
+      "formulas": [
+        "Trung bình $=$ tổng $:$ số số hạng.",
+        "Tổng $=$ trung bình $\\times$ số số hạng."
+      ],
+      "examples": [
+        {
+          "id": "l4b-1",
+          "title": "Tính trung bình",
+          "prompt": "Bốn bạn cân nặng $30$ kg, $34$ kg, $32$ kg, $36$ kg. Trung bình mỗi bạn nặng bao nhiêu?",
+          "steps": [
+            "Tổng: $30+34+32+36=132$.",
+            "Chia cho $4$ bạn: $132:4=33$."
+          ],
+          "result": "$33$ kg"
+        },
+        {
+          "id": "l4b-2",
+          "title": "Tìm số còn thiếu",
+          "prompt": "Trung bình cộng của năm số là $20$. Bốn số đã biết là $18$, $22$, $19$, $21$. Tìm số thứ năm.",
+          "steps": [
+            "Tổng năm số phải là $20\\times5=100$.",
+            "Tổng bốn số đã biết: $18+22+19+21=80$.",
+            "Số còn thiếu: $100-80=20$."
+          ],
+          "result": "$20$"
+        }
+      ],
+      "mistakes": [
+        "Chia cho số lớn nhất thay vì số số hạng.",
+        "Quên đếm một số hạng.",
+        "Lấy trung bình của hai trung bình mà không để ý số số hạng khác nhau."
+      ],
+      "practice": [
+        {
+          "id": "l4b-p1",
+          "prompt": "Tìm trung bình cộng của $8$, $12$ và $16$.",
+          "answer": "$12$",
+          "steps": [
+            "Tổng: $8+12+16=36$.",
+            "Chia cho $3$: $36:3=12$."
+          ]
+        },
+        {
+          "id": "l4b-p2",
+          "prompt": "Trung bình cộng của ba số là $15$. Hai số là $10$ và $20$. Tìm số thứ ba.",
+          "answer": "$15$",
+          "steps": [
+            "Tổng ba số: $15\\times3=45$.",
+            "Số thứ ba: $45-(10+20)=15$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/4",
+          "label": "Các bài lớp 4"
+        },
+        {
+          "href": "/kien-thuc/4/dang",
+          "label": "Dạng bài lớp 4"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l4b-1",
+          "lhs": "Rational(30+34+32+36,4)",
+          "rhs": "33"
+        },
+        {
+          "where": "l4b-2",
+          "lhs": "20*5-(18+22+19+21)",
+          "rhs": "20"
+        },
+        {
+          "where": "l4b-p1",
+          "lhs": "Rational(8+12+16,3)",
+          "rhs": "12"
+        },
+        {
+          "where": "l4b-p2",
+          "lhs": "15*3-(10+20)",
+          "rhs": "15"
+        }
+      ]
+    },
+    {
+      "id": "bieu-do-hinh-quat",
+      "grade": 5,
+      "title": "Đọc biểu đồ hình quạt tròn",
+      "titleEn": "Reading pie charts",
+      "blurb": "Lớp 5: các phần trăm cộng lại là 100%; số lượng của một phần bằng tổng nhân phần trăm.",
+      "spot": [
+        "Biểu đồ hình tròn chia thành các phần ghi phần trăm.",
+        "Đề hỏi số lượng của một phần khi biết tổng, hoặc phần trăm của phần còn lại."
+      ],
+      "thinking": [
+        "Các phần trăm cộng lại phải bằng $100\\%$.",
+        "Số lượng một phần bằng tổng nhân phần trăm của phần đó.",
+        "Tìm phần chưa biết: lấy $100\\%$ trừ các phần đã biết."
+      ],
+      "care": [
+        "Tổng các phần trăm bằng $100\\%$, dùng để kiểm đã đọc đúng biểu đồ chưa.",
+        "Phần trăm là của cả tổng, không phải của một phần khác."
+      ],
+      "formulas": [
+        "Số lượng $=$ tổng $\\times$ phần trăm.",
+        "$45\\%=0{,}45$."
+      ],
+      "examples": [
+        {
+          "id": "l5b-1",
+          "title": "Số lượng một phần",
+          "prompt": "Lớp có $40$ bạn. Biểu đồ hình quạt cho $45\\%$ thích bóng đá, $30\\%$ thích bơi, còn lại thích cờ vua. Bao nhiêu bạn thích bóng đá?",
+          "steps": [
+            "$45\\%=0{,}45$.",
+            "$40\\times0{,}45=18$."
+          ],
+          "result": "$18$ bạn"
+        },
+        {
+          "id": "l5b-2",
+          "title": "Phần còn lại",
+          "prompt": "Cũng với biểu đồ trên, bao nhiêu bạn thích cờ vua?",
+          "steps": [
+            "Cờ vua chiếm $100\\%-45\\%-30\\%=25\\%$.",
+            "$40\\times0{,}25=10$."
+          ],
+          "result": "$10$ bạn"
+        }
+      ],
+      "mistakes": [
+        "Quên rằng tổng các phần là $100\\%$.",
+        "Lấy $45$ bạn thay cho $45\\%$ của $40$ bạn.",
+        "Tính phần trăm của một phần thay vì của tổng."
+      ],
+      "practice": [
+        {
+          "id": "l5b-p1",
+          "prompt": "Có $200$ học sinh, phần đi xe buýt chiếm $15\\%$. Bao nhiêu em đi xe buýt?",
+          "answer": "$30$",
+          "steps": [
+            "$15\\%=0{,}15$.",
+            "$200\\times0{,}15=30$."
+          ]
+        },
+        {
+          "id": "l5b-p2",
+          "prompt": "Hai phần của biểu đồ là $35\\%$ và $40\\%$. Phần thứ ba là bao nhiêu phần trăm?",
+          "answer": "$25\\%$",
+          "steps": [
+            "Tổng các phần là $100\\%$.",
+            "$100-35-40=25$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/5",
+          "label": "Các bài lớp 5"
+        },
+        {
+          "href": "/kien-thuc/5/dang",
+          "label": "Dạng bài lớp 5"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l5b-1",
+          "lhs": "40*Rational(45,100)",
+          "rhs": "18"
+        },
+        {
+          "where": "l5b-2",
+          "lhs": "40*(1-Rational(45,100)-Rational(30,100))",
+          "rhs": "10"
+        },
+        {
+          "where": "l5b-p1",
+          "lhs": "200*Rational(15,100)",
+          "rhs": "30"
+        },
+        {
+          "where": "l5b-p2",
+          "lhs": "100-35-40",
+          "rhs": "25"
+        }
+      ]
+    },
+    {
+      "id": "xac-suat-thuc-nghiem",
+      "grade": 6,
+      "title": "Xác suất thực nghiệm",
+      "titleEn": "Experimental probability",
+      "blurb": "Lớp 6: xác suất thực nghiệm bằng số lần xảy ra chia cho tổng số lần thử.",
+      "spot": [
+        "Đề cho kết quả của nhiều lần thử như tung đồng xu, rút thẻ, gieo xúc xắc rồi hỏi xác suất.",
+        "Câu hỏi chỉ dựa trên các lần đã quan sát, không cần biết xác suất lý thuyết."
+      ],
+      "thinking": [
+        "Đếm số lần sự kiện xảy ra và tổng số lần thử.",
+        "Xác suất thực nghiệm bằng số lần xảy ra chia cho tổng số lần thử.",
+        "Viết kết quả dưới dạng phân số rút gọn hoặc phần trăm. Làm nhiều lần thử hơn thì thường gần xác suất thật hơn."
+      ],
+      "care": [
+        "Mẫu số là tổng số lần thử, không phải số lần xảy ra.",
+        "Kết quả luôn nằm từ $0$ đến $1$.",
+        "Số lần thử ít thì xác suất thực nghiệm có thể khác xa xác suất lý thuyết."
+      ],
+      "formulas": [
+        "Xác suất thực nghiệm $=$ số lần xảy ra $:$ tổng số lần thử.",
+        "Biến cố không xảy ra: $1-P$."
+      ],
+      "examples": [
+        {
+          "id": "l6b-1",
+          "title": "Tung đồng xu",
+          "prompt": "Tung một đồng xu $50$ lần, được mặt sấp $28$ lần. Xác suất thực nghiệm của mặt sấp là bao nhiêu?",
+          "steps": [
+            "Số lần xảy ra là $28$, tổng số lần thử là $50$.",
+            "$P=\\frac{28}{50}=\\frac{14}{25}$."
+          ],
+          "result": "$\\frac{14}{25}$"
+        },
+        {
+          "id": "l6b-2",
+          "title": "Rút thẻ",
+          "prompt": "Rút một thẻ từ hộp rồi trả lại, làm $40$ lần, ra thẻ đỏ $10$ lần. Xác suất thực nghiệm ra thẻ không đỏ là bao nhiêu?",
+          "steps": [
+            "Số lần không đỏ là $40-10=30$.",
+            "$P=\\frac{30}{40}=\\frac{3}{4}$."
+          ],
+          "result": "$\\frac{3}{4}$"
+        }
+      ],
+      "mistakes": [
+        "Lấy số lần xảy ra chia cho số lần không xảy ra.",
+        "Quên rút gọn phân số.",
+        "Cho rằng xác suất thực nghiệm của đồng xu luôn đúng bằng $\\frac{1}{2}$."
+      ],
+      "practice": [
+        {
+          "id": "l6b-p1",
+          "prompt": "Gieo xúc xắc $60$ lần, ra mặt $6$ chấm $9$ lần. Xác suất thực nghiệm của mặt $6$ chấm?",
+          "answer": "$\\frac{3}{20}$",
+          "steps": [
+            "Số lần xảy ra $9$, tổng số lần $60$.",
+            "$\\frac{9}{60}=\\frac{3}{20}$."
+          ]
+        },
+        {
+          "id": "l6b-p2",
+          "prompt": "Trong $25$ lần thử, sự kiện xảy ra $5$ lần. Xác suất thực nghiệm dạng phần trăm?",
+          "answer": "$20\\%$",
+          "steps": [
+            "$\\frac{5}{25}=\\frac{1}{5}$.",
+            "$\\frac{1}{5}=20\\%$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/6",
+          "label": "Các bài lớp 6"
+        },
+        {
+          "href": "/kien-thuc/6/dang",
+          "label": "Dạng bài lớp 6"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l6b-1",
+          "lhs": "Rational(28,50)",
+          "rhs": "Rational(14,25)"
+        },
+        {
+          "where": "l6b-2",
+          "lhs": "Rational(40-10,40)",
+          "rhs": "Rational(3,4)"
+        },
+        {
+          "where": "l6b-p1",
+          "lhs": "Rational(9,60)",
+          "rhs": "Rational(3,20)"
+        },
+        {
+          "where": "l6b-p2",
+          "lhs": "Rational(5,25)*100",
+          "rhs": "20"
+        }
+      ]
+    },
+    {
+      "id": "tan-so-tuong-doi",
+      "grade": 7,
+      "title": "Tần số và tần số tương đối",
+      "titleEn": "Frequency and relative frequency",
+      "blurb": "Lớp 7: so sánh hai mẫu có cỡ khác nhau bằng tần số tương đối, không bằng tần số.",
+      "spot": [
+        "Có bảng thống kê số lần xuất hiện của các giá trị.",
+        "Đề hỏi tỉ lệ của một giá trị hoặc so sánh hai nhóm có tổng khác nhau."
+      ],
+      "thinking": [
+        "Tần số là số lần một giá trị xuất hiện.",
+        "Tần số tương đối bằng tần số chia cho tổng số liệu, thường viết thành phần trăm.",
+        "Kiểm tra: tổng các tần số tương đối bằng $100\\%$."
+      ],
+      "care": [
+        "So sánh hai mẫu cỡ khác nhau phải dùng tần số tương đối, không dùng tần số.",
+        "Làm tròn phần trăm có thể làm tổng lệch $100\\%$ một chút."
+      ],
+      "formulas": [
+        "Tần số tương đối $=$ tần số $:$ tổng số liệu.",
+        "Tổng các tần số tương đối bằng $1$, tức $100\\%$."
+      ],
+      "examples": [
+        {
+          "id": "l7b-1",
+          "title": "Tính tần số tương đối",
+          "prompt": "Điểm của $20$ học sinh, điểm $8$ xuất hiện $5$ lần. Tần số tương đối của điểm $8$ là bao nhiêu?",
+          "steps": [
+            "Tần số là $5$, tổng số liệu là $20$.",
+            "$\\frac{5}{20}=0{,}25=25\\%$."
+          ],
+          "result": "$25\\%$"
+        },
+        {
+          "id": "l7b-2",
+          "title": "So sánh hai lớp",
+          "prompt": "Lớp A có $9$ trong $30$ em đạt giỏi. Lớp B có $12$ trong $50$ em đạt giỏi. Lớp nào có tỉ lệ giỏi cao hơn?",
+          "steps": [
+            "Lớp A: $\\frac{9}{30}=30\\%$.",
+            "Lớp B: $\\frac{12}{50}=24\\%$.",
+            "$30\\%>24\\%$."
+          ],
+          "result": "Lớp A, vì $30\\%>24\\%$"
+        }
+      ],
+      "mistakes": [
+        "So sánh số em giỏi thay vì tỉ lệ.",
+        "Chia cho tần số của giá trị khác thay vì tổng số liệu.",
+        "Quên đổi sang phần trăm khi đề yêu cầu."
+      ],
+      "practice": [
+        {
+          "id": "l7b-p1",
+          "prompt": "Trong $40$ số liệu, giá trị $7$ xuất hiện $10$ lần. Tần số tương đối của $7$?",
+          "answer": "$25\\%$",
+          "steps": [
+            "$\\frac{10}{40}=\\frac{1}{4}$.",
+            "$\\frac{1}{4}=25\\%$."
+          ]
+        },
+        {
+          "id": "l7b-p2",
+          "prompt": "Tần số tương đối của ba giá trị là $30\\%$, $45\\%$ và $x$. Tìm $x$.",
+          "answer": "$25\\%$",
+          "steps": [
+            "Tổng phải bằng $100\\%$.",
+            "$x=100\\%-30\\%-45\\%=25\\%$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/7",
+          "label": "Các bài lớp 7"
+        },
+        {
+          "href": "/kien-thuc/7/dang",
+          "label": "Dạng bài lớp 7"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l7b-1",
+          "lhs": "Rational(5,20)",
+          "rhs": "Rational(1,4)"
+        },
+        {
+          "where": "l7b-2",
+          "lhs": "Rational(9,30)-Rational(12,50)",
+          "rhs": "Rational(3,50)"
+        },
+        {
+          "where": "l7b-p1",
+          "lhs": "Rational(10,40)",
+          "rhs": "Rational(1,4)"
+        },
+        {
+          "where": "l7b-p2",
+          "lhs": "100-30-45",
+          "rhs": "25"
+        }
+      ]
+    },
+    {
+      "id": "tam-giac-bang-nhau",
+      "grade": 7,
+      "title": "Chứng minh hai tam giác bằng nhau",
+      "titleEn": "Proving triangles congruent",
+      "blurb": "Lớp 7: liệt kê các cặp bằng nhau có lý do, chọn đúng trường hợp, rồi suy ra cạnh hoặc góc.",
+      "spot": [
+        "Đề yêu cầu chứng minh hai tam giác bằng nhau, hoặc chứng minh hai đoạn thẳng, hai góc bằng nhau.",
+        "Hình cho một số cạnh hoặc góc bằng nhau, có cạnh chung hoặc góc đối đỉnh."
+      ],
+      "thinking": [
+        "Liệt kê từng cặp cạnh hoặc góc bằng nhau và ghi lý do: giả thiết, cạnh chung, đối đỉnh.",
+        "Chọn trường hợp phù hợp: cạnh–cạnh–cạnh, cạnh–góc–cạnh với góc xen giữa, hoặc góc–cạnh–góc.",
+        "Viết kết luận đúng thứ tự đỉnh tương ứng, rồi mới suy ra cạnh hoặc góc cần chứng minh."
+      ],
+      "care": [
+        "Trong cạnh–góc–cạnh, góc phải nằm xen giữa hai cạnh.",
+        "Thứ tự đỉnh trong kết luận phải ứng nhau: đỉnh thứ nhất với đỉnh thứ nhất.",
+        "Ba góc bằng nhau chưa đủ để kết luận hai tam giác bằng nhau."
+      ],
+      "formulas": [
+        "Ba trường hợp: c.c.c, c.g.c, g.c.g.",
+        "Hai tam giác bằng nhau thì các cạnh và các góc tương ứng bằng nhau."
+      ],
+      "examples": [
+        {
+          "id": "l7c-1",
+          "title": "Cạnh–cạnh–cạnh",
+          "prompt": "Tam giác $ABC$ có $AB=3$, $AC=4$, $BC=5$. Tam giác $DEF$ có $DE=3$, $DF=4$, $EF=5$. Hai tam giác có bằng nhau không, và chúng có vuông không?",
+          "steps": [
+            "Ba cặp cạnh tương ứng bằng nhau: $AB=DE$, $AC=DF$, $BC=EF$.",
+            "Theo trường hợp c.c.c, hai tam giác bằng nhau.",
+            "Vì $3^2+4^2=25=5^2$ nên tam giác $ABC$ vuông tại $A$, và $DEF$ vuông tại $D$."
+          ],
+          "result": "Bằng nhau theo c.c.c và cùng là tam giác vuông"
+        },
+        {
+          "id": "l7c-2",
+          "title": "Cạnh–góc–cạnh",
+          "prompt": "Hai đoạn thẳng $AB$ và $CD$ cắt nhau tại $O$ với $OA=OB=3$ và $OC=OD=4$. Chứng minh $AC=BD$. Nếu $\\widehat{AOC}=90^\\circ$ thì $AC$ bằng bao nhiêu?",
+          "steps": [
+            "Xét hai tam giác $AOC$ và $BOD$: $OA=OB$ và $OC=OD$ theo giả thiết.",
+            "Hai góc $\\widehat{AOC}$ và $\\widehat{BOD}$ bằng nhau vì đối đỉnh, và là góc xen giữa hai cặp cạnh.",
+            "Theo c.g.c, hai tam giác bằng nhau nên $AC=BD$.",
+            "Với $\\widehat{AOC}=90^\\circ$: $AC=\\sqrt{3^2+4^2}=5$."
+          ],
+          "result": "$AC=BD$, và khi góc vuông thì $AC=5$"
+        }
+      ],
+      "mistakes": [
+        "Dùng cạnh–góc–cạnh khi góc không nằm xen giữa hai cạnh.",
+        "Viết sai thứ tự đỉnh tương ứng trong kết luận.",
+        "Dùng ba góc bằng nhau để kết luận hai tam giác bằng nhau."
+      ],
+      "practice": [
+        {
+          "id": "l7c-p1",
+          "prompt": "Hai tam giác $ABC$ và $DEF$ bằng nhau với $AB=DE=7$, $BC=EF=9$ và chu vi tam giác $ABC$ là $24$. Tìm $DF$.",
+          "answer": "$8$",
+          "steps": [
+            "Hai tam giác bằng nhau nên $AC=DF$.",
+            "$AC=24-7-9=8$ nên $DF=8$."
+          ]
+        },
+        {
+          "id": "l7c-p2",
+          "prompt": "Tam giác $ABC$ cân tại $A$ có chu vi $16$ và $AB=AC=5$. Tìm $BC$.",
+          "answer": "$6$",
+          "steps": [
+            "Hai cạnh bên bằng nhau: $AB+AC=10$.",
+            "$BC=16-10=6$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/7",
+          "label": "Các bài lớp 7"
+        },
+        {
+          "href": "/kien-thuc/7/dang",
+          "label": "Dạng bài lớp 7"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l7c-1",
+          "lhs": "3**2+4**2",
+          "rhs": "5**2"
+        },
+        {
+          "where": "l7c-2",
+          "lhs": "sqrt(3**2+4**2)",
+          "rhs": "5"
+        },
+        {
+          "where": "l7c-p1",
+          "lhs": "24-7-9",
+          "rhs": "8"
+        },
+        {
+          "where": "l7c-p2",
+          "lhs": "16-5-5",
+          "rhs": "6"
+        }
+      ]
+    },
+    {
+      "id": "xac-suat-bien-co",
+      "grade": 8,
+      "title": "Xác suất của biến cố",
+      "titleEn": "Probability of an event",
+      "blurb": "Lớp 8: xác suất bằng số kết quả thuận lợi chia cho tổng số kết quả đồng khả năng.",
+      "spot": [
+        "Đề tung đồng xu, gieo xúc xắc, rút thẻ hoặc chọn bạn ngẫu nhiên rồi hỏi xác suất của một biến cố.",
+        "Các kết quả có thể xảy ra với khả năng như nhau."
+      ],
+      "thinking": [
+        "Liệt kê hoặc đếm tất cả kết quả có thể và kiểm tra chúng đồng khả năng.",
+        "Đếm số kết quả thuận lợi cho biến cố.",
+        "Xác suất bằng số kết quả thuận lợi chia cho tổng số kết quả có thể, rồi rút gọn."
+      ],
+      "care": [
+        "Chỉ dùng công thức này khi các kết quả đồng khả năng.",
+        "Với hai xúc xắc có $36$ kết quả, và $(2;\\ 6)$ khác $(6;\\ 2)$.",
+        "Xác suất luôn nằm từ $0$ đến $1$."
+      ],
+      "formulas": [
+        "Xác suất của biến cố $A$ bằng số kết quả thuận lợi chia cho số kết quả có thể.",
+        "$P(\\bar A)=1-P(A)$."
+      ],
+      "examples": [
+        {
+          "id": "l8b-1",
+          "title": "Một xúc xắc",
+          "prompt": "Gieo một xúc xắc cân đối. Xác suất ra mặt có số chấm là số nguyên tố là bao nhiêu?",
+          "steps": [
+            "Có $6$ kết quả có thể, đồng khả năng.",
+            "Các mặt nguyên tố là $2$, $3$, $5$ nên có $3$ kết quả thuận lợi.",
+            "$P=\\frac{3}{6}=\\frac{1}{2}$."
+          ],
+          "result": "$\\frac{1}{2}$"
+        },
+        {
+          "id": "l8b-2",
+          "title": "Hai xúc xắc",
+          "prompt": "Gieo hai xúc xắc cân đối. Xác suất tổng số chấm bằng $8$ là bao nhiêu?",
+          "steps": [
+            "Có $6\\cdot6=36$ kết quả có thể.",
+            "Tổng $8$ có $(2;\\ 6)$, $(3;\\ 5)$, $(4;\\ 4)$, $(5;\\ 3)$, $(6;\\ 2)$, tức $5$ kết quả.",
+            "$P=\\frac{5}{36}$."
+          ],
+          "result": "$\\frac{5}{36}$"
+        }
+      ],
+      "mistakes": [
+        "Coi $(2;\\ 6)$ và $(6;\\ 2)$ là một kết quả.",
+        "Đếm thiếu kết quả thuận lợi vì quên một số cặp.",
+        "Dùng công thức khi các kết quả không đồng khả năng."
+      ],
+      "practice": [
+        {
+          "id": "l8b-p1",
+          "prompt": "Rút một thẻ từ $20$ thẻ đánh số từ $1$ đến $20$. Xác suất rút được số chia hết cho $5$?",
+          "answer": "$\\frac{1}{5}$",
+          "steps": [
+            "Các số chia hết cho $5$ là $5$, $10$, $15$, $20$, tức $4$ kết quả.",
+            "$P=\\frac{4}{20}=\\frac{1}{5}$."
+          ]
+        },
+        {
+          "id": "l8b-p2",
+          "prompt": "Xác suất của biến cố $A$ là $\\frac{3}{8}$. Xác suất của biến cố đối là bao nhiêu?",
+          "answer": "$\\frac{5}{8}$",
+          "steps": [
+            "$P(\\bar A)=1-\\frac{3}{8}$.",
+            "$=\\frac{5}{8}$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/8",
+          "label": "Các bài lớp 8"
+        },
+        {
+          "href": "/kien-thuc/8/dang",
+          "label": "Dạng bài lớp 8"
+        }
+      ],
+      "verify": [
+        {
+          "where": "l8b-1",
+          "lhs": "Rational(3,6)",
+          "rhs": "Rational(1,2)"
+        },
+        {
+          "where": "l8b-2",
+          "lhs": "Rational(5,6*6)",
+          "rhs": "Rational(5,36)"
+        },
+        {
+          "where": "l8b-p1",
+          "lhs": "Rational(4,20)",
+          "rhs": "Rational(1,5)"
+        },
+        {
+          "where": "l8b-p2",
+          "lhs": "1-Rational(3,8)",
+          "rhs": "Rational(5,8)"
         }
       ]
     }

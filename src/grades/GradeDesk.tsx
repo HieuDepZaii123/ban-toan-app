@@ -131,6 +131,11 @@ function GradeIndex({ book }: { book: GradeBook }) {
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
       <p><A className="text-btn" href={`/kien-thuc/${book.grade}/dang`}>{t(lang, "Dạng bài và phương pháp giải", "Problem types and solving methods")}</A></p>
       <p><A className="text-btn" href={`/kien-thuc/${book.grade}/tu-duy`}>{t(lang, "Bài tập tư duy và sáng tạo", "Thinking and creative problems")}</A></p>
+      {book.grade === 12 ? (
+        <p>
+          <A className="text-btn" href="/thi-thu">{t(lang, "Thi thử theo cấu trúc 2025: nhiều lựa chọn, đúng/sai, trả lời ngắn", "Mock exam in the 2025 format: multiple choice, true/false, short answer")}</A>
+        </p>
+      ) : null}
       {book.chapters.map((chapter) => (
         <section key={chapter.id} className="stream">
           <h2><MathText text={gradeTitle(lang, `${book.grade}/c/${chapter.id}`, chapter.title)} /></h2>
