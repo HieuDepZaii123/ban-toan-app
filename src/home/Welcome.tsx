@@ -20,7 +20,8 @@ export function Welcome() {
           lang,
           "Lớp học quen thuộc dạy bạn chép công thức, giải theo bài mẫu rồi chờ chấm điểm. Bàn Toán làm ngược lại: bạn thấy toán chuyển động, tự đặt câu hỏi, tự kiểm chứng, và hiểu vì sao trước khi phải nhớ.",
           "The usual classroom has you copy formulas, follow the worked example and wait for a mark. Bàn Toán turns that around: you watch maths move, ask your own questions, test them yourself, and understand why before you have to remember.",
-        )}
+        )}{" "}
+        <a href="#vi-sao">{t(lang, "Vì sao Bàn Toán khác?", "Why is Bàn Toán different?")}</a>
       </p>
       <p className="lead hero-call">{t(lang, "Hãy biến những ý tưởng của bạn thành hiện thực.", "Turn your ideas into reality.")}</p>
       {/* One block per word of the title. Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies). */}

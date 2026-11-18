@@ -10,6 +10,7 @@ import { useLang } from "../ui/useLang.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
 import { DeskTools, Welcome } from "./Welcome.tsx";
+import { WhyDifferent } from "./WhyDifferent.tsx";
 
 export function HomeDesk() {
   const lang = useLang();
@@ -100,6 +101,7 @@ export function HomeDesk() {
             ))}
           </div>
         </section>
+        <WhyDifferent />
         <DeskCorner />
       </main>
       <SiteFooter />
