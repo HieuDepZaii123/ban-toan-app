@@ -83,6 +83,16 @@ export const expKnowledge: TopicKnowledge = {
             R`Vì $a^0=1$ nên đồ thị qua $(0;1)$, và vì $a^1=a$ nên đồ thị qua $(1;a)$, với mọi cơ số.`,
             R`Giá trị luôn dương nên đồ thị không chạm trục hoành. Với $a>1$, mỗi bước lùi sang trái một đơn vị là chia cho $a$: giá trị nhỏ dần về $0$ nhưng không bao giờ bằng $0$. Đồ thị vì thế sát dần trục hoành mà không chạm, tức trục hoành là tiệm cận ngang.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng đạo hàm",
+              buoc: [
+                R`Theo mục «Số e và đạo hàm», $(a^x)'=a^x\ln a$. Vì $a^x>0$ với mọi $x$ nên dấu của đạo hàm là dấu của $\ln a$.`,
+                R`Khi $a>1$ thì $\ln a>0$, đạo hàm dương trên cả trục số, nên hàm đồng biến. Khi $0<a<1$ thì $\ln a<0$, đạo hàm âm, nên hàm nghịch biến.`,
+                R`Tại $x=0$ độ dốc là $a^0\ln a=\ln a$: cơ số càng lớn thì đồ thị cắt trục tung càng dốc. Xem hình «Độ dốc của hàm mũ luôn tỉ lệ với chính giá trị của nó» ở phần Suy từ số 0.`,
+              ],
+            },
+          ],
         },
         { kind: "luu-y", text: R`Loại $a=1$ vì khi đó $y=1^x$ là hàm hằng, không đơn điệu và không có hàm ngược. Loại $a\le 0$ vì khi đó $a^x$ không xác định với nhiều số mũ không nguyên.` },
         {
@@ -102,6 +112,16 @@ export const expKnowledge: TopicKnowledge = {
             R`Sau một kì, tiền gốc $P$ có thêm tiền lãi $Pr$, thành $P+Pr=P(1+r)$. Vậy mỗi kì số tiền được nhân với $(1+r)$.`,
             R`Lãi nhập vào gốc nên kì sau lại nhân tiếp với $(1+r)$. Sau $n$ kì đã nhân $n$ lần: $A=P(1+r)^n$.`,
             R`Phân rã cũng là nhân lặp, với thừa số $\frac{1}{2}$ cho mỗi chu kì $T$. Trong thời gian $t$ có $\frac{t}{T}$ chu kì, nên lượng còn lại là $N_0\left(\frac{1}{2}\right)^{t/T}$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng cấp số nhân",
+              buoc: [
+                R`Gọi $A_k$ là số tiền sau $k$ kì, $A_0=P$. Tiền lãi của kì thứ $k+1$ là $rA_k$, nên $A_{k+1}=A_k+rA_k=(1+r)A_k$.`,
+                R`Hai số hạng liên tiếp của dãy $A_0,A_1,A_2,\dots$ luôn có tỉ số $1+r$, nên đó là một cấp số nhân với công bội $q=1+r$ (xem chuyên đề Dãy số). Số hạng tổng quát là $A_n=A_0q^n=P(1+r)^n$.`,
+                R`Phân rã cũng là cấp số nhân, công bội $\frac{1}{2}$ cho mỗi chu kì $T$: sau $k$ chu kì còn $N_0\left(\frac{1}{2}\right)^k$. Với $t=kT$, tức $k=\frac{t}{T}$, được $N=N_0\left(\frac{1}{2}\right)^{t/T}$; công thức này đúng cả khi $t$ không là bội của $T$ nhờ số mũ thực.`,
+              ],
+            },
           ],
         },
         { kind: "vi-du", text: R`Gửi $10$ triệu đồng, lãi kép $8\%$ mỗi năm, sau $5$ năm có $10\cdot(1{,}08)^5\approx 14{,}69$ triệu. Lãi đơn chỉ cho $10(1+5\cdot 0{,}08)=14$ triệu, nên lãi kép hơn khoảng $0{,}69$ triệu vì tiền lãi cũng sinh lãi.` },
@@ -132,6 +152,16 @@ export const expKnowledge: TopicKnowledge = {
             R`Nhân lại: $bc=a^m\cdot a^n=a^{m+n}$. Số mũ cho ra $bc$ là $m+n$, tức $\log_a(bc)=\log_a b+\log_a c$.`,
             R`Chia: $\frac{b}{c}=a^{m-n}$, nên $\log_a\frac{b}{c}=m-n$.`,
             R`Lũy thừa: $b^{\alpha}=(a^m)^{\alpha}=a^{\alpha m}$, nên $\log_a b^{\alpha}=\alpha m=\alpha\log_a b$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng đạo hàm",
+              buoc: [
+                R`Với $c>0$ cố định, xét $F(x)=\ln(cx)$ và $G(x)=\ln x$ trên $x>0$. Theo quy tắc hàm hợp và $(\ln u)'=\frac{u'}{u}$: $F'(x)=\frac{c}{cx}=\frac{1}{x}$, và $G'(x)=\frac{1}{x}$.`,
+                R`Hai hàm có cùng đạo hàm trên khoảng $(0;+\infty)$ thì hiệu của chúng có đạo hàm bằng $0$, nên là một hằng số (xem chuyên đề Đạo hàm): $\ln(cx)=\ln x+k$ với một số $k$.`,
+                R`Thay $x=1$: $\ln c=\ln 1+k=k$. Vậy $\ln(cx)=\ln x+\ln c$ với mọi $x,c>0$, tức $\ln(bc)=\ln b+\ln c$. Với cơ số $a$, chia hai vế cho $\ln a$ theo công thức đổi cơ số. Xem hình «Thước logarit» ở phần Suy từ số 0 cho cùng ý dưới dạng đoạn thẳng.`,
+              ],
+            },
           ],
         },
         {
@@ -169,6 +199,16 @@ export const expKnowledge: TopicKnowledge = {
             R`Vì vậy hai điểm $(0;1)$ và $(1;a)$ của đồ thị mũ thành $(1;0)$ và $(a;1)$, còn tiệm cận ngang là trục hoành thành tiệm cận đứng là trục tung.`,
             R`Chiều biến thiên: lấy $0<u<v$, đặt $u=a^m$ và $v=a^n$. Với $a>1$, từ $a^m<a^n$ suy ra $m<n$, tức $\log_a u<\log_a v$: hàm đồng biến. Với $0<a<1$ thì chiều đảo lại.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng đạo hàm",
+              buoc: [
+                R`Với $x>0$, $(\log_a x)'=\frac{1}{x\ln a}$. Vì $x>0$ nên dấu của đạo hàm là dấu của $\ln a$.`,
+                R`Khi $a>1$ thì đạo hàm dương, hàm đồng biến; khi $0<a<1$ thì đạo hàm âm, hàm nghịch biến.`,
+                R`Khi $a>1$, độ dốc $\frac{1}{x\ln a}$ giảm dần theo $x$: hàm logarit tăng nhưng chậm dần, trái với hàm mũ tăng nhanh dần.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Đạo hàm",
@@ -177,6 +217,16 @@ export const expKnowledge: TopicKnowledge = {
             R`Đặt $y=\ln x$, nghĩa là $e^y=x$. Lấy đạo hàm hai vế theo $x$, vế trái dùng quy tắc hàm hợp: $e^y\cdot y'=1$.`,
             R`Giải ra $y'=\frac{1}{e^y}$, và vì $e^y=x$ nên $(\ln x)'=\frac{1}{x}$.`,
             R`Với cơ số khác, đổi cơ số: $\log_a x=\frac{\ln x}{\ln a}$. Số $\frac{1}{\ln a}$ là hằng số nên đứng ngoài khi lấy đạo hàm, được $\frac{1}{x\ln a}$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng giới hạn",
+              buoc: [
+                R`Theo định nghĩa, $(\ln x)'=\lim_{h\to 0}\frac{\ln(x+h)-\ln x}{h}=\lim_{h\to 0}\frac{1}{h}\ln\left(1+\frac{h}{x}\right)$, dùng quy tắc logarit của thương.`,
+                R`Với $x>0$ cố định, đặt $s=\frac{h}{x}$, tức $h=xs$. Biểu thức thành $\frac{1}{x}\cdot\frac{\ln(1+s)}{s}=\frac{1}{x}\ln\left((1+s)^{1/s}\right)$, vì $\alpha\ln u=\ln u^{\alpha}$.`,
+                R`Khi $s\to 0$ thì $(1+s)^{1/s}\to e$ (giới hạn đặc biệt, được công nhận), và $\ln$ liên tục nên $\ln\left((1+s)^{1/s}\right)\to\ln e=1$. Vậy $(\ln x)'=\frac{1}{x}$, rồi đổi cơ số để được $\frac{1}{x\ln a}$ cho $\log_a x$.`,
+              ],
+            },
           ],
         },
         { kind: "luu-y", title: "Điều kiện xác định", text: R`Biểu thức $\log_a f(x)$ chỉ có nghĩa khi $f(x)>0$. Mọi bài logarit phải bắt đầu bằng việc đặt điều kiện này, rồi kiểm lại nghiệm ở cuối.` },
@@ -267,6 +317,11 @@ export const expKnowledge: TopicKnowledge = {
     { id: "integral", vi: R`Nguyên hàm của $e^x$ là $e^x$ và của $\frac{1}{x}$ là $\ln|x|$, nên diện tích dưới đường mũ tính được trực tiếp.` },
   ],
   checks: [
+    { expr: "diff(log(c*x), x) - 1/x", expect: "0" },
+    { expr: "limit(log(1+s)/s, s, 0)", expect: "1" },
+    { expr: "simplify(diff(a**x, x) - a**x*log(a))", expect: "0" },
+    { expr: "simplify(diff(log(x)/log(a), x) - 1/(x*log(a)))", expect: "0" },
+    { expr: "simplify(P*(1+r)**3 - (1+r)*((1+r)*((1+r)*P)))", expect: "0" },
     { expr: "Rational(8)**Rational(2,3)", expect: "4" },
     { expr: "2**(-3)", expect: "Rational(1,8)" },
     { expr: "Rational(1,2)**(-3)", expect: "8" },

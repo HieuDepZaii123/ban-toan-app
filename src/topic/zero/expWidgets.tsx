@@ -24,7 +24,7 @@ export function ExpLawsLab() {
     <Stage
       title={tt("Quy tắc lũy thừa: đếm xem có bao nhiêu thừa số", "The laws of exponents: just count the factors")}
       story={tt(
-        R`Lũy thừa $a^m$ là $m$ thừa số $a$ nhân với nhau. Vậy $a^m\cdot a^n$ là $m$ thừa số rồi thêm $n$ thừa số nữa: tổng cộng $m+n$ thừa số, tức $a^{m+n}$. Còn $(a^m)^n$ là $n$ nhóm, mỗi nhóm $m$ thừa số: $m\cdot n$ thừa số. Mỗi ô dưới đây là một thừa số $a$; hãy đếm.`,
+        R`Lũy thừa $a^m$ là $m$ thừa số $a$ nhân với nhau. Vậy $a^m\cdot a^n$ là $m$ thừa số rồi thêm $n$ thừa số nữa: tổng cộng $m+n$ thừa số, tức $a^{m+n}$. Còn $(a^m)^n$ là $n$ nhóm, mỗi nhóm $m$ thừa số: $m\cdot n$ thừa số. Mỗi ô dưới đây là một thừa số $a$, bạn hãy thử đếm.`,
         R`The power $a^m$ is $m$ factors of $a$ multiplied together. So $a^m\cdot a^n$ is $m$ factors followed by $n$ more: $m+n$ factors in all, i.e. $a^{m+n}$. And $(a^m)^n$ is $n$ groups of $m$ factors each: $m\cdot n$ factors. Each box below is one factor $a$; count them.`,
       )}
       read={tt(
@@ -73,7 +73,7 @@ export function SlideRuleLab() {
     <Stage
       title={tt("Thước logarit: logarit biến phép nhân thành phép cộng", "The slide rule: logarithms turn multiplication into addition")}
       story={tt(
-        R`Thước tính cổ chỉ có hai thang chia khoảng cách theo logarit: số $v$ nằm cách mốc 1 một đoạn $\log_{10}v$. Muốn nhân $b\cdot x$: trượt thang dưới sao cho mốc 1 của nó nằm ngay dưới $b$ trên thang trên, rồi nhìn: số $x$ trên thang dưới nằm ngay dưới tích $b\cdot x$ trên thang trên. Ta chỉ cộng hai đoạn thẳng: $\log b+\log x=\log(bx)$.`,
+        R`Thước tính cổ có hai thang chia theo logarit: số $v$ nằm cách mốc 1 một đoạn dài $\log_{10}v$. Muốn nhân $b\cdot x$: trượt thang dưới sao cho mốc 1 của nó nằm ngay dưới $b$ trên thang trên, rồi nhìn: số $x$ trên thang dưới nằm ngay dưới tích $b\cdot x$ trên thang trên. Thực chất ta chỉ cộng hai đoạn thẳng: $\log b+\log x=\log(bx)$.`,
         R`An old slide rule has just two scales whose distances are logarithmic: the number $v$ sits at distance $\log_{10}v$ from the mark 1. To multiply $b\cdot x$: slide the lower scale so its mark 1 sits right under $b$ on the upper scale; then the number $x$ on the lower scale sits right under the product $b\cdot x$ on the upper scale. We only add two lengths: $\log b+\log x=\log(bx)$.`,
       )}
       read={tt(
@@ -193,7 +193,7 @@ export function DecayLab() {
     <Stage
       title={tt("Phân rã phóng xạ: từng nguyên tử ngẫu nhiên, cả khối thì đều đặn", "Radioactive decay: each atom is random, the whole sample is regular")}
       story={tt(
-        R`Không ai đoán được một nguyên tử cụ thể bao giờ phân rã: mỗi bước thời gian nó chỉ có một xác suất $p$ bị phân rã. Máy mô phỏng từng nguyên tử một bằng cách tung xúc xắc. Vậy mà số nguyên tử còn lại gần như bám sát một đường cong trơn, vì mỗi bước còn lại khoảng $(1-p)$ lần số trước đó: tăng trưởng mũ với cơ số $1-p<1$. Chấm là mô phỏng, đường là công thức $N_0(1-p)^t$.`,
+        R`Không ai đoán được một nguyên tử cụ thể bao giờ phân rã: mỗi bước thời gian nó chỉ có một xác suất $p$ bị phân rã. Máy mô phỏng từng nguyên tử một bằng cách tung xúc xắc. Vậy mà số nguyên tử còn lại gần như bám sát một đường cong trơn, vì sau mỗi bước còn khoảng $(1-p)$ lần số trước đó: tăng trưởng mũ với cơ số $1-p<1$. Chấm là mô phỏng, đường là công thức $N_0(1-p)^t$.`,
         R`No one can predict when one particular atom will decay: at each time step it only has a probability $p$ of decaying. The machine simulates atoms one by one by rolling dice. Yet the number of atoms left follows a smooth curve very closely, because each step leaves about $(1-p)$ times the previous number: exponential change with base $1-p<1$. The dots are the simulation, the curve is the formula $N_0(1-p)^t$.`,
       )}
       read={tt(

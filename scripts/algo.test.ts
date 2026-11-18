@@ -368,6 +368,13 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("|a+b| ≤ |a|+|b| mọi góc", Array.from({ length: 50 }, (_, i) => A.vectorSumLength(3, 2, (i * Math.PI) / 49).gap >= -1e-12).every(Boolean));
 }
 
+// Hàm mũ và logarit: độ dốc a^x chia a^x dồn về ln a; thước logarit biến nhân thành cộng.
+{
+  for (const a of [2, 3, 0.5, Math.E]) near(`độ dốc/giá trị của ${a}^x`, A.expSlopeRatio(a, 1.7), Math.log(a), 1e-6);
+  near("thước logarit: 6×7 = 6 + 7 cộng độ dài", A.logRulerPosition(6 * 7), A.logRulerPosition(6) + A.logRulerPosition(7), 1e-12);
+  near("thước logarit: 1 ở vị trí 0", A.logRulerPosition(1), 0, 1e-12);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

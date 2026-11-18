@@ -57,7 +57,7 @@ let plain = 0;
 let proofs = 0;
 let altProofs = 0;
 /** Chuyên đề đã viết xong cách chứng minh thứ hai cho mọi định lí; thêm id vào đây khi làm xong từng chuyên đề. */
-const MULTI_PROOF = new Set<string>(["trig", "derivative", "integral", "quadratic", "ineq"]);
+const MULTI_PROOF = new Set<string>(["trig", "derivative", "integral", "quadratic", "ineq", "exp"]);
 let wordTotal = 0;
 
 for (const id of ids) {

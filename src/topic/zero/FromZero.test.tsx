@@ -47,7 +47,7 @@ describe("Suy từ số 0 (FromZero)", () => {
 
   test("mọi chuyên đề có đủ hình, có bản đồ liên kết và danh sách mối nối", async () => {
     setLang("en");
-    const min: Record<string, number> = { quadratic: 13, ineq: 12, exp: 8, sequence: 7, trig: 10, limit: 9, derivative: 14, survey: 7, integral: 13, vector: 7, analytic: 7, triangle: 9, combo: 5, probability: 7 };
+    const min: Record<string, number> = { quadratic: 13, ineq: 12, exp: 10, sequence: 7, trig: 10, limit: 9, derivative: 14, survey: 7, integral: 13, vector: 7, analytic: 7, triangle: 9, combo: 5, probability: 7 };
     for (const [id, n] of Object.entries(min)) {
       const r = render(<RouteProvider><FromZero topicId={id} /></RouteProvider>);
       await waitFor(() => expect(r.container.querySelectorAll(".fz-card").length, `${id}: số hình`).toBeGreaterThanOrEqual(n), { timeout: 5000 });

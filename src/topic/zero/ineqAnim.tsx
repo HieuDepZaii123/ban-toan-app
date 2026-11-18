@@ -1,33 +1,13 @@
-import { useState } from "react";
 import { cauchyQuadratic, meanChainAround, semicircleHeight, squaresVsRectangles, vectorSumLength } from "../../algo/index.ts";
 import { dashed, dot } from "../../labs/draw.ts";
 import { Graph } from "../../labs/Graph.tsx";
 import { fmt } from "../../lib/format.ts";
 import { Slider } from "../../ui/Slider.tsx";
-import { frame, label, line, useTicker, useTx } from "./kit.ts";
-import { Buttons, Stage } from "./widgets.tsx";
+import { PlayButtons, useLoop, wave } from "./anim.tsx";
+import { frame, label, line, useTx } from "./kit.ts";
+import { Stage } from "./widgets.tsx";
 
 const R = String.raw;
-
-/** Chuyển động tự chạy: pha đi từ 0 tới 1 rồi lặp lại. Tắt sẵn khi người dùng chọn giảm chuyển động (và trong jsdom). */
-function useLoop(ms = 50, speed = 0.012) {
-  const calm = typeof window !== "undefined" && (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true || /jsdom/i.test(navigator.userAgent));
-  const [phase, setPhase] = useState(0.1);
-  const [running, setRunning] = useState(!calm);
-  useTicker(running, ms, () => setPhase((p) => (p + speed) % 1));
-  return { phase, setPhase, running, setRunning };
-}
-
-function PlayButtons({ running, setRunning, tt }: { running: boolean; setRunning: (v: boolean) => void; tt: (vi: string, en: string) => string }) {
-  return (
-    <Buttons>
-      <button type="button" className="text-btn" onClick={() => setRunning(!running)}>{running ? tt("Dừng", "Pause") : tt("Chạy", "Play")}</button>
-    </Buttons>
-  );
-}
-
-/** Dao động mượt giữa 0 và 1 theo pha. */
-const wave = (phase: number) => 0.5 - 0.5 * Math.cos(2 * Math.PI * phase);
 
 /* ---------- 1. Hai hình vuông phủ hai hình chữ nhật ---------- */
 

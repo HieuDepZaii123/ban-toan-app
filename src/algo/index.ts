@@ -956,3 +956,13 @@ export function vectorSumLength(la: number, lb: number, theta: number): { sum: n
   const sum = Math.sqrt(Math.max(0, la * la + lb * lb + 2 * la * lb * Math.cos(theta)));
   return { sum, bound: la + lb, gap: la + lb - sum };
 }
+
+/** Độ dốc của a^x chia cho giá trị a^x, đo bằng hiệu đối xứng: dồn về ln a (đạo hàm của hàm mũ tỉ lệ với chính nó). */
+export function expSlopeRatio(a: number, x: number, h = 1e-5): number {
+  return ((a ** (x + h) - a ** (x - h)) / (2 * h)) / a ** x;
+}
+
+/** Vị trí trên thước logarit (cơ số 10) của số v > 0: hai tích có cùng tỉ số cách nhau cùng một đoạn. */
+export function logRulerPosition(v: number): number {
+  return Math.log10(v);
+}
