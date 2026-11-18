@@ -47,7 +47,7 @@ export function Discover({ card }: { card: DiscoverCard }) {
   const previous = useMemo(() => readAll()[card.id], [card.id]);
   const [picked, setPicked] = useState<number | null>(null);
   const answer = card.answer();
-  const due = reviewDue(previous, Date.now());
+  const [due] = useState(() => reviewDue(previous, Date.now()));
   const right = picked !== null && picked === answer;
   const wrong = picked !== null && picked !== answer;
   const chosen = picked === null ? null : card.options[picked];

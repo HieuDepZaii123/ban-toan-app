@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, test } from "vitest";
 import { setLang } from "../../lib/store.ts";
-import { LIMIT_CARDS } from "./limitDiscover.tsx";
+import { LIMIT_CARDS } from "./limitCards.ts";
 import { Discover } from "./discover.tsx";
 
 describe("Thẻ khám phá", () => {
