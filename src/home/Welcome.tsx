@@ -8,12 +8,20 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ: Bàn Toán là nơi học, nghiên cứu và sáng tạo, rồi các công cụ để làm điều đó. */
+/** Đầu trang chủ: một tuyên ngôn ngược với cách học thuộc lòng, rồi ba khối so sánh cách cũ với cách của Bàn Toán. */
 export function Welcome() {
   const lang = useLang();
   return (
     <section className="hero-welcome">
-      <h1>{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo.", "Bàn Toán – a place to learn, research and create.")}</h1>
+      <p className="kicker">{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo", "Bàn Toán – a place to learn, research and create")}</p>
+      <h1>{t(lang, "Toán không phải để học thuộc.", "Maths is not for memorising.")}</h1>
+      <p className="lead hero-manifesto">
+        {t(
+          lang,
+          "Lớp học quen thuộc dạy bạn chép công thức, giải theo bài mẫu rồi chờ chấm điểm. Bàn Toán làm ngược lại: bạn thấy toán chuyển động, tự đặt câu hỏi, tự kiểm chứng, và hiểu vì sao trước khi phải nhớ.",
+          "The usual classroom has you copy formulas, follow the worked example and wait for a mark. Bàn Toán turns that around: you watch maths move, ask your own questions, test them yourself, and understand why before you have to remember.",
+        )}
+      </p>
       <p className="lead hero-call">{t(lang, "Hãy biến những ý tưởng của bạn thành hiện thực.", "Turn your ideas into reality.")}</p>
       {/* One block per word of the title. Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies). */}
       <div className="pillars">
@@ -21,6 +29,9 @@ export function Welcome() {
           <article key={pillar.id} className="pillar" aria-labelledby={`pillar-${pillar.id}`}>
             <PillarMark id={pillar.id} />
             <h2 id={`pillar-${pillar.id}`}>{t(lang, pillar.vi, pillar.en)}</h2>
+            <p className="pillar-instead">
+              <span>{t(lang, "Thay vì", "Instead of")}</span> <s>{t(lang, pillar.oldVi, pillar.oldEn)}</s>
+            </p>
             <p className="pillar-gist">{t(lang, pillar.gistVi, pillar.gistEn)}</p>
             <p className="pillar-body">{t(lang, pillar.bodyVi, pillar.bodyEn)}</p>
             <p className="pillar-links">
@@ -50,6 +61,8 @@ type PillarId = "hoc" | "nghien-cuu" | "sang-tao";
 const PILLARS: {
   id: PillarId;
   vi: string; en: string;
+  /** The habit this pillar replaces, shown struck through. */
+  oldVi: string; oldEn: string;
   gistVi: string; gistEn: string;
   bodyVi: string; bodyEn: string;
   links: { href: string; vi: string; en: string }[];
@@ -57,6 +70,7 @@ const PILLARS: {
   {
     id: "hoc",
     vi: "Học tập", en: "Learn",
+    oldVi: "chép công thức, học thuộc", oldEn: "memorising formulas",
     gistVi: "Chạm vào toán, thấy toán chuyển động.",
     gistEn: "Touch maths and watch it move.",
     bodyVi: "Kéo một tham số, đồ thị đổi theo ngay trước mắt. Mười bốn chuyên đề THPT và 182 bài từ lớp 1 đến lớp 12, bài nào cũng giải từng bước và nói rõ vì sao.",
@@ -70,6 +84,7 @@ const PILLARS: {
   {
     id: "nghien-cuu",
     vi: "Nghiên cứu", en: "Research",
+    oldVi: "làm theo bài mẫu", oldEn: "copying the example",
     gistVi: "Đặt câu hỏi như một nhà toán học.",
     gistEn: "Ask questions like a mathematician.",
     bodyVi: "Nêu giả thuyết, tự đo, tự vẽ đồ thị, rồi đối chiếu với chứng minh. 28 bài nghiên cứu dẫn bạn đi từ phỏng đoán đến chắc chắn.",
@@ -82,6 +97,7 @@ const PILLARS: {
   {
     id: "sang-tao",
     vi: "Sáng tạo", en: "Create",
+    oldVi: "chỉ giải đề có sẵn", oldEn: "only solving set problems",
     gistVi: "Từ ý tưởng đến hình khối.",
     gistEn: "From an idea to a shape you can turn.",
     bodyVi: "Dựng hình phẳng, xoay khối không gian, soạn đề và phiếu học có công thức. Điều bạn nghĩ ra, bạn làm ra được ở đây.",

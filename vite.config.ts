@@ -26,7 +26,7 @@ export default defineConfig({
       manifest: {
         name: "Bàn Toán",
         short_name: "Bàn Toán",
-        description: "Nơi học tập, nghiên cứu và sáng tạo toán. Hãy biến những ý tưởng của bạn thành hiện thực.",
+        description: "Toán không phải để học thuộc. Nơi học tập, nghiên cứu và sáng tạo toán.",
         lang: "vi",
         start_url: "/",
         scope: "/",

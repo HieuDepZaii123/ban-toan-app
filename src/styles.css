@@ -1103,15 +1103,20 @@ html[data-lamp="on"] body::before {
 }
 @keyframes fogDrift { from { background-position: 0 0, 100% 0; } to { background-position: 120% 0, -40% 0; } }
 .hero-welcome { margin: 4px 0 16px; }
-.hero-welcome .hero-call { margin-bottom: 4px; color: var(--ink); }
+.hero-welcome .kicker { margin-bottom: 2px; }
+.hero-welcome .hero-manifesto { margin-top: 10px; }
+.hero-welcome .hero-call { margin-top: 10px; font-weight: 600; color: var(--ink); }
 /* Three pillars under the title: one sheet of paper each, the app's teal for the drawing and links. */
 .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
-.pillar { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 14px; display: grid; grid-template-rows: auto auto auto 1fr auto; gap: 6px; min-width: 0; }
+.pillar { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 14px; display: grid; grid-template-rows: auto auto auto auto 1fr auto; gap: 6px; min-width: 0; }
 .pillar h2 { margin: 2px 0 0; font-size: 1.15rem; }
 .pillar-mark { width: 72px; height: 44px; color: var(--accent); }
 .pillar-mark path, .pillar-mark circle { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .pillar-mark circle { fill: currentColor; stroke: none; }
 .pillar-mark .soft { stroke-dasharray: 3 4; opacity: 0.55; }
+.pillar-instead { margin: 0; font-size: 0.9rem; color: var(--muted); }
+.pillar-instead span { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--clay); font-weight: 600; }
+.pillar-instead s { text-decoration-color: var(--clay); text-decoration-thickness: 1.5px; }
 .pillar-gist { margin: 0; font-weight: 600; color: var(--ink); }
 .pillar-body { margin: 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
 .pillar-links { margin: 4px 0 0; align-self: end; display: flex; flex-wrap: wrap; gap: 6px 14px; font-weight: 600; }
@@ -1429,8 +1434,8 @@ html[data-lamp="on"] body::before {
 .desk.is-focus > .site-foot { display: none; }
 @media print { .site-foot { display: none; } }
 
-/* Trang chủ: tiêu đề, một hàng bắt đầu (tờ đang mở | tìm + tiến độ), rồi các chuyên đề; góc bàn ở cuối. */
-.hero-welcome h1 { margin-top: 12px; }
+/* Trang chủ: nhãn nhỏ, tiêu đề, một hàng bắt đầu (tờ đang mở | tìm + tiến độ), rồi các chuyên đề; góc bàn ở cuối. */
+.hero-welcome h1 { margin-top: 4px; text-wrap: balance; }
 .home-start {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
