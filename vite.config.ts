@@ -26,7 +26,7 @@ export default defineConfig({
       manifest: {
         name: "Bàn Toán",
         short_name: "Bàn Toán",
-        description: "Bàn làm việc toán THPT: kéo tham số, nhìn hình đổi, rồi luyện.",
+        description: "Thay đổi cách nhìn nhận và tiếp cận môn toán: kéo tham số, nhìn hình đổi, rồi luyện có lời giải.",
         lang: "vi",
         start_url: "/",
         scope: "/",

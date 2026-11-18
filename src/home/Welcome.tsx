@@ -8,17 +8,17 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ: một câu nói bàn này là gì. Logo đã có trên thanh đầu trang. */
+/** Đầu trang chủ: lời mời đổi cách học toán, rồi bàn này làm điều đó thế nào. Logo đã có trên thanh đầu trang. */
 export function Welcome() {
   const lang = useLang();
   return (
     <section className="hero-welcome">
-      <h1>{t(lang, "Mười bốn chuyên đề, có số để tự kiểm.", "Fourteen topics, with a number you can check.")}</h1>
+      <h1>{t(lang, "Hãy thay đổi cách nhìn nhận và tiếp cận môn toán.", "Change how you see and approach maths.")}</h1>
       <p className="lead">
         {t(
           lang,
-          "Kéo một tham số, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
-          "Drag one parameter, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
+          "Đừng tốn thời gian học những thứ lạc hậu, lỗi thời. Ở đây bạn kéo một tham số, nhìn hình đổi theo, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
+          "Don't spend time learning what is outdated. Here you drag one parameter, watch the figure change, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
         )}
       </p>
       <p className="lead home-premium">
