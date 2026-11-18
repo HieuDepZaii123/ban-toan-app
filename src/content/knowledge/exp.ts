@@ -88,7 +88,7 @@ export const expKnowledge: TopicKnowledge = {
               cach: "Bằng đạo hàm",
               buoc: [
                 R`Theo mục «Số e và đạo hàm», $(a^x)'=a^x\ln a$. Vì $a^x>0$ với mọi $x$ nên dấu của đạo hàm là dấu của $\ln a$.`,
-                R`Khi $a>1$ thì $\ln a>0$, đạo hàm dương trên cả trục số, nên hàm đồng biến. Khi $0<a<1$ thì $\ln a<0$, đạo hàm âm, nên hàm nghịch biến.`,
+                R`Dấu của $\ln a$: vì $(e^x)'=e^x>0$ nên $e^x$ đồng biến. Khi $a>1$ có $a=e^{\ln a}>1=e^0$, suy ra $\ln a>0$ và đạo hàm dương trên cả trục số, nên hàm đồng biến. Khi $0<a<1$ thì $e^{\ln a}<e^0$, suy ra $\ln a<0$, đạo hàm âm, nên hàm nghịch biến.`,
                 R`Tại $x=0$ độ dốc là $a^0\ln a=\ln a$: cơ số càng lớn thì đồ thị cắt trục tung càng dốc. Xem hình «Độ dốc của hàm mũ luôn tỉ lệ với chính giá trị của nó» ở phần Suy từ số 0.`,
               ],
             },
@@ -115,11 +115,11 @@ export const expKnowledge: TopicKnowledge = {
           ],
           suyKhac: [
             {
-              cach: "Bằng cấp số nhân",
+              cach: "Bằng quy nạp",
               buoc: [
-                R`Gọi $A_k$ là số tiền sau $k$ kì, $A_0=P$. Tiền lãi của kì thứ $k+1$ là $rA_k$, nên $A_{k+1}=A_k+rA_k=(1+r)A_k$.`,
-                R`Hai số hạng liên tiếp của dãy $A_0,A_1,A_2,\dots$ luôn có tỉ số $1+r$, nên đó là một cấp số nhân với công bội $q=1+r$ (xem chuyên đề Dãy số). Số hạng tổng quát là $A_n=A_0q^n=P(1+r)^n$.`,
-                R`Phân rã cũng là cấp số nhân, công bội $\frac{1}{2}$ cho mỗi chu kì $T$: sau $k$ chu kì còn $N_0\left(\frac{1}{2}\right)^k$. Với $t=kT$, tức $k=\frac{t}{T}$, được $N=N_0\left(\frac{1}{2}\right)^{t/T}$; công thức này đúng cả khi $t$ không là bội của $T$ nhờ số mũ thực.`,
+                R`Gọi $A_n$ là số tiền sau $n$ kì với lãi nhập gốc. Với $n=0$ chưa có kì nào nên $A_0=P=P(1+r)^0$, công thức đúng.`,
+                R`Giả sử $A_n=P(1+r)^n$. Kì tiếp theo sinh lãi $rA_n$ và lãi nhập gốc, nên $A_{n+1}=A_n+rA_n=(1+r)A_n=P(1+r)^{n+1}$. Công thức vẫn đúng ở $n+1$, vậy đúng với mọi $n$ nguyên không âm.`,
+                R`Phân rã: giả thiết tỉ lệ chất còn lại sau một khoảng thời gian chỉ phụ thuộc độ dài khoảng ấy, nên $f(t+s)=f(t)f(s)$ với $f$ là tỉ lệ còn lại. Từ $f(T)=\frac{1}{2}$ suy ra $f(kT)=\left(\frac{1}{2}\right)^k$ bằng quy nạp, và với số mũ thực $f(t)=\left(\frac{1}{2}\right)^{t/T}$.`,
               ],
             },
           ],
@@ -159,7 +159,9 @@ export const expKnowledge: TopicKnowledge = {
               buoc: [
                 R`Với $c>0$ cố định, xét $F(x)=\ln(cx)$ và $G(x)=\ln x$ trên $x>0$. Theo quy tắc hàm hợp và $(\ln u)'=\frac{u'}{u}$: $F'(x)=\frac{c}{cx}=\frac{1}{x}$, và $G'(x)=\frac{1}{x}$.`,
                 R`Hai hàm có cùng đạo hàm trên khoảng $(0;+\infty)$ thì hiệu của chúng có đạo hàm bằng $0$, nên là một hằng số (xem chuyên đề Đạo hàm): $\ln(cx)=\ln x+k$ với một số $k$.`,
-                R`Thay $x=1$: $\ln c=\ln 1+k=k$. Vậy $\ln(cx)=\ln x+\ln c$ với mọi $x,c>0$, tức $\ln(bc)=\ln b+\ln c$. Với cơ số $a$, chia hai vế cho $\ln a$ theo công thức đổi cơ số. Xem hình «Thước logarit» ở phần Suy từ số 0 cho cùng ý dưới dạng đoạn thẳng.`,
+                R`Thay $x=1$: $\ln c=\ln 1+k=k$. Vậy $\ln(cx)=\ln x+\ln c$ với mọi $x,c>0$, tức $\ln(bc)=\ln b+\ln c$. Với cơ số $a$, chia hai vế cho $\ln a$ theo công thức đổi cơ số. Cách này dùng $(\ln x)'=\frac{1}{x}$ theo cách hàm ngược (cách thứ nhất của mục «Đạo hàm»), không dùng quy tắc tính. Xem hình «Thước logarit» ở phần Suy từ số 0 cho cùng ý dưới dạng đoạn thẳng.`,
+                R`Thương: $\ln\frac{b}{c}+\ln c=\ln\left(\frac{b}{c}\cdot c\right)=\ln b$ theo quy tắc tích, nên $\ln\frac{b}{c}=\ln b-\ln c$.`,
+                R`Lũy thừa: $\frac{d}{dx}\ln x^{\alpha}=\frac{\alpha x^{\alpha-1}}{x^{\alpha}}=\frac{\alpha}{x}=\frac{d}{dx}(\alpha\ln x)$. Hai hàm cùng đạo hàm nên hơn kém một hằng số, và cùng bằng $0$ tại $x=1$, nên $\ln x^{\alpha}=\alpha\ln x$.`,
               ],
             },
           ],
@@ -204,7 +206,7 @@ export const expKnowledge: TopicKnowledge = {
               cach: "Bằng đạo hàm",
               buoc: [
                 R`Với $x>0$, $(\log_a x)'=\frac{1}{x\ln a}$. Vì $x>0$ nên dấu của đạo hàm là dấu của $\ln a$.`,
-                R`Khi $a>1$ thì đạo hàm dương, hàm đồng biến; khi $0<a<1$ thì đạo hàm âm, hàm nghịch biến.`,
+                R`Dấu của $\ln a$: với $a=e$ có $(\ln x)'=\frac{1}{x}>0$ nên $\ln$ đồng biến, và $\ln 1=0$. Vậy $\ln a>0$ khi $a>1$ và $\ln a<0$ khi $0<a<1$. Do đó khi $a>1$ đạo hàm dương, hàm đồng biến; khi $0<a<1$ đạo hàm âm, hàm nghịch biến.`,
                 R`Khi $a>1$, độ dốc $\frac{1}{x\ln a}$ giảm dần theo $x$: hàm logarit tăng nhưng chậm dần, trái với hàm mũ tăng nhanh dần.`,
               ],
             },
@@ -225,6 +227,7 @@ export const expKnowledge: TopicKnowledge = {
                 R`Theo định nghĩa, $(\ln x)'=\lim_{h\to 0}\frac{\ln(x+h)-\ln x}{h}=\lim_{h\to 0}\frac{1}{h}\ln\left(1+\frac{h}{x}\right)$, dùng quy tắc logarit của thương.`,
                 R`Với $x>0$ cố định, đặt $s=\frac{h}{x}$, tức $h=xs$. Biểu thức thành $\frac{1}{x}\cdot\frac{\ln(1+s)}{s}=\frac{1}{x}\ln\left((1+s)^{1/s}\right)$, vì $\alpha\ln u=\ln u^{\alpha}$.`,
                 R`Khi $s\to 0$ thì $(1+s)^{1/s}\to e$ (giới hạn đặc biệt, được công nhận), và $\ln$ liên tục nên $\ln\left((1+s)^{1/s}\right)\to\ln e=1$. Vậy $(\ln x)'=\frac{1}{x}$, rồi đổi cơ số để được $\frac{1}{x\ln a}$ cho $\log_a x$.`,
+                R`Lưu ý: cách này quy phép tính đạo hàm về giới hạn đặc biệt $(1+s)^{1/s}\to e$, một cách định nghĩa khác của $e$ chứ không phải chứng minh độc lập giới hạn ấy. Nó cũng dùng quy tắc logarit của thương, nên chỉ nên đọc sau khi quy tắc tính đã được chứng minh theo cách thứ nhất.`,
               ],
             },
           ],

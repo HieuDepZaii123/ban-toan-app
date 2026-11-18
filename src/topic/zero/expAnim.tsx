@@ -79,16 +79,16 @@ export function LogRulerAnim() {
     <Stage
       title={tt("Thước logarit: nhân hai số là nối hai đoạn", "The logarithmic ruler: multiplying two numbers joins two segments")}
       story={tt(
-        R`Trên thước logarit, số $v$ nằm ở vị trí $\log v$, nên hai phép nhân có cùng tỉ số cho cùng một đoạn đường. Đoạn từ $1$ tới $b$ dài $\log b$. Lấy đoạn từ $1$ tới $c$ dài $\log c$ đặt nối tiếp vào đầu mút $b$: nơi nó dừng đúng là $bc$. Khi $b$ và $c$ đổi giá trị, đoạn tổng luôn là tổng hai đoạn thành phần.`,
-        R`On a logarithmic ruler the number $v$ sits at position $\log v$, so two multiplications with the same ratio cover the same distance. The segment from $1$ to $b$ has length $\log b$. Take the segment from $1$ to $c$, of length $\log c$, and lay it on from the end $b$: it stops exactly at $bc$. As $b$ and $c$ change, the total segment is always the sum of the two parts.`,
+        R`Trên thước logarit (cơ số $10$), số $v>0$ nằm ở vị trí $\log v$, nên hai phép nhân có cùng tỉ số cho cùng một đoạn đường. Đoạn từ $1$ tới $b$ dài $\log b$. Lấy đoạn từ $1$ tới $c$ dài $\log c$ đặt nối tiếp vào đầu mút $b$: nơi nó dừng đúng là $bc$. Khi $b$ và $c$ đổi giá trị, đoạn tổng luôn là tổng hai đoạn thành phần.`,
+        R`On a logarithmic ruler (base $10$) the number $v>0$ sits at position $\log v$, so two multiplications with the same ratio cover the same distance. The segment from $1$ to $b$ has length $\log b$. Take the segment from $1$ to $c$, of length $\log c$, and lay it on from the end $b$: it stops exactly at $bc$. As $b$ and $c$ change, the total segment is always the sum of the two parts.`,
       )}
       read={tt(
         `$b=${fmt(b, 2)}$, $c=${fmt(c, 2)}$: $\\log b=${fmt(pb, 3)}$, $\\log c=${fmt(pc, 3)}$, tổng $${fmt(pb + pc, 3)}$; $bc=${fmt(b * c, 2)}$ có $\\log(bc)=${fmt(pbc, 3)}$.`,
         `$b=${fmt(b, 2)}$, $c=${fmt(c, 2)}$: $\\log b=${fmt(pb, 3)}$, $\\log c=${fmt(pc, 3)}$, sum $${fmt(pb + pc, 3)}$; $bc=${fmt(b * c, 2)}$ has $\\log(bc)=${fmt(pbc, 3)}$.`,
       )}
       why={tt(
-        R`Đặt $\log b=m$ và $\log c=n$, tức $b=10^m$ và $c=10^n$. Khi đó $bc=10^m\cdot 10^n=10^{m+n}$ theo quy tắc cộng số mũ, nên $\log(bc)=m+n$. Thước logarit chỉ là quy tắc ấy được vẽ thành đoạn thẳng.`,
-        R`Let $\log b=m$ and $\log c=n$, that is $b=10^m$ and $c=10^n$. Then $bc=10^m\cdot 10^n=10^{m+n}$ by the rule for adding exponents, so $\log(bc)=m+n$. The logarithmic ruler is just that rule drawn as segments.`,
+        R`Với $b,c>0$ và $\log$ là logarit cơ số $10$, đặt $\log b=m$ và $\log c=n$, tức $b=10^m$ và $c=10^n$. Khi đó $bc=10^m\cdot 10^n=10^{m+n}$ theo quy tắc cộng số mũ, nên $\log(bc)=m+n$. Thước logarit chỉ là quy tắc ấy được vẽ thành đoạn thẳng.`,
+        R`For $b,c>0$ and $\log$ the base-10 logarithm, let $\log b=m$ and $\log c=n$, that is $b=10^m$ and $c=10^n$. Then $bc=10^m\cdot 10^n=10^{m+n}$ by the rule for adding exponents, so $\log(bc)=m+n$. The logarithmic ruler is just that rule drawn as segments.`,
       )}
     >
       <Graph
@@ -141,8 +141,8 @@ export function ExpTangentAnim() {
         `At $x=${fmt(x0, 2)}$: height $${fmt(y0, 3)}$, measured slope $${fmt(slope, 3)}$, quotient $\\frac{\\text{slope}}{\\text{height}}=${fmt(ratio, 4)}$, and $\\ln 2=${fmt(Math.log(2), 4)}$.`,
       )}
       why={tt(
-        R`Vì $a^{x+h}=a^x\cdot a^h$ nên $\frac{a^{x+h}-a^x}{h}=a^x\cdot\frac{a^h-1}{h}$. Thừa số $\frac{a^h-1}{h}$ không chứa $x$ và tiến về một hằng số khi $h\to 0$. Vậy độ dốc tại mọi điểm bằng giá trị $a^x$ nhân với cùng một hằng số, và hằng số đó là $\ln a$.`,
-        R`Since $a^{x+h}=a^x\cdot a^h$, we have $\frac{a^{x+h}-a^x}{h}=a^x\cdot\frac{a^h-1}{h}$. The factor $\frac{a^h-1}{h}$ does not contain $x$ and tends to a constant as $h\to 0$. So the slope at every point is the value $a^x$ times the same constant, and that constant is $\ln a$.`,
+        R`Vì $a^{x+h}=a^x\cdot a^h$ nên $\frac{a^{x+h}-a^x}{h}=a^x\cdot\frac{a^h-1}{h}$. Thừa số $\frac{a^h-1}{h}$ không chứa $x$ và tiến về một hằng số khi $h\to 0$. Vậy độ dốc tại mọi điểm bằng giá trị $a^x$ nhân với cùng một hằng số. Viết $a=e^{\ln a}$ và dùng $(e^x)'=e^x$ (với $e$ là cơ số cho hằng số bằng $1$) thì hằng số đó là $\ln a$; với $a=2$, $\frac{2^h-1}{h}\to 0{,}693\approx\ln 2$.`,
+        R`Since $a^{x+h}=a^x\cdot a^h$, we have $\frac{a^{x+h}-a^x}{h}=a^x\cdot\frac{a^h-1}{h}$. The factor $\frac{a^h-1}{h}$ does not contain $x$ and tends to a constant as $h\to 0$. So the slope at every point is the value $a^x$ times the same constant. Writing $a=e^{\ln a}$ and using $(e^x)'=e^x$ (where $e$ is the base whose constant equals $1$) gives that constant as $\ln a$; for $a=2$, $\frac{2^h-1}{h}\to 0.693\approx\ln 2$.`,
       )}
     >
       <Graph
