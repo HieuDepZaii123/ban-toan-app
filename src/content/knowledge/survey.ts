@@ -10,10 +10,10 @@ export const surveyKnowledge: TopicKnowledge = {
     lienHe: R`Đạo hàm cho dấu và cực trị, giới hạn cho tiệm cận và hành vi ở vô cực. Hàm bậc hai là trường hợp đơn giản nhất của quy trình này, còn phương trình hoành độ giao điểm đưa tương giao về chuyên đề Hàm số bậc hai và các phương trình khác.`,
   },
   tuDau: [
-    R`Trước một chuyến leo núi, người ta xem bản đồ để biết đoạn nào lên dốc, đoạn nào xuống dốc, đỉnh ở đâu, thung lũng ở đâu. Khảo sát hàm số là vẽ tấm bản đồ như thế cho một công thức: chưa cần chấm hàng trăm điểm, ta vẫn biết đường cong lên xuống thế nào và có hình dáng gì.`,
-    R`Công cụ chính là đạo hàm, tức độ dốc của đường cong tại mỗi điểm. Độ dốc dương thì đường cong đang đi lên, độ dốc âm thì đang đi xuống. Chỗ độ dốc bằng $0$ và đổi dấu là chỗ đường cong quay đầu: từ lên sang xuống là đỉnh đồi, từ xuống sang lên là đáy thung lũng.`,
+    R`Trước một chuyến leo núi, người ta xem bản đồ để biết đoạn nào lên dốc, đoạn nào xuống dốc, đỉnh ở đâu, thung lũng ở đâu. Khảo sát hàm số là vẽ tấm bản đồ như vậy cho một công thức: không cần chấm hàng trăm điểm, ta vẫn biết đường cong lên xuống ra sao và có hình dáng gì.`,
+    R`Công cụ chính là đạo hàm, tức độ dốc của đường cong tại mỗi điểm. Độ dốc dương thì đường cong đang đi lên, độ dốc âm thì đang đi xuống. Chỗ độ dốc bằng $0$ và đổi dấu chính là chỗ đường cong quay đầu: từ lên sang xuống là đỉnh đồi, từ xuống sang lên là đáy thung lũng.`,
     R`Mọi thông tin được ghi vào một bảng nhỏ gọi là bảng biến thiên: hàng trên là các giá trị $x$ quan trọng, hàng giữa là dấu của độ dốc, hàng dưới là các mũi tên lên xuống kèm độ cao tại những điểm quay đầu. Đọc bảng này cũng như đọc bản đồ: nhìn là biết hàm lớn nhất ở đâu, nhỏ nhất ở đâu, và một đường ngang cắt đồ thị mấy lần.`,
-    R`Ngoài ra cần biết đường cong đi về đâu khi $x$ thật lớn hoặc khi tới gần chỗ hàm không tính được. Nếu nó nằm sát dần một đường thẳng thì đường đó gọi là tiệm cận. Ba họ hàm trong chuyên đề (bậc ba, bậc bốn trùng phương, phân thức bậc nhất trên bậc nhất) mỗi họ chỉ có vài kiểu dáng, và các phần «Vì sao đúng» cho thấy lý do.`,
+    R`Ngoài ra ta cần biết đường cong đi về đâu khi $x$ thật lớn hoặc khi tới gần chỗ hàm không tính được. Nếu nó nằm sát dần một đường thẳng thì đường đó gọi là tiệm cận. Ba họ hàm trong chuyên đề (bậc ba, bậc bốn trùng phương, phân thức bậc nhất trên bậc nhất) mỗi họ chỉ có vài kiểu dáng, và các phần «Vì sao đúng» cho thấy lý do.`,
   ],
   kyHieu: [
     { kh: R`$y'$`, doc: R`Đạo hàm của $y$: độ dốc của đồ thị tại mỗi điểm $x$.` },
@@ -72,6 +72,16 @@ export const surveyKnowledge: TopicKnowledge = {
             R`Nếu $\Delta'>0$ thì $y'$ có hai nghiệm phân biệt và đổi dấu khi đi qua mỗi nghiệm, theo định lí về dấu của tam thức. Mỗi lần đổi dấu là một lần đồ thị quay đầu, nên hàm có hai điểm cực trị.`,
             R`Nếu $\Delta'\le 0$ thì $y'$ luôn cùng dấu với $a$, cùng lắm bằng $0$ tại một điểm. Độ dốc không đổi dấu nên hàm chỉ tăng hoặc chỉ giảm trên cả trục số, không có chỗ quay đầu.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng cách dời về điểm uốn",
+              buoc: [
+                R`Dời gốc ngang tới điểm uốn $x_0=-\frac{b}{3a}$ (phép dời này được chứng minh ở mục «Tâm đối xứng» ngay dưới và không dùng đến số cực trị): đặt $x=x_0+t$ thì $y=at^3+pt+y_0$, với hệ số của $t$ là $p=3ax_0^2+2bx_0+c=c-\frac{b^2}{3a}$.`,
+                R`Đạo hàm theo $t$ là $y'=3at^2+p$. Phương trình $y'=0$ cho $t^2=-\frac{p}{3a}$. Có hai nghiệm $t$ đối nhau khi $\frac{p}{a}<0$, tức $ap<0$, và khi đó $y'$ đổi dấu qua từng nghiệm: hai cực trị, đối xứng qua điểm uốn.`,
+                R`Nếu $ap\ge 0$ thì $3at^2+p$ không đổi dấu, hàm đơn điệu, không có cực trị. Cuối cùng, $-3ap=-3a\left(c-\frac{b^2}{3a}\right)=b^2-3ac=\Delta'$, nên điều kiện $ap<0$ chính là $\Delta'>0$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "tinh-chat", title: "Giới hạn ở vô cực",
@@ -81,6 +91,16 @@ export const surveyKnowledge: TopicKnowledge = {
             R`Thừa số $x^3$ lớn tùy ý và dương khi $x$ đi về bên phải, âm khi $x$ đi về bên trái vì lập phương giữ dấu. Nhân với một số gần $a$: nếu $a>0$ thì $y$ lên $+\infty$ ở bên phải và xuống $-\infty$ ở bên trái; nếu $a<0$ thì ngược lại.`,
             R`Hàm tính được tại mọi $x$ và không tiến về một số hữu hạn nào ở hai đầu, nên không có tiệm cận đứng và cũng không có tiệm cận ngang.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng đánh giá bất đẳng thức",
+              buoc: [
+                R`Viết $y=ax^3+r(x)$ với $r(x)=bx^2+cx+d$. Với $|x|$ đủ lớn, $|r(x)|\le\frac{|a|\,|x|^3}{2}$, vì $\frac{|r(x)|}{|x|^3}\le\frac{|b|}{|x|}+\frac{|c|}{x^2}+\frac{|d|}{|x|^3}$ nhỏ tùy ý.`,
+                R`Khi đó $y=ax^3(1+\varepsilon)$ với $|\varepsilon|\le\frac{1}{2}$, nên $\frac{y}{ax^3}$ nằm trong $\left[\frac{1}{2};\frac{3}{2}\right]$ và dương. Vậy $y$ cùng dấu với $ax^3$ và $|y|\ge\frac{|a|\,|x|^3}{2}\to\infty$ khi $|x|\to\infty$.`,
+                R`Cách này là dạng bất đẳng thức chặt chẽ của cách đặt nhân tử $x^3$. Vì $y$ cùng dấu với $ax^3$ và lớn vô hạn: $a>0$ thì $y\to+\infty$ khi $x\to+\infty$ và $y\to-\infty$ khi $x\to-\infty$; $a<0$ thì ngược lại. Hàm không tiến về số hữu hạn nên không có tiệm cận ngang.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Tâm đối xứng",
@@ -89,6 +109,16 @@ export const surveyKnowledge: TopicKnowledge = {
             R`Đặt $x_0=-\frac{b}{3a}$ và dời gốc tọa độ ngang tới đó bằng cách viết $x=x_0+t$. Khai triển $a(x_0+t)^3+b(x_0+t)^2+c(x_0+t)+d$ theo $t$, hệ số của $t^2$ là $3ax_0+b$, bằng $0$ do cách chọn $x_0$.`,
             R`Vậy hàm có dạng $y=at^3+pt+y_0$, với $p$ là một hằng số và $y_0$ là giá trị của hàm tại $x_0$. Phần $at^3+pt$ đổi dấu khi đổi $t$ thành $-t$.`,
             R`Nghĩa là nếu đi sang phải một đoạn $t$ mà lên cao hơn $y_0$ một lượng $s$, thì đi sang trái đoạn $t$ sẽ xuống thấp hơn $y_0$ đúng lượng $s$. Hai điểm như thế đối xứng nhau qua điểm $(x_0;y_0)$, nên đó là tâm đối xứng.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng cách kiểm trung điểm",
+              buoc: [
+                R`Cần chứng tỏ với mọi $t$: $f(x_0+t)+f(x_0-t)=2f(x_0)$, tức trung điểm của hai điểm đối xứng ngang qua $x_0$ luôn nằm ở độ cao $f(x_0)$.`,
+                R`Khai triển $f(x_0\pm t)=a(x_0\pm t)^3+b(x_0\pm t)^2+c(x_0\pm t)+d$ rồi cộng lại, các số hạng bậc lẻ theo $t$ triệt tiêu: $f(x_0+t)+f(x_0-t)=2f(x_0)+2t^2(3ax_0+b)$.`,
+                R`Vì $3ax_0+b=0$ theo cách chọn $x_0=-\frac{b}{3a}$ nên tổng bằng $2f(x_0)$. Vậy điểm $(x_0;f(x_0))$ là trung điểm của mọi cặp điểm của đồ thị cùng cách đều $x_0$, tức là tâm đối xứng.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Nhận dạng bốn kiểu đồ thị", text: R`Có bốn kiểu theo dấu của $a$ và việc có hay không có cực trị. Khi $a>0$ đồ thị đi lên từ trái sang phải, có thể lượn một lần; khi $a<0$ thì đi xuống. Số lần lượn bằng số điểm cực trị.` },
@@ -111,6 +141,16 @@ export const surveyKnowledge: TopicKnowledge = {
             R`Đạo hàm là $y'=2x(2ax^2+b)$, bằng $0$ khi $x=0$ hoặc khi $x^2=-\frac{b}{2a}$.`,
             R`Nếu $ab<0$ thì $-\frac{b}{2a}>0$, phương trình $x^2=-\frac{b}{2a}$ có hai nghiệm đối nhau khác $0$. Cùng với $x=0$ là ba nghiệm phân biệt, và $y'$ đổi dấu qua mỗi nghiệm, nên có ba điểm cực trị.`,
             R`Nếu $ab\ge 0$ thì $-\frac{b}{2a}\le 0$, bình phương không thể bằng số âm, nên ngoài $x=0$ không có nghiệm nào khác. Thừa số $2ax^2+b$ không đổi dấu, còn thừa số $2x$ đổi dấu tại $0$, nên $y'$ đổi dấu đúng một lần: có đúng một điểm cực trị.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng ẩn phụ u = x²",
+              buoc: [
+                R`Viết $y=Y(u)$ với $u=x^2$ và $Y(u)=au^2+bu+c$ là một tam thức bậc hai. Hàm $u=x^2$ tăng trên $x>0$ nên ở nửa phải $y$ biến thiên cùng chiều với $Y$ trên $u>0$; ở nửa trái $u$ giảm nên $y$ biến thiên ngược chiều với $Y$.`,
+                R`Tam thức $Y$ chỉ quay đầu tại đỉnh $u_0=-\frac{b}{2a}$. Nếu $ab<0$ thì $u_0>0$, ứng với hai giá trị $x=\pm\sqrt{u_0}$ đối nhau. Vì $y(x)=Y(x^2)$ và $x^2$ gần $u_0$ khi $x$ gần $\pm\sqrt{u_0}$, cực trị của $Y$ tại $u_0$ truyền sang $y$ tại cả hai điểm. Vì $Y$ đơn điệu thật sự ở mỗi phía của $u_0$ nên $y$ không có cực trị nào khác ngoài $x=0$.`,
+                R`Thêm điểm $x=0$: $Y(u)-Y(0)=u(au+b)$ giữ một dấu khác $0$ với $u>0$ nhỏ (cùng dấu $b$ nếu $b\neq 0$, bằng $au^2$ nếu $b=0$), nên $y(x)-y(0)=Y(x^2)-Y(0)$ giữ một dấu với mọi $x\neq 0$ gần $0$: $y$ luôn có cực trị tại $x=0$. Vậy $ab<0$ cho ba cực trị. Nếu $ab\ge 0$ thì $u_0\le 0$, $Y$ không quay đầu trên $u>0$, nên chỉ còn cực trị tại $x=0$.`,
+              ],
+            },
           ],
         },
         {
@@ -189,6 +229,16 @@ export const surveyKnowledge: TopicKnowledge = {
             R`Hàm chẵn: nếu điểm $(x;y)$ thuộc đồ thị thì $f(-x)=f(x)=y$, nên điểm $(-x;y)$ cũng thuộc đồ thị. Hai điểm này cùng độ cao và cách đều trục tung, tức đối xứng nhau qua trục tung.`,
             R`Hàm lẻ: nếu $(x;y)$ thuộc đồ thị thì $f(-x)=-y$, nên $(-x;-y)$ cũng thuộc đồ thị. Hai điểm này nằm đối diện nhau qua gốc tọa độ.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng phép đối xứng của tập hợp điểm",
+              buoc: [
+                R`Giả sử tập xác định đối xứng qua $0$. Gọi $\mathcal{G}$ là tập các điểm $(x;f(x))$ của đồ thị. Phép đối xứng qua trục tung biến điểm $(x;y)$ thành $(-x;y)$, nên biến $\mathcal{G}$ thành đồ thị của hàm $x\mapsto f(-x)$.`,
+                R`Đồ thị đối xứng qua trục tung nghĩa là phép đối xứng ấy biến $\mathcal{G}$ thành chính nó, tức đồ thị của $f(-x)$ trùng đồ thị của $f(x)$. Hai đồ thị trùng nhau khi và chỉ khi hai hàm bằng nhau với mọi $x$: $f(-x)=f(x)$.`,
+                R`Với phép đối xứng qua gốc, $(x;y)\mapsto(-x;-y)$ biến $\mathcal{G}$ thành đồ thị của $x\mapsto -f(-x)$, và hai đồ thị trùng nhau khi $-f(-x)=f(x)$, tức $f(-x)=-f(x)$. Mọi bước đều là «khi và chỉ khi», nên đồ thị đối xứng qua trục tung đúng khi hàm chẵn, qua gốc đúng khi hàm lẻ.`,
+              ],
+            },
+          ],
         },
         { kind: "vi-du", text: R`Hàm $y=x^3-3x$ trên đoạn $[-2;2]$ có $y(-2)=-2$, $y(-1)=2$, $y(1)=-2$ và $y(2)=2$. Giá trị lớn nhất là $2$ và nhỏ nhất là $-2$, đạt ở cả cực trị lẫn đầu mút.` },
       ],
@@ -210,6 +260,9 @@ export const surveyKnowledge: TopicKnowledge = {
     { id: "quadratic", vi: R`Phương trình hoành độ giao điểm thường quy về bậc hai, và điều kiện về số giao điểm là điều kiện về biệt thức.` },
   ],
   checks: [
+    { expr: "simplify(-3*a*(c - b**2/(3*a)) - (b**2 - 3*a*c))", expect: "0" },
+    { expr: "expand(a*(x0+t)**3 + b*(x0+t)**2 + c*(x0+t) + d + a*(x0-t)**3 + b*(x0-t)**2 + c*(x0-t) + d - 2*(a*x0**3 + b*x0**2 + c*x0 + d) - 2*t**2*(3*a*x0 + b))", expect: "0" },
+    { expr: "expand(diff(a*x**4 + b*x**2 + c, x) - (2*a*x**2 + b)*2*x)", expect: "0" },
     { expr: "diff(x**3-3*x, x)", expect: "3*x**2-3" },
     { expr: "solve(3*x**2-3, x)", expect: "[-1, 1]" },
     { expr: "(x**3-3*x).subs(x,-1)", expect: "2" },

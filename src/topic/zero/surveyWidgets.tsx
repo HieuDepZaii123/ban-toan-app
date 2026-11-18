@@ -30,7 +30,7 @@ export function VariationTableLab() {
     <Stage
       title={tt("Bảng biến thiên do máy lập: đọc đường cong bằng độ dốc", "A variation table built by the machine: reading a curve through its slope")}
       story={tt(
-        R`Khảo sát hàm số quy về một bảng nhỏ. Máy làm đúng các bước: tìm chỗ độ dốc $y'=0$ (điểm tới hạn), thử một điểm giữa mỗi khoảng để biết dấu của $y'$, rồi suy ra mũi tên: $y'>0$ thì hàm đi lên, $y'<0$ thì đi xuống. Bảng nằm ngay dưới đồ thị: mỗi cột của bảng là một chỗ quay đầu hoặc một khoảng đơn điệu.`,
+        R`Khảo sát hàm số quy về một bảng nhỏ. Máy làm đúng các bước ấy: tìm chỗ độ dốc $y'=0$ (điểm tới hạn), thử một điểm giữa mỗi khoảng để biết dấu của $y'$, rồi suy ra mũi tên: $y'>0$ thì hàm đi lên, $y'<0$ thì đi xuống. Bảng nằm ngay dưới đồ thị: mỗi cột của bảng là một chỗ quay đầu hoặc một khoảng đơn điệu.`,
         R`Studying a function boils down to a small table. The machine follows the same steps: find where the slope $y'=0$ (critical points), test one point inside each interval to get the sign of $y'$, then deduce the arrows: $y'>0$ means rising, $y'<0$ means falling. The table sits right under the graph: each column of the table is a turning point or a monotonic interval.`,
       )}
       read={tt(
@@ -98,7 +98,7 @@ export function CubicTypesLab() {
     <Stage
       title={tt("Hàm bậc ba: có hai cực trị hay không, và tâm đối xứng", "The cubic: two extrema or none, and its centre of symmetry")}
       story={tt(
-        R`Đạo hàm của hàm bậc ba là một tam thức bậc hai $y'=3ax^2+2bx+c$, nên số cực trị phụ thuộc biệt thức thu gọn $\Delta'=b^2-3ac$: dương thì $y'$ đổi dấu hai lần (đồ thị lượn một đỉnh và một đáy), không dương thì $y'$ không đổi dấu (đồ thị đi thẳng một mạch). Dù có cực trị hay không, đồ thị luôn nhận điểm uốn làm tâm đối xứng. Máy kiểm tâm đối xứng bằng số.`,
+        R`Đạo hàm của hàm bậc ba là một tam thức bậc hai $y'=3ax^2+2bx+c$, nên số cực trị phụ thuộc biệt thức thu gọn $\Delta'=b^2-3ac$: dương thì $y'$ đổi dấu hai lần (đồ thị lượn một đỉnh và một đáy), không dương thì $y'$ không đổi dấu (đồ thị đi thẳng một mạch). Có cực trị hay không, đồ thị vẫn luôn nhận điểm uốn làm tâm đối xứng. Máy kiểm tâm đối xứng bằng số.`,
         R`The derivative of a cubic is a quadratic $y'=3ax^2+2bx+c$, so the number of extrema depends on the reduced discriminant $\Delta'=b^2-3ac$: positive means $y'$ changes sign twice (the graph wiggles through one peak and one valley), non-positive means $y'$ never changes sign (the graph runs straight through). Whether or not there are extrema, the graph always has its inflection point as a centre of symmetry. The machine checks the symmetry numerically.`,
       )}
       read={tt(
@@ -150,7 +150,7 @@ export function QuarticLab() {
     <Stage
       title={tt("Hàm trùng phương: chữ U hay chữ W, nghiệm qua ẩn phụ t = x²", "The biquadratic: a U or a W, and roots through the substitution t = x²")}
       story={tt(
-        R`Hàm $y=ax^4+bx^2+c$ chỉ chứa các lũy thừa chẵn nên đồ thị đối xứng qua trục tung. Đạo hàm $y'=2x(2ax^2+b)$ luôn có nghiệm $x=0$, và có thêm hai nghiệm đối nhau khi $ab<0$. Vậy $ab<0$ cho ba cực trị (chữ W hoặc chữ M), $ab\ge 0$ chỉ cho một cực trị (chữ U hoặc chữ ∩). Để tìm giao với trục hoành, đặt $t=x^2\ge 0$ rồi giải phương trình bậc hai theo $t$: mỗi $t>0$ cho hai nghiệm $x=\pm\sqrt{t}$.`,
+        R`Hàm $y=ax^4+bx^2+c$ chỉ chứa các lũy thừa chẵn nên đồ thị đối xứng qua trục tung. Đạo hàm $y'=2x(2ax^2+b)$ luôn có nghiệm $x=0$, và có thêm hai nghiệm đối nhau khi $ab<0$. Vậy $ab<0$ cho ba cực trị (chữ W hoặc chữ M), $ab\ge 0$ chỉ cho một cực trị (chữ U hoặc chữ ∩). Muốn tìm giao điểm với trục hoành, ta đặt $t=x^2\ge 0$ rồi giải phương trình bậc hai theo $t$: mỗi $t>0$ cho hai nghiệm $x=\pm\sqrt{t}$.`,
         R`The function $y=ax^4+bx^2+c$ contains only even powers so its graph is symmetric about the vertical axis. The derivative $y'=2x(2ax^2+b)$ always has the root $x=0$, and two more opposite roots when $ab<0$. So $ab<0$ gives three extrema (a W or an M), $ab\ge 0$ gives only one (a U or an ∩). To find where it meets the horizontal axis, put $t=x^2\ge 0$ and solve the quadratic in $t$: each $t>0$ gives two roots $x=\pm\sqrt{t}$.`,
       )}
       read={tt(
@@ -202,7 +202,7 @@ export function SolutionsLab() {
     <Stage
       title={tt("Biện luận số nghiệm: một đường ngang quét qua đồ thị", "Discussing the number of solutions: a horizontal line sweeping over the graph")}
       story={tt(
-        R`Số nghiệm của $f(x)=m$ là số giao điểm của đồ thị với đường ngang $y=m$. Kéo $m$ từ dưới lên: số giao điểm thay đổi đúng khi đường ngang đi qua một giá trị cực trị. Máy đếm số giao điểm cho từng $m$ rồi vẽ thành bậc thang bên phải: đó là kết quả của bài «biện luận số nghiệm theo tham số». Các bậc đổi chiều tại đúng các giá trị cực đại, cực tiểu.`,
+        R`Số nghiệm của $f(x)=m$ là số giao điểm của đồ thị với đường ngang $y=m$. Hãy kéo $m$ từ dưới lên: số giao điểm chỉ đổi khi đường ngang đi qua một giá trị cực trị. Máy đếm số giao điểm cho từng $m$ rồi vẽ thành bậc thang bên phải: đó là kết quả của bài «biện luận số nghiệm theo tham số». Các bậc đổi chiều tại đúng các giá trị cực đại, cực tiểu.`,
         R`The number of solutions of $f(x)=m$ is the number of intersections of the graph with the horizontal line $y=m$. Drag $m$ upwards: the number of intersections changes exactly when the line passes a critical value. The machine counts the intersections for every $m$ and draws them as a staircase on the right: that is the answer to a «discuss the number of solutions in terms of the parameter» problem. The steps change exactly at the maximum and minimum values.`,
       )}
       read={tt(

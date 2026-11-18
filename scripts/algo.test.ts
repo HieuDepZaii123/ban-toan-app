@@ -410,6 +410,25 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("sai nhiều lần: phải đợi 3 ngày", !A.reviewDue({ ok: false, tries: 2, at: now - 2 * 86_400_000 }, now) && A.reviewDue({ ok: false, tries: 2, at: now - 3 * 86_400_000 }, now));
 }
 
+// Khảo sát hàm số: độ dốc, cực trị, số cực trị bậc ba, số nghiệm.
+{
+  near("độ dốc x³ − 3x tại 2 là 9", A.centralSlope((x) => x ** 3 - 3 * x, 2), 9, 1e-5);
+  near("độ dốc x³ − 3x tại 1 là 0", A.centralSlope((x) => x ** 3 - 3 * x, 1), 0, 1e-5);
+  is("x³ tại 0 không phải cực trị", A.isExtremum((x) => x ** 3, 0) === "none");
+  is("x² tại 0 là cực tiểu", A.isExtremum((x) => x * x, 0) === "min");
+  is("−x⁴ tại 0 là cực đại", A.isExtremum((x) => -(x ** 4), 0) === "max");
+  is("x³ − 3x có 2 cực trị", A.cubicExtremaCount(1, 0, -3) === 2);
+  is("x³ + x có 0 cực trị", A.cubicExtremaCount(1, 0, 1) === 0);
+  is("x³ có 0 cực trị (y' có nghiệm kép)", A.cubicExtremaCount(1, 0, 0) === 0);
+  let most = 0;
+  const rng = mulberry32(7);
+  for (let i = 0; i < 300; i++) most = Math.max(most, A.cubicExtremaCount(rng() * 4 - 2 || 1, rng() * 4 - 2, rng() * 4 - 2, rng() * 4 - 2));
+  is("bậc ba không bao giờ có quá 2 cực trị", most === 2);
+  is("Δ' = b² − 3ac quyết định số cực trị", [[1, 0, -3], [2, 1, 1], [1, 3, 3], [-1, 1, 1]].every(([a, b, c]) => (A.cubicExtremaCount(a!, b!, c!) === 2) === (b! * b! - 3 * a! * c! > 0)));
+  is("y = 1 cắt x³ − 3x tại 3 điểm", A.countSolutions((x) => x ** 3 - 3 * x, 1, -4, 4) === 3);
+  is("y = 3 cắt x³ − 3x tại 1 điểm", A.countSolutions((x) => x ** 3 - 3 * x, 3, -4, 4) === 1);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

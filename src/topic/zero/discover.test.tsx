@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, test } from "vitest";
 import { setLang } from "../../lib/store.ts";
 import { LIMIT_CARDS } from "./limitCards.ts";
 import { Discover } from "./discover.tsx";
+import { SURVEY_CARDS } from "./surveyCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -53,5 +54,14 @@ describe("Thẻ khám phá", () => {
     localStorage.setItem("ban-toan-discover", JSON.stringify(saved));
     render(<Discover card={LIMIT_CARDS.hole} />);
     expect(screen.getByText("Ôn lại")).toBeTruthy();
+  });
+
+  test("các thẻ khảo sát hàm số có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(SURVEY_CARDS.flat)).toContain("Không phải");
+    expect(label(SURVEY_CARDS.maxCount)).toBe("2");
+    expect(label(SURVEY_CARDS.line)).toContain("3");
+    expect(label(SURVEY_CARDS.quartic)).toBe("3");
+    expect(label(SURVEY_CARDS.asymptote)).toContain("3");
   });
 });

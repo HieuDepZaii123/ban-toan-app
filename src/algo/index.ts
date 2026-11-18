@@ -1030,3 +1030,23 @@ export function reviewDue(record: { ok: boolean; tries: number; at: number } | u
   const day = 86_400_000;
   return now - record.at >= (record.tries <= 1 ? day : 3 * day);
 }
+
+/** Độ dốc của f tại x đo bằng hiệu đối xứng. */
+export function centralSlope(f: Fn, x: number, h = 1e-5): number {
+  return (f(x + h) - f(x - h)) / (2 * h);
+}
+
+/** x0 có phải điểm cực trị không: f(x0) lớn hơn hoặc nhỏ hơn mọi giá trị lân cận cả hai phía (đo bằng bước nhỏ). */
+export function isExtremum(f: Fn, x0: number, h = 1e-3): "min" | "max" | "none" {
+  const y = f(x0);
+  const left = f(x0 - h) - y;
+  const right = f(x0 + h) - y;
+  if (left > 0 && right > 0) return "min";
+  if (left < 0 && right < 0) return "max";
+  return "none";
+}
+
+/** Số cực trị của y = ax³ + bx² + cx + d tìm bằng thuật toán trên đoạn [−R; R]: nghiệm đổi dấu của y'. */
+export function cubicExtremaCount(a: number, b: number, c: number, d = 0, R = 20): number {
+  return criticalPoints((x) => a * x ** 3 + b * x ** 2 + c * x + d, -R, R).length;
+}
