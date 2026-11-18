@@ -49,7 +49,7 @@ export function HomeDesk() {
       <SiteHeader />
       <main id="content">
         <Welcome />
-        <section className={`home-start${folded ? " is-searching" : ""}`} aria-label={t(lang, "Bắt đầu", "Start")}>
+        <section id="chuyen-de" className={`home-start${folded ? " is-searching" : ""}`} aria-label={t(lang, "Bắt đầu", "Start")}>
           {folded ? null : <Continue />}
           <div className="home-find">
             <form className="search home-search" role="search" onSubmit={(event) => event.preventDefault()}>

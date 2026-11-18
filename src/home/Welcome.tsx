@@ -15,12 +15,24 @@ export function Welcome() {
     <section className="hero-welcome">
       <h1>{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo.", "Bàn Toán – a place to learn, research and create.")}</h1>
       <p className="lead hero-call">{t(lang, "Hãy biến những ý tưởng của bạn thành hiện thực.", "Turn your ideas into reality.")}</p>
-      {/* One short line per word of the title: học tập, nghiên cứu, sáng tạo. */}
-      <p className="lead hero-ways">
-        <span>{t(lang, "Học bằng cách kéo hình và nhìn con số đổi theo.", "Learn by dragging a figure and watching the numbers follow.")}</span>
-        <span>{t(lang, "Nghiên cứu bằng cách tự đặt giả thuyết rồi kiểm chứng.", "Research by making a guess and testing it yourself.")}</span>
-        <span>{t(lang, "Sáng tạo bằng cách dựng hình, dựng khối theo ý mình.", "Create by building figures and solids your own way.")}</span>
-      </p>
+      {/* One block per word of the title. Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies, 8 solids). */}
+      <div className="pillars">
+        {PILLARS.map((pillar) => (
+          <article key={pillar.id} className="pillar" aria-labelledby={`pillar-${pillar.id}`}>
+            <PillarMark id={pillar.id} />
+            <h2 id={`pillar-${pillar.id}`}>{t(lang, pillar.vi, pillar.en)}</h2>
+            <p className="pillar-gist">{t(lang, pillar.gistVi, pillar.gistEn)}</p>
+            <p className="pillar-body">{t(lang, pillar.bodyVi, pillar.bodyEn)}</p>
+            <p className="pillar-links">
+              {pillar.links.map((link) => (
+                link.href.startsWith("#")
+                  ? <a key={link.href} href={link.href}>{t(lang, link.vi, link.en)}</a>
+                  : <A key={link.href} href={link.href}>{t(lang, link.vi, link.en)}</A>
+              ))}
+            </p>
+          </article>
+        ))}
+      </div>
       <p className="lead home-premium">
         {t(
           lang,
@@ -30,6 +42,83 @@ export function Welcome() {
         <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
       </p>
     </section>
+  );
+}
+
+type PillarId = "hoc" | "nghien-cuu" | "sang-tao";
+
+const PILLARS: {
+  id: PillarId;
+  vi: string; en: string;
+  gistVi: string; gistEn: string;
+  bodyVi: string; bodyEn: string;
+  links: { href: string; vi: string; en: string }[];
+}[] = [
+  {
+    id: "hoc",
+    vi: "Học tập", en: "Learn",
+    gistVi: "Hiểu vì sao, không chỉ nhớ công thức.",
+    gistEn: "Understand why, not just the formula.",
+    bodyVi: "Mười bốn chuyên đề THPT và 182 bài từ lớp 1 đến lớp 12. Mỗi tờ có hình kéo được, bài giảng ngắn, dạng bài giải từng bước có lý do, và câu luyện có gợi ý.",
+    bodyEn: "Fourteen upper-secondary topics and 182 lessons from grade 1 to 12. Every sheet has a figure you can drag, a short lesson, worked problems with a reason for each step, and practice with hints.",
+    links: [
+      { href: "#chuyen-de", vi: "Chuyên đề", en: "Topics" },
+      { href: "/kien-thuc", vi: "Lớp 1–12", en: "Grades 1–12" },
+      { href: "/thi-thu", vi: "Thi thử 2025", en: "2025 mock exam" },
+    ],
+  },
+  {
+    id: "nghien-cuu",
+    vi: "Nghiên cứu", en: "Research",
+    gistVi: "Tự đặt câu hỏi, tự đo, tự kết luận.",
+    gistEn: "Ask, measure and conclude for yourself.",
+    bodyVi: "28 bài nghiên cứu dẫn dắt: nêu giả thuyết, kéo hình để ghi số liệu, đọc đồ thị, rồi đối chiếu kết luận của bạn với chứng minh. Thêm năm mảng mở rộng như lập trình toán và vật lý toán.",
+    bodyEn: "28 guided investigations: state a guess, drag the figure to record data, read the graph, then check your conclusion against the proof. Plus five wider areas such as maths programming and maths in physics.",
+    links: [
+      { href: "/nghien-cuu", vi: "Nghiên cứu", en: "Research" },
+      { href: "/khoa-hoc", vi: "Khoa học", en: "Science" },
+    ],
+  },
+  {
+    id: "sang-tao",
+    vi: "Sáng tạo", en: "Create",
+    gistVi: "Dựng nên thứ của riêng bạn.",
+    gistEn: "Build something of your own.",
+    bodyVi: "Dựng điểm, đoạn, chân đường vuông góc trên mặt phẳng; xoay tám loại khối và xem công thức đổi theo kích thước. Soạn đề hay phiếu học có công thức rồi xuất ra PDF, Word.",
+    bodyEn: "Place points, segments and perpendicular feet on the plane; turn eight kinds of solid and watch the formula follow the sizes. Write a test or worksheet with formulas and export it to PDF or Word.",
+    links: [
+      { href: "/xuong-hinh", vi: "Xưởng hình", en: "Workshop" },
+      { href: "/soan-tai-lieu", vi: "Soạn tài liệu", en: "Documents" },
+    ],
+  },
+];
+
+/** A small drawing for each pillar: a parabola with its tangent, measured points with a fitted line, a cube. */
+function PillarMark({ id }: { id: PillarId }) {
+  return (
+    <svg className="pillar-mark" viewBox="0 0 72 44" aria-hidden="true">
+      {id === "hoc" ? (
+        <>
+          <path d="M8 6 Q36 64 64 6" />
+          <path className="soft" d="M22 40 L62 10" />
+          <circle cx="46" cy="22" r="3" />
+        </>
+      ) : null}
+      {id === "nghien-cuu" ? (
+        <>
+          <path className="soft" d="M6 38 L66 8" />
+          {[[12, 33], [20, 31], [27, 25], [35, 24], [43, 18], [51, 16], [60, 10]].map(([x, y]) => (
+            <circle key={x} cx={x} cy={y} r="2.6" />
+          ))}
+        </>
+      ) : null}
+      {id === "sang-tao" ? (
+        <>
+          <path d="M18 14 H46 V40 H18 Z M18 14 L30 4 H58 L46 14 M58 4 V30 L46 40" />
+          <path className="soft" d="M18 40 L30 30 H58 M30 30 V4" />
+        </>
+      ) : null}
+    </svg>
   );
 }
 
