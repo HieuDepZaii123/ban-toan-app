@@ -7,6 +7,7 @@
  * 90 phút. Mỗi đề rút từ một hạt giống, nên cùng hạt giống cho cùng đề.
  */
 import { mulberry32 } from "../lib/prng.ts";
+import { templateKeyOf } from "../grades/practiceGen.ts";
 import { joinMath } from "../content/vary/stem.ts";
 import type { DssItem } from "../content/vary/dss/item.ts";
 import { analyticDssItems } from "../content/vary/dss/analytic.ts";
@@ -29,11 +30,11 @@ export const EXAM_MINUTES_2025 = 90;
 export const PART_POINTS = { mcq: 3, tf: 4, short: 3 } as const;
 
 /** Grade mix of the real paper: mostly grade 12, some grade 11, a little grade 10. */
-const MCQ_GRADES = [12, 12, 12, 12, 12, 12, 12, 11, 11, 11, 11, 10] as const;
-const SHORT_GRADES = [12, 12, 12, 11, 11, 10] as const;
+const MCQ_GRADES = [12, 12, 12, 12, 12, 12, 12, 12, 12, 11, 11, 10] as const;
+const SHORT_GRADES = [12, 12, 12, 12, 11, 11] as const;
 
 /** Topic sheets that carry the true/false statements, with a readable topic name. */
-const TF_SOURCES: { topic: string; vi: string; en: string; items: readonly DssItem[] }[] = [
+export const TF_SOURCES: { topic: string; vi: string; en: string; items: readonly DssItem[] }[] = [
   { topic: "survey", vi: "Khảo sát hàm số", en: "Function analysis", items: surveyDssItems },
   { topic: "derivative", vi: "Đạo hàm", en: "Derivatives", items: derivativeDssItems },
   { topic: "integral", vi: "Tích phân", en: "Integrals", items: integralDssItems },
@@ -115,15 +116,17 @@ export function shortRight(question: ThptQuestion, typed: string | undefined): b
   return expected !== null && got !== null && Math.abs(got - expected) < 1e-9;
 }
 
-function pickByGrade(pool: readonly ThptQuestion[], grades: readonly number[], rng: () => number, used: Set<string>): string[] {
+function pickByGrade(pool: readonly ThptQuestion[], grades: readonly number[], rng: () => number, used: Set<string>, kinds: Set<string>): string[] {
   const out: string[] = [];
   const topics = new Set<string>();
   for (const grade of grades) {
-    const options = shuffle(pool.filter((item) => item.grade === grade && !used.has(item.id)), rng);
+    // One paper never carries two questions of the same kind (two "length of AB", two "cos x = 0").
+    const options = shuffle(pool.filter((item) => item.grade === grade && !used.has(item.id) && !kinds.has(templateKeyOf(item.id))), rng);
     // Prefer a topic not used yet, so one paper covers the chapters instead of repeating one.
     const pick = options.find((item) => !topics.has(item.topic)) ?? options[0];
     if (!pick) continue;
     used.add(pick.id);
+    kinds.add(templateKeyOf(pick.id));
     topics.add(pick.topic);
     out.push(pick.id);
   }
@@ -159,14 +162,39 @@ function dropUnusedUnknowns(context: string, free: readonly string[], statements
     .join(" ");
 }
 
+/** One-letter names used inside the formulas of a text. */
+export function mathLetters(text: string): Set<string> {
+  const out = new Set<string>();
+  for (const m of text.matchAll(/\$([^$]*)\$/g)) {
+    const body = (m[1] ?? "").replace(/\\[A-Za-z]+/g, " ");
+    for (const t of body.matchAll(/(^|[^A-Za-z])([A-Za-z])(?![A-Za-z])/g)) out.add(t[2] as string);
+  }
+  return out;
+}
+
+/** Names every reader knows without a definition: the variable, a function, e, i, the set R. */
+const STANDARD_NAMES = new Set(["x", "y", "f", "g", "h", "e", "i", "R", "d"]);
+
+/** A statement may only use names the question defines; otherwise the learner cannot judge it. */
+export function declared(context: string, statement: string): boolean {
+  const known = mathLetters(context);
+  return [...mathLetters(statement)].every((name) => STANDARD_NAMES.has(name) || known.has(name));
+}
+
+/** The decided statements of an item that only use names its context defines. */
+function usableFacts(item: DssItem, params: Record<string, number>): DssItem["facts"][number][] {
+  const context = item.context(params);
+  return item.facts.filter((fact) => fact.verdict !== "thieu" && declared(context, fact.vi));
+}
+
 function tfQuestion(source: (typeof TF_SOURCES)[number], rng: () => number, index: number): TfQuestion {
-  const item = source.items[Math.floor(rng() * source.items.length)] ?? source.items[0];
+  const usable = source.items.filter((candidate) => candidate.rows.every((row) => usableFacts(candidate, row).length >= 4));
+  const item = usable[Math.floor(rng() * usable.length)];
   if (!item) throw new Error(`${source.topic} has no true/false items`);
   const params = item.rows[Math.floor(rng() * item.rows.length)] ?? item.rows[0];
   if (!params) throw new Error(`${item.id} has no rows`);
-  // Only statements that are definitely true or false; "not enough" belongs to the in-app format, not the exam.
-  const decided = shuffle(item.facts.filter((fact) => fact.verdict !== "thieu"), rng).slice(0, 4);
-  if (decided.length < 4) throw new Error(`${item.id} has fewer than 4 decided statements`);
+  // Only statements that are definitely true or false and use defined names; "not enough" belongs to the in-app format, not the exam.
+  const decided = shuffle(usableFacts(item, params), rng).slice(0, 4);
   const statements = decided.map((fact) => ({
     vi: joinMath(fact.vi),
     en: joinMath(fact.en),
@@ -186,12 +214,16 @@ function tfQuestion(source: (typeof TF_SOURCES)[number], rng: () => number, inde
   };
 }
 
+const hasUsable = (source: (typeof TF_SOURCES)[number]): boolean =>
+  source.items.some((item) => item.rows.every((row) => usableFacts(item, row).length >= 4));
+
 export function buildPaper(seed: number): Paper {
   const rng = mulberry32(seed >>> 0);
   const used = new Set<string>();
-  const mcq = pickByGrade(thptBank, MCQ_GRADES, rng, used);
-  const short = pickByGrade(SHORT_POOL, SHORT_GRADES, rng, used);
-  const tf = shuffle(TF_SOURCES, rng).slice(0, 4).map((source, index) => tfQuestion(source, rng, index));
+  const kinds = new Set<string>();
+  const mcq = pickByGrade(thptBank, MCQ_GRADES, rng, used, kinds);
+  const short = pickByGrade(SHORT_POOL, SHORT_GRADES, rng, used, kinds);
+  const tf = shuffle(TF_SOURCES.filter(hasUsable), rng).slice(0, 4).map((source, index) => tfQuestion(source, rng, index));
   return { seed: seed >>> 0, mcq, tf, short };
 }
 

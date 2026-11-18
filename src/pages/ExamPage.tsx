@@ -142,6 +142,7 @@ export function ExamPage() {
           "Basis: the THPT graduation exam format in force since the 2025 exam (Decision 764/QĐ-BGDĐT of 8 March 2024, Ministry of Education and Training). These are practice papers written by Bàn Toán and drawn at random from its own question bank, not Ministry papers; the score is only an estimate for yourself.",
         )}
       </p>
+      {lang === "en" ? <p className="exam-note">The paper itself is in Vietnamese, as in the real exam; every question comes from one Vietnamese question bank, so the three parts read the same way.</p> : null}
       {saved.last ? <Result finished={saved.last} /> : null}
       <section className="exam-intro" aria-labelledby="exam-how">
         <h2 id="exam-how">{t(lang, "Cách chấm", "Scoring")}</h2>
@@ -252,13 +253,13 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
         <h2 id="part2">{t(lang, "Phần II. Đúng/Sai", "Part II. True/false")}</h2>
         {paper.tf.map((question, qi) => (
           <article key={question.id} className="exam-q">
-            <h3><span className="exam-no">{t(lang, `Câu ${qi + 1}.`, `Q${qi + 1}.`)}</span> <MathText text={lang === "en" ? question.contextEn : question.contextVi} /></h3>
+            <h3><span className="exam-no">{t(lang, `Câu ${qi + 1}.`, `Q${qi + 1}.`)}</span> <MathText text={question.contextVi} /></h3>
             <ol className="exam-tf" type="a">
               {question.statements.map((statement, si) => {
                 const key = `${qi}:${si}`;
                 return (
                   <li key={si}>
-                    <span className="exam-tf-text"><MathText text={lang === "en" ? statement.en : statement.vi} /></span>
+                    <span className="exam-tf-text"><MathText text={statement.vi} /></span>
                     <span className="exam-tf-pick" role="group" aria-label={t(lang, `Ý ${"abcd"[si]}`, `Statement ${"abcd"[si]}`)}>
                       <button type="button" className="text-btn" aria-pressed={answers.tf[key] === true} onClick={() => onChange({ ...answers, tf: { ...answers.tf, [key]: true } })}>{t(lang, "Đúng", "True")}</button>
                       <button type="button" className="text-btn" aria-pressed={answers.tf[key] === false} onClick={() => onChange({ ...answers, tf: { ...answers.tf, [key]: false } })}>{t(lang, "Sai", "False")}</button>
@@ -359,16 +360,16 @@ function Result({ finished }: { finished: Finished }) {
         <h3>{t(lang, "Phần II", "Part II")}</h3>
         {paper.tf.map((question, qi) => (
           <article key={question.id} className="exam-q">
-            <h4>{t(lang, `Câu ${qi + 1}.`, `Q${qi + 1}.`)} <MathText text={lang === "en" ? question.contextEn : question.contextVi} /></h4>
+            <h4>{t(lang, `Câu ${qi + 1}.`, `Q${qi + 1}.`)} <MathText text={question.contextVi} /></h4>
             <ol type="a">
               {question.statements.map((statement, si) => {
                 const mine = answers.tf[`${qi}:${si}`];
                 const ok = mine === statement.truth;
                 return (
                   <li key={si}>
-                    {ok ? "✓" : "✗"} <MathText text={lang === "en" ? statement.en : statement.vi} /> — <b>{statement.truth ? t(lang, "Đúng", "True") : t(lang, "Sai", "False")}</b>
+                    {ok ? "✓" : "✗"} <MathText text={statement.vi} /> — <b>{statement.truth ? t(lang, "Đúng", "True") : t(lang, "Sai", "False")}</b>
                     {mine === undefined ? <> ({t(lang, "bỏ trống", "blank")})</> : null}
-                    <br /><small><MathText text={lang === "en" ? statement.whyEn : statement.whyVi} /></small>
+                    <br /><small><MathText text={statement.whyVi} /></small>
                   </li>
                 );
               })}

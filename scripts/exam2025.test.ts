@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
-import { buildPaper, emptyAnswers, parseShort, scorePaper, shortValue, tfPoints, TF_TOPIC_NAMES, type Answers } from "../src/thpt/exam2025.ts";
+import { buildPaper, declared, emptyAnswers, parseShort, scorePaper, shortValue, tfPoints, TF_TOPIC_NAMES, type Answers } from "../src/thpt/exam2025.ts";
 import { thptById, topicById } from "../src/thpt/bank.ts";
+import { templateKeyOf } from "../src/grades/practiceGen.ts";
 
 const name = (id: string) => {
   const topic = topicById(id);
@@ -19,10 +20,17 @@ for (let seed = 1; seed <= 300; seed += 1) {
   assert.equal(paper.short.length, 6, `seed ${seed} part III`);
   assert.equal(new Set([...paper.mcq, ...paper.short]).size, 18, `seed ${seed} repeats a question`);
   assert.equal(new Set(paper.tf.map((q) => q.topic)).size, 4, `seed ${seed} true/false topics repeat`);
+  const kinds = [...paper.mcq, ...paper.short].map((id) => templateKeyOf(id));
+  assert.equal(new Set(kinds).size, kinds.length, `seed ${seed} has two questions of the same kind`);
+  assert.ok(paper.mcq.filter((id) => thptById.get(id)!.grade === 12).length >= 8, `seed ${seed} part I is not mostly grade 12`);
   for (const id of paper.short) assert.notEqual(shortValue(thptById.get(id)!), null, `${id} is not a short-answer number`);
   for (const q of paper.tf) {
     assert.ok(!/Chưa đủ|not enough/i.test(q.contextVi + q.contextEn), `${q.id} keeps the in-app instruction`);
     for (const s of q.statements) assert.ok(s.vi && s.en && s.whyVi && s.whyEn, `${q.id} statement incomplete`);
+    for (const s of q.statements) {
+      assert.ok(declared(q.contextVi, s.vi), `${q.id} uses a name the question never defines: ${s.vi}`);
+      assert.ok(declared(q.contextEn, s.en), `${q.id} (en) uses a name the question never defines: ${s.en}`);
+    }
   }
   assert.deepEqual(buildPaper(seed), paper, "same seed, same paper");
 
