@@ -194,6 +194,25 @@ const lop05: GradeDang[] = [
     mistake: b(R`Chia hiệu cho tổng số phần như bài tổng và tỉ.`, R`Dividing the difference by the total parts as in a sum-and-ratio problem.`),
     drill: { prompt: b(R`Hai số hơn kém nhau $12$ và số bé bằng $\frac{2}{5}$ số lớn. Số lớn bằng bao nhiêu?`, R`Two numbers differ by $12$ and the smaller is $\frac{2}{5}$ of the bigger. What is the bigger number?`), answer: b(R`Số lớn là $20$.`, R`The bigger number is $20$.`), checks: [{ expr: "12/3*5", expect: "20" }] },
   },
+  {
+    name: b(R`Đọc biểu đồ hình quạt`, R`Reading a pie chart`),
+    spot: b(R`Đề cho biểu đồ hình tròn chia thành các phần ghi phần trăm, rồi hỏi số lượng của một phần.`, R`The problem gives a circle chart split into percentage parts and asks for the amount in one part.`),
+    method: [
+      b(R`Cộng các phần trăm đã biết, rồi lấy $100\%$ trừ đi để tìm phần còn lại.`, R`Add the known percentages, then take them from $100\%$ to find the remaining part.`),
+      b(R`Số lượng của một phần bằng tổng nhân phần trăm của phần đó.`, R`The amount in a part is the total times the percentage of that part.`),
+    ],
+    example: {
+      prompt: b(R`Lớp có $40$ bạn. Biểu đồ cho $45\%$ thích bóng đá, $30\%$ thích bơi, còn lại thích cờ vua. Có bao nhiêu bạn thích cờ vua?`, R`A class has $40$ pupils. The chart shows $45\%$ like football, $30\%$ like swimming and the rest like chess. How many like chess?`),
+      steps: [
+        b(R`Cờ vua chiếm $100\%-45\%-30\%=25\%$.`, R`Chess takes $100\%-45\%-30\%=25\%$.`),
+        b(R`Số bạn là $40\times0{,}25=10$.`, R`The number of pupils is $40\times0.25=10$.`),
+      ],
+      ket: b(R`Vậy có $10$ bạn thích cờ vua.`, R`So $10$ pupils like chess.`),
+      checks: [{ expr: "100-45-30", expect: "25" }, { expr: "40*Rational(25,100)", expect: "10" }],
+    },
+    mistake: b(R`Quên rằng các phần cộng lại là $100\%$ nên bỏ sót phần còn lại.`, R`Forgetting that the parts add up to $100\%$ and missing the remaining part.`),
+    drill: { prompt: b(R`Có $200$ em, biểu đồ cho $15\%$ đi xe buýt. Bao nhiêu em đi xe buýt?`, R`There are $200$ pupils and the chart shows $15\%$ take the bus. How many take the bus?`), answer: b(R`Vậy có $30$ em đi xe buýt.`, R`So $30$ pupils take the bus.`), checks: [{ expr: "200*Rational(15,100)", expect: "30" }] },
+  },
 ];
 
 export default lop05;

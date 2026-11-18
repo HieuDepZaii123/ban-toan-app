@@ -194,6 +194,26 @@ const lop11: GradeDang[] = [
     mistake: b(R`Chỉ ra một đường vuông góc rồi kết luận đường thẳng vuông góc với mặt phẳng.`, R`Showing one perpendicular line and concluding the line is perpendicular to the plane.`),
     drill: { prompt: b(R`Hình chóp có đáy diện tích $12$ và chiều cao $5$. Tính thể tích.`, R`A pyramid has base area $12$ and height $5$. Find the volume.`), answer: b(R`Bằng $20$.`, R`It is $20$.`), checks: [{ expr: "Rational(1,3)*12*5", expect: "20" }] },
   },
+  {
+    name: b(R`Xác suất biến cố hợp và biến cố độc lập`, R`Probability of a union and of independent events`),
+    spot: b(R`Đề hỏi xác suất ít nhất một biến cố xảy ra, hoặc cả hai biến cố cùng xảy ra.`, R`The problem asks the probability that at least one event happens, or that both happen.`),
+    method: [
+      b(R`Biến cố hợp: $P(A\cup B)=P(A)+P(B)-P(A\cap B)$.`, R`Union: $P(A\cup B)=P(A)+P(B)-P(A\cap B)$.`),
+      b(R`Hai biến cố độc lập thì $P(A\cap B)=P(A)\cdot P(B)$.`, R`For independent events $P(A\cap B)=P(A)\cdot P(B)$.`),
+      b(R`Ít nhất một xảy ra bằng $1$ trừ xác suất không biến cố nào xảy ra.`, R`At least one happens equals $1$ minus the probability that none happens.`),
+    ],
+    example: {
+      prompt: b(R`Hai xạ thủ bắn độc lập, xác suất trúng của họ lần lượt là $0{,}8$ và $0{,}7$. Xác suất ít nhất một người trúng là bao nhiêu?`, R`Two shooters fire independently and hit with probabilities $0.8$ and $0.7$. What is the probability that at least one hits?`),
+      steps: [
+        b(R`Xác suất cả hai trượt: $0{,}2\cdot0{,}3=0{,}06$.`, R`Probability both miss: $0.2\cdot0.3=0.06$.`),
+        b(R`Xác suất ít nhất một người trúng: $1-0{,}06=0{,}94$.`, R`Probability at least one hits: $1-0.06=0.94$.`),
+      ],
+      ket: b(R`Xác suất là $0{,}94$.`, R`The probability is $0.94$.`),
+      checks: [{ expr: "1-Rational(2,10)*Rational(3,10)", expect: "Rational(47,50)" }],
+    },
+    mistake: b(R`Cộng $0{,}8+0{,}7$ mà quên trừ phần chung nên ra hơn $1$.`, R`Adding $0.8+0.7$ without subtracting the overlap and getting more than $1$.`),
+    drill: { prompt: b(R`Tung hai đồng xu cân đối độc lập. Xác suất cả hai ngửa là bao nhiêu?`, R`Toss two fair coins independently. What is the probability that both land tails?`), answer: b(R`Bằng $\frac{1}{4}$.`, R`It is $\frac{1}{4}$.`), checks: [{ expr: "Rational(1,2)*Rational(1,2)", expect: "Rational(1,4)" }] },
+  },
 ];
 
 export default lop11;

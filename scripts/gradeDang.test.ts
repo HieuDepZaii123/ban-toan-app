@@ -33,7 +33,7 @@ function bi(where: string, text: Bi, min = 12): void {
 let total = 0;
 for (let grade = 1; grade <= 12; grade += 1) {
   const list = dangByGrade[grade] ?? [];
-  if (list.length !== 10) fail(`lớp ${grade}`, `có ${list.length} dạng, cần đúng 10`);
+  if (list.length < 10 || list.length > 12) fail(`lớp ${grade}`, `có ${list.length} dạng, cần từ 10 đến 12`);
   const names = new Set<string>();
   list.forEach((d, i) => {
     total += 1;

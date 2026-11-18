@@ -195,6 +195,27 @@ const lop09: GradeDang[] = [
     mistake: b(R`Dùng đường kính thay cho bán kính.`, R`Using the diameter instead of the radius.`),
     drill: { prompt: b(R`Cung $90^\circ$ của đường tròn bán kính $8$ dài bao nhiêu?`, R`How long is a $90^\circ$ arc of a circle of radius $8$?`), answer: b(R`Dài $4\pi$.`, R`It is $4\pi$ long.`), checks: [{ expr: "pi*8*90/180", expect: "4*pi" }] },
   },
+  {
+    name: b(R`Không gian mẫu và xác suất bằng liệt kê`, R`Sample space and probability by listing`),
+    spot: b(R`Đề tung hai đồng xu, gieo hai xúc xắc hoặc chọn hai bạn rồi hỏi xác suất.`, R`The problem tosses two coins, rolls two dice or picks two pupils and asks for a probability.`),
+    method: [
+      b(R`Liệt kê không gian mẫu bằng bảng hoặc sơ đồ cây, coi thứ tự là khác nhau.`, R`List the sample space with a table or tree diagram, treating order as different.`),
+      b(R`Đếm các kết quả thuận lợi trong bảng.`, R`Count the favourable outcomes in the table.`),
+      b(R`Chia cho số phần tử của không gian mẫu.`, R`Divide by the number of elements of the sample space.`),
+    ],
+    example: {
+      prompt: b(R`Gieo hai xúc xắc cân đối. Xác suất tổng số chấm bằng $7$ là bao nhiêu?`, R`Roll two fair dice. What is the probability that the total number of dots is $7$?`),
+      steps: [
+        b(R`Không gian mẫu có $6\cdot6=36$ kết quả.`, R`The sample space has $6\cdot6=36$ outcomes.`),
+        b(R`Tổng $7$ có $(1;\ 6)$, $(2;\ 5)$, $(3;\ 4)$, $(4;\ 3)$, $(5;\ 2)$, $(6;\ 1)$, tức $6$ kết quả.`, R`A total of $7$ comes from $(1,\ 6)$, $(2,\ 5)$, $(3,\ 4)$, $(4,\ 3)$, $(5,\ 2)$, $(6,\ 1)$, that is $6$ outcomes.`),
+        b(R`Vậy $P=\frac{6}{36}=\frac{1}{6}$.`, R`So $P=\frac{6}{36}=\frac{1}{6}$.`),
+      ],
+      ket: b(R`Xác suất là $\frac{1}{6}$.`, R`The probability is $\frac{1}{6}$.`),
+      checks: [{ expr: "Rational(6,6*6)", expect: "Rational(1,6)" }],
+    },
+    mistake: b(R`Coi $(1;\ 6)$ và $(6;\ 1)$ là một kết quả nên đếm thiếu.`, R`Treating $(1,\ 6)$ and $(6,\ 1)$ as one outcome and undercounting.`),
+    drill: { prompt: b(R`Tung hai đồng xu cân đối. Xác suất được hai mặt giống nhau là bao nhiêu?`, R`Toss two fair coins. What is the probability that both faces match?`), answer: b(R`Bằng $\frac{1}{2}$.`, R`It is $\frac{1}{2}$.`), checks: [{ expr: "Rational(2,4)", expect: "Rational(1,2)" }] },
+  },
 ];
 
 export default lop09;

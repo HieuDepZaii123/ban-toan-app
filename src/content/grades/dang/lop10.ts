@@ -194,6 +194,27 @@ const lop10: GradeDang[] = [
     mistake: b(R`Dùng chỉnh hợp khi thứ tự không có ý nghĩa.`, R`Using arrangements when order does not matter.`),
     drill: { prompt: b(R`Có bao nhiêu cách xếp $5$ bạn thành một hàng?`, R`In how many ways can $5$ pupils line up?`), answer: b(R`Có $120$ cách.`, R`There are $120$ ways.`), checks: [{ expr: "factorial(5)", expect: "120" }] },
   },
+  {
+    name: b(R`Số trung bình, trung vị và phương sai của mẫu số liệu`, R`Mean, median and variance of a data set`),
+    spot: b(R`Đề cho một dãy số liệu và hỏi số trung bình, trung vị hoặc phương sai.`, R`The problem gives a list of data and asks for the mean, median or variance.`),
+    method: [
+      b(R`Sắp xếp số liệu từ bé đến lớn.`, R`Sort the data from smallest to largest.`),
+      b(R`Trung bình là tổng chia cho số số liệu; trung vị là số ở giữa, hoặc trung bình hai số giữa.`, R`The mean is the total divided by the count; the median is the middle value, or the mean of the two middle values.`),
+      b(R`Phương sai là trung bình của bình phương các độ lệch so với số trung bình.`, R`The variance is the mean of the squared deviations from the mean.`),
+    ],
+    example: {
+      prompt: b(R`Số liệu $2$, $4$, $4$, $6$, $9$. Tìm số trung bình, trung vị và phương sai.`, R`The data are $2$, $4$, $4$, $6$, $9$. Find the mean, the median and the variance.`),
+      steps: [
+        b(R`Số trung bình: $\frac{2+4+4+6+9}{5}=5$.`, R`Mean: $\frac{2+4+4+6+9}{5}=5$.`),
+        b(R`Trung vị là số ở giữa: $4$.`, R`The median is the middle value: $4$.`),
+        b(R`Phương sai: $\frac{9+1+1+1+16}{5}=\frac{28}{5}$.`, R`Variance: $\frac{9+1+1+1+16}{5}=\frac{28}{5}$.`),
+      ],
+      ket: b(R`Trung bình $5$, trung vị $4$, phương sai $\frac{28}{5}$.`, R`Mean $5$, median $4$, variance $\frac{28}{5}$.`),
+      checks: [{ expr: "Rational(2+4+4+6+9,5)", expect: "5" }, { expr: "Rational(9+1+1+1+16,5)", expect: "Rational(28,5)" }],
+    },
+    mistake: b(R`Tìm trung vị mà quên sắp xếp số liệu trước.`, R`Finding the median without sorting the data first.`),
+    drill: { prompt: b(R`Tìm trung vị của $3$, $9$, $5$, $7$.`, R`Find the median of $3$, $9$, $5$, $7$.`), answer: b(R`Sắp xếp được $3$, $5$, $7$, $9$ nên trung vị là $\frac{5+7}{2}=6$.`, R`Sorted: $3$, $5$, $7$, $9$, so the median is $\frac{5+7}{2}=6$.`), checks: [{ expr: "Rational(5+7,2)", expect: "6" }] },
+  },
 ];
 
 export default lop10;

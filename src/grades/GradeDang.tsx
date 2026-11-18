@@ -16,7 +16,7 @@ export function DangView({ book }: { book: GradeBook }) {
     <PageFrame
       kicker={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)}
       title={t(lang, "Dạng bài và phương pháp giải", "Problem types and solving methods")}
-      lead={t(lang, "Mười dạng bài thường gặp của lớp này. Nhận ra dạng trước, làm theo các bước, rồi tự luyện một bài.", "Ten common problem types for this grade. Recognise the type first, follow the steps, then try one yourself.")}
+      lead={t(lang, "Các dạng bài thường gặp của lớp này. Nhận ra dạng trước, làm theo các bước, rồi tự luyện một bài.", "Ten common problem types for this grade. Recognise the type first, follow the steps, then try one yourself.")}
     >
       <p><A href={`/kien-thuc/${book.grade}`}>{t(lang, `Về các bài lớp ${book.grade}`, `Back to grade ${book.grade} lessons`)}</A></p>
       {list.map((dang, index) => (

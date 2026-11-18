@@ -1704,13 +1704,13 @@
       "titleEn": "Column addition and subtraction with carrying",
       "blurb": "Lớp 2: viết thẳng hàng, làm từ hàng đơn vị, nhớ hoặc mượn đúng chỗ.",
       "spot": [
-        "Cộng hoặc trừ hai số có hai chữ số, trong đó hàng đơn vị cộng được hơn $10$ hoặc không đủ để trừ.",
+        "Cộng hoặc trừ hai số có hai chữ số. Hàng đơn vị cộng được hơn $10$, hoặc không đủ để trừ.",
         "Đề cho số tiền, số quả, số trang cần tính chính xác, không ước lượng."
       ],
       "thinking": [
         "Viết hai số thẳng hàng: đơn vị dưới đơn vị, chục dưới chục. Gạch ngang rồi làm từ phải sang trái.",
         "Cộng: nếu tổng hàng đơn vị từ $10$ trở lên, viết chữ số đơn vị và nhớ $1$ sang hàng chục.",
-        "Trừ: nếu hàng đơn vị không đủ trừ, mượn $1$ chục, tức thêm $10$ cho hàng đơn vị, và nhớ bớt $1$ ở hàng chục."
+        "Trừ: nếu hàng đơn vị không đủ trừ, mượn $1$ chục, tức thêm $10$ cho hàng đơn vị. Nhớ bớt $1$ ở hàng chục."
       ],
       "care": [
         "Số nhớ phải được cộng vào hàng chục, rất dễ quên.",

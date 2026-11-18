@@ -194,6 +194,27 @@ const lop08: GradeDang[] = [
     mistake: b(R`Dùng cạnh bên hoặc trung đoạn làm chiều cao.`, R`Using a lateral edge or slant height as the height.`),
     drill: { prompt: b(R`Hình thoi có hai đường chéo $10$ và $24$. Tính diện tích.`, R`A rhombus has diagonals $10$ and $24$. Find its area.`), answer: b(R`Bằng $120$.`, R`It is $120$.`), checks: [{ expr: "Rational(1,2)*10*24", expect: "120" }] },
   },
+  {
+    name: b(R`Xác suất của biến cố khi các kết quả đồng khả năng`, R`Probability of an event with equally likely outcomes`),
+    spot: b(R`Đề gieo xúc xắc, rút thẻ hoặc chọn ngẫu nhiên rồi hỏi xác suất của một biến cố.`, R`The problem rolls dice, draws cards or picks at random and asks for the probability of an event.`),
+    method: [
+      b(R`Đếm tổng số kết quả có thể và kiểm tra chúng có khả năng như nhau.`, R`Count all possible outcomes and check they are equally likely.`),
+      b(R`Đếm số kết quả thuận lợi cho biến cố.`, R`Count the outcomes favourable to the event.`),
+      b(R`Chia số kết quả thuận lợi cho tổng số kết quả có thể.`, R`Divide the favourable outcomes by all possible outcomes.`),
+    ],
+    example: {
+      prompt: b(R`Rút ngẫu nhiên một thẻ từ $20$ thẻ đánh số từ $1$ đến $20$. Xác suất rút được số chia hết cho $5$ là bao nhiêu?`, R`Draw one card at random from $20$ cards numbered $1$ to $20$. What is the probability of a number divisible by $5$?`),
+      steps: [
+        b(R`Có $20$ kết quả có thể, đồng khả năng.`, R`There are $20$ possible outcomes, all equally likely.`),
+        b(R`Các số chia hết cho $5$ là $5$, $10$, $15$, $20$, tức $4$ kết quả thuận lợi.`, R`The numbers divisible by $5$ are $5$, $10$, $15$, $20$, that is $4$ favourable outcomes.`),
+        b(R`Vậy $P=\frac{4}{20}=\frac{1}{5}$.`, R`So $P=\frac{4}{20}=\frac{1}{5}$.`),
+      ],
+      ket: b(R`Xác suất là $\frac{1}{5}$.`, R`The probability is $\frac{1}{5}$.`),
+      checks: [{ expr: "Rational(4,20)", expect: "Rational(1,5)" }],
+    },
+    mistake: b(R`Dùng công thức khi các kết quả không có khả năng như nhau.`, R`Using the formula when the outcomes are not equally likely.`),
+    drill: { prompt: b(R`Gieo một xúc xắc cân đối. Xác suất ra mặt có số chấm chẵn là bao nhiêu?`, R`Roll a fair die. What is the probability of an even number of dots?`), answer: b(R`Bằng $\frac{1}{2}$.`, R`It is $\frac{1}{2}$.`), checks: [{ expr: "Rational(3,6)", expect: "Rational(1,2)" }] },
+  },
 ];
 
 export default lop08;

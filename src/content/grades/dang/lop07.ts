@@ -194,6 +194,26 @@ const lop07: GradeDang[] = [
     mistake: b(R`Nhầm chiều cao tam giác đáy với chiều cao lăng trụ.`, R`Mixing up the height of the base triangle with the height of the prism.`),
     drill: { prompt: b(R`Hộp chữ nhật dài $5$, rộng $3$, cao $4$. Tính thể tích.`, R`A cuboid is $5$ long, $3$ wide and $4$ high. Find the volume.`), answer: b(R`Bằng $60$.`, R`It is $60$.`), checks: [{ expr: "5*3*4", expect: "60" }] },
   },
+  {
+    name: b(R`Tần số tương đối và so sánh hai nhóm`, R`Relative frequency and comparing two groups`),
+    spot: b(R`Đề cho số liệu của hai nhóm có tổng khác nhau rồi hỏi nhóm nào có tỉ lệ cao hơn.`, R`The problem gives data for two groups of different sizes and asks which has the higher rate.`),
+    method: [
+      b(R`Tần số tương đối bằng tần số chia cho tổng số liệu của nhóm đó.`, R`Relative frequency is the frequency divided by the total of that group.`),
+      b(R`So sánh các tần số tương đối, không so sánh các tần số.`, R`Compare the relative frequencies, not the frequencies.`),
+    ],
+    example: {
+      prompt: b(R`Lớp A có $9$ trong $30$ em đạt giỏi, lớp B có $12$ trong $50$ em đạt giỏi. Lớp nào có tỉ lệ giỏi cao hơn?`, R`Class A has $9$ of $30$ pupils with top marks, class B has $12$ of $50$. Which class has the higher rate?`),
+      steps: [
+        b(R`Lớp A: $\frac{9}{30}=0{,}3$.`, R`Class A: $\frac{9}{30}=0.3$.`),
+        b(R`Lớp B: $\frac{12}{50}=0{,}24$.`, R`Class B: $\frac{12}{50}=0.24$.`),
+        b(R`Vì $0{,}3>0{,}24$ nên lớp A cao hơn.`, R`Since $0.3>0.24$, class A is higher.`),
+      ],
+      ket: b(R`Lớp A có tỉ lệ giỏi cao hơn.`, R`Class A has the higher rate.`),
+      checks: [{ expr: "Rational(9,30)-Rational(12,50)", expect: "Rational(3,50)" }],
+    },
+    mistake: b(R`So sánh số em giỏi ($9$ và $12$) thay vì so sánh tỉ lệ.`, R`Comparing the numbers of pupils ($9$ and $12$) instead of the rates.`),
+    drill: { prompt: b(R`Trong $40$ số liệu, giá trị $7$ xuất hiện $10$ lần. Tần số tương đối của $7$ là bao nhiêu?`, R`Among $40$ data values, the value $7$ appears $10$ times. What is the relative frequency of $7$?`), answer: b(R`Bằng $\frac{1}{4}$, tức $25\%$.`, R`It is $\frac{1}{4}$, that is $25\%$.`), checks: [{ expr: "Rational(10,40)", expect: "Rational(1,4)" }] },
+  },
 ];
 
 export default lop07;

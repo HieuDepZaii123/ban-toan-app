@@ -1,7 +1,7 @@
 import { gradeTitle } from "../content/grades/titlesEn.ts";
 import { lessonInEnglish } from "../content/grades/en/index.ts";
 import { plainMath } from "../lib/plainMath.ts";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { cards } from "../content/cards.ts";
 import { gradeBooks, lessonAt, lessonsOf } from "../content/grades/index.ts";
 import type { GradeAsk, GradeBook, GradeDrill, GradeExample } from "../content/grades/types.ts";
@@ -16,6 +16,7 @@ import { useLang } from "../ui/useLang.ts";
 import { GradeFigure } from "./GradeFigure.tsx";
 import { DangView } from "./GradeDang.tsx";
 import { ThinkView } from "./GradeThink.tsx";
+const PathView = lazy(() => import("./GradePath.tsx").then((mod) => ({ default: mod.PathView })));
 import { LessonPicture } from "./LessonPicture.tsx";
 import { pictures } from "../content/grades/pictures.ts";
 import { GradeWidgetView } from "./GradeWidgets.tsx";
@@ -44,6 +45,7 @@ export function GradeDesk() {
   if (!parsed.lesson) return <GradeIndex book={book} />;
   if (parsed.lesson === "dang") return <DangView book={book} />;
   if (parsed.lesson === "tu-duy") return <ThinkView book={book} />;
+  if (parsed.lesson === "lo-trinh") return <Suspense fallback={<p className="loading">…</p>}><PathView book={book} /></Suspense>;
   const found = lessonAt(book.grade, parsed.lesson);
   if (!found) {
     return (
@@ -129,6 +131,7 @@ function GradeIndex({ book }: { book: GradeBook }) {
     <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={gradeTitle(lang, String(book.grade), book.title)}>
       <p><A href="/kien-thuc">{t(lang, "Tất cả các lớp", "All grades")}</A>{" · "}{book.grade <= 9 ? <A href={`/luyen-lop/${book.grade}`}>{t(lang, "Luyện nhanh lớp này", "Quick practice")}</A> : <A href="/luyen-thpt">{t(lang, "Luyện THPT", "Upper-secondary practice")}</A>}</p>
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
+      <p><A className="text-btn" href={`/kien-thuc/${book.grade}/lo-trinh`}>{t(lang, "Lộ trình lớp này: bài học, thí nghiệm, dạng bài, phương pháp, tư duy", "This grade's path: lessons, labs, problem types, methods, thinking")}</A></p>
       <p><A className="text-btn" href={`/kien-thuc/${book.grade}/dang`}>{t(lang, "Dạng bài và phương pháp giải", "Problem types and solving methods")}</A></p>
       <p><A className="text-btn" href={`/kien-thuc/${book.grade}/tu-duy`}>{t(lang, "Bài tập tư duy và sáng tạo", "Thinking and creative problems")}</A></p>
       {book.grade === 12 ? (
