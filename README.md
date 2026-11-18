@@ -10,6 +10,8 @@ Mỗi tờ có tab thứ tư, **Nghiên cứu**: hai bài dẫn dắt. Học sin
 
 Mỗi tờ có một ảnh động ngắn ngay trên thẻ và ở đầu tab Học: đỉnh parabol trượt, tia nghiệm đổi chiều, mũ với log, dãy co về 0, đường tròn đơn vị, lỗ hổng của giới hạn, cát tuyến thành tiếp tuyến, bậc ba với dấu đạo hàm, hình chữ nhật Riemann, cộng vectơ, khoảng cách tới đường thẳng, tam giác đồng dạng, sáu cách xếp ba vật, và histogram hai xúc xắc. Ảnh vẽ bằng canvas, mỗi tờ một tệp riêng, chỉ tải khi thẻ hoặc trang Học đi vào khung nhìn, và dừng khi ra khỏi màn hình. Trên máy có chuột, thẻ chạy khi rê vào; trên cảm ứng thì chạy khi hiện. Nếu máy xin giảm chuyển động, ảnh giữ một khung đứng.
 
+Hướng dẫn cho agent lập trình (chạy, điều khiển giao diện, sửa nội dung): xem [AGENTS.md](AGENTS.md).
+
 ## Chạy
 
 ```bash

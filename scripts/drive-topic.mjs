@@ -1,8 +1,15 @@
 // Smoke driver for Bàn Toán: opens a topic's "Suy từ số 0" figures, drives one slider, screenshots, checks console errors.
-// Usage: node .claude/skills/run-ban-toan/driver.mjs [topicId=trig] [lang=vi|en] [outDir=/tmp/ban-toan-shots]
+// Usage: npm run drive -- [topicId=trig] [lang=vi|en] [outDir=/tmp/ban-toan-shots]
+// Needs the dev server (npm run dev) and Playwright with Chromium. BASE_URL overrides http://127.0.0.1:43123.
 import { createRequire } from "node:module";
 import { mkdirSync } from "node:fs";
-const { chromium } = createRequire(import.meta.url)("playwright");
+let chromium;
+try {
+  ({ chromium } = createRequire(import.meta.url)("playwright"));
+} catch {
+  console.error("Playwright is missing. Install it with: npm i -D playwright && npx playwright install chromium");
+  process.exit(2);
+}
 const [topic = "trig", lang = "vi", out = "/tmp/ban-toan-shots"] = process.argv.slice(2);
 const base = process.env.BASE_URL ?? "http://127.0.0.1:43123";
 mkdirSync(out, { recursive: true });

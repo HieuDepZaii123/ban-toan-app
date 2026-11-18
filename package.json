@@ -21,7 +21,9 @@
     "free-llm:sync": "tsx scripts/sync-free-llm.ts",
     "db:migrate": "tsx scripts/db.ts migrate",
     "db:status": "tsx scripts/db.ts status",
-    "db:copy-sqlite": "tsx scripts/db.ts copy-sqlite"
+    "db:copy-sqlite": "tsx scripts/db.ts copy-sqlite",
+    "drive": "node scripts/drive-topic.mjs",
+    "check:prose": "tsx scripts/prose-guard.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.104",
