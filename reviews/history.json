@@ -8,5 +8,10 @@
     "id": "2026-11-19-b",
     "note": "Vòng 10 vai sau vòng sửa lỗi, trước các nền móng.",
     "scores": { "gv12": 7, "hs12": 6, "thcs": 7, "lecturer": 7, "a11y": 6, "mobile": 7, "katex": 6, "creative": 5, "qa": 6, "pm": 5 }
+  },
+  {
+    "id": "2026-11-19-c",
+    "note": "Vòng 10 vai trùng sau bốn nền móng (chương trình trục, ký hiệu lab, điều hướng, cổng chất lượng).",
+    "scores": { "gv12": 7, "hs12": 4, "thcs": 7, "lecturer": 7, "a11y": 7, "mobile": 6, "katex": 7, "creative": 4, "qa": 7, "pm": 5 }
   }
 ]
