@@ -69,7 +69,7 @@ for (const id of TOPICS) {
       style(`${at} gợi ý vi`, c.hint.vi, false);
       style(`${at} gợi ý en`, c.hint.en, true);
     }
-    if (c.level !== undefined && ![1, 2, 3].includes(c.level)) fail(at, "mức độ sai");
+    if (![1, 2, 3].includes(c.level ?? 0)) fail(at, "thiếu mức độ Dễ/Vừa/Khó");
     if (c.guess) {
       style(`${at} đoán vi`, c.guess.vi, false);
       style(`${at} đoán en`, c.guess.en, true);

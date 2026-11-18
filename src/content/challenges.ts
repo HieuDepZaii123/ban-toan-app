@@ -60,6 +60,7 @@ export const near = (a: number, b: number, tol = 1e-6) => Math.abs(a - b) <= tol
 const quadratic: Challenge[] = [
   {
     id: "q-down-two",
+    level: 1,
     vi: "Chỉnh $a$, $b$, $c$ để parabol bề lõm xuống và cắt trục $Ox$ tại hai điểm phân biệt.",
     en: "Set $a$, $b$ and $c$ so the parabola opens downward and crosses the $Ox$ axis at two different points.",
     set: { scene: 0, a: 1, b: -2, c: -3 },
@@ -85,6 +86,7 @@ const quadratic: Challenge[] = [
   },
   {
     id: "q-vertex",
+    level: 2,
     vi: "Đặt đỉnh parabol tại $(2;\\ 1)$ và để bề lõm hướng xuống.",
     en: "Put the vertex of the parabola at $(2,\\ 1)$ and make it open downward.",
     set: { scene: 0, a: 1, b: -2, c: -3 },
@@ -106,6 +108,7 @@ const quadratic: Challenge[] = [
   },
   {
     id: "q-vertex-form",
+    level: 2,
     vi: "Ở dạng đỉnh, đưa đỉnh về $(-2;\\ 3)$ và chọn $a$ để parabol vẫn cắt $Ox$.",
     en: "In vertex form, move the vertex to $(-2,\\ 3)$ and choose $a$ so the parabola still crosses $Ox$.",
     set: { scene: 1, va: 1, vh: 1, vk: -4 },
@@ -122,6 +125,7 @@ const quadratic: Challenge[] = [
   },
   {
     id: "q-fence",
+    level: 2,
     vi: "Tìm $x$ để diện tích chuồng $S=x(40-2x)$ lớn nhất.",
     en: "Find $x$ that makes the area $S=x(40-2x)$ of the pen as large as possible.",
     set: { scene: 2, fence: 3 },
@@ -140,6 +144,7 @@ const quadratic: Challenge[] = [
 const ineq: Challenge[] = [
   {
     id: "i-equal",
+    level: 1,
     vi: "Chọn $a$ và $b$ dương để trung bình cộng bằng trung bình nhân.",
     en: "Choose positive $a$ and $b$ so the arithmetic mean equals the geometric mean.",
     set: { scene: 0, a: 4, b: 9 },
@@ -165,6 +170,7 @@ const ineq: Challenge[] = [
   },
   {
     id: "i-sum10",
+    level: 2,
     vi: "Giữ $a+b=10$ và làm tích $ab$ lớn nhất.",
     en: "Keep $a+b=10$ and make the product $ab$ as large as possible.",
     set: { scene: 0, a: 2, b: 8 },
@@ -181,6 +187,7 @@ const ineq: Challenge[] = [
   },
   {
     id: "i-cauchy",
+    level: 3,
     vi: "Chọn bốn số để bất đẳng thức Bu-nhi-a-cốp-xki xảy ra dấu bằng, với mỗi cặp không đồng thời bằng $0$.",
     en: "Choose four numbers so the Cauchy-Schwarz inequality becomes an equality, with neither pair both zero.",
     set: { scene: 1, p: 1, q: 2, c: 3, d: 4 },
@@ -200,6 +207,7 @@ const ineq: Challenge[] = [
   },
   {
     id: "i-workshop-max",
+    level: 2,
     vi: "Tìm $(x;\\ y)$ trong miền cho lợi nhuận $P=5x+3y$ lớn nhất.",
     en: "Find $(x,\\ y)$ inside the region that gives the largest profit $P=5x+3y$.",
     set: { scene: 2, x: 2, y: 2 },
@@ -216,6 +224,7 @@ const ineq: Challenge[] = [
   },
   {
     id: "i-workshop-out",
+    level: 3,
     vi: "Tìm một điểm ngoài miền mà $P$ lớn hơn $42$; lời báo sẽ cho thấy vì sao điểm đó không dùng được.",
     en: "Find a point outside the region with $P$ above $42$; the feedback will show why it cannot be used.",
     set: { scene: 2, x: 2, y: 2 },
@@ -235,6 +244,7 @@ const ineq: Challenge[] = [
 const exp: Challenge[] = [
   {
     id: "e-decreasing",
+    level: 1,
     vi: "Chọn cơ số $a$ hợp lệ để hàm $y=a^x$ nghịch biến.",
     en: "Choose a valid base $a$ so that $y=a^x$ is decreasing.",
     set: { scene: 0, base: 2, x: 2 },
@@ -258,6 +268,7 @@ const exp: Challenge[] = [
   },
   {
     id: "e-eight",
+    level: 1,
     vi: "Chọn $a$ và $x$ để $a^x=8$.",
     en: "Choose $a$ and $x$ so that $a^x=8$.",
     set: { scene: 0, base: 3, x: 1 },
@@ -276,6 +287,7 @@ const exp: Challenge[] = [
   },
   {
     id: "e-double",
+    level: 2,
     vi: "Chọn lãi suất và số năm (không quá $8$ năm) để $10$ triệu lãi kép tăng gấp đôi.",
     en: "Choose a rate and a number of years (at most $8$) so that $10$ million at compound interest doubles.",
     set: { scene: 1, rate: 5, years: 4 },
@@ -294,6 +306,7 @@ const exp: Challenge[] = [
   },
   {
     id: "e-halflife",
+    level: 2,
     vi: "Chất phóng xạ nặng $80$ g, chu kỳ bán rã $10$ năm. Tìm $t$ để còn đúng $10$ g.",
     en: "A radioactive sample weighs $80$ g with a half-life of $10$ years. Find $t$ so exactly $10$ g remain.",
     set: { scene: 2, massTime: 5 },
@@ -312,6 +325,7 @@ const exp: Challenge[] = [
 const sequence: Challenge[] = [
   {
     id: "s-term",
+    level: 1,
     vi: "Cấp số cộng có công sai dương: chọn $u_1$, $d$, $n$ để số hạng thứ $n$ bằng $25$.",
     en: "For an arithmetic sequence with a positive common difference, choose $u_1$, $d$ and $n$ so the $n$th term equals $25$.",
     set: { scene: 0, u1: 3, d: 4, n: 3 },
@@ -330,6 +344,7 @@ const sequence: Challenge[] = [
   },
   {
     id: "s-sum",
+    level: 2,
     vi: "Chọn $u_1$, $d$, $n$ để tổng $n$ số hạng đầu bằng $100$.",
     en: "Choose $u_1$, $d$ and $n$ so the sum of the first $n$ terms is $100$.",
     set: { scene: 0, u1: 3, d: 4, n: 10 },
@@ -345,6 +360,7 @@ const sequence: Challenge[] = [
   },
   {
     id: "s-geom",
+    level: 2,
     vi: "Cấp số nhân lùi vô hạn: chọn $u_1$ và $q$ để tổng $S=\\frac{u_1}{1-q}$ bằng $12$.",
     en: "Infinite geometric series: choose $u_1$ and $q$ so the sum $S=\\frac{u_1}{1-q}$ equals $12$.",
     set: { scene: 1, g1: 3, q: 0.5, gn: 6 },
@@ -363,6 +379,7 @@ const sequence: Challenge[] = [
   },
   {
     id: "s-bounce",
+    level: 3,
     vi: "Quả bóng nảy lên bằng một nửa độ cao trước. Chọn độ cao thả và tỉ số để quãng đường tổng cộng đúng $24$ m.",
     en: "A ball rebounds to half its previous height. Choose the drop height and ratio so the total path is exactly $24$ m.",
     set: { scene: 2, drop: 4, ratio: 0.5, months: 12 },
@@ -381,6 +398,7 @@ const sequence: Challenge[] = [
 const trig: Challenge[] = [
   {
     id: "t-sin-half",
+    level: 1,
     vi: "Tìm góc có $\\sin\\alpha=\\frac{1}{2}$ nằm ở góc phần tư thứ hai.",
     en: "Find the angle with $\\sin\\alpha=\\frac{1}{2}$ in the second quadrant.",
     set: { scene: 0, angle: 30 },
@@ -397,6 +415,7 @@ const trig: Challenge[] = [
   },
   {
     id: "t-sin-cos",
+    level: 2,
     vi: "Tìm góc để $\\sin\\alpha=\\cos\\alpha$.",
     en: "Find an angle where $\\sin\\alpha=\\cos\\alpha$.",
     set: { scene: 0, angle: 100 },
@@ -417,6 +436,7 @@ const trig: Challenge[] = [
   },
   {
     id: "t-tree",
+    level: 2,
     vi: "Chọn khoảng cách và góc ngẩng để cây cao khoảng $21{,}5$ m (mắt cao $1{,}5$ m).",
     en: "Choose a distance and an angle so the tree is about $21.5$ m tall (eye height $1.5$ m).",
     set: { scene: 1, distance: 20, tilt: 30 },
@@ -435,6 +455,7 @@ const trig: Challenge[] = [
 const limit: Challenge[] = [
   {
     id: "l-fill-hole",
+    level: 1,
     vi: "Chọn $f(1)$ để hàm liên tục tại $x=1$.",
     en: "Choose $f(1)$ so the function is continuous at $x=1$.",
     set: { scene: 0, h: 1, assigned: 5 },
@@ -448,6 +469,7 @@ const limit: Challenge[] = [
   },
   {
     id: "l-limit-not-cont",
+    level: 2,
     vi: "Chọn giá trị trái, phải và $f(0)$ để giới hạn tại $0$ tồn tại nhưng hàm không liên tục.",
     en: "Choose the left value, the right value and $f(0)$ so the limit at $0$ exists but the function is not continuous.",
     set: { scene: 1, left: -1, right: 1, at: 0 },
@@ -466,6 +488,7 @@ const limit: Challenge[] = [
   },
   {
     id: "l-continuous",
+    level: 1,
     vi: "Chọn lại ba giá trị để hàm liên tục tại $0$.",
     en: "Choose the three values again so the function is continuous at $0$.",
     set: { scene: 1, left: 1, right: 1, at: 2 },
@@ -484,6 +507,7 @@ const limit: Challenge[] = [
   },
   {
     id: "l-tea",
+    level: 2,
     vi: "Tìm $t$ để trà nguội xuống dưới $30^\\circ\\mathrm{C}$ (nhiệt độ phòng $25^\\circ\\mathrm{C}$).",
     en: "Find $t$ so the tea cools below $30^\\circ\\mathrm{C}$ (room temperature $25^\\circ\\mathrm{C}$).",
     set: { scene: 2, time: 0 },
@@ -502,6 +526,7 @@ const limit: Challenge[] = [
 const derivative: Challenge[] = [
   {
     id: "d-secant",
+    level: 1,
     vi: "Chọn $h\\ne0$ nhỏ để hệ số góc cát tuyến lệch hệ số góc tiếp tuyến ($2$) dưới $0{,}1$.",
     en: "Choose a small $h\\ne0$ so the secant slope is within $0.1$ of the tangent slope ($2$).",
     set: { scene: 0, h: 1 },
@@ -520,6 +545,7 @@ const derivative: Challenge[] = [
   },
   {
     id: "d-apex",
+    level: 1,
     vi: "Ném vật lên với $v_0=20$ m/s. Chọn $t$ để vận tốc bằng $0$.",
     en: "A ball is thrown up at $v_0=20$ m/s. Choose $t$ so the velocity is $0$.",
     set: { scene: 1, v0: 20, time: 0 },
@@ -542,6 +568,7 @@ const derivative: Challenge[] = [
   },
   {
     id: "d-rising",
+    level: 2,
     vi: "Chọn $v_0$ và $t$ để vật cao $15$ m và vẫn đang bay lên.",
     en: "Choose $v_0$ and $t$ so the ball is $15$ m high and still rising.",
     set: { scene: 1, v0: 20, time: 0 },
@@ -560,6 +587,7 @@ const derivative: Challenge[] = [
   },
   {
     id: "d-brake",
+    level: 2,
     vi: "Xe phanh từ $20$ m/s. Tìm $t$ để xe đã đi được khoảng $40$ m.",
     en: "A car brakes from $20$ m/s. Find $t$ so it has travelled about $40$ m.",
     set: { scene: 2, brake: 0 },
@@ -578,6 +606,7 @@ const derivative: Challenge[] = [
 const survey: Challenge[] = [
   {
     id: "v-max",
+    level: 2,
     vi: "Đưa $x$ tới điểm cực đại của $y=x^3-3x$.",
     en: "Move $x$ to the local maximum of $y=x^3-3x$.",
     set: { scene: 0, x: 0 },
@@ -601,6 +630,7 @@ const survey: Challenge[] = [
   },
   {
     id: "v-inflection",
+    level: 2,
     vi: "Tìm điểm uốn của $y=x^3-3x$, nơi $y''=0$.",
     en: "Find the inflection point of $y=x^3-3x$, where $y''=0$.",
     set: { scene: 0, x: 1.5 },
@@ -614,6 +644,7 @@ const survey: Challenge[] = [
   },
   {
     id: "v-not-extremum",
+    level: 3,
     vi: "Với $y=x^3$, tìm $x$ có $y'=0$ nhưng không phải cực trị.",
     en: "For $y=x^3$, find $x$ with $y'=0$ that is not an extremum.",
     set: { scene: 2, px: 1 },
@@ -630,6 +661,7 @@ const survey: Challenge[] = [
 const integral: Challenge[] = [
   {
     id: "g-riemann",
+    level: 2,
     vi: "Với $b=2$, chọn số dải $n$ để tổng hình chữ nhật chỉ lệch diện tích đúng $\\frac{4}{3}$ chưa tới $0{,}02$.",
     en: "With $b=2$, choose the number of strips $n$ so the rectangle sum is within $0.02$ of the exact area $\\frac{4}{3}$.",
     set: { scene: 0, upper: 2, strips: 1 },
@@ -648,6 +680,7 @@ const integral: Challenge[] = [
   },
   {
     id: "g-area-exact",
+    level: 2,
     vi: "Chọn cận $b$ để $\\int_0^b(2x-x^2)\\,dx=\\frac{9}{8}$.",
     en: "Choose the bound $b$ so that $\\int_0^b(2x-x^2)\\,dx=\\frac{9}{8}$.",
     set: { scene: 0, upper: 1 },
@@ -663,6 +696,7 @@ const integral: Challenge[] = [
   },
   {
     id: "g-between",
+    level: 3,
     vi: "Chọn $b$ để diện tích giữa $y=x$ và $y=x^2$ đạt giá trị lớn nhất (bằng $\\frac{1}{6}$).",
     en: "Choose $b$ so the area between $y=x$ and $y=x^2$ is as large as possible (the largest value is $\\frac{1}{6}$).",
     set: { scene: 1, gap: 0.5 },
@@ -678,6 +712,7 @@ const integral: Challenge[] = [
   },
   {
     id: "g-volume",
+    level: 3,
     vi: "Chọn $b$ để tích phân $\\int_0^b y^2\\,dx$ bằng $\\frac{16}{15}$ (thể tích quay $\\frac{16\\pi}{15}$).",
     en: "Choose $b$ so that $\\int_0^b y^2\\,dx=\\frac{16}{15}$ (the solid of revolution has volume $\\frac{16\\pi}{15}$).",
     set: { scene: 2, span: 1 },
@@ -696,6 +731,7 @@ const integral: Challenge[] = [
 const probability: Challenge[] = [
   {
     id: "p-bayes-up",
+    level: 2,
     vi: "Với độ nhạy $99\\%$ và dương giả $5\\%$, chọn tỉ lệ bệnh để người dương tính thật sự bệnh với xác suất trên $50\\%$.",
     en: "With sensitivity $99\\%$ and false positives $5\\%$, choose the prevalence so a positive person is actually sick with probability above $50\\%$.",
     set: { scene: 1, prev: 1, sens: 99, fpr: 5 },
@@ -721,6 +757,7 @@ const probability: Challenge[] = [
   },
   {
     id: "p-bayes-fpr",
+    level: 3,
     vi: "Giữ tỉ lệ bệnh $1\\%$ và độ nhạy $99\\%$; hạ tỉ lệ dương giả để xác suất bệnh khi dương tính đạt ít nhất $50\\%$.",
     en: "Keep prevalence $1\\%$ and sensitivity $99\\%$; lower the false-positive rate so a positive is sick with probability at least $50\\%$.",
     set: { scene: 1, prev: 1, sens: 99, fpr: 10 },
@@ -739,6 +776,7 @@ const probability: Challenge[] = [
   },
   {
     id: "p-binom",
+    level: 2,
     vi: "Chọn $n$, $k$, $p$ để xác suất đúng $k$ lần thành công trong $n$ lần bằng $\\frac{5}{16}$.",
     en: "Choose $n$, $k$ and $p$ so the probability of exactly $k$ successes in $n$ trials equals $\\frac{5}{16}$.",
     set: { scene: 2, n: 3, k: 2, p: 0.5 },
@@ -757,6 +795,7 @@ const probability: Challenge[] = [
 const vector: Challenge[] = [
   {
     id: "w-perp",
+    level: 1,
     vi: "Chọn $\\vec u$ và $\\vec v$ khác $\\vec 0$ sao cho hai vectơ vuông góc.",
     en: "Choose nonzero $\\vec u$ and $\\vec v$ that are perpendicular.",
     set: { scene: 0, ux: 2, uy: 1, uz: 2, vx: 1, vy: -1, vz: 2 },
@@ -784,6 +823,7 @@ const vector: Challenge[] = [
   },
   {
     id: "w-singular",
+    level: 2,
     vi: "Chọn ma trận $2\\times2$ khác ma trận không có định thức bằng $0$.",
     en: "Choose a nonzero $2\\times2$ matrix with determinant $0$.",
     set: { scene: 1, m11: 2, m12: 1, m21: 1, m22: -1 },
@@ -802,6 +842,7 @@ const vector: Challenge[] = [
   },
   {
     id: "w-system",
+    level: 2,
     vi: "Chọn các hệ số để hệ phương trình có nghiệm duy nhất $(x;\\ y)=(1;\\ 2)$.",
     en: "Choose the coefficients so the system has the single solution $(x,\\ y)=(1,\\ 2)$.",
     set: { scene: 2, s11: 2, s12: 1, t1: 5, s21: 1, s22: -1, t2: 1 },
@@ -823,6 +864,7 @@ const vector: Challenge[] = [
 const analytic: Challenge[] = [
   {
     id: "n-on-line",
+    level: 1,
     vi: "Đặt điểm $P$ nằm trên đường thẳng $x+y-2=0$.",
     en: "Place the point $P$ on the line $x+y-2=0$.",
     set: { scene: 0, a: 1, b: 1, c: -2, px: 3, py: 1 },
@@ -841,6 +883,7 @@ const analytic: Challenge[] = [
   },
   {
     id: "n-dist-sqrt2",
+    level: 2,
     vi: "Đặt $P$ để khoảng cách tới đường thẳng $x+y-2=0$ bằng $\\sqrt{2}$.",
     en: "Place $P$ so its distance to the line $x+y-2=0$ is $\\sqrt{2}$.",
     set: { scene: 0, a: 1, b: 1, c: -2, px: 1, py: 1 },
@@ -859,6 +902,7 @@ const analytic: Challenge[] = [
   },
   {
     id: "n-plane",
+    level: 2,
     vi: "Đặt điểm $Q$ nằm trên mặt phẳng $x+y+z-6=0$.",
     en: "Place the point $Q$ on the plane $x+y+z-6=0$.",
     set: { scene: 1, pa: 1, pb: 1, pc: 1, pd: -6, qx: 1, qy: 1, qz: 1 },
@@ -877,6 +921,7 @@ const analytic: Challenge[] = [
   },
   {
     id: "n-circle",
+    level: 2,
     vi: "Chỉnh bán kính để điểm $(6;\\ 0)$ nằm đúng trên đường tròn tâm $O$.",
     en: "Adjust the radius so the point $(6,\\ 0)$ lies exactly on the circle centred at $O$.",
     set: { scene: 2, radius: 5 },
@@ -895,6 +940,7 @@ const analytic: Challenge[] = [
 const triangle: Challenge[] = [
   {
     id: "h-tri",
+    level: 1,
     vi: "Chọn đáy và chiều cao để tam giác có diện tích $24$.",
     en: "Choose the base and height so the triangle has area $24$.",
     set: { scene: 0, base: 6, tall: 4 },
@@ -910,6 +956,7 @@ const triangle: Challenge[] = [
   },
   {
     id: "h-box",
+    level: 1,
     vi: "Chọn ba cạnh để hình hộp chữ nhật có thể tích $48$.",
     en: "Choose three edges so the box has volume $48$.",
     set: { scene: 1, len: 2, wid: 2, ht: 2 },
@@ -925,6 +972,7 @@ const triangle: Challenge[] = [
   },
   {
     id: "h-pyramid",
+    level: 2,
     vi: "Chọn cạnh đáy và chiều cao để khối chóp đáy vuông có thể tích $24$.",
     en: "Choose the base edge and the height so the square pyramid has volume $24$.",
     set: { scene: 2, side: 6, ph: 4 },
@@ -947,6 +995,7 @@ const triangle: Challenge[] = [
   },
   {
     id: "h-tetra",
+    level: 2,
     vi: "Chọn cạnh $a$ để tứ diện đều có thể tích $18\\sqrt{2}$.",
     en: "Choose the edge $a$ so the regular tetrahedron has volume $18\\sqrt{2}$.",
     set: { scene: 3, edge: 4 },
@@ -965,6 +1014,7 @@ const triangle: Challenge[] = [
 const combo: Challenge[] = [
   {
     id: "c-ac",
+    level: 2,
     vi: "Chọn $n$ và $k$ để $C_n^k=10$ và $A_n^k=20$ cùng lúc.",
     en: "Choose $n$ and $k$ so that $C_n^k=10$ and $A_n^k=20$ at the same time.",
     set: { scene: 0, n: 4, k: 2 },
@@ -984,6 +1034,7 @@ const combo: Challenge[] = [
   },
   {
     id: "c-middle",
+    level: 2,
     vi: "Với $n=6$, chọn $k$ để $C_6^k$ lớn nhất.",
     en: "With $n=6$, choose $k$ so that $C_6^k$ is the largest.",
     set: { scene: 0, n: 6, k: 1 },
@@ -1009,6 +1060,7 @@ const combo: Challenge[] = [
   },
   {
     id: "c-outlier",
+    level: 2,
     vi: "Giữ trung vị bằng $4$ nhưng kéo trung bình lên ít nhất $6$ bằng điểm lệch.",
     en: "Keep the median at $4$ but pull the mean up to at least $6$ with the outlier.",
     set: { scene: 2, outlier: 6 },

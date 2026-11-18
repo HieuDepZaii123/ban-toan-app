@@ -80,6 +80,10 @@ export function TopicDesk({ id }: { id: string }) {
     if (topic) setLast(topic.id);
   }, [topic]);
 
+  useEffect(() => {
+    document.querySelector(".topic-bar .tab[aria-current=page]")?.scrollIntoView({ inline: "center", block: "nearest" });
+  }, [tab, topic?.id]);
+
   const shared = new URLSearchParams(search).get("p");
   const appliedShare = useRef("");
   useEffect(() => {

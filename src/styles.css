@@ -1821,3 +1821,6 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
   .topic-bar .tab { padding: 0 6px; font-size: 0.9rem; }
   .topic-bar .tabs { -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); }
 }
+.think-draft { display: grid; gap: 4px; font-size: 0.9rem; color: var(--ink-soft); }
+.think-draft textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--ink); font: inherit; resize: vertical; }
+.read-switch button:disabled { opacity: 0.5; cursor: not-allowed; }
