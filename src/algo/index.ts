@@ -966,3 +966,28 @@ export function expSlopeRatio(a: number, x: number, h = 1e-5): number {
 export function logRulerPosition(v: number): number {
   return Math.log10(v);
 }
+
+/** Các tổng riêng S_1..S_n của cấp số nhân u1, u1·q, u1·q², ...: dồn về u1/(1−q) khi |q| < 1. */
+export function geometricPartials(u1: number, q: number, n: number): number[] {
+  const out: number[] = [];
+  let term = u1;
+  let sum = 0;
+  for (let i = 0; i < n; i++) {
+    sum += term;
+    out.push(sum);
+    term *= q;
+  }
+  return out;
+}
+
+/** Góc nghiêng (rad) của n quân domino ở thời điểm t: quân i bắt đầu đổ sau i·delay, đổ hết trong `fall`; quân sau chỉ đổ khi quân trước đã chạm. */
+export function dominoAngles(n: number, t: number, delay = 0.6, fall = 0.8, maxAngle = 1.35): number[] {
+  return Array.from({ length: n }, (_, i) => maxAngle * Math.min(1, Math.max(0, (t - i * delay) / fall)));
+}
+
+/** Tổng cấp số cộng bằng cách ghép cặp: các cột u_i + u_{n+1−i} đều bằng u1 + un. */
+export function gaussPairs(u1: number, d: number, n: number): { top: number[]; bottom: number[]; sums: number[] } {
+  const top = Array.from({ length: n }, (_, i) => u1 + i * d);
+  const bottom = [...top].reverse();
+  return { top, bottom, sums: top.map((v, i) => v + (bottom[i] as number)) };
+}

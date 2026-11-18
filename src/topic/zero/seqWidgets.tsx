@@ -23,7 +23,7 @@ export function ArithSumLab() {
     <Stage
       title={tt("Tổng cấp số cộng: ghép hai hàng thành hình chữ nhật (mẹo của Gauss)", "Sum of an arithmetic sequence: two rows make a rectangle (Gauss's trick)")}
       story={tt(
-        R`Vẽ các số hạng thành các cột, cao dần đều. Lấy một bản sao, lật ngược, ghép vào bên cạnh: cột nào cũng có tổng chiều cao $u_1+u_n$, vì cột này hơn cột trước $d$ thì cột kia kém đúng $d$. Hai hàng ghép thành hình chữ nhật $n$ cột, cao $u_1+u_n$. Hình chữ nhật chứa hai lần tổng, nên $S_n=\frac{n(u_1+u_n)}{2}$.`,
+        R`Vẽ các số hạng thành các cột cao dần đều. Lấy một bản sao, lật ngược rồi ghép vào bên cạnh: cột nào cũng có tổng chiều cao $u_1+u_n$, vì cột này hơn cột trước $d$ thì cột kia kém đúng $d$. Hai hàng ghép thành hình chữ nhật $n$ cột, cao $u_1+u_n$. Hình chữ nhật chứa hai lần tổng, nên $S_n=\frac{n(u_1+u_n)}{2}$.`,
         R`Draw the terms as columns rising evenly. Take a copy, flip it upside down and join it alongside: every column has total height $u_1+u_n$, because where one column gains $d$ over the previous one the other loses exactly $d$. The two rows form a rectangle of $n$ columns and height $u_1+u_n$. The rectangle holds twice the sum, so $S_n=\frac{n(u_1+u_n)}{2}$.`,
       )}
       read={tt(
@@ -81,7 +81,7 @@ export function ArithGeoLab() {
     <Stage
       title={tt("Cộng đều hay nhân đều: cuộc đua của hai dãy", "Adding steadily or multiplying steadily: a race between two sequences")}
       story={tt(
-        R`Dãy cộng đều (cấp số cộng) mỗi bước thêm cùng một lượng $d$; dãy nhân đều (cấp số nhân) mỗi bước nhân cùng một hệ số $q$. Lúc đầu dãy cộng có thể dẫn trước, nhưng chỉ cần $q>1$ thì dãy nhân sớm muộn vượt lên và bỏ xa. Máy tìm chỗ vượt. Bật thang logarit: dãy nhân biến thành đường thẳng vì $\log(q^{n-1})=(n-1)\log q$ là hàm bậc nhất của $n$.`,
+        R`Dãy cộng đều (cấp số cộng) mỗi bước thêm cùng một lượng $d$; dãy nhân đều (cấp số nhân) mỗi bước nhân cùng một hệ số $q$. Lúc đầu dãy cộng có thể dẫn trước, nhưng chỉ cần $q>1$ thì sớm muộn dãy nhân sẽ vượt lên và bỏ xa. Máy tự tìm chỗ vượt. Bật thang logarit: dãy nhân biến thành đường thẳng vì $\log(q^{n-1})=(n-1)\log q$ là hàm bậc nhất của $n$.`,
         R`The arithmetic sequence adds the same amount $d$ at each step; the geometric sequence multiplies by the same factor $q$. At first the arithmetic one may lead, but as soon as $q>1$ the geometric one sooner or later overtakes and runs away. The machine finds the crossing. Switch on the logarithmic scale: the geometric sequence becomes a straight line because $\log(q^{n-1})=(n-1)\log q$ is a linear function of $n$.`,
       )}
       read={tt(
@@ -143,7 +143,7 @@ export function CobwebLab() {
     <Stage
       title={tt("Dãy truy hồi: mạng nhện và điểm bất động", "Recurrence sequences: the cobweb and the fixed point")}
       story={tt(
-        R`Dãy truy hồi $u_{n+1}=f(u_n)$ lấy kết quả bước trước làm đầu vào của bước sau. Trên đồ thị: từ $u_n$ đi thẳng lên tới đường cong $y=f(x)$, rồi đi ngang sang đường chéo $y=x$ để «chuyển» giá trị $f(u_n)$ thành hoành độ mới, và cứ thế. Đường đi giống mạng nhện. Nếu mạng xoắn vào một điểm thì dãy hội tụ về giao điểm của đường cong với đường chéo: nghiệm của $L=f(L)$. Với dãy logistic, tăng $r$ để thấy mạng nhện không còn xoắn vào đâu.`,
+        R`Dãy truy hồi $u_{n+1}=f(u_n)$ lấy kết quả bước trước làm đầu vào của bước sau. Trên đồ thị: từ $u_n$ đi thẳng lên tới đường cong $y=f(x)$, rồi đi ngang sang đường chéo $y=x$ để «chuyển» giá trị $f(u_n)$ thành hoành độ mới, và cứ thế. Đường đi trông như mạng nhện. Nếu mạng xoắn vào một điểm thì dãy hội tụ về giao điểm của đường cong với đường chéo: nghiệm của $L=f(L)$. Với dãy logistic, tăng $r$ để thấy mạng nhện không còn xoắn vào đâu.`,
         R`A recurrence $u_{n+1}=f(u_n)$ feeds the previous result into the next step. On the graph: from $u_n$ go straight up to the curve $y=f(x)$, then sideways to the diagonal $y=x$ to «transfer» the value $f(u_n)$ into the new horizontal position, and repeat. The path looks like a cobweb. If the web spirals into a point, the sequence converges to the intersection of the curve with the diagonal: a solution of $L=f(L)$. For the logistic sequence, raise $r$ and the web no longer spirals anywhere.`,
       )}
       read={tt(
@@ -204,7 +204,7 @@ export function InductionLab() {
     <Stage
       title={tt("Quy nạp: 1 + 3 + 5 + … + (2n − 1) = n²", "Induction: 1 + 3 + 5 + … + (2n − 1) = n²")}
       story={tt(
-        R`Hình vuông cạnh $n$ có $n^2$ ô. Bắt đầu bằng 1 ô. Muốn có hình vuông cạnh $2$, thêm một góc chữ L gồm $3$ ô. Muốn có cạnh $3$, thêm góc chữ L gồm $5$ ô. Mỗi lần thêm một góc chữ L mới, số ô trong góc là số lẻ kế tiếp. Vậy tổng các số lẻ liên tiếp chính là số ô của hình vuông. Quy nạp là hiệu ứng domino: nếu hình vuông cạnh $k$ đúng thì thêm góc chữ L $2k+1$ ô thành hình vuông cạnh $k+1$.`,
+        R`Hình vuông cạnh $n$ có $n^2$ ô. Ta bắt đầu bằng 1 ô. Muốn có hình vuông cạnh $2$, thêm một góc chữ L gồm $3$ ô. Muốn có cạnh $3$, thêm góc chữ L gồm $5$ ô. Mỗi lần thêm một góc chữ L mới, số ô trong góc là số lẻ kế tiếp. Vậy tổng các số lẻ liên tiếp chính là số ô của hình vuông. Quy nạp là hiệu ứng domino: nếu hình vuông cạnh $k$ đúng thì thêm góc chữ L $2k+1$ ô thành hình vuông cạnh $k+1$.`,
         R`A square of side $n$ has $n^2$ cells. Start with 1 cell. To get side $2$, add an L-shaped corner of $3$ cells. For side $3$, add an L of $5$ cells. Each new L-shaped corner holds the next odd number of cells. So the sum of consecutive odd numbers is exactly the number of cells of the square. Induction is the domino effect: if the square of side $k$ works, adding an L of $2k+1$ cells makes the square of side $k+1$.`,
       )}
       read={tt(

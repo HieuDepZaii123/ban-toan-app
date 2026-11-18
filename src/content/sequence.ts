@@ -9,9 +9,9 @@ export const sequenceLesson: Lesson = {
     { k: "vd", vi: R`Dãy $3,7,11,15$ có công sai $d=4$. Số hạng thứ $10$ là $u_{10}=3+9\cdot 4=39$.`, en: R`The sequence $3,7,11,15$ has common difference $d=4$. The 10th term is $u_{10}=3+9\cdot 4=39$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`$|q|<1$ thì tổng vô hạn $S=\dfrac{u_1}{1-q}$. Số hạng dần về $0$, tổng thì không.`, en: R`If $|q|<1$ the infinite sum is $S=\dfrac{u_1}{1-q}$. Terms tend to $0$; the sum does not.` },
+    { k: "dinh", vi: R`$|q|<1$ thì tổng vô hạn $S=\dfrac{u_1}{1-q}$. Số hạng dần về $0$, còn tổng thì không dần về $0$.`, en: R`If $|q|<1$ the infinite sum is $S=\dfrac{u_1}{1-q}$. The terms tend to $0$, but the sum does not.` },
     { k: "vd", vi: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. Phần dư sau $n$ hạng là $16\left(\dfrac12\right)^n$.`, en: R`$u_1=8$, $q=\dfrac12$: $S=\dfrac{8}{1-1/2}=16$. The remainder after $n$ terms is $16\left(\dfrac12\right)^n$.` },
-    { k: "loi", vi: R`$u_{10}=u_1+10d$ thừa một bước. Với $u_1=3$, $d=4$ thì ra $43$, đúng là $39$.`, en: R`$u_{10}=u_1+10d$ takes one extra step. With $u_1=3$, $d=4$ that gives $43$; the term is $39$.` },
+    { k: "loi", vi: R`$u_{10}=u_1+10d$ là thừa một bước. Với $u_1=3$, $d=4$ thì được $43$, trong khi kết quả đúng là $39$.`, en: R`$u_{10}=u_1+10d$ takes one step too many. With $u_1=3$, $d=4$ that gives $43$, whereas the correct term is $39$.` },
     { k: "kiem", vi: R`Tổng $1+\cdots+12=\dfrac{12\cdot 13}{2}=78$.`, en: R`The sum $1+\cdots+12=\dfrac{12\cdot 13}{2}=78$.` },
   ],
 };

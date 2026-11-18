@@ -103,6 +103,16 @@ export const sequenceKnowledge: TopicKnowledge = {
             R`Có $n$ cột nên $2S_n=n(u_1+u_n)$, tức $S_n=\frac{n(u_1+u_n)}{2}$. Thay $u_n=u_1+(n-1)d$ được dạng thứ hai.`,
             R`Thử với $1+2+\dots+100$: mỗi cặp $1+100$, $2+99$ đều bằng $101$, nên tổng là $\frac{100\cdot 101}{2}=5050$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng quy nạp",
+              buoc: [
+                R`Muốn chứng minh $S_n=\frac{n\left[2u_1+(n-1)d\right]}{2}$ với mọi $n\ge 1$. Với $n=1$: vế phải là $\frac{1\cdot 2u_1}{2}=u_1=S_1$, đúng.`,
+                R`Giả sử công thức đúng với $n=k$. Khi đó $S_{k+1}=S_k+u_{k+1}=\frac{k\left[2u_1+(k-1)d\right]}{2}+u_1+kd$.`,
+                R`Quy đồng: $S_{k+1}=\frac{2ku_1+k(k-1)d+2u_1+2kd}{2}=\frac{(k+1)\cdot 2u_1+k(k+1)d}{2}=\frac{(k+1)\left[2u_1+kd\right]}{2}$. Đó đúng là công thức ở $n=k+1$, nên đúng với mọi $n$. Xem hình «Ghép cặp kiểu Gauss» ở phần Suy từ số 0 cho cách nhìn bằng hình.`,
+              ],
+            },
+          ],
         },
         { kind: "cach-lam", title: "Vì sao có công thức", text: R`Viết tổng hai lần, một lần theo thứ tự xuôi và một lần ngược rồi cộng từng cặp. Mỗi cặp bằng $u_1+u_n$ và có $n$ cặp, nên $2S_n=n(u_1+u_n)$.` },
         {
@@ -165,6 +175,16 @@ export const sequenceKnowledge: TopicKnowledge = {
             R`Hai dòng có chung mọi số hạng trừ số đầu của dòng trên và số cuối của dòng dưới. Trừ dòng dưới khỏi dòng trên: $S_n-qS_n=u_1-u_1q^n$.`,
             R`Đặt nhân tử chung: $S_n(1-q)=u_1(1-q^n)$. Khi $q\neq 1$, chia cho $1-q$ được công thức. Khi $q=1$ không chia được, nhưng lúc đó $n$ số hạng đều bằng $u_1$ nên tổng là $nu_1$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng quy nạp",
+              buoc: [
+                R`Với $q\neq 1$, cần chứng minh $S_n=u_1\cdot\frac{1-q^n}{1-q}$ với mọi $n\ge 1$. Với $n=1$: vế phải là $u_1\cdot\frac{1-q}{1-q}=u_1=S_1$, đúng.`,
+                R`Giả sử đúng với $n$. Thêm số hạng thứ $n+1$ là $u_1q^n$: $S_{n+1}=S_n+u_1q^n=u_1\cdot\frac{1-q^n}{1-q}+u_1q^n$.`,
+                R`Quy đồng: $S_{n+1}=u_1\cdot\frac{1-q^n+q^n(1-q)}{1-q}=u_1\cdot\frac{1-q^{n+1}}{1-q}$. Đó đúng là công thức ở $n+1$, nên đúng với mọi $n$. Trường hợp $q=1$ có $S_n=nu_1$ như ở cách thứ nhất.`,
+              ],
+            },
+          ],
         },
         { kind: "cach-lam", title: "Vì sao có công thức", text: R`Nhân $S_n$ với $q$ rồi trừ cho $S_n$: các số hạng ở giữa triệt tiêu, còn lại $S_n(1-q)=u_1(1-q^n)$. Chia hai vế cho $1-q$ khi $q\neq 1$ thì được công thức.` },
         {
@@ -175,6 +195,16 @@ export const sequenceKnowledge: TopicKnowledge = {
             R`Khi $|q|<1$, mỗi lần nhân với $q$ thì độ lớn co lại theo cùng một tỉ lệ nhỏ hơn $1$, nên $q^n$ nhỏ hơn bất cứ số dương nào cho trước khi $n$ đủ lớn. Chẳng hạn với $q=\frac{1}{2}$: $\frac{1}{2},\frac{1}{4},\frac{1}{8},\dots$ Số hạng sau vì thế tiến về $0$ và $S_n$ tiến về $\frac{u_1}{1-q}$.`,
             R`Hình ảnh: ăn nửa cái bánh, rồi nửa của phần còn lại, rồi lại nửa của phần còn lại. Tổng $\frac{1}{2}+\frac{1}{4}+\frac{1}{8}+\dots$ tiến về đúng một cái bánh, khớp với $\frac{1/2}{1-1/2}=1$.`,
             R`Khi $|q|\ge 1$ và $u_1\neq 0$, độ lớn các số hạng không nhỏ đi: mỗi lần cộng thêm, tổng lại xê dịch ít nhất $|u_1|$, nên không thể dừng lại gần một số nào.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng tự đồng dạng",
+              buoc: [
+                R`Khi $|q|<1$, cách thứ nhất đã chỉ ra $S_n$ có giới hạn $S$. Viết $S_{n+1}$ theo hai cách: thêm số hạng cuối thì $S_{n+1}=S_n+u_1q^n$, còn tách số hạng đầu thì $S_{n+1}=u_1+qS_n$.`,
+                R`Từ cách thứ hai, cho $n\to\infty$ thì cả $S_{n+1}$ và $S_n$ cùng tiến về $S$, nên $S=u_1+qS$. Đây là phương trình bậc nhất: $S(1-q)=u_1$.`,
+                R`Vì $|q|<1$ nên $q\neq 1$, chia được: $S=\frac{u_1}{1-q}$. Cách này chỉ dùng cách thứ nhất để biết tổng tồn tại, còn giá trị thì tìm bằng phép đồng dạng: phần sau số hạng đầu là một bản thu nhỏ $q$ lần của cả tổng. Xem hình «Cộng mãi các mảnh nhỏ dần» ở phần Suy từ số 0.`,
+              ],
+            },
           ],
         },
         { kind: "luu-y", text: R`Điều kiện $|q|<1$ là bắt buộc. Với $1+2+4+\dots$ công thức $\frac{1}{1-2}=-1$ cho một số vô nghĩa, vì thực tế tổng này lớn vô hạn.` },
@@ -194,6 +224,16 @@ export const sequenceKnowledge: TopicKnowledge = {
             R`Lập luận chặt chẽ: giả sử có một số $n$ mà $P(n)$ sai. Trong các số như vậy lấy số nhỏ nhất, gọi là $m$. Số $m$ không thể là $n_0$ vì bước cơ sở đã kiểm $P(n_0)$ đúng.`,
             R`Vậy $m-1\ge n_0$, và $P(m-1)$ đúng vì $m$ là số nhỏ nhất làm mệnh đề sai. Bước quy nạp khi đó cho $P(m)$ đúng, trái với cách chọn $m$. Mâu thuẫn này chứng tỏ không có số nào làm $P(n)$ sai.`,
             R`Điều duy nhất được công nhận ở đây: trong một nhóm số nguyên dương bất kì luôn có số nhỏ nhất.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Từ tiên đề về số tự nhiên",
+              buoc: [
+                R`Gọi $A$ là tập các số nguyên $n\ge n_0$ mà $P(n)$ đúng. Bước cơ sở nói $n_0\in A$, bước quy nạp nói nếu $k\in A$ thì $k+1\in A$.`,
+                R`Các số nguyên $n\ge n_0$ có thể được xây từ $n_0$ bằng cách cộng thêm $1$ lặp lại: tập ấy là tập nhỏ nhất chứa $n_0$ và đóng dưới phép $k\mapsto k+1$. Nếu lấy đặc tính này làm tiên đề về số tự nhiên (tiên đề quy nạp), thì $A$ chứa $n_0$ và đóng dưới $k\mapsto k+1$ nên $A$ chứa mọi $n\ge n_0$.`,
+                R`Cách thứ nhất dùng tiên đề «mọi tập khác rỗng đều có phần tử nhỏ nhất»; cách này dùng tiên đề quy nạp. Hai tiên đề tương đương, nên đây là một cách nhìn khác chứ không thêm kiến thức mới. Xem hình «Hàng domino» ở phần Suy từ số 0.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Mẫu chứng minh", text: R`Muốn chứng minh $1+3+5+\dots+(2n-1)=n^2$: với $n=1$ hai vế cùng bằng $1$. Giả sử tổng của $k$ số đầu là $k^2$, thì tổng của $k+1$ số đầu là $k^2+(2k+1)=(k+1)^2$, đúng công thức với $n=k+1$.` },
@@ -219,6 +259,9 @@ export const sequenceKnowledge: TopicKnowledge = {
     { id: "ineq", vi: R`Trung bình cộng và trung bình nhân của hai số là số hạng giữa của cấp số cộng và cấp số nhân qua chúng.` },
   ],
   checks: [
+    { expr: "simplify((k*(2*u + (k-1)*d)/2 + u + k*d) - (k+1)*(2*u + k*d)/2)", expect: "0" },
+    { expr: "expand((Sn + u*q**n) - (u + q*Sn) - (Sn*(1-q) - u*(1-q**n)))", expect: "0" },
+    { expr: "simplify(((a*(k-1)+b) + (a*(k+1)+b))/2 - (a*k+b))", expect: "0" },
     { expr: "3+(10-1)*4", expect: "39" },
     { expr: "Rational(22-7,8-3)", expect: "3" },
     { expr: "7-2*3", expect: "1" },

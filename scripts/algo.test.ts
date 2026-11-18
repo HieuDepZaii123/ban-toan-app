@@ -375,6 +375,22 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   near("thước logarit: 1 ở vị trí 0", A.logRulerPosition(1), 0, 1e-12);
 }
 
+// Dãy số: tổng riêng cấp số nhân, domino, ghép cặp Gauss.
+{
+  const gp = A.geometricPartials(1, 0.5, 40);
+  near("1 + 1/2 + 1/4 + … dồn về 2", gp[39]!, 2, 1e-9);
+  near("S_3 của 3, 6, 12 = 21", A.geometricPartials(3, 2, 3)[2]!, 21, 1e-12);
+  near("S_n = u1(1−q^n)/(1−q)", A.geometricPartials(2, 0.3, 7)[6]!, 2 * (1 - 0.3 ** 7) / 0.7, 1e-12);
+  const early = A.dominoAngles(5, 0.3);
+  is("lúc đầu chỉ quân đầu nghiêng", early[0]! > 0 && early[1] === 0);
+  const late = A.dominoAngles(5, 100);
+  is("đủ lâu thì cả hàng đã đổ", late.every((v) => v === late[0] && v > 1));
+  is("quân sau không đổ trước quân trước", A.dominoAngles(6, 2.1).every((v, i, a) => i === 0 || v <= a[i - 1]!));
+  const g = A.gaussPairs(3, 4, 10);
+  is("mọi cột cùng tổng u1 + un", g.sums.every((v) => v === 3 + 39));
+  near("tổng các cột = 2·S_n", g.sums.reduce((a, b) => a + b, 0), 2 * 10 * (3 + 39) / 2, 1e-9);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);
