@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { cards } from "../content/cards.ts";
-import { gradeBooks, lessonAt, lessonsOf } from "../content/grades/index.ts";
+import { findLesson, lessonsOf } from "../content/grades/lessons.ts";
+import { GRADES, hasGrade, loadGradeBook } from "../content/grades/load.ts";
 import type { GradeAsk, GradeBook, GradeDrill, GradeExample } from "../content/grades/types.ts";
 import { A } from "../lib/route.tsx";
 import { t } from "../lib/text.ts";
@@ -12,19 +13,44 @@ import { GradeFigure } from "./GradeFigure.tsx";
 import { GradeWidgetView } from "./GradeWidgets.tsx";
 import { doneCount, markDone, readDone } from "./progress.ts";
 
+/**
+ * The books a screen needs, loaded on demand: the grade list needs all twelve (titles and lesson counts),
+ * a grade or a lesson needs only its own book. Null while loading.
+ */
+function useGradeBooks(grades: readonly number[]): GradeBook[] | null {
+  const key = grades.join(",");
+  const [loaded, setLoaded] = useState<{ key: string; books: GradeBook[] } | null>(null);
+  useEffect(() => {
+    let live = true;
+    const wanted = key ? key.split(",").map(Number) : [];
+    Promise.all(wanted.map(loadGradeBook)).then(
+      (books) => { if (live) setLoaded({ key, books: books.filter((book): book is GradeBook => book !== null) }); },
+      () => { if (live) setLoaded({ key, books: [] }); },
+    );
+    return () => { live = false; };
+  }, [key]);
+  return loaded?.key === key ? loaded.books : null;
+}
+
+function setPageTitle(title: string): void {
+  document.title = title;
+}
+
 export function GradeDesk() {
   const lang = useLang();
   const { path } = useRoute();
   const parsed = parseGradePath(path);
+  const books = useGradeBooks(parsed.grade ? (hasGrade(parsed.grade) ? [parsed.grade] : []) : GRADES);
+  const book = parsed.grade ? books?.[0] : undefined;
+  const found = book && parsed.lesson ? findLesson(book, parsed.lesson) : undefined;
+  const lesson = found?.lesson; // stable reference; `found` itself is a new object every render
   useEffect(() => {
-    const book = parsed.grade ? gradeBooks.find((item) => item.grade === parsed.grade) : undefined;
-    const found = parsed.grade && parsed.lesson ? lessonAt(parsed.grade, parsed.lesson) : undefined;
     const gradeWord = lang === "en" ? "Grade" : "Lớp";
-    document.title = found ? `${plainMath(tr(lang, found.lesson))} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12");
-  }, [parsed.grade, parsed.lesson, lang]);
+    setPageTitle(lesson ? `${plainMath(tr(lang, lesson))} · ${gradeWord} ${parsed.grade}` : book ? `${gradeWord} ${book.grade}` : (lang === "en" ? "Grades 1–12" : "Kiến thức lớp 1–12"));
+  }, [lesson, book, parsed.grade, lang]);
 
-  if (!parsed.grade) return <GradeHome />;
-  const book = gradeBooks.find((item) => item.grade === parsed.grade);
+  if (!books) return <p className="lecture-note">{t(lang, "Đang mở sách…", "Opening the book…")}</p>;
+  if (!parsed.grade) return <GradeHome books={books} />;
   if (!book) {
     return (
       <PageFrame kicker={t(lang, "Chương trình 2018", "2018 curriculum")} title={t(lang, "Không thấy lớp này", "This grade is missing")} lead={t(lang, "Chọn một lớp từ 1 đến 12.", "Choose a grade from 1 to 12.")}>
@@ -33,7 +59,6 @@ export function GradeDesk() {
     );
   }
   if (!parsed.lesson) return <GradeIndex book={book} />;
-  const found = lessonAt(book.grade, parsed.lesson);
   if (!found) {
     return (
       <PageFrame kicker={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} title={t(lang, "Không thấy bài này", "This lesson is missing")} lead={t(lang, "Bài không nằm trong danh sách của lớp.", "This lesson is not in the grade list.")}>
@@ -71,7 +96,7 @@ function ProgressBar({ done, total, label }: { done: number; total: number; labe
   );
 }
 
-function GradeHome() {
+function GradeHome({ books }: { books: GradeBook[] }) {
   const lang = useLang();
   const done = useDone();
   const bands = [
@@ -90,7 +115,7 @@ function GradeHome() {
         <section key={band.id} className="stream">
           <h2>{band.title}</h2>
           <div className="grade-grid">
-            {gradeBooks.filter((book) => book.band === band.id).map((book) => {
+            {books.filter((book) => book.band === band.id).map((book) => {
               const ids = lessonsOf(book).map((item) => item.lesson.id);
               const count = doneCount(book.grade, ids, done);
               return (

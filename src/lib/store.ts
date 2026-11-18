@@ -406,15 +406,28 @@ function valuesEqual(a: Data, b: Data): boolean {
     && stable(a.studies) === stable(b.studies);
 }
 
+/**
+ * Stamp `now` on every key whose value changed. Edits are made with spreads, so an untouched map or entry
+ * keeps its reference: those are skipped before the costly `stable` comparison. That keeps a write
+ * proportional to what changed, not to everything the learner has stored.
+ */
 function touchMap<T>(prev: Record<string, T>, next: Record<string, T>, stamps: Record<string, number>, now: number): Record<string, number> {
-  const out = { ...stamps };
-  const keys = new Set([...Object.keys(prev), ...Object.keys(next)]);
-  for (const key of keys) {
+  if (prev === next) return stamps;
+  let out: Record<string, number> | null = null;
+  const mark = (key: string) => {
+    out ??= { ...stamps };
+    out[key] = now;
+  };
+  for (const key of Object.keys(next)) {
+    const after = next[key];
     const before = owns(prev, key) ? prev[key] : undefined;
-    const after = owns(next, key) ? next[key] : undefined;
-    if (stable(before) !== stable(after)) out[key] = now;
+    if (before === after && owns(prev, key)) continue;
+    if (stable(before) !== stable(after)) mark(key);
   }
-  return out;
+  for (const key of Object.keys(prev)) {
+    if (!owns(next, key) && stable(prev[key]) !== stable(undefined)) mark(key);
+  }
+  return out ?? stamps;
 }
 
 function stampChanges(prev: Data, next: Data, now: number): Data {

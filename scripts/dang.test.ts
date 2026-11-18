@@ -7,6 +7,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { cards } from "../src/content/cards.ts";
 import { allDang, collectChecks } from "../src/content/dang/index.ts";
+import { DANG_IDS, loadDang } from "../src/content/dang/load.ts";
 import type { TopicDang } from "../src/content/dang/types.ts";
 import { MARK } from "./testkit.ts";
 
@@ -234,6 +235,10 @@ function controlChars(value: unknown, where: string): void {
 assert(hasControl(String.fromCharCode(11)), "bộ dò ký tự điều khiển");
 assert(!hasControl("ok"), "bộ dò ký tự điều khiển");
 assert(allDang.length === 14, "đủ 14 chủ đề");
+// The page loads one topic through load.ts: every topic must load, and load the same object the tests check.
+assert(DANG_IDS.length === allDang.length && allDang.every((topic) => DANG_IDS.includes(topic.id)), "load.ts có đủ các chủ đề của index.ts");
+for (const topic of allDang) assert((await loadDang(topic.id)) === topic, `${topic.id}: load.ts trả đúng dạng bài`);
+assert((await loadDang("khong-co")) === null, "id lạ trả null");
 const ids = new Set(allDang.map((topic) => topic.id));
 for (const card of cards) assert(ids.has(card.id), `thiếu ${card.id}`);
 

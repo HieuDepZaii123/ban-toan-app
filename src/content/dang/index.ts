@@ -14,6 +14,7 @@ import { trigDang } from "./trig.ts";
 import type { Check, TopicDang } from "./types.ts";
 import { vectorDang } from "./vector.ts";
 
+/** All fourteen topics at once, for tests and tools. Pages load one topic through load.ts. */
 export const allDang: TopicDang[] = [
   derivativeDang,
   surveyDang,
@@ -30,12 +31,6 @@ export const allDang: TopicDang[] = [
   quadraticDang,
   ineqDang,
 ];
-
-const byId = new Map(allDang.map((topic) => [topic.id, topic]));
-
-export function dangFor(id: string): TopicDang | undefined {
-  return byId.get(id);
-}
 
 function take(found: Check[], item: { check?: Check; checks?: Check[] }): void {
   if (item.check) found.push(item.check);
