@@ -391,6 +391,25 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   near("tổng các cột = 2·S_n", g.sums.reduce((a, b) => a + b, 0), 2 * 10 * (3 + 39) / 2, 1e-9);
 }
 
+// Giới hạn: δ theo ε, giới hạn hai bên, giới hạn ở vô cực, lịch ôn.
+{
+  const d = A.largestDelta((x) => 2 * x + 1, 3, 7, 0.1);
+  near("f = 2x+1: δ = ε/2", d, 0.05, 1e-6);
+  const d2 = A.largestDelta((x) => x * x, 2, 4, 0.01);
+  is("f = x²: δ nhỏ hơn ε/4 một chút", d2 > 0.0024 && d2 < 0.0025);
+  is("ε nhỏ hơn thì δ nhỏ hơn", A.largestDelta((x) => x * x, 2, 4, 0.001) < d2);
+  const hole = A.twoSidedLimit((x) => (x * x - 1) / (x - 1), 1);
+  is("lỗ hổng (x²−1)/(x−1) có giới hạn 2", hole.agree && Math.abs(hole.left - 2) < 1e-4);
+  const jump = A.twoSidedLimit((x) => (x < 0 ? -1 : 1), 0);
+  is("bước nhảy không có giới hạn hai bên", !jump.agree);
+  near("(2x+1)/(x−3) → 2 ở vô cực", A.limitAtInfinity((x) => (2 * x + 1) / (x - 3)), 2, 1e-5);
+  const now = 10 * 86_400_000;
+  is("câu đúng thì không ôn", !A.reviewDue({ ok: true, tries: 1, at: 0 }, now));
+  is("sai một lần: chưa tới 1 ngày thì chưa ôn", !A.reviewDue({ ok: false, tries: 1, at: now - 3_600_000 }, now));
+  is("sai một lần: sau 1 ngày thì ôn", A.reviewDue({ ok: false, tries: 1, at: now - 86_400_000 }, now));
+  is("sai nhiều lần: phải đợi 3 ngày", !A.reviewDue({ ok: false, tries: 2, at: now - 2 * 86_400_000 }, now) && A.reviewDue({ ok: false, tries: 2, at: now - 3 * 86_400_000 }, now));
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

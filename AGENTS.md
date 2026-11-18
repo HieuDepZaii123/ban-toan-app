@@ -47,6 +47,8 @@ curl -s -XPOST 'http://127.0.0.1:43123/api/chat?do=check' -H 'content-type: appl
 - Công thức nằm trong `$…$` trên một dòng; dùng `String.raw` (`R`…``). Thuộc tính JSX không xử lý `\\`.
 - Bản Anh không được lẫn chữ Việt (`src/topic/zero/FromZero.test.tsx` kiểm).
 - Mỗi định lí/công thức có `suy` (cách chứng minh thứ nhất) và có thể có `suyKhac` (cách khác thật sự khác hướng, 2–7 bước). Chuyên đề đã làm xong thì thêm id vào `MULTI_PROOF` trong `scripts/knowledge.test.ts`; test khi đó đòi mọi `dinh-ly` có ít nhất một cách khác và cả chuyên đề có ít nhất ba.
+- Thẻ «Đoán trước» (`src/topic/zero/discover.tsx`, ví dụ `limitDiscover.tsx`): người học đoán trước khi xem lập luận; đáp án đúng do hàm trong `src/algo` tính lúc chạy, không gõ cứng; câu sai được nhắc lại sau 1 rồi 3 ngày. Mỗi thẻ cần cả bản Việt và Anh và có test trong `discover.test.tsx`.
+- Hình hoạt hình dùng `useLoop`/`PlayButtons` ở `src/topic/zero/anim.tsx` (tự chạy, tắt khi người dùng chọn giảm chuyển động); phần tính toán đặt thành hàm thuần trong `src/algo/index.ts` và có kiểm trong `scripts/algo.test.ts`.
 - Công thức trong chứng minh mới nên có thêm phép kiểm sympy ở mảng `checks` của chuyên đề.
 - Sau khi chỉnh lời văn, so với bản cũ để chắc không mất công thức hay số: `npm run check:prose -- <commit> <tệp>...` (báo «MẤT» khi một đoạn `$…$` hoặc số biến mất; phần «thêm» là bình thường khi bạn viết thêm).
 - Sửa bằng chỉnh từng cụm câu duy nhất, đừng thay hàng loạt bằng script: chuỗi song ngữ dễ bị đổi nhầm nửa Việt/Anh.

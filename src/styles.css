@@ -1530,6 +1530,13 @@ html[data-lamp="on"] body::before {
 .fz-lead { margin: 0; color: var(--ink-soft); }
 .fz-card { margin: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); padding: 14px 16px; display: grid; gap: 10px; }
 .fz-card h3 { margin: 0; font-size: 1.05rem; }
+.fz-discover { margin: 0; border: 1px dashed var(--accent); border-radius: 12px; background: var(--sheet); padding: 14px 16px; display: grid; gap: 10px; }
+.fz-discover h3 { margin: 0; font-size: 1.05rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.fz-due { font-size: 0.75rem; font-weight: 600; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 1px 8px; }
+.fz-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.fz-choice { min-height: 44px; }
+.fz-choice.ok { border-color: var(--accent); background: var(--accent-soft); }
+.fz-choice.no { border-color: var(--plot-alt); }
 .fz-story, .fz-read, .fz-why { margin: 0; overflow-wrap: anywhere; }
 .fz-story { color: var(--ink-soft); }
 .fz-read { padding: 8px 10px; border-left: 3px solid var(--plot-alt); background: var(--accent-soft); }

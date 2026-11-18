@@ -55,6 +55,17 @@ export const limitKnowledge: TopicKnowledge = {
             R`Trong tất cả các bức tường chắn được dãy, có một bức đứng sát dãy nhất, gọi là $L$. Sự tồn tại của $L$ là tính chất «không có lỗ hổng» của trục số thực, được công nhận làm nền móng chứ không chứng minh ở mức này.`,
             R`Lấy một sai số $\varepsilon>0$. Số $L-\varepsilon$ không còn chắn được dãy, vì $L$ là bức tường sát nhất, nên có một số hạng $u_N$ vượt qua $L-\varepsilon$. Dãy tăng nên mọi số hạng sau đó nằm giữa $L-\varepsilon$ và $L$, tức cách $L$ ít hơn $\varepsilon$. Vậy giới hạn của dãy là $L$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng đoạn lồng nhau",
+              buoc: [
+                R`Giả sử $u_n$ tăng và $u_n\le M$ với mọi $n$. Đặt $A_0=u_1$ và $B_0=M$. Ta xây các đoạn $[A_k;B_k]$ sao cho $B_k$ luôn là cận trên của dãy và từ một chỉ số $N_k$ trở đi mọi số hạng đều nằm trong đoạn.`,
+                R`Từ $[A_k;B_k]$, lấy điểm giữa $m$. Nếu có số hạng $u_N>m$ thì vì dãy tăng, mọi số hạng sau đó đều lớn hơn $m$: lấy $[A_{k+1};B_{k+1}]=[m;B_k]$. Nếu không, mọi số hạng đều không vượt $m$, và $m$ là cận trên mới: lấy $[A_k;m]$.`,
+                R`Các đoạn lồng nhau, độ dài $\frac{M-u_1}{2^k}$ tiến về $0$, nên theo tính chất «không có lỗ hổng» (được công nhận) chúng co về đúng một điểm $L$. Với $\varepsilon>0$, chọn $k$ để độ dài nhỏ hơn $\varepsilon$.`,
+                R`Từ chỉ số $N_k$ mọi số hạng nằm trong đoạn thứ $k$, mà đoạn này chứa $L$ và có độ dài nhỏ hơn $\varepsilon$, nên $|u_n-L|<\varepsilon$ khi $n\ge N_k$. Vậy dãy có giới hạn $L$. Cách này dùng phép chia đôi, khác với cách chọn cận trên nhỏ nhất; ở nhánh đầu có thể lấy $N_{k+1}=\max(N_k,N)$. Với dãy giảm bị chặn dưới, áp dụng cho dãy $-u_n$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Giới hạn vô cực",
@@ -86,6 +97,17 @@ export const limitKnowledge: TopicKnowledge = {
             R`Chiều ngược: mọi $x$ gần $a$ đều nằm bên trái hoặc bên phải $a$. Nếu ở cả hai bên $f(x)$ đều sát $L$ thì với mọi $x$ gần $a$, giá trị $f(x)$ sát $L$.`,
             R`Nếu bên trái tiến về $L_1$ còn bên phải tiến về $L_2$ khác $L_1$, thì không có một số nào mà $f(x)$ cùng sát tới từ cả hai phía, nên giới hạn không tồn tại.`,
           ],
+          suyKhac: [
+            {
+              cach: "Dạng ε–δ chặt chẽ của cách thứ nhất",
+              buoc: [
+                R`Chiều thuận: nếu $\lim_{x\to a}f(x)=L$ thì với mỗi $\varepsilon>0$ có $\delta>0$ để mọi $x$ với $0<|x-a|<\delta$ đều cho $|f(x)-L|<\varepsilon$. Các $x$ trong $(a-\delta;a)$ và trong $(a;a+\delta)$ đều thỏa điều đó, nên giới hạn trái và giới hạn phải đều bằng $L$.`,
+                R`Chiều ngược: giả sử giới hạn trái và phải cùng bằng $L$. Với $\varepsilon>0$ có $\delta_1$ sao cho $|f(x)-L|<\varepsilon$ khi $a-\delta_1<x<a$, và có $\delta_2$ sao cho điều đó đúng khi $a<x<a+\delta_2$. Lấy $\delta=\min\{\delta_1,\delta_2\}$.`,
+                R`Mọi $x$ với $0<|x-a|<\delta$ đều nằm trong một trong hai khoảng trên nên $|f(x)-L|<\varepsilon$. Đó đúng là định nghĩa $\lim_{x\to a}f(x)=L$.`,
+                R`Nếu giới hạn trái là $L_1$ và giới hạn phải là $L_2\neq L_1$ mà giới hạn $L$ tồn tại thì theo chiều thuận cả hai đều bằng $L$, mâu thuẫn. Vậy khi hai giới hạn một bên khác nhau thì không có giới hạn. Cách này không đưa ra hướng mới, chỉ viết lại lập luận trên bằng ngôn ngữ ε–δ của định nghĩa.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Quy tắc tính",
@@ -96,6 +118,16 @@ export const limitKnowledge: TopicKnowledge = {
             R`Tích: $fg=LM+(Lq+Mp+pq)$. Trong ngoặc, mỗi số hạng là một số cố định nhân với một sai số, hoặc tích của hai sai số, nên cả ngoặc nhỏ tùy ý. Vậy $fg$ tiến về $LM$.`,
             R`Thương: $\frac{1}{g}-\frac{1}{M}=\frac{-q}{M(M+q)}$. Vì $M\neq 0$, mẫu gần $M^2$ nên không gần $0$, còn tử nhỏ tùy ý. Vậy $\frac{1}{g}$ tiến về $\frac{1}{M}$, rồi dùng quy tắc tích cho $f\cdot\frac{1}{g}$.`,
             R`Căn, khi $L>0$: $\sqrt{f}-\sqrt{L}=\frac{f-L}{\sqrt{f}+\sqrt{L}}$. Tử nhỏ tùy ý còn mẫu không nhỏ hơn $\sqrt{L}$, nên hiệu nhỏ tùy ý.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng định nghĩa ε–δ cho tổng và tích",
+              buoc: [
+                R`Tổng và hiệu: cho $\varepsilon>0$. Chọn $\delta_1$ để $|f-L|<\frac{\varepsilon}{2}$ và $\delta_2$ để $|g-M|<\frac{\varepsilon}{2}$ khi $0<|x-a|<\delta$ với $\delta=\min\{\delta_1,\delta_2\}$. Khi đó $|(f\pm g)-(L\pm M)|\le|f-L|+|g-M|<\varepsilon$.`,
+                R`Tích: viết $fg-LM=f\,(g-M)+M\,(f-L)$. Chọn $\delta_0$ để $|f-L|<1$, suy ra $|f|<|L|+1$. Rồi chọn $\delta_1$ để $|g-M|<\frac{\varepsilon}{2(|L|+1)}$ và $\delta_2$ để $|f-L|<\frac{\varepsilon}{2(|M|+1)}$.`,
+                R`Với $\delta=\min\{\delta_0,\delta_1,\delta_2\}$ và $0<|x-a|<\delta$: $|fg-LM|\le|f|\,|g-M|+|M|\,|f-L|<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon$. Thương đưa về tích: chọn $\delta$ để $|g-M|<\frac{|M|}{2}$ thì $|g|>\frac{|M|}{2}$ và $\left|\frac{1}{g}-\frac{1}{M}\right|=\frac{|g-M|}{|g||M|}<\frac{2|g-M|}{M^2}$. Chọn thêm $|g-M|<\frac{\varepsilon M^2}{2}$ thì $\left|\frac{1}{g}-\frac{1}{M}\right|<\varepsilon$, rồi dùng quy tắc tích cho $f\cdot\frac{1}{g}$. Căn khi $L>0$: $|\sqrt{f}-\sqrt{L}|\le\frac{|f-L|}{\sqrt{L}}$, nên chọn $|f-L|<\varepsilon\sqrt{L}$.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Thay trực tiếp", text: R`Nếu $f$ là hàm sơ cấp xác định tại $a$, như đa thức, phân thức có mẫu khác $0$ hoặc hàm căn, thì $\lim_{x\to a}f(x)=f(a)$. Chỉ khi thay số ra dạng vô định mới cần biến đổi.` },
@@ -210,6 +242,17 @@ export const limitKnowledge: TopicKnowledge = {
             R`Sau mỗi lần, đoạn ngắn đi một nửa nhưng hai đầu vẫn trái dấu. Các đoạn lồng nhau này co về một điểm $c$, nhờ tính chất «không có lỗ hổng» của trục số.`,
             R`Sát $c$ tùy ý có điểm mà $f$ âm và có điểm mà $f$ dương. Vì $f$ liên tục, $f(c)$ vừa là giới hạn của các giá trị âm nên không dương, vừa là giới hạn của các giá trị dương nên không âm. Vậy $f(c)=0$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng cận trên nhỏ nhất",
+              buoc: [
+                R`Giả sử $f$ liên tục trên $[a;b]$ và $f(a)<0<f(b)$. Gọi $S$ là tập các $x\in[a;b]$ có $f(x)<0$. Tập $S$ khác rỗng vì $a\in S$ và bị chặn trên bởi $b$, nên có cận trên nhỏ nhất $c=\sup S$ (tính chất «không có lỗ hổng» của trục số, được công nhận).`,
+                R`Giả sử $f(c)<0$. Vì $f$ liên tục nên $f$ vẫn âm trên một khoảng quanh $c$, và $c\neq b$ vì $f(b)>0$. Khi đó có điểm lớn hơn $c$ thuộc $S$, trái với việc $c$ là cận trên.`,
+                R`Giả sử $f(c)>0$. Do liên tục nên $f>0$ trên một khoảng $(c-\delta;c]$, nên mọi điểm của $S$ đều không lớn hơn $c-\delta$. Khi đó $c-\delta$ là một cận trên nhỏ hơn $c$, trái với việc $c$ là cận trên nhỏ nhất.`,
+                R`Vậy $f(c)=0$. Vì $f(a)$ và $f(b)$ đều khác $0$ nên $c$ nằm trong khoảng $(a;b)$. Cách này không chia đôi nhiều lần mà chỉ dùng một điểm $c$ được chọn bằng cận trên nhỏ nhất. Ở các bước trên, «$f$ liên tục và $f(c)\neq 0$ thì $f$ giữ nguyên dấu quanh $c$» suy ra bằng cách lấy $\varepsilon=|f(c)|$. Trường hợp $f(a)>0>f(b)$ thì xét $-f$.`,
+              ],
+            },
+          ],
         },
         { kind: "cach-lam", title: "Tìm tham số để liên tục", text: R`Với hàm cho bằng hai công thức, tính giới hạn trái, giới hạn phải và giá trị tại điểm nối rồi cho ba số đó bằng nhau. Mỗi điều kiện cho một phương trình theo tham số.` },
         { kind: "luu-y", text: R`Liên tục tại một điểm cần cả ba điều kiện. Hàm có giới hạn nhưng không xác định tại điểm đó, hoặc xác định nhưng giá trị lệch giới hạn, đều bị gián đoạn.` },
@@ -234,6 +277,8 @@ export const limitKnowledge: TopicKnowledge = {
     { id: "sequence", vi: R`Tổng vô hạn của cấp số nhân là giới hạn của dãy các tổng riêng $S_n$.` },
   ],
   checks: [
+    { expr: "simplify((f*g - L*M) - (f*(g-M) + M*(f-L)))", expect: "0" },
+    { expr: "simplify((1/g - 1/M) + (g-M)/(g*M))", expect: "0" },
     { expr: "limit((2*n+1)/n, n, oo)", expect: "2" },
     { expr: "limit((3*n**2+1)/(n**2-2*n), n, oo)", expect: "3" },
     { expr: "limit(Rational(1,2)**n, n, oo)", expect: "0" },

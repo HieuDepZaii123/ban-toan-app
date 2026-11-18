@@ -991,3 +991,42 @@ export function gaussPairs(u1: number, d: number, n: number): { top: number[]; b
   const bottom = [...top].reverse();
   return { top, bottom, sums: top.map((v, i) => v + (bottom[i] as number)) };
 }
+
+/** δ lớn nhất (tới `max`) để |f(x) − L| < ε với mọi 0 < |x − a| < δ, tìm bằng cách quét mịn rồi chia đôi: «đưa sai số ε thì chỉ ra được δ». */
+export function largestDelta(f: Fn, a: number, L: number, eps: number, max = 2, grid = 400): number {
+  const ok = (d: number): boolean => {
+    for (let i = 1; i <= grid; i++) {
+      const h = (d * i) / grid;
+      if (!(Math.abs(f(a - h) - L) < eps) || !(Math.abs(f(a + h) - L) < eps)) return false;
+    }
+    return true;
+  };
+  let lo = 0;
+  let hi = max;
+  if (ok(hi)) return hi;
+  for (let i = 0; i < 40; i++) {
+    const mid = (lo + hi) / 2;
+    if (ok(mid)) lo = mid;
+    else hi = mid;
+  }
+  return lo;
+}
+
+/** Giá trị gần đúng của giới hạn hai bên và hai bên có dồn về cùng một số không. */
+export function twoSidedLimit(f: Fn, a: number, kMax = 8): { left: number; right: number; agree: boolean } {
+  const left = (limitEstimate(f, a, "left", kMax).at(-1) as { value: number }).value;
+  const right = (limitEstimate(f, a, "right", kMax).at(-1) as { value: number }).value;
+  return { left, right, agree: Math.abs(left - right) < 1e-3 };
+}
+
+/** Giá trị của f ở rất xa (x → +∞ hoặc −∞): ước lượng giới hạn tại vô cực. */
+export function limitAtInfinity(f: Fn, sign: 1 | -1 = 1, big = 1e7): number {
+  return f(sign * big);
+}
+
+/** Lịch ôn lặp lại cách quãng: câu làm sai được hiện lại sau 1 ngày, rồi 3 ngày nếu vẫn sai. */
+export function reviewDue(record: { ok: boolean; tries: number; at: number } | undefined, now: number): boolean {
+  if (!record || record.ok) return false;
+  const day = 86_400_000;
+  return now - record.at >= (record.tries <= 1 ? day : 3 * day);
+}
