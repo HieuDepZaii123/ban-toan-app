@@ -1103,6 +1103,9 @@ html[data-lamp="on"] body::before {
 }
 @keyframes fogDrift { from { background-position: 0 0, 100% 0; } to { background-position: 120% 0, -40% 0; } }
 .hero-welcome { margin: 4px 0 16px; }
+.hero-welcome .hero-call { margin-bottom: 4px; color: var(--ink); }
+.hero-welcome .hero-ways span { display: block; }
+.hero-welcome .hero-ways span + span { margin-top: 6px; }
 .tier-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 0 0 16px; }
 .tier-row article { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: grid; gap: 4px; }
 .tier-row b { color: var(--accent); font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 1.15rem; }

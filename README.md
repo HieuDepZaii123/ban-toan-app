@@ -2,6 +2,10 @@
 
 **Bàn Toán – nơi học tập, nghiên cứu và sáng tạo.** Hãy biến những ý tưởng của bạn thành hiện thực.
 
+- Học bằng cách kéo hình và nhìn con số đổi theo.
+- Nghiên cứu bằng cách tự đặt giả thuyết rồi kiểm chứng.
+- Sáng tạo bằng cách dựng hình, dựng khối theo ý mình.
+
 Bàn Toán là bàn làm việc cho toán từ lớp 1 đến lớp 12. Học sinh kéo tham số, nhìn đồ thị đổi, rồi làm câu có gợi ý và lời giải.
 
 Giao diện tiếng Việt, có thể chuyển EN. Có hai giao diện Giấy và Đêm. Trên trang chủ có đèn bàn, đồng hồ Hà Nội cùng Tokyo, London và New York, và cửa sổ đổi cảnh Sáng / Trưa / Chiều / Đêm theo giờ trên máy (chọn tay được). App chạy được khi mất mạng sau lần mở đầu (PWA).

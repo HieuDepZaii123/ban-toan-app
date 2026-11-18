@@ -14,12 +14,12 @@ export function Welcome() {
   return (
     <section className="hero-welcome">
       <h1>{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo.", "Bàn Toán – a place to learn, research and create.")}</h1>
-      <p className="lead">
-        {t(
-          lang,
-          "Hãy biến những ý tưởng của bạn thành hiện thực. Kéo một tham số và nhìn hình đổi theo, đặt giả thuyết rồi tự đo trong tab Nghiên cứu, dựng hình và khối trong Xưởng hình, rồi làm câu có lời giải để chắc mình đã hiểu.",
-          "Turn your ideas into reality. Drag a parameter and watch the figure change, make a guess and measure it yourself in the Research tab, build figures and solids in the Workshop, then work questions with solutions to be sure you understand.",
-        )}
+      <p className="lead hero-call">{t(lang, "Hãy biến những ý tưởng của bạn thành hiện thực.", "Turn your ideas into reality.")}</p>
+      {/* One short line per word of the title: học tập, nghiên cứu, sáng tạo. */}
+      <p className="lead hero-ways">
+        <span>{t(lang, "Học bằng cách kéo hình và nhìn con số đổi theo.", "Learn by dragging a figure and watching the numbers follow.")}</span>
+        <span>{t(lang, "Nghiên cứu bằng cách tự đặt giả thuyết rồi kiểm chứng.", "Research by making a guess and testing it yourself.")}</span>
+        <span>{t(lang, "Sáng tạo bằng cách dựng hình, dựng khối theo ý mình.", "Create by building figures and solids your own way.")}</span>
       </p>
       <p className="lead home-premium">
         {t(
