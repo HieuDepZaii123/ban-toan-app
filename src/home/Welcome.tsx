@@ -15,7 +15,7 @@ export function Welcome() {
     <section className="hero-welcome">
       <h1>{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo.", "Bàn Toán – a place to learn, research and create.")}</h1>
       <p className="lead hero-call">{t(lang, "Hãy biến những ý tưởng của bạn thành hiện thực.", "Turn your ideas into reality.")}</p>
-      {/* One block per word of the title. Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies, 8 solids). */}
+      {/* One block per word of the title. Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies). */}
       <div className="pillars">
         {PILLARS.map((pillar) => (
           <article key={pillar.id} className="pillar" aria-labelledby={`pillar-${pillar.id}`}>
@@ -57,10 +57,10 @@ const PILLARS: {
   {
     id: "hoc",
     vi: "Học tập", en: "Learn",
-    gistVi: "Hiểu vì sao, không chỉ nhớ công thức.",
-    gistEn: "Understand why, not just the formula.",
-    bodyVi: "Mười bốn chuyên đề THPT và 182 bài từ lớp 1 đến lớp 12. Mỗi tờ có hình kéo được, bài giảng ngắn, dạng bài giải từng bước có lý do, và câu luyện có gợi ý.",
-    bodyEn: "Fourteen upper-secondary topics and 182 lessons from grade 1 to 12. Every sheet has a figure you can drag, a short lesson, worked problems with a reason for each step, and practice with hints.",
+    gistVi: "Chạm vào toán, thấy toán chuyển động.",
+    gistEn: "Touch maths and watch it move.",
+    bodyVi: "Kéo một tham số, đồ thị đổi theo ngay trước mắt. Mười bốn chuyên đề THPT và 182 bài từ lớp 1 đến lớp 12, bài nào cũng giải từng bước và nói rõ vì sao.",
+    bodyEn: "Drag a parameter and the graph changes right in front of you. Fourteen upper-secondary topics and 182 lessons from grade 1 to 12, each worked step by step with the reason for every step.",
     links: [
       { href: "#chuyen-de", vi: "Chuyên đề", en: "Topics" },
       { href: "/kien-thuc", vi: "Lớp 1–12", en: "Grades 1–12" },
@@ -70,10 +70,10 @@ const PILLARS: {
   {
     id: "nghien-cuu",
     vi: "Nghiên cứu", en: "Research",
-    gistVi: "Tự đặt câu hỏi, tự đo, tự kết luận.",
-    gistEn: "Ask, measure and conclude for yourself.",
-    bodyVi: "28 bài nghiên cứu dẫn dắt: nêu giả thuyết, kéo hình để ghi số liệu, đọc đồ thị, rồi đối chiếu kết luận của bạn với chứng minh. Thêm năm mảng mở rộng như lập trình toán và vật lý toán.",
-    bodyEn: "28 guided investigations: state a guess, drag the figure to record data, read the graph, then check your conclusion against the proof. Plus five wider areas such as maths programming and maths in physics.",
+    gistVi: "Đặt câu hỏi như một nhà toán học.",
+    gistEn: "Ask questions like a mathematician.",
+    bodyVi: "Nêu giả thuyết, tự đo, tự vẽ đồ thị, rồi đối chiếu với chứng minh. 28 bài nghiên cứu dẫn bạn đi từ phỏng đoán đến chắc chắn.",
+    bodyEn: "Make a guess, measure it, plot it yourself, then check it against the proof. 28 investigations take you from a hunch to certainty.",
     links: [
       { href: "/nghien-cuu", vi: "Nghiên cứu", en: "Research" },
       { href: "/khoa-hoc", vi: "Khoa học", en: "Science" },
@@ -82,10 +82,10 @@ const PILLARS: {
   {
     id: "sang-tao",
     vi: "Sáng tạo", en: "Create",
-    gistVi: "Dựng nên thứ của riêng bạn.",
-    gistEn: "Build something of your own.",
-    bodyVi: "Dựng điểm, đoạn, chân đường vuông góc trên mặt phẳng; xoay tám loại khối và xem công thức đổi theo kích thước. Soạn đề hay phiếu học có công thức rồi xuất ra PDF, Word.",
-    bodyEn: "Place points, segments and perpendicular feet on the plane; turn eight kinds of solid and watch the formula follow the sizes. Write a test or worksheet with formulas and export it to PDF or Word.",
+    gistVi: "Từ ý tưởng đến hình khối.",
+    gistEn: "From an idea to a shape you can turn.",
+    bodyVi: "Dựng hình phẳng, xoay khối không gian, soạn đề và phiếu học có công thức. Điều bạn nghĩ ra, bạn làm ra được ở đây.",
+    bodyEn: "Build plane figures, turn solids in space, write tests and worksheets with formulas. What you think up, you can make here.",
     links: [
       { href: "/xuong-hinh", vi: "Xưởng hình", en: "Workshop" },
       { href: "/soan-tai-lieu", vi: "Soạn tài liệu", en: "Documents" },
