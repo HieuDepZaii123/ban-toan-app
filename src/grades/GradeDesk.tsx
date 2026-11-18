@@ -131,9 +131,12 @@ function GradeIndex({ book }: { book: GradeBook }) {
     <PageFrame kicker={t(lang, "Kiến thức lớp 1–12", "Grades 1–12")} title={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)} lead={gradeTitle(lang, String(book.grade), book.title)}>
       <p><A href="/kien-thuc">{t(lang, "Tất cả các lớp", "All grades")}</A>{" · "}{book.grade <= 9 ? <A href={`/luyen-lop/${book.grade}`}>{t(lang, "Luyện nhanh lớp này", "Quick practice")}</A> : <A href="/luyen-thpt">{t(lang, "Luyện THPT", "Upper-secondary practice")}</A>}</p>
       <ProgressBar done={doneCount(book.grade, ids, done)} total={ids.length} label={t(lang, `Tiến độ lớp ${book.grade}`, `Grade ${book.grade} progress`)} />
-      <p><A className="text-btn" href={`/kien-thuc/${book.grade}/lo-trinh`}>{t(lang, "Lộ trình lớp này: bài học, thí nghiệm, dạng bài, phương pháp, tư duy", "This grade's path: lessons, labs, problem types, methods, thinking")}</A></p>
-      <p><A className="text-btn" href={`/kien-thuc/${book.grade}/dang`}>{t(lang, "Dạng bài và phương pháp giải", "Problem types and solving methods")}</A></p>
-      <p><A className="text-btn" href={`/kien-thuc/${book.grade}/tu-duy`}>{t(lang, "Bài tập tư duy và sáng tạo", "Thinking and creative problems")}</A></p>
+      <p><A className="pay-btn" href={`/kien-thuc/${book.grade}/lo-trinh`}>{t(lang, "Lộ trình lớp này", "This grade's path")}</A></p>
+      <p className="lecture-note">
+        {t(lang, "Lộ trình gom bài học, thí nghiệm, dạng bài, phương pháp và bài tư duy theo từng chương. Xem riêng: ", "The path gathers lessons, labs, problem types, methods and thinking problems chapter by chapter. Or see them on their own: ")}
+        <A href={`/kien-thuc/${book.grade}/dang`}>{t(lang, "dạng bài", "problem types")}</A>{" · "}
+        <A href={`/kien-thuc/${book.grade}/tu-duy`}>{t(lang, "bài tư duy", "thinking problems")}</A>
+      </p>
       {book.grade === 12 ? (
         <p>
           <A className="text-btn" href="/thi-thu">{t(lang, "Thi thử theo cấu trúc 2025: nhiều lựa chọn, đúng/sai, trả lời ngắn", "Mock exam in the 2025 format: multiple choice, true/false, short answer")}</A>

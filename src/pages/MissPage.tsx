@@ -31,6 +31,7 @@ export function MissPage() {
       title={t(lang, "Những câu còn sai", "Questions still wrong")}
       lead={t(lang, "Mọi câu bạn từng làm sai trong Đề tổng hợp, và số câu sai trong từng chuyên đề. Làm lại một câu cho đến khi đúng thì câu đó rời khỏi sổ.", "Misses from the mixed drill, and the count of misses on each topic sheet.")}
     >
+      <p className="lecture-note"><A href="/on-loi-sai">{t(lang, "Xem lịch ôn lại các câu sai", "See the review schedule")}</A></p>
       {total === 0 ? (
         <div className="miss-empty">
           <p>{t(lang, "Chưa có câu sai nào. Làm vài câu rồi quay lại đây.", "No misses yet. Answer a few questions, then come back here.")}</p>

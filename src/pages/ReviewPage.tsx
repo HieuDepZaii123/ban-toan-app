@@ -70,6 +70,7 @@ export function ReviewPage() {
         "Questions you miss in mock exams land here and come back after 1, 3, 7 and then 14 days. Four right answers spaced apart and the question counts as learned.",
       )}
     >
+      <p className="lecture-note"><A href="/so-loi">{t(lang, "Về Sổ câu sai", "Back to the miss book")}</A></p>
       {state.papers === 0 ? (
         <p className="pay-card">
           <b>{t(lang, "Chưa có đề nào được chấm.", "No scored paper yet.")}</b>

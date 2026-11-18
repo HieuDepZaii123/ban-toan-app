@@ -1834,3 +1834,6 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .path-kind-think { background: var(--clay-soft); color: var(--clay); }
 .path-items li { display: flex; gap: 8px; align-items: baseline; }
 .path-items .think-kind { flex: none; white-space: nowrap; }
+
+.home-explore { margin: 1.25rem 0; }
+.home-explore h2 { margin: 0 0 0.5rem; font-size: 1.05rem; }

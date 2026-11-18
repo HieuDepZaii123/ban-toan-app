@@ -55,6 +55,7 @@ export function HomeDesk() {
         ) : (
           <GradeHero grade={grade} onChange={() => setPicking(true)} />
         )}
+        {grade !== null && !picking ? <ExploreStrip grade={grade} /> : null}
         {young ? (
           <details className="home-more">
             <summary>{t(lang, "Chuyên đề THPT (lớp 10–12) và Khoa học", "Upper-secondary topics (grades 10–12) and Science")}</summary>
@@ -65,6 +66,33 @@ export function HomeDesk() {
       </main>
       <SiteFooter />
     </div>
+  );
+}
+
+/** Hai cửa vào ít người thấy nếu chỉ đi theo bài học: thí nghiệm kéo thả và bài tư duy. */
+function ExploreStrip({ grade }: { grade: Grade }) {
+  const lang = useLang();
+  const labsFit = grade === "adult" || (typeof grade === "number" && grade >= 10);
+  return (
+    <section className="home-explore" aria-labelledby="explore-title">
+      <h2 id="explore-title">{t(lang, "Khám phá thêm", "Explore more")}</h2>
+      <div className="study-list">
+        <A className="study-card" href="/thi-nghiem">
+          <span>
+            <strong>{t(lang, "Thí nghiệm", "Labs")}</strong>
+            <small className="lecture-note">{labsFit ? t(lang, "Kéo thanh trượt, xem hình đổi, làm thử thách có kiểm tra.", "Drag sliders, watch the figure change, take checked challenges.") : t(lang, "Dành cho lớp 10–12; xem trước cũng được.", "For grades 10–12; take a look ahead if you like.")}</small>
+          </span>
+          <span aria-hidden="true">→</span>
+        </A>
+        <A className="study-card" href={typeof grade === "number" ? `/kien-thuc/${grade}/tu-duy` : "/tu-duy"}>
+          <span>
+            <strong>{t(lang, "Tư duy và sáng tạo", "Thinking and creating")}</strong>
+            <small className="lecture-note">{t(lang, "Tìm lỗi sai, phản ví dụ, tự ra đề: bài để nghĩ, không chỉ để tính.", "Spot errors, find counterexamples, pose problems: to think about, not only to compute.")}</small>
+          </span>
+          <span aria-hidden="true">→</span>
+        </A>
+      </div>
+    </section>
   );
 }
 
@@ -158,6 +186,7 @@ function GradeHero({ grade, onChange }: { grade: number; onChange: () => void })
       </p>
       <div className="home-cta">
         <A className="pay-btn" href={next?.href ?? `/kien-thuc/${grade}`}>{start}</A>
+        <A className="text-btn" href={`/kien-thuc/${grade}/lo-trinh`}>{t(lang, "Lộ trình lớp này", "This grade's path")}</A>
         <A className="text-btn" href={practice}>{t(lang, "Luyện nhanh", "Quick practice")}</A>
         <A className="text-btn" href={`/kien-thuc/${grade}`}>{t(lang, `Tất cả bài lớp ${grade}`, `All grade ${grade} lessons`)}</A>
         <button type="button" className="text-btn" onClick={onChange}>{t(lang, "Đổi lớp", "Change grade")}</button>

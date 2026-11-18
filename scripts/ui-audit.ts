@@ -46,7 +46,7 @@ const DESKTOP: Shape = { name: "máy tính", width: 1280, height: 800, mobile: f
 const STATIC = [
   "/", "/kien-thuc", "/so-cong-thuc", "/phuong-phap", "/khoa-hoc", "/nghien-cuu", "/luyen", "/luyen-lop", "/luyen-lop/3",
   "/luyen-thpt", "/thi-thu", "/so-loi", "/on-loi-sai", "/danh-gia", "/soan-tai-lieu", "/xuong-hinh", "/may-tinh", "/tai-lieu",
-  "/nang-cap", "/chinh-sach", "/gioi-thieu", "/du-lieu", "/phu-huynh",
+  "/thi-nghiem", "/tu-duy", "/nang-cap", "/chinh-sach", "/gioi-thieu", "/du-lieu", "/phu-huynh",
 ];
 
 function routes(): { path: string; shapes: Shape[] }[] {
