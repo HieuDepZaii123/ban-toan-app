@@ -1,0 +1,12 @@
+[
+  {
+    "id": "2026-11-18-a",
+    "note": "Vòng 20 vai đầu tiên của bộ này, trước các nền móng.",
+    "scores": { "gv12": 7, "parent5": 6, "thcs": 8, "hs6": 6, "hs10": 6, "hs12": 5, "lecturer": 7, "a11y": 7, "keyboard": 6, "mobile": 6, "english": 8, "katex": 5, "pedagogy": 7, "game": 4, "qa": 7, "perf": 6, "security": 8, "curriculum": 6, "creative": 4, "pm": 5 }
+  },
+  {
+    "id": "2026-11-19-b",
+    "note": "Vòng 10 vai sau vòng sửa lỗi, trước các nền móng.",
+    "scores": { "gv12": 7, "hs12": 6, "thcs": 7, "lecturer": 7, "a11y": 6, "mobile": 7, "katex": 6, "creative": 5, "qa": 6, "pm": 5 }
+  }
+]

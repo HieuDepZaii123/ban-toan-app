@@ -14,7 +14,7 @@ export function ThinkView({ book }: { book: GradeBook }) {
     <PageFrame
       kicker={t(lang, `Lớp ${book.grade}`, `Grade ${book.grade}`)}
       title={t(lang, "Bài tập tư duy và sáng tạo", "Thinking and creative problems")}
-      lead={t(lang, "Năm bài để nghĩ kỹ chứ không chỉ tính: đố mẹo, tìm lỗi sai, tìm phản ví dụ, tự ra đề và thử nhiều cách giải.", "Five problems to think about, not just compute: puzzles, spotting errors, counterexamples, posing your own problem and trying several methods.")}
+      lead={t(lang, "Các bài để nghĩ kỹ chứ không chỉ tính: đố mẹo, tìm lỗi sai, tìm phản ví dụ, tự ra đề và thử nhiều cách giải.", "Problems to think about, not just compute: puzzles, spotting errors, counterexamples, posing your own problem and trying several methods.")}
     >
       <p><A href={`/kien-thuc/${book.grade}`}>{t(lang, `Về các bài lớp ${book.grade}`, `Back to grade ${book.grade} lessons`)}</A></p>
       {list.map((item, i) => <ThinkCard key={item.title.vi} item={item} index={i + 1} />)}

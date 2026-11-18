@@ -22,17 +22,17 @@ export const DANG_CHAPTER: Record<number, string[]> = {
 
 /** Chương của từng bài tư duy theo lớp, theo thứ tự trong src/content/think/*.ts (5 bài mỗi lớp). */
 export const THINK_CHAPTER: Record<number, string[]> = {
-  1: ["cong-tru", "cong-tru", "cong-tru", "cong-tru", "cong-tru"],
-  2: ["cong-tru", "cong-tru", "cong-tru", "cong-tru", "nhan"],
+  1: ["cong-tru", "cong-tru", "cong-tru", "cong-tru", "cong-tru", "do-xem"],
+  2: ["cong-tru", "cong-tru", "cong-tru", "cong-tru", "nhan", "do-dai", "hinh-so-lieu-2"],
   3: ["nhan-chia", "nhan-chia", "nhan-chia", "do", "nhan-chia"],
-  4: ["bon-phep-tinh", "phan-so", "thong-ke-4", "bon-phep-tinh", "bon-phep-tinh"],
-  5: ["phan-tram", "phan-tram", "ti-so", "thap-phan", "thap-phan"],
-  6: ["chia-het", "so-nguyen", "so-nguyen", "phan-so", "chia-het"],
+  4: ["bon-phep-tinh", "phan-so", "thong-ke-4", "bon-phep-tinh", "bon-phep-tinh", "goc-duong"],
+  5: ["phan-tram", "phan-tram", "ti-so", "thap-phan", "thap-phan", "dien-tich"],
+  6: ["chia-het", "so-nguyen", "so-nguyen", "phan-so", "chia-het", "hinh"],
   7: ["ti-le", "huu-ti", "ti-le", "tam-giac", "tam-giac"],
-  8: ["dang-thuc", "dang-thuc", "pt-ham", "dang-thuc", "dang-thuc"],
-  9: ["pt-b2", "can", "can", "lg-vuong", "he-pt"],
-  10: ["menh-de", "menh-de", "ham-bac-hai", "vecto", "ham-bac-hai"],
-  11: ["gioi-han", "dao-ham", "gioi-han", "xs-11", "xs-11"],
+  8: ["dang-thuc", "dang-thuc", "pt-ham", "dang-thuc", "dang-thuc", "tam-giac"],
+  9: ["pt-b2", "can", "can", "lg-vuong", "he-pt", "tan-so"],
+  10: ["menh-de", "menh-de", "ham-bac-hai", "vecto", "ham-bac-hai", "thong-ke"],
+  11: ["gioi-han", "dao-ham", "gioi-han", "xs-11", "xs-11", "khong-gian"],
   12: ["khao-sat", "tich-phan", "tich-phan", "xs-12", "oxyz"],
 };
 
