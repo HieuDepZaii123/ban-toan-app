@@ -10,6 +10,7 @@ import { useLang } from "../ui/useLang.ts";
 import { Motion } from "../motion/Motion.tsx";
 import { Room } from "./Room.tsx";
 import { DeskTools, Welcome } from "./Welcome.tsx";
+import { WhyDifferent } from "./WhyDifferent.tsx";
 
 export function HomeDesk() {
   const lang = useLang();
@@ -49,7 +50,7 @@ export function HomeDesk() {
       <SiteHeader />
       <main id="content">
         <Welcome />
-        <section className={`home-start${folded ? " is-searching" : ""}`} aria-label={t(lang, "Bắt đầu", "Start")}>
+        <section id="chuyen-de" className={`home-start${folded ? " is-searching" : ""}`} aria-label={t(lang, "Bắt đầu", "Start")}>
           {folded ? null : <Continue />}
           <div className="home-find">
             <form className="search home-search" role="search" onSubmit={(event) => event.preventDefault()}>
@@ -100,6 +101,7 @@ export function HomeDesk() {
             ))}
           </div>
         </section>
+        <WhyDifferent />
         <DeskCorner />
       </main>
       <SiteFooter />

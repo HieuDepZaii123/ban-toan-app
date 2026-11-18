@@ -8,19 +8,43 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ: một câu nói bàn này là gì. Logo đã có trên thanh đầu trang. */
+/** Đầu trang chủ: một tuyên ngôn ngược với cách học thuộc lòng, rồi ba khối so sánh cách cũ với cách của Bàn Toán. */
 export function Welcome() {
   const lang = useLang();
   return (
     <section className="hero-welcome">
-      <h1>{t(lang, "Mười bốn chuyên đề, có số để tự kiểm.", "Fourteen topics, with a number you can check.")}</h1>
-      <p className="lead">
+      <p className="kicker">{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo", "Bàn Toán – a place to learn, research and create")}</p>
+      <h1>{t(lang, "Toán không phải để học thuộc.", "Maths is not for memorising.")}</h1>
+      <p className="lead hero-manifesto">
         {t(
           lang,
-          "Kéo một tham số, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
-          "Drag one parameter, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
-        )}
+          "Lớp học quen thuộc dạy bạn chép công thức, giải theo bài mẫu rồi chờ chấm điểm. Bàn Toán làm ngược lại: bạn thấy toán chuyển động, tự đặt câu hỏi, tự kiểm chứng, và hiểu vì sao trước khi phải nhớ.",
+          "The usual classroom has you copy formulas, follow the worked example and wait for a mark. Bàn Toán turns that around: you watch maths move, ask your own questions, test them yourself, and understand why before you have to remember.",
+        )}{" "}
+        <a href="#vi-sao">{t(lang, "Vì sao Bàn Toán khác?", "Why is Bàn Toán different?")}</a>
       </p>
+      <p className="lead hero-call">{t(lang, "Hãy biến những ý tưởng của bạn thành hiện thực.", "Turn your ideas into reality.")}</p>
+      {/* One block per word of the title. Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies). */}
+      <div className="pillars">
+        {PILLARS.map((pillar) => (
+          <article key={pillar.id} className="pillar" aria-labelledby={`pillar-${pillar.id}`}>
+            <PillarMark id={pillar.id} />
+            <h2 id={`pillar-${pillar.id}`}>{t(lang, pillar.vi, pillar.en)}</h2>
+            <p className="pillar-instead">
+              <span>{t(lang, "Không", "Not")}</span> <s>{t(lang, pillar.oldVi, pillar.oldEn)}</s>
+            </p>
+            <p className="pillar-gist">{t(lang, pillar.gistVi, pillar.gistEn)}</p>
+            <p className="pillar-body">{t(lang, pillar.bodyVi, pillar.bodyEn)}</p>
+            <p className="pillar-links">
+              {pillar.links.map((link) => (
+                link.href.startsWith("#")
+                  ? <a key={link.href} href={link.href}>{t(lang, link.vi, link.en)}</a>
+                  : <A key={link.href} href={link.href}>{t(lang, link.vi, link.en)}</A>
+              ))}
+            </p>
+          </article>
+        ))}
+      </div>
       <p className="lead home-premium">
         {t(
           lang,
@@ -30,6 +54,88 @@ export function Welcome() {
         <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
       </p>
     </section>
+  );
+}
+
+type PillarId = "hoc" | "nghien-cuu" | "sang-tao";
+
+const PILLARS: {
+  id: PillarId;
+  vi: string; en: string;
+  /** The habit this pillar replaces, shown struck through. */
+  oldVi: string; oldEn: string;
+  gistVi: string; gistEn: string;
+  bodyVi: string; bodyEn: string;
+  links: { href: string; vi: string; en: string }[];
+}[] = [
+  {
+    id: "hoc",
+    vi: "Học tập", en: "Learn",
+    oldVi: "chép công thức, học thuộc", oldEn: "memorising formulas",
+    gistVi: "Chạm vào toán, thấy toán chuyển động.",
+    gistEn: "Touch maths and watch it move.",
+    bodyVi: "Kéo một tham số, đồ thị đổi theo ngay trước mắt. Mười bốn chuyên đề THPT và 182 bài từ lớp 1 đến lớp 12, bài nào cũng giải từng bước và nói rõ vì sao.",
+    bodyEn: "Drag a parameter and the graph changes right in front of you. Fourteen upper-secondary topics and 182 lessons from grade 1 to 12, each worked step by step with the reason for every step.",
+    links: [
+      { href: "#chuyen-de", vi: "Chuyên đề", en: "Topics" },
+      { href: "/kien-thuc", vi: "Lớp 1–12", en: "Grades 1–12" },
+      { href: "/thi-thu", vi: "Thi thử 2025", en: "2025 mock exam" },
+    ],
+  },
+  {
+    id: "nghien-cuu",
+    vi: "Nghiên cứu", en: "Research",
+    oldVi: "làm theo bài mẫu", oldEn: "copying the example",
+    gistVi: "Đặt câu hỏi như một nhà toán học.",
+    gistEn: "Ask questions like a mathematician.",
+    bodyVi: "Nêu giả thuyết, tự đo, tự vẽ đồ thị, rồi đối chiếu với chứng minh. 28 bài nghiên cứu dẫn bạn đi từ phỏng đoán đến chắc chắn.",
+    bodyEn: "Make a guess, measure it, plot it yourself, then check it against the proof. 28 investigations take you from a hunch to certainty.",
+    links: [
+      { href: "/nghien-cuu", vi: "Nghiên cứu", en: "Research" },
+      { href: "/khoa-hoc", vi: "Khoa học", en: "Science" },
+    ],
+  },
+  {
+    id: "sang-tao",
+    vi: "Sáng tạo", en: "Create",
+    oldVi: "chỉ giải đề có sẵn", oldEn: "only solving set problems",
+    gistVi: "Từ ý tưởng đến hình khối.",
+    gistEn: "From an idea to a shape you can turn.",
+    bodyVi: "Dựng hình phẳng, xoay khối không gian, soạn đề và phiếu học có công thức. Điều bạn nghĩ ra, bạn làm ra được ở đây.",
+    bodyEn: "Build plane figures, turn solids in space, write tests and worksheets with formulas. What you think up, you can make here.",
+    links: [
+      { href: "/xuong-hinh", vi: "Xưởng hình", en: "Workshop" },
+      { href: "/soan-tai-lieu", vi: "Soạn tài liệu", en: "Documents" },
+    ],
+  },
+];
+
+/** A small drawing for each pillar: a parabola with its tangent, measured points with a fitted line, a cube. */
+function PillarMark({ id }: { id: PillarId }) {
+  return (
+    <svg className="pillar-mark" viewBox="0 0 72 44" aria-hidden="true">
+      {id === "hoc" ? (
+        <>
+          <path d="M8 6 Q36 64 64 6" />
+          <path className="soft" d="M22 40 L62 10" />
+          <circle cx="46" cy="22" r="3" />
+        </>
+      ) : null}
+      {id === "nghien-cuu" ? (
+        <>
+          <path className="soft" d="M6 38 L66 8" />
+          {[[12, 33], [20, 31], [27, 25], [35, 24], [43, 18], [51, 16], [60, 10]].map(([x, y]) => (
+            <circle key={x} cx={x} cy={y} r="2.6" />
+          ))}
+        </>
+      ) : null}
+      {id === "sang-tao" ? (
+        <>
+          <path d="M18 14 H46 V40 H18 Z M18 14 L30 4 H58 L46 14 M58 4 V30 L46 40" />
+          <path className="soft" d="M18 40 L30 30 H58 M30 30 V4" />
+        </>
+      ) : null}
+    </svg>
   );
 }
 
