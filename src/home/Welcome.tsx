@@ -31,7 +31,7 @@ export function Welcome() {
             <PillarMark id={pillar.id} />
             <h2 id={`pillar-${pillar.id}`}>{t(lang, pillar.vi, pillar.en)}</h2>
             <p className="pillar-instead">
-              <span>{t(lang, "Thay vì", "Instead of")}</span> <s>{t(lang, pillar.oldVi, pillar.oldEn)}</s>
+              <span>{t(lang, "Không", "Not")}</span> <s>{t(lang, pillar.oldVi, pillar.oldEn)}</s>
             </p>
             <p className="pillar-gist">{t(lang, pillar.gistVi, pillar.gistEn)}</p>
             <p className="pillar-body">{t(lang, pillar.bodyVi, pillar.bodyEn)}</p>

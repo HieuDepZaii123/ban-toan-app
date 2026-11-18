@@ -4,9 +4,9 @@
 
 Lớp học quen thuộc dạy chép công thức, giải theo bài mẫu rồi chờ chấm điểm. Bàn Toán làm ngược lại: học sinh thấy toán chuyển động, tự đặt câu hỏi, tự kiểm chứng, và hiểu vì sao trước khi phải nhớ. Hãy biến những ý tưởng của bạn thành hiện thực.
 
-- **Học tập**, thay vì chép công thức, học thuộc: kéo một tham số, đồ thị đổi theo ngay trước mắt.
-- **Nghiên cứu**, thay vì làm theo bài mẫu: nêu giả thuyết, tự đo, rồi đối chiếu với chứng minh.
-- **Sáng tạo**, thay vì chỉ giải đề có sẵn: dựng hình, xoay khối, soạn đề của riêng mình.
+- **Học tập** – không chép công thức, học thuộc: kéo một tham số, đồ thị đổi theo ngay trước mắt.
+- **Nghiên cứu** – không làm theo bài mẫu: nêu giả thuyết, tự đo, rồi đối chiếu với chứng minh.
+- **Sáng tạo** – không chỉ giải đề có sẵn: dựng hình, xoay khối, soạn đề của riêng mình.
 
 Bàn Toán là bàn làm việc cho toán từ lớp 1 đến lớp 12. Học sinh kéo tham số, nhìn đồ thị đổi, rồi làm câu có gợi ý và lời giải.
 

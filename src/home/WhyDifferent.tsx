@@ -2,7 +2,7 @@ import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 
 /**
- * "Vì sao Bàn Toán khác": each reason names the usual habit it replaces and the feature that replaces it.
+ * "Vì sao Bàn Toán khác": each reason names the usual habit it rejects ("Không …") and the feature that replaces it.
  * Every claim is something the app does today (see the file named in each comment). No promised results:
  * the app has no outcome data yet, so the copy describes the method, not test scores.
  */
@@ -98,7 +98,7 @@ export function WhyDifferent() {
         {REASONS.map((reason) => (
           <article key={reason.id} className="why-card" aria-labelledby={`why-${reason.id}`}>
             <p className="pillar-instead">
-              <span>{t(lang, "Thay vì", "Instead of")}</span> <s>{t(lang, reason.oldVi, reason.oldEn)}</s>
+              <span>{t(lang, "Không", "Not")}</span> <s>{t(lang, reason.oldVi, reason.oldEn)}</s>
             </p>
             <h3 id={`why-${reason.id}`}>{t(lang, reason.vi, reason.en)}</h3>
             <p>{t(lang, reason.bodyVi, reason.bodyEn)}</p>
