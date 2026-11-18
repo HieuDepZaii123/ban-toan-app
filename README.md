@@ -1,6 +1,6 @@
 # Bàn Toán
 
-Đừng tốn thời gian học những thứ lạc hậu, lỗi thời. Hãy thay đổi cách nhìn nhận và tiếp cận môn toán.
+**Bàn Toán – nơi học tập, nghiên cứu và sáng tạo.** Hãy biến những ý tưởng của bạn thành hiện thực.
 
 Bàn Toán là bàn làm việc cho toán từ lớp 1 đến lớp 12. Học sinh kéo tham số, nhìn đồ thị đổi, rồi làm câu có gợi ý và lời giải.
 

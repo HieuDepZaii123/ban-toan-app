@@ -8,17 +8,17 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ: lời mời đổi cách học toán, rồi bàn này làm điều đó thế nào. Logo đã có trên thanh đầu trang. */
+/** Đầu trang chủ: Bàn Toán là nơi học, nghiên cứu và sáng tạo, rồi các công cụ để làm điều đó. */
 export function Welcome() {
   const lang = useLang();
   return (
     <section className="hero-welcome">
-      <h1>{t(lang, "Hãy thay đổi cách nhìn nhận và tiếp cận môn toán.", "Change how you see and approach maths.")}</h1>
+      <h1>{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo.", "Bàn Toán – a place to learn, research and create.")}</h1>
       <p className="lead">
         {t(
           lang,
-          "Đừng tốn thời gian học những thứ lạc hậu, lỗi thời. Ở đây bạn kéo một tham số, nhìn hình đổi theo, đọc số vừa tính, rồi làm câu có lời giải. Mỗi tờ có phần Cơ bản, phần Chuẩn thi, và một câu khó hơn.",
-          "Don't spend time learning what is outdated. Here you drag one parameter, watch the figure change, read the number you just got, then work a question with a solution. Each sheet has a basic part, an exam part, and one harder question.",
+          "Hãy biến những ý tưởng của bạn thành hiện thực. Kéo một tham số và nhìn hình đổi theo, đặt giả thuyết rồi tự đo trong tab Nghiên cứu, dựng hình và khối trong Xưởng hình, rồi làm câu có lời giải để chắc mình đã hiểu.",
+          "Turn your ideas into reality. Drag a parameter and watch the figure change, make a guess and measure it yourself in the Research tab, build figures and solids in the Workshop, then work questions with solutions to be sure you understand.",
         )}
       </p>
       <p className="lead home-premium">
