@@ -123,14 +123,14 @@ const quadratic: Challenge[] = [
   {
     id: "q-fence",
     vi: "Tìm $x$ để diện tích chuồng $S=x(40-2x)$ lớn nhất.",
-    en: "Find $x$ that makes the pen area $S=x(40-2x)$ as large as possible.",
+    en: "Find $x$ that makes the area $S=x(40-2x)$ of the pen as large as possible.",
     set: { scene: 2, fence: 3 },
     sol: { scene: 2, fence: 10 },
     check: (v, say) => {
       const area = fence(v.fence).area;
       return judge(
         say,
-        [[area >= 199.9, `Với $x=${say.n(v.fence)}$ diện tích mới là $${say.n(area)}$, còn có thể lớn hơn.`, `With $x=${say.n(v.fence)}$ the area is only $${say.n(area)}$, it can get bigger.`]],
+        [[area >= 200 - 1e-9, `Với $x=${say.n(v.fence)}$ diện tích mới là $${say.n(area)}$, còn có thể lớn hơn.`, `With $x=${say.n(v.fence)}$ the area is only $${say.n(area)}$, it can get bigger.`]],
         [`$x=${say.n(v.fence)}$ cho $S=${say.n(area)}$, gần giá trị lớn nhất $200$ tại $x=10$.`, `$x=${say.n(v.fence)}$ gives $S=${say.n(area)}$, close to the maximum $200$ at $x=10$.`],
       );
     },
@@ -216,8 +216,8 @@ const ineq: Challenge[] = [
   },
   {
     id: "i-workshop-out",
-    vi: "Tìm một điểm ngoài miền mà $P$ lớn hơn $42$, rồi giải thích vì sao không dùng được.",
-    en: "Find a point outside the region with $P$ above $42$, then explain why it cannot be used.",
+    vi: "Tìm một điểm ngoài miền mà $P$ lớn hơn $42$; lời báo sẽ cho thấy vì sao điểm đó không dùng được.",
+    en: "Find a point outside the region with $P$ above $42$; the feedback will show why it cannot be used.",
     set: { scene: 2, x: 2, y: 2 },
     sol: { scene: 2, x: 8, y: 4 },
     check: (v, say) =>
@@ -268,7 +268,7 @@ const exp: Challenge[] = [
         say,
         [
           [baseOk(v.base), `Cơ số chưa hợp lệ.`, `The base is not valid.`],
-          [near(y, 8, 0.05), `$a^x=${say.n(y)}$, cần bằng $8$.`, `$a^x=${say.n(y)}$, it should be $8$.`],
+          [near(y, 8, 1e-6), `$a^x=${say.n(y)}$, cần bằng $8$.`, `$a^x=${say.n(y)}$, it should be $8$.`],
         ],
         [`$${say.n(v.base)}^{${say.n(v.x)}}=${say.n(y)}\\approx8$.`, `$${say.n(v.base)}^{${say.n(v.x)}}=${say.n(y)}\\approx8$.`],
       );
@@ -302,7 +302,7 @@ const exp: Challenge[] = [
       const mass = decayMass(v.massTime);
       return judge(
         say,
-        [[near(mass, 10, 0.5), `Sau $${say.n(v.massTime)}$ năm còn $${say.n(mass)}$ g, cần $10$ g.`, `After $${say.n(v.massTime)}$ years $${say.n(mass)}$ g remain, it should be $10$ g.`]],
+        [[near(mass, 10, 1e-6), `Sau $${say.n(v.massTime)}$ năm còn $${say.n(mass)}$ g, cần $10$ g.`, `After $${say.n(v.massTime)}$ years $${say.n(mass)}$ g remain, it should be $10$ g.`]],
         [`$80\\cdot\\left(\\frac{1}{2}\\right)^{3}=10$: ba chu kỳ bán rã, tức $30$ năm.`, `$80\\cdot\\left(\\frac{1}{2}\\right)^{3}=10$: three half-lives, that is $30$ years.`],
       );
     },
@@ -313,7 +313,7 @@ const sequence: Challenge[] = [
   {
     id: "s-term",
     vi: "Cấp số cộng có công sai dương: chọn $u_1$, $d$, $n$ để số hạng thứ $n$ bằng $25$.",
-    en: "Arithmetic sequence with a positive common difference: choose $u_1$, $d$ and $n$ so the $n$th term equals $25$.",
+    en: "For an arithmetic sequence with a positive common difference, choose $u_1$, $d$ and $n$ so the $n$th term equals $25$.",
     set: { scene: 0, u1: 3, d: 4, n: 3 },
     sol: { scene: 0, u1: 1, d: 4, n: 7 },
     check: (v, say) => {
@@ -663,8 +663,8 @@ const integral: Challenge[] = [
   },
   {
     id: "g-between",
-    vi: "Chọn $b$ để diện tích giữa $y=x$ và $y=x^2$ đạt giá trị lớn nhất, $\\frac{1}{6}$.",
-    en: "Choose $b$ so the area between $y=x$ and $y=x^2$ is as large as possible, $\\frac{1}{6}$.",
+    vi: "Chọn $b$ để diện tích giữa $y=x$ và $y=x^2$ đạt giá trị lớn nhất (bằng $\\frac{1}{6}$).",
+    en: "Choose $b$ so the area between $y=x$ and $y=x^2$ is as large as possible (the largest value is $\\frac{1}{6}$).",
     set: { scene: 1, gap: 0.5 },
     sol: { scene: 1, gap: 1 },
     check: (v, say) => {

@@ -1,8 +1,8 @@
 {
   "title": "Phương pháp giải",
   "titleEn": "Solving methods",
-  "lead": "14 phương pháp thường gặp từ lớp 9 đến lớp 12. Nhận dạng trước, rồi mới tính. Mỗi phương pháp nêu khi nào dùng, cách nghĩ, điều kiện cần giữ, hai ví dụ đủ bước, lỗi hay gặp và bài tự luyện.",
-  "leadEn": "14 methods used from grade 9 to grade 12. Recognise the shape first, then compute. Each method says when to use it, how to think, which conditions to keep, two fully worked examples, common mistakes and practice.",
+  "lead": "22 phương pháp: mỗi lớp từ 1 đến 8 một phương pháp, và 14 phương pháp nâng cao từ lớp 9 đến lớp 12. Nhận dạng trước, rồi mới tính. Mỗi phương pháp nêu khi nào dùng, cách nghĩ, điều kiện cần giữ, hai ví dụ đủ bước, lỗi hay gặp và bài tự luyện.",
+  "leadEn": "22 methods: one for each grade from 1 to 8, plus 14 advanced methods for grades 9 to 12. Recognise the shape first, then compute. Each method says when to use it, how to think, which conditions to keep, two fully worked examples, common mistakes and practice.",
   "guide": [
     {
       "when": "Có $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ hoặc $\\sqrt{x^2-a^2}$, và không thấy sẵn đạo hàm của phần trong căn.",
@@ -2038,7 +2038,7 @@
           "prompt": "Giá $50$ nghìn tăng $20\\%$. Giá mới?",
           "answer": "$60$ nghìn",
           "steps": [
-            "Còn thành $120\\%=1{,}2$ giá cũ.",
+            "Giá mới bằng $120\\%=1{,}2$ giá cũ.",
             "$50\\times1{,}2=60$."
           ]
         }
@@ -2192,7 +2192,7 @@
         "Chia một số theo tỉ lệ cho trước, hoặc chia tỉ lệ với các số đã cho."
       ],
       "thinking": [
-        "Tự hỏi: đại lượng này tăng gấp đôi thì đại lượng kia thế nào? Cùng tăng là tỉ lệ thuận, một tăng một giảm là tỉ lệ nghịch.",
+        "Tự hỏi: đại lượng này tăng gấp đôi thì đại lượng kia thế nào? Cũng gấp đôi và thương $y:x$ không đổi là tỉ lệ thuận. Một đại lượng tăng, đại lượng kia giảm và tích $xy$ không đổi là tỉ lệ nghịch. Chỉ thấy cùng tăng thì chưa đủ để kết luận.",
         "Tỉ lệ thuận: $\\frac{y_1}{x_1}=\\frac{y_2}{x_2}$. Tỉ lệ nghịch: $x_1y_1=x_2y_2$.",
         "Chia theo tỉ lệ: cộng các phần, chia để được giá trị một phần, rồi nhân."
       ],

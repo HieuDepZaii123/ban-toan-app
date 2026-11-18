@@ -1812,3 +1812,12 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .kind-error { background: var(--clay-soft); color: var(--clay); }
 .kind-counter { background: var(--clay-soft); color: var(--clay); }
 .kind-design { background: var(--ok-soft); color: var(--ok); }
+
+/* Sau vòng đánh giá: vùng chạm 44px trong lab, dải tab điện thoại gọn hơn, công thức dài không tràn khung. */
+.lab-tools button, .lab-tools input, .challenge button { min-height: 44px; }
+.think-card, .tool-card, .challenge, .lab-tools { min-width: 0; overflow-wrap: anywhere; }
+.think-card .mathline, .tool-card .mathline { max-width: 100%; overflow-x: auto; vertical-align: bottom; }
+@media (max-width: 420px) {
+  .topic-bar .tab { padding: 0 6px; font-size: 0.9rem; }
+  .topic-bar .tabs { -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); }
+}

@@ -68,7 +68,7 @@ export const extra: Record<string, Challenge[]> = {
     {
       id: "i-cauchy-gap", level: 3,
       vi: "Chọn bốn số để vế trái hơn vế phải ít nhất $50$ trong bất đẳng thức Bu-nhi-a-cốp-xki.",
-      en: "Choose four numbers so the left side beats the right side by at least $50$ in Cauchy-Schwarz.",
+      en: "Choose four numbers so the left-hand side exceeds the right-hand side by at least $50$ in Cauchy-Schwarz.",
       hint: B("Hiệu hai vế bằng $(ad-bc)^2$; làm $ad-bc$ lớn.", "The difference of the sides is $(ad-bc)^2$; make $ad-bc$ large."),
       set: { scene: 1, p: 1, q: 2, c: 3, d: 4 }, sol: { scene: 1, p: 6, q: 0, c: 0, d: 6 },
       check: (v, say) => {
@@ -100,7 +100,7 @@ export const extra: Record<string, Challenge[]> = {
       set: { scene: 0, base: 3, x: 1 }, sol: { scene: 0, base: 2, x: -2 },
       check: (v, say) => {
         const y = expY(v.base, v.x);
-        return judge(say, [[baseOk(v.base), `Cơ số chưa hợp lệ.`, `The base is not valid.`], [v.x < 0, `Cần $x<0$.`, `Need $x<0$.`], [near(y, 0.25, 0.006), `$a^x=${say.n(y)}$, cần $0{,}25$.`.replace("0{,}25", say.en ? "0.25" : "0{,}25"), `$a^x=${say.n(y)}$, it should be $0.25$.`]],
+        return judge(say, [[baseOk(v.base), `Cơ số chưa hợp lệ.`, `The base is not valid.`], [v.x < 0, `Cần $x<0$.`, `Need $x<0$.`], [near(y, 0.25, 1e-6), `$a^x=${say.n(y)}$, cần $0{,}25$.`.replace("0{,}25", say.en ? "0.25" : "0{,}25"), `$a^x=${say.n(y)}$, it should be $0.25$.`]],
           [`$${say.n(v.base)}^{${say.n(v.x)}}=\\frac{1}{${say.n(1 / y)}}$.`, `$${say.n(v.base)}^{${say.n(v.x)}}=\\frac{1}{${say.n(1 / y)}}$.`]);
       },
     },
@@ -171,7 +171,7 @@ export const extra: Record<string, Challenge[]> = {
       en: "Find an angle with $\\sin\\alpha<0$ and $\\cos\\alpha>0$.",
       hint: B("Đó là góc phần tư thứ tư.", "That is the fourth quadrant."),
       set: { scene: 0, angle: 150 }, sol: { scene: 0, angle: 300 },
-      check: (v, say) => judge(say, [[sinDeg(v.angle) < 0, `$\\sin=${say.n(sinDeg(v.angle))}$ chưa âm.`, `$\\sin=${say.n(sinDeg(v.angle))}$ is not negative.`], [cosDeg(v.angle) > 0, `$\\cos=${say.n(cosDeg(v.angle))}$ chưa dương.`, `$\\cos=${say.n(cosDeg(v.angle))}$ is not positive.`]],
+      check: (v, say) => judge(say, [[sinDeg(v.angle) < -1e-9, `$\\sin=${say.n(sinDeg(v.angle))}$ chưa âm.`, `$\\sin=${say.n(sinDeg(v.angle))}$ is not negative.`], [cosDeg(v.angle) > 1e-9, `$\\cos=${say.n(cosDeg(v.angle))}$ chưa dương.`, `$\\cos=${say.n(cosDeg(v.angle))}$ is not positive.`]],
         [`Góc phần tư thứ tư: sin âm, cos dương.`, `Fourth quadrant: sine negative, cosine positive.`]),
     },
     {
@@ -180,7 +180,7 @@ export const extra: Record<string, Challenge[]> = {
       en: "Find an angle with $\\cos\\alpha=-\\frac{1}{2}$ and $\\sin\\alpha<0$.",
       hint: B("Góc phần tư thứ ba, tham chiếu $60^\\circ$.", "Third quadrant, reference angle $60^\\circ$."),
       set: { scene: 0, angle: 100 }, sol: { scene: 0, angle: 240 },
-      check: (v, say) => judge(say, [[near(cosDeg(v.angle), -0.5, 1e-6), `$\\cos=${say.n(cosDeg(v.angle))}$, cần $-0{,}5$.`.replace("0{,}5", say.en ? "0.5" : "0{,}5"), `$\\cos=${say.n(cosDeg(v.angle))}$, it should be $-0.5$.`], [sinDeg(v.angle) < 0, `$\\sin\\alpha>0$ nên đây là góc $120^\\circ$, không phải $240^\\circ$.`, `$\\sin\\alpha>0$, so this is $120^\\circ$, not $240^\\circ$.`]],
+      check: (v, say) => judge(say, [[near(cosDeg(v.angle), -0.5, 1e-6), `$\\cos=${say.n(cosDeg(v.angle))}$, cần $-0{,}5$.`.replace("0{,}5", say.en ? "0.5" : "0{,}5"), `$\\cos=${say.n(cosDeg(v.angle))}$, it should be $-0.5$.`], [sinDeg(v.angle) < -1e-9, `$\\sin\\alpha>0$ nên đây là góc $120^\\circ$, không phải $240^\\circ$.`, `$\\sin\\alpha>0$, so this is $120^\\circ$, not $240^\\circ$.`]],
         [`$240^\\circ=180^\\circ+60^\\circ$.`, `$240^\\circ=180^\\circ+60^\\circ$.`]),
     },
     {
@@ -357,14 +357,14 @@ export const extra: Record<string, Challenge[]> = {
     {
       id: "w-parallel", level: 1,
       vi: "Chọn $\\vec u$ và $\\vec v$ khác $\\vec 0$ để tích có hướng $[\\vec u,\\ \\vec v]=\\vec 0$.",
-      en: "Choose nonzero $\\vec u$ and $\\vec v$ with cross product $[\\vec u,\\ \\vec v]=\\vec 0$.",
+      en: "Choose nonzero $\\vec u$ and $\\vec v$ that are parallel, so that $\\vec u\\times\\vec v=\\vec 0$.",
       hint: B("Hai vectơ cùng phương.", "The two vectors are parallel."),
       set: { scene: 0, ux: 2, uy: 1, uz: 2, vx: 1, vy: -1, vz: 2 }, sol: { scene: 0, ux: 2, uy: 1, uz: 2, vx: 4, vy: 2, vz: 4 },
       check: (v, say) => {
         const u: [number, number, number] = [v.ux, v.uy, v.uz];
         const w: [number, number, number] = [v.vx, v.vy, v.vz];
         const cr = vec3Cross(u, w);
-        return judge(say, [[u.some((x) => x !== 0) && w.some((x) => x !== 0), `Một vectơ là $\\vec 0$.`, `One vector is $\\vec 0$.`], [cr.every((x) => near(x, 0, 1e-9)), `$[\\vec u,\\ \\vec v]=(${cr.map((x) => say.n(x)).join(say.en ? ", " : ";\\ ")})\\ne\\vec 0$.`, `$[\\vec u,\\ \\vec v]=(${cr.map((x) => say.n(x)).join(", ")})\\ne\\vec 0$.`]], [`Hai vectơ cùng phương nên tích có hướng bằng $\\vec 0$.`, `The vectors are parallel, so the cross product is $\\vec 0$.`]);
+        return judge(say, [[u.some((x) => x !== 0) && w.some((x) => x !== 0), `Một vectơ là $\\vec 0$.`, `One vector is $\\vec 0$.`], [cr.every((x) => near(x, 0, 1e-9)), `$[\\vec u,\\ \\vec v]=(${cr.map((x) => say.n(x)).join(say.en ? ", " : ";\\ ")})\\ne\\vec 0$.`, `$\\vec u\\times\\vec v=(${cr.map((x) => say.n(x)).join(", ")})\\ne\\vec 0$.`]], [`Hai vectơ cùng phương nên tích có hướng bằng $\\vec 0$.`, `The vectors are parallel, so the cross product is $\\vec 0$.`]);
       },
     },
     {
@@ -473,7 +473,7 @@ export const extra: Record<string, Challenge[]> = {
       id: "c-low-outlier", level: 3,
       vi: "Chọn điểm lệch để trung vị bằng $3$ và trung bình nhỏ hơn $3$.",
       en: "Choose the outlier so the median is $3$ and the mean is below $3$.",
-      hint: B("Điểm lệch phải nhỏ hơn $2$ hoặc bằng $2$.", "The outlier must be at most $2$."),
+      hint: B("Trung bình dưới $3$ cần $14+x<15$, tức $x<1$.", "A mean below $3$ needs $14+x<15$, that is $x<1$."),
       set: { scene: 2, outlier: 6 }, sol: { scene: 2, outlier: 0 },
       check: (v, say) => {
         const scores = [2, 3, 4, 5, v.outlier];

@@ -87,22 +87,27 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
     return () => window.clearTimeout(timer);
   }, [current]);
 
+  const flush = () => {
+    if (spec) hist.current.record(readParams(id, spec.init, spec.range));
+  };
   const apply = (p: Params) => {
     writeParams(id, p);
     onPreset();
     bump((n) => n + 1);
   };
   const undo = () => {
+    flush();
     const p = hist.current.undo();
     if (p) apply(p);
   };
   const redo = () => {
+    flush();
     const p = hist.current.redo();
     if (p) apply(p);
   };
   const reset = () => {
     if (!spec) return;
-    hist.current.record(current);
+    flush();
     hist.current.record({ ...spec.init });
     apply({ ...spec.init });
     setStatus(t(lang, "Đã đặt lại về ban đầu.", "Back to the starting setup."));
@@ -144,6 +149,7 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
           if (chip) {
             event.preventDefault();
             chip.click();
+            chip.focus();
           }
         } else if ((event.key === "ArrowLeft" || event.key === "ArrowRight") && !(el instanceof HTMLInputElement) && !onControl) {
           const target = lastRange.current?.isConnected ? lastRange.current : area?.querySelector<HTMLInputElement>(".stage input[type=range]") ?? null;
@@ -161,6 +167,13 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
       document.removeEventListener("keydown", onKey);
     };
   }, [id]);
+
+  useEffect(() => {
+    if (snapshot && snapshot.params.scene !== current.scene) {
+      setSnapshot(null);
+      setStatus(t(lang, "Đã đổi cảnh nên ảnh chụp cũ bị bỏ.", "The scene changed, so the old snapshot was dropped."));
+    }
+  }, [snapshot, current.scene, lang]);
 
   useEffect(() => {
     if (!snapshot) return;
@@ -298,7 +311,7 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
           </table>
         </div>
       ) : null}
-      <details className="lab-keys">
+      <details className="lab-keys" open>
         <summary>{t(lang, "Phím tắt", "Keyboard shortcuts")}</summary>
         <ul>
           <li>{t(lang, "Dấu cách: chạy hoặc dừng.", "Space: play or stop.")}</li>

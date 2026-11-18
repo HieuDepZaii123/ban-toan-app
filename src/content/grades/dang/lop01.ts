@@ -77,7 +77,7 @@ const lop01: GradeDang[] = [
       ket: b(R`Có tất cả $7$ con vịt.`, R`There are $7$ ducks altogether.`),
       checks: [{ expr: "4+3", expect: "7" }],
     },
-    mistake: b(R`Lấy cả số vịt rồi đếm lại từ $0$ nên bị sai một hai đơn vị.`, R`Starting the count again from $0$ and ending up off by one or two.`),
+    mistake: b(R`Đếm lại từ đầu mà quên số đã có, nên kết quả bị lệch.`, R`Counting again from the start and forgetting the number already there, so the answer is off.`),
     drill: { prompt: b(R`Lan có $5$ cái kẹo, mẹ cho thêm $4$ cái. Lan có tất cả mấy cái?`, R`Lan has $5$ sweets and Mum gives her $4$ more. How many does she have altogether?`), answer: b(R`Lan có $9$ cái kẹo.`, R`Lan has $9$ sweets.`), checks: [{ expr: "5+4", expect: "9" }] },
   },
   {
@@ -123,7 +123,7 @@ const lop01: GradeDang[] = [
     spot: b(R`Đề hỏi một số có mấy chục mấy đơn vị, hoặc viết số từ số chục và số đơn vị.`, R`The problem asks how many tens and ones a number has, or to write a number from its tens and ones.`),
     method: [
       b(R`Chữ số bên trái là số chục, chữ số bên phải là số đơn vị.`, R`The left digit is the tens and the right digit is the ones.`),
-      b(R`Giá trị của số bằng số chục nhân $10$ rồi cộng số đơn vị.`, R`The value of the number is the tens times $10$ plus the ones.`),
+      b(R`Số chục cho biết có bao nhiêu chục: $6$ chục là $60$. Rồi cộng thêm số đơn vị.`, R`The tens digit tells how many tens: $6$ tens is $60$. Then add the ones.`),
     ],
     example: {
       prompt: b(R`Viết số gồm $6$ chục và $5$ đơn vị.`, R`Write the number made of $6$ tens and $5$ ones.`),

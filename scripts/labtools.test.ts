@@ -4,6 +4,7 @@
  */
 import { allLabSpecs } from "../src/content/labSpecs.ts";
 import { History, sig } from "../src/labs/history.ts";
+import { toTex } from "../src/lib/tex.ts";
 import { decodeParams, encodeParams } from "../src/labs/shared.ts";
 
 const fails: string[] = [];
@@ -26,6 +27,20 @@ const cap = new History({ n: 0 }, 5);
 for (let i = 1; i <= 20; i += 1) cap.record({ n: i });
 expect(cap.past.length === 5, "lịch sử bị chặn ở giới hạn");
 expect(sig({ b: 1, a: 2 }) === sig({ a: 2, b: 1 }), "chữ ký không phụ thuộc thứ tự khóa");
+
+const tex: [string, string][] = [
+  ["−√3/2", "$-\\frac{\\sqrt{3}}{2}$"],
+  ["√2/2", "$\\frac{\\sqrt{2}}{2}$"],
+  ["1 / 6", "$\\frac{1}{6}$"],
+  ["2^10", "$2^{10}$"],
+  ["2.5 s", "$2{,}5\\ \\mathrm{s}$"],
+  ["uₙ", "$u_{n}$"],
+  ["S′", "$S'$"],
+  ["tan 45°", "$\\tan 45^\\circ$"],
+  ["x = 1,5", "$x = 1{,}5$"],
+  ["Bằng", "Bằng"],
+];
+for (const [input, want] of tex) expect(toTex(input) === want, `toTex(${input}) = ${toTex(input)}, cần ${want}`);
 
 for (const [id, spec] of Object.entries(allLabSpecs)) {
   const code = encodeParams(spec.init);

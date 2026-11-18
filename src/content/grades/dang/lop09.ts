@@ -126,13 +126,14 @@ const lop09: GradeDang[] = [
       b(R`Tìm giao điểm với đường thẳng bằng cách giải phương trình hoành độ giao điểm.`, R`Find the intersections with a line by solving the equation of their first coordinates.`),
     ],
     example: {
-      prompt: b(R`Parabol $y=ax^2$ đi qua $(2;-6)$. Tìm $a$ và giao điểm với đường thẳng $y=x-2$ trong trường hợp $a=\frac{1}{2}$.`, R`The parabola $y=ax^2$ passes through $(2,-6)$. Find $a$, and the intersections with the line $y=x-2$ when $a=\frac{1}{2}$.`),
+      prompt: b(R`Parabol $y=ax^2$ đi qua $(2;-6)$. Tìm $a$, rồi tìm giao điểm của nó với đường thẳng $y=x-2$.`, R`The parabola $y=ax^2$ passes through $(2,-6)$. Find $a$, then find its intersections with the line $y=x-2$.`),
       steps: [
         b(R`Thay $(2;-6)$: $-6=4a$, nên $a=-\frac{3}{2}$.`, R`Substituting $(2,-6)$: $-6=4a$, so $a=-\frac{3}{2}$.`),
-        b(R`Với $a=\frac{1}{2}$: $\frac{1}{2}x^2=x-2$, tức $x^2-2x+4=0$, có $\Delta=-12<0$ nên không giao nhau.`, R`With $a=\frac{1}{2}$: $\frac{1}{2}x^2=x-2$, that is $x^2-2x+4=0$, with $\Delta=-12<0$, so no intersection.`),
+        b(R`Phương trình hoành độ giao điểm: $-\frac{3}{2}x^2=x-2$, tức $3x^2+2x-4=0$.`, R`The equation of the first coordinates: $-\frac{3}{2}x^2=x-2$, that is $3x^2+2x-4=0$.`),
+        b(R`Có $\Delta=4+48=52>0$ nên có hai giao điểm, với $x=\frac{-1\pm\sqrt{13}}{3}$.`, R`Since $\Delta=4+48=52>0$ there are two intersections, with $x=\frac{-1\pm\sqrt{13}}{3}$.`),
       ],
-      ket: b(R`Ta có $a=-\frac{3}{2}$, và với $a=\frac{1}{2}$ hai đồ thị không giao nhau.`, R`We have $a=-\frac{3}{2}$, and for $a=\frac{1}{2}$ the graphs do not meet.`),
-      checks: [{ expr: "solve(4*a+6,a)[0]", expect: "Rational(-3,2)" }, { expr: "4-4*4", expect: "-12" }],
+      ket: b(R`Ta có $a=-\frac{3}{2}$, và parabol cắt đường thẳng tại hai điểm có hoành độ $x=\frac{-1\pm\sqrt{13}}{3}$.`, R`We have $a=-\frac{3}{2}$, and the parabola meets the line at two points with $x=\frac{-1\pm\sqrt{13}}{3}$.`),
+      checks: [{ expr: "solve(4*a+6,a)[0]", expect: "Rational(-3,2)" }, { expr: "4-4*3*(-4)", expect: "52" }],
     },
     mistake: b(R`Tính $-2x^2$ tại $x=3$ thành $(-2\cdot 3)^2$.`, R`Computing $-2x^2$ at $x=3$ as $(-2\cdot 3)^2$.`),
     drill: { prompt: b(R`Tính $y=-\frac{1}{2}x^2$ tại $x=4$.`, R`Find $y=-\frac{1}{2}x^2$ at $x=4$.`), answer: b(R`Bằng $-8$.`, R`It is $-8$.`), checks: [{ expr: "-Rational(1,2)*4**2", expect: "-8" }] },

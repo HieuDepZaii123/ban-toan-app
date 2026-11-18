@@ -19,12 +19,12 @@ import { Practice } from "./Practice.tsx";
 import { DangHoc } from "./DangHoc.tsx";
 import { FocusBar } from "./FocusBar.tsx";
 import { LectureVideos } from "./LectureVideos.tsx";
-import { LabChallenges } from "../labs/LabChallenges.tsx";
-import { LabTools } from "../labs/LabTools.tsx";
-import { ThinkSet } from "./ThinkSet.tsx";
 import { writeParams } from "../lib/store.ts";
 import { SangTao } from "./SangTao.tsx";
 
+const LabChallenges = lazy(() => import("../labs/LabChallenges.tsx").then((mod) => ({ default: mod.LabChallenges })));
+const LabTools = lazy(() => import("../labs/LabTools.tsx").then((mod) => ({ default: mod.LabTools })));
+const ThinkSet = lazy(() => import("./ThinkSet.tsx").then((mod) => ({ default: mod.ThinkSet })));
 const Research = lazy(() => import("./Research.tsx").then((mod) => ({ default: mod.Research })));
 
 const QuadraticLab = lazy(() => import("../labs/QuadraticLab.tsx").then((mod) => ({ default: mod.QuadraticLab })));
@@ -74,6 +74,7 @@ export function TopicDesk({ id }: { id: string }) {
   const [pack, setPack] = useState<Loaded | null>(null);
   const [focus, setFocus] = useState(false);
   const [labRun, setLabRun] = useState(0);
+  const [shareBad, setShareBad] = useState(false);
 
   useEffect(() => {
     if (topic) setLast(topic.id);
@@ -94,6 +95,9 @@ export function TopicDesk({ id }: { id: string }) {
       if (params) {
         writeParams(topic.id, params);
         setLabRun((n) => n + 1);
+        setShareBad(false);
+      } else {
+        setShareBad(true);
       }
     });
   }, [topic, shared]);
@@ -219,14 +223,23 @@ export function TopicDesk({ id }: { id: string }) {
           Lab ? (
             <div className="lab-desk">
               <div className="lab-col">
+                {shareBad ? (
+                  <p className="note" role="status">
+                    {t(lang, "Liên kết chia sẻ không dùng được nên lab mở ở cấu hình đã lưu hoặc mặc định.", "The shared link could not be used, so the lab opened with your saved or default setup.")}
+                  </p>
+                ) : null}
                 <div className="lab-main">
                   <Suspense fallback={<div className="graph-wrap skeleton" aria-hidden="true" />}>
                     <Lab key={`${topic.id}:${labRun}`} />
                   </Suspense>
                 </div>
-                <LabTools key={topic.id} id={topic.id} onPreset={() => setLabRun((n) => n + 1)} />
+                <Suspense fallback={null}>
+                  <LabTools key={topic.id} id={topic.id} onPreset={() => setLabRun((n) => n + 1)} />
+                </Suspense>
               </div>
-              <LabChallenges key={topic.id} id={topic.id} onPreset={() => setLabRun((n) => n + 1)} />
+              <Suspense fallback={null}>
+                <LabChallenges key={topic.id} id={topic.id} onPreset={() => setLabRun((n) => n + 1)} />
+              </Suspense>
             </div>
           ) : (
             <div className="stub-stage" role="note">
@@ -243,7 +256,9 @@ export function TopicDesk({ id }: { id: string }) {
           ) : questions.length > 0 ? (
             <>
               <Practice key={topic.id} topicId={topic.id} questions={questions} vary={vary} />
-              <ThinkSet topicId={topic.id} />
+              <Suspense fallback={null}>
+                <ThinkSet topicId={topic.id} />
+              </Suspense>
             </>
           ) : (
             <div className="stub-stage" role="note">

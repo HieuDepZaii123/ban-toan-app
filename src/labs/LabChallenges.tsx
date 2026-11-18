@@ -36,6 +36,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
   const [done, setDone] = useState<string[]>(() => loadDone(id));
   const [guess, setGuess] = useState<number | null>(null);
   const [hintOpen, setHintOpen] = useState(false);
+  const [revealed, setRevealed] = useState<string[]>([]);
   const [checked, setChecked] = useState<{ verdict: Verdict; at: string; guess: number | null } | null>(null);
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
     setDone(loadDone(id));
     setGuess(null);
     setHintOpen(false);
+    setRevealed([]);
     setChecked(null);
   }, [id]);
 
@@ -69,7 +71,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
     const verdict = challenge.check(values as Dense, say);
     const at = stamp;
     setChecked({ verdict, at, guess });
-    if (verdict.ok && !done.includes(challenge.id)) {
+    if (verdict.ok && !revealed.includes(challenge.id) && !done.includes(challenge.id)) {
       const next = [...done, challenge.id];
       setDone(next);
       saveDone(id, next);
@@ -114,12 +116,30 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
         </fieldset>
       ) : null}
       <div className="challenge-actions">
-        <button type="button" className="text-btn" onClick={() => preset(challenge.set)}>{t(lang, "Đặt đề", "Set up")}</button>
+        <button
+          type="button"
+          className="text-btn"
+          onClick={() => {
+            setRevealed((list) => list.filter((item) => item !== challenge.id));
+            preset(challenge.set);
+          }}
+        >
+          {t(lang, "Đặt đề", "Set up")}
+        </button>
         <button type="button" className="play" onClick={run} disabled={needGuess}>{t(lang, "Kiểm tra", "Check")}</button>
         {challenge.hint ? (
           <button type="button" className="text-btn" aria-expanded={hintOpen} onClick={() => setHintOpen(!hintOpen)}>{t(lang, "Gợi ý", "Hint")}</button>
         ) : null}
-        <button type="button" className="text-btn" onClick={() => preset(challenge.sol)}>{t(lang, "Xem đáp án mẫu", "Show a sample answer")}</button>
+        <button
+          type="button"
+          className="text-btn"
+          onClick={() => {
+            setRevealed((list) => (list.includes(challenge.id) ? list : [...list, challenge.id]));
+            preset(challenge.sol);
+          }}
+        >
+          {t(lang, "Xem đáp án mẫu", "Show a sample answer")}
+        </button>
       </div>
       {hintOpen && challenge.hint ? <p className="note challenge-hint"><MathText text={en ? challenge.hint.en : challenge.hint.vi} /></p> : null}
       {needGuess ? <p className="note">{t(lang, "Chọn một dự đoán rồi mới kiểm tra.", "Pick a prediction before you check.")}</p> : null}
@@ -142,6 +162,9 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
                 </b>
                 <MathText text={en ? challenge.guess.why.en : challenge.guess.why.vi} />
               </p>
+            ) : null}
+            {result.verdict.ok && revealed.includes(challenge.id) && !done.includes(challenge.id) ? (
+              <p className="note">{t(lang, "Bạn đã xem đáp án mẫu nên thử thách này chưa được tính vào tiến độ. Hãy tự làm lại.", "You looked at the sample answer, so this challenge does not count towards progress. Try it again yourself.")}</p>
             ) : null}
             {result.verdict.ok && index + 1 < spec.challenges.length ? (
               <button type="button" className="text-btn" onClick={() => pick(index + 1)}>{t(lang, "Thử thách tiếp theo", "Next challenge")}</button>
