@@ -10,10 +10,10 @@ export const limitKnowledge: TopicKnowledge = {
     lienHe: R`Đạo hàm là giới hạn của tỉ số $\frac{f(a+h)-f(a)}{h}$, tích phân là giới hạn của tổng diện tích các hình chữ nhật, và tổng cấp số nhân vô hạn là giới hạn của $S_n$. Tiệm cận trong khảo sát hàm số cũng là giới hạn ở vô cực.`,
   },
   tuDau: [
-    R`Đứng cách bức tường $1$ mét. Mỗi bước, bạn đi đúng một nửa quãng đường còn lại: còn $\frac{1}{2}$ mét, rồi $\frac{1}{4}$, rồi $\frac{1}{8}$. Bạn không bao giờ chạm tường, nhưng muốn gần tường đến mức nào cũng được, chỉ cần đi đủ nhiều bước. Ta nói khoảng cách tới tường «có giới hạn bằng $0$».`,
-    R`Giới hạn là con số mà một đại lượng tiến sát tới, sát bao nhiêu cũng được, dù có thể không bao giờ chạm đúng con số đó. Điều quan trọng không phải là «đến nơi», mà là «muốn gần cỡ nào cũng làm được». Ý tưởng này cho phép nói chính xác về những thứ rất nhỏ và rất lớn mà không cần coi «vô cùng» là một con số.`,
-    R`Vì sao cần giới hạn? Vì có những phép tính không làm trực tiếp được. Tốc độ đúng tại một thời điểm là quãng đường chia thời gian khi thời gian bằng $0$, tức $0$ chia $0$, vô nghĩa. Nhưng ta có thể tính tốc độ trên một giây, một phần mười giây, một phần nghìn giây, rồi xem các con số đó tiến sát tới đâu. Con số ấy là giới hạn.`,
-    R`Cách làm việc với giới hạn luôn giống nhau: thử thay số; nếu ra một con số bình thường thì đó là đáp số. Nếu ra thứ vô nghĩa như $0$ chia $0$ thì biến đổi biểu thức, thường là rút gọn nhân tử gây rắc rối, rồi thay số lại. Phần còn lại của chuyên đề là các cách biến đổi đó và lý do chúng đúng.`,
+    R`Đứng cách bức tường $1$ mét. Mỗi bước, bạn đi đúng một nửa quãng đường còn lại: còn $\frac{1}{2}$ mét, rồi $\frac{1}{4}$, rồi $\frac{1}{8}$. Bạn không bao giờ chạm tường, nhưng muốn đứng gần tường đến mức nào cũng được, chỉ cần đi đủ nhiều bước. Ta nói khoảng cách tới tường «có giới hạn bằng $0$».`,
+    R`Giới hạn là con số mà một đại lượng tiến sát tới, sát bao nhiêu cũng được, dù có thể không bao giờ chạm đúng con số đó. Điều quan trọng không phải là «đến nơi», mà là «muốn gần cỡ nào cũng làm được». Nhờ ý tưởng ấy ta nói được chính xác về những thứ rất nhỏ và rất lớn mà không cần coi «vô cùng» là một con số.`,
+    R`Vì sao cần giới hạn? Vì có những phép tính không thể làm trực tiếp. Tốc độ đúng tại một thời điểm là quãng đường chia thời gian khi thời gian bằng $0$, tức $0$ chia $0$, vô nghĩa. Nhưng ta có thể tính tốc độ trên một giây, một phần mười giây, một phần nghìn giây, rồi xem các con số đó tiến sát tới đâu. Con số ấy là giới hạn.`,
+    R`Cách làm việc với giới hạn luôn giống nhau: thử thay số; nếu ra một con số bình thường thì đó là đáp số. Nếu ra thứ vô nghĩa như $0$ chia $0$ thì biến đổi biểu thức, thường là rút gọn nhân tử gây rắc rối, rồi thay số lại. Phần còn lại của chuyên đề nói về các cách biến đổi ấy và lý do chúng đúng.`,
   ],
   kyHieu: [
     { kh: R`$\lim$`, doc: R`Viết tắt của «limit», nghĩa là giới hạn: con số mà biểu thức đứng sau tiến sát tới.` },

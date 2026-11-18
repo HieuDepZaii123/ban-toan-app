@@ -32,7 +32,7 @@ export function ZoomLab() {
     <Stage
       title={tt("Phóng to chỗ «lỗ hổng»: hàm không xác định mà vẫn có giới hạn", "Zooming in on the «hole»: undefined at the point, yet it has a limit")}
       story={tt(
-        R`Tại điểm cần xét, công thức thành $\frac{0}{0}$ nên hàm không có giá trị: đồ thị có một lỗ thủng. Nhưng nếu phóng to rất gần lỗ thủng, ta thấy đường cong dồn về một độ cao rõ ràng. Máy tính giá trị ở những điểm ngày càng sát từ cả hai bên, và ta xem hai dãy số ấy dồn về đâu. Con số đó là giới hạn, dù chính tại điểm ấy hàm chẳng có giá trị.`,
+        R`Tại điểm cần xét, công thức thành $\frac{0}{0}$ nên hàm không có giá trị: đồ thị có một lỗ thủng. Nhưng nếu phóng to thật gần lỗ thủng, ta thấy đường cong dồn về một độ cao rõ ràng. Máy tính giá trị ở những điểm ngày càng sát từ cả hai bên, rồi ta xem hai dãy số ấy dồn về đâu. Con số đó là giới hạn, dù chính tại điểm ấy hàm chẳng có giá trị.`,
         R`At the point of interest the formula becomes $\frac{0}{0}$, so the function has no value: the graph has a hole. But zoom in very close to the hole and the curve settles at a definite height. The machine evaluates the function at points ever closer from both sides, and we watch where the two lists of numbers go. That number is the limit, even though the function itself has no value there.`,
       )}
       read={tt(
@@ -94,7 +94,7 @@ export function IndeterminateLab() {
     <Stage
       title={tt("Dạng 0/0 là một nhãn, không phải một con số", "The form 0/0 is a label, not a number")}
       story={tt(
-        R`Khi $x\to 0$, cả tử và mẫu của bốn phân thức dưới đây đều tiến về 0. Nếu $\frac{0}{0}$ là một con số thì bốn đáp số phải giống nhau. Nhưng chúng khác nhau: ai tiến về 0 nhanh hơn thì thắng. Tử co nhanh hơn mẫu thì thương về 0, mẫu co nhanh hơn tử thì thương phình ra vô cùng. Đó là lý do dạng $\frac{0}{0}$ gọi là «vô định»: phải xem tốc độ co của từng bên.`,
+        R`Khi $x\to 0$, cả tử và mẫu của bốn phân thức dưới đây đều tiến về 0. Nếu $\frac{0}{0}$ là một con số thì bốn đáp số phải giống nhau. Nhưng chúng lại khác nhau: bên nào tiến về 0 nhanh hơn thì thắng. Tử co nhanh hơn mẫu thì thương về 0, mẫu co nhanh hơn tử thì thương phình ra vô cùng. Vì vậy dạng $\frac{0}{0}$ gọi là «vô định»: phải xem tốc độ co của từng bên.`,
         R`As $x\to 0$, both the numerator and the denominator of the four fractions below tend to 0. If $\frac{0}{0}$ were a number, the four answers would have to agree. They do not: whoever shrinks faster wins. If the numerator shrinks faster the quotient goes to 0; if the denominator shrinks faster the quotient blows up. That is why $\frac{0}{0}$ is called indeterminate: you must compare how fast each side shrinks.`,
       )}
       read={tt(
@@ -151,7 +151,7 @@ export function AsymptoteLab() {
     <Stage
       title={tt("Tiệm cận: máy tìm chỗ hàm vọt lên và chỗ hàm ổn định", "Asymptotes: where the function shoots up and where it settles")}
       story={tt(
-        R`Tiệm cận đứng là chỗ mẫu số bằng 0 mà tử số thì không: đi sát chỗ đó, giá trị lớn tùy ý. Máy tìm chúng bằng cách tìm nghiệm của mẫu số rồi nhìn giá trị hai bên. Tiệm cận ngang là độ cao mà đường cong tiến sát khi $x$ đi thật xa: máy đo bằng cách tính hàm tại $x=\pm 10^7$. Kéo $k$ để thấy tiệm cận ngang đổi chỗ.`,
+        R`Tiệm cận đứng là chỗ mẫu số bằng 0 mà tử số thì không: đi sát chỗ đó, giá trị lớn lên tùy ý. Máy tìm chúng bằng cách tìm nghiệm của mẫu số rồi nhìn giá trị hai bên. Tiệm cận ngang là độ cao mà đường cong tiến sát khi $x$ đi thật xa: máy đo bằng cách tính hàm tại $x=\pm 10^7$. Kéo $k$ để thấy tiệm cận ngang đổi chỗ.`,
         R`A vertical asymptote is where the denominator is zero but the numerator is not: close to it the values become arbitrarily large. The machine finds them by solving denominator $=0$ and looking at the values on both sides. A horizontal asymptote is the height the curve approaches when $x$ goes very far: the machine measures it by evaluating the function at $x=\pm 10^7$. Drag $k$ to move the horizontal asymptote.`,
       )}
       read={tt(
@@ -203,7 +203,7 @@ export function SqueezeLab() {
     <Stage
       title={tt("Định lí kẹp: hai bức tường ép đường cong vào một số", "The squeeze theorem: two walls press the curve onto one number")}
       story={tt(
-        R`Một đường cong bị kẹp giữa hai đường khác. Nếu cả hai đường kẹp cùng tiến về một số $L$ thì đường cong ở giữa cũng buộc phải tiến về $L$, vì nó không còn chỗ nào để đi. Cách này tính được cả những giới hạn mà đường cong rung vô hạn, như $x^2\sin\frac{1}{x}$: nó rung nhanh vô cùng nhưng bị ép giữa $-x^2$ và $x^2$ cùng co về 0.`,
+        R`Một đường cong bị kẹp giữa hai đường khác. Nếu cả hai đường kẹp cùng tiến về một số $L$ thì đường cong ở giữa cũng buộc phải tiến về $L$, vì nó chẳng còn chỗ nào khác để đi. Cách này tính được cả những giới hạn mà đường cong rung vô hạn, như $x^2\sin\frac{1}{x}$: nó rung nhanh vô cùng nhưng bị ép giữa $-x^2$ và $x^2$ cùng co về 0.`,
         R`A curve is squeezed between two other curves. If both outer curves tend to the same number $L$, the curve in the middle is forced to tend to $L$ as well, because it has nowhere else to go. This even handles curves that oscillate infinitely often, like $x^2\sin\frac{1}{x}$: it wiggles faster and faster but is pressed between $-x^2$ and $x^2$, which both shrink to 0.`,
       )}
       read={tt(
@@ -267,7 +267,7 @@ export function ContinuityLab() {
     <Stage
       title={tt("Liên tục: tìm tham số để hai nhánh khớp nhau", "Continuity: find the parameter that makes the two branches meet")}
       story={tt(
-        R`Hàm cho bằng hai công thức: $x+1$ khi $x<2$ và $mx-1$ khi $x\ge 2$. Hàm liên tục tại 2 nếu đồ thị không bị đứt: giới hạn bên trái, giới hạn bên phải và giá trị tại 2 phải cùng bằng nhau. Kéo $m$ để nhánh phải trượt lên xuống cho tới khi khớp với nhánh trái. Máy cũng tự tìm $m$ bằng cách tìm nghiệm của «giới hạn phải trừ giới hạn trái».`,
+        R`Hàm cho bằng hai công thức: $x+1$ khi $x<2$ và $mx-1$ khi $x\ge 2$. Hàm liên tục tại 2 nếu đồ thị không bị đứt: giới hạn bên trái, giới hạn bên phải và giá trị tại 2 phải cùng bằng nhau. Hãy kéo $m$ để nhánh phải trượt lên xuống cho tới khi khớp với nhánh trái. Máy cũng tự tìm $m$ bằng cách tìm nghiệm của «giới hạn phải trừ giới hạn trái».`,
         R`The function is given by two formulas: $x+1$ for $x<2$ and $mx-1$ for $x\ge 2$. It is continuous at 2 if the graph has no break: the left limit, the right limit and the value at 2 must all be equal. Drag $m$ to slide the right branch up and down until it meets the left branch. The machine can also find $m$ by solving «right limit minus left limit» $=0$.`,
       )}
       read={tt(
