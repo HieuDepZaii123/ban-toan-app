@@ -15,6 +15,7 @@ await page.addInitScript((l) => { try { localStorage.setItem("ban-toan", JSON.st
 await page.goto(`${base}/t/${topic}?tab=hoc`, { waitUntil: "domcontentloaded" });
 await page.waitForSelector(".fz-card", { timeout: 30000 }); // lazy section module
 const heading = await page.locator(".fz h2").first().textContent();
+await page.waitForTimeout(1500);
 const cards = await page.locator(".fz-card").count();
 const nodes = await page.locator(".fz-node").count();
 // Drive one real control: move the first slider of the first figure and check its canvas repainted.

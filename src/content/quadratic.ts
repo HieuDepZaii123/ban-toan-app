@@ -4,14 +4,14 @@ const R = String.raw;
 
 export const quadraticLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Parabol $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: miệng lên, có cực tiểu. $a<0$: miệng xuống, có cực đại.`, en: R`The parabola $y=ax^2+bx+c$ ($a\neq 0$). $a>0$: opens up, a minimum. $a<0$: opens down, a maximum.` },
+    { k: "mo", vi: R`Parabol $y=ax^2+bx+c$ ($a\neq 0$). Nếu $a>0$: miệng lên, có cực tiểu. Nếu $a<0$: miệng xuống, có cực đại.`, en: R`The parabola $y=ax^2+bx+c$ ($a\neq 0$). If $a>0$: opens up, with a minimum. If $a<0$: opens down, with a maximum.` },
     { k: "dinh", vi: R`Đỉnh $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, với $\Delta=b^2-4ac$.`, en: R`Vertex $\left(-\dfrac{b}{2a};\,-\dfrac{\Delta}{4a}\right)$, where $\Delta=b^2-4ac$.` },
-    { k: "vd", vi: R`Chuồng $40$ m, một cạnh tựa tường: $S=x(40-2x)=-2x^2+40x$. Đỉnh tại $x=-\dfrac{40}{2\cdot(-2)}=10$, và $S(10)=200$.`, en: R`A $40$ m pen with one side against a wall: $S=x(40-2x)=-2x^2+40x$. $S'=0$ at $x=10$, and $S(10)=200$.` },
+    { k: "vd", vi: R`Chuồng $40$ m, một cạnh tựa tường: $S=x(40-2x)=-2x^2+40x$. Đỉnh tại $x=-\dfrac{40}{2\cdot(-2)}=10$, và $S(10)=200$.`, en: R`A $40$ m pen with one side against a wall: $S=x(40-2x)=-2x^2+40x$. The vertex is at $x=-\dfrac{40}{2\cdot(-2)}=10$, and $S(10)=200$.` },
   ],
   exam: [
     { k: "dinh", vi: R`$y=a(x-h)^2+k$ có đỉnh $(h;k)$ đứng yên khi đổi $a$. Dạng $ax^2+bx+c$: đổi $a$ thì đỉnh chạy.`, en: R`$y=a(x-h)^2+k$ has vertex $(h;k)$, fixed when $a$ changes. In $ax^2+bx+c$, changing $a$ moves the vertex.` },
     { k: "vd", vi: R`$y=x^2-2x-3=(x-1)^2-4$. Đỉnh $(1;-4)$. $\Delta=16$, nghiệm $x=-1$ và $x=3$.`, en: R`$y=x^2-2x-3=(x-1)^2-4$. Vertex $(1;-4)$. $\Delta=16$, roots $x=-1$ and $x=3$.` },
-    { k: "loi", vi: R`Với $y=x^2-2x+1$, lấy đỉnh từ $\Delta=0$ ra $x=0$ thì sai. Đỉnh vẫn là $x=-\dfrac{b}{2a}=1$.`, en: R`For $y=x^2-2x+1$, reading the vertex from $\Delta=0$ as $x=0$ is wrong. The vertex is still $x=-\dfrac{b}{2a}=1$.` },
+    { k: "loi", vi: R`Với $y=x^2-2x+1$, suy ra đỉnh có $x=0$ từ $\Delta=0$ là sai. Đỉnh vẫn là $x=-\dfrac{b}{2a}=1$.`, en: R`For $y=x^2-2x+1$, concluding from $\Delta=0$ that the vertex has $x=0$ is wrong. The vertex is still $x=-\dfrac{b}{2a}=1$.` },
     { k: "kiem", vi: R`$y=x^2-4x=(x-2)^2-4$. Đỉnh $(2;-4)$.`, en: R`$y=x^2-4x=(x-2)^2-4$. Vertex $(2;-4)$.` },
   ],
 };

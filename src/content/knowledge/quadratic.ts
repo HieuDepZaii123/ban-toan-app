@@ -10,10 +10,10 @@ export const quadraticKnowledge: TopicKnowledge = {
     lienHe: R`Phương trình bậc hai là trường hợp $y=0$ của hàm này, bất phương trình bậc hai là bài xét dấu của hàm. Ở lớp 12, đạo hàm cho một cách tìm đỉnh khác là giải $y'=0$. Bất đẳng thức dùng chính phép biến đổi thành bình phương ở đây.`,
   },
   tuDau: [
-    R`Ném một quả bóng lên trời: nó bay lên chậm dần, dừng một thoáng ở điểm cao nhất rồi rơi xuống. Ghi lại độ cao sau mỗi giây rồi chấm lên giấy, các chấm xếp thành một đường cong hình vòm. Đường cong đó tên là parabol, và công thức sinh ra nó là hàm số bậc hai.`,
-    R`Hàm số là một cái máy: bỏ vào một số $x$, máy trả ra đúng một số $y$. Máy bậc hai làm ba việc: lấy $x$ nhân với chính nó rồi nhân với $a$, cộng thêm $b$ lần $x$, rồi cộng $c$. Chẳng hạn máy $y=x^2-4x+3$ nhận số $5$ thì trả ra $25-20+3=8$.`,
-    R`Đồ thị là bức ảnh của cái máy. Mỗi cặp số (bỏ vào; trả ra) là một chấm: số bỏ vào cho vị trí ngang, số trả ra cho độ cao. Nối mọi chấm lại thì được đường cong. Mọi câu hỏi của chuyên đề đều là câu hỏi về bức ảnh này: điểm thấp nhất ở đâu, đường cong chạm mặt đất (trục hoành) ở đâu, đoạn nào nằm phía trên mặt đất.`,
-    R`Chỉ cần một ý để suy ra gần như mọi công thức ở đây: một số nhân với chính nó không bao giờ âm, vì âm nhân âm cũng ra dương. Khi viết được hàm thành «một bình phương cộng một hằng số» thì đỉnh, nghiệm và dấu đều đọc ra được. Các phần «Vì sao đúng» bên dưới đi lại đúng con đường đó, từng bước một.`,
+    R`Ném một quả bóng lên trời: nó bay lên chậm dần, dừng một thoáng ở điểm cao nhất rồi rơi xuống. Ghi lại độ cao sau mỗi giây rồi chấm lên giấy, ta thấy các chấm xếp thành một đường cong hình vòm. Đường cong đó tên là parabol, và công thức sinh ra nó là hàm số bậc hai.`,
+    R`Hàm số là một cái máy: bỏ vào một số $x$, máy trả ra đúng một số $y$. Máy bậc hai làm ba việc: lấy $x$ nhân với chính nó rồi nhân với $a$, cộng thêm $b$ lần $x$, rồi cộng thêm $c$. Chẳng hạn máy $y=x^2-4x+3$ nhận số $5$ thì trả ra $25-20+3=8$.`,
+    R`Đồ thị là bức ảnh của cái máy. Mỗi cặp số (bỏ vào; trả ra) là một chấm: số bỏ vào cho vị trí ngang, số trả ra cho độ cao. Nối mọi chấm lại, ta được đường cong. Mọi câu hỏi của chuyên đề đều là câu hỏi về bức ảnh này: điểm thấp nhất ở đâu, đường cong chạm mặt đất (trục hoành) ở đâu, đoạn nào nằm phía trên mặt đất.`,
+    R`Chỉ cần một ý là suy ra được gần như mọi công thức ở đây: một số nhân với chính nó không bao giờ âm, vì âm nhân âm cũng ra dương. Khi viết được hàm thành «một bình phương cộng một hằng số» thì đỉnh, nghiệm và dấu đều đọc ra được. Các phần «Vì sao đúng» bên dưới đi đúng con đường ấy, từng bước một.`,
   ],
   kyHieu: [
     { kh: R`$x^2$`, doc: R`Đọc là «x bình phương», nghĩa là $x$ nhân với chính nó. Chẳng hạn $3^2=9$ và $(-3)^2=9$.` },
@@ -96,6 +96,16 @@ export const quadraticKnowledge: TopicKnowledge = {
             R`Không có giá trị lớn nhất, vì bình phương lớn bao nhiêu cũng được: cho $x$ đi xa dần thì $y$ vượt qua mọi số cho trước.`,
             R`Nếu $a<0$, nhân «bình phương $\ge 0$» với số âm $a$ làm đổi chiều: $y\le-\frac{\Delta}{4a}$. Đó là giá trị lớn nhất, còn $y$ xuống thấp tùy ý nên không có giá trị nhỏ nhất.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng đạo hàm",
+              buoc: [
+                R`Hàm $y=ax^2+bx+c$ có đạo hàm $y'=2ax+b$ (xem chuyên đề Đạo hàm). Giá trị lớn nhất hay nhỏ nhất trên cả trục số chỉ có thể nằm ở nơi $y'=0$, tức $x=-\frac{b}{2a}$.`,
+                R`Khi $a>0$: $y'<0$ với $x<-\frac{b}{2a}$ và $y'>0$ với $x>-\frac{b}{2a}$, nên hàm giảm rồi tăng, và $x=-\frac{b}{2a}$ là điểm thấp nhất. Khi $a<0$ dấu của $y'$ đảo ngược nên đó là điểm cao nhất.`,
+                R`Thay vào hàm: $y\left(-\frac{b}{2a}\right)=\frac{b^2}{4a}-\frac{b^2}{2a}+c=-\frac{b^2-4ac}{4a}=-\frac{\Delta}{4a}$. Phía còn lại không bị chặn: khi $a>0$ thì $y\to+\infty$ nên không có giá trị lớn nhất, vì $ax^2$ lớn tùy ý khi $|x|$ đủ lớn.`,
+              ],
+            },
+          ],
         },
         { kind: "cach-lam", title: "Trên một đoạn cho trước", text: R`Tính giá trị hàm tại hai đầu mút, rồi tại đỉnh nếu hoành độ đỉnh nằm trong đoạn. Số lớn nhất trong các giá trị đó là giá trị lớn nhất, số nhỏ nhất là giá trị nhỏ nhất. Đỉnh nằm ngoài đoạn thì hàm đơn điệu trên đoạn và cực trị nằm ở đầu mút.` },
         { kind: "vi-du", text: R`Với $y=-2x^2+8x-3$, hoành độ đỉnh là $-\frac{8}{2\cdot(-2)}=2$ và $y(2)=5$, nên giá trị lớn nhất trên $\mathbb{R}$ là $5$. Trên đoạn $[3;5]$ đỉnh nằm ngoài, ta có $y(3)=3$ và $y(5)=-13$, nên giá trị lớn nhất là $3$.` },
@@ -112,6 +122,18 @@ export const quadraticKnowledge: TopicKnowledge = {
             R`Khi $\Delta\ge 0$, có hai số mà bình phương bằng $\frac{\Delta}{4a^2}$, đó là $\frac{\sqrt{\Delta}}{2a}$ và $-\frac{\sqrt{\Delta}}{2a}$.`,
             R`Vậy $x+\frac{b}{2a}=\pm\frac{\sqrt{\Delta}}{2a}$. Chuyển $\frac{b}{2a}$ sang vế phải được $x=\frac{-b\pm\sqrt{\Delta}}{2a}$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng tính đối xứng qua trục",
+              buoc: [
+                R`Parabol đối xứng qua đường thẳng $x=-\frac{b}{2a}$, nên nếu có nghiệm thì các nghiệm có dạng $x=-\frac{b}{2a}\pm d$ với $d\ge 0$, cách đều trục.`,
+                R`Theo Viète (chứng minh bằng đồng nhất hệ số, không dùng công thức nghiệm), $x_1x_2=\frac{c}{a}$. Mặt khác $x_1x_2=\left(-\frac{b}{2a}\right)^2-d^2=\frac{b^2}{4a^2}-d^2$.`,
+                R`Cho hai vế bằng nhau: $d^2=\frac{b^2}{4a^2}-\frac{c}{a}=\frac{b^2-4ac}{4a^2}=\frac{\Delta}{4a^2}$. Nếu $\Delta<0$ thì không có $d$ thực nào, tức vô nghiệm.`,
+                R`Khi $\Delta\ge 0$ có $d=\frac{\sqrt{\Delta}}{2|a|}$. Nếu $-\frac{b}{2a}+d$ là nghiệm thì nhờ đối xứng $-\frac{b}{2a}-d$ cũng là nghiệm, nên hai nghiệm là $x=-\frac{b}{2a}\pm d=\frac{-b\pm\sqrt{\Delta}}{2a}$ (dấu $\pm$ đã bao cả hai khả năng nên bỏ được dấu giá trị tuyệt đối của $a$).`,
+                R`Ngược lại, hai số $u,v=-\frac{b}{2a}\pm d$ có $u+v=-\frac{b}{a}$ và $uv=\frac{b^2}{4a^2}-d^2=\frac{c}{a}$. Khai triển $a(x-u)(x-v)=ax^2+bx+c$, nên $u$ và $v$ đúng là nghiệm của phương trình.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Số nghiệm theo biệt thức",
@@ -120,6 +142,17 @@ export const quadraticKnowledge: TopicKnowledge = {
             R`Vẫn từ $\left(x+\frac{b}{2a}\right)^2=\frac{\Delta}{4a^2}$: vế trái là một bình phương nên không âm, vế phải có mẫu dương nên cùng dấu với $\Delta$.`,
             R`Nếu $\Delta<0$, một số không âm không thể bằng một số âm, nên không có $x$ nào thỏa. Nếu $\Delta=0$, bình phương bằng $0$ chỉ khi $x=-\frac{b}{2a}$, nên có một nghiệm. Nếu $\Delta>0$, có hai số đối nhau cùng bình phương ra vế phải, nên có hai nghiệm khác nhau.`,
             R`Nghiệm là giá trị $x$ làm $y=0$, tức là chỗ đồ thị chạm trục hoành. Vì vậy số nghiệm bằng số điểm chung của parabol với trục hoành.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng vị trí đỉnh",
+              buoc: [
+                R`Đỉnh có tung độ $y_0=-\frac{\Delta}{4a}$, và đó là điểm thấp nhất khi $a>0$, cao nhất khi $a<0$ (đã chứng minh ở các mục trên). Số nghiệm là số lần parabol chạm trục hoành.`,
+                R`Khi $a>0$: nếu $y_0>0$, tức $\Delta<0$, mọi điểm của parabol đều ở trên trục hoành nên không có nghiệm. Nếu $y_0=0$, tức $\Delta=0$, đỉnh nằm đúng trên trục nên có một điểm chung, tại $x=-\frac{b}{2a}$. Mọi điểm khác đều ở trên trục vì $y=a(x-h)^2+y_0$ chỉ nhận giá trị nhỏ nhất $y_0=0$ tại $x=h$.`,
+                R`Nếu $y_0<0$, tức $\Delta>0$, đỉnh nằm dưới trục còn hai nhánh đi lên vô hạn. Hàm $y=a(x-h)^2+y_0$ liên tục và đơn điệu chặt trên mỗi nửa $(-\infty;h]$ và $[h;+\infty)$, đồng thời lớn tùy ý ở xa. Nên trên mỗi nửa, $y$ đi từ giá trị âm lên giá trị dương và bằng $0$ đúng một lần (định lí giá trị trung gian, được công nhận): có hai nghiệm phân biệt.`,
+                R`Khi $a<0$ đỉnh là điểm cao nhất và $y_0=-\frac{\Delta}{4a}$ cùng dấu với $\Delta$: $\Delta<0$ thì đỉnh dưới trục nên không có nghiệm, $\Delta=0$ thì chạm một điểm, $\Delta>0$ thì đỉnh trên trục nên cắt hai điểm.`,
+              ],
+            },
           ],
         },
         {
@@ -137,6 +170,16 @@ export const quadraticKnowledge: TopicKnowledge = {
             R`Hai nghiệm là $x_1=\frac{-b+\sqrt{\Delta}}{2a}$ và $x_2=\frac{-b-\sqrt{\Delta}}{2a}$. Cộng lại thì hai căn triệt tiêu: $x_1+x_2=\frac{-2b}{2a}=-\frac{b}{a}$.`,
             R`Nhân lại, dùng $(m+n)(m-n)=m^2-n^2$ cho tử số: $x_1x_2=\frac{b^2-\Delta}{4a^2}=\frac{b^2-(b^2-4ac)}{4a^2}=\frac{4ac}{4a^2}=\frac{c}{a}$.`,
             R`Chiều ngược lại: nếu hai số $u,v$ có $u+v=S$ và $uv=P$ thì $(X-u)(X-v)=X^2-(u+v)X+uv=X^2-SX+P$. Tích bằng $0$ đúng khi $X=u$ hoặc $X=v$, nên $u$ và $v$ là hai nghiệm. Hai số thực như vậy tồn tại khi biệt thức $S^2-4P\ge 0$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng đồng nhất hệ số",
+              buoc: [
+                R`Gọi $x_1$, $x_2$ là hai nghiệm của $ax^2+bx+c$. Theo định lí nhân tử (được công nhận), $ax^2+bx+c=(x-x_1)(ax+k)$ với một số $k$, và nghiệm của $ax+k$ cũng là nghiệm của đa thức. Khi nghiệm kép thì nghiệm này chính là $x_1$, còn không thì nó là $x_2$. Vậy $ax^2+bx+c=a(x-x_1)(x-x_2)$ với mọi $x$.`,
+                R`Khai triển vế phải: $a(x-x_1)(x-x_2)=ax^2-a(x_1+x_2)\,x+ax_1x_2$.`,
+                R`Hai đa thức bằng nhau với mọi $x$ thì hệ số tương ứng bằng nhau: $b=-a(x_1+x_2)$ và $c=ax_1x_2$. Chia cho $a\neq 0$ được $x_1+x_2=-\frac{b}{a}$ và $x_1x_2=\frac{c}{a}$, không cần dùng công thức nghiệm. Đây là chiều thuận; chiều ngược lại đã được chứng minh ở cách thứ nhất.`,
+              ],
+            },
           ],
         },
         {
@@ -165,6 +208,17 @@ export const quadraticKnowledge: TopicKnowledge = {
             R`Nếu $\Delta>0$, gọi hai nghiệm là $x_1<x_2$. Khai triển $a(x-x_1)(x-x_2)=ax^2-a(x_1+x_2)x+ax_1x_2$ rồi dùng Viète thì được đúng $ax^2+bx+c$. Vậy $f(x)=a(x-x_1)(x-x_2)$.`,
             R`Khi $x$ nằm giữa hai nghiệm, $x-x_1>0$ còn $x-x_2<0$, tích âm, nên $f(x)$ trái dấu với $a$. Khi $x$ nằm ngoài, hai thừa số cùng dương hoặc cùng âm, tích dương, nên $f(x)$ cùng dấu với $a$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng tính liên tục",
+              buoc: [
+                R`Hàm bậc hai liên tục, nên nếu $f(p)$ và $f(q)$ trái dấu thì có một nghiệm giữa $p$ và $q$ (định lí giá trị trung gian, được công nhận). Vậy trên một khoảng không chứa nghiệm, $f$ giữ nguyên một dấu.`,
+                R`Khi $|x|$ rất lớn, $f(x)=x^2\left(a+\frac{b}{x}+\frac{c}{x^2}\right)$ có ngoặc tiến về $a$, nên $f(x)$ cùng dấu với $a$, ở cả hai phía của trục số.`,
+                R`Nếu $\Delta<0$ thì không có nghiệm: $f$ giữ một dấu trên cả trục số, và đó là dấu của $a$. Nếu $\Delta=0$ thì chỉ có một nghiệm, hai khoảng hai bên nó đều chứa điểm ở xa nên cùng dấu $a$.`,
+                R`Nếu $\Delta>0$ thì hai nghiệm $x_1<x_2$ chia trục số thành ba khoảng. Hai khoảng ngoài chứa điểm ở xa nên cùng dấu $a$. Điểm đối xứng của $x_1$ qua trục $x=h$ cũng là nghiệm và khác $x_1$ (vì $x_1\neq h$ khi $\Delta>0$), nên nó bằng $x_2$: vậy $h=\frac{x_1+x_2}{2}$ nằm giữa hai nghiệm. Tại đó $f(h)=-\frac{\Delta}{4a}$ trái dấu $a$, nên cả khoảng giữa trái dấu $a$.`,
+              ],
+            },
+          ],
         },
         { kind: "luu-y", title: "Trong trái, ngoài cùng", text: R`Cách nhớ: giữa hai nghiệm thì trái dấu với $a$, ngoài hai nghiệm thì cùng dấu với $a$. Vẽ parabol phác ra giấy sẽ thấy ngay vì dấu của $f$ là dấu của đồ thị so với trục hoành.` },
         { kind: "cach-lam", title: "Giải bất phương trình bậc hai", text: R`Tìm nghiệm của vế trái, đặt hai nghiệm lên trục số, xét dấu theo định lí trên rồi chọn khoảng thỏa dấu yêu cầu. Chú ý bất phương trình có dấu bằng thì lấy cả hai nghiệm.` },
@@ -192,6 +246,16 @@ export const quadraticKnowledge: TopicKnowledge = {
             R`Chiều thuận: giả sử có hai nghiệm $x_1<\alpha<x_2$. Số $\alpha$ nằm giữa hai nghiệm nên theo định lí về dấu, $f(\alpha)$ trái dấu với $a$. Hai số trái dấu có tích âm, tức $a\cdot f(\alpha)<0$.`,
             R`Chiều ngược: giả sử $a\cdot f(\alpha)<0$, tức $f(\alpha)$ trái dấu với $a$. Khi $\Delta\le 0$ thì $f$ không bao giờ trái dấu với $a$, nên buộc phải có $\Delta>0$: tự động có hai nghiệm phân biệt.`,
             R`Khi đã có hai nghiệm, $f$ chỉ trái dấu với $a$ ở khoảng giữa hai nghiệm, nên $\alpha$ nằm giữa chúng.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng tính liên tục và dạng tích",
+              buoc: [
+                R`Chiều thuận: nếu $x_1<\alpha<x_2$ là hai nghiệm thì $f(x)=a(x-x_1)(x-x_2)$, nên $a\cdot f(\alpha)=a^2(\alpha-x_1)(\alpha-x_2)$. Ở đây $a^2>0$, $\alpha-x_1>0$ và $\alpha-x_2<0$, nên tích âm.`,
+                R`Chiều ngược: giả sử $a\cdot f(\alpha)<0$, tức $f(\alpha)$ trái dấu với $a$. Khi $|x|$ đủ lớn, $f(x)$ cùng dấu $a$, nên có $p<\alpha<q$ để $f(p)$ và $f(q)$ đều cùng dấu $a$.`,
+                R`Theo định lí giá trị trung gian, $f$ có một nghiệm trong $(p;\alpha)$ và một nghiệm trong $(\alpha;q)$. Đó là hai nghiệm phân biệt $x_1<\alpha<x_2$, và theo định lí nhân tử hàm bậc hai chỉ có tối đa hai nghiệm nên không còn nghiệm nào khác.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Hai nghiệm cùng phía của một số", text: R`Để cả hai nghiệm cùng lớn hơn $\alpha$, cần $\Delta\ge 0$, $a\cdot f(\alpha)>0$ và $\frac{S}{2}>\alpha$. Đổi chiều dấu cuối để được hai nghiệm cùng nhỏ hơn $\alpha$.` },
@@ -227,6 +291,10 @@ export const quadraticKnowledge: TopicKnowledge = {
     { id: "analytic", vi: R`Parabol cũng là một đường conic; giao điểm và tiếp xúc với đường thẳng giải bằng đúng điều kiện về $\Delta$.` },
   ],
   checks: [
+    { expr: "simplify(a*(-b/(2*a))**2 + b*(-b/(2*a)) + c + (b**2-4*a*c)/(4*a))", expect: "0" },
+    { expr: "expand(a*(x-x1)*(x-x2))", expect: "a*x**2 - a*x*x1 - a*x*x2 + a*x1*x2" },
+    { expr: "simplify((b/(2*a))**2 - c/a - (b**2-4*a*c)/(4*a**2))", expect: "0" },
+    { expr: "diff(a*x**2 + b*x + c, x)", expect: "2*a*x + b" },
     { expr: "-8/(2*(-2))", expect: "2" },
     { expr: "-2*2**2+8*2-3", expect: "5" },
     { expr: "-2*3**2+8*3-3", expect: "3" },
