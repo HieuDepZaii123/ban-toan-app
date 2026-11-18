@@ -4,6 +4,8 @@
  */
 import { execFileSync } from "node:child_process";
 import { collectGradeChecks, gradeBooks, lessonsOf } from "../src/content/grades/index.ts";
+import { GRADES, loadGradeBook } from "../src/content/grades/load.ts";
+import { findLesson } from "../src/content/grades/lessons.ts";
 import { cards } from "../src/content/cards.ts";
 import { MARK } from "./testkit.ts";
 
@@ -28,6 +30,16 @@ function checkProse(where: string, text: string): void {
 }
 
 assert(gradeBooks.length === 12, "đủ 12 lớp");
+// Pages load one grade through load.ts: same grades, same content as the aggregate the tests check, cached once.
+assert(GRADES.join() === gradeBooks.map((book) => book.grade).join(), "load.ts có đủ 12 lớp, đúng thứ tự");
+for (const book of gradeBooks) {
+  const lazy = await loadGradeBook(book.grade);
+  assert(JSON.stringify(lazy) === JSON.stringify(book), `lớp ${book.grade}: load.ts cho cùng nội dung`);
+  assert(lazy === (await loadGradeBook(book.grade)), `lớp ${book.grade}: tải lần hai dùng lại cùng sách`);
+  const first = lessonsOf(book)[0]!.lesson;
+  assert(findLesson(book, first.id)?.lesson === first && findLesson(book, "khong-co") === undefined, `lớp ${book.grade}: findLesson`);
+}
+assert((await loadGradeBook(13)) === null, "lớp lạ trả null");
 const grades = gradeBooks.map((book) => book.grade).sort((a, b) => a - b);
 assert(grades.join(",") === "1,2,3,4,5,6,7,8,9,10,11,12", "thiếu một lớp");
 

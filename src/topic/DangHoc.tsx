@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { dangFor } from "../content/dang/index.ts";
-import type { Drill, ReasonStep, Worked } from "../content/dang/types.ts";
+import { useEffect, useState } from "react";
+import { hasDang, loadDang } from "../content/dang/load.ts";
+import type { Drill, ReasonStep, TopicDang, Worked } from "../content/dang/types.ts";
 import { MathText } from "../ui/MathText.tsx";
 
 const KIND_LABEL: Record<Drill["kind"], string> = {
@@ -14,8 +14,24 @@ const KIND_LABEL: Record<Drill["kind"], string> = {
 };
 
 export function DangHoc({ topicId }: { topicId: string }) {
-  const pack = dangFor(topicId);
-  if (!pack) return null;
+  // Same loading shape as KnowledgeRead: one topic's file, fetched when the Learn tab opens.
+  const [loaded, setLoaded] = useState<{ id: string; data: TopicDang | null } | null>(null);
+
+  useEffect(() => {
+    if (!hasDang(topicId)) return;
+    let live = true;
+    loadDang(topicId).then(
+      (data) => { if (live) setLoaded({ id: topicId, data }); },
+      () => { if (live) setLoaded({ id: topicId, data: null }); },
+    );
+    return () => { live = false; };
+  }, [topicId]);
+
+  if (!hasDang(topicId)) return null;
+  const pack = loaded?.id === topicId ? loaded.data : null;
+  if (!pack) {
+    return loaded?.id === topicId ? null : <p className="lecture-note">Đang mở phần dạng bài…</p>;
+  }
   return (
     <section className="dang-hoc" aria-label="Dạng bài">
       <h2>Dạng bài</h2>
