@@ -67,6 +67,16 @@ export const METHOD_NODE: Record<string, { grade: number; chapter: string; stran
   "phan-bu": { grade: 11, chapter: "xs-11" },
   "quy-nap": { grade: 11, chapter: "day-so" },
   "tao-binh-phuong": { grade: 10, chapter: "ham-bac-hai" },
+  "bpt-bac-hai-dau": { grade: 10, chapter: "ham-bac-hai" },
+  "truc-can-thuc": { grade: 9, chapter: "can" },
+  "he-pt-cong-the": { grade: 9, chapter: "he-pt" },
+  "ti-so-luong-giac-vuong": { grade: 9, chapter: "lg-vuong" },
+  "chop-goc-the-tich": { grade: 11, chapter: "khong-gian" },
+  "tham-so-don-dieu": { grade: 12, chapter: "khao-sat" },
+  "boi-nghiem-cuc-tri": { grade: 12, chapter: "khao-sat" },
+  "toi-uu-thuc-te": { grade: 12, chapter: "khao-sat" },
+  "xac-suat-bayes": { grade: 12, chapter: "xs-12" },
+  "giao-diem-oxyz": { grade: 12, chapter: "oxyz" },
 };
 
 export const methodNodeId = (id: string): string | undefined => {

@@ -12,8 +12,8 @@ const MARK = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêề�
 const IDS = new Set<string>(cards.map((card) => card.id));
 const methodIds = new Set(methodsData.methods.map((item) => item.id));
 
-assert.ok(methodsData.methods.length >= 22);
-for (let grade = 1; grade <= 8; grade += 1) {
+assert.ok(methodsData.methods.length >= 38);
+for (let grade = 1; grade <= 12; grade += 1) {
   assert.ok(methodsData.methods.some((item) => item.grade === grade), `thiếu phương pháp cho lớp ${grade}`);
 }
 assert.equal(methodIds.size, methodsData.methods.length);
@@ -27,6 +27,7 @@ for (const row of methodsData.guide) {
 }
 
 for (const method of methodsData.methods) {
+  for (const line of [method.title, method.titleEn, method.blurb, ...method.examples.map((item) => item.title)]) assert.ok(!line.includes("$"), `${method.id}: tiêu đề hiện nguyên $ (${line})`);
   assert.ok(method.examples.length >= 2, method.id);
   assert.ok(method.practice.length >= 2, method.id);
   assert.ok(method.spot.length >= 2 && method.thinking.length >= 2 && method.care.length >= 2, method.id);

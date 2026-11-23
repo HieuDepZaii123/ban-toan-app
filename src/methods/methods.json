@@ -1,8 +1,8 @@
 {
   "title": "Phương pháp giải",
   "titleEn": "Solving methods",
-  "lead": "29 phương pháp: 15 phương pháp cho lớp 1 đến lớp 8 (có lớp hai phương pháp) và 14 phương pháp nâng cao từ lớp 9 đến lớp 12. Nhận dạng trước, rồi mới tính. Mỗi phương pháp nêu khi nào dùng, cách nghĩ, điều kiện cần giữ, hai ví dụ đủ bước, lỗi hay gặp và bài tự luyện.",
-  "leadEn": "29 methods: 15 for grades 1 to 8 (two for some grades) and 14 advanced methods for grades 9 to 12. Recognise the shape first, then compute. Each method says when to use it, how to think, which conditions to keep, two fully worked examples, common mistakes and practice.",
+  "lead": "39 phương pháp: 25 phương pháp theo lớp, từ lớp 1 đến lớp 12 (có lớp hai phương pháp), và 14 phương pháp nâng cao. Nhận dạng trước, rồi mới tính. Mỗi phương pháp nêu khi nào dùng, cách nghĩ, điều kiện cần giữ, hai ví dụ đủ bước, lỗi hay gặp và bài tự luyện.",
+  "leadEn": "39 methods: 25 by grade, from grade 1 to grade 12 (two for some grades), and 14 advanced methods. Recognise the shape first, then compute. Each method says when to use it, how to think, which conditions to keep, two fully worked examples, common mistakes and practice.",
   "guide": [
     {
       "when": "Có $\\sqrt{a^2-x^2}$, $\\sqrt{a^2+x^2}$ hoặc $\\sqrt{x^2-a^2}$, và không thấy sẵn đạo hàm của phần trong căn.",
@@ -177,6 +177,66 @@
       "methodId": "xac-suat-bien-co",
       "topicHref": "/kien-thuc/8/dang",
       "topicLabel": "Dạng bài lớp 8"
+    },
+    {
+      "when": "Mẫu số của phân số có căn bậc hai, cần đưa về mẫu không chứa căn.",
+      "methodId": "truc-can-thuc",
+      "topicHref": "/kien-thuc/9/dang",
+      "topicLabel": "Dạng bài lớp 9"
+    },
+    {
+      "when": "Hệ hai phương trình bậc nhất hai ẩn.",
+      "methodId": "he-pt-cong-the",
+      "topicHref": "/kien-thuc/9/dang",
+      "topicLabel": "Dạng bài lớp 9"
+    },
+    {
+      "when": "Tam giác vuông biết một góc nhọn và một cạnh.",
+      "methodId": "ti-so-luong-giac-vuong",
+      "topicHref": "/kien-thuc/9/dang",
+      "topicLabel": "Dạng bài lớp 9"
+    },
+    {
+      "when": "Thể tích khối chóp hoặc lăng trụ khi đề cho một góc với mặt đáy.",
+      "methodId": "chop-goc-the-tich",
+      "topicHref": "/kien-thuc/11/dang",
+      "topicLabel": "Dạng bài lớp 11"
+    },
+    {
+      "when": "Tham số $m$ trong bài hàm số đồng biến hoặc nghịch biến trên $\\mathbb{R}$.",
+      "methodId": "tham-so-don-dieu",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Hàm số cho bởi đạo hàm đã phân tích thành nhân tử, cần số điểm cực trị.",
+      "methodId": "boi-nghiem-cuc-tri",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Bài toán thực tế hỏi giá trị lớn nhất hoặc nhỏ nhất.",
+      "methodId": "toi-uu-thuc-te",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Xác suất có điều kiện nhiều bước, cho kết quả và hỏi nguyên nhân.",
+      "methodId": "xac-suat-bayes",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Đường thẳng cắt mặt phẳng trong không gian Oxyz, cần giao điểm.",
+      "methodId": "giao-diem-oxyz",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Bất phương trình bậc hai một ẩn.",
+      "methodId": "bpt-bac-hai-dau",
+      "topicHref": "/kien-thuc/10/dang",
+      "topicLabel": "Dạng bài lớp 10"
     }
   ],
   "methods": [
@@ -3164,6 +3224,1097 @@
           "where": "l8b-p2",
           "lhs": "1-Rational(3,8)",
           "rhs": "Rational(5,8)"
+        }
+      ]
+    },
+    {
+      "id": "truc-can-thuc",
+      "grade": 9,
+      "title": "Trục căn thức ở mẫu",
+      "titleEn": "Rationalising a denominator",
+      "blurb": "Lớp 9: nhân cả tử và mẫu với biểu thức liên hợp để mẫu không còn căn.",
+      "spot": [
+        "Biểu thức có phân số mà mẫu chứa $\\sqrt{a}$ hoặc $\\sqrt{a}\\pm\\sqrt{b}$.",
+        "Đề yêu cầu rút gọn, so sánh hoặc tính giá trị của biểu thức có căn ở mẫu."
+      ],
+      "thinking": [
+        "Nếu mẫu là một căn $\\sqrt{b}$, nhân cả tử và mẫu với $\\sqrt{b}$.",
+        "Nếu mẫu là $\\sqrt{a}-\\sqrt{b}$ hay $\\sqrt{a}+\\sqrt{b}$, nhân cả tử và mẫu với biểu thức liên hợp của nó.",
+        "Mẫu mới nhờ hằng đẳng thức $(\\sqrt{a}-\\sqrt{b})(\\sqrt{a}+\\sqrt{b})=a-b$ nên không còn căn; rồi rút gọn."
+      ],
+      "care": [
+        "Phải nhân cả tử lẫn mẫu với cùng một biểu thức khác $0$ thì giá trị phân số mới không đổi.",
+        "Mẫu ban đầu phải khác $0$, chẳng hạn $\\sqrt{a}\\ne\\sqrt{b}$.",
+        "Sau khi trục căn, luôn rút gọn nếu có thừa số chung."
+      ],
+      "formulas": [
+        "$\\dfrac{a}{\\sqrt{b}}=\\dfrac{a\\sqrt{b}}{b}$ với $b>0$.",
+        "$\\dfrac{c}{\\sqrt{a}-\\sqrt{b}}=\\dfrac{c(\\sqrt{a}+\\sqrt{b})}{a-b}$ và $\\dfrac{c}{\\sqrt{a}+\\sqrt{b}}=\\dfrac{c(\\sqrt{a}-\\sqrt{b})}{a-b}$."
+      ],
+      "examples": [
+        {
+          "id": "truc-can-thuc-1",
+          "title": "Mẫu là một căn",
+          "prompt": "Trục căn thức ở mẫu của $\\dfrac{6}{\\sqrt{3}}$.",
+          "steps": [
+            "Nhân cả tử và mẫu với $\\sqrt{3}$: $\\dfrac{6\\sqrt{3}}{\\sqrt{3}\\cdot\\sqrt{3}}=\\dfrac{6\\sqrt{3}}{3}$.",
+            "Rút gọn cho $3$: $2\\sqrt{3}$."
+          ],
+          "result": "$2\\sqrt{3}$"
+        },
+        {
+          "id": "truc-can-thuc-2",
+          "title": "Mẫu là hiệu hai căn",
+          "prompt": "Trục căn thức ở mẫu của $\\dfrac{4}{\\sqrt{5}-1}$.",
+          "steps": [
+            "Biểu thức liên hợp của $\\sqrt{5}-1$ là $\\sqrt{5}+1$. Nhân cả tử và mẫu với nó.",
+            "Mẫu: $(\\sqrt{5}-1)(\\sqrt{5}+1)=5-1=4$. Tử: $4(\\sqrt{5}+1)$.",
+            "$\\dfrac{4(\\sqrt{5}+1)}{4}=\\sqrt{5}+1$."
+          ],
+          "result": "$\\sqrt{5}+1$"
+        }
+      ],
+      "mistakes": [
+        "Chỉ nhân tử hoặc chỉ nhân mẫu nên giá trị phân số đổi.",
+        "Nhân với $\\sqrt{a}-\\sqrt{b}$ thay vì $\\sqrt{a}+\\sqrt{b}$ nên mẫu vẫn còn căn.",
+        "Quên rút gọn sau khi trục căn."
+      ],
+      "practice": [
+        {
+          "id": "truc-can-thuc-p1",
+          "prompt": "Trục căn thức ở mẫu của $\\dfrac{10}{\\sqrt{5}}$.",
+          "answer": "$2\\sqrt{5}$",
+          "steps": [
+            "$\\dfrac{10\\sqrt{5}}{5}$.",
+            "$=2\\sqrt{5}$."
+          ]
+        },
+        {
+          "id": "truc-can-thuc-p2",
+          "prompt": "Trục căn thức ở mẫu của $\\dfrac{1}{\\sqrt{3}+\\sqrt{2}}$.",
+          "answer": "$\\sqrt{3}-\\sqrt{2}$",
+          "steps": [
+            "Nhân với $\\sqrt{3}-\\sqrt{2}$: mẫu $3-2=1$.",
+            "Kết quả $\\sqrt{3}-\\sqrt{2}$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/9",
+          "label": "Các bài lớp 9"
+        },
+        {
+          "href": "/kien-thuc/9/dang",
+          "label": "Dạng bài lớp 9"
+        }
+      ],
+      "verify": [
+        {
+          "where": "truc-can-thuc-1",
+          "lhs": "6/sqrt(3)",
+          "rhs": "2*sqrt(3)"
+        },
+        {
+          "where": "truc-can-thuc-2",
+          "lhs": "4/(sqrt(5)-1)",
+          "rhs": "sqrt(5)+1"
+        },
+        {
+          "where": "truc-can-thuc-p1",
+          "lhs": "10/sqrt(5)",
+          "rhs": "2*sqrt(5)"
+        },
+        {
+          "where": "truc-can-thuc-p2",
+          "lhs": "1/(sqrt(3)+sqrt(2))",
+          "rhs": "sqrt(3)-sqrt(2)"
+        }
+      ]
+    },
+    {
+      "id": "he-pt-cong-the",
+      "grade": 9,
+      "title": "Giải hệ hai phương trình bằng cách cộng hoặc thế",
+      "titleEn": "Solving a system by elimination or substitution",
+      "blurb": "Lớp 9: khử một ẩn bằng cách cộng đại số hoặc thế, rồi tìm ẩn còn lại.",
+      "spot": [
+        "Đề cho hai phương trình bậc nhất hai ẩn và yêu cầu tìm cặp nghiệm.",
+        "Bài toán đố đã được lập thành hai phương trình theo hai ẩn."
+      ],
+      "thinking": [
+        "Chọn ẩn dễ khử: nếu hệ số của một ẩn bằng nhau hoặc đối nhau thì cộng hay trừ hai vế.",
+        "Nếu chưa được, nhân cả một phương trình với số thích hợp để hệ số của một ẩn bằng nhau hoặc đối nhau.",
+        "Giải phương trình một ẩn, thay ngược lại tìm ẩn kia, rồi thử vào cả hai phương trình."
+      ],
+      "care": [
+        "Khi nhân cả phương trình, nhân cả hai vế, không bỏ sót vế phải.",
+        "Thử lại nghiệm vào cả hai phương trình.",
+        "Nếu sau khi cộng cả hai ẩn cùng mất: hệ vô nghiệm hoặc vô số nghiệm, tùy vế phải."
+      ],
+      "formulas": [
+        "Cộng hai vế: $\\begin{cases}ax+by=c\\\\a'x-by=c'\\end{cases}\\Rightarrow (a+a')x=c+c'$.",
+        "Thế: từ $y=\\dots$ trong một phương trình, thay vào phương trình còn lại."
+      ],
+      "examples": [
+        {
+          "id": "he-pt-cong-the-1",
+          "title": "Cộng thẳng",
+          "prompt": "Giải hệ $x+y=7$ và $x-y=1$.",
+          "steps": [
+            "Cộng hai vế: $2x=8$ nên $x=4$.",
+            "Thay vào $x+y=7$: $y=3$.",
+            "Thử: $4+3=7$ và $4-3=1$, đúng."
+          ],
+          "result": "$(x;\\ y)=(4;\\ 3)$"
+        },
+        {
+          "id": "he-pt-cong-the-2",
+          "title": "Phải nhân trước khi cộng",
+          "prompt": "Giải hệ $2x+3y=12$ và $3x-y=7$.",
+          "steps": [
+            "Nhân phương trình thứ hai với $3$: $9x-3y=21$.",
+            "Cộng với phương trình thứ nhất: $11x=33$ nên $x=3$.",
+            "Thế vào $y=3x-7$: $y=2$. Thử: $2\\cdot3+3\\cdot2=12$, đúng."
+          ],
+          "result": "$(x;\\ y)=(3;\\ 2)$"
+        }
+      ],
+      "mistakes": [
+        "Nhân một vế mà quên nhân vế còn lại.",
+        "Cộng khi hệ số của ẩn chưa đối nhau nên không khử được ẩn.",
+        "Tìm được $x$ rồi quên tìm $y$ hoặc không thử lại."
+      ],
+      "practice": [
+        {
+          "id": "he-pt-cong-the-p1",
+          "prompt": "Giải hệ $x+2y=8$ và $x-y=2$.",
+          "answer": "$(4;\\ 2)$",
+          "steps": [
+            "Trừ vế theo vế: $3y=6$ nên $y=2$.",
+            "$x=2+y=4$."
+          ]
+        },
+        {
+          "id": "he-pt-cong-the-p2",
+          "prompt": "Giải hệ $3x+2y=13$ và $x-2y=-1$.",
+          "answer": "$(3;\\ 2)$",
+          "steps": [
+            "Cộng hai vế: $4x=12$ nên $x=3$.",
+            "$2y=13-9=4$ nên $y=2$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/9",
+          "label": "Các bài lớp 9"
+        },
+        {
+          "href": "/kien-thuc/9/dang",
+          "label": "Dạng bài lớp 9"
+        }
+      ],
+      "verify": [
+        {
+          "where": "he-pt-cong-the-1",
+          "lhs": "Rational(7+1,2)",
+          "rhs": "4"
+        },
+        {
+          "where": "he-pt-cong-the-1b",
+          "lhs": "7-4",
+          "rhs": "3"
+        },
+        {
+          "where": "he-pt-cong-the-2",
+          "lhs": "Rational(12+21,11)",
+          "rhs": "3"
+        },
+        {
+          "where": "he-pt-cong-the-2b",
+          "lhs": "3*3-7",
+          "rhs": "2"
+        },
+        {
+          "where": "he-pt-cong-the-p1",
+          "lhs": "Rational(8-2,3)",
+          "rhs": "2"
+        },
+        {
+          "where": "he-pt-cong-the-p2",
+          "lhs": "Rational(13-1,4)",
+          "rhs": "3"
+        }
+      ]
+    },
+    {
+      "id": "ti-so-luong-giac-vuong",
+      "grade": 9,
+      "title": "Giải tam giác vuông bằng tỉ số lượng giác",
+      "titleEn": "Solving a right triangle with trigonometric ratios",
+      "blurb": "Lớp 9: dùng sin, cos, tan của góc nhọn để tìm cạnh còn thiếu.",
+      "spot": [
+        "Tam giác vuông cho một góc nhọn và một cạnh, cần tìm các cạnh còn lại.",
+        "Đề hỏi chiều cao, khoảng cách khi biết góc nhìn."
+      ],
+      "thinking": [
+        "Xác định cạnh huyền, cạnh đối và cạnh kề so với góc đã cho.",
+        "Chọn tỉ số chứa cạnh đã biết và cạnh cần tìm: $\\sin$ (đối : huyền), $\\cos$ (kề : huyền), $\\tan$ (đối : kề).",
+        "Lập phương trình, giải cạnh cần tìm, kiểm tra bằng định lí Pi-ta-go."
+      ],
+      "care": [
+        "Cạnh đối và cạnh kề đổi vai trò khi đổi sang góc nhọn còn lại.",
+        "Góc ở các giá trị đặc biệt: $30^\\circ$, $45^\\circ$, $60^\\circ$ cho giá trị chính xác.",
+        "Máy tính phải đặt ở chế độ độ khi dùng góc tính bằng độ."
+      ],
+      "formulas": [
+        "Sin bằng cạnh đối chia cạnh huyền, cos bằng cạnh kề chia cạnh huyền, tan bằng cạnh đối chia cạnh kề.",
+        "$\\sin30^\\circ=\\dfrac{1}{2}$, $\\cos30^\\circ=\\dfrac{\\sqrt{3}}{2}$, $\\tan60^\\circ=\\sqrt{3}$, $\\sin45^\\circ=\\cos45^\\circ=\\dfrac{\\sqrt{2}}{2}$."
+      ],
+      "examples": [
+        {
+          "id": "ti-so-luong-giac-vuong-1",
+          "title": "Biết cạnh huyền và một góc",
+          "prompt": "Tam giác $ABC$ vuông tại $A$, $BC=10$ và $\\widehat{B}=30^\\circ$. Tìm $AC$.",
+          "steps": [
+            "$AC$ là cạnh đối của góc $B$, $BC$ là cạnh huyền nên $AC=BC\\cdot\\sin B$.",
+            "$AC=10\\cdot\\dfrac{1}{2}=5$."
+          ],
+          "result": "$AC=5$"
+        },
+        {
+          "id": "ti-so-luong-giac-vuong-2",
+          "title": "Biết cạnh góc vuông và một góc",
+          "prompt": "Tam giác $ABC$ vuông tại $A$, $AC=9$ và $\\widehat{C}=60^\\circ$. Tìm $AB$ và $BC$.",
+          "steps": [
+            "$AB=AC\\cdot\\tan C=9\\sqrt{3}$.",
+            "$BC=\\dfrac{AC}{\\cos C}=\\dfrac{9}{1:2}=18$."
+          ],
+          "result": "$AB=9\\sqrt{3}$ và $BC=18$"
+        }
+      ],
+      "mistakes": [
+        "Chọn nhầm cạnh đối với cạnh kề nên tìm ra tỉ số nghịch đảo.",
+        "Dùng $\\sin$ thay cho $\\cos$ khi đổi góc.",
+        "Quên rằng $BC$ là cạnh huyền khi chia."
+      ],
+      "practice": [
+        {
+          "id": "ti-so-luong-giac-vuong-p1",
+          "prompt": "Tam giác $ABC$ vuông tại $A$, $BC=8$, $\\widehat{B}=45^\\circ$. Tìm $AB$.",
+          "answer": "$AB=4\\sqrt{2}$",
+          "steps": [
+            "$AB=BC\\cdot\\cos B=8\\cdot\\dfrac{\\sqrt{2}}{2}$.",
+            "$=4\\sqrt{2}$."
+          ]
+        },
+        {
+          "id": "ti-so-luong-giac-vuong-p2",
+          "prompt": "Tam giác $ABC$ vuông tại $A$, $BC=12$, $\\widehat{C}=30^\\circ$. Tìm $AB$.",
+          "answer": "$AB=6$",
+          "steps": [
+            "$AB=BC\\cdot\\sin C=12\\cdot\\dfrac{1}{2}$.",
+            "$=6$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/9",
+          "label": "Các bài lớp 9"
+        },
+        {
+          "href": "/kien-thuc/9/dang",
+          "label": "Dạng bài lớp 9"
+        }
+      ],
+      "verify": [
+        {
+          "where": "ti-so-luong-giac-vuong-1",
+          "lhs": "10*Rational(1,2)",
+          "rhs": "5"
+        },
+        {
+          "where": "ti-so-luong-giac-vuong-2",
+          "lhs": "9*tan(pi/3)",
+          "rhs": "9*sqrt(3)"
+        },
+        {
+          "where": "ti-so-luong-giac-vuong-2b",
+          "lhs": "9/cos(pi/3)",
+          "rhs": "18"
+        },
+        {
+          "where": "ti-so-luong-giac-vuong-p1",
+          "lhs": "8*cos(pi/4)",
+          "rhs": "4*sqrt(2)"
+        },
+        {
+          "where": "ti-so-luong-giac-vuong-p2",
+          "lhs": "12*sin(pi/6)",
+          "rhs": "6"
+        }
+      ]
+    },
+    {
+      "id": "chop-goc-the-tich",
+      "grade": 11,
+      "title": "Tìm chiều cao từ góc giữa đường thẳng và mặt phẳng",
+      "titleEn": "Finding a height from a line-plane angle",
+      "blurb": "Lớp 11: xác định hình chiếu, dựng tam giác vuông để có chiều cao rồi tính thể tích.",
+      "spot": [
+        "Hình chóp hoặc lăng trụ có cạnh bên vuông góc với đáy và đề cho góc giữa một đường thẳng với mặt đáy.",
+        "Đề hỏi thể tích khi chưa cho chiều cao."
+      ],
+      "thinking": [
+        "Tìm hình chiếu vuông góc của đường thẳng lên mặt đáy, nhờ cạnh bên vuông góc với đáy.",
+        "Góc giữa đường thẳng và mặt phẳng là góc giữa nó và hình chiếu: dựng tam giác vuông chứa góc ấy và chiều cao.",
+        "Dùng $\\tan$ hoặc tam giác vuông cân để suy ra chiều cao, rồi áp dụng $V=\\frac{1}{3}Bh$ hoặc $V=Bh$."
+      ],
+      "care": [
+        "Góc phải là góc giữa đường thẳng và hình chiếu, không phải góc giữa hai cạnh bất kì.",
+        "Chóp dùng hệ số $\\frac{1}{3}$, lăng trụ thì không.",
+        "Diện tích đáy tính đúng theo hình của đáy (hình vuông, tam giác vuông, hình chữ nhật)."
+      ],
+      "formulas": [
+        "Chóp: $V=\\dfrac{1}{3}\\cdot B\\cdot h$ với $B$ là diện tích đáy.",
+        "Lăng trụ: $V=B\\cdot h$ với $B$ là diện tích đáy."
+      ],
+      "examples": [
+        {
+          "id": "chop-goc-the-tich-1",
+          "title": "Chóp đáy hình vuông",
+          "prompt": "Chóp $S.ABCD$ có đáy là hình vuông cạnh $3$, $SA\\perp(ABCD)$ và $SB$ tạo với đáy góc $45^\\circ$. Tính thể tích.",
+          "steps": [
+            "Hình chiếu của $SB$ lên đáy là $AB$, nên $\\widehat{SBA}=45^\\circ$ và tam giác $SAB$ vuông cân tại $A$: $SA=AB=3$.",
+            "$V=\\dfrac{1}{3}\\cdot 3^2\\cdot 3=9$."
+          ],
+          "result": "$V=9$"
+        },
+        {
+          "id": "chop-goc-the-tich-2",
+          "title": "Chóp đáy tam giác vuông",
+          "prompt": "Chóp $S.ABC$ có đáy $ABC$ vuông tại $B$, $AB=3$, $BC=4$, $SA\\perp(ABC)$ và $SC$ tạo với đáy góc $60^\\circ$. Tính thể tích.",
+          "steps": [
+            "$AC=5$ và $\\widehat{SCA}=60^\\circ$ nên $SA=AC\\cdot\\tan60^\\circ=5\\sqrt{3}$.",
+            "$S_{ABC}=\\dfrac{1}{2}\\cdot3\\cdot4=6$.",
+            "$V=\\dfrac{1}{3}\\cdot 6\\cdot5\\sqrt{3}=10\\sqrt{3}$."
+          ],
+          "result": "$V=10\\sqrt{3}$"
+        }
+      ],
+      "mistakes": [
+        "Dùng $V=Bh$ cho hình chóp nên ra gấp ba lần.",
+        "Lấy nhầm góc giữa $SB$ và $SA$ thay vì góc giữa $SB$ và đáy.",
+        "Quên bước tìm hình chiếu nên không dựng được tam giác vuông."
+      ],
+      "practice": [
+        {
+          "id": "chop-goc-the-tich-p1",
+          "prompt": "Lăng trụ đứng $ABC.A'B'C'$ có đáy vuông cân tại $A$, $AB=4$, $A'B$ tạo với đáy góc $45^\\circ$. Tính thể tích.",
+          "answer": "$V=32$",
+          "steps": [
+            "$\\widehat{A'BA}=45^\\circ$ nên $AA'=AB=4$.",
+            "$V=\\dfrac{1}{2}\\cdot4\\cdot4\\cdot4=32$."
+          ]
+        },
+        {
+          "id": "chop-goc-the-tich-p2",
+          "prompt": "Chóp $S.ABCD$ có đáy hình chữ nhật $3\\times4$, $SA\\perp(ABCD)$ và $SC$ tạo với đáy góc $45^\\circ$. Tính thể tích.",
+          "answer": "$V=20$",
+          "steps": [
+            "$AC=5$ nên $SA=AC=5$.",
+            "$V=\\dfrac{1}{3}\\cdot12\\cdot5=20$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/11",
+          "label": "Các bài lớp 11"
+        },
+        {
+          "href": "/kien-thuc/11/dang",
+          "label": "Dạng bài lớp 11"
+        }
+      ],
+      "verify": [
+        {
+          "where": "chop-goc-the-tich-1",
+          "lhs": "Rational(1,3)*3**2*3",
+          "rhs": "9"
+        },
+        {
+          "where": "chop-goc-the-tich-2",
+          "lhs": "Rational(1,3)*Rational(1,2)*3*4*5*sqrt(3)",
+          "rhs": "10*sqrt(3)"
+        },
+        {
+          "where": "chop-goc-the-tich-2b",
+          "lhs": "5*tan(pi/3)",
+          "rhs": "5*sqrt(3)"
+        },
+        {
+          "where": "chop-goc-the-tich-p1",
+          "lhs": "Rational(1,2)*4*4*4",
+          "rhs": "32"
+        },
+        {
+          "where": "chop-goc-the-tich-p2",
+          "lhs": "Rational(1,3)*3*4*5",
+          "rhs": "20"
+        }
+      ]
+    },
+    {
+      "id": "tham-so-don-dieu",
+      "grade": 12,
+      "title": "Tham số để hàm bậc ba đơn điệu trên toàn trục số",
+      "titleEn": "A parameter that makes a cubic monotonic",
+      "blurb": "Lớp 12: chuyển về điều kiện đạo hàm không âm (hoặc không dương) với mọi x, rồi dùng dấu của tam thức.",
+      "spot": [
+        "Đề hỏi giá trị của tham số $m$ để hàm số đồng biến hoặc nghịch biến trên $\\mathbb{R}$.",
+        "Đề hỏi có bao nhiêu giá trị nguyên của $m$ trong một đoạn cho trước."
+      ],
+      "thinking": [
+        "Tính $y'$, là tam thức bậc hai trong $x$ khi hàm số là bậc ba.",
+        "Đồng biến trên $\\mathbb{R}$ cần $y'\\ge0$ với mọi $x$, nên hệ số cao nhất dương và $\\Delta'\\le0$; nghịch biến thì hệ số cao nhất âm và $\\Delta'\\le0$.",
+        "Giải bất phương trình theo $m$, rồi đếm các số nguyên trong đoạn."
+      ],
+      "care": [
+        "Dấu bằng được lấy: $\\Delta'=0$ thì $y'=0$ chỉ tại một điểm nên hàm số vẫn đồng biến.",
+        "Đếm số nguyên trong đoạn $[p;\\ q]$ cả hai đầu mút nếu thỏa điều kiện.",
+        "Nếu hệ số cao nhất của $y'$ chứa tham số, xét riêng trường hợp bằng $0$."
+      ],
+      "formulas": [
+        "$ax^2+bx+c\\ge0$ với mọi $x\\iff a>0$ và $\\Delta\\le0$.",
+        "$\\Delta'=\\left(\\dfrac{b}{2}\\right)^2-ac$."
+      ],
+      "examples": [
+        {
+          "id": "tham-so-don-dieu-1",
+          "title": "Đồng biến trên toàn trục số",
+          "prompt": "Tìm $m$ để $y=x^3+3x^2+mx+2$ đồng biến trên $\\mathbb{R}$.",
+          "steps": [
+            "$y'=3x^2+6x+m$ với hệ số cao nhất $3>0$.",
+            "Cần $\\Delta'=9-3m\\le0$.",
+            "$m\\ge3$."
+          ],
+          "result": "$m\\ge3$"
+        },
+        {
+          "id": "tham-so-don-dieu-2",
+          "title": "Nghịch biến trên toàn trục số",
+          "prompt": "Tìm $m$ để $y=-x^3+3x^2+mx+1$ nghịch biến trên $\\mathbb{R}$.",
+          "steps": [
+            "$y'=-3x^2+6x+m$ với hệ số cao nhất $-3<0$.",
+            "Cần $\\Delta'=9+3m\\le0$.",
+            "$m\\le-3$."
+          ],
+          "result": "$m\\le-3$"
+        }
+      ],
+      "mistakes": [
+        "Bỏ dấu bằng nên mất giá trị biên $m=3$.",
+        "Dùng $\\Delta'\\ge0$ thay vì $\\Delta'\\le0$.",
+        "Đếm số nguyên sai đầu mút của đoạn."
+      ],
+      "practice": [
+        {
+          "id": "tham-so-don-dieu-p1",
+          "prompt": "Tìm $m$ để $y=x^3-6x^2+mx$ đồng biến trên $\\mathbb{R}$.",
+          "answer": "$m\\ge12$",
+          "steps": [
+            "$y'=3x^2-12x+m$.",
+            "$\\Delta'=36-3m\\le0$ nên $m\\ge12$."
+          ]
+        },
+        {
+          "id": "tham-so-don-dieu-p2",
+          "prompt": "Có bao nhiêu số nguyên $m\\in[0;\\ 20]$ để $y=x^3+6x^2+mx$ đồng biến trên $\\mathbb{R}$?",
+          "answer": "$9$",
+          "steps": [
+            "$y'=3x^2+12x+m$ nên $\\Delta'=36-3m\\le0$, tức $m\\ge12$.",
+            "Các số nguyên từ $12$ đến $20$: $20-12+1=9$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/derivative",
+          "label": "Đạo hàm"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "tham-so-don-dieu-1",
+          "lhs": "9-3*3",
+          "rhs": "0"
+        },
+        {
+          "where": "tham-so-don-dieu-2",
+          "lhs": "9+3*(-3)",
+          "rhs": "0"
+        },
+        {
+          "where": "tham-so-don-dieu-p1",
+          "lhs": "36-3*12",
+          "rhs": "0"
+        },
+        {
+          "where": "tham-so-don-dieu-p2",
+          "lhs": "20-12+1",
+          "rhs": "9"
+        }
+      ]
+    },
+    {
+      "id": "boi-nghiem-cuc-tri",
+      "grade": 12,
+      "title": "Đếm cực trị từ đạo hàm đã phân tích thành nhân tử",
+      "titleEn": "Counting extrema from a factored derivative",
+      "blurb": "Lớp 12: nghiệm bội lẻ của đạo hàm là điểm cực trị, nghiệm bội chẵn thì không.",
+      "spot": [
+        "Đề cho $f'(x)$ dưới dạng tích các thừa số $(x-a)^k$ rồi hỏi số điểm cực trị của $f$.",
+        "Đề cho đồ thị hoặc bảng dấu của $f'$ và hỏi số điểm cực trị."
+      ],
+      "thinking": [
+        "Tìm các nghiệm khác nhau của $f'(x)=0$ và bội của từng nghiệm.",
+        "Bội lẻ làm $f'$ đổi dấu khi đi qua nghiệm nên đó là điểm cực trị; bội chẵn thì $f'$ giữ nguyên dấu nên không phải cực trị.",
+        "Đếm các nghiệm bội lẻ."
+      ],
+      "care": [
+        "Đề hỏi cực trị của $f$, không phải của $f'$.",
+        "Nghiệm bội chẵn vẫn là nghiệm của $f'$ nhưng không đổi dấu.",
+        "Hai nghiệm trùng nhau chỉ đếm là một nghiệm với bội cộng lại."
+      ],
+      "formulas": [
+        "Nếu $f'(x)=(x-a)^k g(x)$ với $g(a)\\ne0$ thì $f'$ đổi dấu tại $a\\iff k$ lẻ."
+      ],
+      "examples": [
+        {
+          "id": "boi-nghiem-cuc-tri-1",
+          "title": "Một nghiệm bội chẵn",
+          "prompt": "Hàm số $f$ có $f'(x)=(x-1)^2(x+2)(x-3)$. Có bao nhiêu điểm cực trị?",
+          "steps": [
+            "Nghiệm $1$ có bội $2$: không đổi dấu, loại.",
+            "Nghiệm $-2$ và $3$ đều có bội $1$: đổi dấu.",
+            "Có $2$ điểm cực trị."
+          ],
+          "result": "$2$"
+        },
+        {
+          "id": "boi-nghiem-cuc-tri-2",
+          "title": "Bội ba và bội bốn",
+          "prompt": "Hàm số $f$ có $f'(x)=x^3(x-2)^4$. Có bao nhiêu điểm cực trị?",
+          "steps": [
+            "Nghiệm $0$ có bội $3$ (lẻ): đổi dấu.",
+            "Nghiệm $2$ có bội $4$ (chẵn): không đổi dấu.",
+            "Có $1$ điểm cực trị."
+          ],
+          "result": "$1$"
+        }
+      ],
+      "mistakes": [
+        "Đếm cả nghiệm bội chẵn nên ra nhiều hơn.",
+        "Đếm số nghiệm của $f'$ thay vì số nghiệm đổi dấu.",
+        "Quên rằng $x^2-4=(x-2)(x+2)$ cho thêm hai nghiệm bội một."
+      ],
+      "practice": [
+        {
+          "id": "boi-nghiem-cuc-tri-p1",
+          "prompt": "$f'(x)=(x+1)(x-1)^2(x-2)^3$. Có bao nhiêu điểm cực trị?",
+          "answer": "$2$",
+          "steps": [
+            "Bội lần lượt là $1$, $2$, $3$.",
+            "Hai nghiệm bội lẻ: $-1$ và $2$."
+          ]
+        },
+        {
+          "id": "boi-nghiem-cuc-tri-p2",
+          "prompt": "$f'(x)=x^2(x^2-4)$. Có bao nhiêu điểm cực trị?",
+          "answer": "$2$",
+          "steps": [
+            "Phân tích: $f'(x)=x^2(x-2)(x+2)$.",
+            "Nghiệm $0$ bội $2$ bị loại; $2$ và $-2$ bội $1$ nên có $2$ điểm cực trị."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/derivative",
+          "label": "Đạo hàm"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "boi-nghiem-cuc-tri-1",
+          "lhs": "(2%2)+(1%2)+(1%2)",
+          "rhs": "2"
+        },
+        {
+          "where": "boi-nghiem-cuc-tri-2",
+          "lhs": "(3%2)+(4%2)",
+          "rhs": "1"
+        },
+        {
+          "where": "boi-nghiem-cuc-tri-p1",
+          "lhs": "(1%2)+(2%2)+(3%2)",
+          "rhs": "2"
+        },
+        {
+          "where": "boi-nghiem-cuc-tri-p2",
+          "lhs": "(2%2)+(1%2)+(1%2)",
+          "rhs": "2"
+        }
+      ]
+    },
+    {
+      "id": "toi-uu-thuc-te",
+      "grade": 12,
+      "title": "Bài toán tối ưu có lời văn",
+      "titleEn": "Word problems of optimisation",
+      "blurb": "Lớp 12: đặt ẩn, viết đại lượng cần tối ưu thành hàm một biến, tìm miền xác định rồi dùng đạo hàm.",
+      "spot": [
+        "Đề hỏi lớn nhất, nhỏ nhất của thể tích, diện tích, chi phí trong một tình huống thực tế.",
+        "Có một ràng buộc như độ dài hàng rào hay cạnh tấm tôn cho trước."
+      ],
+      "thinking": [
+        "Chọn một ẩn $x$ và tìm miền xác định thật theo hình học của bài.",
+        "Dùng ràng buộc để viết đại lượng cần tối ưu thành hàm một biến $f(x)$.",
+        "Tìm điểm làm $f'(x)=0$ trong miền, so sánh với giá trị ở đầu mút miền rồi kết luận và nêu đơn vị."
+      ],
+      "care": [
+        "Miền của $x$ phải khớp hình học: cạnh hộp phải dương, độ dài không âm.",
+        "Loại các nghiệm của $f'$ nằm ngoài miền.",
+        "Trả lời đúng đại lượng được hỏi, không phải giá trị của $x$."
+      ],
+      "formulas": [
+        "Hộp không nắp từ tấm vuông cạnh $a$, cắt bốn góc cạnh $x$: $V(x)=x(a-2x)^2$ với $0<x<\\dfrac{a}{2}$.",
+        "Rào ba cạnh với tổng độ dài $L$: $S(x)=x(L-2x)$ với $0<x<\\dfrac{L}{2}$."
+      ],
+      "examples": [
+        {
+          "id": "toi-uu-thuc-te-1",
+          "title": "Hộp không nắp",
+          "prompt": "Từ tấm tôn vuông cạnh $12$ dm, cắt bốn hình vuông cạnh $x$ ở các góc rồi gập thành hộp không nắp. Tìm thể tích lớn nhất.",
+          "steps": [
+            "$V(x)=x(12-2x)^2$ với $0<x<6$.",
+            "$V'(x)=(12-2x)(12-6x)=0$ nên $x=2$ (nhận) hoặc $x=6$ (loại).",
+            "$V(2)=2\\cdot8^2=128$ dm$^3$."
+          ],
+          "result": "$128$ dm$^3$"
+        },
+        {
+          "id": "toi-uu-thuc-te-2",
+          "title": "Rào hình chữ nhật dựa vào tường",
+          "prompt": "Có $100$ m hàng rào, rào ba cạnh của một hình chữ nhật còn cạnh thứ tư là bức tường. Tìm diện tích lớn nhất.",
+          "steps": [
+            "Hai cạnh vuông góc với tường dài $x$, cạnh còn lại dài $100-2x$ với $0<x<50$.",
+            "$S(x)=x(100-2x)$, $S'(x)=100-4x=0$ nên $x=25$.",
+            "$S(25)=25\\cdot50=1250$ m$^2$."
+          ],
+          "result": "$1250$ m$^2$"
+        }
+      ],
+      "mistakes": [
+        "Không tìm miền xác định nên nhận cả nghiệm không phù hợp.",
+        "Trả lời giá trị của $x$ thay vì thể tích hay diện tích.",
+        "Quên bình phương khi viết đáy hình vuông của hộp."
+      ],
+      "practice": [
+        {
+          "id": "toi-uu-thuc-te-p1",
+          "prompt": "Tấm tôn vuông cạnh $18$ dm, làm hộp không nắp như trên. Tìm thể tích lớn nhất.",
+          "answer": "$432$ dm$^3$",
+          "steps": [
+            "$V(x)=x(18-2x)^2$ với $0<x<9$.",
+            "$x=3$ và $V(3)=3\\cdot12^2=432$."
+          ]
+        },
+        {
+          "id": "toi-uu-thuc-te-p2",
+          "prompt": "Có $60$ m hàng rào, rào ba cạnh hình chữ nhật dựa vào tường. Tìm diện tích lớn nhất.",
+          "answer": "$450$ m$^2$",
+          "steps": [
+            "$S(x)=x(60-2x)$ với $0<x<30$.",
+            "$x=15$ và $S(15)=15\\cdot30=450$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/derivative",
+          "label": "Đạo hàm"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "toi-uu-thuc-te-1",
+          "lhs": "maximum(x*(12-2*x)**2, x, Interval(0, 6))",
+          "rhs": "128"
+        },
+        {
+          "where": "toi-uu-thuc-te-2",
+          "lhs": "maximum(x*(100-2*x), x, Interval(0, 50))",
+          "rhs": "1250"
+        },
+        {
+          "where": "toi-uu-thuc-te-p1",
+          "lhs": "maximum(x*(18-2*x)**2, x, Interval(0, 9))",
+          "rhs": "432"
+        },
+        {
+          "where": "toi-uu-thuc-te-p2",
+          "lhs": "maximum(x*(60-2*x), x, Interval(0, 30))",
+          "rhs": "450"
+        }
+      ]
+    },
+    {
+      "id": "xac-suat-bayes",
+      "grade": 12,
+      "title": "Xác suất toàn phần và công thức Bayes",
+      "titleEn": "Total probability and Bayes' rule",
+      "blurb": "Lớp 12: vẽ sơ đồ cây, tính xác suất toàn phần rồi tính xác suất nguyên nhân khi biết kết quả.",
+      "spot": [
+        "Đề cho xác suất của các nhóm nguyên nhân và xác suất kết quả trong từng nhóm, rồi hỏi xác suất nhóm khi đã biết kết quả.",
+        "Có cụm \"biết rằng\", \"nếu kết quả là\", \"xác suất người đó thật sự\"."
+      ],
+      "thinking": [
+        "Gọi $A$ là nguyên nhân, $B$ là kết quả quan sát; ghi $P(A)$, $P(B\\mid A)$, $P(B\\mid\\bar A)$ trên sơ đồ cây.",
+        "Tính xác suất toàn phần $P(B)=P(A)P(B\\mid A)+P(\\bar A)P(B\\mid\\bar A)$.",
+        "Tính $P(A\\mid B)=\\dfrac{P(A)P(B\\mid A)}{P(B)}$."
+      ],
+      "care": [
+        "$P(A\\mid B)$ khác $P(B\\mid A)$; đề hỏi loại nào phải đọc kỹ.",
+        "Các nhóm nguyên nhân phải đôi một không giao nhau và hợp lại là toàn bộ.",
+        "Khi dùng phần trăm, đổi cùng một đơn vị trước khi nhân."
+      ],
+      "formulas": [
+        "$P(B)=P(A)P(B\\mid A)+P(\\bar A)P(B\\mid\\bar A)$.",
+        "$P(A\\mid B)=\\dfrac{P(A)\\cdot P(B\\mid A)}{P(B)}$."
+      ],
+      "examples": [
+        {
+          "id": "xac-suat-bayes-1",
+          "title": "Xét nghiệm bệnh",
+          "prompt": "Một bệnh có $10\\%$ dân số mắc. Xét nghiệm dương tính với $90\\%$ người mắc và $10\\%$ người không mắc. Một người dương tính; xác suất họ thật sự mắc bệnh là bao nhiêu?",
+          "steps": [
+            "$P(A)=\\frac{10}{100}$, $P(B\\mid A)=\\frac{90}{100}$, $P(B\\mid\\bar A)=\\frac{10}{100}$.",
+            "Tử số: $10\\cdot90=900$. Phần người không mắc nhưng dương tính: $90\\cdot10=900$.",
+            "$P(A\\mid B)=\\dfrac{900}{900+900}=\\dfrac{1}{2}$."
+          ],
+          "result": "$\\dfrac{1}{2}$"
+        },
+        {
+          "id": "xac-suat-bayes-2",
+          "title": "Hai hộp bi",
+          "prompt": "Hộp I có $3$ bi đỏ và $2$ bi xanh, hộp II có $1$ bi đỏ và $4$ bi xanh. Chọn ngẫu nhiên một hộp rồi lấy một bi, được bi đỏ. Xác suất lấy từ hộp I là bao nhiêu?",
+          "steps": [
+            "Phần đỏ qua hộp I: $\\dfrac{1}{2}\\cdot\\dfrac{3}{5}$. Phần đỏ qua hộp II: $\\dfrac{1}{2}\\cdot\\dfrac{1}{5}$.",
+            "Xác suất được bi đỏ: $P(D)=\\dfrac{3}{10}+\\dfrac{1}{10}=\\dfrac{2}{5}$.",
+            "$P(\\mathrm{I}\\mid D)=\\dfrac{3}{10}:\\dfrac{2}{5}=\\dfrac{3}{4}$."
+          ],
+          "result": "$\\dfrac{3}{4}$"
+        }
+      ],
+      "mistakes": [
+        "Lấy $P(B\\mid A)$ làm đáp số trong khi đề hỏi $P(A\\mid B)$.",
+        "Quên cộng phần của nhóm còn lại vào mẫu.",
+        "Dùng phần trăm lẫn với số thập phân khi nhân."
+      ],
+      "practice": [
+        {
+          "id": "xac-suat-bayes-p1",
+          "prompt": "Máy $A$ làm $60\\%$ sản phẩm với $2\\%$ lỗi, máy $B$ làm $40\\%$ với $5\\%$ lỗi. Một sản phẩm bị lỗi; xác suất nó do máy $A$ làm là?",
+          "answer": "$\\dfrac{3}{8}$",
+          "steps": [
+            "Phần lỗi của $A$: $60\\cdot2=120$; của $B$: $40\\cdot5=200$.",
+            "$\\dfrac{120}{120+200}=\\dfrac{3}{8}$."
+          ]
+        },
+        {
+          "id": "xac-suat-bayes-p2",
+          "prompt": "$P(A)=30\\%$, $P(B\\mid A)=80\\%$, $P(B\\mid\\bar A)=20\\%$. Tính $P(A\\mid B)$.",
+          "answer": "$\\dfrac{12}{19}$",
+          "steps": [
+            "Tử số $30\\cdot80=2400$; phần còn lại $70\\cdot20=1400$.",
+            "$\\dfrac{2400}{3800}=\\dfrac{12}{19}$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/probability",
+          "label": "Xác suất"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "xac-suat-bayes-1",
+          "lhs": "Rational(10*90, 10*90+90*10)",
+          "rhs": "Rational(1,2)"
+        },
+        {
+          "where": "xac-suat-bayes-2",
+          "lhs": "Rational(1,2)*Rational(3,5)/(Rational(1,2)*Rational(3,5)+Rational(1,2)*Rational(1,5))",
+          "rhs": "Rational(3,4)"
+        },
+        {
+          "where": "xac-suat-bayes-p1",
+          "lhs": "Rational(60*2, 60*2+40*5)",
+          "rhs": "Rational(3,8)"
+        },
+        {
+          "where": "xac-suat-bayes-p2",
+          "lhs": "Rational(30*80, 30*80+70*20)",
+          "rhs": "Rational(12,19)"
+        }
+      ]
+    },
+    {
+      "id": "giao-diem-oxyz",
+      "grade": 12,
+      "title": "Giao điểm của đường thẳng và mặt phẳng trong Oxyz",
+      "titleEn": "Intersection of a line and a plane in Oxyz",
+      "blurb": "Lớp 12: tham số hóa đường thẳng rồi thay vào phương trình mặt phẳng để tìm tham số.",
+      "spot": [
+        "Đề cho đường thẳng $d$ (dạng tham số hoặc chính tắc) và mặt phẳng $(P)$ rồi hỏi giao điểm hoặc một đại lượng của nó.",
+        "Đề cần tọa độ điểm chung của đường thẳng và mặt phẳng."
+      ],
+      "thinking": [
+        "Viết $d$ dưới dạng $x=x_0+at$, $y=y_0+bt$, $z=z_0+ct$.",
+        "Thay vào phương trình mặt phẳng, được phương trình bậc nhất theo $t$ và giải $t$.",
+        "Thế $t$ vào ba tọa độ để có điểm giao, rồi trả lời đúng đại lượng được hỏi."
+      ],
+      "care": [
+        "Nếu hệ số của $t$ bằng $0$ và phần còn lại khác $0$ thì $d$ song song với $(P)$, không có giao điểm.",
+        "Nếu cả hai bằng $0$ thì $d$ nằm trong $(P)$.",
+        "Với dạng chính tắc, đặt cả ba tỉ số bằng $t$."
+      ],
+      "formulas": [
+        "$(P):\\ Ax+By+Cz+D=0$ và $d:\\ \\begin{cases}x=x_0+at\\\\y=y_0+bt\\\\z=z_0+ct\\end{cases}$ cho $(Aa+Bb+Cc)t+(Ax_0+By_0+Cz_0+D)=0$."
+      ],
+      "examples": [
+        {
+          "id": "giao-diem-oxyz-1",
+          "title": "Giao điểm tìm ngay",
+          "prompt": "Cho $d$: $x=1+t$, $y=2-t$, $z=3+2t$ và $(P)$: $x+y+z-10=0$. Tìm giao điểm.",
+          "steps": [
+            "Thay vào: $(1+t)+(2-t)+(3+2t)-10=2t-4=0$ nên $t=2$.",
+            "$I(3;\\ 0;\\ 7)$."
+          ],
+          "result": "$I(3;\\ 0;\\ 7)$"
+        },
+        {
+          "id": "giao-diem-oxyz-2",
+          "title": "Hệ số có dấu âm",
+          "prompt": "Cho $d$: $x=t$, $y=1+2t$, $z=-1+t$ và $(P)$: $2x-y+z+3=0$. Tìm giao điểm.",
+          "steps": [
+            "Thay vào: $2t-(1+2t)+(-1+t)+3=t+1=0$ nên $t=-1$.",
+            "$I(-1;\\ -1;\\ -2)$."
+          ],
+          "result": "$I(-1;\\ -1;\\ -2)$"
+        }
+      ],
+      "mistakes": [
+        "Thay sai dấu khi trừ tọa độ có tham số.",
+        "Tìm được $t$ rồi dừng, không thế lại tìm tọa độ.",
+        "Không thử lại bằng cách thay giao điểm vào $(P)$."
+      ],
+      "practice": [
+        {
+          "id": "giao-diem-oxyz-p1",
+          "prompt": "$d$: $x=2t$, $y=1-t$, $z=t$ và $(P)$: $x+2y-z-4=0$. Tìm giao điểm.",
+          "answer": "$I(-4;\\ 3;\\ -2)$",
+          "steps": [
+            "$2t+2(1-t)-t-4=-t-2=0$ nên $t=-2$.",
+            "$I(-4;\\ 3;\\ -2)$."
+          ]
+        },
+        {
+          "id": "giao-diem-oxyz-p2",
+          "prompt": "$d$: $x=1+t$, $y=-t$, $z=2$ và $(P)$: $x-y+z-5=0$. Tìm giao điểm.",
+          "answer": "$I(2;\\ -1;\\ 2)$",
+          "steps": [
+            "$1+t+t+2-5=2t-2=0$ nên $t=1$.",
+            "$I(2;\\ -1;\\ 2)$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/analytic",
+          "label": "Hình giải tích"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "giao-diem-oxyz-1",
+          "lhs": "(1+2)+(2-2)+(3+2*2)-10",
+          "rhs": "0"
+        },
+        {
+          "where": "giao-diem-oxyz-2",
+          "lhs": "2*(-1)-(1+2*(-1))+(-1+(-1))+3",
+          "rhs": "0"
+        },
+        {
+          "where": "giao-diem-oxyz-p1",
+          "lhs": "2*(-2)+2*(1-(-2))-(-2)-4",
+          "rhs": "0"
+        },
+        {
+          "where": "giao-diem-oxyz-p2",
+          "lhs": "(1+1)-(-1)+2-5",
+          "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "bpt-bac-hai-dau",
+      "grade": 10,
+      "title": "Giải bất phương trình bậc hai bằng xét dấu tam thức",
+      "titleEn": "Solving a quadratic inequality by the sign of the trinomial",
+      "blurb": "Lớp 10: tìm nghiệm của tam thức, rồi đọc dấu theo quy tắc \"trong trái, ngoài cùng\".",
+      "spot": [
+        "Đề cho bất phương trình dạng $ax^2+bx+c>0$, $\\ge0$, $<0$ hoặc $\\le0$.",
+        "Bài toán tìm tập xác định, tập nghiệm hoặc khoảng hàm số nhận giá trị âm, dương."
+      ],
+      "thinking": [
+        "Chuyển mọi số hạng về một vế để so sánh với $0$, giữ $a$ khác $0$.",
+        "Tìm nghiệm của $ax^2+bx+c=0$ rồi sắp thứ tự các nghiệm.",
+        "Đọc dấu: $a>0$ thì tam thức dương ngoài hai nghiệm và âm giữa hai nghiệm, $a<0$ thì ngược lại. Viết tập nghiệm bằng khoảng."
+      ],
+      "care": [
+        "Dấu bằng có trong tập nghiệm khi bất phương trình có $\\ge$ hoặc $\\le$ (đóng ngoặc vuông).",
+        "Khi $a<0$ nên đổi dấu hai vế (và đổi chiều bất đẳng thức) trước khi đọc dấu.",
+        "Nếu $\\Delta<0$ thì tam thức cùng dấu với $a$ với mọi $x$; nếu $\\Delta=0$ thì chỉ bằng $0$ tại một điểm."
+      ],
+      "formulas": [
+        "Nếu $a>0$ và có hai nghiệm $x_1<x_2$ thì $ax^2+bx+c<0\\iff x_1<x<x_2$.",
+        "Nếu $a>0$ thì $ax^2+bx+c>0\\iff x<x_1$ hoặc $x>x_2$."
+      ],
+      "examples": [
+        {
+          "id": "bpt-bac-hai-dau-1",
+          "title": "Tam thức có hai nghiệm",
+          "prompt": "Giải $x^2-5x+6\\le0$.",
+          "steps": [
+            "$x^2-5x+6=0$ có hai nghiệm $x=2$ và $x=3$.",
+            "Vì $a=1>0$, tam thức không dương trong đoạn giữa hai nghiệm, kể cả hai nghiệm vì có dấu $\\le$."
+          ],
+          "result": "$[2;\\ 3]$"
+        },
+        {
+          "id": "bpt-bac-hai-dau-2",
+          "title": "Hệ số cao nhất âm",
+          "prompt": "Giải $-x^2+2x+3>0$.",
+          "steps": [
+            "Nhân hai vế với $-1$ và đổi chiều: $x^2-2x-3<0$.",
+            "Nghiệm $x=-1$ và $x=3$.",
+            "Tam thức âm giữa hai nghiệm, không lấy hai đầu."
+          ],
+          "result": "$(-1;\\ 3)$"
+        }
+      ],
+      "mistakes": [
+        "Đọc dấu theo quy tắc ngược khi $a<0$.",
+        "Quên đóng ngoặc vuông ở hai đầu khi có dấu bằng.",
+        "Sắp xếp sai thứ tự nghiệm nên viết khoảng $(x_2;\\ x_1)$."
+      ],
+      "practice": [
+        {
+          "id": "bpt-bac-hai-dau-p1",
+          "prompt": "Giải $x^2-x-6<0$.",
+          "answer": "$(-2;\\ 3)$",
+          "steps": [
+            "Nghiệm là $-2$ và $3$.",
+            "$a>0$ nên âm trong khoảng giữa."
+          ]
+        },
+        {
+          "id": "bpt-bac-hai-dau-p2",
+          "prompt": "Giải $2x^2-3x-2\\ge0$.",
+          "answer": "$(-\\infty;\\ -\\frac{1}{2}]\\cup[2;\\ +\\infty)$",
+          "steps": [
+            "Nghiệm là $-\\frac{1}{2}$ và $2$.",
+            "$a>0$ nên không âm ngoài hai nghiệm và tại hai nghiệm."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/kien-thuc/10",
+          "label": "Các bài lớp 10"
+        },
+        {
+          "href": "/kien-thuc/10/dang",
+          "label": "Dạng bài lớp 10"
+        }
+      ],
+      "verify": [
+        {
+          "where": "bpt-bac-hai-dau-1",
+          "lhs": "2**2-5*2+6",
+          "rhs": "0"
+        },
+        {
+          "where": "bpt-bac-hai-dau-1b",
+          "lhs": "3**2-5*3+6",
+          "rhs": "0"
+        },
+        {
+          "where": "bpt-bac-hai-dau-2",
+          "lhs": "-(-1)**2+2*(-1)+3",
+          "rhs": "0"
+        },
+        {
+          "where": "bpt-bac-hai-dau-2b",
+          "lhs": "-3**2+2*3+3",
+          "rhs": "0"
+        },
+        {
+          "where": "bpt-bac-hai-dau-p1",
+          "lhs": "(-2)**2-(-2)-6",
+          "rhs": "0"
+        },
+        {
+          "where": "bpt-bac-hai-dau-p1b",
+          "lhs": "3**2-3-6",
+          "rhs": "0"
+        },
+        {
+          "where": "bpt-bac-hai-dau-p2",
+          "lhs": "2*2**2-3*2-2",
+          "rhs": "0"
+        },
+        {
+          "where": "bpt-bac-hai-dau-p2b",
+          "lhs": "2*Rational(1,4)+Rational(3,2)-2",
+          "rhs": "0"
         }
       ]
     }
