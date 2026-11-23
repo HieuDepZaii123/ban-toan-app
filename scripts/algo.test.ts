@@ -517,6 +517,40 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   near("phương sai tổng hai xúc xắc = 35/6", A.variance(sums), 35 / 6, 1e-12);
 }
 
+// Phương trình vi phân và toán rời rạc.
+{
+  const coarse = A.eulerPath((_x, y) => y, 0, 1, 0.1, 10).pop()!;
+  near("Euler y' = y, h = 0,1: 1,1^10", coarse.y, 1.1 ** 10, 1e-12);
+  const fine = A.eulerPath((_x, y) => y, 0, 1, 0.01, 100).pop()!;
+  is("Euler: bước nhỏ hơn thì sai số nhỏ hơn", Math.abs(fine.y - Math.E) < Math.abs(coarse.y - Math.E));
+  is("Euler: h giảm 10 lần thì sai số giảm khoảng 10 lần", Math.abs(coarse.y - Math.E) / Math.abs(fine.y - Math.E) > 8);
+  const unstable = A.eulerPath((_x, y) => -10 * y, 0, 1, 0.3, 10).pop()!;
+  is("Euler mất ổn định khi h quá lớn", Math.abs(unstable.y) > 100);
+  near("logistic tại t = 0 là y0", A.logisticSolution(0.5, 100, 10, 0), 10, 1e-12);
+  near("logistic tiến về K", A.logisticSolution(0.5, 100, 10, 60), 100, 1e-6);
+  const lg = A.eulerPath((_x, y) => 0.5 * y * (1 - y / 100), 0, 10, 0.01, 1000).pop()!;
+  near("Euler bám nghiệm logistic", lg.y, A.logisticSolution(0.5, 100, 10, 10), 0.3);
+  const sir = A.sirPath({ s: 990, i: 10, r: 0 }, 0.3, 0.1, 0.1, 3000);
+  const peak = sir.reduce((a, b) => (b.i > a.i ? b : a));
+  near("SIR: dân số được bảo toàn", sir[3000]!.s + sir[3000]!.i + sir[3000]!.r, 1000, 1e-6);
+  near("SIR: đỉnh dịch khi S ≈ N/R0", peak.s, 1000 / 3, 15);
+  const calm = A.sirPath({ s: 990, i: 10, r: 0 }, 0.08, 0.1, 0.1, 3000);
+  is("SIR: R0 < 1 thì dịch không bùng", Math.max(...calm.map((x) => x.i)) <= 10 + 1e-9);
+  const g = A.degreeSum([[1, 2], [2, 3], [3, 1], [3, 4], [4, 5], [5, 6], [6, 4]]);
+  is("bổ đề bắt tay: tổng bậc = 2·số cạnh", g.sum === 14);
+  is("số đỉnh bậc lẻ là số chẵn", [...g.degrees.values()].filter((d) => d % 2 === 1).length % 2 === 0);
+  is("modPow: 3^100 mod 7 = 4", A.modPow(3, 100, 7) === 4);
+  is("modPow: 2^10 mod 11 = 1 (Fermat nhỏ)", A.modPow(2, 10, 11) === 1);
+  is("modPow: Fermat nhỏ với mọi a không chia hết 13", [1, 2, 3, 5, 8, 12].every((a) => A.modPow(a, 12, 13) === 1));
+  is("modInverse: 3 mod 11 là 4", A.modInverse(3, 11) === 4);
+  is("modInverse: 3 mod 40 là 27", A.modInverse(3, 40) === 27);
+  is("modInverse: 4 mod 6 không có", A.modInverse(4, 6) === null);
+  const rsa = A.rsaToy(5, 11, 3, 7);
+  is("RSA nhỏ: n = 55, φ = 40, d = 27", rsa !== null && rsa.n === 55 && rsa.phi === 40 && rsa.d === 27);
+  is("RSA nhỏ: 7 → 13 → 7", rsa !== null && rsa.cipher === 13 && rsa.plain === 7);
+  is("RSA: giải mã đúng với mọi tin nhắn", Array.from({ length: 54 }, (_, i) => i + 1).every((m) => A.rsaToy(5, 11, 3, m)?.plain === m));
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

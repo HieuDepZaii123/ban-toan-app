@@ -23,6 +23,7 @@ const universityLoaders: Record<string, () => Promise<TopicKnowledge>> = {
   linalg: () => import("../university/linalg.ts").then((mod) => mod.linalgKnowledge),
   calculus: () => import("../university/calculus.ts").then((mod) => mod.calculusKnowledge),
   stats: () => import("../university/stats.ts").then((mod) => mod.statsKnowledge),
+  discrete: () => import("../university/discrete.ts").then((mod) => mod.discreteKnowledge),
 };
 
 export const KNOWLEDGE_IDS: readonly string[] = Object.keys(loaders);

@@ -1106,6 +1106,88 @@ export function twoProportionZ(x1: number, n1: number, x2: number, n2: number): 
   return { z, p: 2 * (1 - normalCdf(Math.abs(z))), pooled };
 }
 
+/** Phương pháp Euler cho y' = f(x, y): đi theo tiếp tuyến mỗi bước h. Trả về các điểm (x_n, y_n), gồm điểm đầu. */
+export function eulerPath(f: (x: number, y: number) => number, x0: number, y0: number, h: number, steps: number): { x: number; y: number }[] {
+  const out = [{ x: x0, y: y0 }];
+  let x = x0;
+  let y = y0;
+  for (let i = 0; i < steps; i++) {
+    y += h * f(x, y);
+    x += h;
+    out.push({ x, y });
+  }
+  return out;
+}
+
+/** Nghiệm đúng của y' = r·y·(1 − y/K) với y(0) = y0: K / (1 + A·e^(−rt)), A = (K − y0)/y0. */
+export function logisticSolution(r: number, K: number, y0: number, t: number): number {
+  return K / (1 + ((K - y0) / y0) * Math.exp(-r * t));
+}
+
+export type SirState = { s: number; i: number; r: number };
+
+/** Mô hình SIR bước Euler nhỏ dt (đơn vị ngày): trả về trạng thái sau mỗi bước, gồm trạng thái đầu. */
+export function sirPath(start: SirState, beta: number, gamma: number, dt: number, steps: number): SirState[] {
+  const n = start.s + start.i + start.r;
+  const out = [start];
+  let cur = start;
+  for (let k = 0; k < steps; k++) {
+    const infect = (beta * cur.s * cur.i) / n;
+    const heal = gamma * cur.i;
+    cur = { s: cur.s - dt * infect, i: cur.i + dt * (infect - heal), r: cur.r + dt * heal };
+    out.push(cur);
+  }
+  return out;
+}
+
+/** Tổng bậc của đồ thị đơn cho bằng danh sách cạnh; theo bổ đề bắt tay phải bằng 2·(số cạnh). */
+export function degreeSum(edges: readonly [number, number][]): { degrees: Map<number, number>; sum: number } {
+  const degrees = new Map<number, number>();
+  for (const [u, v] of edges) {
+    degrees.set(u, (degrees.get(u) ?? 0) + 1);
+    degrees.set(v, (degrees.get(v) ?? 0) + 1);
+  }
+  let sum = 0;
+  for (const d of degrees.values()) sum += d;
+  return { degrees, sum };
+}
+
+/** Lũy thừa modulo bằng bình phương liên tiếp (dùng BigInt nên không tràn số). */
+export function modPow(base: number, exp: number, mod: number): number {
+  let result = 1n;
+  let b = BigInt(base) % BigInt(mod);
+  let e = BigInt(exp);
+  const m = BigInt(mod);
+  while (e > 0n) {
+    if (e & 1n) result = (result * b) % m;
+    b = (b * b) % m;
+    e >>= 1n;
+  }
+  return Number(result);
+}
+
+/** Nghịch đảo của a theo modulo m bằng thuật toán Euclid mở rộng; null nếu gcd(a, m) ≠ 1. */
+export function modInverse(a: number, m: number): number | null {
+  let [r0, r1] = [((a % m) + m) % m, m];
+  let [s0, s1] = [1, 0];
+  while (r1 !== 0) {
+    const q = Math.floor(r0 / r1);
+    [r0, r1] = [r1, r0 - q * r1];
+    [s0, s1] = [s1, s0 - q * s1];
+  }
+  return r0 === 1 ? ((s0 % m) + m) % m : null;
+}
+
+/** RSA cỡ nhỏ: từ hai số nguyên tố và số mũ công khai e, tạo khóa; mã hóa và giải mã một tin nhắn m < n. */
+export function rsaToy(p: number, q: number, e: number, m: number): { n: number; phi: number; d: number; cipher: number; plain: number } | null {
+  const n = p * q;
+  const phi = (p - 1) * (q - 1);
+  const d = modInverse(e, phi);
+  if (d === null || m >= n) return null;
+  const cipher = modPow(m, e, n);
+  return { n, phi, d, cipher, plain: modPow(cipher, d, n) };
+}
+
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
 export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
   const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);

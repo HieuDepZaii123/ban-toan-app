@@ -9,6 +9,7 @@ import { VECTOR_CARDS } from "./vectorCards.ts";
 import { LINALG_CARDS } from "./linalgCards.ts";
 import { CALC_CARDS } from "./calcCards.ts";
 import { STATS_CARDS } from "./statsCards.ts";
+import { DISCRETE_CARDS } from "./discreteCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -103,5 +104,14 @@ describe("Thẻ khám phá", () => {
     expect(label(STATS_CARDS.coverage)).toContain("95");
     expect(label(STATS_CARDS.bias)).toContain("Thấp hơn");
     expect(label(STATS_CARDS.diceVar)).toBe("$\\frac{35}{6}$");
+  });
+
+  test("các thẻ vi phân và rời rạc có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(DISCRETE_CARDS.doubling)).toContain("0,69");
+    expect(label(DISCRETE_CARDS.logistic)).toBe("$100$");
+    expect(label(DISCRETE_CARDS.fermat)).toBe("Dư $4$");
+    expect(label(DISCRETE_CARDS.handshake)).toContain("Không thể");
+    expect(label(DISCRETE_CARDS.rsa)).toBe("$7$");
   });
 });
