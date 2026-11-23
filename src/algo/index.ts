@@ -979,6 +979,70 @@ export function leastSquaresLine(pts: readonly { x: number; y: number }[]): { a:
 /** Tổng bình phương phần dư của đường y = a + bx. */
 export const lineSse = (pts: readonly { x: number; y: number }[], a: number, b: number): number => pts.reduce((s, p) => s + (p.y - a - b * p.x) ** 2, 0);
 
+export type TaylorKind = "exp" | "sin" | "cos" | "ln1p";
+
+/** Đa thức Taylor bậc n tại 0 của e^x, sin x, cos x hoặc ln(1 + x), tính bằng cộng dần từng số hạng. */
+export function taylorPartial(kind: TaylorKind, x: number, n: number): number {
+  let sum = 0;
+  let term = 1;
+  if (kind === "exp") {
+    for (let k = 0; k <= n; k++) { sum += term; term *= x / (k + 1); }
+    return sum;
+  }
+  if (kind === "ln1p") {
+    for (let k = 1; k <= n; k++) sum += ((k % 2 === 1 ? 1 : -1) * x ** k) / k;
+    return sum;
+  }
+  // sin và cos: số hạng bậc k là x^k / k! nhân dấu theo chu kì của đạo hàm tại 0.
+  const cycle = kind === "sin" ? [0, 1, 0, -1] : [1, 0, -1, 0];
+  for (let k = 0; k <= n; k++) {
+    sum += (cycle[k % 4] as number) * term;
+    term *= x / (k + 1);
+  }
+  return sum;
+}
+
+/** Các tổng riêng S_1..S_count của chuỗi có số hạng thứ k là term(k), k chạy từ `from`. */
+export function partialSums(term: (k: number) => number, from: number, count: number): number[] {
+  const out: number[] = [];
+  let acc = 0;
+  for (let i = 0; i < count; i++) {
+    acc += term(from + i);
+    out.push(acc);
+  }
+  return out;
+}
+
+/** Hạ gradient hai biến: đi ngược gradient mỗi bước một đoạn lr·|∇f|. Trả về cả đường đi (gồm điểm đầu). */
+export function descend2D(grad: (x: number, y: number) => [number, number], start: { x: number; y: number }, lr: number, steps: number): { x: number; y: number }[] {
+  const path = [start];
+  let p = start;
+  for (let i = 0; i < steps; i++) {
+    const [gx, gy] = grad(p.x, p.y);
+    p = { x: p.x - lr * gx, y: p.y - lr * gy };
+    path.push(p);
+  }
+  return path;
+}
+
+/** Phân loại điểm dừng hai biến bằng D = f_xx·f_yy − f_xy² và dấu của f_xx. */
+export function classifyStationary(fxx: number, fyy: number, fxy: number): "min" | "max" | "saddle" | "unknown" {
+  const D = fxx * fyy - fxy * fxy;
+  if (Math.abs(D) < 1e-9) return "unknown";
+  if (D < 0) return "saddle";
+  return fxx > 0 ? "min" : "max";
+}
+
+/** Đạo hàm riêng cấp hai bằng sai phân trung tâm. */
+export function hessian2D(f: (x: number, y: number) => number, x: number, y: number, h = 1e-3): { fxx: number; fyy: number; fxy: number } {
+  const f0 = f(x, y);
+  return {
+    fxx: (f(x + h, y) - 2 * f0 + f(x - h, y)) / (h * h),
+    fyy: (f(x, y + h) - 2 * f0 + f(x, y - h)) / (h * h),
+    fxy: (f(x + h, y + h) - f(x + h, y - h) - f(x - h, y + h) + f(x - h, y - h)) / (4 * h * h),
+  };
+}
+
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
 export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
   const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);

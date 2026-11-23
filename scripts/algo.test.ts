@@ -466,6 +466,32 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("hồi quy: đường tối ưu có sai số nhỏ hơn mọi đường lân cận", [-0.1, 0.1].every((d) => A.lineSse([{ x: 0, y: 1 }, { x: 1, y: 3 }, { x: 2, y: 4 }], ls.a, ls.b + d) > ls.sse));
 }
 
+// Giải tích đại học: Taylor, chuỗi, hạ gradient, điểm dừng.
+{
+  near("Taylor e^0,5 bậc 3 = 79/48", A.taylorPartial("exp", 0.5, 3), 79 / 48, 1e-12);
+  near("Taylor e^1 bậc 20 ≈ e", A.taylorPartial("exp", 1, 20), Math.E, 1e-12);
+  near("Taylor sin 0,3 bậc 5", A.taylorPartial("sin", 0.3, 5), Math.sin(0.3), 1e-6);
+  near("Taylor cos 0,3 bậc 6", A.taylorPartial("cos", 0.3, 6), Math.cos(0.3), 1e-8);
+  near("Taylor ln(1,5) bậc 30", A.taylorPartial("ln1p", 0.5, 30), Math.log(1.5), 1e-8);
+  is("Taylor ln(1+x) lệch xa khi x = 1,5", Math.abs(A.taylorPartial("ln1p", 1.5, 30) - Math.log(2.5)) > 1);
+  const geo = A.partialSums((k) => 0.5 ** k, 0, 40);
+  near("chuỗi hình học q = 1/2 về 2", geo[geo.length - 1]!, 2, 1e-9);
+  const har = A.partialSums((k) => 1 / k, 1, 1 << 12);
+  is("chuỗi điều hòa: S_{2^m} ≥ 1 + m/2", [1, 2, 4, 8, 12].every((m) => har[(1 << m) - 1]! >= 1 + m / 2));
+  const path = A.descend2D((x, y) => [2 * x, 6 * y], { x: 4, y: 2 }, 0.1, 1);
+  near("hạ gradient bước một: x", path[1]!.x, 3.2, 1e-12);
+  near("hạ gradient bước một: y", path[1]!.y, 0.8, 1e-12);
+  const far = A.descend2D((x, y) => [2 * x, 6 * y], { x: 4, y: 2 }, 0.1, 80).pop()!;
+  is("hạ gradient dần tới (0;0)", Math.hypot(far.x, far.y) < 1e-6);
+  const big = A.descend2D((x, y) => [2 * x, 6 * y], { x: 4, y: 2 }, 0.4, 10).pop()!;
+  is("bước học quá lớn thì phân kì", Math.hypot(big.x, big.y) > 10);
+  is("x² − y² tại gốc là điểm yên", A.classifyStationary(2, -2, 0) === "saddle");
+  is("x² + y² tại gốc là cực tiểu", A.classifyStationary(2, 2, 0) === "min");
+  is("−x² − y² tại gốc là cực đại", A.classifyStationary(-2, -2, 0) === "max");
+  const hs = A.hessian2D((x, y) => x * x - y * y, 0, 0);
+  is("Hessian số của x² − y²", Math.abs(hs.fxx - 2) < 1e-6 && Math.abs(hs.fyy + 2) < 1e-6 && Math.abs(hs.fxy) < 1e-6);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

@@ -8,6 +8,7 @@ import { KnowledgeRead } from "../topic/KnowledgeRead.tsx";
 
 const SECTIONS: Record<string, React.LazyExoticComponent<() => React.JSX.Element>> = {
   linalg: lazy(() => import("../topic/zero/sections/uni-linalg.tsx")),
+  calculus: lazy(() => import("../topic/zero/sections/uni-calculus.tsx")),
 };
 
 /** Toán đại học: danh sách môn và trang từng môn (kiến thức, hình, thẻ đoán trước). */

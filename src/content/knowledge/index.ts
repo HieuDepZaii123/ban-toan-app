@@ -21,6 +21,7 @@ const loaders: Record<string, () => Promise<TopicKnowledge>> = {
 /** Toán đại học: các môn đứng riêng, không thuộc 14 tờ THPT nên không có thẻ câu hỏi. */
 const universityLoaders: Record<string, () => Promise<TopicKnowledge>> = {
   linalg: () => import("../university/linalg.ts").then((mod) => mod.linalgKnowledge),
+  calculus: () => import("../university/calculus.ts").then((mod) => mod.calculusKnowledge),
 };
 
 export const KNOWLEDGE_IDS: readonly string[] = Object.keys(loaders);

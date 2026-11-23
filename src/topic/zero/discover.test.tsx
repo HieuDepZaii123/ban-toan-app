@@ -7,6 +7,7 @@ import { Discover } from "./discover.tsx";
 import { SURVEY_CARDS } from "./surveyCards.ts";
 import { VECTOR_CARDS } from "./vectorCards.ts";
 import { LINALG_CARDS } from "./linalgCards.ts";
+import { CALC_CARDS } from "./calcCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -83,5 +84,14 @@ describe("Thẻ khám phá", () => {
     expect(label(LINALG_CARDS.rank)).toBe("$2$");
     expect(label(LINALG_CARDS.eigen)).toBe("$5$");
     expect(label(LINALG_CARDS.regress)).toBe("$1,5$");
+  });
+
+  test("các thẻ giải tích có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(CALC_CARDS.harmonic)).toContain("Lớn lên mãi");
+    expect(label(CALC_CARDS.taylor)).toContain("0,003");
+    expect(label(CALC_CARDS.descent)).toBe("$(-4;-6)$");
+    expect(label(CALC_CARDS.saddle)).toContain("yên");
+    expect(label(CALC_CARDS.lagrange)).toBe("$2$");
   });
 });
