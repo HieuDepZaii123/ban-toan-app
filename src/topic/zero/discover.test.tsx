@@ -5,6 +5,7 @@ import { setLang } from "../../lib/store.ts";
 import { LIMIT_CARDS } from "./limitCards.ts";
 import { Discover } from "./discover.tsx";
 import { SURVEY_CARDS } from "./surveyCards.ts";
+import { VECTOR_CARDS } from "./vectorCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -63,5 +64,14 @@ describe("Thẻ khám phá", () => {
     expect(label(SURVEY_CARDS.line)).toContain("3");
     expect(label(SURVEY_CARDS.quartic)).toBe("3");
     expect(label(SURVEY_CARDS.asymptote)).toContain("3");
+  });
+
+  test("các thẻ vectơ có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(VECTOR_CARDS.dot)).toBe("$(3;-4)$");
+    expect(label(VECTOR_CARDS.order)).toContain("\\neq");
+    expect(label(VECTOR_CARDS.area)).toBe("$5$");
+    expect(label(VECTOR_CARDS.system)).toContain("Vô nghiệm");
+    expect(label(VECTOR_CARDS.centroid)).toBe("$(2;1)$");
   });
 });

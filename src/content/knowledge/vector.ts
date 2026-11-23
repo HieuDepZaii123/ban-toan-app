@@ -47,6 +47,18 @@ export const vectorKnowledge: TopicKnowledge = {
             R`Trừ một vectơ là cộng với vectơ đối của nó, và vectơ đối của $\overrightarrow{AC}$ là $\overrightarrow{CA}$. Vậy $\overrightarrow{AB}-\overrightarrow{AC}=\overrightarrow{CA}+\overrightarrow{AB}=\overrightarrow{CB}$, theo quy tắc ba điểm.`,
             R`Trong hình bình hành $ABCD$, hai cạnh đối $AD$ và $BC$ song song, cùng chiều và bằng nhau, nên $\overrightarrow{AD}=\overrightarrow{BC}$. Do đó $\overrightarrow{AB}+\overrightarrow{AD}=\overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng tọa độ",
+              buoc: [
+                R`Chọn một hệ trục tọa độ và gọi tọa độ các điểm là $A(x_A;y_A)$, $B(x_B;y_B)$, $C(x_C;y_C)$. Theo định nghĩa, tọa độ của vectơ là tọa độ điểm cuối trừ tọa độ điểm đầu, nên $\overrightarrow{AB}=(x_B-x_A;\,y_B-y_A)$ và $\overrightarrow{BC}=(x_C-x_B;\,y_C-y_B)$.`,
+                R`Cộng từng thành phần: $(x_B-x_A)+(x_C-x_B)=x_C-x_A$, vì $x_B$ bị triệt tiêu; thành phần thứ hai tương tự. Kết quả $(x_C-x_A;\,y_C-y_A)$ chính là tọa độ của $\overrightarrow{AC}$, nên $\overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}$.`,
+                R`Với phép trừ: $\overrightarrow{AB}-\overrightarrow{AC}=(x_B-x_C;\,y_B-y_C)$, đó là tọa độ của $\overrightarrow{CB}$ (điểm cuối $B$ trừ điểm đầu $C$).`,
+                R`Với hình bình hành $ABCD$ ta có $\overrightarrow{AD}=\overrightarrow{BC}$, tức hai vectơ này có cùng tọa độ: $x_D-x_A=x_C-x_B$ và $y_D-y_A=y_C-y_B$. Suy ra $x_A+x_C=x_B+x_D$ và $y_A+y_C=y_B+y_D$. Khi đó $(x_B-x_A)+(x_D-x_A)=x_B+x_D-2x_A=x_C-x_A$, và thành phần thứ hai tương tự.`,
+                R`Vậy $\overrightarrow{AB}+\overrightarrow{AD}$ có tọa độ $(x_C-x_A;\,y_C-y_A)$, tức là $\overrightarrow{AC}$. Cách này chỉ dùng định nghĩa tọa độ, không cần vẽ hình.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Nhân vectơ với một số",
@@ -201,6 +213,25 @@ export const vectorKnowledge: TopicKnowledge = {
             R`Nhân thử: $\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}=\begin{pmatrix}ad-bc&0\\0&ad-bc\end{pmatrix}$. Khi $ad-bc\neq 0$, chia cho số đó thì được ma trận đơn vị $I$, nên ma trận nghịch đảo đúng như công thức.`,
             R`Nếu $\det A=0$ mà vẫn có nghịch đảo thì $\det A\cdot\det A^{-1}=\det I=1$, tức $0=1$, vô lí. Vậy định thức bằng $0$ thì không có nghịch đảo.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng diện tích",
+              buoc: [
+                R`Ma trận $M$ đưa hình vuông đơn vị thành hình bình hành dựng trên hai cột của nó. Theo mục «Ý nghĩa hình học», diện tích hình đó là $|\det M|$ (mục này tính cho hai vectơ $(a;b)$, $(c;d)$ và cho hai cột $(a;c)$, $(b;d)$ thì kết quả vẫn là $|ad-bc|$). Một phép biến đổi như vậy đổi mọi diện tích với cùng một tỉ lệ: hình bất kì được chia thành các ô vuông nhỏ, và ô nào cũng bị đổi theo tỉ lệ $|\det M|$.`,
+                R`Làm phép biến đổi $B$ rồi phép biến đổi $A$ chính là nhân với ma trận $AB$. Diện tích bị nhân với $|\det B|$ rồi với $|\det A|$, tức nhân với $|\det A|\cdot|\det B|$ sau hai bước, và cũng bằng $|\det(AB)|$ sau một bước. Vậy $|\det(AB)|=|\det A|\,|\det B|$: cách này chứng minh phần giá trị tuyệt đối.`,
+                R`Phần dấu lấy từ phép tính trực tiếp ở cách thứ nhất: đó là khai triển đại số cho $\det(AB)=\det A\cdot\det B$, có cả dấu. Cách diện tích cho thấy lí do hình học vì sao hệ số đổi diện tích nhân lên khi ghép hai phép biến đổi, và nó chỉ dựa trên tính chất đổi diện tích đều của phép biến đổi tuyến tính.`,
+              ],
+            },
+            {
+              cach: "Bằng cách giải hệ phương trình",
+              buoc: [
+                R`Ma trận nghịch đảo $X$ của $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$ thỏa $AX=I$. Cột thứ nhất $(x;y)$ của $X$ phải thỏa hệ $ax+by=1$, $cx+dy=0$; cột thứ hai $(x';y')$ phải thỏa $ax'+by'=0$, $cx'+dy'=1$.`,
+                R`Giải hệ thứ nhất bằng quy tắc Cramer ở phần sau (chứng minh ở đó bằng khử ẩn, không dùng nghịch đảo), với $D=ad-bc\neq 0$: $D_x=1\cdot d-b\cdot 0=d$ và $D_y=a\cdot 0-1\cdot c=-c$, nên $(x;y)=\left(\frac{d}{D};\frac{-c}{D}\right)$.`,
+                R`Hệ thứ hai có vế phải $(0;1)$: $D_x=0\cdot d-b\cdot 1=-b$ và $D_y=a\cdot 1-0\cdot c=a$, nên $(x';y')=\left(\frac{-b}{D};\frac{a}{D}\right)$. Ghép hai cột lại: $A^{-1}=\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$. Nhân thử phía còn lại cũng cho $XA=I$, nên $X$ là nghịch đảo hai phía.`,
+                R`Nếu $D=0$ thì hai cột của $A$ cùng phương, nên mọi vectơ $A\begin{pmatrix}x\\y\end{pmatrix}$ đều nằm trên một đường thẳng qua gốc. Hai vectơ $(1;0)$ và $(0;1)$ không cùng phương nên không thể cùng nằm trên đường đó, vì thế không tồn tại $X$ thỏa $AX=I$ và $A$ không có nghịch đảo.`,
+              ],
+            },
+          ],
         },
         {
           kind: "tinh-chat", title: "Ý nghĩa hình học",
@@ -226,6 +257,24 @@ export const vectorKnowledge: TopicKnowledge = {
             R`Khử $x$: nhân phương trình thứ hai với $a$, phương trình thứ nhất với $c$ rồi trừ nhau, còn $(ad-bc)y=af-ec$, tức $D\cdot y=D_y$.`,
             R`Khi $D\neq 0$, chia được và chỉ có một đáp số: $x=\frac{D_x}{D}$, $y=\frac{D_y}{D}$. Thay ngược vào phương trình đầu: $a(ed-bf)+b(af-ec)=e(ad-bc)$, nên vế trái đúng bằng $e$; phương trình sau kiểm tương tự.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng ma trận nghịch đảo",
+              buoc: [
+                R`Viết hệ dưới dạng ma trận $A\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}e\\f\end{pmatrix}$ với $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$. Khi $D=ad-bc\neq 0$, ma trận $A$ có nghịch đảo $A^{-1}=\frac{1}{D}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$, kiểm được bằng cách nhân thử hai phía như ở mục «Định thức và nghịch đảo», vì $\begin{pmatrix}d&-b\\-c&a\end{pmatrix}A=D\cdot I$ cũng đúng như $A\begin{pmatrix}d&-b\\-c&a\end{pmatrix}=D\cdot I$.`,
+                R`Nhân cả hai vế với $A^{-1}$ từ bên trái: $\begin{pmatrix}x\\y\end{pmatrix}=A^{-1}\begin{pmatrix}e\\f\end{pmatrix}$. Vế phải chỉ có một giá trị, nên hệ có không quá một nghiệm. Ngược lại, nhân $A$ vào giá trị đó thì được đúng $\begin{pmatrix}e\\f\end{pmatrix}$, nên nó thật sự là nghiệm.`,
+                R`Tính tích: $\frac{1}{D}\begin{pmatrix}de-bf\\-ce+af\end{pmatrix}$. Thành phần đầu là $\frac{ed-bf}{D}=\frac{D_x}{D}$, thành phần sau là $\frac{af-ec}{D}=\frac{D_y}{D}$.`,
+              ],
+            },
+            {
+              cach: "Bằng diện tích",
+              buoc: [
+                R`Gọi $\vec{u}=(a;c)$, $\vec{v}=(b;d)$ là hai cột và $\vec{w}=(e;f)$ là vế phải. Hệ nói rằng $x\vec{u}+y\vec{v}=\vec{w}$. Với hai vectơ $\vec{p}=(p_1;p_2)$, $\vec{q}=(q_1;q_2)$, gọi $[\vec{p},\vec{q}]=p_1q_2-p_2q_1$ là diện tích có dấu của hình bình hành dựng trên chúng; số này tuyến tính theo từng vectơ và bằng $0$ khi hai vectơ cùng phương. Khi đó $D=[\vec{u},\vec{v}]$.`,
+                R`Xét hình bình hành dựng trên $\vec{w}$ và $\vec{v}$, có diện tích có dấu là $ed-bf=D_x$. Thay $\vec{w}=x\vec{u}+y\vec{v}$: phần $y\vec{v}$ cùng phương với đáy $\vec{v}$ nên chỉ trượt đỉnh dọc theo đáy, không đổi diện tích. Còn lại hình bình hành dựng trên $x\vec{u}$ và $\vec{v}$, diện tích $x\cdot D$.`,
+                R`Vậy nếu có nghiệm thì $D_x=x\cdot D$, tức $x=\frac{D_x}{D}$ khi $D\neq 0$. Nghiệm có tồn tại vì khi $D\neq 0$ hai vectơ $\vec{u},\vec{v}$ không cùng phương nên mọi $\vec{w}$ là tổ hợp của chúng. Với $y$: hình bình hành dựng trên $\vec{u}$ và $\vec{w}$ có diện tích có dấu $af-ec=D_y$, và cùng lí do cho $D_y=y\cdot D$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Khi định thức bằng không",
@@ -233,6 +282,17 @@ export const vectorKnowledge: TopicKnowledge = {
           suy: [
             R`Hai hệ thức $D\cdot x=D_x$ và $D\cdot y=D_y$ ở mục trước đúng với mọi nghiệm của hệ. Nếu $D=0$ thì vế trái bằng $0$; nếu lúc đó $D_x\neq 0$ hoặc $D_y\neq 0$ thì ta có $0$ bằng một số khác $0$, vô lí. Vậy hệ không có nghiệm.`,
             R`Nếu cả ba định thức bằng $0$ thì $ad=bc$, $ed=bf$ và $af=ec$: các hệ số của hai phương trình tỉ lệ với nhau, nên phương trình này là bội của phương trình kia. Hai phương trình thực ra là một, biểu diễn cùng một đường thẳng, và mọi điểm trên đường thẳng đó đều là nghiệm.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng hình học của hai cột",
+              buoc: [
+                R`Gọi $\vec{u}=(a;c)$, $\vec{v}=(b;d)$ là hai cột và $\vec{w}=(e;f)$. Hệ là $x\vec{u}+y\vec{v}=\vec{w}$: tìm cách ghép $\vec{u}$ và $\vec{v}$ để ra $\vec{w}$. Điều kiện cùng phương cho biết $D=ad-bc=0$ khi và chỉ khi $\vec{u}$ và $\vec{v}$ cùng phương.`,
+                R`Vì mỗi phương trình có ít nhất một hệ số khác $0$, hai cột không đồng thời bằng $\vec{0}$. Khi hai cột cùng phương, mọi tổ hợp $x\vec{u}+y\vec{v}$ đều nằm trên cùng một đường thẳng $L$ qua gốc, dù chọn $x$, $y$ thế nào.`,
+                R`Nếu $\vec{w}$ không nằm trên $L$ thì không tổ hợp nào ra được $\vec{w}$, hệ vô nghiệm. Việc $\vec{w}$ không cùng phương với cột khác $\vec{0}$ chính là điều kiện $D_x=ed-bf\neq 0$ hoặc $D_y=af-ec\neq 0$, vì hai số này là các định thức của $(\vec{w},\vec{v})$ và $(\vec{u},\vec{w})$.`,
+                R`Nếu $\vec{w}$ nằm trên $L$ (tức $D_x=D_y=0$), giả sử $\vec{u}\neq\vec{0}$ và $\vec{v}=k\vec{u}$, $\vec{w}=s\vec{u}$. Khi đó $x\vec{u}+y\vec{v}=(x+ky)\vec{u}$ và hệ chỉ còn đòi $x+ky=s$: một phương trình cho hai ẩn, có vô số nghiệm $(x;y)$. Trường hợp $\vec{u}=\vec{0}$ làm tương tự với $\vec{v}$.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Ý nghĩa hình học", text: R`Mỗi phương trình là một đường thẳng. Nếu $D\neq 0$ hai đường cắt nhau tại một điểm. Nếu $D=0$ hai đường song song, vô nghiệm, hoặc trùng nhau, vô số nghiệm.` },
@@ -284,5 +344,14 @@ export const vectorKnowledge: TopicKnowledge = {
     { expr: "solve([x+2*y-5, 3*x+4*y-6], [x,y])", expect: "{x: -4, y: Rational(9,2)}" },
     { expr: "Matrix([[m,1],[1,m]]).det()", expect: "m**2-1" },
     { expr: "solve([-x+y-1, x-y-1], [x,y])", expect: "[]" },
+    { expr: "simplify((xB-xA)+(xC-xB)-(xC-xA))", expect: "0" },
+    { expr: "simplify((xB-xA)+((xA+xC-xB)-xA)-(xC-xA))", expect: "0" },
+    { expr: "simplify((Matrix([[a,b],[c,d]]).inv())[0,0]-d/(a*d-b*c))", expect: "0" },
+    { expr: "simplify((Matrix([[a,b],[c,d]]).inv()*Matrix([e,f]))[0]-(e*d-b*f)/(a*d-b*c))", expect: "0" },
+    { expr: "simplify((Matrix([[a,b],[c,d]]).inv()*Matrix([e,f]))[1]-(a*f-e*c)/(a*d-b*c))", expect: "0" },
+    { expr: "Matrix([[e,b],[f,d]]).det()-(e*d-b*f)", expect: "0" },
+    { expr: "Matrix([[a,e],[c,f]]).det()-(a*f-e*c)", expect: "0" },
+    { expr: "simplify(Matrix([[x*a+y*b,b],[x*c+y*d,d]]).det()-x*(a*d-b*c))", expect: "0" },
+    { expr: "simplify(Matrix([[a,x*a+y*b],[c,x*c+y*d]]).det()-y*(a*d-b*c))", expect: "0" },
   ],
 };

@@ -900,6 +900,23 @@ export const matApply = (m: M2, p: { x: number; y: number }): { x: number; y: nu
 export const matMul = (m: M2, n: M2): M2 => [m[0] * n[0] + m[1] * n[2], m[0] * n[1] + m[1] * n[3], m[2] * n[0] + m[3] * n[2], m[2] * n[1] + m[3] * n[3]];
 export const matDet = (m: M2): number => m[0] * m[3] - m[1] * m[2];
 
+/** Ma trận trượt đều từ ma trận đơn vị (t = 0) tới ma trận đích (t = 1): dùng để xem hình vuông đơn vị bị biến đổi dần. */
+export const matLerp = (target: M2, t: number): M2 => [1 + (target[0] - 1) * t, target[1] * t, target[2] * t, 1 + (target[3] - 1) * t];
+
+/** Hệ ax + by = e, cx + dy = f: một nghiệm, vô nghiệm hay vô số nghiệm (xét bằng định thức D, D_x, D_y). */
+export function systemKind(a: number, b: number, e: number, c: number, d: number, f: number): "one" | "none" | "many" {
+  const D = a * d - b * c;
+  if (Math.abs(D) > 1e-9) return "one";
+  return Math.abs(e * d - b * f) < 1e-9 && Math.abs(a * f - e * c) < 1e-9 ? "many" : "none";
+}
+
+/** Hệ x + y = 2 và cosθ·x + sinθ·y = 1: định thức D = sinθ − cosθ triệt tiêu ở θ = 45°, khi hai đường song song. */
+export function rotatingLineSystem(theta: number): { det: number; solution: { x: number; y: number } | null } {
+  const c = Math.cos(theta);
+  const s = Math.sin(theta);
+  return { det: matDet([1, 1, c, s]), solution: cramer(1, 1, c, s, 2, 1) };
+}
+
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
 export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
   const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);

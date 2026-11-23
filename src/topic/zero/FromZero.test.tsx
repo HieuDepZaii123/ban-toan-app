@@ -47,7 +47,7 @@ describe("Suy từ số 0 (FromZero)", () => {
 
   test("mọi chuyên đề có đủ hình, có bản đồ liên kết và danh sách mối nối", async () => {
     setLang("en");
-    const min: Record<string, number> = { quadratic: 13, ineq: 12, exp: 10, sequence: 9, trig: 10, limit: 12, derivative: 14, survey: 10, integral: 13, vector: 7, analytic: 7, triangle: 9, combo: 5, probability: 7 };
+    const min: Record<string, number> = { quadratic: 13, ineq: 12, exp: 10, sequence: 9, trig: 10, limit: 12, derivative: 14, survey: 10, integral: 13, vector: 10, analytic: 7, triangle: 9, combo: 5, probability: 7 };
     for (const [id, n] of Object.entries(min)) {
       const r = render(<RouteProvider><FromZero topicId={id} /></RouteProvider>);
       await waitFor(() => expect(r.container.querySelectorAll(".fz-card").length, `${id}: số hình`).toBeGreaterThanOrEqual(n), { timeout: 5000 });
@@ -57,7 +57,7 @@ describe("Suy từ số 0 (FromZero)", () => {
       expect(r.container.querySelector(".fz-node.self"), `${id}: nút của chính nó`).not.toBeNull();
       r.unmount();
     }
-  });
+  }, 30000);
 
   test("mọi mối nối nối hai chuyên đề có thật và không trùng lặp", () => {
     const ids = new Set(IDS);

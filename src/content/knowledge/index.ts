@@ -18,12 +18,20 @@ const loaders: Record<string, () => Promise<TopicKnowledge>> = {
   probability: () => import("./probability.ts").then((mod) => mod.probabilityKnowledge),
 };
 
+/** Toán đại học: các môn đứng riêng, không thuộc 14 tờ THPT nên không có thẻ câu hỏi. */
+const universityLoaders: Record<string, () => Promise<TopicKnowledge>> = {
+  linalg: () => import("../university/linalg.ts").then((mod) => mod.linalgKnowledge),
+};
+
 export const KNOWLEDGE_IDS: readonly string[] = Object.keys(loaders);
+export const UNIVERSITY_IDS: readonly string[] = Object.keys(universityLoaders);
 
 export function hasKnowledge(id: string): boolean {
-  return Object.prototype.hasOwnProperty.call(loaders, id);
+  return Object.prototype.hasOwnProperty.call(loaders, id) || Object.prototype.hasOwnProperty.call(universityLoaders, id);
 }
 
 export function loadKnowledge(id: string): Promise<TopicKnowledge | null> {
-  return hasKnowledge(id) ? loaders[id]!() : Promise.resolve(null);
+  if (Object.prototype.hasOwnProperty.call(loaders, id)) return loaders[id]!();
+  if (Object.prototype.hasOwnProperty.call(universityLoaders, id)) return universityLoaders[id]!();
+  return Promise.resolve(null);
 }

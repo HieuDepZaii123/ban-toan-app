@@ -8,7 +8,7 @@
 import { execFileSync } from "node:child_process";
 import katex from "katex";
 import { cards } from "../src/content/cards.ts";
-import { KNOWLEDGE_IDS, loadKnowledge } from "../src/content/knowledge/index.ts";
+import { KNOWLEDGE_IDS, UNIVERSITY_IDS, loadKnowledge } from "../src/content/knowledge/index.ts";
 import type { TopicKnowledge } from "../src/content/knowledge/types.ts";
 
 const fails: string[] = [];
@@ -45,7 +45,7 @@ function words(pack: TopicKnowledge): number {
 }
 
 const only = process.argv.slice(2);
-const ids = only.length > 0 ? only : [...KNOWLEDGE_IDS];
+const ids = only.length > 0 ? only : [...KNOWLEDGE_IDS, ...UNIVERSITY_IDS];
 if (only.length === 0) {
   const want = cards.filter((card) => card.status === "ready").map((card) => card.id).sort();
   assert(JSON.stringify([...KNOWLEDGE_IDS].sort()) === JSON.stringify(want), "mọi tờ đã mở phải có bộ kiến thức");
@@ -57,7 +57,7 @@ let plain = 0;
 let proofs = 0;
 let altProofs = 0;
 /** Chuyên đề đã viết xong cách chứng minh thứ hai cho mọi định lí; thêm id vào đây khi làm xong từng chuyên đề. */
-const MULTI_PROOF = new Set<string>(["trig", "derivative", "integral", "quadratic", "ineq", "exp", "sequence", "limit", "survey"]);
+const MULTI_PROOF = new Set<string>(["trig", "derivative", "integral", "quadratic", "ineq", "exp", "sequence", "limit", "survey", "vector"]);
 let wordTotal = 0;
 
 for (const id of ids) {

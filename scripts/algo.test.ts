@@ -429,6 +429,23 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("y = 3 cắt x³ − 3x tại 1 điểm", A.countSolutions((x) => x ** 3 - 3 * x, 3, -4, 4) === 1);
 }
 
+// Vectơ và ma trận: biến đổi dần, phân loại hệ, đường quay.
+{
+  const T: A.M2 = [2, 1, 1, 0.5];
+  near("matLerp t=0 là ma trận đơn vị", A.matDet(A.matLerp(T, 0)), 1, 1e-12);
+  near("matLerp t=1 có định thức của ma trận đích", A.matDet(A.matLerp(T, 1)), A.matDet(T), 1e-12);
+  is("det(AB) = det A · det B", Math.abs(A.matDet(A.matMul([1, 2, 3, 4], [0, 1, 1, 1])) - A.matDet([1, 2, 3, 4]) * A.matDet([0, 1, 1, 1])) < 1e-9);
+  is("x+2y=3, 2x+4y=7 vô nghiệm", A.systemKind(1, 2, 3, 2, 4, 7) === "none");
+  is("x+2y=3, 2x+4y=6 vô số nghiệm", A.systemKind(1, 2, 3, 2, 4, 6) === "many");
+  is("x+2y=5, 3x+4y=6 một nghiệm", A.systemKind(1, 2, 5, 3, 4, 6) === "one");
+  near("đường quay: D = 0 ở 45°", A.rotatingLineSystem(Math.PI / 4).det, 0, 1e-12);
+  is("đường quay: song song thì không có nghiệm", A.rotatingLineSystem(Math.PI / 4).solution === null);
+  const near45 = A.rotatingLineSystem(Math.PI / 4 + 0.01).solution;
+  is("đường quay: gần 45° nghiệm rất xa gốc", near45 !== null && Math.hypot(near45.x, near45.y) > 30);
+  const far = A.rotatingLineSystem(0).solution;
+  is("đường quay: θ = 0 cho nghiệm (1; 1)", far !== null && Math.abs(far.x - 1) < 1e-9 && Math.abs(far.y - 1) < 1e-9);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);
