@@ -6,6 +6,7 @@ import { LIMIT_CARDS } from "./limitCards.ts";
 import { Discover } from "./discover.tsx";
 import { SURVEY_CARDS } from "./surveyCards.ts";
 import { VECTOR_CARDS } from "./vectorCards.ts";
+import { LINALG_CARDS } from "./linalgCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -73,5 +74,14 @@ describe("Thẻ khám phá", () => {
     expect(label(VECTOR_CARDS.area)).toBe("$5$");
     expect(label(VECTOR_CARDS.system)).toContain("Vô nghiệm");
     expect(label(VECTOR_CARDS.centroid)).toBe("$(2;1)$");
+  });
+
+  test("các thẻ đại số tuyến tính có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(LINALG_CARDS.stay)).toBe("$(1;1)$");
+    expect(label(LINALG_CARDS.power)).toBe("$(1;1)$");
+    expect(label(LINALG_CARDS.rank)).toBe("$2$");
+    expect(label(LINALG_CARDS.eigen)).toBe("$5$");
+    expect(label(LINALG_CARDS.regress)).toBe("$1,5$");
   });
 });

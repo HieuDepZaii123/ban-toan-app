@@ -917,6 +917,68 @@ export function rotatingLineSystem(theta: number): { det: number; solution: { x:
   return { det: matDet([1, 1, c, s]), solution: cramer(1, 1, c, s, 2, 1) };
 }
 
+/** Hạng của ma trận bằng khử Gauss có chọn chốt lớn nhất (đủ chính xác cho ma trận nhỏ trong bài học). */
+export function matRank(rows: number[][], tol = 1e-9): number {
+  const a = rows.map((r) => [...r]);
+  const m = a.length;
+  const n = a[0]?.length ?? 0;
+  let rank = 0;
+  for (let col = 0; col < n && rank < m; col++) {
+    let best = rank;
+    for (let r = rank + 1; r < m; r++) if (Math.abs((a[r] as number[])[col] as number) > Math.abs((a[best] as number[])[col] as number)) best = r;
+    if (Math.abs((a[best] as number[])[col] as number) < tol) continue;
+    [a[rank], a[best]] = [a[best] as number[], a[rank] as number[]];
+    for (let r = rank + 1; r < m; r++) {
+      const f = ((a[r] as number[])[col] as number) / ((a[rank] as number[])[col] as number);
+      for (let c = col; c < n; c++) (a[r] as number[])[c] = ((a[r] as number[])[c] as number) - f * ((a[rank] as number[])[c] as number);
+    }
+    rank += 1;
+  }
+  return rank;
+}
+
+/** Giá trị riêng thực của ma trận cấp hai, từ nhỏ đến lớn: nghiệm của λ² − (a+d)λ + (ad − bc). Rỗng nếu biệt thức âm. */
+export function eigenvalues2(m: M2): number[] {
+  const tr = m[0] + m[3];
+  const det = matDet(m);
+  const disc = tr * tr - 4 * det;
+  if (disc < 0) return [];
+  const root = Math.sqrt(disc);
+  return [(tr - root) / 2, (tr + root) / 2];
+}
+
+/** Lặp lũy thừa: nhân dần với ma trận rồi chuẩn hóa. Trả về hướng và ước lượng giá trị riêng ở mỗi bước (bước 0 là vectơ đầu). */
+export function powerIteration(m: M2, start: { x: number; y: number }, steps: number): { v: { x: number; y: number }; lambda: number }[] {
+  const out: { v: { x: number; y: number }; lambda: number }[] = [];
+  let v = start;
+  const len0 = Math.hypot(v.x, v.y) || 1;
+  v = { x: v.x / len0, y: v.y / len0 };
+  out.push({ v, lambda: NaN });
+  for (let i = 0; i < steps; i++) {
+    const w = matApply(m, v);
+    const len = Math.hypot(w.x, w.y) || 1;
+    const lambda = w.x * v.x + w.y * v.y;
+    v = { x: w.x / len, y: w.y / len };
+    out.push({ v, lambda });
+  }
+  return out;
+}
+
+/** Đường thẳng y = a + bx gần nhất theo bình phương tối thiểu (giải phương trình chuẩn), và tổng bình phương phần dư. */
+export function leastSquaresLine(pts: readonly { x: number; y: number }[]): { a: number; b: number; sse: number } {
+  const n = pts.length;
+  const sx = pts.reduce((s, p) => s + p.x, 0);
+  const sy = pts.reduce((s, p) => s + p.y, 0);
+  const sxx = pts.reduce((s, p) => s + p.x * p.x, 0);
+  const sxy = pts.reduce((s, p) => s + p.x * p.y, 0);
+  const b = (n * sxy - sx * sy) / (n * sxx - sx * sx);
+  const a = (sy - b * sx) / n;
+  return { a, b, sse: lineSse(pts, a, b) };
+}
+
+/** Tổng bình phương phần dư của đường y = a + bx. */
+export const lineSse = (pts: readonly { x: number; y: number }[], a: number, b: number): number => pts.reduce((s, p) => s + (p.y - a - b * p.x) ** 2, 0);
+
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
 export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
   const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);

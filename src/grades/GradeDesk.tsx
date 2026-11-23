@@ -106,6 +106,17 @@ function GradeHome() {
           </div>
         </section>
       ))}
+      <section className="stream">
+        <h2>{t(lang, "Đại học", "University")}</h2>
+        <div className="grade-grid">
+          <A className="study-card" href="/dai-hoc">
+            <span>
+              <strong>{t(lang, "Toán đại học", "University mathematics")}</strong>
+              <small className="lecture-note">{t(lang, "Đại số tuyến tính, giải tích, xác suất thống kê và ứng dụng.", "Linear algebra, calculus, probability and statistics, with applications.")}</small>
+            </span>
+          </A>
+        </div>
+      </section>
     </PageFrame>
   );
 }

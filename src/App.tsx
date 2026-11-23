@@ -20,6 +20,7 @@ const ReviewPage = lazy(() => import("./pages/ReviewPage.tsx").then((mod) => ({ 
 const StudyPackPage = lazy(() => import("./pages/StudyPackPage.tsx").then((mod) => ({ default: mod.StudyPackPage })));
 const PolicyPage = lazy(() => import("./pages/PolicyPage.tsx").then((mod) => ({ default: mod.PolicyPage })));
 const ScienceDesk = lazy(() => import("./science/ScienceDesk.tsx").then((mod) => ({ default: mod.ScienceDesk })));
+const UniversityPage = lazy(() => import("./pages/UniversityPage.tsx").then((mod) => ({ default: mod.UniversityPage })));
 const GradeDesk = lazy(() => import("./grades/GradeDesk.tsx").then((mod) => ({ default: mod.GradeDesk })));
 const FormulaPage = lazy(() => import("./pages/FormulaPage.tsx").then((mod) => ({ default: mod.FormulaPage })));
 const AssessPage = lazy(() => import("./pages/AssessPage.tsx").then((mod) => ({ default: mod.AssessPage })));
@@ -100,6 +101,7 @@ function Shell() {
   if (path === "/luyen-lop" || path.startsWith("/luyen-lop/")) return <GradePracticePage path={path} />;
   if (path === "/luyen-thpt") return <ThptPracticePage />;
   if (path === "/khoa-hoc" || path.startsWith("/khoa-hoc/")) return <ScienceDesk path={path} />;
+  if (path === "/dai-hoc" || path.startsWith("/dai-hoc/")) return <UniversityPage path={path} />;
   if (path === "/kien-thuc" || path.startsWith("/kien-thuc/")) return <GradeDesk />;
   if (path === "/" || path === "") return <HomeDesk />;
   return <NotFound />;

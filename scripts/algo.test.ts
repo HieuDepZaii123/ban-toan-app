@@ -446,6 +446,26 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("đường quay: θ = 0 cho nghiệm (1; 1)", far !== null && Math.abs(far.x - 1) < 1e-9 && Math.abs(far.y - 1) < 1e-9);
 }
 
+// Đại số tuyến tính: hạng, giá trị riêng, lặp lũy thừa, hồi quy.
+{
+  is("hạng của ma trận có hàng hai gấp đôi hàng một là 2", A.matRank([[1, 2, 3], [2, 4, 6], [1, 0, 1]]) === 2);
+  is("hạng của ma trận đơn vị 3×3 là 3", A.matRank([[1, 0, 0], [0, 1, 0], [0, 0, 1]]) === 3);
+  is("hạng của ma trận không là 0", A.matRank([[0, 0], [0, 0]]) === 0);
+  const ev = A.eigenvalues2([2, 1, 1, 2]);
+  is("giá trị riêng của [[2,1],[1,2]] là 1 và 3", ev.length === 2 && Math.abs(ev[0]! - 1) < 1e-12 && Math.abs(ev[1]! - 3) < 1e-12);
+  is("phép quay 90° không có giá trị riêng thực", A.eigenvalues2([0, -1, 1, 0]).length === 0);
+  const ev2 = A.eigenvalues2([4, 1, 2, 3]);
+  is("tổng giá trị riêng bằng vết, tích bằng định thức", Math.abs(ev2[0]! + ev2[1]! - 7) < 1e-12 && Math.abs(ev2[0]! * ev2[1]! - 10) < 1e-12);
+  const it = A.powerIteration([2, 1, 1, 2], { x: 1, y: 0 }, 30);
+  const last = it[it.length - 1]!;
+  near("lặp lũy thừa về hướng (1;1)", Math.abs(last.v.x - last.v.y), 0, 1e-9);
+  near("lặp lũy thừa: ước lượng giá trị riêng trội", last.lambda, 3, 1e-9);
+  const ls = A.leastSquaresLine([{ x: 0, y: 1 }, { x: 1, y: 3 }, { x: 2, y: 4 }]);
+  near("hồi quy: hệ số góc 3/2", ls.b, 1.5, 1e-12);
+  near("hồi quy: tung độ gốc 7/6", ls.a, 7 / 6, 1e-12);
+  is("hồi quy: đường tối ưu có sai số nhỏ hơn mọi đường lân cận", [-0.1, 0.1].every((d) => A.lineSse([{ x: 0, y: 1 }, { x: 1, y: 3 }, { x: 2, y: 4 }], ls.a, ls.b + d) > ls.sse));
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);
