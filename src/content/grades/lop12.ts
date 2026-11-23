@@ -1,9 +1,10 @@
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
+import { lop12KyThuat, lop12UngDung } from "./lop12extra.ts";
 
 const R = String.raw;
 
-export const lop12: GradeBook = {
+const lop12Base: GradeBook = {
   grade: 12,
   band: "thpt",
   title: "Khảo sát hàm số, tích phân, tọa độ không gian, thống kê và xác suất.",
@@ -304,4 +305,10 @@ export const lop12: GradeBook = {
         { topicId: "probability" }),
     ]),
   ],
+};
+
+/** Hai chương bổ sung xen vào sau chương cùng mạch: ứng dụng đạo hàm sau khảo sát, kĩ thuật tích phân sau tích phân. */
+export const lop12: GradeBook = {
+  ...lop12Base,
+  chapters: lop12Base.chapters.flatMap((chapter) => (chapter.id === "khao-sat" ? [chapter, lop12UngDung] : chapter.id === "tich-phan" ? [chapter, lop12KyThuat] : [chapter])),
 };

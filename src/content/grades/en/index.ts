@@ -12,9 +12,10 @@ import { g9En } from "./g9.ts";
 import { g10En } from "./g10.ts";
 import { g11En } from "./g11.ts";
 import { g12En } from "./g12.ts";
+import { g12ExtraEn } from "./g12extra.ts";
 
 /** Bản dịch theo khóa "<lớp>/<mã bài>". */
-const byGrade: [number, Record<string, LessonEn>][] = [[1, g1En], [2, g2En], [3, g3En], [4, g4En], [5, g5En], [6, g6En], [7, g7En], [8, g8En], [9, g9En], [10, g10En], [11, g11En], [12, g12En]];
+const byGrade: [number, Record<string, LessonEn>][] = [[1, g1En], [2, g2En], [3, g3En], [4, g4En], [5, g5En], [6, g6En], [7, g7En], [8, g8En], [9, g9En], [10, g10En], [11, g11En], [12, { ...g12En, ...g12ExtraEn }]];
 
 export const lessonsEn: Record<string, LessonEn> = Object.fromEntries(
   byGrade.flatMap(([grade, lessons]) => Object.entries(lessons).map(([id, item]) => [`${grade}/${id}`, item])),
