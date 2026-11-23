@@ -8,18 +8,21 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ: một tuyên ngôn ngược với cách học thuộc lòng, rồi ba khối so sánh cách cũ với cách của Bàn Toán. */
+/** Đầu trang chủ, viết theo một giọng: "Không …, hãy …". Vế "Không" nhạt, vế "hãy" đậm. */
 export function Welcome() {
   const lang = useLang();
   return (
     <section className="hero-welcome">
       <p className="kicker">{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo", "Bàn Toán – a place to learn, research and create")}</p>
-      <h1>{t(lang, "Toán không phải để học thuộc.", "Maths is not for memorising.")}</h1>
+      <h1>
+        <span className="no">{t(lang, "Không học thuộc công thức toán học,", "Don't memorise maths formulas.")}</span>{" "}
+        <span className="yes">{t(lang, "hãy hiểu nó.", "Understand them.")}</span>
+      </h1>
       <p className="lead hero-manifesto">
         {t(
           lang,
-          "Lớp học quen thuộc dạy bạn chép công thức, giải theo bài mẫu rồi chờ chấm điểm. Bàn Toán làm ngược lại: bạn thấy toán chuyển động, tự đặt câu hỏi, tự kiểm chứng, và hiểu vì sao trước khi phải nhớ.",
-          "The usual classroom has you copy formulas, follow the worked example and wait for a mark. Bàn Toán turns that around: you watch maths move, ask your own questions, test them yourself, and understand why before you have to remember.",
+          "Không chép công thức rồi giải theo bài mẫu, hãy nhìn toán chuyển động, tự đặt câu hỏi và tự kiểm chứng. Không nhớ trước rồi mới hiểu, hãy hiểu vì sao trước, rồi bạn sẽ nhớ.",
+          "Don't copy formulas and follow the worked example. Watch maths move, ask your own questions and test them yourself. Don't remember first and hope to understand later. Understand why first, and you will remember.",
         )}{" "}
         <a href="#vi-sao">{t(lang, "Vì sao Bàn Toán khác?", "Why is Bàn Toán different?")}</a>
       </p>
@@ -30,10 +33,10 @@ export function Welcome() {
           <article key={pillar.id} className="pillar" aria-labelledby={`pillar-${pillar.id}`}>
             <PillarMark id={pillar.id} />
             <h2 id={`pillar-${pillar.id}`}>{t(lang, pillar.vi, pillar.en)}</h2>
-            <p className="pillar-instead">
-              <span>{t(lang, "Không", "Not")}</span> <s>{t(lang, pillar.oldVi, pillar.oldEn)}</s>
+            <p className="pillar-gist">
+              <span className="no">{t(lang, pillar.noVi, pillar.noEn)}</span>{" "}
+              <span className="yes">{t(lang, pillar.yesVi, pillar.yesEn)}</span>
             </p>
-            <p className="pillar-gist">{t(lang, pillar.gistVi, pillar.gistEn)}</p>
             <p className="pillar-body">{t(lang, pillar.bodyVi, pillar.bodyEn)}</p>
             <p className="pillar-links">
               {pillar.links.map((link) => (
@@ -62,18 +65,17 @@ type PillarId = "hoc" | "nghien-cuu" | "sang-tao";
 const PILLARS: {
   id: PillarId;
   vi: string; en: string;
-  /** The habit this pillar replaces, shown struck through. */
-  oldVi: string; oldEn: string;
-  gistVi: string; gistEn: string;
+  /** "Không …," then "hãy …": the habit to drop, then what to do instead. */
+  noVi: string; noEn: string;
+  yesVi: string; yesEn: string;
   bodyVi: string; bodyEn: string;
   links: { href: string; vi: string; en: string }[];
 }[] = [
   {
     id: "hoc",
     vi: "Học tập", en: "Learn",
-    oldVi: "chép công thức, học thuộc", oldEn: "memorising formulas",
-    gistVi: "Chạm vào toán, thấy toán chuyển động.",
-    gistEn: "Touch maths and watch it move.",
+    noVi: "Không chép công thức,", noEn: "Don't copy the formula.",
+    yesVi: "hãy nhìn nó chuyển động.", yesEn: "Watch it move.",
     bodyVi: "Kéo một tham số, đồ thị đổi theo ngay trước mắt. Mười bốn chuyên đề THPT và 182 bài từ lớp 1 đến lớp 12, bài nào cũng giải từng bước và nói rõ vì sao.",
     bodyEn: "Drag a parameter and the graph changes right in front of you. Fourteen upper-secondary topics and 182 lessons from grade 1 to 12, each worked step by step with the reason for every step.",
     links: [
@@ -85,9 +87,8 @@ const PILLARS: {
   {
     id: "nghien-cuu",
     vi: "Nghiên cứu", en: "Research",
-    oldVi: "làm theo bài mẫu", oldEn: "copying the example",
-    gistVi: "Đặt câu hỏi như một nhà toán học.",
-    gistEn: "Ask questions like a mathematician.",
+    noVi: "Không làm theo bài mẫu,", noEn: "Don't follow the example.",
+    yesVi: "hãy tự đặt câu hỏi.", yesEn: "Ask your own question.",
     bodyVi: "Nêu giả thuyết, tự đo, tự vẽ đồ thị, rồi đối chiếu với chứng minh. 28 bài nghiên cứu dẫn bạn đi từ phỏng đoán đến chắc chắn.",
     bodyEn: "Make a guess, measure it, plot it yourself, then check it against the proof. 28 investigations take you from a hunch to certainty.",
     links: [
@@ -98,9 +99,8 @@ const PILLARS: {
   {
     id: "sang-tao",
     vi: "Sáng tạo", en: "Create",
-    oldVi: "chỉ giải đề có sẵn", oldEn: "only solving set problems",
-    gistVi: "Từ ý tưởng đến hình khối.",
-    gistEn: "From an idea to a shape you can turn.",
+    noVi: "Không chỉ giải đề có sẵn,", noEn: "Don't just solve set problems.",
+    yesVi: "hãy tự làm ra đề.", yesEn: "Make your own.",
     bodyVi: "Dựng hình phẳng, xoay khối không gian, soạn đề và phiếu học có công thức. Điều bạn nghĩ ra, bạn làm ra được ở đây.",
     bodyEn: "Build plane figures, turn solids in space, write tests and worksheets with formulas. What you think up, you can make here.",
     links: [
