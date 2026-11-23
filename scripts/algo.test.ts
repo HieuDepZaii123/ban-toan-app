@@ -492,6 +492,31 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("Hessian số của x² − y²", Math.abs(hs.fxx - 2) < 1e-6 && Math.abs(hs.fyy + 2) < 1e-6 && Math.abs(hs.fxy) < 1e-6);
 }
 
+// Xác suất thống kê đại học: chuẩn, luật số lớn, khoảng tin cậy, A/B test.
+{
+  near("Φ(0) = 0,5", A.normalCdf(0), 0.5, 1e-7);
+  near("Φ(1,96) ≈ 0,975", A.normalCdf(1.96), 0.9750021, 1e-6);
+  near("Φ(1,9) ≈ 0,97128", A.normalCdf(1.9), 0.9712834, 1e-6);
+  near("Φ(−z) = 1 − Φ(z)", A.normalCdf(-1.3), 1 - A.normalCdf(1.3), 1e-9);
+  const means = A.runningDiceMeans(20000, mulberry32(7));
+  near("trung bình xúc xắc sau 20000 lần ≈ 3,5", means[19999]!, 3.5, 0.05);
+  is("trung bình dao động mạnh ở những lần đầu", Math.abs(means[0]! - 3.5) >= 0.5 || Math.abs(means[1]! - 3.5) >= 0.25);
+  near("phương sai mẫu của 1..6 chia n−1 = 3,5", A.sampleVariance([1, 2, 3, 4, 5, 6]), 3.5, 1e-12);
+  const vb = A.varianceBias(5, 4000, mulberry32(3));
+  near("chia n−1 không chệch (≈ 1/12)", vb.divN1, 1 / 12, 0.003);
+  is("chia n thấp hơn chia n−1 theo đúng tỉ lệ (n−1)/n", Math.abs(vb.divN / vb.divN1 - 4 / 5) < 1e-9);
+  const cov = A.intervalCoverage(2000, 30, 1.96, mulberry32(11));
+  near("khoảng tin cậy 95% phủ khoảng 95%", cov.covered / 2000, 0.95, 0.02);
+  const cov2 = A.intervalCoverage(2000, 30, 1, mulberry32(11));
+  near("khoảng z = 1 phủ khoảng 68%", cov2.covered / 2000, 0.6827, 0.03);
+  const ab = A.twoProportionZ(200, 1000, 240, 1000);
+  near("A/B: tỉ lệ gộp 0,22", ab.pooled, 0.22, 1e-12);
+  near("A/B: z ≈ −2,159", ab.z, -2.1592, 1e-3);
+  near("A/B: p ≈ 0,0308", ab.p, 0.0308, 5e-4);
+  const sums = Array.from({ length: 36 }, (_, i) => 2 + Math.floor(i / 6) + (i % 6) - 1);
+  near("phương sai tổng hai xúc xắc = 35/6", A.variance(sums), 35 / 6, 1e-12);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

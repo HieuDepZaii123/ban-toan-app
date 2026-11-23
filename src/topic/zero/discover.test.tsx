@@ -8,6 +8,7 @@ import { SURVEY_CARDS } from "./surveyCards.ts";
 import { VECTOR_CARDS } from "./vectorCards.ts";
 import { LINALG_CARDS } from "./linalgCards.ts";
 import { CALC_CARDS } from "./calcCards.ts";
+import { STATS_CARDS } from "./statsCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -93,5 +94,14 @@ describe("Thẻ khám phá", () => {
     expect(label(CALC_CARDS.descent)).toBe("$(-4;-6)$");
     expect(label(CALC_CARDS.saddle)).toContain("yên");
     expect(label(CALC_CARDS.lagrange)).toBe("$2$");
+  });
+
+  test("các thẻ xác suất thống kê có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(STATS_CARDS.standardError)).toBe("0,5 lần");
+    expect(label(STATS_CARDS.abTest)).toContain("có ý nghĩa");
+    expect(label(STATS_CARDS.coverage)).toContain("95");
+    expect(label(STATS_CARDS.bias)).toContain("Thấp hơn");
+    expect(label(STATS_CARDS.diceVar)).toBe("$\\frac{35}{6}$");
   });
 });

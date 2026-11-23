@@ -1043,6 +1043,69 @@ export function hessian2D(f: (x: number, y: number) => number, x: number, y: num
   };
 }
 
+/** Hàm phân phối chuẩn tắc Φ(z), sai số dưới 1,5·10⁻⁷ (xấp xỉ Abramowitz–Stegun cho erf). */
+export function normalCdf(z: number): number {
+  const x = Math.abs(z) / Math.SQRT2;
+  const t = 1 / (1 + 0.3275911 * x);
+  const poly = t * (0.254829592 + t * (-0.284496736 + t * (1.421413741 + t * (-1.453152027 + t * 1.061405429))));
+  const erf = 1 - poly * Math.exp(-x * x);
+  return z >= 0 ? 0.5 * (1 + erf) : 0.5 * (1 - erf);
+}
+
+/** Trung bình dần của n lần tung xúc xắc (hạt giống cố định cho hình luật số lớn). */
+export function runningDiceMeans(n: number, rng: () => number): number[] {
+  const out: number[] = [];
+  let sum = 0;
+  for (let i = 1; i <= n; i++) {
+    sum += 1 + Math.floor(rng() * 6);
+    out.push(sum / i);
+  }
+  return out;
+}
+
+/** Phương sai mẫu chia n−1 (không chệch). */
+export function sampleVariance(xs: readonly number[]): number {
+  const m = mean(xs);
+  return xs.reduce((s, v) => s + (v - m) ** 2, 0) / (xs.length - 1);
+}
+
+/** Lấy reps mẫu U(0;1) cỡ n; trả về trung bình của phương sai chia n và chia n−1 (đúng là 1/12 ≈ 0,0833). */
+export function varianceBias(n: number, reps: number, rng: () => number): { divN: number; divN1: number } {
+  let a = 0;
+  let b = 0;
+  for (let r = 0; r < reps; r++) {
+    const xs = Array.from({ length: n }, () => rng());
+    a += variance(xs);
+    b += sampleVariance(xs);
+  }
+  return { divN: a / reps, divN1: b / reps };
+}
+
+/** Mỗi lần lấy một mẫu U(0;1) cỡ n, dựng khoảng x̄ ± z·σ/√n với σ = √(1/12). Trả về các khoảng và số khoảng chứa trung bình thật 0,5. */
+export function intervalCoverage(trials: number, n: number, z: number, rng: () => number): { intervals: { lo: number; hi: number; covers: boolean }[]; covered: number } {
+  const sigma = Math.sqrt(1 / 12);
+  const half = (z * sigma) / Math.sqrt(n);
+  const intervals: { lo: number; hi: number; covers: boolean }[] = [];
+  let covered = 0;
+  for (let t = 0; t < trials; t++) {
+    let sum = 0;
+    for (let i = 0; i < n; i++) sum += rng();
+    const xbar = sum / n;
+    const covers = Math.abs(xbar - 0.5) <= half;
+    if (covers) covered += 1;
+    intervals.push({ lo: xbar - half, hi: xbar + half, covers });
+  }
+  return { intervals, covered };
+}
+
+/** Kiểm định hai tỉ lệ (A/B test) bằng tỉ lệ gộp: thống kê z và giá trị p hai phía. */
+export function twoProportionZ(x1: number, n1: number, x2: number, n2: number): { z: number; p: number; pooled: number } {
+  const pooled = (x1 + x2) / (n1 + n2);
+  const se = Math.sqrt(pooled * (1 - pooled) * (1 / n1 + 1 / n2));
+  const z = (x1 / n1 - x2 / n2) / se;
+  return { z, p: 2 * (1 - normalCdf(Math.abs(z))), pooled };
+}
+
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
 export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
   const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);
