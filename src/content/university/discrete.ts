@@ -75,7 +75,7 @@ export const discreteKnowledge: TopicKnowledge = {
           kind: "cong-thuc", title: "Tăng trưởng và phân rã mũ",
           text: R`Phương trình $y'=ky$ có nghiệm $y=y_0e^{kt}$. Với $k>0$ là tăng trưởng, thời gian nhân đôi là $\frac{\ln2}{k}$. Với $k<0$ là phân rã, chu kì bán rã là $\frac{\ln2}{|k|}$.`,
           suy: [
-            R`Tách biến: $\frac{dy}{y}=k\,dt$. Lấy nguyên hàm hai vế, $\ln|y|=kt+c$, nên $y=\pm e^{c}e^{kt}=Ce^{kt}$. Điều kiện đầu $y(0)=y_0$ cho $C=y_0$.`,
+            R`Tách biến: $\frac{dy}{y}=k\,dt$. Lấy nguyên hàm hai vế, $\ln|y|=kt+c$, nên $y=\pm e^{c}e^{kt}=Ce^{kt}$. Điều kiện đầu $y(0)=y_0$ cho $C=y_0$. Nếu $y_0=0$ thì $y\equiv0$ và vẫn khớp công thức.`,
             R`Thời gian nhân đôi $T$ thỏa $y_0e^{kT}=2y_0$, nên $e^{kT}=2$ và $T=\frac{\ln2}{k}$. Chu kì bán rã tính tương tự với $e^{kT}=\frac12$.`,
           ],
         },
@@ -83,7 +83,7 @@ export const discreteKnowledge: TopicKnowledge = {
           kind: "dinh-ly", title: "Mô hình logistic",
           text: R`Nghiệm của $y'=ry\left(1-\frac{y}{K}\right)$ với $0<y_0<K$ là $y=\frac{K}{1+Ae^{-rt}}$ với $A=\frac{K-y_0}{y_0}$. Nghiệm tăng dần về sức chứa $K$.`,
           suy: [
-            R`Đặt $u=\frac1y$. Khi đó $u'=-\frac{y'}{y^2}=-r\cdot\frac1y\left(1-\frac yK\right)=-r\left(u-\frac1K\right)$.`,
+            R`Vì $y\equiv0$ và $y\equiv K$ là nghiệm nên theo tính duy nhất, nghiệm bắt đầu trong $(0;K)$ luôn ở trong khoảng đó, và $y\neq0$. Đặt $u=\frac1y$. Khi đó $u'=-\frac{y'}{y^2}=-r\cdot\frac1y\left(1-\frac yK\right)=-r\left(u-\frac1K\right)$.`,
             R`Đây là phương trình tuyến tính cho $v=u-\frac1K$: $v'=-rv$, có nghiệm $v=Ce^{-rt}$. Vậy $u=\frac1K+Ce^{-rt}$.`,
             R`Đổi lại $y=\frac1u=\frac{K}{1+KCe^{-rt}}$. Đặt $A=KC$; điều kiện $y(0)=y_0$ cho $1+A=\frac{K}{y_0}$, tức $A=\frac{K-y_0}{y_0}$.`,
           ],
@@ -100,10 +100,10 @@ export const discreteKnowledge: TopicKnowledge = {
         },
         {
           kind: "tinh-chat", title: "Trạng thái cân bằng",
-          text: R`Với $y'=f(y)$, nghiệm hằng $y\equiv y^*$ ứng với $f(y^*)=0$. Trạng thái cân bằng ổn định nếu $f'(y^*)<0$ và không ổn định nếu $f'(y^*)>0$. Mô hình logistic có hai cân bằng: $0$ không ổn định, $K$ ổn định.`,
+          text: R`Với $y'=f(y)$, nghiệm hằng $y\equiv y^*$ ứng với $f(y^*)=0$. Trạng thái cân bằng ổn định nếu $f'(y^*)<0$ và không ổn định nếu $f'(y^*)>0$; nếu $f'(y^*)=0$ thì chưa kết luận được. Mô hình logistic với $r>0$ có hai cân bằng: $0$ không ổn định, $K$ ổn định.`,
           suy: [
             R`Nếu $f(y^*)=0$ thì $y\equiv y^*$ thỏa phương trình, vì cả hai vế đều bằng $0$.`,
-            R`Gần $y^*$, $f(y)\approx f'(y^*)(y-y^*)$. Đặt $w=y-y^*$ thì $w'\approx f'(y^*)w$ nên $w\approx w_0e^{f'(y^*)t}$. Độ lệch $w$ co về $0$ khi $f'(y^*)<0$ và lớn lên khi $f'(y^*)>0$.`,
+            R`Gần $y^*$ ta dùng xấp xỉ tuyến tính (lập luận gần đúng, đủ để thấy xu hướng): $f(y)\approx f'(y^*)(y-y^*)$. Đặt $w=y-y^*$ thì $w'\approx f'(y^*)w$ nên $w\approx w_0e^{f'(y^*)t}$. Độ lệch $w$ co về $0$ khi $f'(y^*)<0$ và lớn lên khi $f'(y^*)>0$.`,
             R`Với $f(y)=ry\left(1-\frac yK\right)$ ta có $f'(y)=r\left(1-\frac{2y}{K}\right)$, nên $f'(0)=r>0$ và $f'(K)=-r<0$.`,
           ],
         },
@@ -127,7 +127,7 @@ export const discreteKnowledge: TopicKnowledge = {
         },
         {
           kind: "tinh-chat", title: "Sai số của phương pháp Euler",
-          text: R`Với $f$ đủ trơn và liên tục Lipschitz theo $y$, sai số sau một đoạn cố định $[x_0;x_0+T]$ cỡ $h$: giảm bước đi một nửa thì sai số giảm khoảng một nửa.`,
+          text: R`Với $f$ đủ trơn và liên tục Lipschitz theo $y$, sai số sau một đoạn cố định $[x_0;x_0+T]$ không vượt quá $Ch$ với một hằng số $C$. Trong thực tế, giảm bước đi một nửa thì sai số thường giảm khoảng một nửa.`,
           suy: [
             R`Theo khai triển Taylor với phần dư Lagrange, $y(x+h)=y(x)+h\,y'(x)+\frac{h^2}{2}y''(c)$. Mỗi bước Euler mắc sai số cục bộ cỡ $\frac{h^2}{2}|y''|\le\frac{M}{2}h^2$.`,
             R`Để đi hết đoạn dài $T$ cần $\frac{T}{h}$ bước. Các sai số cục bộ cộng dồn, và điều kiện Lipschitz đảm bảo sai số cũ không bị khuếch đại quá một hệ số hữu hạn, nên sai số toàn cục cỡ $\frac{T}{h}\cdot\frac{M}{2}h^2$, tức cỡ $h$.`,
@@ -137,9 +137,9 @@ export const discreteKnowledge: TopicKnowledge = {
           kind: "cong-thuc", title: "Mô hình dịch bệnh SIR",
           text: R`Chia dân số $N$ thành $S$ (chưa nhiễm), $I$ (đang nhiễm), $R$ (đã khỏi): $S'=-\beta\frac{SI}{N}$, $I'=\beta\frac{SI}{N}-\gamma I$, $R'=\gamma I$. Dịch bùng phát khi $R_0\frac{S}{N}>1$ với $R_0=\frac{\beta}{\gamma}$.`,
           suy: [
-            R`Cộng ba phương trình: $S'+I'+R'=-\beta\frac{SI}{N}+\beta\frac{SI}{N}-\gamma I+\gamma I=0$, nên $S+I+R=N$ không đổi theo thời gian.`,
-            R`Viết $I'=I\left(\beta\frac{S}{N}-\gamma\right)$. Số người nhiễm tăng ($I'>0$) khi và chỉ khi $\beta\frac SN>\gamma$, tức $\frac{\beta}{\gamma}\cdot\frac SN>1$.`,
-            R`Lúc đầu gần như mọi người chưa nhiễm, $S\approx N$, nên dịch bùng khi $R_0=\frac{\beta}{\gamma}>1$. Số người nhiễm đạt đỉnh khi $S=\frac{N}{R_0}$, vì lúc đó $I'=0$.`,
+            R`Cộng ba phương trình: $S'+I'+R'=-\beta\frac{SI}{N}+\beta\frac{SI}{N}-\gamma I+\gamma I=0$, nên $S+I+R$ không đổi theo thời gian, và bằng $N$ theo điều kiện đầu.`,
+            R`Viết $I'=I\left(\beta\frac{S}{N}-\gamma\right)$. Khi $I>0$, số người nhiễm tăng ($I'>0$) khi và chỉ khi $\beta\frac SN>\gamma$, tức $\frac{\beta}{\gamma}\cdot\frac SN>1$.`,
+            R`Lúc đầu gần như mọi người chưa nhiễm, $S\approx N$, nên dịch bùng khi $R_0=\frac{\beta}{\gamma}>1$. Số người nhiễm đạt đỉnh khi $S=\frac{N}{R_0}$, vì lúc đó $I'=0$. Do $S$ chỉ giảm theo thời gian nên $I'$ đổi dấu từ dương sang âm tại thời điểm ấy.`,
           ],
         },
         {
@@ -148,7 +148,7 @@ export const discreteKnowledge: TopicKnowledge = {
         },
         {
           kind: "vi-du",
-          text: R`Phương trình $y'=y$ với $y(0)=1$ và $h=0{,}1$: Euler cho $y_{10}=1{,}1^{10}\approx2{,}5937$, còn nghiệm đúng là $y(1)=e\approx2{,}7183$. Với $\beta=0{,}3$ và $\gamma=0{,}1$ ta có $R_0=3$, và dịch dừng lây khi $\frac SN$ giảm xuống dưới $\frac13$, tức khi khoảng $1-\frac13=\frac23$ dân số đã miễn dịch.`,
+          text: R`Phương trình $y'=y$ với $y(0)=1$ và $h=0{,}1$: Euler cho $y_{10}=1{,}1^{10}\approx2{,}5937$, còn nghiệm đúng là $y(1)=e\approx2{,}7183$, sai số $0{,}1245$. Với $h=0{,}05$ được $1{,}05^{20}\approx2{,}6533$, sai số giảm còn $0{,}0650$, khoảng một nửa. Với $\beta=0{,}3$ và $\gamma=0{,}1$ ta có $R_0=3$, và số ca đang nhiễm bắt đầu giảm khi $\frac SN$ xuống dưới $\frac13$, tức khi khoảng $1-\frac13=\frac23$ dân số đã nhiễm hoặc đã miễn dịch; đó là ngưỡng miễn dịch cộng đồng.`,
         },
         { kind: "luu-y", text: R`Phương pháp Euler có thể mất ổn định khi bước quá lớn. Với $y'=-10y$ và $h=0{,}3$ thì $y_{n+1}=(1-3)y_n=-2y_n$, nghiệm số dao động và lớn lên trong khi nghiệm thật $e^{-10t}$ co về $0$.` },
       ],
@@ -199,7 +199,7 @@ export const discreteKnowledge: TopicKnowledge = {
           text: R`Mọi cây có $n$ đỉnh (với $n\ge1$) có đúng $n-1$ cạnh, không nhiều hơn và không ít hơn.`,
           suy: [
             R`Chứng minh bằng quy nạp theo $n$. Cây một đỉnh không có cạnh nào, và $1-1=0$.`,
-            R`Với $n\ge2$, xét một đường đi dài nhất $v_0v_1\dots v_k$ trong cây. Đỉnh $v_0$ có bậc $1$: nếu có thêm một láng giềng $w$, thì hoặc $w$ nằm trên đường đi, tạo chu trình, hoặc $w$ nằm ngoài, tạo đường đi dài hơn.`,
+            R`Với $n\ge2$, xét một đường đi dài nhất $v_0v_1\dots v_k$ trong cây. Đỉnh $v_0$ có bậc ít nhất $1$ vì đồ thị liên thông và $n\ge2$. Bậc đó đúng bằng $1$: nếu có thêm một láng giềng $w$, thì hoặc $w$ nằm trên đường đi, tạo chu trình, hoặc $w$ nằm ngoài, tạo đường đi dài hơn.`,
             R`Bỏ đỉnh $v_0$ cùng cạnh duy nhất của nó. Đồ thị còn lại vẫn liên thông (vì $v_0$ chỉ là đầu mút) và không có chu trình, nên là cây có $n-1$ đỉnh, với $n-2$ cạnh theo giả thiết quy nạp.`,
             R`Thêm lại đỉnh $v_0$ và cạnh của nó, cây ban đầu có $n-2+1=n-1$ cạnh.`,
           ],
@@ -267,7 +267,7 @@ export const discreteKnowledge: TopicKnowledge = {
           kind: "vi-du",
           text: R`Tính $3^{100}\bmod7$. Vì $3^6\equiv1\pmod7$ theo định lí Fermat nhỏ, $3^{100}=3^{96}\cdot3^4\equiv3^4=81\equiv4\pmod7$. Nghịch đảo của $3$ theo modulo $11$ là $4$ vì $3\cdot4=12\equiv1$. Và $2^{10}=1024\equiv1\pmod{11}$.`,
         },
-        { kind: "luu-y", text: R`Định lí Fermat nhỏ cần $p$ nguyên tố. Với hợp số có thể sai: modulo $6$ và $a=2$ có $2^{5}=32\equiv2$, không phải $1$. Chia cả hai vế của một đồng dư cho một số cũng chỉ được khi số đó có nghịch đảo modulo $m$.` },
+        { kind: "luu-y", text: R`Định lí Fermat nhỏ cần $p$ nguyên tố. Với hợp số có thể sai: modulo $6$ và $a=5$ (nguyên tố cùng nhau với $6$) có $5^{5}=3125\equiv5$, không phải $1$. Chia cả hai vế của một đồng dư cho một số cũng chỉ được khi số đó có nghịch đảo modulo $m$.` },
       ],
     },
     {
@@ -280,12 +280,12 @@ export const discreteKnowledge: TopicKnowledge = {
         },
         {
           kind: "dinh-ly", title: "RSA giải mã đúng",
-          text: R`Với $n=pq$, $ed\equiv1\pmod{(p-1)(q-1)}$ và $0\le m<n$, ta có $\left(m^{e}\right)^{d}\equiv m\pmod n$.`,
+          text: R`Với $p\neq q$ nguyên tố, $n=pq$, các số nguyên dương $e$, $d$ thỏa $ed\equiv1\pmod{(p-1)(q-1)}$ và $0\le m<n$, ta có $\left(m^{e}\right)^{d}\equiv m\pmod n$.`,
           suy: [
             R`Vì $ed\equiv1\pmod{(p-1)(q-1)}$ nên $ed=1+k(p-1)(q-1)$ với một $k\ge0$ nguyên. Cần chứng minh $m^{ed}\equiv m$ theo từng modulo $p$ và $q$.`,
             R`Theo modulo $p$: nếu $p\mid m$ thì cả hai vế đều $\equiv0$. Nếu $p\nmid m$ thì theo Fermat nhỏ $m^{p-1}\equiv1$, nên $m^{ed}=m\cdot\left(m^{p-1}\right)^{k(q-1)}\equiv m\pmod p$.`,
             R`Tương tự, $m^{ed}\equiv m\pmod q$ với vai trò của $q$ và $\left(m^{q-1}\right)^{k(p-1)}$.`,
-            R`Vậy $p$ và $q$ cùng chia hết $m^{ed}-m$. Vì $p$, $q$ là hai số nguyên tố khác nhau nên tích $n=pq$ cũng chia hết $m^{ed}-m$, tức $m^{ed}\equiv m\pmod n$.`,
+            R`Vậy $p$ và $q$ cùng chia hết $m^{ed}-m$. Vì $p$, $q$ là hai số nguyên tố khác nhau nên tích $n=pq$ cũng chia hết $m^{ed}-m$, tức $m^{ed}\equiv m\pmod n$. Vì $0\le m<n$ nên $m$ chính là số dư của $m^{ed}$ khi chia cho $n$, và giải mã nhận lại đúng $m$.`,
           ],
         },
         {
@@ -313,7 +313,7 @@ export const discreteKnowledge: TopicKnowledge = {
   lienQuan: [
     { id: "exp", vi: R`Nghiệm của $y'=ky$ là hàm mũ $e^{kt}$, và thời gian nhân đôi dùng logarit tự nhiên.` },
     { id: "integral", vi: R`Tách biến và nhân tử tích phân đều dựa vào nguyên hàm; phương pháp Euler là phiên bản rời rạc của tích phân.` },
-    { id: "combo", vi: R`Đếm theo hai cách là kĩ thuật chung của bổ đề bắt tay và hệ số nhị thức trong chứng minh Fermat nhỏ.` },
+    { id: "combo", vi: R`Kĩ thuật đếm hai cách xuất hiện trong bổ đề bắt tay, còn hệ số nhị thức $\binom{p}{k}$ chia hết cho $p$ là chìa khóa của chứng minh Fermat nhỏ bằng quy nạp.` },
     { id: "sequence", vi: R`Phương pháp Euler cho một dãy truy hồi, và quy nạp là công cụ để chứng minh tính chất của đồ thị và đồng dư.` },
   ],
   checks: [
@@ -335,6 +335,8 @@ export const discreteKnowledge: TopicKnowledge = {
     { expr: "Rational(7*2,1)", expect: "14" },
     { expr: "binomial(7,3)%7", expect: "0" },
     { expr: "Mod(3**100, 7)", expect: "4" },
+    { expr: "Mod(5**5, 6)", expect: "5" },
+    { expr: "floor(Rational(105,100)**20*10000)", expect: "26532" },
     { expr: "Mod(3*4, 11)", expect: "1" },
     { expr: "Mod(2**10, 11)", expect: "1" },
     { expr: "Mod(3*27, 40)", expect: "1" },
