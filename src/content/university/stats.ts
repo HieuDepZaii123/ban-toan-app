@@ -79,11 +79,11 @@ export const statsKnowledge: TopicKnowledge = {
         },
         {
           kind: "dinh-ly", title: "Tính tuyến tính của kì vọng",
-          text: R`Với mọi biến ngẫu nhiên $X$, $Y$ và số $a$, $b$ ta có $E[aX+bY]=aE[X]+bE[Y]$, dù $X$ và $Y$ có độc lập hay không.`,
+          text: R`Với mọi biến ngẫu nhiên $X$, $Y$ có kì vọng tồn tại và số $a$, $b$ ta có $E[aX+bY]=aE[X]+bE[Y]$, dù $X$ và $Y$ có độc lập hay không.`,
           suy: [
             R`Với hai biến rời rạc có phân phối đồng thời $P(X=x_i,Y=y_j)=p_{ij}$, kì vọng của $aX+bY$ là $\sum_{i,j}(ax_i+by_j)p_{ij}$.`,
             R`Tách thành hai tổng: $a\sum_ix_i\sum_jp_{ij}+b\sum_jy_j\sum_ip_{ij}$. Tổng $\sum_jp_{ij}$ chính là $P(X=x_i)$ và $\sum_ip_{ij}$ là $P(Y=y_j)$, nên kết quả là $aE[X]+bE[Y]$.`,
-            R`Trong cả hai bước ta không dùng đến tính độc lập, vì vậy kết luận đúng cho mọi cặp biến.`,
+            R`Trong cả hai bước ta không dùng đến tính độc lập, vì vậy kết luận đúng cho mọi cặp biến. Chứng minh viết cho biến rời rạc có kì vọng hội tụ tuyệt đối; biến liên tục làm tương tự, thay tổng bằng tích phân.`,
           ],
         },
         {
@@ -96,7 +96,7 @@ export const statsKnowledge: TopicKnowledge = {
         },
         {
           kind: "dinh-ly", title: "Phương sai của tổng độc lập",
-          text: R`Nếu $X$ và $Y$ độc lập thì $\operatorname{Var}(X+Y)=\operatorname{Var}X+\operatorname{Var}Y$.`,
+          text: R`Nếu $X$ và $Y$ độc lập thì $\operatorname{Var}(X+Y)=\operatorname{Var}X+\operatorname{Var}Y$. Nếu chúng phụ thuộc thì tổng này lệch thêm $2\operatorname{Cov}(X,Y)$, với $\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]$.`,
           suy: [
             R`Đặt $\mu_X=E[X]$, $\mu_Y=E[Y]$. Khi đó $E[X+Y]=\mu_X+\mu_Y$, và $\operatorname{Var}(X+Y)=E\left[\big((X-\mu_X)+(Y-\mu_Y)\big)^2\right]$.`,
             R`Khai triển bình phương và lấy kì vọng từng số hạng: $\operatorname{Var}X+\operatorname{Var}Y+2E\big[(X-\mu_X)(Y-\mu_Y)\big]$.`,
@@ -104,11 +104,11 @@ export const statsKnowledge: TopicKnowledge = {
           ],
           suyKhac: [
             {
-              cach: "Bằng hiệp phương sai",
+              cach: "Bằng hàm sinh moment",
               buoc: [
-                R`Định nghĩa hiệp phương sai $\operatorname{Cov}(X,Y)=E[XY]-E[X]E[Y]$. Phương sai là trường hợp $\operatorname{Cov}(X,X)$, và hiệp phương sai tuyến tính theo từng biến.`,
-                R`Do đó $\operatorname{Var}(X+Y)=\operatorname{Cov}(X+Y,X+Y)=\operatorname{Var}X+2\operatorname{Cov}(X,Y)+\operatorname{Var}Y$, tính bằng cách khai triển như tích hai tổng.`,
-                R`Nếu $X$, $Y$ độc lập thì $E[XY]=E[X]E[Y]$, tức $\operatorname{Cov}(X,Y)=0$, và công thức rút gọn thành $\operatorname{Var}X+\operatorname{Var}Y$. Cách này cho thấy tổng quát: hai biến phụ thuộc thì phương sai của tổng khác tổng các phương sai đúng một lượng $2\operatorname{Cov}(X,Y)$.`,
+                R`Giả sử các hàm sinh moment $M_X(t)=E[e^{tX}]$ và $M_Y(t)$ tồn tại gần $t=0$. Vì $X$, $Y$ độc lập nên $E[e^{t(X+Y)}]=E[e^{tX}]E[e^{tY}]$, tức $M_{X+Y}=M_XM_Y$.`,
+                R`Lấy logarit: với $K=\ln M$ ta có $K_{X+Y}=K_X+K_Y$. Hàm $K$ có $K(0)=0$, $K'(0)=E[X]$ và $K''(0)=\frac{M''(0)}{M(0)}-\left(\frac{M'(0)}{M(0)}\right)^2=E[X^2]-(E[X])^2=\operatorname{Var}X$.`,
+                R`Đạo hàm cấp hai tại $0$ của $K_{X+Y}=K_X+K_Y$ cho $\operatorname{Var}(X+Y)=\operatorname{Var}X+\operatorname{Var}Y$. Cách này không khai triển bình phương, và cho thấy cả các «bán bất biến» bậc cao hơn cũng cộng được.`,
               ],
             },
           ],
@@ -125,7 +125,7 @@ export const statsKnowledge: TopicKnowledge = {
           kind: "vi-du",
           text: R`Một xúc xắc có $E[X]=\frac{1+2+3+4+5+6}{6}=\frac72$ và $E[X^2]=\frac{91}{6}$, nên $\operatorname{Var}X=\frac{91}{6}-\frac{49}{4}=\frac{35}{12}$. Hai xúc xắc độc lập có phương sai tổng $\frac{35}{6}$. Tung đồng xu $100$ lần: số mặt ngửa có kì vọng $50$ và phương sai $100\cdot\frac12\cdot\frac12=25$, độ lệch chuẩn $5$.`,
         },
-        { kind: "luu-y", text: R`Phương sai không tuyến tính: $\operatorname{Var}(aX)=a^2\operatorname{Var}X$, và $\operatorname{Var}(X-Y)=\operatorname{Var}X+\operatorname{Var}Y$ khi độc lập (phương sai vẫn cộng, không trừ). Hai biến phụ thuộc thì không dùng được công thức cộng phương sai.` },
+        { kind: "luu-y", text: R`Phương sai không tuyến tính: $\operatorname{Var}(aX)=a^2\operatorname{Var}X$, và $\operatorname{Var}(X-Y)=\operatorname{Var}X+\operatorname{Var}Y$ khi độc lập (phương sai vẫn cộng, không trừ). Chỉ khi hiệp phương sai khác $0$ thì công thức cộng phương sai mới không còn đúng.` },
       ],
     },
     {
@@ -141,7 +141,7 @@ export const statsKnowledge: TopicKnowledge = {
         },
         {
           kind: "dinh-ly", title: "Bất đẳng thức Chebyshev",
-          text: R`Nếu $X$ có kì vọng $\mu$ và phương sai $\sigma^2$ hữu hạn thì với mọi $k>0$: $P(|X-\mu|\ge k\sigma)\le\frac{1}{k^2}$.`,
+          text: R`Nếu $X$ có kì vọng $\mu$ và phương sai $\sigma^2$ hữu hạn, $\sigma>0$, thì với mọi $k>0$: $P(|X-\mu|\ge k\sigma)\le\frac{1}{k^2}$.`,
           suy: [
             R`Áp dụng bất đẳng thức Markov cho biến không âm $(X-\mu)^2$ với ngưỡng $a=k^2\sigma^2$.`,
             R`Biến cố $|X-\mu|\ge k\sigma$ xảy ra đúng khi $(X-\mu)^2\ge k^2\sigma^2$. Do đó $P(|X-\mu|\ge k\sigma)\le\frac{E[(X-\mu)^2]}{k^2\sigma^2}=\frac{\sigma^2}{k^2\sigma^2}=\frac1{k^2}$.`,
@@ -150,7 +150,7 @@ export const statsKnowledge: TopicKnowledge = {
             {
               cach: "Bằng chia tổng thành hai phần",
               buoc: [
-                R`Với biến rời rạc, viết $\sigma^2=\sum(x_i-\mu)^2p_i$ rồi tách thành hai tổng: các giá trị có $|x_i-\mu|\ge\varepsilon$ và các giá trị còn lại, với $\varepsilon=k\sigma$.`,
+                R`Cách này dùng cùng ý với Markov nhưng viết thẳng, không gọi tên Markov. Với biến rời rạc (biến liên tục thay tổng bằng tích phân), viết $\sigma^2=\sum(x_i-\mu)^2p_i$ rồi tách thành hai tổng: các giá trị có $|x_i-\mu|\ge\varepsilon$ và các giá trị còn lại, với $\varepsilon=k\sigma$.`,
                 R`Bỏ phần thứ hai, vì mọi số hạng đều không âm: $\sigma^2\ge\sum_{|x_i-\mu|\ge\varepsilon}(x_i-\mu)^2p_i$.`,
                 R`Trong phần còn lại mỗi $(x_i-\mu)^2\ge\varepsilon^2$, nên $\sigma^2\ge\varepsilon^2\sum_{|x_i-\mu|\ge\varepsilon}p_i=\varepsilon^2P(|X-\mu|\ge\varepsilon)$. Chia cho $\varepsilon^2=k^2\sigma^2$ ta được kết luận, không cần qua bất đẳng thức Markov.`,
               ],
@@ -159,7 +159,7 @@ export const statsKnowledge: TopicKnowledge = {
         },
         {
           kind: "dinh-ly", title: "Luật số lớn yếu",
-          text: R`Cho $X_1,\dots,X_n$ độc lập, cùng kì vọng $\mu$ và phương sai $\sigma^2$, và $\bar X_n=\frac{X_1+\dots+X_n}{n}$. Với mọi $\varepsilon>0$: $P(|\bar X_n-\mu|\ge\varepsilon)\le\frac{\sigma^2}{n\varepsilon^2}\to0$ khi $n\to\infty$.`,
+          text: R`Cho $X_1,\dots,X_n$ độc lập, cùng kì vọng $\mu$ và phương sai $\sigma^2>0$, và $\bar X_n=\frac{X_1+\dots+X_n}{n}$. Với mọi $\varepsilon>0$: $P(|\bar X_n-\mu|\ge\varepsilon)\le\frac{\sigma^2}{n\varepsilon^2}\to0$ khi $n\to\infty$.`,
           suy: [
             R`Theo tính tuyến tính, $E[\bar X_n]=\mu$. Vì các biến độc lập nên $\operatorname{Var}(X_1+\dots+X_n)=n\sigma^2$, và $\operatorname{Var}(\bar X_n)=\frac{1}{n^2}\cdot n\sigma^2=\frac{\sigma^2}{n}$.`,
             R`Áp dụng bất đẳng thức Chebyshev cho $\bar X_n$ với $\varepsilon=k\frac{\sigma}{\sqrt n}$: $P(|\bar X_n-\mu|\ge\varepsilon)\le\frac{\sigma^2/n}{\varepsilon^2}=\frac{\sigma^2}{n\varepsilon^2}$.`,
@@ -190,9 +190,9 @@ export const statsKnowledge: TopicKnowledge = {
           text: R`Cho $X_1,\dots,X_n$ độc lập, cùng phân phối, kì vọng $\mu$, phương sai $\sigma^2$ hữu hạn, và $S_n=X_1+\dots+X_n$. Khi $n\to\infty$, biến chuẩn hóa $Z_n=\frac{S_n-n\mu}{\sigma\sqrt n}$ có phân phối tiến về chuẩn tắc $N(0;1)$.`,
           suy: [
             R`Đặt $Y_i=\frac{X_i-\mu}{\sigma}$: $E[Y_i]=0$ và $\operatorname{Var}Y_i=1$. Khi đó $Z_n=\frac{1}{\sqrt n}\sum Y_i$ có kì vọng $0$ và phương sai $\frac{1}{n}\cdot n=1$ với mọi $n$.`,
-            R`Dùng hàm sinh moment $M(t)=E[e^{tY}]$. Vì các $Y_i$ độc lập nên $E[e^{tZ_n}]=\left(M\left(\frac{t}{\sqrt n}\right)\right)^n$. Khai triển Taylor, $M(s)=1+\frac{s^2}{2}+o(s^2)$ vì $E[Y]=0$ và $E[Y^2]=1$.`,
+            R`Để gọn, ta thêm giả thiết hàm sinh moment $M(t)=E[e^{tY}]$ tồn tại gần $0$ (bản đầy đủ chỉ cần phương sai hữu hạn và dùng hàm đặc trưng). Vì các $Y_i$ độc lập nên $E[e^{tZ_n}]=\left(M\left(\frac{t}{\sqrt n}\right)\right)^n$. Khai triển Taylor, $M(s)=1+\frac{s^2}{2}+o(s^2)$ vì $E[Y]=0$ và $E[Y^2]=1$.`,
             R`Thay $s=\frac{t}{\sqrt n}$: $\left(1+\frac{t^2}{2n}+o\left(\frac1n\right)\right)^n\to e^{t^2/2}$ khi $n\to\infty$. Đây chính là hàm sinh moment của phân phối chuẩn tắc.`,
-            R`Một hàm sinh moment xác định duy nhất phân phối, và hội tụ của hàm sinh moment kéo theo hội tụ của phân phối. Hai khẳng định này (định lí liên tục Lévy) được dùng ở đây mà không chứng minh. Giả thiết hàm sinh moment tồn tại làm lập luận gọn hơn; bản đầy đủ dùng hàm đặc trưng.`,
+            R`Hội tụ của hàm sinh moment về hàm sinh moment của chuẩn tắc kéo theo hội tụ của phân phối (định lí Curtiss, tương ứng với định lí liên tục Lévy cho hàm đặc trưng). Khẳng định này được dùng mà không chứng minh.`,
           ],
         },
         {
@@ -327,6 +327,7 @@ export const statsKnowledge: TopicKnowledge = {
     { expr: "100*Rational(1,2)*Rational(1,2)", expect: "25" },
     { expr: "expand((x+y-(mx+my))**2-((x-mx)**2+(y-my)**2+2*(x-mx)*(y-my)))", expect: "0" },
     { expr: "expand(Rational(1,1)*(x-m)**2-(x**2-2*m*x+m**2))", expect: "0" },
+    { expr: "simplify(diff(log(f(t)),t,2)-(diff(f(t),t,2)/f(t)-(diff(f(t),t)/f(t))**2))", expect: "0" },
     { expr: "ceiling(Rational(35,12)*2000)", expect: "5834" },
     { expr: "Rational(1,2**2)", expect: "1/4" },
     { expr: "(Rational(119,2)-50)/5", expect: "19/10" },
