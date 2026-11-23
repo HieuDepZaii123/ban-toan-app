@@ -1,9 +1,10 @@
+import { lop8PhuongTrinh } from "./lopExtraUpper.ts";
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop08: GradeBook = {
+const lop08Base: GradeBook = {
   grade: 8,
   band: "thcs",
   title: "Hằng đẳng thức, phân thức, hàm số bậc nhất, định lí Thalès, Pythagore, hình chóp đều và xác suất.",
@@ -357,4 +358,10 @@ export const lop08: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bài toán bổ sung nằm cuối sách của lớp. */
+export const lop08: GradeBook = {
+  ...lop08Base,
+  chapters: [...lop08Base.chapters, lop8PhuongTrinh],
 };

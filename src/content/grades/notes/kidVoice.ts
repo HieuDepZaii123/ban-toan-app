@@ -56,4 +56,12 @@ export const kidSummaries: Record<string, string> = {
   "3/so-kha-nang": R`Khi rút ngẫu nhiên một viên bi, màu nào có nhiều viên hơn thì dễ được rút hơn. Túi có $4$ bi đỏ và $1$ bi xanh thì rút được bi đỏ dễ hơn, nhưng vẫn có lúc rút được bi xanh.`,
   "3/dien-tich-3": R`Diện tích là phần mặt phẳng bên trong hình. Đếm xem hình phủ được bao nhiêu ô vuông cạnh $1$ cm: hình chữ nhật dài $5$ cm, rộng $3$ cm có $5\times 3=15$ ô, tức diện tích $15$ cm vuông.`,
   "3/gam-ml": R`Gam dùng cho vật nhẹ, $1000$ gam bằng $1$ kilôgam. Mililít dùng cho lượng nước nhỏ, $1000$ mililít bằng $1$ lít. Một gói đường $500$ gam, hai gói là $1000$ gam, tức $1$ kilôgam.`,
+
+  // Bài toán có lời văn bổ sung
+  "1/toan-them": R`Khi có thêm đồ vật thì mình cộng. Lan có $5$ quả bóng, mẹ mua thêm $3$ quả, vậy có $5+3=8$ quả. Đọc đề xong, hỏi mình: lúc đầu có mấy, thêm mấy, rồi mới viết phép tính.`,
+  "1/toan-bot": R`Khi đồ vật bị ăn, cho đi hay mang đi thì mình trừ. Mai có $9$ cái bánh, ăn $4$ cái, còn $9-4=5$ cái. Muốn kiểm tra, cộng lại: $5+4=9$.`,
+  "2/nhieu-hon": R`Muốn biết bên nào nhiều hơn và nhiều hơn bao nhiêu, lấy số lớn trừ số bé. Lan có $15$ quyển vở, Mai có $9$ quyển, thì Lan nhiều hơn $15-9=6$ quyển. Khi biết người ít hơn và phần chênh, mình cộng để tìm người nhiều.`,
+  "2/chia-deu": R`Chia đều là chia thành các phần bằng nhau, mỗi phần giống hệt nhau. Có $10$ cái kẹo chia cho $2$ bạn thì mỗi bạn được $10:2=5$ cái. Muốn kiểm tra, nhân lại: $2\times5=10$.`,
+  "3/rut-ve-don-vi": R`Biết giá của nhiều món, hãy tìm giá của một món trước. Mua $4$ quyển vở hết $24$ nghìn đồng thì một quyển là $24:4=6$ nghìn đồng. Rồi mua $7$ quyển thì hết $6\times7=42$ nghìn đồng.`,
+  "3/hai-buoc": R`Có bài phải làm hai phép tính, làm lần lượt từng phép. Có $45$ kg gạo, bán $18$ kg rồi $15$ kg. Bước một: đã bán $18+15=33$ kg. Bước hai: còn $45-33=12$ kg.`,
 };

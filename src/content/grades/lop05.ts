@@ -1,9 +1,10 @@
+import { lop5BaiToan } from "./lopExtraPrimary.ts";
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop05: GradeBook = {
+const lop05Base: GradeBook = {
   grade: 5,
   band: "tieu-hoc",
   title: "Số thập phân, phần trăm, tổng và tỉ, diện tích tam giác, hình tròn và thể tích hình hộp.",
@@ -414,4 +415,10 @@ export const lop05: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bài toán bổ sung nằm cuối sách của lớp. */
+export const lop05: GradeBook = {
+  ...lop05Base,
+  chapters: [...lop05Base.chapters, lop5BaiToan],
 };

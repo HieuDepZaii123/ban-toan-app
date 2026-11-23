@@ -19,14 +19,14 @@ const T = "tk" as const;
 
 /** Mạch của từng chương, theo mã chương trong sách của lớp đó. */
 const STRAND: Record<number, Record<string, Strand>> = {
-  1: { "so-10": S, "cong-tru": S, "so-100": S, "do-xem": H },
-  2: { "cong-tru": S, nhan: S, "den-1000": S, "do-dai": H, "do-luong-2": H, "hinh-so-lieu-2": T },
-  3: { "so-100000": S, "nhan-chia": S, "mot-phan": S, do: H, "hinh-3": H, "kha-nang": T, "dien-tich-khoi-luong-3": H },
-  4: { "lop-trieu": S, "phan-so": S, "goc-duong": H, "thong-ke-4": T, "bon-phep-tinh": S, "do-luong-4": H },
-  5: { "thap-phan": S, "phan-tram": S, "dien-tich": H, "the-tich": H, "ti-so": S, "thoi-gian": H, "bieu-do-5": T, "giai-toan-5": S },
-  6: { "so-tu-nhien": S, "chia-het": S, "so-nguyen": S, "phan-so": S, "thap-phan": S, "ti-so-pt": S, hinh: H, "tk-xs-6": T },
-  7: { "huu-ti": S, "ti-le": S, "dai-so": S, "tam-giac": H, thong: T, "thong-ke": T, "goc-song-song": H, "hinh-khoi-7": H },
-  8: { "dang-thuc": S, "pt-ham": S, "tam-giac": H, "tu-giac": H, thales: H, "xac-suat-8": T },
+  1: { "so-10": S, "cong-tru": S, "so-100": S, "do-xem": H, "bai-toan-1": S },
+  2: { "cong-tru": S, nhan: S, "den-1000": S, "do-dai": H, "do-luong-2": H, "hinh-so-lieu-2": T, "bai-toan-2": S },
+  3: { "so-100000": S, "nhan-chia": S, "mot-phan": S, do: H, "hinh-3": H, "kha-nang": T, "dien-tich-khoi-luong-3": H, "bai-toan-3": S },
+  4: { "lop-trieu": S, "phan-so": S, "goc-duong": H, "thong-ke-4": T, "bon-phep-tinh": S, "do-luong-4": H, "hinh-binh-hanh-4": H },
+  5: { "thap-phan": S, "phan-tram": S, "dien-tich": H, "the-tich": H, "ti-so": S, "thoi-gian": H, "bieu-do-5": T, "giai-toan-5": S, "bai-toan-5": S },
+  6: { "so-tu-nhien": S, "chia-het": S, "so-nguyen": S, "phan-so": S, "thap-phan": S, "ti-so-pt": S, hinh: H, "tk-xs-6": T, "bai-toan-6": S },
+  7: { "huu-ti": S, "ti-le": S, "dai-so": S, "tam-giac": H, thong: T, "thong-ke": T, "goc-song-song": H, "hinh-khoi-7": H, "bai-toan-7": S },
+  8: { "dang-thuc": S, "pt-ham": S, "tam-giac": H, "tu-giac": H, thales: H, "xac-suat-8": T, "pt-tich-mau-8": S },
   9: { can: S, "ham-b2": S, "he-pt": S, "pt-b2": S, bpt: S, "lg-vuong": H, tron: H, khoi: H, "tan-so": T, "thuc-te-9": S, "on-vao-10": S },
   10: { "menh-de": S, "bpt-hai-an": S, "ham-bac-hai": S, "ung-dung-b2": S, "luong-giac": H, vecto: H, "toa-do": H, "to-hop": S, "thong-ke": T, xs: T },
   11: { "luong-giac": S, "day-so": S, "gioi-han": S, "mu-log": S, "dao-ham": S, "khong-gian": H, "goc-kc-11": H, "tk-11": T, "xs-11": T },

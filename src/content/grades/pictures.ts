@@ -75,4 +75,11 @@ export const pictures: Record<string, Picture> = {
   "3/so-kha-nang": { k: "groups", items: [{ n: 4, tone: "red" }, { n: 1, tone: "blue" }], alt: "Túi có bốn bi đỏ và một bi xanh." },
   "3/dien-tich-3": { k: "grid", w: 5, h: 3, unit: "cm", alt: "Hình chữ nhật năm nhân ba ô vuông, mỗi ô một xentimét vuông." },
   "3/gam-ml": { k: "bars", values: [500, 500], labels: ["Gói 1", "Gói 2"], unit: "g", alt: "Hai gói đường, mỗi gói năm trăm gam, cộng lại một kilôgam." },
+  // Bài toán có lời văn bổ sung
+  "1/toan-them": { k: "groups", items: [{ n: 5, tone: "orange" }, { n: 3, tone: "blue" }], op: "+", alt: "Năm quả bóng cam và ba quả bóng xanh: gộp lại được tám quả." },
+  "1/toan-bot": { k: "groups", items: [{ n: 9, tone: "green", gone: 4 }], op: "-", alt: "Chín cái bánh, gạch đi bốn cái, còn năm cái." },
+  "2/nhieu-hon": { k: "rows", rows: [{ n: 15, tone: "orange", name: "Lan" }, { n: 9, tone: "blue", name: "Mai" }], alt: "Hàng của Lan có mười lăm chấm, hàng của Mai có chín chấm; Lan nhiều hơn sáu chấm." },
+  "2/chia-deu": { k: "share", total: 10, groups: 2, alt: "Mười cái kẹo chia đều thành hai phần, mỗi phần năm cái." },
+  "3/rut-ve-don-vi": { k: "share", total: 24, groups: 4, alt: "Hai mươi bốn nghìn đồng chia đều cho bốn quyển vở, mỗi quyển sáu nghìn đồng." },
+  "3/hai-buoc": { k: "bars", values: [45, 33, 12], labels: ["Ban đầu", "Đã bán", "Còn lại"], unit: "kg", alt: "Ba cột: bốn mươi lăm ki-lô-gam gạo ban đầu, ba mươi ba ki-lô-gam đã bán, mười hai ki-lô-gam còn lại." },
 };

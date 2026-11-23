@@ -1,9 +1,10 @@
+import { lop3BaiToan } from "./lopExtraPrimary.ts";
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop03: GradeBook = {
+const lop03Base: GradeBook = {
   grade: 3,
   band: "tieu-hoc",
   title: "Số đến 100 000, bảng nhân và phép chia, một phần mấy, đo lường, diện tích và hình tròn.",
@@ -389,4 +390,10 @@ export const lop03: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bài toán bổ sung nằm cuối sách của lớp. */
+export const lop03: GradeBook = {
+  ...lop03Base,
+  chapters: [...lop03Base.chapters, lop3BaiToan],
 };

@@ -1,9 +1,10 @@
+import { lop2BaiToan } from "./lopExtraPrimary.ts";
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop02: GradeBook = {
+const lop02Base: GradeBook = {
   grade: 2,
   band: "tieu-hoc",
   title: "Cộng trừ có nhớ, bảng nhân và bảng chia 2 và 5, số đến 1000, đo lường, hình khối và biểu đồ tranh.",
@@ -316,4 +317,10 @@ export const lop02: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bài toán bổ sung nằm cuối sách của lớp. */
+export const lop02: GradeBook = {
+  ...lop02Base,
+  chapters: [...lop02Base.chapters, lop2BaiToan],
 };

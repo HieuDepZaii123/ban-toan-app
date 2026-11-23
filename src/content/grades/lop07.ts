@@ -1,9 +1,10 @@
+import { lop7BaiToan } from "./lopExtraUpper.ts";
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop07: GradeBook = {
+const lop07Base: GradeBook = {
   grade: 7,
   band: "thcs",
   title: "Số hữu tỉ, tỉ lệ thuận, đa thức một biến, đường thẳng song song, tam giác bằng nhau và lăng trụ đứng.",
@@ -353,4 +354,10 @@ export const lop07: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bài toán bổ sung nằm cuối sách của lớp. */
+export const lop07: GradeBook = {
+  ...lop07Base,
+  chapters: [...lop07Base.chapters, lop7BaiToan],
 };

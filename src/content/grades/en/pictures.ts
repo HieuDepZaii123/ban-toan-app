@@ -2,6 +2,17 @@
 import type { Picture } from "../pictures.ts";
 
 export const pictureTextEn: Record<string, string> = {
+  "Năm quả bóng cam và ba quả bóng xanh: gộp lại được tám quả.": "Five orange balls and three blue balls: together they make eight.",
+  "Chín cái bánh, gạch đi bốn cái, còn năm cái.": "Nine cakes, four crossed out, five left.",
+  "Lan": "Lan",
+  "Mai": "Mai",
+  "Hàng của Lan có mười lăm chấm, hàng của Mai có chín chấm; Lan nhiều hơn sáu chấm.": "Lan's row has fifteen dots and Mai's row has nine dots; Lan has six more.",
+  "Mười cái kẹo chia đều thành hai phần, mỗi phần năm cái.": "Ten sweets shared equally into two parts, five in each part.",
+  "Hai mươi bốn nghìn đồng chia đều cho bốn quyển vở, mỗi quyển sáu nghìn đồng.": "Twenty-four thousand dong shared equally among four notebooks, six thousand dong each.",
+  "Ban đầu": "At first",
+  "Đã bán": "Sold",
+  "Còn lại": "Left",
+  "Ba cột: bốn mươi lăm ki-lô-gam gạo ban đầu, ba mươi ba ki-lô-gam đã bán, mười hai ki-lô-gam còn lại.": "Three bars: forty-five kilograms of rice at first, thirty-three kilograms sold, twelve kilograms left.",
   "Bốn ngôi sao cam và một ngôi sao xanh: đếm được năm.": "Four orange stars and one green star: counting gives five.",
   "Ba quả táo đều bị gạch đi: còn không quả nào.": "Three apples, all crossed out: none are left.",
   "Năm cái kẹo tách thành hai cái và ba cái.": "Five sweets split into two and three.",

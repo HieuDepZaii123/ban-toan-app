@@ -1,9 +1,10 @@
+import { lop4HinhBinhHanh } from "./lopExtraPrimary.ts";
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop04: GradeBook = {
+const lop04Base: GradeBook = {
   grade: 4,
   band: "tieu-hoc",
   title: "Số đến lớp triệu, bốn phép tính, phân số, đo lường, góc, đường thẳng và biểu đồ cột.",
@@ -384,4 +385,10 @@ export const lop04: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bài toán bổ sung nằm cuối sách của lớp. */
+export const lop04: GradeBook = {
+  ...lop04Base,
+  chapters: [...lop04Base.chapters, lop4HinhBinhHanh],
 };

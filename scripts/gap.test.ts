@@ -5,6 +5,7 @@ import { withPick, withoutMiss, type MissRow } from "../src/lib/missBook.ts";
 import { sciences } from "../src/science/catalog.ts";
 import { scienceLessons } from "../src/science/lessons.ts";
 import { scienceMore } from "../src/science/more.ts";
+import { scienceWorked } from "../src/science/worked.ts";
 import { foot, midpoint } from "../src/workshop/plane.ts";
 
 assert.equal(sharedDrill.length, 36);
@@ -55,6 +56,15 @@ for (const area of sciences) {
         assert.ok(drill.answer.includes(String(drill.num).replace(".", ",")), `${area.id}/${key} đáp số không chứa ${drill.num}: ${drill.q}`);
       }
     }
+  }
+}
+for (const area of sciences) {
+  for (const key of ["basic", "exam", "adv"] as const) {
+    const item = scienceWorked[area.id][key];
+    assert.ok(item.steps.length >= 2 && item.pitfall.length > 20, `${area.id}/${key}: ví dụ có lời giải thiếu bước hoặc lỗi hay gặp`);
+    assert.ok(Math.abs(item.calc() - item.num) < 1e-9, `${area.id}/${key} ví dụ có lời giải tính lại ra ${item.calc()}, khác ${item.num}`);
+    assert.ok(item.answer.includes(String(item.num).replace(".", ",")), `${area.id}/${key}: đáp số không chứa ${item.num}`);
+    for (const step of item.steps) assert.ok(step.why.length >= 20, `${area.id}/${key}: lý do cụt`);
   }
 }
 assert.equal(scienceLessons.python.basic.drill.answer, "55");

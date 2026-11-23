@@ -1,9 +1,10 @@
+import { lop1BaiToan } from "./lopExtraPrimary.ts";
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop01: GradeBook = {
+const lop01Base: GradeBook = {
   grade: 1,
   band: "tieu-hoc",
   title: "Các số đến 10 và đến 100, phép cộng, phép trừ, hình quen thuộc.",
@@ -297,4 +298,10 @@ export const lop01: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bài toán bổ sung nằm cuối sách của lớp. */
+export const lop01: GradeBook = {
+  ...lop01Base,
+  chapters: [...lop01Base.chapters, lop1BaiToan],
 };

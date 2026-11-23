@@ -1,9 +1,10 @@
+import { lop6BaiToan } from "./lopExtraUpper.ts";
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop06: GradeBook = {
+const lop06Base: GradeBook = {
   grade: 6,
   band: "thcs",
   title: "Số tự nhiên, số nguyên tố, phép tính phân số, hỗn số, ước lượng và hình đều.",
@@ -424,4 +425,10 @@ export const lop06: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bài toán bổ sung nằm cuối sách của lớp. */
+export const lop06: GradeBook = {
+  ...lop06Base,
+  chapters: [...lop06Base.chapters, lop6BaiToan],
 };
