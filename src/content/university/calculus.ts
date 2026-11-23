@@ -53,7 +53,7 @@ export const calculusKnowledge: TopicKnowledge = {
           text: R`Nếu $a_n\le u_n\le b_n$ với mọi $n$ lớn và $a_n\to L$, $b_n\to L$ thì $u_n\to L$.`,
           suy: [
             R`Cho $\varepsilon>0$. Vì $a_n\to L$ nên có $N_1$ để $a_n>L-\varepsilon$ với mọi $n>N_1$. Vì $b_n\to L$ nên có $N_2$ để $b_n<L+\varepsilon$ với mọi $n>N_2$.`,
-            R`Với $n$ lớn hơn cả $N_1$ và $N_2$, ta có $L-\varepsilon<a_n\le u_n\le b_n<L+\varepsilon$, tức $|u_n-L|<\varepsilon$. Vậy $u_n\to L$.`,
+            R`Gọi $N_0$ là mốc từ đó $a_n\le u_n\le b_n$. Với $n$ lớn hơn cả $N_0$, $N_1$ và $N_2$, ta có $L-\varepsilon<a_n\le u_n\le b_n<L+\varepsilon$, tức $|u_n-L|<\varepsilon$. Vậy $u_n\to L$.`,
           ],
         },
         {
@@ -115,8 +115,8 @@ export const calculusKnowledge: TopicKnowledge = {
           kind: "cong-thuc", title: "Tiêu chuẩn tỉ số",
           text: R`Nếu $\left|\frac{a_{k+1}}{a_k}\right|\to\rho$ với $\rho<1$ thì chuỗi $\sum a_k$ hội tụ. Nếu $\rho>1$ thì chuỗi phân kì. Nếu $\rho=1$ thì tiêu chuẩn không kết luận được.`,
           suy: [
-            R`Với $\rho<1$, chọn số $r$ sao cho $\rho<r<1$. Từ một chỉ số $K$ trở đi, $\left|\frac{a_{k+1}}{a_k}\right|<r$, nên $|a_{K+j}|\le r^j|a_K|$.`,
-            R`So sánh với chuỗi hình học: các số hạng của $\sum|a_k|$ từ $K$ trở đi không vượt quá $|a_K|r^j$, mà $\sum r^j$ hội tụ vì $r<1$. Tổng riêng của chuỗi dương $\sum|a_k|$ tăng và bị chặn nên hội tụ.`,
+            R`Giả sử mọi $a_k\neq0$ để tỉ số có nghĩa. Với $\rho<1$, chọn số $r$ sao cho $\rho<r<1$. Từ một chỉ số $K$ trở đi, $\left|\frac{a_{k+1}}{a_k}\right|<r$, nên $|a_{K+j}|\le r^j|a_K|$.`,
+            R`So sánh với chuỗi hình học: các số hạng của $\sum|a_k|$ từ $K$ trở đi không vượt quá $|a_K|r^j$, mà $\sum r^j$ hội tụ vì $r<1$. Tổng riêng của chuỗi dương $\sum|a_k|$ tăng và bị chặn nên hội tụ, và chuỗi hội tụ tuyệt đối thì hội tụ vì $0\le a_k+|a_k|\le2|a_k|$.`,
             R`Với $\rho>1$ thì từ một chỉ số nào đó $|a_{k+1}|>|a_k|$, số hạng không tiến về $0$, và chuỗi phân kì theo điều kiện cần.`,
           ],
         },
@@ -169,7 +169,8 @@ export const calculusKnowledge: TopicKnowledge = {
           text: R`$e^x=\sum\frac{x^k}{k!}$, $\sin x=\sum\frac{(-1)^kx^{2k+1}}{(2k+1)!}$, $\cos x=\sum\frac{(-1)^kx^{2k}}{(2k)!}$, và $\ln(1+x)=\sum_{k\ge1}\frac{(-1)^{k+1}x^k}{k}$ với $-1<x\le1$.`,
           suy: [
             R`Với $f(x)=e^x$ mọi đạo hàm đều bằng $e^x$, bằng $1$ tại $0$, nên hệ số là $\frac{1}{k!}$. Với $\sin x$, các đạo hàm tại $0$ lặp theo chu kì $0,1,0,-1$, nên chỉ còn các lũy thừa lẻ với dấu đan xen; $\cos x$ cho các lũy thừa chẵn.`,
-            R`Phần dư Lagrange của $e^x$ và $\sin x$ có độ lớn không vượt $\frac{e^{|x|}|x|^{n+1}}{(n+1)!}$, tiến về $0$ khi $n\to\infty$ với mọi $x$, nên chuỗi hội tụ về chính hàm với mọi $x$.`,
+            R`Phần dư Lagrange của $e^x$, $\sin x$ và $\cos x$ có độ lớn không vượt $\frac{e^{|x|}|x|^{n+1}}{(n+1)!}$, tiến về $0$ khi $n\to\infty$ với mọi $x$, nên chuỗi hội tụ về chính hàm với mọi $x$.`,
+            R`Với $\ln(1+x)$, phần dư Lagrange không dùng được khi $x<-\frac12$. Thay vào đó, lấy tích phân chuỗi hình học $\frac{1}{1+t}=\sum(-t)^k$ (hội tụ khi $|t|<1$) từ $0$ tới $x$ với $|x|<1$. Tại $x=1$, phần dư $\int_0^1\frac{t^n}{1+t}\,dt\le\frac1{n+1}$ tiến về $0$, nên chuỗi vẫn hội tụ về $\ln2$.`,
           ],
         },
         {
@@ -211,7 +212,7 @@ export const calculusKnowledge: TopicKnowledge = {
               cach: "Bằng nhân tử Lagrange",
               buoc: [
                 R`Cần tìm vectơ đơn vị $\mathbf{u}=(u_1;u_2)$ làm lớn nhất $\varphi(\mathbf{u})=f_xu_1+f_yu_2$, với ràng buộc $u_1^2+u_2^2=1$.`,
-                R`Theo điều kiện Lagrange (chứng minh ở phần cực trị), tại điểm tối ưu $\nabla\varphi=\mu\nabla g$ với $g=u_1^2+u_2^2$. Ở đây $\nabla\varphi=(f_x;f_y)$ và $\nabla g=2\mathbf{u}$, nên $\mathbf{u}$ cùng phương với $(f_x;f_y)$.`,
+                R`Đường tròn đơn vị đóng và bị chặn nên $\varphi$ đạt giá trị lớn nhất trên nó. Theo điều kiện Lagrange (chứng minh ở phần cực trị), tại điểm tối ưu $\nabla\varphi=\mu\nabla g$ với $g=u_1^2+u_2^2$. Ở đây $\nabla\varphi=(f_x;f_y)$ và $\nabla g=2\mathbf{u}$, nên $\mathbf{u}$ cùng phương với $(f_x;f_y)$, và $\mu\neq0$ vì $\nabla f\neq\vec{0}$.`,
                 R`Hai vectơ đơn vị cùng phương với $\nabla f$ là $\pm\frac{\nabla f}{|\nabla f|}$, cho $\varphi=\pm|\nabla f|$. Giá trị lớn nhất là $+|\nabla f|$ tại $\mathbf{u}=\frac{\nabla f}{|\nabla f|}$.`,
               ],
             },
@@ -252,10 +253,10 @@ export const calculusKnowledge: TopicKnowledge = {
           kind: "dinh-ly", title: "Phân loại điểm dừng bằng ma trận Hessian",
           text: R`Tại điểm dừng, đặt $D=f_{xx}f_{yy}-f_{xy}^2$. Nếu $D>0$ và $f_{xx}>0$ thì là cực tiểu; nếu $D>0$ và $f_{xx}<0$ thì là cực đại; nếu $D<0$ thì là điểm yên; nếu $D=0$ thì chưa kết luận được.`,
           suy: [
-            R`Tại điểm dừng, các số hạng bậc nhất của khai triển Taylor bậc hai biến mất. Khi đó $f(a+h;b+k)-f(a;b)\approx\frac12\left(f_{xx}h^2+2f_{xy}hk+f_{yy}k^2\right)$.`,
-            R`Giả sử $f_{xx}\neq0$ và hoàn thành bình phương: $f_{xx}h^2+2f_{xy}hk+f_{yy}k^2=f_{xx}\left(h+\frac{f_{xy}}{f_{xx}}k\right)^2+\frac{D}{f_{xx}}k^2$.`,
+            R`Tại điểm dừng, các số hạng bậc nhất của khai triển Taylor bậc hai biến mất. Với $f$ có đạo hàm riêng cấp hai liên tục, $f(a+h;b+k)-f(a;b)=\frac12\left(f_{xx}h^2+2f_{xy}hk+f_{yy}k^2\right)+o(h^2+k^2)$.`,
+            R`Khi $f_{xx}\neq0$ (với $D>0$ điều này tự có vì $f_{xx}f_{yy}>f_{xy}^2\ge0$), hoàn thành bình phương: $f_{xx}h^2+2f_{xy}hk+f_{yy}k^2=f_{xx}\left(h+\frac{f_{xy}}{f_{xx}}k\right)^2+\frac{D}{f_{xx}}k^2$.`,
             R`Nếu $D>0$ thì hai hệ số $f_{xx}$ và $\frac{D}{f_{xx}}$ cùng dấu, nên biểu thức giữ nguyên một dấu với mọi $(h;k)\neq(0;0)$: dương khi $f_{xx}>0$ (cực tiểu), âm khi $f_{xx}<0$ (cực đại).`,
-            R`Nếu $D<0$ thì hai hệ số trái dấu: biểu thức dương theo một hướng và âm theo hướng khác, tức điểm yên. Khi $D=0$ số hạng bậc hai có thể bằng $0$ theo một hướng và phải xét các số hạng bậc cao hơn.`,
+            R`Nếu $D<0$ thì hai hệ số trái dấu: biểu thức dương theo một hướng và âm theo hướng khác, tức điểm yên. Nếu $f_{xx}=0$ thì $D=-f_{xy}^2<0$ và dạng bậc hai $2f_{xy}hk+f_{yy}k^2$ vẫn đổi dấu vì $f_{xy}\neq0$. Với $D\neq0$, dạng bậc hai khác $0$ theo mọi hướng nên trội hơn phần dư $o(h^2+k^2)$ (dạng xác định thì $\ge m(h^2+k^2)$ với $m>0$). Khi $D=0$ số hạng bậc hai có thể bằng $0$ theo một hướng và phải xét các số hạng bậc cao hơn.`,
           ],
         },
         {
@@ -286,7 +287,7 @@ export const calculusKnowledge: TopicKnowledge = {
           text: R`Nếu $f$ liên tục trên hình chữ nhật $[a;b]\times[c;d]$ thì $\iint f\,dA=\int_a^b\left(\int_c^d f(x;y)\,dy\right)dx=\int_c^d\left(\int_a^b f(x;y)\,dx\right)dy$.`,
           suy: [
             R`Chia hình chữ nhật thành lưới ô nhỏ, tổng Riemann là $\sum_i\sum_j f(x_i;y_j)\,\Delta x\,\Delta y$, gồm một số hữu hạn các số hạng.`,
-            R`Cộng hữu hạn số hạng thì được cộng theo hàng trước hay theo cột trước đều cho cùng kết quả. Cho các ô co lại, cộng theo $j$ trước cho tích phân theo $y$ trong ngoặc, còn cộng theo $i$ trước cho tích phân theo $x$, nên hai tích phân lặp bằng nhau.`,
+            R`Cộng hữu hạn số hạng thì được cộng theo hàng trước hay theo cột trước đều cho cùng kết quả. Cho các ô co lại, cộng theo $j$ trước cho tích phân theo $y$ trong ngoặc, còn cộng theo $i$ trước cho tích phân theo $x$, nên hai tích phân lặp bằng nhau. Việc chuyển giới hạn hợp lệ vì $f$ liên tục trên hình chữ nhật đóng nên liên tục đều, và tổng theo $y$ hội tụ đều theo $x$.`,
           ],
         },
         {
@@ -301,9 +302,10 @@ export const calculusKnowledge: TopicKnowledge = {
           kind: "dinh-ly", title: "Tích phân Gauss",
           text: R`Diện tích dưới đường chuông thỏa $\int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi}$.`,
           suy: [
-            R`Gọi $I$ là tích phân cần tính, $I>0$. Khi đó $I^2=\int e^{-x^2}dx\int e^{-y^2}dy=\iint_{\mathbb{R}^2}e^{-(x^2+y^2)}\,dx\,dy$, theo định lí Fubini.`,
-            R`Đổi sang tọa độ cực, $x^2+y^2=r^2$ và $dA=r\,dr\,d\theta$: $I^2=\int_0^{2\pi}\int_0^{\infty}e^{-r^2}r\,dr\,d\theta$.`,
-            R`Tích phân trong là $\int_0^{\infty}e^{-r^2}r\,dr=\frac12$, vì $-\frac12e^{-r^2}$ là một nguyên hàm. Vậy $I^2=2\pi\cdot\frac12=\pi$, và $I=\sqrt{\pi}$ do $I>0$.`,
+            R`Với $L>0$ đặt $I_L=\int_{-L}^{L}e^{-x^2}dx$. Theo định lí Fubini cho hình vuông $[-L;L]^2$, $I_L^2=\iint_{[-L;L]^2}e^{-(x^2+y^2)}\,dx\,dy$.`,
+            R`Hình vuông này nằm giữa hình tròn bán kính $L$ và hình tròn bán kính $L\sqrt2$. Hàm dưới dấu dương nên $\iint_{D_L}\le I_L^2\le\iint_{D_{L\sqrt2}}$, với $D_\rho$ là hình tròn tâm gốc bán kính $\rho$.`,
+            R`Trong tọa độ cực, $\iint_{D_\rho}e^{-r^2}dA=\int_0^{2\pi}\int_0^{\rho}e^{-r^2}r\,dr\,d\theta=2\pi\cdot\frac{1-e^{-\rho^2}}{2}=\pi\left(1-e^{-\rho^2}\right)$, vì $-\frac12e^{-r^2}$ là một nguyên hàm của $e^{-r^2}r$.`,
+            R`Hai cận $\pi(1-e^{-L^2})$ và $\pi(1-e^{-2L^2})$ cùng tiến về $\pi$ khi $L\to\infty$. Theo nguyên lí kẹp, $I_L^2\to\pi$, và $I=\lim I_L=\sqrt{\pi}$ vì $I_L>0$.`,
           ],
         },
         {
