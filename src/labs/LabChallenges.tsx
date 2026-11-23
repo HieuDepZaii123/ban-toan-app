@@ -57,6 +57,8 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
   const [hintOpen, setHintOpen] = useState(false);
   const [revealed, setRevealed] = useState<string[]>(() => loadPeeked(id));
   const [checked, setChecked] = useState<{ verdict: Verdict; at: string; guess: number | null } | null>(null);
+  /** The challenge whose start was put on the figure (by "Set up" or by picking it). Only then can a check earn progress. */
+  const [armedId, setArmedId] = useState<string | null>(null);
 
   useEffect(() => {
     setIndex(0);
@@ -65,6 +67,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
     setHintOpen(false);
     setRevealed(loadPeeked(id));
     setChecked(null);
+    setArmedId(null);
   }, [id]);
 
   if (!spec || spec.challenges.length === 0) return null;
@@ -75,19 +78,30 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
   const result = checked && checked.at === stamp ? checked : null;
   const sameScene = values.scene === challenge.set.scene;
 
-  const pick = (next: number) => {
-    setIndex(next);
-    setGuess(null);
-    setHintOpen(false);
-    setChecked(null);
-  };
   const preset = (target: Record<string, number>) => {
     writeParams(id, { ...spec.init, ...target });
     setChecked(null);
     onPreset();
   };
+  const pick = (next: number) => {
+    setIndex(next);
+    setGuess(null);
+    setHintOpen(false);
+    setChecked(null);
+    const picked = spec.challenges[next];
+    if (picked) {
+      preset(picked.set);
+      setArmedId(picked.id);
+    }
+  };
   const run = () => {
-    const verdict = challenge.check(values as Dense, say);
+    // Progress only counts after the challenge was set up and while the figure is on its scene; otherwise the
+    // lab's own starting state (or a shared link) could pass a check without any work.
+    const verdict: Verdict = armedId !== challenge.id
+      ? { ok: false, why: en ? "Press Set up first, then change the figure to solve the challenge." : "Bấm Đặt đề trước, rồi thay đổi hình để giải thử thách." }
+      : !sameScene
+        ? { ok: false, why: en ? "The figure is on a different scene. Press Set up." : "Hình đang ở cảnh khác. Bấm Đặt đề." }
+        : challenge.check(values as Dense, say);
     const at = stamp;
     setChecked({ verdict, at, guess });
     if (verdict.ok && !revealed.includes(challenge.id) && !done.includes(challenge.id)) {
@@ -140,6 +154,7 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
           className="text-btn"
           onClick={() => {
             preset(challenge.set);
+            setArmedId(challenge.id);
           }}
         >
           {t(lang, "Đặt đề", "Set up")}

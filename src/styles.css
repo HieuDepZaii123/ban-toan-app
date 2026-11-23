@@ -1837,3 +1837,9 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 
 .home-explore { margin: 1.25rem 0; }
 .home-explore h2 { margin: 0 0 0.5rem; font-size: 1.05rem; }
+
+/* Vùng chạm tối thiểu 44px trên màn hình cảm ứng cho liên kết trong danh sách và các nút nhỏ của lab. */
+.method-guide a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (pointer: coarse) {
+  .text-btn, .chips button, .lab-tools button, .challenge-actions button { min-height: 44px; }
+}

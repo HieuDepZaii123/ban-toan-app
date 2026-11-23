@@ -45,9 +45,10 @@ try {
   if (localStorage.getItem("bt-read") === "on") root.dataset.read = "on";
   if (localStorage.getItem("bt-contrast") === "on") root.dataset.contrast = "on";
   if (localStorage.getItem("bt-motion") === "less") root.dataset.motion = "less";
-  // Lần mở đầu tiên: trình duyệt không đặt tiếng Việt thì mở bản tiếng Anh (App đọc cờ này một lần).
+  // Lần mở đầu tiên luôn là tiếng Việt: phần lớn nội dung (Khoa học, nghiên cứu, đề thi) chỉ có tiếng Việt, nên mở bản tiếng Anh
+  // theo ngôn ngữ trình duyệt làm giao diện lẫn hai thứ tiếng. Người cần tiếng Anh chuyển bằng nút ngôn ngữ.
   if (!saved && !localStorage.getItem("bt-lang-auto")) {
-    var first = /^vi\b/i.test(navigator.language || "vi") ? "vi" : "en";
+    var first = "vi";
     localStorage.setItem("bt-lang-auto", first);
     if (first === "en") document.documentElement.lang = "en";
   }

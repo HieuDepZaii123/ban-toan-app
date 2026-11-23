@@ -22,6 +22,19 @@ export function sanitizeParams(raw: unknown, init: Params, range: Range): Params
   return used > 0 ? out : null;
 }
 
+/** Did the link carry a value outside the slider range, or a key or value that had to be dropped? */
+export function shareAdjusted(text: string, init: Params, range: Range): boolean {
+  for (const part of text.slice(0, 600).split(",")) {
+    const [key, value] = part.split(":");
+    if (!key || value === undefined || !Object.prototype.hasOwnProperty.call(init, key)) return true;
+    const number = Number(value);
+    const bounds = range[key];
+    if (!Number.isFinite(number)) return true;
+    if (bounds && (number < bounds[0] || number > bounds[1])) return true;
+  }
+  return false;
+}
+
 /** Only known keys with finite numbers survive; values are snapped into the slider range. Null when nothing is usable. */
 export function decodeParams(text: string, init: Params, range: Range): Params | null {
   const raw: Record<string, number> = {};

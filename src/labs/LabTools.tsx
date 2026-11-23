@@ -229,6 +229,7 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
       return;
     }
     apply(clean);
+    setStatus(t(lang, `Đã mở "${item.name}".`, `Opened "${item.name}".`));
   };
   const drop = (at: number) => {
     const next = saved.filter((item) => item.at !== at);

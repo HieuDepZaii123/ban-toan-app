@@ -24,7 +24,7 @@
     "test:math": "tsx scripts/mathstyle.test.ts",
     "fix:math": "tsx scripts/fix-math.ts",
     "test:ui": "tsx scripts/ui-audit.ts",
-    "test:labs": "tsx scripts/lab-sweep.ts",
+    "test:labs": "tsx scripts/lab-sweep.ts && tsx scripts/lab-cheat.ts",
     "test:ui:full": "tsx scripts/ui-audit.ts --full",
     "traces": "python3 scripts/make_traces.py"
   },

@@ -74,7 +74,7 @@ export function TopicDesk({ id }: { id: string }) {
   const [pack, setPack] = useState<Loaded | null>(null);
   const [focus, setFocus] = useState(false);
   const [labRun, setLabRun] = useState(0);
-  const [shareBad, setShareBad] = useState(false);
+  const [shareBad, setShareBad] = useState<false | "bad" | "adjusted">(false);
 
   useEffect(() => {
     if (topic) setLast(topic.id);
@@ -94,18 +94,19 @@ export function TopicDesk({ id }: { id: string }) {
     void import("../content/labSpecs.ts").then(async ({ allLabSpecs }) => {
       const spec = allLabSpecs[topic.id];
       if (!spec) return;
-      const { decodeParams } = await import("../labs/shared.ts");
+      const { decodeParams, shareAdjusted } = await import("../labs/shared.ts");
       const params = decodeParams(shared, spec.init, spec.range);
       if (params) {
         writeParams(topic.id, params);
         setLabRun((n) => n + 1);
-        setShareBad(false);
-        const here = new URL(window.location.href);
-        here.searchParams.delete("p");
-        window.history.replaceState(window.history.state, "", here.toString());
+        setShareBad(shareAdjusted(shared, spec.init, spec.range) ? "adjusted" : false);
       } else {
-        setShareBad(true);
+        setShareBad("bad");
       }
+      // The link has been read once, good or bad: take it off the address bar so a refresh does not reapply it.
+      const here = new URL(window.location.href);
+      here.searchParams.delete("p");
+      window.history.replaceState(window.history.state, "", here.toString());
     });
   }, [topic, shared]);
 
@@ -232,7 +233,9 @@ export function TopicDesk({ id }: { id: string }) {
               <div className="lab-col">
                 {shareBad ? (
                   <p className="note" role="status">
-                    {t(lang, "Liên kết chia sẻ không dùng được nên lab mở ở cấu hình đã lưu hoặc mặc định.", "The shared link could not be used, so the lab opened with your saved or default setup.")}
+                    {shareBad === "adjusted"
+                      ? t(lang, "Liên kết có giá trị ngoài khoảng cho phép hoặc khóa lạ nên đã được chỉnh về giá trị gần nhất hợp lệ.", "The link had values outside the allowed range or unknown keys, so they were adjusted to the nearest valid values.")
+                      : t(lang, "Liên kết chia sẻ không dùng được nên lab mở ở cấu hình đã lưu hoặc mặc định.", "The shared link could not be used, so the lab opened with your saved or default setup.")}
                   </p>
                 ) : null}
                 <div className="lab-main">
