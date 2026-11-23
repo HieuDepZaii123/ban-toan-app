@@ -19,5 +19,10 @@
     "note": "Chỉ vai hs12, sau khi sửa đề thi thử (không lặp dạng, lớp 12 đa số, ẩn đã khai báo).",
     "regressionNote": "Một vai duy nhất, lệch ngẫu nhiên của người chấm là đáng kể; lỗi nêu chủ yếu về độ khó và chiều sâu ngân hàng đề, chưa được sửa ở vòng này.",
     "scores": { "hs12": 3 }
+  },
+  {
+    "id": "2026-11-23-e",
+    "note": "Vòng 10 vai trùng sau khi bổ sung nội dung: bài lớp 1–12, bốn mảng Khoa học, ví dụ có lời giải, đề thi thử có câu vận dụng cao.",
+    "scores": { "gv12": 6, "hs12": 4, "thcs": 7, "lecturer": 7, "a11y": 7, "mobile": 6, "katex": 7, "creative": 5, "qa": 5, "pm": 6 }
   }
 ]
