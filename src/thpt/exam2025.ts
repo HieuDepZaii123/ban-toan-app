@@ -7,7 +7,7 @@
  * 90 phút. Mỗi đề rút từ một hạt giống, nên cùng hạt giống cho cùng đề.
  */
 import { mulberry32 } from "../lib/prng.ts";
-import { templateKeyOf } from "../grades/practiceGen.ts";
+import { HARD_KEYS, templateKeyOf } from "../grades/practiceGen.ts";
 import { joinMath } from "../content/vary/stem.ts";
 import type { DssItem } from "../content/vary/dss/item.ts";
 import { analyticDssItems } from "../content/vary/dss/analytic.ts";
@@ -30,8 +30,14 @@ export const EXAM_MINUTES_2025 = 90;
 export const PART_POINTS = { mcq: 3, tf: 4, short: 3 } as const;
 
 /** Grade mix of the real paper: mostly grade 12, some grade 11, a little grade 10. */
-const MCQ_GRADES = [12, 12, 12, 12, 12, 12, 12, 12, 12, 11, 11, 10] as const;
-const SHORT_GRADES = [12, 12, 12, 12, 11, 11] as const;
+type Slot = { grade: number; hard?: true };
+const MCQ_SLOTS: readonly Slot[] = [
+  { grade: 12 }, { grade: 12 }, { grade: 12 }, { grade: 12 }, { grade: 12 },
+  { grade: 11 }, { grade: 11 }, { grade: 10 },
+  // The last four are the "application" questions: parameters, optimisation, solids, two-step problems.
+  { grade: 12, hard: true }, { grade: 12, hard: true }, { grade: 12, hard: true }, { grade: 12, hard: true },
+];
+const SHORT_SLOTS: readonly Slot[] = [{ grade: 12 }, { grade: 12 }, { grade: 11 }, { grade: 11 }, { grade: 12, hard: true }, { grade: 12, hard: true }];
 
 /** Topic sheets that carry the true/false statements, with a readable topic name. */
 export const TF_SOURCES: { topic: string; vi: string; en: string; items: readonly DssItem[] }[] = [
@@ -116,12 +122,12 @@ export function shortRight(question: ThptQuestion, typed: string | undefined): b
   return expected !== null && got !== null && Math.abs(got - expected) < 1e-9;
 }
 
-function pickByGrade(pool: readonly ThptQuestion[], grades: readonly number[], rng: () => number, used: Set<string>, kinds: Set<string>): string[] {
+function pickByGrade(pool: readonly ThptQuestion[], slots: readonly Slot[], rng: () => number, used: Set<string>, kinds: Set<string>): string[] {
   const out: string[] = [];
   const topics = new Set<string>();
-  for (const grade of grades) {
+  for (const { grade, hard } of slots) {
     // One paper never carries two questions of the same kind (two "length of AB", two "cos x = 0").
-    const options = shuffle(pool.filter((item) => item.grade === grade && !used.has(item.id) && !kinds.has(templateKeyOf(item.id))), rng);
+    const options = shuffle(pool.filter((item) => item.grade === grade && !used.has(item.id) && !kinds.has(templateKeyOf(item.id)) && (hard ? HARD_KEYS.has(templateKeyOf(item.id)) : !HARD_KEYS.has(templateKeyOf(item.id)))), rng);
     // Prefer a topic not used yet, so one paper covers the chapters instead of repeating one.
     const pick = options.find((item) => !topics.has(item.topic)) ?? options[0];
     if (!pick) continue;
@@ -221,8 +227,8 @@ export function buildPaper(seed: number): Paper {
   const rng = mulberry32(seed >>> 0);
   const used = new Set<string>();
   const kinds = new Set<string>();
-  const mcq = pickByGrade(thptBank, MCQ_GRADES, rng, used, kinds);
-  const short = pickByGrade(SHORT_POOL, SHORT_GRADES, rng, used, kinds);
+  const mcq = pickByGrade(thptBank, MCQ_SLOTS, rng, used, kinds);
+  const short = pickByGrade(SHORT_POOL, SHORT_SLOTS, rng, used, kinds);
   const tf = shuffle(TF_SOURCES.filter(hasUsable), rng).slice(0, 4).map((source, index) => tfQuestion(source, rng, index));
   return { seed: seed >>> 0, mcq, tf, short };
 }

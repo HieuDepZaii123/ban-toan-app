@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { buildPaper, declared, emptyAnswers, parseShort, scorePaper, shortValue, tfPoints, TF_TOPIC_NAMES, type Answers } from "../src/thpt/exam2025.ts";
 import { thptById, topicById } from "../src/thpt/bank.ts";
-import { templateKeyOf } from "../src/grades/practiceGen.ts";
+import { HARD_KEYS, templateKeyOf } from "../src/grades/practiceGen.ts";
 
 const name = (id: string) => {
   const topic = topicById(id);
@@ -22,12 +22,18 @@ for (let seed = 1; seed <= 300; seed += 1) {
   assert.equal(new Set(paper.tf.map((q) => q.topic)).size, 4, `seed ${seed} true/false topics repeat`);
   const kinds = [...paper.mcq, ...paper.short].map((id) => templateKeyOf(id));
   assert.equal(new Set(kinds).size, kinds.length, `seed ${seed} has two questions of the same kind`);
+  assert.equal(paper.mcq.filter((id) => HARD_KEYS.has(templateKeyOf(id))).length, 4, `seed ${seed} part I needs 4 application questions`);
+  assert.equal(paper.short.filter((id) => HARD_KEYS.has(templateKeyOf(id))).length, 2, `seed ${seed} part III needs 2 application questions`);
   assert.ok(paper.mcq.filter((id) => thptById.get(id)!.grade === 12).length >= 8, `seed ${seed} part I is not mostly grade 12`);
   for (const id of paper.short) assert.notEqual(shortValue(thptById.get(id)!), null, `${id} is not a short-answer number`);
   for (const q of paper.tf) {
     assert.ok(!/Chưa đủ|not enough/i.test(q.contextVi + q.contextEn), `${q.id} keeps the in-app instruction`);
     for (const s of q.statements) assert.ok(s.vi && s.en && s.whyVi && s.whyEn, `${q.id} statement incomplete`);
     for (const s of q.statements) {
+      for (const text of [q.contextVi, s.vi, s.whyVi]) {
+        assert.ok(!/(^|[^0-9A-Za-z.{,^_\\])1[a-z](?![a-z])/.test((text.match(/\$[^$]*\$/g) ?? []).join(" ")), `${q.id} writes a coefficient 1: ${text}`);
+        assert.ok(!/\+\s*-|-\s*-/.test((text.match(/\$[^$]*\$/g) ?? []).join(" ")), `${q.id} has a doubled sign: ${text}`);
+      }
       assert.ok(declared(q.contextVi, s.vi), `${q.id} uses a name the question never defines: ${s.vi}`);
       assert.ok(declared(q.contextEn, s.en), `${q.id} (en) uses a name the question never defines: ${s.en}`);
     }

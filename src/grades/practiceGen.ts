@@ -1111,6 +1111,119 @@ const grade12More: Template[] = [
   } },
 ];
 
+/** Mẫu vận dụng cao lớp 12: tham số, bội của nghiệm, bài toán tối ưu, khối đa diện, tích phân đổi biến, xác suất Bayes, Oxyz hai bước. */
+export const HARD_KEYS = new Set(["thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "chopvuong", "tdiencb", "langtru", "tpdoibien", "tpphanh", "bayes", "giaodiem", "tdiemoabc"]);
+
+/** Thừa số $(x-u)^e$ của đạo hàm, viết gọn khi $u=0$ hay $e=1$. */
+function factor(root: number, e: number): string {
+  const base = root === 0 ? "x" : `(x${sgn(-root)})`;
+  return e === 1 ? base : `${base}^{${e}}`;
+}
+
+/** Phân số chính tắc của đường thẳng: $\dfrac{x-p}{u}$. */
+function dir(v: string, p: number, u: number): string {
+  return `\\dfrac{${v}${p === 0 ? "" : sgn(-p)}}{${u}}`;
+}
+
+const grade12Hard: Template[] = [
+  { key: "thamsodb", make: (r) => {
+    const a = r.int(1, 5), b = 3 * a * a, hi = r.int(b + 2, b + 12), lo = -r.int(1, 6), right = hi - b + 1;
+    return made(`Có bao nhiêu giá trị nguyên của tham số $m$ thuộc đoạn $[${lo};${hi}]$ để hàm số $y=x^3+${3 * a}x^2+mx+2$ đồng biến trên $\\mathbb{R}$?`,
+      nums(right, [hi - b, hi - lo + 1, hi - b + 2], m, 1),
+      [`$y'=3x^2+${6 * a}x+m$. Hàm số đồng biến trên $\\mathbb{R}$ khi $y'\\ge 0$ với mọi $x$.`, `Cần $\\Delta'=${9 * a * a}-3m\\le 0$, tức $m\\ge ${b}$.`, `Các số nguyên $m$ từ $${b}$ đến $${hi}$: $${hi}-${b}+1=${right}$.`],
+      `${hi} - solve(9*${a * a}-3*x, x)[0] + 1`, String(right));
+  } },
+  { key: "cucdaim", make: (r) => {
+    const a = r.int(1, 4), k = r.int(-9, 9), v = k + 4 * a ** 3;
+    return made(`Cho hàm số $y=x^3-${3 * a}x^2+m$ với $m$ là tham số. Giá trị cực tiểu của hàm số bằng $${k}$ khi $m$ bằng`, nums(v, [k - 4 * a ** 3, k, -v]),
+      [`$y'=3x^2-${6 * a}x=3x(x-${2 * a})$ và $y'$ đổi dấu từ âm sang dương tại $x=${2 * a}$, nên đó là điểm cực tiểu.`, `$y(${2 * a})=${8 * a ** 3}-${12 * a ** 3}+m=m-${4 * a ** 3}$.`, `$m-${4 * a ** 3}=${k}$ nên $m=${v}$.`],
+      `solve((x**3-${3 * a}*x**2).subs(x, Max(*solve(diff(x**3-${3 * a}*x**2, x), x)))+x-(${k}), x)[0]`, String(v));
+  } },
+  { key: "cuctrinhi", make: (r) => {
+    const p = r.int(1, 4), q = r.int(1, 4), s = r.int(1, 4), u = r.int(-6, -2), v = r.int(-1, 1), w = r.int(2, 6);
+    const count = (p % 2) + (q % 2) + (s % 2);
+    return made(`Hàm số $y=f(x)$ có đạo hàm $f'(x)=${factor(u, p)}${factor(v, q)}${factor(w, s)}$ với mọi $x\\in\\mathbb{R}$. Số điểm cực trị của hàm số đã cho là`, nums(count, [3, 2, 1, 0], m, 0),
+      ["Điểm cực trị là nghiệm của $f'(x)=0$ mà $f'(x)$ đổi dấu khi đi qua nghiệm đó.", `Nghiệm bội lẻ làm $f'$ đổi dấu, nghiệm bội chẵn thì không. Ba nghiệm $${u}$, $${v}$, $${w}$ có bội $${p}$, $${q}$, $${s}$.`, `Có $${count}$ nghiệm bội lẻ nên có $${count}$ điểm cực trị.`],
+      `${p}%2+${q}%2+${s}%2`, String(count));
+  } },
+  { key: "hopkhongnap", make: (r) => {
+    const k = r.int(1, 10), side = 6 * k, vol = 16 * k ** 3, u = r.pick(["dm", "cm"]);
+    return made(`Từ một tấm tôn hình vuông cạnh $${side}$ ${u}, người ta cắt bỏ bốn hình vuông nhỏ cạnh $x$ ở bốn góc rồi gập lại thành một cái hộp không nắp. Thể tích lớn nhất của hộp, tính theo ${u}$^3$, bằng`,
+      nums(vol, [vol / 2, 2 * vol, (side * side * side) / 27, vol + k]),
+      [`Đáy là hình vuông cạnh $${side}-2x$, chiều cao $x$: $V(x)=x(${side}-2x)^2$ với $0<x<${side / 2}$.`, `$V'(x)=(${side}-2x)(${side}-6x)=0$ nên $x=${k}$ (nhận) hoặc $x=${side / 2}$ (loại).`, `$V(${k})=${k}\\cdot ${side - 2 * k}^2=${vol}$.`],
+      `maximum(x*(${side}-2*x)**2, x, Interval(0, ${side / 2}))`, String(vol));
+  } },
+  { key: "chopvuong", make: (r) => {
+    const a = 3 * r.int(1, 12), v = a ** 3 / 3;
+    return made(`Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình vuông cạnh $${a}$, cạnh bên $SA$ vuông góc với mặt phẳng đáy và đường thẳng $SB$ tạo với mặt phẳng đáy một góc $45^\\circ$. Thể tích khối chóp $S.ABCD$ bằng`,
+      nums(v, [a ** 3, 2 * v, a * a, v + a]),
+      [`Góc giữa $SB$ và mặt đáy là $\\widehat{SBA}=45^\\circ$ nên tam giác $SAB$ vuông cân tại $A$: $SA=AB=${a}$.`, `Diện tích đáy $S_{ABCD}=${a}^2=${a * a}$.`, `$V=\\dfrac{1}{3}\\cdot ${a * a}\\cdot ${a}=${v}$.`],
+      `Rational(1,3)*${a}**2*${a}`, String(v));
+  } },
+  { key: "tdiencb", make: (r) => {
+    const a = 3 * r.int(1, 12), v = a ** 3 / 3;
+    return made(`Cho hình lập phương $ABCD.A'B'C'D'$ cạnh $${a}$. Thể tích khối tứ diện $ACB'D'$ bằng`, nums(v, [a ** 3, 2 * v, a ** 3 / 6 + 1, a * a]),
+      [`Khối lập phương có thể tích $${a}^3=${a ** 3}$.`, `Cắt bỏ bốn góc (các đỉnh $B$, $D$, $A'$, $C'$), mỗi góc là một tứ diện có ba cạnh vuông góc dài $${a}$, thể tích $\\dfrac{1}{6}\\cdot ${a}^3=${F(a ** 3, 6).tex()}$.`, `$V=${a ** 3}-4\\cdot ${F(a ** 3, 6).tex()}=${v}$.`],
+      `${a}**3-4*Rational(${a ** 3},6)`, String(v));
+  } },
+  { key: "langtru", make: (r) => {
+    const a = 2 * r.int(1, 12), v = a ** 3 / 2;
+    return made(`Cho lăng trụ đứng $ABC.A'B'C'$ có đáy $ABC$ là tam giác vuông cân tại $A$, $AB=${a}$. Đường thẳng $A'B$ tạo với mặt phẳng đáy một góc $45^\\circ$. Thể tích khối lăng trụ bằng`, nums(v, [a ** 3, 2 * v + 1, a * a / 2, v + a]),
+      [`$A'A$ vuông góc với đáy nên góc giữa $A'B$ và đáy là $\\widehat{A'BA}=45^\\circ$, suy ra $AA'=AB=${a}$.`, `Diện tích đáy $\\dfrac{1}{2}\\cdot ${a}\\cdot ${a}=${a * a / 2}$.`, `$V=${a * a / 2}\\cdot ${a}=${v}$.`],
+      `Rational(1,2)*${a}**2*${a}`, String(v));
+  } },
+  { key: "tpdoibien", make: (r) => {
+    const k = r.int(1, 6), n = r.int(2, 4), top = k * k + 1, res = F(top ** (n + 1) - 1, 2 * (n + 1));
+    const wrong = [F(top ** (n + 1) - 1, n + 1), F(top ** (n + 1), 2 * (n + 1)), F(top ** n - 1, 2 * n)].filter((v) => v.n !== res.n || v.d !== res.d);
+    return made(`Tính $\\displaystyle\\int_0^{${k}}x(x^2+1)^{${n}}\\,dx$.`, fracs(res, wrong),
+      [`Đặt $t=x^2+1$, $dt=2x\\,dx$. Cận: $x=0$ thì $t=1$; $x=${k}$ thì $t=${top}$.`, `$I=\\dfrac{1}{2}\\displaystyle\\int_1^{${top}}t^{${n}}\\,dt=\\dfrac{1}{2}\\cdot\\dfrac{t^{${n + 1}}}{${n + 1}}\\Big|_1^{${top}}$.`, `$I=${res.tex()}$.`],
+      `integrate(x*(x**2+1)**${n}, (x, 0, ${k}))`, res.sym());
+  } },
+  { key: "tpphanh", make: (r) => {
+    let v0 = 0, a = 0;
+    do {
+      v0 = 5 * r.int(2, 12);
+      a = r.pick([2, 4, 5, 10]);
+    } while ((v0 * v0) % (2 * a) !== 0);
+    const dist = (v0 * v0) / (2 * a), stop = F(v0, a);
+    return made(`Một ô tô đang chạy với vận tốc $${v0}$ m/s thì người lái đạp phanh. Từ lúc đó ô tô chuyển động chậm dần với vận tốc $v(t)=${v0}-${a}t$ (m/s), trong đó $t$ là số giây kể từ lúc đạp phanh. Quãng đường ô tô đi được từ lúc đạp phanh đến khi dừng hẳn, tính theo mét, là`,
+      nums(dist, [v0 * stop.n / stop.d, 2 * dist, dist + a, v0], m, 1),
+      [`Xe dừng khi $v(t)=0$, tức $t=\\dfrac{${v0}}{${a}}=${stop.tex()}$ giây.`, `$S=\\displaystyle\\int_0^{${stop.tex()}}(${v0}-${a}t)\\,dt=\\left(${v0}t-\\dfrac{${a}}{2}t^2\\right)\\Big|_0^{${stop.tex()}}$.`, `$S=${dist}$ mét.`],
+      `integrate(${v0}-${a}*x, (x, 0, Rational(${v0},${a})))`, String(dist));
+  } },
+  { key: "bayes", make: (r) => {
+    const sick = r.pick([1, 2, 5, 10, 20]), pos = r.pick([80, 90, 95]), fals = r.pick([5, 10, 20]);
+    const num = sick * pos, den = sick * pos + (100 - sick) * fals, res = F(num, den);
+    const wrong = [F(pos, pos + fals), F(num, 10000), F(sick, 100), F(den, 10000)].filter((v) => v.n !== res.n || v.d !== res.d);
+    return made(`Một bệnh có $${sick}\\%$ dân số mắc. Xét nghiệm cho kết quả dương tính với $${pos}\\%$ số người mắc bệnh và với $${fals}\\%$ số người không mắc bệnh. Chọn ngẫu nhiên một người có kết quả dương tính. Xác suất người đó thật sự mắc bệnh là`, fracs(res, wrong),
+      [`Gọi $A$ là biến cố "mắc bệnh", $B$ là biến cố "dương tính": $P(A)=\\dfrac{${sick}}{100}$, $P(B\\mid A)=\\dfrac{${pos}}{100}$, $P(B\\mid\\bar A)=\\dfrac{${fals}}{100}$.`, `Xác suất toàn phần: $P(B)=\\dfrac{${sick}\\cdot ${pos}+${100 - sick}\\cdot ${fals}}{10000}=\\dfrac{${den}}{10000}$.`, `Công thức Bayes: $P(A\\mid B)=\\dfrac{${num}}{${den}}=${res.tex()}$.`],
+      `Rational(${num}, ${den})`, res.sym());
+  } },
+  { key: "giaodiem", make: (r) => {
+    const I = [r.int(-5, 5), r.int(-5, 5), r.int(-5, 5)] as const, u = [r.nz(-3, 3), r.nz(-3, 3), r.nz(-3, 3)] as const, t0 = r.nz(-3, 3);
+    let n = [r.nz(-3, 3), r.int(-3, 3), r.nz(-3, 3)] as [number, number, number];
+    while (n[0] * u[0] + n[1] * u[1] + n[2] * u[2] === 0) n = [r.nz(-3, 3), r.int(-3, 3), r.nz(-3, 3)];
+    const P = [I[0] - t0 * u[0], I[1] - t0 * u[1], I[2] - t0 * u[2]] as const, d = -(n[0] * I[0] + n[1] * I[1] + n[2] * I[2]), sum = I[0] + I[1] + I[2];
+    const coef = n[0] * u[0] + n[1] * u[1] + n[2] * u[2], rest = n[0] * P[0] + n[1] * P[1] + n[2] * P[2] + d;
+    return made(`Trong không gian $Oxyz$, cho đường thẳng $d:\\ ${dir("x", P[0], u[0])}=${dir("y", P[1], u[1])}=${dir("z", P[2], u[2])}$ và mặt phẳng $(P):\\ ${lin([[n[0], "x"], [n[1], "y"], [n[2], "z"], [d, ""]])}=0$. Gọi $I$ là giao điểm của $d$ và $(P)$. Tổng $x_I+y_I+z_I$ bằng`,
+      nums(sum, [I[0] * I[1] * I[2], P[0] + P[1] + P[2], t0, -sum]),
+      [`Tham số hóa $d$: $x=${lin([[P[0], ""], [u[0], "t"]])}$, $y=${lin([[P[1], ""], [u[1], "t"]])}$, $z=${lin([[P[2], ""], [u[2], "t"]])}$.`, `Thay vào $(P)$: $${lin([[coef, "t"], [rest, ""]])}=0$ nên $t=${t0}$, và $I(${I.join(";")})$.`, `$x_I+y_I+z_I=${sum}$.`],
+      `solve(${n[0]}*(${P[0]}+${u[0]}*x)+(${n[1]})*(${P[1]}+${u[1]}*x)+(${n[2]})*(${P[2]}+${u[2]}*x)+(${d}), x)[0]*(${u[0]}+${u[1]}+${u[2]})+(${P[0]})+(${P[1]})+(${P[2]})`, String(sum));
+  } },
+  { key: "tdiemoabc", make: (r) => {
+    let a = 1, b = 1, c = 1;
+    do {
+      a = r.int(1, 6);
+      b = r.int(1, 6);
+      c = r.int(1, 6);
+    } while ((a * b * c) % 6 !== 0 || (a === b && b === c));
+    const big = lcm(lcm(a, b), c), res = F(a * b * c, 6);
+    return made(`Trong không gian $Oxyz$, mặt phẳng $(P):\\ ${lin([[big / a, "x"], [big / b, "y"], [big / c, "z"], [-big, ""]])}=0$ cắt ba trục tọa độ tại $A$, $B$, $C$. Thể tích khối tứ diện $OABC$ bằng`, nums(res.n / res.d, [a * b * c, a + b + c, (a * b * c) / 3, (a * b * c) / 2]),
+      [`Cho hai tọa độ bằng $0$: $A(${a};0;0)$, $B(0;${b};0)$, $C(0;0;${c})$.`, "$OA$, $OB$, $OC$ đôi một vuông góc nên $V=\\dfrac{1}{6}\\cdot OA\\cdot OB\\cdot OC$.", `$V=\\dfrac{1}{6}\\cdot ${a}\\cdot ${b}\\cdot ${c}=${res.tex()}$.`],
+      `Rational(${a}*${b}*${c}, 6)`, res.sym());
+  } },
+];
+
 /** Chủ đề THPT theo chương; mỗi mẫu lớp 10–12 thuộc đúng một chủ đề. */
 export const thptTopics: { id: string; grade: number; vi: string; en: string; keys: string[] }[] = [
   { id: "g10-tap-hop", grade: 10, vi: "Mệnh đề và tập hợp", en: "Sets", keys: ["taphop"] },
@@ -1127,11 +1240,12 @@ export const thptTopics: { id: string; grade: number; vi: string; en: string; ke
   { id: "g11-mu-log", grade: 11, vi: "Mũ và logarit", en: "Exponents and logarithms", keys: ["log", "mu", "loghieu"] },
   { id: "g11-dao-ham", grade: 11, vi: "Đạo hàm", en: "Derivatives", keys: ["daoham", "daohamhop"] },
   { id: "g11-xac-suat", grade: 11, vi: "Xác suất", en: "Probability", keys: ["xsdoclap", "xscodien"] },
-  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln"] },
+  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap"] },
   { id: "g12-tiem-can", grade: 12, vi: "Tiệm cận", en: "Asymptotes", keys: ["tcngang", "tcdung"] },
-  { id: "g12-tich-phan", grade: 12, vi: "Nguyên hàm và tích phân", en: "Antiderivatives and integrals", keys: ["nguyenham", "tp1", "tp2", "dientich"] },
-  { id: "g12-khong-gian", grade: 12, vi: "Tọa độ trong không gian", en: "Space coordinates", keys: ["kc3d", "kcmp", "matcau", "vuonggoc", "ptmp"] },
-  { id: "g12-xac-suat", grade: 12, vi: "Xác suất có điều kiện", en: "Conditional probability", keys: ["dieukien"] },
+  { id: "g12-tich-phan", grade: 12, vi: "Nguyên hàm và tích phân", en: "Antiderivatives and integrals", keys: ["nguyenham", "tp1", "tp2", "dientich", "tpdoibien", "tpphanh"] },
+  { id: "g12-khong-gian", grade: 12, vi: "Tọa độ trong không gian", en: "Space coordinates", keys: ["kc3d", "kcmp", "matcau", "vuonggoc", "ptmp", "giaodiem", "tdiemoabc"] },
+  { id: "g12-xac-suat", grade: 12, vi: "Xác suất có điều kiện", en: "Conditional probability", keys: ["dieukien", "bayes"] },
+  { id: "g12-khoi", grade: 12, vi: "Khối đa diện", en: "Solids", keys: ["chopvuong", "tdiencb", "langtru"] },
 ];
 
 /* ---------- lắp ráp ---------- */
@@ -1139,7 +1253,7 @@ export const thptTopics: { id: string; grade: number; vi: string; en: string; ke
 export const gradeTemplates: Record<number, Template[]> = {
   1: grade1, 2: grade2, 3: grade3, 4: grade4, 5: grade5, 6: grade6,
   7: grade7, 8: grade8, 9: grade9,
-  10: [...grade10, ...grade10More], 11: [...grade11, ...grade11More], 12: [...grade12, ...grade12More],
+  10: [...grade10, ...grade10More], 11: [...grade11, ...grade11More], 12: [...grade12, ...grade12More, ...grade12Hard],
 };
 
 function build(grade: number, taken: Set<string>): GradeQuestion[] {

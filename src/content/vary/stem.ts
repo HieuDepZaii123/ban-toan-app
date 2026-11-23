@@ -176,7 +176,12 @@ export function joinMath(text: string): string {
 
 /** A negative parameter dropped after an operator: x-(-1) is x+1, x+(-1) is x-1. */
 function signs(math: string): string {
-  return math.replace(/-\s*-/g, "+").replace(/\+\s*-/g, "-").replace(/-\s*\+/g, "-");
+  return math
+    .replace(/-\s*-/g, "+")
+    .replace(/\+\s*-/g, "-")
+    .replace(/-\s*\+/g, "-")
+    // A coefficient 1 in front of a lone variable is never written: 1x → x, -1y → -y.
+    .replace(/(^|[^0-9A-Za-z.{,^_\\])1([a-z])(?![a-z])/g, "$1$2");
 }
 
 const tidy = <T extends string[]>(list: T): T => list.map(joinMath) as T;

@@ -28,13 +28,15 @@ import { checkMarked, checkShape, sympyRows } from "./questionCheck.ts";
 
 /* ---------- ngân hàng ---------- */
 
-assert.equal(thptBank.length, 450);
-assert.equal(new Set(thptBank.map((item) => item.id)).size, 450);
+const TOTAL = thptTopics.reduce((sum, topic) => sum + topic.keys.length * 10, 0);
+assert.equal(thptBank.length, TOTAL);
+assert.equal(new Set(thptBank.map((item) => item.id)).size, TOTAL);
 const quickIds = new Set(gradePractice.map((item) => item.id));
 assert.ok(thptBank.every((item) => !quickIds.has(item.id)), "luyện THPT phải tách khỏi luyện nhanh");
 for (const grade of THPT_GRADES) {
   const rows = thptBank.filter((item) => item.grade === grade);
-  assert.equal(rows.length, 150, `lớp ${grade} cần 150 câu`);
+  assert.equal(rows.length, thptTopics.filter((topic) => topic.grade === grade).reduce((sum, topic) => sum + topic.keys.length * 10, 0), `lớp ${grade} thiếu câu`);
+  assert.ok(rows.length >= 150, `lớp ${grade} cần ít nhất 150 câu`);
   checkShape(rows, `THPT lớp ${grade}`);
   const topics = thptTopics.filter((topic) => topic.grade === grade);
   assert.ok(topics.length >= 5, `lớp ${grade} cần ít nhất 5 chủ đề`);
@@ -46,7 +48,7 @@ for (const grade of THPT_GRADES) {
 }
 assert.equal(new Set(thptTopics.map((topic) => topic.id)).size, thptTopics.length);
 assert.ok(checkMarked(thptBank) >= 300, "so được quá ít đáp án THPT");
-assert.equal(inScope([10], []).length, 150);
+assert.equal(inScope([10], []).length, thptBank.filter((item) => item.grade === 10).length);
 assert.equal(inScope([10, 11, 12], ["g11-gioi-han"]).length, 40);
 assert.equal(inScope([10], ["g11-gioi-han"]).length, 0);
 
@@ -59,9 +61,9 @@ bag = answerPractice(bag, second.id, (second.answer + 1) % 4);
 assert.equal(bag.at, second.id);
 assert.deepEqual(tally([first, second], bag.picks), { total: 2, done: 2, right: 1 });
 assert.deepEqual(wrongIds(thptBank, bag.picks), [second.id]);
-assert.equal(freshIds(thptBank, bag.picks).length, 448);
+assert.equal(freshIds(thptBank, bag.picks).length, TOTAL - 2);
 const byTopic = tallyBy(thptBank, bag.picks, (item) => item.topic);
-assert.equal([...byTopic.values()].reduce((sum, item) => sum + item.total, 0), 450);
+assert.equal([...byTopic.values()].reduce((sum, item) => sum + item.total, 0), TOTAL);
 
 bag = setScope(bag, [11, 12], ["g12-tich-phan"]);
 const restored = parseThptBag(JSON.stringify(bag));
