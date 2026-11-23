@@ -1,10 +1,11 @@
-import type { ScienceId } from "./catalog.ts";
+import type { CoreScienceId, ScienceId } from "./catalog.ts";
+import { extraLessons } from "./extra.ts";
 
 export type ScienceDrill = { q: string; answer: string; steps: string[] };
 export type ScienceLayer = { bits: string[]; code?: string; drill: ScienceDrill };
 export type ScienceLesson = { basic: ScienceLayer; exam: ScienceLayer; adv: ScienceLayer };
 
-export const scienceLessons: Record<ScienceId, ScienceLesson> = {
+const coreLessons: Record<CoreScienceId, ScienceLesson> = {
   python: {
     basic: {
       bits: [
@@ -184,3 +185,5 @@ export const scienceLessons: Record<ScienceId, ScienceLesson> = {
     },
   },
 };
+
+export const scienceLessons: Record<ScienceId, ScienceLesson> = { ...coreLessons, ...extraLessons };

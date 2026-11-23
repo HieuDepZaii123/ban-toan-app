@@ -91,6 +91,22 @@ export const scienceLectures: Record<ScienceId, [LectureVideo, LectureVideo]> = 
     { slot: "chuyen-basic", youtubeId: "", title: "Cách đọc một đề trường chuyên", level: "basic" },
     { slot: "chuyen-exam", youtubeId: "", title: "Một bài số học và một bài hình", level: "exam" },
   ],
+  sinh: [
+    { slot: "sinh-basic", youtubeId: "", title: "Lai Aa × Aa và tỉ lệ ba trội một lặn", level: "basic" },
+    { slot: "sinh-exam", youtubeId: "", title: "Hardy–Weinberg và đếm nuclêôtit", level: "exam" },
+  ],
+  "thuat-toan": [
+    { slot: "thuat-toan-basic", youtubeId: "", title: "Hệ nhị phân và vòng lặp while", level: "basic" },
+    { slot: "thuat-toan-exam", youtubeId: "", title: "Tìm kiếm nhị phân và độ phức tạp", level: "exam" },
+  ],
+  "song-quang": [
+    { slot: "song-quang-basic", youtubeId: "", title: "Sóng, bước sóng và tần số", level: "basic" },
+    { slot: "song-quang-exam", youtubeId: "", title: "Khúc xạ và thấu kính hội tụ", level: "exam" },
+  ],
+  "nhiet-khi": [
+    { slot: "nhiet-khi-basic", youtubeId: "", title: "Nhiệt lượng và nhiệt dung riêng", level: "basic" },
+    { slot: "nhiet-khi-exam", youtubeId: "", title: "Ba quá trình đẳng của chất khí", level: "exam" },
+  ],
   "vat-ly": [
     { slot: "vat-ly-basic", youtubeId: "", title: "Rơi tự do và vận tốc theo thời gian", level: "basic" },
     { slot: "vat-ly-exam", youtubeId: "", title: "Định luật Ohm và công suất", level: "exam" },

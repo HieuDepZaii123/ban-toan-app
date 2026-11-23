@@ -1,12 +1,14 @@
-import type { ScienceId } from "./catalog.ts";
+import type { CoreScienceId, ScienceId } from "./catalog.ts";
 import type { ScienceDrill } from "./lessons.ts";
+import { extraMore } from "./extra.ts";
+import { extraDrills } from "./extraDrills.ts";
 
 /** Bài luyện có đáp số là một số thì kèm phép tính để bộ kiểm thử đối chiếu. */
 export type CheckedDrill = ScienceDrill & { num?: number; calc?: () => number };
 export type MoreLayer = { bits: string[]; code?: string; drills: CheckedDrill[] };
 export type LayerKey = "basic" | "exam" | "adv";
 
-export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
+const coreMore: Record<CoreScienceId, Record<LayerKey, MoreLayer>> = {
   python: {
     basic: {
       bits: [
@@ -360,3 +362,15 @@ export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = {
     },
   },
 };
+
+const LAYER_KEYS: LayerKey[] = ["basic", "exam", "adv"];
+
+/** Năm mảng đầu nhận thêm bài luyện từ extraDrills.ts; bốn mảng mới nằm trọn trong extra.ts. */
+const grown = Object.fromEntries(
+  (Object.keys(coreMore) as CoreScienceId[]).map((id) => [
+    id,
+    Object.fromEntries(LAYER_KEYS.map((key) => [key, { ...coreMore[id][key], drills: [...coreMore[id][key].drills, ...extraDrills[id][key]] }])),
+  ]),
+) as Record<CoreScienceId, Record<LayerKey, MoreLayer>>;
+
+export const scienceMore: Record<ScienceId, Record<LayerKey, MoreLayer>> = { ...grown, ...extraMore };

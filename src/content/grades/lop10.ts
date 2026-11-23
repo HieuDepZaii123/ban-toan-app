@@ -1,5 +1,6 @@
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
+import { lop10UngDung } from "./lopExtra.ts";
 
 const R = String.raw;
 
@@ -27,7 +28,7 @@ const W = {
   doi: "Xác suất biến cố đối bằng một trừ xác suất biến cố đã cho.",
 };
 
-export const lop10: GradeBook = {
+const lop10Base: GradeBook = {
   grade: 10,
   band: "thpt",
   title: "Mệnh đề, bất phương trình hai ẩn, hàm số bậc hai, vectơ, tọa độ, tổ hợp và thống kê.",
@@ -460,4 +461,10 @@ export const lop10: GradeBook = {
         { topicId: "probability" }),
     ]),
   ],
+};
+
+/** Chương bổ sung xen vào cạnh chương cùng mạch. */
+export const lop10: GradeBook = {
+  ...lop10Base,
+  chapters: lop10Base.chapters.flatMap((chapter) => (chapter.id === "ham-bac-hai" ? [chapter, lop10UngDung] : [chapter])),
 };

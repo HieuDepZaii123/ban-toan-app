@@ -1,10 +1,11 @@
 import { thcsNotes } from "./thcs.ts";
 import { thptNotes } from "./thpt.ts";
+import { mathExtraNotes } from "./mathExtra.ts";
 import { thptExtraNotes } from "./thptExtra.ts";
 import { tieuHocNotes } from "./tieuHoc.ts";
 import type { LessonNote, NoteBook } from "./types.ts";
 
-const ALL: NoteBook = { ...tieuHocNotes, ...thcsNotes, ...thptNotes, ...thptExtraNotes };
+const ALL: NoteBook = { ...tieuHocNotes, ...thcsNotes, ...thptNotes, ...thptExtraNotes, ...mathExtraNotes };
 
 export function noteFor(grade: number, lessonId: string): LessonNote | undefined {
   return ALL[`${grade}/${lessonId}`];

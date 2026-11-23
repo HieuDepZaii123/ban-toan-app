@@ -1,9 +1,10 @@
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
+import { lop9ThucTe } from "./lopExtra.ts";
 
 const R = String.raw;
 
-export const lop09: GradeBook = {
+const lop09Base: GradeBook = {
   grade: 9,
   band: "thcs",
   title: "Căn bậc hai và căn bậc ba, hàm số bậc hai, bất phương trình, đường tròn, xác suất, và một chương ôn thi vào lớp 10.",
@@ -584,4 +585,10 @@ export const lop09: GradeBook = {
       ),
     ]),
   ],
+};
+
+/** Chương bổ sung xen vào cạnh chương cùng mạch. */
+export const lop09: GradeBook = {
+  ...lop09Base,
+  chapters: lop09Base.chapters.flatMap((chapter) => (chapter.id === "on-vao-10" ? [lop9ThucTe, chapter] : [chapter])),
 };

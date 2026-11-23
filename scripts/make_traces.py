@@ -44,6 +44,24 @@ SNIPPETS = [
         "after": "ket_qua = chia_doi(f, 1, 2, 5)\n",
         "note": "Gọi chia_doi với f(x) = x² − 2 trên đoạn [1; 2], 5 bước, để tìm √2.",
     },
+    {
+        "code": "n = 13\nbits = \"\"\nwhile n > 0:\n    bits = str(n % 2) + bits\n    n = n // 2",
+        "setup": "",
+        "after": "",
+        "note": "Đổi số 13 sang nhị phân: các số dư ghi từ dưới lên cho 1101.",
+    },
+    {
+        "code": "def tim_nhi_phan(a, x):\n    lo, hi = 0, len(a) - 1\n    dem = 0\n    while lo <= hi:\n        dem = dem + 1\n        mid = (lo + hi) // 2\n        if a[mid] == x:\n            return mid, dem\n        if a[mid] < x:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1, dem",
+        "setup": "",
+        "after": "ket_qua = tim_nhi_phan([1, 3, 5, 7, 9, 11, 13, 15], 11)\n",
+        "note": "Tìm số 11 trong dãy 8 số đã sắp xếp; biến dem đếm số lần so sánh.",
+    },
+    {
+        "code": "def so_cach(n):\n    f = [1, 1]\n    for i in range(2, n + 1):\n        f.append(f[i-1] + f[i-2])\n    return f[n]",
+        "setup": "",
+        "after": "ket_qua = so_cach(6)\n",
+        "note": "Đếm cách leo 6 bậc thang, mỗi lần bước 1 hoặc 2 bậc.",
+    },
 ]
 
 

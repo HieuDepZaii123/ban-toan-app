@@ -1,9 +1,10 @@
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
+import { lop11GocKhongGian } from "./lopExtra.ts";
 
 const R = String.raw;
 
-export const lop11: GradeBook = {
+const lop11Base: GradeBook = {
   grade: 11,
   band: "thpt",
   title: "Lượng giác, dãy số, giới hạn, mũ, logarit và đạo hàm.",
@@ -421,4 +422,10 @@ export const lop11: GradeBook = {
         { topicId: "probability" }),
     ]),
   ],
+};
+
+/** Chương bổ sung xen vào cạnh chương cùng mạch. */
+export const lop11: GradeBook = {
+  ...lop11Base,
+  chapters: lop11Base.chapters.flatMap((chapter) => (chapter.id === "khong-gian" ? [chapter, lop11GocKhongGian] : [chapter])),
 };

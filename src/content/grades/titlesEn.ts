@@ -6,6 +6,16 @@
 const R = String.raw;
 
 export const titlesEn: Record<string, string> = {
+  "9/c/thuc-te-9": "Real-world problems with equations",
+  "9/lai-suat": "Interest rates and percentage growth",
+  "9/dong-nuoc": "Motion with a current",
+  "10/c/ung-dung-b2": "Applications of quadratic functions",
+  "10/doanh-thu-b2": "Largest revenue and profit",
+  "10/quy-dao-b2": "Parabolic paths",
+  "11/c/goc-kc-11": "Angles, volumes and distances in space geometry",
+  "11/goc-dt-mp": "The angle between a line and a plane",
+  "11/the-tich-goc": "Volume of a pyramid from an angle",
+  "11/kc-diem-mp": "Distance from a point to a plane",
   "1": "Numbers to 10 and to 100, addition, subtraction, familiar shapes.",
   "1/c/so-10": "Numbers to 10",
   "1/dem-10": "Counting from 1 to 10",
