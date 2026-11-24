@@ -53,4 +53,36 @@ export const thptExtra2Notes: NoteBook = {
     R`Hình chiếu của $M$ nằm trên đường thẳng qua $M$ vuông góc với mặt phẳng, nên đi từ $M$ theo hướng vectơ pháp tuyến. Điểm đối xứng đi gấp đôi quãng đường đó.`,
     R`Nhầm dấu của $t$ nên đi ngược hướng, hoặc lấy hình chiếu làm điểm đối xứng. Hình chiếu là trung điểm của đoạn nối $M$ với điểm đối xứng.`,
   ),
+  "12/trung-vi-nhom": note(
+    R`Trung vị chia mẫu thành hai nửa bằng nhau về số lượng. Nội suy trong nhóm chứa mốc $\frac{n}{2}$ coi các giá trị trong nhóm phân bố đều, nên phần cần đi thêm là tỉ lệ $\frac{\frac{n}{2}-N}{n_i}$ của độ dài nhóm.`,
+    R`Chọn nhóm theo tần số lớn nhất thay vì theo tần số tích lũy, hoặc dùng cỡ mẫu $n$ thay cho $\frac{n}{2}$ trong tử. Nhóm đúng là nhóm đầu tiên mà tần số tích lũy đạt tới mốc.`,
+  ),
+  "12/phuong-sai-ngan": note(
+    R`Khai triển $(c_i-\bar x)^2=c_i^2-2c_i\bar x+\bar x^2$ rồi lấy trung bình, các số hạng giữa gộp lại thành $-2\bar x^2$, nên còn lại trung bình bình phương trừ bình phương trung bình.`,
+    R`Lấy bình phương của trung bình bình phương hoặc quên trừ $\bar x^2$. Trung bình bình phương luôn không nhỏ hơn bình phương của trung bình, nên kết quả âm là dấu hiệu sai.`,
+  ),
+  "12/so-sanh-hai-mau": note(
+    R`Độ lệch chuẩn đo khoảng cách điển hình từ giá trị tới trung bình và cùng đơn vị với số liệu. Khi hai trung bình bằng nhau thì mẫu có độ lệch chuẩn lớn hơn có các giá trị nằm xa trung bình hơn.`,
+    R`So sánh phương sai của hai mẫu khác đơn vị, hoặc kết luận chỉ từ trung bình. Hai mẫu có cùng trung bình vẫn có thể phân tán rất khác nhau.`,
+  ),
+  "12/bien-doi-mau": note(
+    R`Cộng thêm $a$ làm cả giá trị và trung bình dịch cùng đoạn nên độ lệch không đổi. Nhân với $k$ làm mọi độ lệch nhân $k$, nên bình phương nhân $k^2$.`,
+    R`Nhân phương sai với $k$ thay vì $k^2$, hoặc cho rằng cộng thêm một số làm phương sai tăng. Phương sai chỉ đo độ phân tán nên không đổi khi dịch cả mẫu.`,
+  ),
+  "12/cay-xac-suat": note(
+    R`Nhánh sau của sơ đồ cây ghi xác suất có điều kiện, nên nhân dọc theo đường đi chính là công thức nhân. Các đường đi khác nhau loại trừ nhau nên cộng được.`,
+    R`Dùng cùng một mẫu số ở cả hai lần lấy dù không hoàn lại. Sau lần đầu tổng số vật giảm một, nên mẫu số của nhánh thứ hai nhỏ hơn.`,
+  ),
+  "12/cong-thuc-nhan": note(
+    R`Định nghĩa $P(B\mid A)=\frac{P(A\cap B)}{P(A)}$ chuyển vế cho ngay công thức nhân. Với ba biến cố, áp dụng công thức hai lần liên tiếp.`,
+    R`Nhân $P(A)$ với $P(B)$ trong khi hai biến cố không độc lập. Phải dùng $P(B\mid A)$, vì sau khi $A$ xảy ra xác suất của $B$ đã thay đổi.`,
+  ),
+  "12/doc-lap-12": note(
+    R`Nếu $A$ không ảnh hưởng $B$ thì $P(B\mid A)=P(B)$, thay vào công thức nhân được $P(A\cap B)=P(A)P(B)$. Điều ngược lại cũng đúng nên đây là điều kiện cần và đủ.`,
+    R`Nhầm biến cố độc lập với biến cố xung khắc. Hai biến cố xung khắc có xác suất giao bằng $0$, nên chỉ độc lập khi có một biến cố có xác suất bằng $0$.`,
+  ),
+  "12/bayes-cay": note(
+    R`Mỗi đường đi trên cây là một cách dẫn tới kết quả, và xác suất của nó là tích các nhánh. Biết kết quả $A$ đã xảy ra thì xác suất của một nguyên nhân là phần đóng góp của đường đi qua nguyên nhân ấy trong tổng các đường dẫn tới $A$.`,
+    R`Chia cho xác suất của nguyên nhân thay vì chia cho tổng các đường dẫn tới kết quả. Với bệnh hiếm, xác suất mắc bệnh sau xét nghiệm dương tính thường nhỏ hơn nhiều so với mức nhiều người đoán.`,
+  ),
 };

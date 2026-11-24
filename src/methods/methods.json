@@ -237,6 +237,36 @@
       "methodId": "bpt-bac-hai-dau",
       "topicHref": "/kien-thuc/10/dang",
       "topicLabel": "Dạng bài lớp 10"
+    },
+    {
+      "when": "Đếm nghiệm của phương trình bậc ba theo tham số, hoặc số giao điểm với đường thẳng ngang.",
+      "methodId": "tuong-giao-do-thi",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Tích phân có giá trị tuyệt đối hoặc diện tích giữa hai đồ thị cắt nhau nhiều lần.",
+      "methodId": "tp-tach-doan",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Khoảng cách giữa hai đường chéo nhau hoặc mặt cầu tiếp xúc mặt phẳng.",
+      "methodId": "khoang-cach-oxyz",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Lấy lần lượt các vật không hoàn lại và hỏi xác suất cùng màu, khác màu.",
+      "methodId": "cay-khong-hoan-lai",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "So sánh hai bảng số liệu ghép nhóm về độ đồng đều.",
+      "methodId": "so-sanh-phan-tan",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
     }
   ],
   "methods": [
@@ -4315,6 +4345,511 @@
           "where": "bpt-bac-hai-dau-p2b",
           "lhs": "2*Rational(1,4)+Rational(3,2)-2",
           "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "tuong-giao-do-thi",
+      "grade": 12,
+      "title": "Đếm nghiệm bằng đồ thị và giá trị cực trị",
+      "titleEn": "Counting roots with a graph and the extreme values",
+      "blurb": "Lớp 12: đưa phương trình về dạng hàm bằng hằng số rồi so hằng số với cực đại và cực tiểu.",
+      "spot": [
+        "Đề hỏi số nghiệm của phương trình có tham số $m$, hoặc số giao điểm của đồ thị với một đường thẳng ngang.",
+        "Phương trình có thể tách thành $f(x)=m$ với $f$ là hàm bậc ba."
+      ],
+      "thinking": [
+        "Tách tham số về một vế để được $f(x)=m$.",
+        "Tìm đạo hàm, các điểm cực trị và giá trị cực đại, cực tiểu.",
+        "So $m$ với hai giá trị đó: nằm giữa thì ba nghiệm, bằng một trong hai thì hai nghiệm, nằm ngoài thì một nghiệm."
+      ],
+      "care": [
+        "Khi $m$ bằng đúng giá trị cực trị thì có nghiệm kép, nên số nghiệm phân biệt là hai.",
+        "Chỉ dùng cách này khi $f$ là hàm bậc ba có hai cực trị."
+      ],
+      "formulas": [
+        "$y_{CT}<m<y_{CD}$ cho ba nghiệm phân biệt của $x^3-3x=m$."
+      ],
+      "examples": [
+        {
+          "id": "tuong-giao-do-thi-1",
+          "title": "Ba nghiệm",
+          "prompt": "Phương trình $x^3-3x=1$ có bao nhiêu nghiệm thực?",
+          "steps": [
+            "Hàm $f(x)=x^3-3x$ có $f'(x)=3x^2-3=0$ tại $x=\\pm1$.",
+            "Cực đại $f(-1)=2$, cực tiểu $f(1)=-2$ và $-2<1<2$."
+          ],
+          "result": "Có $3$ nghiệm."
+        },
+        {
+          "id": "tuong-giao-do-thi-2",
+          "title": "Nghiệm kép",
+          "prompt": "Phương trình $x^3-3x=2$ có bao nhiêu nghiệm thực phân biệt?",
+          "steps": [
+            "Cực đại của $f(x)=x^3-3x$ bằng $2$, đúng bằng $m$.",
+            "Đường thẳng $y=2$ tiếp xúc đồ thị tại cực đại và cắt thêm một điểm."
+          ],
+          "result": "Có $2$ nghiệm phân biệt."
+        }
+      ],
+      "mistakes": [
+        "Quên xét trường hợp $m$ bằng giá trị cực trị.",
+        "Nhầm cực đại với cực tiểu khi so sánh."
+      ],
+      "practice": [
+        {
+          "id": "tuong-giao-do-thi-p1",
+          "prompt": "Phương trình $x^3-3x=-3$ có bao nhiêu nghiệm thực?",
+          "answer": "Có $1$ nghiệm.",
+          "steps": [
+            "Cực tiểu bằng $-2$ và $-3<-2$ nên đường thẳng nằm dưới cực tiểu.",
+            "Đường thẳng $y=-3$ cắt đồ thị đúng một lần."
+          ]
+        },
+        {
+          "id": "tuong-giao-do-thi-p2",
+          "prompt": "Phương trình $x^3-3x=0$ có bao nhiêu nghiệm thực?",
+          "answer": "Có $3$ nghiệm.",
+          "steps": [
+            "Giá trị $0$ nằm giữa $-2$ và $2$.",
+            "Phương trình $x(x^2-3)=0$ có ba nghiệm $0$ và $\\pm\\sqrt3$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/survey",
+          "label": "Khảo sát hàm số"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "tuong-giao-do-thi-1",
+          "lhs": "2**3-3*2",
+          "rhs": "2"
+        },
+        {
+          "where": "tuong-giao-do-thi-2",
+          "lhs": "(-1)**3-3*(-1)",
+          "rhs": "2"
+        },
+        {
+          "where": "tuong-giao-do-thi-p1",
+          "lhs": "1**3-3*1",
+          "rhs": "-2"
+        },
+        {
+          "where": "tuong-giao-do-thi-p2",
+          "lhs": "0**3-3*0",
+          "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "tp-tach-doan",
+      "grade": 12,
+      "title": "Chia đoạn tại nghiệm để bỏ giá trị tuyệt đối",
+      "titleEn": "Splitting at the roots to remove the absolute value",
+      "blurb": "Lớp 12: tích phân có giá trị tuyệt đối và diện tích giữa hai đồ thị đều cần chia đoạn tại nghiệm.",
+      "spot": [
+        "Đề có $\\int|f(x)|\\,dx$ hoặc hỏi diện tích hình phẳng giới hạn bởi hai đồ thị cắt nhau nhiều lần.",
+        "Biểu thức trong dấu giá trị tuyệt đối đổi dấu trong đoạn lấy tích phân."
+      ],
+      "thinking": [
+        "Giải $f(x)=0$ và giữ các nghiệm nằm trong đoạn lấy tích phân.",
+        "Chia đoạn tại các nghiệm đó và xét dấu $f$ trên từng đoạn con.",
+        "Bỏ giá trị tuyệt đối theo dấu rồi cộng các tích phân, mỗi tích phân đều không âm."
+      ],
+      "care": [
+        "Không tính tích phân của $f$ trên cả đoạn rồi lấy giá trị tuyệt đối.",
+        "Với diện tích giữa hai đồ thị, lấy hàm trên trừ hàm dưới trên từng đoạn."
+      ],
+      "formulas": [
+        "$\\int_a^b|f(x)|\\,dx=\\int_a^c(-f)\\,dx+\\int_c^b f\\,dx$ khi $f\\le0$ trên $[a;\\ c]$ và $f\\ge0$ trên $[c;\\ b]$."
+      ],
+      "examples": [
+        {
+          "id": "tp-tach-doan-1",
+          "title": "Một nghiệm",
+          "prompt": "Tính $\\int_0^3|x-1|\\,dx$.",
+          "steps": [
+            "Nghiệm $x=1$ chia đoạn thành $[0;\\ 1]$ và $[1;\\ 3]$.",
+            "Ta có $\\int_0^1(1-x)\\,dx+\\int_1^3(x-1)\\,dx=\\frac12+2$."
+          ],
+          "result": "Giá trị bằng $\\frac52$."
+        },
+        {
+          "id": "tp-tach-doan-2",
+          "title": "Diện tích hai đồ thị",
+          "prompt": "Tính diện tích hình phẳng giới hạn bởi $y=x^3$ và $y=x$.",
+          "steps": [
+            "Giao điểm tại $x=-1$, $x=0$, $x=1$.",
+            "Ta có $\\int_{-1}^0(x^3-x)\\,dx+\\int_0^1(x-x^3)\\,dx=\\frac14+\\frac14$."
+          ],
+          "result": "Diện tích bằng $\\frac12$."
+        }
+      ],
+      "mistakes": [
+        "Quên chia đoạn khi có nghiệm bên trong đoạn lấy tích phân.",
+        "Lấy hiệu hai hàm theo một thứ tự cố định dù hai đồ thị cắt nhau ở giữa."
+      ],
+      "practice": [
+        {
+          "id": "tp-tach-doan-p1",
+          "prompt": "Tính $\\int_0^4|x-2|\\,dx$.",
+          "answer": "Giá trị bằng $4$.",
+          "steps": [
+            "Chia tại $x=2$: $\\int_0^2(2-x)\\,dx=2$.",
+            "Và $\\int_2^4(x-2)\\,dx=2$ nên tổng là $4$."
+          ]
+        },
+        {
+          "id": "tp-tach-doan-p2",
+          "prompt": "Tính diện tích hình phẳng giới hạn bởi $y=x^2$ và $y=4$.",
+          "answer": "Diện tích bằng $\\frac{32}{3}$.",
+          "steps": [
+            "Giao điểm tại $x=\\pm2$.",
+            "Ta có $\\int_{-2}^2(4-x^2)\\,dx=16-\\frac{16}{3}$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/integral",
+          "label": "Tích phân"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "tp-tach-doan-1",
+          "lhs": "Rational(1,2)+2",
+          "rhs": "Rational(5,2)"
+        },
+        {
+          "where": "tp-tach-doan-2",
+          "lhs": "Rational(1,4)+Rational(1,4)",
+          "rhs": "Rational(1,2)"
+        },
+        {
+          "where": "tp-tach-doan-p1",
+          "lhs": "2+2",
+          "rhs": "4"
+        },
+        {
+          "where": "tp-tach-doan-p2",
+          "lhs": "16-Rational(16,3)",
+          "rhs": "Rational(32,3)"
+        }
+      ]
+    },
+    {
+      "id": "khoang-cach-oxyz",
+      "grade": 12,
+      "title": "Khoảng cách trong Oxyz bằng tích có hướng",
+      "titleEn": "Distances in Oxyz using the cross product",
+      "blurb": "Lớp 12: khoảng cách giữa hai đường chéo nhau và bán kính mặt cầu tiếp xúc mặt phẳng.",
+      "spot": [
+        "Đề hỏi khoảng cách giữa hai đường thẳng chéo nhau cho bằng điểm và vectơ chỉ phương.",
+        "Đề cho mặt cầu tiếp xúc mặt phẳng và hỏi bán kính hoặc tham số."
+      ],
+      "thinking": [
+        "Với hai đường chéo nhau, tính tích có hướng $\\left[\\vec{u_1},\\vec{u_2}\\right]$ và vectơ nối hai điểm $\\overrightarrow{AB}$.",
+        "Lấy giá trị tuyệt đối của tích vô hướng của hai vectơ đó rồi chia cho độ dài tích có hướng.",
+        "Với mặt cầu tiếp xúc, bán kính bằng khoảng cách từ tâm đến mặt phẳng."
+      ],
+      "care": [
+        "Phải có dấu giá trị tuyệt đối ở tử số.",
+        "Công thức chỉ dùng khi hai đường không song song, tức tích có hướng khác $\\vec0$."
+      ],
+      "formulas": [
+        "$d=\\frac{\\left|\\left[\\vec{u_1},\\vec{u_2}\\right]\\cdot\\overrightarrow{AB}\\right|}{\\left|\\left[\\vec{u_1},\\vec{u_2}\\right]\\right|}$."
+      ],
+      "examples": [
+        {
+          "id": "khoang-cach-oxyz-1",
+          "title": "Hai trục",
+          "prompt": "Tính khoảng cách giữa đường qua $O$ với $\\vec{u_1}=(1;\\ 0;\\ 0)$ và đường qua $B(0;\\ 0;\\ 3)$ với $\\vec{u_2}=(0;\\ 1;\\ 0)$.",
+          "steps": [
+            "Tích có hướng là $(0;\\ 0;\\ 1)$ và $\\overrightarrow{OB}=(0;\\ 0;\\ 3)$.",
+            "Tích vô hướng bằng $3$ và độ dài bằng $1$."
+          ],
+          "result": "Khoảng cách bằng $3$."
+        },
+        {
+          "id": "khoang-cach-oxyz-2",
+          "title": "Mặt cầu tiếp xúc",
+          "prompt": "Tìm bán kính mặt cầu tâm $I(1;\\ 1;\\ 1)$ tiếp xúc với mặt phẳng $x+y+z-6=0$.",
+          "steps": [
+            "Khoảng cách là $\\frac{|1+1+1-6|}{\\sqrt{3}}$.",
+            "Rút gọn $\\frac{3}{\\sqrt3}=\\sqrt3$."
+          ],
+          "result": "Bán kính bằng $\\sqrt{3}$."
+        }
+      ],
+      "mistakes": [
+        "Quên dấu giá trị tuyệt đối ở tử số.",
+        "Dùng công thức cho hai đường song song hoặc cắt nhau."
+      ],
+      "practice": [
+        {
+          "id": "khoang-cach-oxyz-p1",
+          "prompt": "Tính khoảng cách từ $O$ đến mặt phẳng $2x+y+2z-9=0$.",
+          "answer": "Khoảng cách bằng $3$.",
+          "steps": [
+            "Tử là $|-9|=9$.",
+            "Mẫu là $\\sqrt{4+1+4}=3$ nên khoảng cách là $3$."
+          ]
+        },
+        {
+          "id": "khoang-cach-oxyz-p2",
+          "prompt": "Tìm độ dài tích có hướng của $(1;\\ 0;\\ 0)$ và $(0;\\ 2;\\ 0)$.",
+          "answer": "Độ dài bằng $2$.",
+          "steps": [
+            "Tích có hướng là $(0;\\ 0;\\ 2)$.",
+            "Độ dài của nó bằng $2$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/analytic",
+          "label": "Hình giải tích"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "khoang-cach-oxyz-1",
+          "lhs": "1*3",
+          "rhs": "3"
+        },
+        {
+          "where": "khoang-cach-oxyz-2",
+          "lhs": "3/sqrt(3)",
+          "rhs": "sqrt(3)"
+        },
+        {
+          "where": "khoang-cach-oxyz-p1",
+          "lhs": "9/sqrt(9)",
+          "rhs": "3"
+        },
+        {
+          "where": "khoang-cach-oxyz-p2",
+          "lhs": "sqrt(0+0+4)",
+          "rhs": "2"
+        }
+      ]
+    },
+    {
+      "id": "cay-khong-hoan-lai",
+      "grade": 12,
+      "title": "Sơ đồ cây khi lấy không hoàn lại",
+      "titleEn": "A tree diagram when drawing without replacement",
+      "blurb": "Lớp 12: nhân dọc đường đi, cộng các đường đi thuộc biến cố và nhớ mẫu số giảm sau mỗi lần lấy.",
+      "spot": [
+        "Đề lấy lần lượt hai hay ba vật mà vật đã lấy không trả lại.",
+        "Đề hỏi xác suất cùng màu, khác màu hoặc có ít nhất một vật có tính chất nào đó."
+      ],
+      "thinking": [
+        "Vẽ các nhánh của lần lấy đầu và ghi xác suất từng nhánh.",
+        "Ở lần lấy sau, giảm tổng số vật đi một và giảm số vật cùng loại nếu vật vừa lấy cùng loại.",
+        "Nhân dọc đường đi, rồi cộng các đường đi thuộc biến cố cần tìm hoặc dùng biến cố đối."
+      ],
+      "care": [
+        "Mẫu số của lần lấy sau nhỏ hơn mẫu số của lần lấy đầu một đơn vị.",
+        "Biến cố có ít nhất một thường dễ tính qua biến cố đối."
+      ],
+      "formulas": [
+        "$P(A\\cap B)=P(A)\\,P(B\\mid A)$."
+      ],
+      "examples": [
+        {
+          "id": "cay-khong-hoan-lai-1",
+          "title": "Hai bi đỏ",
+          "prompt": "Túi có $3$ bi đỏ và $2$ bi xanh. Lấy lần lượt hai bi không hoàn lại. Tính xác suất cả hai đều đỏ.",
+          "steps": [
+            "Lần đầu đỏ có xác suất $\\frac35$.",
+            "Lần hai còn $2$ đỏ trong $4$ bi nên xác suất là $\\frac24$."
+          ],
+          "result": "Xác suất bằng $\\frac{3}{10}$."
+        },
+        {
+          "id": "cay-khong-hoan-lai-2",
+          "title": "Ít nhất một đỏ",
+          "prompt": "Với túi trên, tính xác suất có ít nhất một bi đỏ.",
+          "steps": [
+            "Biến cố đối là cả hai bi xanh, có xác suất $\\frac25\\cdot\\frac14=\\frac1{10}$.",
+            "Xác suất cần tìm là $1-\\frac1{10}$."
+          ],
+          "result": "Xác suất bằng $\\frac{9}{10}$."
+        }
+      ],
+      "mistakes": [
+        "Dùng cùng một mẫu số cho cả hai lần lấy.",
+        "Quên cộng các đường đi khác nhau của cùng một biến cố."
+      ],
+      "practice": [
+        {
+          "id": "cay-khong-hoan-lai-p1",
+          "prompt": "Hộp có $4$ viên đỏ và $6$ viên vàng. Lấy hai viên không hoàn lại. Tính xác suất cả hai đều đỏ.",
+          "answer": "Xác suất bằng $\\frac{2}{15}$.",
+          "steps": [
+            "Ta có $\\frac{4}{10}\\cdot\\frac{3}{9}$.",
+            "Rút gọn $\\frac{12}{90}=\\frac{2}{15}$."
+          ]
+        },
+        {
+          "id": "cay-khong-hoan-lai-p2",
+          "prompt": "Với túi $3$ đỏ, $2$ xanh, tính xác suất hai bi khác màu.",
+          "answer": "Xác suất bằng $\\frac{3}{5}$.",
+          "steps": [
+            "Đường đỏ rồi xanh là $\\frac35\\cdot\\frac24=\\frac3{10}$.",
+            "Đường xanh rồi đỏ cũng là $\\frac3{10}$ nên tổng là $\\frac35$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/probability",
+          "label": "Xác suất"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "cay-khong-hoan-lai-1",
+          "lhs": "Rational(3,5)*Rational(2,4)",
+          "rhs": "Rational(3,10)"
+        },
+        {
+          "where": "cay-khong-hoan-lai-2",
+          "lhs": "1-Rational(2,5)*Rational(1,4)",
+          "rhs": "Rational(9,10)"
+        },
+        {
+          "where": "cay-khong-hoan-lai-p1",
+          "lhs": "Rational(4,10)*Rational(3,9)",
+          "rhs": "Rational(2,15)"
+        },
+        {
+          "where": "cay-khong-hoan-lai-p2",
+          "lhs": "2*Rational(3,5)*Rational(2,4)",
+          "rhs": "Rational(3,5)"
+        }
+      ]
+    },
+    {
+      "id": "so-sanh-phan-tan",
+      "grade": 12,
+      "title": "So sánh độ phân tán của hai mẫu ghép nhóm",
+      "titleEn": "Comparing the spread of two grouped samples",
+      "blurb": "Lớp 12: tính phương sai bằng công thức rút gọn rồi so sánh độ lệch chuẩn.",
+      "spot": [
+        "Đề cho hai bảng số liệu ghép nhóm và hỏi mẫu nào đồng đều hơn hay ổn định hơn.",
+        "Đề hỏi tỉ số hai độ lệch chuẩn hoặc ảnh hưởng của việc đổi đơn vị."
+      ],
+      "thinking": [
+        "Tính số trung bình mỗi mẫu bằng giá trị đại diện và tần số.",
+        "Tính phương sai bằng trung bình của bình phương trừ bình phương của trung bình.",
+        "So sánh độ lệch chuẩn: mẫu có độ lệch chuẩn nhỏ hơn thì đồng đều hơn."
+      ],
+      "care": [
+        "Chỉ so sánh trực tiếp khi hai mẫu cùng đơn vị.",
+        "Khi đổi đơn vị bằng cách nhân $k$, phương sai nhân $k^2$ chứ không nhân $k$."
+      ],
+      "formulas": [
+        "$s^2=\\frac{1}{n}\\sum n_ic_i^2-\\bar x^2$."
+      ],
+      "examples": [
+        {
+          "id": "so-sanh-phan-tan-1",
+          "title": "Hai lớp",
+          "prompt": "Lớp $X$ có giá trị đại diện $5;\\ 7;\\ 9$ và lớp $Y$ có $3;\\ 7;\\ 11$, cùng tần số $1;\\ 2;\\ 1$. Lớp nào đồng đều hơn?",
+          "steps": [
+            "Cả hai có trung bình $7$; phương sai của $X$ là $\\frac{4+0+4}{4}=2$ và của $Y$ là $\\frac{16+0+16}{4}=8$.",
+            "Phương sai của $X$ nhỏ hơn."
+          ],
+          "result": "Lớp $X$ đồng đều hơn."
+        },
+        {
+          "id": "so-sanh-phan-tan-2",
+          "title": "Công thức rút gọn",
+          "prompt": "Tính phương sai của mẫu có giá trị đại diện $1;\\ 3;\\ 5$ và tần số $1;\\ 2;\\ 1$.",
+          "steps": [
+            "Trung bình bằng $3$ và trung bình bình phương bằng $\\frac{1+18+25}{4}=11$.",
+            "Phương sai là $11-9$."
+          ],
+          "result": "Phương sai bằng $2$."
+        }
+      ],
+      "mistakes": [
+        "So sánh phương sai của hai mẫu khác đơn vị.",
+        "Quên trừ bình phương của trung bình."
+      ],
+      "practice": [
+        {
+          "id": "so-sanh-phan-tan-p1",
+          "prompt": "Mẫu có giá trị đại diện $2;\\ 4$ với tần số $1;\\ 1$ có phương sai bằng bao nhiêu?",
+          "answer": "Phương sai bằng $1$.",
+          "steps": [
+            "Trung bình bằng $3$ và trung bình bình phương bằng $10$.",
+            "Phương sai là $10-9=1$."
+          ]
+        },
+        {
+          "id": "so-sanh-phan-tan-p2",
+          "prompt": "Mẫu có phương sai $4$. Nhân mọi giá trị với $2$ thì phương sai mới là bao nhiêu?",
+          "answer": "Phương sai bằng $16$.",
+          "steps": [
+            "Phương sai nhân $k^2=4$.",
+            "Kết quả là $4\\cdot4=16$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/combo",
+          "label": "Tổ hợp và thống kê"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "so-sanh-phan-tan-1",
+          "lhs": "Rational(16+0+16,4)",
+          "rhs": "8"
+        },
+        {
+          "where": "so-sanh-phan-tan-2",
+          "lhs": "Rational(1+18+25,4)-9",
+          "rhs": "2"
+        },
+        {
+          "where": "so-sanh-phan-tan-p1",
+          "lhs": "10-9",
+          "rhs": "1"
+        },
+        {
+          "where": "so-sanh-phan-tan-p2",
+          "lhs": "4*2**2",
+          "rhs": "16"
         }
       ]
     }

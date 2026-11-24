@@ -194,6 +194,44 @@ const lop12: GradeDang[] = [
     mistake: b(R`Nhầm $P(A\mid B)$ với $P(B\mid A)$.`, R`Confusing $P(A\mid B)$ with $P(B\mid A)$.`),
     drill: { prompt: b(R`Biết $P(A\cap B)=\frac{1}{6}$ và $P(B)=\frac{1}{3}$. Tính $P(A\mid B)$.`, R`Given $P(A\cap B)=\frac{1}{6}$ and $P(B)=\frac{1}{3}$, find $P(A\mid B)$.`), answer: b(R`Bằng $\frac{1}{2}$.`, R`It is $\frac{1}{2}$.`), checks: [{ expr: "Rational(1,6)/Rational(1,3)", expect: "Rational(1,2)" }] },
   },
+  {
+    name: b(R`Số nghiệm của phương trình bậc ba bằng đồ thị`, R`The number of roots of a cubic equation from its graph`),
+    spot: b(R`Có phương trình dạng $f(x)=m$ hoặc hỏi số giao điểm của đồ thị với một đường thẳng nằm ngang.`, R`An equation of the form $f(x)=m$, or a question about the intersections of the graph with a horizontal line.`),
+    method: [
+      b(R`Tìm các điểm cực trị bằng $f'(x)=0$ và tính giá trị cực đại, cực tiểu.`, R`Find the extreme points from $f'(x)=0$ and compute the maximum and minimum values.`),
+      b(R`So $m$ với hai giá trị đó: nằm giữa thì ba nghiệm, bằng một giá trị thì hai nghiệm, nằm ngoài thì một nghiệm.`, R`Compare $m$ with the two values: between them gives three roots, equal to one gives two roots, outside gives one root.`),
+    ],
+    example: {
+      prompt: b(R`Phương trình $x^3-3x=1$ có bao nhiêu nghiệm thực?`, R`How many real roots does $x^3-3x=1$ have?`),
+      steps: [
+        b(R`Cực đại $f(-1)=2$ và cực tiểu $f(1)=-2$.`, R`The maximum is $f(-1)=2$ and the minimum is $f(1)=-2$.`),
+        b(R`Vì $-2<1<2$ nên đường thẳng $y=1$ cắt đồ thị tại ba điểm.`, R`Since $-2<1<2$, the line $y=1$ meets the graph at three points.`),
+      ],
+      ket: b(R`Phương trình có $3$ nghiệm.`, R`The equation has $3$ roots.`),
+      checks: [{ expr: "len(Poly(x**3-3*x-1, x).real_roots())", expect: "3" }],
+    },
+    mistake: b(R`Quên trường hợp $m$ bằng đúng giá trị cực trị, khi đó có một nghiệm kép.`, R`Forgetting the case where $m$ equals an extreme value exactly, which gives a double root.`),
+    drill: { prompt: b(R`Phương trình $x^3-3x=-3$ có bao nhiêu nghiệm thực?`, R`How many real roots does $x^3-3x=-3$ have?`), answer: b(R`Có $1$ nghiệm.`, R`It has $1$ root.`), checks: [{ expr: "len(Poly(x**3-3*x+3, x).real_roots())", expect: "1" }] },
+  },
+  {
+    name: b(R`Tích phân có giá trị tuyệt đối và diện tích giữa hai đồ thị`, R`Integrals with an absolute value and the area between two graphs`),
+    spot: b(R`Có $|f(x)|$ dưới dấu tích phân, hoặc hai đồ thị cắt nhau nhiều lần trong khoảng cần tính diện tích.`, R`An $|f(x)|$ under the integral sign, or two graphs that cross several times in the interval whose area is wanted.`),
+    method: [
+      b(R`Giải $f(x)=0$, chia đoạn tại các nghiệm trong đoạn lấy tích phân.`, R`Solve $f(x)=0$ and split the interval at the roots inside it.`),
+      b(R`Bỏ giá trị tuyệt đối theo dấu trên từng đoạn con rồi cộng các tích phân.`, R`Remove the absolute value according to the sign on each piece and add the integrals.`),
+    ],
+    example: {
+      prompt: b(R`Tính $\int_0^3|x-1|\,dx$.`, R`Compute $\int_0^3|x-1|\,dx$.`),
+      steps: [
+        b(R`Chia tại $x=1$: $\int_0^1(1-x)\,dx=\frac{1}{2}$.`, R`Split at $x=1$: $\int_0^1(1-x)\,dx=\frac{1}{2}$.`),
+        b(R`Và $\int_1^3(x-1)\,dx=2$, nên tổng là $\frac{5}{2}$.`, R`And $\int_1^3(x-1)\,dx=2$, so the total is $\frac{5}{2}$.`),
+      ],
+      ket: b(R`Giá trị bằng $\frac{5}{2}$.`, R`The value is $\frac{5}{2}$.`),
+      checks: [{ expr: "integrate(Abs(x-1), (x, 0, 3))", expect: "Rational(5,2)" }],
+    },
+    mistake: b(R`Tính tích phân của $f$ trên cả đoạn rồi mới lấy giá trị tuyệt đối.`, R`Integrating $f$ over the whole interval and only then taking the absolute value.`),
+    drill: { prompt: b(R`Tính $\int_0^4|x-2|\,dx$.`, R`Compute $\int_0^4|x-2|\,dx$.`), answer: b(R`Bằng $4$.`, R`It is $4$.`), checks: [{ expr: "integrate(2-x, (x, 0, 2))+integrate(x-2, (x, 2, 4))", expect: "4" }] },
+  },
 ];
 
 export default lop12;

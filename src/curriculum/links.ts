@@ -17,7 +17,7 @@ export const DANG_CHAPTER: Record<number, string[]> = {
   9: ["can", "can", "he-pt", "he-pt", "pt-b2", "bpt", "ham-b2", "lg-vuong", "tron", "khoi", "tan-so"],
   10: ["menh-de", "bpt-hai-an", "ham-bac-hai", "ham-bac-hai", "ham-bac-hai", "luong-giac", "vecto", "toa-do", "toa-do", "to-hop", "thong-ke"],
   11: ["luong-giac", "luong-giac", "luong-giac", "day-so", "gioi-han", "gioi-han", "mu-log", "mu-log", "dao-ham", "khong-gian", "xs-11"],
-  12: ["khao-sat", "khao-sat", "khao-sat", "khao-sat", "tich-phan", "tich-phan", "tich-phan", "tich-phan", "oxyz", "xs-12"],
+  12: ["khao-sat", "khao-sat", "khao-sat", "khao-sat", "tich-phan", "tich-phan", "tich-phan", "tich-phan", "oxyz", "xs-12", "do-thi-ham", "tp-nang-cao"],
 };
 
 /** Chương của từng bài tư duy theo lớp, theo thứ tự trong src/content/think/*.ts (5 bài mỗi lớp). */
@@ -77,6 +77,11 @@ export const METHOD_NODE: Record<string, { grade: number; chapter: string; stran
   "toi-uu-thuc-te": { grade: 12, chapter: "ung-dung-dh" },
   "xac-suat-bayes": { grade: 12, chapter: "xs-12" },
   "giao-diem-oxyz": { grade: 12, chapter: "oxyz" },
+  "tuong-giao-do-thi": { grade: 12, chapter: "do-thi-ham" },
+  "tp-tach-doan": { grade: 12, chapter: "tp-nang-cao" },
+  "khoang-cach-oxyz": { grade: 12, chapter: "oxyz-nang-cao" },
+  "cay-khong-hoan-lai": { grade: 12, chapter: "xs-nang-cao" },
+  "so-sanh-phan-tan": { grade: 12, chapter: "tk-nang-cao" },
 };
 
 export const methodNodeId = (id: string): string | undefined => {
