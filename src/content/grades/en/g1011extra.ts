@@ -66,61 +66,61 @@ export const g10Extra2En: Record<string, LessonEn> = {
   },
   "don-dieu-bac-hai": {
     s: R`The function $y=ax^2+bx+c$ has its vertex at $x=-\frac{b}{2a}$. When $a>0$ the function is decreasing on the interval to the left of the vertex and increasing on the interval to the right, while for $a<0$ it is the other way round.`,
-    w: R`A parabola is symmetric about the line through its vertex, so the direction of variation changes at the x-coy-coordinate of the vertex. With $a>0$ the vertex is the lowest point, so on both sides the values increase as we move away from it.`,
-    p: R`Getting the sign of the x-coy-coordinate $-\frac{b}{2a}$ of the vertex wrong, or forgetting to check the sign of $a$ before saying increasing or decreasing.`,
+    w: R`A parabola is symmetric about the line through its vertex, so the direction of variation changes at the x-coordinate of the vertex. With $a>0$ the vertex is the lowest point, so on both sides the values increase as we move away from it.`,
+    p: R`Getting the sign of the x-coordinate $-\frac{b}{2a}$ of the vertex wrong, or forgetting to check the sign of $a$ before saying increasing or decreasing.`,
     ex: [
       [R`Study the variation of $y=x^2-4x+1$.`, [
-        [R`The x-coy-coordinate of the vertex is $-\frac{-4}{2\cdot1}=2$.`, R`Substitute $a=1$ and $b=-4$ into $-\frac{b}{2a}$.`],
+        [R`The x-coordinate of the vertex is $-\frac{-4}{2\cdot1}=2$.`, R`Substitute $a=1$ and $b=-4$ into $-\frac{b}{2a}$.`],
         [R`Since $a=1>0$, the function is decreasing on $(-\infty;\ 2)$ and increasing on $(2;\ +\infty)$.`, R`The parabola opens upwards, so the values fall and then rise around the vertex.`],
       ], R`Decreasing on $(-\infty;\ 2)$ and increasing on $(2;\ +\infty)$.`],
       [R`Study the variation of $y=-2x^2+8x$.`, [
-        [R`The x-coy-coordinate of the vertex is $-\frac{8}{2\cdot(-2)}=2$.`, R`Substitute $a=-2$ and $b=8$ into the formula.`],
+        [R`The x-coordinate of the vertex is $-\frac{8}{2\cdot(-2)}=2$.`, R`Substitute $a=-2$ and $b=8$ into the formula.`],
         [R`Since $a=-2<0$, the function is increasing on $(-\infty;\ 2)$ and decreasing on $(2;\ +\infty)$.`, R`The parabola opens downwards, so the values rise and then fall around the vertex.`],
       ], R`Increasing on $(-\infty;\ 2)$ and decreasing on $(2;\ +\infty)$.`],
     ],
     dr: [
-      [R`Find the x-coy-coordinate of the vertex of $y=x^2+6x$.`, R`The x-coy-coordinate of the vertex is $-3$.`, R`We have $-\frac{6}{2\cdot1}=-3$.`],
-      [R`Find the x-coy-coordinate of the vertex of $y=-x^2+2x-5$.`, R`The x-coy-coordinate of the vertex is $1$.`, R`We have $-\frac{2}{2\cdot(-1)}=1$.`],
+      [R`Find the x-coordinate of the vertex of $y=x^2+6x$.`, R`The x-coordinate of the vertex is $-3$.`, R`We have $-\frac{6}{2\cdot1}=-3$.`],
+      [R`Find the x-coordinate of the vertex of $y=-x^2+2x-5$.`, R`The x-coordinate of the vertex is $1$.`, R`We have $-\frac{2}{2\cdot(-1)}=1$.`],
       [R`Find $m$ so that $y=x^2-mx+1$ is decreasing on $(-\infty;\ 3)$ and increasing on $(3;\ +\infty)$.`, R`The required value is $m=6$.`, R`The vertex is at $x=\frac{m}{2}$ and must equal $3$, so $m=6$.`],
     ],
   },
   "toa-do-vt": {
-    s: R`The vector $\overrightarrow{AB}$ has coy-coy-coordinates $(x_B-x_A;\ y_B-y_A)$. For $\vec a=(x_1;\ y_1)$ and $\vec b=(x_2;\ y_2)$ we have $\vec a+\vec b=(x_1+x_2;\ y_1+y_2)$, $k\vec a=(kx_1;\ ky_1)$, and the length is $|\vec a|=\sqrt{x_1^2+y_1^2}$.`,
-    w: R`A vector depends only on the difference of two points, so take the coy-coy-coordinates of the end point minus those of the start point. Addition and multiplication by a number are done on each coy-coordinate separately.`,
-    p: R`Taking the start point minus the end point, which reverses the sign of both coy-coy-coordinates, or forgetting the square root when computing a length.`,
+    s: R`The vector $\overrightarrow{AB}$ has coordinates $(x_B-x_A;\ y_B-y_A)$. For $\vec a=(x_1;\ y_1)$ and $\vec b=(x_2;\ y_2)$ we have $\vec a+\vec b=(x_1+x_2;\ y_1+y_2)$, $k\vec a=(kx_1;\ ky_1)$, and the length is $|\vec a|=\sqrt{x_1^2+y_1^2}$.`,
+    w: R`A vector depends only on the difference of two points, so take the coordinates of the end point minus those of the start point. Addition and multiplication by a number are done on each coordinate separately.`,
+    p: R`Taking the start point minus the end point, which reverses the sign of both coordinates, or forgetting the square root when computing a length.`,
     ex: [
-      [R`Let $A(1;\ 2)$ and $B(4;\ 6)$. Find the coy-coy-coordinates and the length of $\overrightarrow{AB}$.`, [
-        [R`The coy-coy-coordinates are $\overrightarrow{AB}=(4-1;\ 6-2)=(3;\ 4)$.`, R`Take the coy-coy-coordinates of the end point minus those of the start point.`],
-        [R`The length is $\sqrt{3^2+4^2}=5$.`, R`Use the length formula in coy-coy-coordinates.`],
+      [R`Let $A(1;\ 2)$ and $B(4;\ 6)$. Find the coordinates and the length of $\overrightarrow{AB}$.`, [
+        [R`The coordinates are $\overrightarrow{AB}=(4-1;\ 6-2)=(3;\ 4)$.`, R`Take the coordinates of the end point minus those of the start point.`],
+        [R`The length is $\sqrt{3^2+4^2}=5$.`, R`Use the length formula in coordinates.`],
       ], R`The vector $\overrightarrow{AB}=(3;\ 4)$ has length $5$.`],
-      [R`Let $\vec a=(2;\ -1)$ and $\vec b=(1;\ 3)$. Find the coy-coy-coordinates of $2\vec a-\vec b$.`, [
-        [R`We have $2\vec a=(4;\ -2)$.`, R`Multiply each coy-coordinate by $2$.`],
-        [R`Subtract $\vec b$: $(4-1;\ -2-3)=(3;\ -5)$.`, R`Subtract the corresponding coy-coy-coordinates.`],
+      [R`Let $\vec a=(2;\ -1)$ and $\vec b=(1;\ 3)$. Find the coordinates of $2\vec a-\vec b$.`, [
+        [R`We have $2\vec a=(4;\ -2)$.`, R`Multiply each coordinate by $2$.`],
+        [R`Subtract $\vec b$: $(4-1;\ -2-3)=(3;\ -5)$.`, R`Subtract the corresponding coordinates.`],
       ], R`The vector $2\vec a-\vec b=(3;\ -5)$.`],
     ],
     dr: [
       [R`Let $A(1;\ 1)$ and $B(7;\ 9)$. Find the length $AB$.`, R`The length is $10$.`, R`The vector $\overrightarrow{AB}=(6;\ 8)$ has length $\sqrt{36+64}=10$.`],
-      [R`Let $\vec a=(3;\ 1)$ and $\vec b=(-1;\ 2)$. What is the second coy-coordinate of $\vec a+\vec b$?`, R`The second coy-coordinate is $3$.`, R`Add the two second coy-coy-coordinates of the vectors: $1+2=3$.`],
+      [R`Let $\vec a=(3;\ 1)$ and $\vec b=(-1;\ 2)$. What is the second coordinate of $\vec a+\vec b$?`, R`The second coordinate is $3$.`, R`Add the two second coordinates of the vectors: $1+2=3$.`],
       [R`Find the length of the vector $(5;\ 12)$.`, R`The length is $13$.`, R`We have $\sqrt{25+144}=13$.`],
     ],
   },
   "trung-diem-trong-tam": {
-    s: R`The midpoint $M$ of $AB$ has coy-coy-coordinates $\left(\frac{x_A+x_B}{2};\ \frac{y_A+y_B}{2}\right)$. The centroid $G$ of triangle $ABC$ has coy-coy-coordinates $\left(\frac{x_A+x_B+x_C}{3};\ \frac{y_A+y_B+y_C}{3}\right)$.`,
-    w: R`The midpoint splits a segment into two equal parts, so its coy-coy-coordinates are the mean of the end points. The centroid balances three points, so its coy-coy-coordinates are the mean of the three.`,
-    p: R`Dividing by $2$ instead of $3$ when finding a centroid, or forgetting to find both coy-coy-coordinates of the point.`,
+    s: R`The midpoint $M$ of $AB$ has coordinates $\left(\frac{x_A+x_B}{2};\ \frac{y_A+y_B}{2}\right)$. The centroid $G$ of triangle $ABC$ has coordinates $\left(\frac{x_A+x_B+x_C}{3};\ \frac{y_A+y_B+y_C}{3}\right)$.`,
+    w: R`The midpoint splits a segment into two equal parts, so its coordinates are the mean of the end points. The centroid balances three points, so its coordinates are the mean of the three.`,
+    p: R`Dividing by $2$ instead of $3$ when finding a centroid, or forgetting to find both coordinates of the point.`,
     ex: [
       [R`Find the midpoint $M$ of $AB$ with $A(1;\ 2)$ and $B(5;\ 8)$.`, [
-        [R`The x-coy-coordinate is $\frac{1+5}{2}=3$.`, R`Take the mean of the two x-coy-coy-coordinates.`],
-        [R`The y-coordinate is $\frac{2+8}{2}=5$.`, R`Take the mean of the two y-coy-coordinates.`],
+        [R`The x-coordinate is $\frac{1+5}{2}=3$.`, R`Take the mean of the two x-coordinates.`],
+        [R`The y-coordinate is $\frac{2+8}{2}=5$.`, R`Take the mean of the two y-coordinates.`],
       ], R`The midpoint is $M(3;\ 5)$.`],
       [R`Find the centroid $G$ of the triangle with $A(0;\ 0)$, $B(6;\ 0)$ and $C(0;\ 3)$.`, [
-        [R`The x-coy-coordinate is $\frac{0+6+0}{3}=2$.`, R`Take the mean of the three x-coy-coy-coordinates.`],
-        [R`The y-coordinate is $\frac{0+0+3}{3}=1$.`, R`Take the mean of the three y-coy-coordinates.`],
+        [R`The x-coordinate is $\frac{0+6+0}{3}=2$.`, R`Take the mean of the three x-coordinates.`],
+        [R`The y-coordinate is $\frac{0+0+3}{3}=1$.`, R`Take the mean of the three y-coordinates.`],
       ], R`The centroid is $G(2;\ 1)$.`],
     ],
     dr: [
-      [R`Find the x-coy-coordinate of the midpoint of the segment joining $A(-2;\ 4)$ and $B(4;\ 0)$.`, R`The x-coy-coordinate is $1$.`, R`We have $\frac{-2+4}{2}=1$.`],
-      [R`Find the x-coy-coordinate of the centroid of the triangle with vertices $(1;\ 1)$, $(4;\ 2)$ and $(1;\ 6)$.`, R`The x-coy-coordinate is $2$.`, R`We have $\frac{1+4+1}{3}=2$.`],
+      [R`Find the x-coordinate of the midpoint of the segment joining $A(-2;\ 4)$ and $B(4;\ 0)$.`, R`The x-coordinate is $1$.`, R`We have $\frac{-2+4}{2}=1$.`],
+      [R`Find the x-coordinate of the centroid of the triangle with vertices $(1;\ 1)$, $(4;\ 2)$ and $(1;\ 6)$.`, R`The x-coordinate is $2$.`, R`We have $\frac{1+4+1}{3}=2$.`],
       [R`The point $M(2;\ 3)$ is the midpoint of $AB$ with $A(1;\ 1)$. Find the y-coordinate of $B$.`, R`The y-coordinate is $5$.`, R`From $\frac{1+y_B}{2}=3$ we get $y_B=2\cdot3-1=5$.`],
     ],
   },
@@ -146,11 +146,11 @@ export const g10Extra2En: Record<string, LessonEn> = {
   },
   "dk-song-song-vuong": {
     s: R`Two vectors $\vec a=(x_1;\ y_1)$ and $\vec b=(x_2;\ y_2)$ are parallel when $x_1y_2-x_2y_1=0$, and perpendicular when $x_1x_2+y_1y_2=0$. Three points $A$, $B$, $C$ are collinear when $\overrightarrow{AB}$ and $\overrightarrow{AC}$ are parallel.`,
-    w: R`Two vectors are parallel when their coy-coy-coordinates are proportional, that is when the determinant $x_1y_2-x_2y_1$ is $0$. They are perpendicular when the dot product is $0$, so the two conditions use two different expressions.`,
+    w: R`Two vectors are parallel when their coordinates are proportional, that is when the determinant $x_1y_2-x_2y_1$ is $0$. They are perpendicular when the dot product is $0$, so the two conditions use two different expressions.`,
     p: R`Confusing the parallel condition with the perpendicular one, because both lead to an expression equal to $0$ but the expressions are different.`,
     ex: [
       [R`Are the vectors $\vec a=(2;\ 3)$ and $\vec b=(4;\ 6)$ parallel?`, [
-        [R`Compute $x_1y_2-x_2y_1=2\cdot6-4\cdot3$.`, R`Substitute the coy-coy-coordinates into the parallel condition.`],
+        [R`Compute $x_1y_2-x_2y_1=2\cdot6-4\cdot3$.`, R`Substitute the coordinates into the parallel condition.`],
         [R`The result is $0$, so the vectors are parallel.`, R`Indeed $\vec b=2\vec a$.`],
       ], R`The vectors are parallel.`],
       [R`Find $m$ so that $\vec a=(1;\ m)$ is perpendicular to $\vec b=(2;\ 4)$.`, [

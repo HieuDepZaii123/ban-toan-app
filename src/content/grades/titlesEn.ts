@@ -42,7 +42,7 @@ export const titlesEn: Record<string, string> = {
   "10/toa-do-vt": "Coordinates of a vector and operations",
   "10/trung-diem-trong-tam": "Midpoint and centroid coordinates",
   "10/goc-hai-vt": "Dot product and the angle between vectors",
-  "10/dk-song-song-vuong": "Collinear and perpendicular vectors",
+  "10/dk-song-song-vuong": "Parallel and perpendicular vectors",
   "10/c/ung-dung-b2": "Applications of quadratic functions",
   "10/doanh-thu-b2": "Largest revenue and profit",
   "10/quy-dao-b2": "Parabolic paths",
