@@ -1867,3 +1867,4 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .plot-axis { stroke: currentColor; stroke-width: 1.4; }
 .plot-tick { fill: currentColor; font-size: 10px; }
 .plot-curve { fill: none; stroke: var(--accent, #2563eb); stroke-width: 2.2; stroke-linejoin: round; }
+.plot-asym { stroke: currentColor; stroke-width: 1; stroke-dasharray: 5 4; opacity: 0.55; }

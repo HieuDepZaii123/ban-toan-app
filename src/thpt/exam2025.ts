@@ -30,14 +30,17 @@ export const EXAM_MINUTES_2025 = 90;
 export const PART_POINTS = { mcq: 3, tf: 4, short: 3 } as const;
 
 /** Grade mix of the real paper: mostly grade 12, some grade 11, a little grade 10. */
-type Slot = { grade: number; hard?: true };
+type Slot = { grade: number; hard?: true; graph?: true };
+
+/** Mẫu câu hỏi đọc đồ thị hoặc bảng biến thiên; đề thật có nhiều câu loại này nên mỗi đề dành sẵn các ô cho chúng. */
+const GRAPH_KEYS = new Set(["dothicucdai", "dothinghiem", "dothidongbien", "dothipttcd", "dothipttcn", "dothiptdbien", "bbtcucdai", "bbtnghiem"]);
 const MCQ_SLOTS: readonly Slot[] = [
-  { grade: 12 }, { grade: 12 }, { grade: 12 }, { grade: 12 }, { grade: 12 },
+  { grade: 12 }, { grade: 12 }, { grade: 12 }, { grade: 12, graph: true }, { grade: 12, graph: true },
   { grade: 11 }, { grade: 11 }, { grade: 10 },
   // The last four are the "application" questions: parameters, optimisation, solids, two-step problems.
-  { grade: 12, hard: true }, { grade: 12, hard: true }, { grade: 12, hard: true }, { grade: 12, hard: true },
+  { grade: 12, hard: true, graph: true }, { grade: 12, hard: true }, { grade: 12, hard: true }, { grade: 12, hard: true },
 ];
-const SHORT_SLOTS: readonly Slot[] = [{ grade: 12 }, { grade: 12 }, { grade: 11 }, { grade: 11 }, { grade: 12, hard: true }, { grade: 12, hard: true }];
+const SHORT_SLOTS: readonly Slot[] = [{ grade: 12, graph: true }, { grade: 12 }, { grade: 11 }, { grade: 11 }, { grade: 12, hard: true }, { grade: 12, hard: true }];
 
 /** Topic sheets that carry the true/false statements, with a readable topic name. */
 export const TF_SOURCES: { topic: string; vi: string; en: string; items: readonly DssItem[] }[] = [
@@ -125,9 +128,9 @@ export function shortRight(question: ThptQuestion, typed: string | undefined): b
 function pickByGrade(pool: readonly ThptQuestion[], slots: readonly Slot[], rng: () => number, used: Set<string>, kinds: Set<string>): string[] {
   const out: string[] = [];
   const topics = new Set<string>();
-  for (const { grade, hard } of slots) {
+  for (const { grade, hard, graph } of slots) {
     // One paper never carries two questions of the same kind (two "length of AB", two "cos x = 0").
-    const options = shuffle(pool.filter((item) => item.grade === grade && !used.has(item.id) && !kinds.has(templateKeyOf(item.id)) && (hard ? HARD_KEYS.has(templateKeyOf(item.id)) : !HARD_KEYS.has(templateKeyOf(item.id)))), rng);
+    const options = shuffle(pool.filter((item) => item.grade === grade && !used.has(item.id) && !kinds.has(templateKeyOf(item.id)) && (graph ? GRAPH_KEYS.has(templateKeyOf(item.id)) : !GRAPH_KEYS.has(templateKeyOf(item.id))) && (hard ? HARD_KEYS.has(templateKeyOf(item.id)) : !HARD_KEYS.has(templateKeyOf(item.id)))), rng);
     // Prefer a topic not used yet, so one paper covers the chapters instead of repeating one.
     const pick = options.find((item) => !topics.has(item.topic)) ?? options[0];
     if (!pick) continue;
@@ -166,7 +169,7 @@ export function buildPaper(seed: number): Paper {
   const short = pickByGrade(SHORT_POOL, SHORT_SLOTS, rng, used, kinds);
   // Part II is built from data-reading families (a function and its derivative, coordinates, a counting table, a sequence),
   // so each statement needs a short calculation, instead of the bare statements of the in-app true/false sheets.
-  const tf: TfQuestion[] = shuffle(TF_FAMILIES, rng).slice(0, 4).map((family, index) => {
+  const tf: TfQuestion[] = (() => { const all = shuffle(TF_FAMILIES, rng); const graphFamily = all.find((family) => family.topic === "graph-reading"); return shuffle([graphFamily!, ...all.filter((family) => family !== graphFamily)].slice(0, 4), rng); })().map((family, index) => {
     const made = family.make(rng);
     return {
       id: `${family.topic}#${index}`,

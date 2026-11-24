@@ -15,7 +15,9 @@ function stepFor(span: number): number {
   return span <= 8 ? 1 : span <= 16 ? 2 : 5;
 }
 
-export function plotSvg(coef: number[], xmin: number, xmax: number, ymin: number, ymax: number): string {
+type Curve = { f: (x: number) => number; asymptotes?: { x?: number; y?: number } };
+
+function drawSvg(curve: Curve, xmin: number, xmax: number, ymin: number, ymax: number): string {
   const sx = (x: number) => PAD + ((x - xmin) / (xmax - xmin)) * (W - 2 * PAD);
   const sy = (y: number) => H - PAD - ((y - ymin) / (ymax - ymin)) * (H - 2 * PAD);
   const stepX = stepFor(xmax - xmin);
@@ -38,24 +40,44 @@ export function plotSvg(coef: number[], xmin: number, xmax: number, ymin: number
     if (y !== 0) parts.push(`<text x="${(ay - 4).toFixed(1)}" y="${(sy(y) + 3.5).toFixed(1)}" class="plot-tick" text-anchor="end">${y}</text>`);
   }
   parts.push(`<text x="${(ay - 4).toFixed(1)}" y="${(ax + 12).toFixed(1)}" class="plot-tick" text-anchor="end">O</text>`);
-  const points: string[] = [];
-  const steps = 160;
+  const asym = curve.asymptotes ?? {};
+  if (asym.x !== undefined) parts.push(`<line x1="${sx(asym.x).toFixed(1)}" y1="${PAD / 2}" x2="${sx(asym.x).toFixed(1)}" y2="${H - PAD / 2}" class="plot-asym"/>`);
+  if (asym.y !== undefined) parts.push(`<line x1="${PAD / 2}" y1="${sy(asym.y).toFixed(1)}" x2="${W - PAD / 2}" y2="${sy(asym.y).toFixed(1)}" class="plot-asym"/>`);
+  const steps = 400;
+  let run: string[] = [];
+  const flush = () => {
+    if (run.length > 1) parts.push(`<polyline points="${run.join(" ")}" class="plot-curve"/>`);
+    run = [];
+  };
+  let prev: number | null = null;
   for (let i = 0; i <= steps; i += 1) {
     const x = xmin + ((xmax - xmin) * i) / steps;
-    const y = evalPoly(coef, x);
-    if (y >= ymin - 1 && y <= ymax + 1) points.push(`${sx(x).toFixed(1)},${sy(Math.max(ymin - 1, Math.min(ymax + 1, y))).toFixed(1)}`);
+    const y = curve.f(x);
+    const inside = Number.isFinite(y) && y >= ymin - 1 && y <= ymax + 1;
+    // Một nhánh dừng khi ra khỏi khung hoặc khi nhảy qua tiệm cận đứng.
+    if (!inside || (prev !== null && Math.abs(y - prev) > (ymax - ymin))) flush();
+    if (inside) run.push(`${sx(x).toFixed(1)},${sy(y).toFixed(1)}`);
+    prev = Number.isFinite(y) ? y : null;
   }
-  parts.push(`<polyline points="${points.join(" ")}" class="plot-curve"/>`);
+  flush();
   return `<svg class="plot-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Đồ thị hàm số y = f(x)">${parts.join("")}</svg>`;
 }
 
 /** Thay mọi {{plot:…}} trong một đoạn văn bản bằng SVG; phần còn lại giữ nguyên. */
-export const PLOT_TOKEN = /\{\{plot:([^}]+)\}\}/g;
+export function plotSvg(coef: number[], xmin: number, xmax: number, ymin: number, ymax: number): string {
+  return drawSvg({ f: (x) => evalPoly(coef, x) }, xmin, xmax, ymin, ymax);
+}
 
-export function plotFromToken(body: string): string | null {
+/** y = (ax + b) / (cx + d) với tiệm cận đứng x = −d/c và tiệm cận ngang y = a/c, vẽ nét đứt. */
+export function plotRational(a: number, b: number, c: number, d: number, xmin: number, xmax: number, ymin: number, ymax: number): string {
+  return drawSvg({ f: (x) => (c * x + d === 0 ? Number.NaN : (a * x + b) / (c * x + d)), asymptotes: { x: -d / c, y: a / c } }, xmin, xmax, ymin, ymax);
+}
+
+export function plotFromToken(kind: "plot" | "plotr", body: string): string | null {
   const [coefText, x0, x1, y0, y1] = body.split("|");
   const coef = (coefText ?? "").split(",").map(Number);
   const nums = [x0, x1, y0, y1].map(Number);
-  if (coef.length < 2 || coef.some((n) => !Number.isFinite(n)) || nums.some((n) => !Number.isFinite(n))) return null;
-  return plotSvg(coef, nums[0]!, nums[1]!, nums[2]!, nums[3]!);
+  if (coef.some((n) => !Number.isFinite(n)) || nums.some((n) => !Number.isFinite(n))) return null;
+  if (kind === "plotr") return coef.length === 4 && coef[2] !== 0 ? plotRational(coef[0]!, coef[1]!, coef[2]!, coef[3]!, nums[0]!, nums[1]!, nums[2]!, nums[3]!) : null;
+  return coef.length >= 2 ? plotSvg(coef, nums[0]!, nums[1]!, nums[2]!, nums[3]!) : null;
 }

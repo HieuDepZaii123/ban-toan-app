@@ -1239,6 +1239,27 @@ const grade12Hard: Template[] = [
       [`Nghiệm của $f(x)=${k}$ là hoành độ giao điểm của đồ thị với đường thẳng nằm ngang $y=${k}$.`, `Đọc trên hình: đỉnh cao có tung độ $${t.M}$ và đỉnh thấp có tung độ $${t.m}$; so sánh $${k}$ với hai giá trị này.`, `Đường thẳng $y=${k}$ cắt đồ thị tại $${count}$ điểm phân biệt.`],
       `len(set(Poly(${bbtSympy(t.a, t.b, t.c)}-(${k}), x).real_roots()))`, String(count));
   } },
+  { key: "dothipttcd", make: (r) => {
+    const p = r.nz(-3, 3), h = r.nz(-3, 3), k = r.nz(-2, 2) * (Math.abs(p) === 1 ? 1 : 1);
+    return made(`Cho hàm số $y=f(x)$ có đồ thị như hình vẽ: {{plotr:${h},${k - h * p},1,${-p}|-6|6|-6|6}} Đồ thị có tiệm cận đứng là đường thẳng $x=a$. Giá trị của $a$ bằng`, nums(p, [-p, h, -h, p + 1]),
+      ["Tiệm cận đứng là đường thẳng đứng nét đứt mà hai nhánh của đồ thị tiến sát nhưng không cắt.", `Trên hình, đường thẳng đứng nét đứt cắt trục hoành tại điểm có hoành độ $${p}$.`, `Vậy tiệm cận đứng là $x=${p}$ và $a=${p}$.`],
+      `solve(x-(${p}), x)[0]`, String(p));
+  } },
+  { key: "dothipttcn", make: (r) => {
+    const p = r.nz(-3, 3), h = r.nz(-3, 3), k = r.nz(-2, 2);
+    return made(`Cho hàm số $y=f(x)$ có đồ thị như hình vẽ: {{plotr:${h},${k - h * p},1,${-p}|-6|6|-6|6}} Đồ thị có tiệm cận ngang là đường thẳng $y=b$. Giá trị của $b$ bằng`, nums(h, [-h, p, -p, h + 1]),
+      ["Tiệm cận ngang là đường nằm ngang nét đứt mà hai nhánh tiến sát khi $x$ rất lớn hoặc rất nhỏ.", `Trên hình, đường nằm ngang nét đứt đi qua điểm có tung độ $${h}$.`, `Vậy tiệm cận ngang là $y=${h}$ và $b=${h}$.`],
+      `limit((${h}*x+(${k - h * p}))/(x-(${p})), x, oo)`, String(h));
+  } },
+  { key: "dothiptdbien", make: (r) => {
+    const p = r.nz(-3, 3), h = r.nz(-3, 3), k = r.nz(-2, 2);
+    const up = k < 0;
+    return made(`Cho hàm số $y=f(x)$ có đồ thị như hình vẽ: {{plotr:${h},${k - h * p},1,${-p}|-6|6|-6|6}} Mệnh đề nào dưới đây đúng?`,
+      { right: up ? `Hàm số đồng biến trên mỗi khoảng $(-\\infty;\\ ${p})$ và $(${p};\\ +\\infty)$.` : `Hàm số nghịch biến trên mỗi khoảng $(-\\infty;\\ ${p})$ và $(${p};\\ +\\infty)$.`,
+        wrong: [up ? `Hàm số nghịch biến trên mỗi khoảng $(-\\infty;\\ ${p})$ và $(${p};\\ +\\infty)$.` : `Hàm số đồng biến trên mỗi khoảng $(-\\infty;\\ ${p})$ và $(${p};\\ +\\infty)$.`, `Hàm số đồng biến trên $\\mathbb{R}$.`, `Hàm số nghịch biến trên $\\mathbb{R}$.`] },
+      [`Hàm số không xác định tại $x=${p}$ nên chỉ xét trên từng khoảng, không nói trên $\\mathbb{R}$.`, `Trên mỗi nhánh, đi từ trái sang phải thì đồ thị đi ${up ? "lên" : "xuống"}.`, `Vậy hàm số ${up ? "đồng" : "nghịch"} biến trên mỗi khoảng xác định.`],
+      `diff((${h}*x+(${k - h * p}))/(x-(${p})), x).subs(x, ${p + 1})`, String(-k));
+  } },
   { key: "tdiemoabc", make: (r) => {
     let a = 1, b = 1, c = 1;
     do {
@@ -1269,7 +1290,7 @@ export const thptTopics: { id: string; grade: number; vi: string; en: string; ke
   { id: "g11-mu-log", grade: 11, vi: "Mũ và logarit", en: "Exponents and logarithms", keys: ["log", "mu", "loghieu"] },
   { id: "g11-dao-ham", grade: 11, vi: "Đạo hàm", en: "Derivatives", keys: ["daoham", "daohamhop"] },
   { id: "g11-xac-suat", grade: 11, vi: "Xác suất", en: "Probability", keys: ["xsdoclap", "xscodien"] },
-  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem", "dothicucdai", "dothinghiem"] },
+  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem", "dothicucdai", "dothinghiem", "dothipttcd", "dothipttcn", "dothiptdbien"] },
   { id: "g12-tiem-can", grade: 12, vi: "Tiệm cận", en: "Asymptotes", keys: ["tcngang", "tcdung"] },
   { id: "g12-tich-phan", grade: 12, vi: "Nguyên hàm và tích phân", en: "Antiderivatives and integrals", keys: ["nguyenham", "tp1", "tp2", "dientich", "tpdoibien", "tpphanh"] },
   { id: "g12-khong-gian", grade: 12, vi: "Tọa độ trong không gian", en: "Space coordinates", keys: ["kc3d", "kcmp", "matcau", "vuonggoc", "ptmp", "giaodiem", "tdiemoabc"] },

@@ -9,11 +9,10 @@ function escapeHtml(value: string): string {
 
 function renderMixed(text: string): string {
   return text
-    .split(/(\{\{plot:[^}]+\}\}|\$[^$]+\$)/g)
+    .split(/(\{\{plotr?:[^}]+\}\}|\$[^$]+\$)/g)
     .map((part) => {
-      if (part.startsWith("{{plot:") && part.endsWith("}}")) {
-        return plotFromToken(part.slice(7, -2)) ?? "";
-      }
+      const plot = part.match(/^\{\{(plotr?):([^}]+)\}\}$/);
+      if (plot) return plotFromToken(plot[1] as "plot" | "plotr", plot[2] ?? "") ?? "";
       if (part.startsWith("$") && part.endsWith("$") && part.length > 2) {
         return katex.renderToString(part.slice(1, -1), { throwOnError: false, output: "htmlAndMathml" });
       }
