@@ -1,6 +1,7 @@
 import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 import { lop12KyThuat, lop12UngDung } from "./lop12extra.ts";
+import { lop12DoThi, lop12OxyzNC, lop12TichPhanNC } from "./lop12extra2.ts";
 
 const R = String.raw;
 
@@ -310,5 +311,5 @@ const lop12Base: GradeBook = {
 /** Hai chương bổ sung xen vào sau chương cùng mạch: ứng dụng đạo hàm sau khảo sát, kĩ thuật tích phân sau tích phân. */
 export const lop12: GradeBook = {
   ...lop12Base,
-  chapters: lop12Base.chapters.flatMap((chapter) => (chapter.id === "khao-sat" ? [chapter, lop12UngDung] : chapter.id === "tich-phan" ? [chapter, lop12KyThuat] : [chapter])),
+  chapters: lop12Base.chapters.flatMap((chapter) => (chapter.id === "khao-sat" ? [chapter, lop12UngDung, lop12DoThi] : chapter.id === "tich-phan" ? [chapter, lop12KyThuat, lop12TichPhanNC] : chapter.id === "oxyz" ? [chapter, lop12OxyzNC] : [chapter])),
 };
