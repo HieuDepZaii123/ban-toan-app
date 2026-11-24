@@ -10,6 +10,7 @@ import { LINALG_CARDS } from "./linalgCards.ts";
 import { CALC_CARDS } from "./calcCards.ts";
 import { STATS_CARDS } from "./statsCards.ts";
 import { DISCRETE_CARDS } from "./discreteCards.ts";
+import { ANALYTIC_CARDS } from "./analyticCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -113,5 +114,14 @@ describe("Thẻ khám phá", () => {
     expect(label(DISCRETE_CARDS.fermat)).toBe("Dư $4$");
     expect(label(DISCRETE_CARDS.handshake)).toContain("Không thể");
     expect(label(DISCRETE_CARDS.rsa)).toBe("$7$");
+  });
+
+  test("các thẻ hình giải tích có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(ANALYTIC_CARDS.touch)).toBe("1 điểm");
+    expect(label(ANALYTIC_CARDS.distance)).toBe("$2,6$");
+    expect(label(ANALYTIC_CARDS.parallel)).toBe("Song song");
+    expect(label(ANALYTIC_CARDS.skew)).toBe("Chéo nhau");
+    expect(label(ANALYTIC_CARDS.slice)).toBe("$4$");
   });
 });

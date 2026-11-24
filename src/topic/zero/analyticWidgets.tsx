@@ -154,7 +154,7 @@ export function CircleLineLab() {
     <Stage
       title={tt("Đường tròn và đường thẳng: so khoảng cách với bán kính", "A circle and a line: compare the distance with the radius")}
       story={tt(
-        R`Đường tròn là mọi điểm cách tâm đúng $R$. Một đường thẳng có thể cắt nó tại hai điểm, chạm đúng một điểm (tiếp xúc), hoặc đứng ngoài. Cách phân biệt rất gọn: đo khoảng cách $d$ từ tâm đến đường thẳng rồi so với $R$. Máy tính chân đường vuông góc, rồi dùng Pythagore để tìm hai giao điểm cách chân một đoạn $\sqrt{R^2-d^2}$.`,
+        R`Đường tròn là mọi điểm cách tâm đúng $R$. Một đường thẳng có thể cắt nó tại hai điểm, chạm đúng một điểm (tiếp xúc), hoặc đứng ngoài. Cách phân biệt rất gọn: đo khoảng cách $d$ từ tâm đến đường thẳng rồi so với $R$. Máy dựng chân đường vuông góc, rồi dùng Pythagore để đặt hai giao điểm cách chân một đoạn $\sqrt{R^2-d^2}$.`,
         R`A circle is every point at distance exactly $R$ from the centre. A line can cut it at two points, touch it at exactly one (tangent), or stay outside. Telling them apart is easy: measure the distance $d$ from the centre to the line and compare it with $R$. The machine finds the foot of the perpendicular, then uses Pythagoras to place the two intersection points at distance $\sqrt{R^2-d^2}$ from the foot.`,
       )}
       read={tt(

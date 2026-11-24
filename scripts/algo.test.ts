@@ -551,6 +551,23 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("RSA: giải mã đúng với mọi tin nhắn", Array.from({ length: 54 }, (_, i) => i + 1).every((m) => A.rsaToy(5, 11, 3, m)?.plain === m));
 }
 
+// Hình giải tích: vị trí tương đối.
+{
+  is("x − y = 0 và x + y = 2 cắt nhau", A.lineRelation(1, -1, 0, 1, 1, -2) === "cat");
+  is("y = 2x + 1 và y = 2x − 3 song song", A.lineRelation(2, -1, 1, 2, -1, -3) === "songsong");
+  is("hai phương trình tỉ lệ thì trùng", A.lineRelation(1, 2, -3, 2, 4, -6) === "trung");
+  is("hai đường thẳng đứng khác nhau song song", A.lineRelation(1, 0, -1, 1, 0, -3) === "songsong");
+  is("trục x và trục y cắt nhau", A.spaceLineRelation([0, 0, 0], [1, 0, 0], [0, 0, 0], [0, 1, 0]) === "cat");
+  is("hai đường thẳng chéo nhau", A.spaceLineRelation([0, 0, 0], [1, 0, 0], [0, 0, 1], [0, 1, 0]) === "cheo");
+  is("hai đường thẳng song song trong không gian", A.spaceLineRelation([0, 0, 0], [1, 0, 0], [0, 1, 0], [2, 0, 0]) === "songsong");
+  is("hai đường thẳng trùng trong không gian", A.spaceLineRelation([0, 0, 0], [1, 0, 0], [3, 0, 0], [2, 0, 0]) === "trung");
+  near("mặt cầu R = 5 cắt mặt phẳng cách tâm 3 theo bán kính 4", A.sphereSliceRadius(5, 3)!, 4, 1e-12);
+  near("mặt phẳng tiếp xúc có bán kính 0", A.sphereSliceRadius(5, 5)!, 0, 1e-12);
+  is("mặt phẳng xa hơn R không giao", A.sphereSliceRadius(5, 6) === null);
+  const lc = A.lineCircle(1, 1, -4, 0, 0, Math.sqrt(8));
+  is("x + y = 4 tiếp xúc x² + y² = 8", lc.points.length === 1 && Math.abs(lc.d - Math.sqrt(8)) < 1e-9);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

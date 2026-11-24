@@ -680,7 +680,7 @@ export function lineCircle(a: number, b: number, c: number, cx: number, cy: numb
   const half = Math.sqrt(Math.max(0, R * R - d * d));
   const ux = -b / n;
   const uy = a / n;
-  const pts = half < 1e-9 ? [foot] : [{ x: foot.x - ux * half, y: foot.y - uy * half }, { x: foot.x + ux * half, y: foot.y + uy * half }];
+  const pts = half < 1e-6 ? [foot] : [{ x: foot.x - ux * half, y: foot.y - uy * half }, { x: foot.x + ux * half, y: foot.y + uy * half }];
   return { d, foot, points: pts };
 }
 
@@ -1186,6 +1186,27 @@ export function rsaToy(p: number, q: number, e: number, m: number): { n: number;
   if (d === null || m >= n) return null;
   const cipher = modPow(m, e, n);
   return { n, phi, d, cipher, plain: modPow(cipher, d, n) };
+}
+
+/** Vị trí tương đối của hai đường thẳng trong mặt phẳng a₁x + b₁y + c₁ = 0 và a₂x + b₂y + c₂ = 0, qua định thức D = a₁b₂ − a₂b₁. */
+export function lineRelation(a1: number, b1: number, c1: number, a2: number, b2: number, c2: number): "cat" | "songsong" | "trung" {
+  if (Math.abs(a1 * b2 - a2 * b1) > 1e-9) return "cat";
+  const same = Math.abs(a1 * c2 - a2 * c1) < 1e-9 && Math.abs(b1 * c2 - b2 * c1) < 1e-9;
+  return same ? "trung" : "songsong";
+}
+
+/** Hai đường thẳng trong không gian M₁ + t·u và M₂ + s·v: song song, trùng, cắt hoặc chéo nhau (qua tích có hướng và tích hỗn tạp). */
+export function spaceLineRelation(M1: V3, u: V3, M2: V3, v: V3): "songsong" | "trung" | "cat" | "cheo" {
+  const w = sub3(M2, M1);
+  const uv = cross3(u, v);
+  if (Math.hypot(...uv) < 1e-9) return Math.hypot(...cross3(u, w)) < 1e-9 ? "trung" : "songsong";
+  return Math.abs(dot3(uv, w)) < 1e-9 ? "cat" : "cheo";
+}
+
+/** Bán kính đường tròn là giao của mặt cầu bán kính R với mặt phẳng cách tâm d: √(R² − d²); null nếu không giao nhau. */
+export function sphereSliceRadius(R: number, d: number): number | null {
+  const gap = R * R - d * d;
+  return gap < -1e-12 ? null : Math.sqrt(Math.max(0, gap));
 }
 
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */

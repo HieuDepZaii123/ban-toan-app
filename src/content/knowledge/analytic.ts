@@ -64,6 +64,17 @@ export const analyticKnowledge: TopicKnowledge = {
             R`Điểm chung của hai đường thẳng là nghiệm của hệ hai phương trình. Định thức của hệ là $D=a_1b_2-a_2b_1$. Theo quy tắc Cramer, khi $D\neq 0$ hệ có đúng một nghiệm, tức hai đường cắt nhau tại đúng một điểm.`,
             R`Khi $D=0$, hai pháp tuyến $(a_1;b_1)$ và $(a_2;b_2)$ cùng phương, nên hai đường thẳng cùng hướng. Hai đường cùng hướng thì hoặc không có điểm chung (song song), hoặc trùng nhau; so thêm hệ số tự do để biết trường hợp nào.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng hệ số góc",
+              buoc: [
+                R`Giả sử $b_1,b_2\neq 0$. Viết hai đường dưới dạng $y=k_1x+m_1$ và $y=k_2x+m_2$ với $k_i=-\frac{a_i}{b_i}$. Hoành độ điểm chung thỏa $(k_1-k_2)x=m_2-m_1$.`,
+                R`Nếu $k_1\neq k_2$ thì có đúng một $x$, rồi $y$ tính từ một đường: hai đường cắt nhau tại đúng một điểm. Vì $k_1-k_2=\frac{a_2b_1-a_1b_2}{b_1b_2}$ nên $k_1\neq k_2$ khi và chỉ khi $a_1b_2-a_2b_1\neq 0$.`,
+                R`Nếu $k_1=k_2$, hai đường có cùng độ dốc: khi $m_1\neq m_2$ không có $x$ nào thỏa nên hai đường song song, khi $m_1=m_2$ chúng trùng nhau. Trường hợp này ứng với $a_1b_2-a_2b_1=0$.`,
+                R`Nếu một hệ số $b$ bằng $0$, đường thẳng ấy thẳng đứng. Hai đường cùng thẳng đứng thì song song hoặc trùng, và $a_1b_2-a_2b_1=0$. Chỉ một đường thẳng đứng thì hai đường cắt nhau tại một điểm, và $a_1b_2-a_2b_1\neq 0$. `,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Góc giữa hai đường thẳng",
@@ -101,6 +112,18 @@ export const analyticKnowledge: TopicKnowledge = {
             R`Với một điểm thì dùng ngay định nghĩa: đường tròn gồm những điểm cách tâm đúng $R$, nên điểm gần tâm hơn $R$ nằm trong, xa hơn $R$ nằm ngoài.`,
             R`Với đường thẳng: gọi $H$ là chân đường vuông góc hạ từ tâm $I$, và $IH=d$. Một điểm $N$ trên đường thẳng cách $H$ một đoạn $t$ thì theo Pythagore $IN^2=d^2+t^2$. Điểm $N$ nằm trên đường tròn đúng khi $t^2=R^2-d^2$.`,
             R`Nếu $d<R$ thì $t$ nhận hai giá trị đối nhau: hai giao điểm. Nếu $d=R$ thì $t=0$: một điểm chung duy nhất là $H$, đường thẳng tiếp xúc. Nếu $d>R$ thì $t^2$ phải âm, không thể: không có điểm chung.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng biệt thức của phương trình bậc hai",
+              buoc: [
+                R`Lấy một điểm $M(x_0;y_0)$ trên đường thẳng, chỉ phương $(u;v)$, và đặt $p=x_0-a$, $q=y_0-b$. Điểm $(x_0+ut;\,y_0+vt)$ nằm trên đường tròn khi $(p+ut)^2+(q+vt)^2=R^2$, tức $(u^2+v^2)t^2+2(up+vq)t+(p^2+q^2-R^2)=0$.`,
+                R`Số giao điểm bằng số nghiệm $t$, quyết định bởi dấu của $\Delta'=(up+vq)^2-(u^2+v^2)(p^2+q^2-R^2)$.`,
+                R`Dùng đồng nhất thức $(up+vq)^2+(uq-vp)^2=(u^2+v^2)(p^2+q^2)$, ta được $\Delta'=(u^2+v^2)R^2-(uq-vp)^2$.`,
+                R`Khoảng cách từ tâm $I(a;b)$ đến đường thẳng có pháp tuyến $(v;-u)$ là $d=\frac{|uq-vp|}{\sqrt{u^2+v^2}}$. Do đó $\Delta'=(u^2+v^2)(R^2-d^2)$, và dấu của $\Delta'$ là dấu của $R^2-d^2$.`,
+                R`Vậy có hai nghiệm khi $d<R$, một nghiệm kép khi $d=R$ và vô nghiệm khi $d>R$, tương ứng hai giao điểm, tiếp xúc, không giao nhau.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Tiếp tuyến tại một điểm của đường tròn", text: R`Tiếp tuyến tại $M$ thuộc đường tròn đi qua $M$ và có vectơ pháp tuyến là $\overrightarrow{IM}$, vì tiếp tuyến vuông góc với bán kính tại tiếp điểm.` },
@@ -198,6 +221,17 @@ export const analyticKnowledge: TopicKnowledge = {
             R`Nếu $p\neq 0$ thì có đúng một giá trị $t$, ứng với đúng một điểm chung: đường thẳng cắt mặt phẳng.`,
             R`Nếu $p=0$, tức chỉ phương vuông góc với pháp tuyến, đường thẳng cùng hướng với mặt phẳng. Khi đó nếu $q\neq 0$ thì không $t$ nào thỏa: song song. Nếu $q=0$ thì mọi $t$ đều thỏa: cả đường thẳng nằm trong mặt phẳng.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng hệ ba mặt phẳng",
+              buoc: [
+                R`Viết đường thẳng thành giao của hai mặt phẳng không song song có pháp tuyến $\vec{n}_1$, $\vec{n}_2$. Chỉ phương $\vec{u}$ vuông góc với cả hai pháp tuyến nên cùng phương với $\vec{n}_1\times\vec{n}_2$. Điểm chung của đường thẳng và mặt phẳng $(P)$ có pháp tuyến $\vec{n}$ là nghiệm của hệ ba phương trình bậc nhất ba ẩn.`,
+                R`Định thức của hệ là $\det(\vec{n}_1,\vec{n}_2,\vec{n})=(\vec{n}_1\times\vec{n}_2)\cdot\vec{n}$, tức bằng $k\,\vec{u}\cdot\vec{n}$ với một số $k\neq0$.`,
+                R`Nếu $\vec{u}\cdot\vec{n}\neq0$ thì định thức khác $0$ và theo quy tắc Cramer hệ có đúng một nghiệm: đường thẳng cắt mặt phẳng tại đúng một điểm.`,
+                R`Nếu $\vec{u}\cdot\vec{n}=0$ thì định thức bằng $0$, không còn nghiệm duy nhất. Khi đó một điểm $M$ của đường thẳng quyết định: nếu $M\notin(P)$ thì hệ vô nghiệm (song song), nếu $M\in(P)$ thì cả đường thẳng nằm trong $(P)$ (vô số nghiệm).`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Hai đường thẳng",
@@ -206,6 +240,16 @@ export const analyticKnowledge: TopicKnowledge = {
             R`Chia theo hai câu hỏi: hai đường có cùng hướng không, và có điểm chung không. Cùng hướng mà không có điểm chung là song song; cùng hướng mà có điểm chung thì trùng nhau.`,
             R`Khác hướng mà có điểm chung là cắt nhau. Khác hướng mà không có điểm chung là chéo nhau.`,
             R`Trong mặt phẳng, hai đường khác hướng luôn cắt nhau vì định thức của hệ khác $0$. Trong không gian có thêm một chiều để hai đường «lách» qua nhau, như cầu vượt đi phía trên con đường bên dưới, nên mới có trường hợp chéo nhau.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng tích hỗn tạp",
+              buoc: [
+                R`Gọi hai đường là $M_1+t\vec{u}$ và $M_2+s\vec{v}$ với $\vec{u}$, $\vec{v}$ không cùng phương. Chúng cắt nhau khi và chỉ khi tồn tại $t$, $s$ để $M_1+t\vec{u}=M_2+s\vec{v}$, tức $\overrightarrow{M_1M_2}=t\vec{u}-s\vec{v}$.`,
+                R`Vì $\vec{u}$, $\vec{v}$ độc lập, mọi vectơ trong mặt phẳng của chúng viết được dưới dạng $t\vec{u}-s\vec{v}$. Vậy hai đường cắt nhau khi và chỉ khi $\overrightarrow{M_1M_2}$ nằm trong mặt phẳng của $\vec{u}$ và $\vec{v}$, tức ba vectơ $\vec{u}$, $\vec{v}$, $\overrightarrow{M_1M_2}$ đồng phẳng.`,
+                R`Vì $\vec{u}$, $\vec{v}$ không cùng phương nên $[\vec{u},\vec{v}]\neq\vec{0}$ và vuông góc với mặt phẳng của chúng. Do đó $\overrightarrow{M_1M_2}$ nằm trong mặt phẳng ấy khi và chỉ khi $[\vec{u},\vec{v}]\cdot\overrightarrow{M_1M_2}=0$. Giá trị khác $0$ nghĩa là hai đường không cùng nằm trong một mặt phẳng, tức chéo nhau.`,
+              ],
+            },
           ],
         },
         {
@@ -245,6 +289,16 @@ export const analyticKnowledge: TopicKnowledge = {
             R`Điểm $N$ nằm trên mặt cầu đúng khi $IN=R$, tức $HN^2=R^2-d^2$. Nếu $d<R$, đó là các điểm của mặt phẳng cách $H$ đúng $\sqrt{R^2-d^2}$: một đường tròn tâm $H$.`,
             R`Nếu $d=R$ thì $HN=0$, chỉ có điểm $H$: mặt phẳng tiếp xúc mặt cầu. Nếu $d>R$ thì $HN^2$ phải âm, không thể: không có điểm chung.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng chọn hệ trục thích hợp",
+              buoc: [
+                R`Phép tịnh tiến và phép quay giữ nguyên khoảng cách, nên ta chọn hệ trục có gốc ở tâm $I$ và mặt phẳng là $z=d$, với $d\ge0$ là khoảng cách từ $I$ tới mặt phẳng.`,
+                R`Trong hệ này mặt cầu là $x^2+y^2+z^2=R^2$. Giao với mặt phẳng $z=d$ cho $x^2+y^2=R^2-d^2$.`,
+                R`Nếu $d<R$ thì vế phải dương: đó là đường tròn tâm $(0;0;d)$, bán kính $\sqrt{R^2-d^2}$. Nếu $d=R$ thì chỉ có $(0;0;d)$. Nếu $d>R$ thì vế phải âm nên không có điểm nào.`,
+              ],
+            },
+          ],
         },
         { kind: "cach-lam", title: "Viết phương trình mặt cầu", text: R`Biết tâm và một điểm trên mặt cầu thì bán kính là khoảng cách giữa hai điểm. Biết đường kính $AB$ thì tâm là trung điểm $AB$. Biết tiếp xúc với một mặt phẳng thì bán kính là khoảng cách từ tâm đến mặt phẳng.` },
         { kind: "luu-y", text: R`Phải kiểm $a^2+b^2+c^2-d>0$ trước khi nói đó là mặt cầu. Nếu bằng $0$ thì chỉ là một điểm, nếu âm thì không có điểm nào.` },
@@ -269,6 +323,14 @@ export const analyticKnowledge: TopicKnowledge = {
     { id: "triangle", vi: R`Khoảng cách và góc tính bằng tọa độ cho cùng kết quả như tính bằng hình học trong chuyên đề Hình phẳng và không gian.` },
   ],
   checks: [
+    { expr: "simplify(-a1/b1+a2/b2+(a1*b2-a2*b1)/(b1*b2))", expect: "0" },
+    { expr: "expand((u*p+v*q)**2+(u*q-v*p)**2-(u**2+v**2)*(p**2+q**2))", expect: "0" },
+    { expr: "expand((u*p+v*q)**2-(u**2+v**2)*(p**2+q**2-R**2)-((u**2+v**2)*R**2-(u*q-v*p)**2))", expect: "0" },
+    { expr: "expand((p+u*t)**2+(q+v*t)**2-R**2-((u**2+v**2)*t**2+2*(u*p+v*q)*t+(p**2+q**2-R**2)))", expect: "0" },
+    { expr: "expand(Matrix([[a1,b1,c1],[a2,b2,c2],[a3,b3,c3]]).det()-Matrix([a1,b1,c1]).cross(Matrix([a2,b2,c2])).dot(Matrix([a3,b3,c3])))", expect: "0" },
+    { expr: "Matrix([[1,0,0],[0,1,0],[0,0,1]]).det()", expect: "1" },
+    { expr: "Matrix([[1,0,0],[0,1,0],[1,1,0]]).det()", expect: "0" },
+    { expr: "expand(A*(x0+a*t)+B*(y0+b*t)+C*(z0+c*t)+D-((A*a+B*b+C*c)*t+(A*x0+B*y0+C*z0+D)))", expect: "0" },
     { expr: "Abs(3+1-2)/sqrt(2)", expect: "sqrt(2)" },
     { expr: "expand(2*(x-1)-(y-2))", expect: "2*x-y" },
     { expr: "Abs(1*1+1*0)/(sqrt(2)*1)", expect: "sqrt(2)/2" },
