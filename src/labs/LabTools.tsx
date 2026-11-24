@@ -4,7 +4,7 @@ import { readParams, useSlice, writeParams } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 import { getLabSpeed, setLabSpeed } from "./clock.ts";
-import { History, type Params } from "./history.ts";
+import { History, sig, type Params } from "./history.ts";
 import { encodeParams, sanitizeParams } from "./shared.ts";
 
 type Saved = { name: string; params: Params; at: number };
@@ -107,6 +107,10 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
     return () => window.clearTimeout(timer);
   }, [current]);
 
+  // A change that the debounce has not recorded yet still counts: Undo must work right after a drag, not 350 ms later.
+  const dirty = sig(current) !== sig(hist.current.now);
+  const canUndo = hist.current.past.length > 0 || dirty;
+  const canRedo = hist.current.future.length > 0 && !dirty;
   const flush = () => {
     if (spec) hist.current.record(readParams(id, spec.init, spec.range));
   };
@@ -270,8 +274,8 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
   return (
     <div className="lab-tools" ref={rootRef}>
       <div className="lab-tools-row" role="group" aria-label={t(lang, "Công cụ lab", "Lab tools")}>
-        <button type="button" className="text-btn" onClick={undo} disabled={hist.current.past.length === 0}>{t(lang, "Hoàn tác", "Undo")}</button>
-        <button type="button" className="text-btn" onClick={redo} disabled={hist.current.future.length === 0}>{t(lang, "Làm lại", "Redo")}</button>
+        <button type="button" className="text-btn" onClick={undo} disabled={!canUndo}>{t(lang, "Hoàn tác", "Undo")}</button>
+        <button type="button" className="text-btn" onClick={redo} disabled={!canRedo}>{t(lang, "Làm lại", "Redo")}</button>
         <button type="button" className="text-btn" onClick={reset}>{t(lang, "Đặt lại", "Reset")}</button>
         <button type="button" className="text-btn" onClick={() => void share()}>{t(lang, "Chia sẻ liên kết", "Share link")}</button>
         <button type="button" className="text-btn" onClick={takeSnapshot}>{t(lang, "Giữ ảnh chụp", "Keep snapshot")}</button>

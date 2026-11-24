@@ -39,6 +39,21 @@ for (const [topic, spec] of Object.entries(allLabSpecs)) {
     await press();
     if ((await count()) !== none) fails.push(`${topic}: đề ${i + 1} được tính khi chưa làm gì`);
   }
+
+  // 3. Hoàn tác phải dùng được ngay sau khi kéo, không phải chờ bộ trễ ghi lịch sử (thử trên trang mới, chưa có lịch sử).
+  const fresh = await context.newPage();
+  await fresh.goto(`${BASE}/t/${topic}?tab=tn`, { waitUntil: "networkidle" });
+  await fresh.locator(".lab-main").waitFor({ timeout: 15000 });
+  const slider = fresh.locator(".lab-main input[type=range]").first();
+  if (await slider.count()) {
+    await slider.focus();
+    const before = await slider.inputValue();
+    await fresh.keyboard.press("ArrowRight");
+    // Thanh trượt đang ở mút phải thì ArrowRight không đổi gì: đi ngược lại.
+    if ((await slider.inputValue()) === before) await fresh.keyboard.press("ArrowLeft");
+    const undo = fresh.getByRole("button", { name: /Hoàn tác|Undo/ }).first();
+    if (await undo.isDisabled()) fails.push(`${topic}: nút Hoàn tác còn bị khóa ngay sau khi kéo thanh trượt`);
+  }
   await context.close();
 }
 await browser.close();
