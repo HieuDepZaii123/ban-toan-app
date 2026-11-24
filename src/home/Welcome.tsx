@@ -8,13 +8,16 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ: Bàn Toán có gì, ba lối vào chính, rồi phần miễn phí và Premium. */
+/** Đầu trang chủ: một câu "Không …, hãy …", Bàn Toán có gì, ba lối vào chính, rồi phần miễn phí và Premium. */
 export function Welcome() {
   const lang = useLang();
   return (
     <section className="hero-welcome">
       <p className="kicker">{t(lang, "Toán lớp 1–12", "Maths, grades 1–12")}</p>
-      <h1>{t(lang, "Kéo hình, làm bài, xem lời giải từng bước.", "Drag the figure, try the problem, read each step.")}</h1>
+      <h1>
+        <span className="no">{t(lang, "Không học thuộc công thức toán học,", "Don't memorise maths formulas.")}</span>{" "}
+        <span className="yes">{t(lang, "hãy hiểu nó.", "Understand them.")}</span>
+      </h1>
       <p className="lead">
         {t(
           lang,
@@ -29,6 +32,10 @@ export function Welcome() {
           <article key={pillar.id} className="pillar" aria-labelledby={`pillar-${pillar.id}`}>
             <PillarMark id={pillar.id} />
             <h2 id={`pillar-${pillar.id}`}>{t(lang, pillar.vi, pillar.en)}</h2>
+            <p className="pillar-gist">
+              <span className="no">{t(lang, pillar.noVi, pillar.noEn)}</span>{" "}
+              <span className="yes">{t(lang, pillar.yesVi, pillar.yesEn)}</span>
+            </p>
             <p className="pillar-body">{t(lang, pillar.bodyVi, pillar.bodyEn)}</p>
             <p className="pillar-links">
               {pillar.links.map((link) => (
@@ -57,12 +64,17 @@ type PillarId = "hoc" | "nghien-cuu" | "sang-tao";
 const PILLARS: {
   id: PillarId;
   vi: string; en: string;
+  /** "Không …," then "hãy …": the habit to drop, then what to do instead. */
+  noVi: string; noEn: string;
+  yesVi: string; yesEn: string;
   bodyVi: string; bodyEn: string;
   links: { href: string; vi: string; en: string }[];
 }[] = [
   {
     id: "hoc",
     vi: "Học", en: "Learn",
+    noVi: "Không chép công thức,", noEn: "Don't copy the formula.",
+    yesVi: "hãy nhìn nó chuyển động.", yesEn: "Watch it move.",
     bodyVi: "Kéo một tham số, đồ thị và con số đổi theo. Mỗi bài giải từng bước, bước nào cũng ghi lý do.",
     bodyEn: "Drag a parameter and the graph and the numbers follow. Every lesson is worked step by step, with a reason for each step.",
     links: [
@@ -74,6 +86,8 @@ const PILLARS: {
   {
     id: "nghien-cuu",
     vi: "Nghiên cứu", en: "Investigate",
+    noVi: "Không làm theo bài mẫu,", noEn: "Don't follow the example.",
+    yesVi: "hãy tự đặt câu hỏi.", yesEn: "Ask your own question.",
     bodyVi: "Nêu giả thuyết, đo năm dòng số liệu, xem đồ thị, viết kết luận, rồi đối chiếu với chứng minh.",
     bodyEn: "State a guess, measure five rows of data, read the graph, write a conclusion, then compare it with the proof.",
     links: [
@@ -84,6 +98,8 @@ const PILLARS: {
   {
     id: "sang-tao",
     vi: "Dựng hình và soạn đề", en: "Build and write",
+    noVi: "Không chỉ giải đề có sẵn,", noEn: "Don't just solve set problems.",
+    yesVi: "hãy tự làm ra đề.", yesEn: "Make your own.",
     bodyVi: "Dựng hình phẳng, xoay tám loại khối, soạn đề và phiếu học có công thức rồi xuất PDF hoặc Word.",
     bodyEn: "Build plane figures, turn eight kinds of solid, write tests and worksheets with formulas and export them to PDF or Word.",
     links: [

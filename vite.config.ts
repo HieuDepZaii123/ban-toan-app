@@ -26,7 +26,7 @@ export default defineConfig({
       manifest: {
         name: "Bàn Toán",
         short_name: "Bàn Toán",
-        description: "Toán lớp 1–12: kéo hình, làm bài, xem lời giải từng bước.",
+        description: "Không học thuộc công thức toán học, hãy hiểu nó. Toán lớp 1–12: kéo hình, làm bài, xem lời giải từng bước.",
         lang: "vi",
         start_url: "/",
         scope: "/",
