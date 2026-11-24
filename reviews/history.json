@@ -108,5 +108,17 @@
       "english": 6,
       "pedagogy": 6
     }
+  },
+  {
+    "id": "2026-11-24-h",
+    "note": "Chạy lại vòng nội dung học mới lớp 10–12 sau khi viết lại bài luyện, thêm ô nhập, đồ thị vẽ thật trong đề thi; bản tiếng Anh còn lỗi 'coy-coordinate' lúc chấm (đã sửa sau đó).",
+    "scores": {
+      "lecturer": 7,
+      "hs10": 5,
+      "hs12": 5,
+      "curriculum": 7,
+      "english": 5,
+      "pedagogy": 6
+    }
   }
 ]
