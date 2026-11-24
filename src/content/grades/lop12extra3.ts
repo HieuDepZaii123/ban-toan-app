@@ -175,7 +175,7 @@ export const lop12XsNC: GradeChapter = chuong("xs-nang-cao", "Xác suất nâng 
     ],
     [
       luyen(R`Hai biến cố độc lập có $P(A)=\frac{1}{5}$ và $P(B)=\frac{1}{2}$. Tính $P(A\cap B)$.`, R`Xác suất bằng $\frac{1}{10}$.`, [{ expr: "Rational(1,5)*Rational(1,2)", expect: "Rational(1,10)" }], R`Với biến cố độc lập thì xác suất giao bằng tích hai xác suất.`),
-      luyen(R`Với hai biến cố độc lập ở câu trên, tính $P(A\cup B)$.`, R`Xác suất bằng $\frac{3}{5}$.`, [{ expr: "Rational(1,5)+Rational(1,2)-Rational(1,10)", expect: "Rational(3,5)" }], R`Ta có $\frac{1}{5}+\frac{1}{2}-\frac{1}{10}=\frac{2+5-1}{10}=\frac{3}{5}$.`),
+      luyen(R`Hai biến cố độc lập có $P(A)=\frac{1}{5}$ và $P(B)=\frac{1}{2}$. Tính $P(A\cup B)$.`, R`Xác suất bằng $\frac{3}{5}$.`, [{ expr: "Rational(1,5)+Rational(1,2)-Rational(1,5)*Rational(1,2)", expect: "Rational(3,5)" }], R`Với biến cố độc lập thì $P(A\cap B)=\frac{1}{10}$, nên $P(A\cup B)=\frac{1}{5}+\frac{1}{2}-\frac{1}{10}=\frac{3}{5}$.`),
       luyen(R`Biết $P(A)=\frac{1}{4}$, $P(B)=\frac{1}{3}$ và $P(A\cap B)=\frac{1}{10}$. Tích $P(A)P(B)$ bằng bao nhiêu, và hai biến cố có độc lập không?`, R`Tích bằng $\frac{1}{12}$, khác $\frac{1}{10}$, nên không độc lập.`, [{ expr: "Rational(1,4)*Rational(1,3)", expect: "Rational(1,12)" }], R`Tích $\frac{1}{12}$ khác xác suất giao $\frac{1}{10}$, nên điều kiện độc lập không thỏa.`),
     ],
     { topicId: "probability" }),
@@ -201,7 +201,7 @@ export const lop12XsNC: GradeChapter = chuong("xs-nang-cao", "Xác suất nâng 
     [
       luyen(R`Với bài xét nghiệm trên, tính xác suất một người bất kì có kết quả dương tính.`, R`Xác suất bằng $\frac{27}{250}$.`, [{ expr: "Rational(9,1000)+Rational(99,1000)", expect: "Rational(27,250)" }], R`Cộng hai đường dẫn tới dương tính: $\frac{9+99}{1000}=\frac{108}{1000}=\frac{27}{250}$.`),
       luyen(R`Một nửa số người mắc bệnh, xét nghiệm dương tính với người bệnh có xác suất $\frac{4}{5}$ và với người không bệnh có xác suất $\frac{1}{5}$. Biết kết quả dương tính, tính xác suất mắc bệnh.`, R`Xác suất bằng $\frac{4}{5}$.`, [{ expr: "(Rational(1,2)*Rational(4,5))/(Rational(1,2)*Rational(4,5)+Rational(1,2)*Rational(1,5))", expect: "Rational(4,5)" }], R`Hai đường là $\frac{2}{5}$ và $\frac{1}{10}$, nên xác suất là $\frac{\frac{2}{5}}{\frac{2}{5}+\frac{1}{10}}=\frac{4}{5}$.`),
-      luyen(R`Với bài máy sản xuất ở ví dụ thứ hai, tính xác suất sản phẩm lỗi do máy $2$ làm.`, R`Xác suất bằng $\frac{5}{8}$.`, [{ expr: "1-Rational(3,8)", expect: "Rational(5,8)" }], R`Hai máy là hệ đầy đủ nên $1-\frac{3}{8}=\frac{5}{8}$.`),
+      luyen(R`Máy $1$ làm $\frac{3}{5}$ sản phẩm với tỉ lệ lỗi $\frac{1}{50}$, máy $2$ làm $\frac{2}{5}$ sản phẩm với tỉ lệ lỗi $\frac{1}{20}$. Một sản phẩm bị lỗi, tính xác suất nó do máy $2$ làm.`, R`Xác suất bằng $\frac{5}{8}$.`, [{ expr: "(Rational(2,5)*Rational(1,20))/(Rational(3,5)*Rational(1,50)+Rational(2,5)*Rational(1,20))", expect: "Rational(5,8)" }], R`Đường máy $2$ rồi lỗi là $\frac{1}{50}$ và máy $1$ rồi lỗi là $\frac{3}{250}$, nên xác suất là $\frac{5}{3+5}=\frac{5}{8}$.`),
     ],
     { topicId: "probability" }),
 ]);

@@ -143,7 +143,7 @@ export const g12Extra3En: Record<string, LessonEn> = {
     ],
     dr: [
       [R`Two independent events have $P(A)=\frac{1}{5}$ and $P(B)=\frac{1}{2}$. Find $P(A\cap B)$.`, R`The probability is $\frac{1}{10}$.`, R`For independent events the probability of the intersection is the product of the two probabilities.`],
-      [R`For the two independent events above, find $P(A\cup B)$.`, R`The probability is $\frac{3}{5}$.`, R`We have $\frac{1}{5}+\frac{1}{2}-\frac{1}{10}=\frac{2+5-1}{10}=\frac{3}{5}$.`],
+      [R`Two independent events have $P(A)=\frac{1}{5}$ and $P(B)=\frac{1}{2}$. Find $P(A\cup B)$.`, R`The probability is $\frac{3}{5}$.`, R`For independent events $P(A\cap B)=\frac{1}{10}$, so $P(A\cup B)=\frac{1}{5}+\frac{1}{2}-\frac{1}{10}=\frac{3}{5}$.`],
       [R`Given $P(A)=\frac{1}{4}$, $P(B)=\frac{1}{3}$ and $P(A\cap B)=\frac{1}{10}$, what is the product $P(A)P(B)$, and are the events independent?`, R`The product is $\frac{1}{12}$, which differs from $\frac{1}{10}$, so they are not independent.`, R`The product $\frac{1}{12}$ differs from the probability of the intersection $\frac{1}{10}$, so the independence condition fails.`],
     ],
   },
@@ -165,7 +165,7 @@ export const g12Extra3En: Record<string, LessonEn> = {
     dr: [
       [R`For the test above, find the probability that a random person tests positive.`, R`The probability is $\frac{27}{250}$.`, R`Add the two paths leading to a positive test: $\frac{9+99}{1000}=\frac{108}{1000}=\frac{27}{250}$.`],
       [R`Half of the people are ill. A test is positive for an ill person with probability $\frac{4}{5}$ and for a healthy person with probability $\frac{1}{5}$. Given a positive test, find the probability of being ill.`, R`The probability is $\frac{4}{5}$.`, R`The two paths are $\frac{2}{5}$ and $\frac{1}{10}$, so the probability is $\frac{\frac{2}{5}}{\frac{2}{5}+\frac{1}{10}}=\frac{4}{5}$.`],
-      [R`For the machine example, find the probability that a defective product was made by machine $2$.`, R`The probability is $\frac{5}{8}$.`, R`The two machines form a complete system, so $1-\frac{3}{8}=\frac{5}{8}$.`],
+      [R`Machine $1$ makes $\frac{3}{5}$ of the products with defect rate $\frac{1}{50}$ and machine $2$ makes $\frac{2}{5}$ with defect rate $\frac{1}{20}$. A product is defective; find the probability that machine $2$ made it.`, R`The probability is $\frac{5}{8}$.`, R`The path machine $2$ then defective is $\frac{1}{50}$ and machine $1$ then defective is $\frac{3}{250}$, so the probability is $\frac{5}{3+5}=\frac{5}{8}$.`],
     ],
   },
 };

@@ -15,7 +15,7 @@ export const g10Extra2En: Record<string, LessonEn> = {
       ], R`The domain is $\mathbb{R}\setminus\{-2;\ 2\}$.`],
       [R`Find the domain of $y=\sqrt{3-x}$.`, [
         [R`The expression under the root must be non-negative, that is $3-x\ge0$.`, R`The square root of a negative number has no meaning among real numbers.`],
-        [R`Hence $x\le3$, because $3-x=0$ at $x=3$ and $3-x$ decreases as $x$ increases.`, R`The point $x=3$ makes the expression equal to $0$, so it belongs to the domain.`],
+        [R`Moving terms gives $x\le3$.`, R`Add $x$ to both sides of $3-x\ge0$; the value $x=3$ makes the expression equal to $0$ so it still belongs to the domain.`],
       ], R`The domain is $(-\infty;\ 3]$.`],
     ],
     dr: [
@@ -39,7 +39,7 @@ export const g10Extra2En: Record<string, LessonEn> = {
       ], R`The function is neither even nor odd.`],
     ],
     dr: [
-      [R`Let $f(x)=x^3-3x$. Compute $f(2)+f(-2)$ to decide whether the function is even or odd.`, R`It equals $0$, so the function is odd.`, R`An odd function has $f(-2)=-f(2)$, so the two values add up to $0$.`],
+      [R`For $f(x)=x^3-3x$, simplify $f(x)+f(-x)$ to decide whether the function is even or odd.`, R`It equals $0$ for every $x$, so the function is odd.`, R`We have $f(-x)=-x^3+3x=-f(x)$, so $f(x)+f(-x)=0$ for every $x$, which is exactly an odd function.`],
       [R`For $f(x)=x^2+1$, what is $f(3)-f(-3)$?`, R`It equals $0$.`, R`The function is even, so $f(-3)=f(3)$ and the difference is $0$.`],
       [R`Find $m$ so that $f(x)=x^3+mx^2$ is an odd function.`, R`The required value is $m=0$.`, R`An odd function needs $f(1)+f(-1)=2m=0$, and for $m=0$ we get $f(x)=x^3$, which is indeed odd.`],
     ],
@@ -50,7 +50,7 @@ export const g10Extra2En: Record<string, LessonEn> = {
     p: R`Getting the direction of a horizontal translation wrong: $f(x+1)$ shifts to the left, not to the right, because the sign inside the bracket is opposite to the direction of the shift.`,
     ex: [
       [R`The graph of $y=x^2$ is translated $2$ units right and $3$ units up. Write the new function and find its vertex.`, [
-        [R`Translating $2$ units right replaces $x$ by $x-2$, and then up $3$ units adds $3$.`, R`The two translations use the two rules above.`],
+        [R`Translating $2$ units right replaces $x$ by $x-2$, and then up $3$ units adds $3$.`, R`Moving $2$ units right replaces $x$ by $x-2$, and moving $3$ units up adds $3$ to the function.`],
         [R`The new function is $y=(x-2)^2+3$, with vertex $(2;\ 3)$.`, R`The vertex $(0;\ 0)$ of $y=x^2$ moves with the translation to $(2;\ 3)$.`],
       ], R`The new function is $y=(x-2)^2+3$ with vertex $(2;\ 3)$.`],
       [R`The graph of $y=x^2$ is translated $1$ unit left and $2$ units down. Find the value of the new function at $x=0$.`, [
@@ -59,8 +59,8 @@ export const g10Extra2En: Record<string, LessonEn> = {
       ], R`The value at $x=0$ is $-1$.`],
     ],
     dr: [
-      [R`The graph of $y=x^2$ is translated $3$ units to the right. What value does the new function take at $x=3$?`, R`The value is $0$.`, R`The new function is $y=(x-3)^2$, so at $x=3$ we get $y=0$.`],
-      [R`The graph of $y=x^2$ is translated $5$ units up. What value does the new function take at $x=0$?`, R`The value is $5$.`, R`The new function is $y=x^2+5$, so at $x=0$ we get $y=5$.`],
+      [R`The graph of $y=|x|$ is translated $2$ units left and $1$ unit down. What is the smallest value of the new function?`, R`The smallest value is $-1$.`, R`The new function is $y=|x+2|-1$, smallest at $x=-2$ where it equals $0-1=-1$.`],
+      [R`The graph of $y=x^2$ is translated $a$ units right and $5$ units up and passes through $(4;\ 6)$ with $a<4$. Find $a$.`, R`The required value is $a=3$.`, R`The new function is $y=(x-a)^2+5$, so $(4-a)^2+5=6$, that is $(4-a)^2=1$, and with $a<4$ we get $a=3$.`],
       [R`The graph of $y=x^2$ is translated $2$ units right and $b$ units up, and then passes through the point $(0;\ 7)$. Find $b$.`, R`The required value is $b=3$.`, R`The new function is $y=(x-2)^2+b$, and substituting $(0;\ 7)$ gives $4+b=7$, so $b=3$.`],
     ],
   },
@@ -79,15 +79,15 @@ export const g10Extra2En: Record<string, LessonEn> = {
       ], R`Increasing on $(-\infty;\ 2)$ and decreasing on $(2;\ +\infty)$.`],
     ],
     dr: [
-      [R`Find the x-coordinate of the vertex of $y=x^2+6x$.`, R`The x-coordinate of the vertex is $-3$.`, R`We have $-\frac{6}{2\cdot1}=-3$.`],
-      [R`Find the x-coordinate of the vertex of $y=-x^2+2x-5$.`, R`The x-coordinate of the vertex is $1$.`, R`We have $-\frac{2}{2\cdot(-1)}=1$.`],
+      [R`The function $y=x^2+6x$ is decreasing on the interval $(-\infty;\ a)$. Find the largest $a$.`, R`The largest value is $a=-3$.`, R`The parabola opens upwards, so it is decreasing to the left of the vertex, and the vertex has x-coordinate $-\frac{6}{2\cdot1}=-3$.`],
+      [R`The function $y=-x^2+2x-5$ is increasing on the interval $(-\infty;\ a)$. Find the largest $a$.`, R`The largest value is $a=1$.`, R`The parabola opens downwards, so it is increasing to the left of the vertex, and the vertex has x-coordinate $-\frac{2}{2\cdot(-1)}=1$.`],
       [R`Find $m$ so that $y=x^2-mx+1$ is decreasing on $(-\infty;\ 3)$ and increasing on $(3;\ +\infty)$.`, R`The required value is $m=6$.`, R`The vertex is at $x=\frac{m}{2}$ and must equal $3$, so $m=6$.`],
     ],
   },
   "toa-do-vt": {
     s: R`The vector $\overrightarrow{AB}$ has coordinates $(x_B-x_A;\ y_B-y_A)$. For $\vec a=(x_1;\ y_1)$ and $\vec b=(x_2;\ y_2)$ we have $\vec a+\vec b=(x_1+x_2;\ y_1+y_2)$, $k\vec a=(kx_1;\ ky_1)$, and the length is $|\vec a|=\sqrt{x_1^2+y_1^2}$.`,
     w: R`A vector depends only on the difference of two points, so take the coordinates of the end point minus those of the start point. Addition and multiplication by a number are done on each coordinate separately.`,
-    p: R`Taking the start point minus the end point, which reverses the sign of both coordinates, or forgetting the square root when computing a length.`,
+    p: R`Confusing $\overrightarrow{AB}$ with $\overrightarrow{BA}$ and getting opposite coordinates, or adding the lengths of two vectors instead of adding coordinates when finding the length of a sum.`,
     ex: [
       [R`Let $A(1;\ 2)$ and $B(4;\ 6)$. Find the coordinates and the length of $\overrightarrow{AB}$.`, [
         [R`The coordinates are $\overrightarrow{AB}=(4-1;\ 6-2)=(3;\ 4)$.`, R`Take the coordinates of the end point minus those of the start point.`],
@@ -101,13 +101,13 @@ export const g10Extra2En: Record<string, LessonEn> = {
     dr: [
       [R`Let $A(1;\ 1)$ and $B(7;\ 9)$. Find the length $AB$.`, R`The length is $10$.`, R`The vector $\overrightarrow{AB}=(6;\ 8)$ has length $\sqrt{36+64}=10$.`],
       [R`Let $\vec a=(3;\ 1)$ and $\vec b=(-1;\ 2)$. What is the second coordinate of $\vec a+\vec b$?`, R`The second coordinate is $3$.`, R`Add the two second coordinates of the vectors: $1+2=3$.`],
-      [R`Find the length of the vector $(5;\ 12)$.`, R`The length is $13$.`, R`We have $\sqrt{25+144}=13$.`],
+      [R`Find the positive $m$ so that the vector $(m;\ 4)$ has length $5$.`, R`The required value is $m=3$.`, R`We need $\sqrt{m^2+16}=5$, that is $m^2=9$, and we take the positive value $m=3$.`],
     ],
   },
   "trung-diem-trong-tam": {
     s: R`The midpoint $M$ of $AB$ has coordinates $\left(\frac{x_A+x_B}{2};\ \frac{y_A+y_B}{2}\right)$. The centroid $G$ of triangle $ABC$ has coordinates $\left(\frac{x_A+x_B+x_C}{3};\ \frac{y_A+y_B+y_C}{3}\right)$.`,
     w: R`The midpoint splits a segment into two equal parts, so its coordinates are the mean of the end points. The centroid balances three points, so its coordinates are the mean of the three.`,
-    p: R`Dividing by $2$ instead of $3$ when finding a centroid, or forgetting to find both coordinates of the point.`,
+    p: R`Mixing up the order when finding the other end point from a midpoint: one must take $B=2M-A$, not $M-A$, and the divide-by-$2$ formula must not be used for a centroid.`,
     ex: [
       [R`Find the midpoint $M$ of $AB$ with $A(1;\ 2)$ and $B(5;\ 8)$.`, [
         [R`The x-coordinate is $\frac{1+5}{2}=3$.`, R`Take the mean of the two x-coordinates.`],
@@ -224,15 +224,15 @@ export const g11Extra2En: Record<string, LessonEn> = {
       ], R`There are two solutions, $\frac{2\pi}{3}$ and $\frac{4\pi}{3}$.`],
     ],
     dr: [
-      [R`What is the solution of $\tan x=1$ in $[0;\ \pi)$?`, R`The solution is $x=\frac{\pi}{4}$.`, R`We have $\tan\frac{\pi}{4}=1$ and the tangent has period $\pi$, so there is only one solution in $[0;\ \pi)$.`],
-      [R`What is the solution of $\sin x=1$ in $[0;\ 2\pi]$?`, R`The solution is $x=\frac{\pi}{2}$.`, R`The two families of solutions coincide, and there is only one solution in the interval.`],
+      [R`How many degrees is the solution of $\tan x=1$ in $[0;\ \pi)$?`, R`It is $45$ degrees, that is $x=\frac{\pi}{4}$.`, R`We have $\tan\frac{\pi}{4}=1$ and the tangent has period $\pi$, so there is only one solution in $[0;\ \pi)$.`],
+      [R`How many degrees is the solution of $\sin x=1$ in $[0;\ 2\pi]$?`, R`It is $90$ degrees, that is $x=\frac{\pi}{2}$.`, R`The two families of solutions coincide, and there is only one solution in the interval.`],
       [R`Find the sum of the two solutions of $\sin x=-\frac12$ in $[0;\ 2\pi]$ in degrees.`, R`The sum is $540$ degrees, that is $3\pi$.`, R`The two solutions are $\frac{7\pi}{6}$ and $\frac{11\pi}{6}$, whose sum is $3\pi$, that is $540^\circ$.`],
     ],
   },
   "gtln-lg": {
     s: R`The expression $a\sin x+b\cos x$ takes every value in the interval $[-\sqrt{a^2+b^2};\ \sqrt{a^2+b^2}]$. So the maximum and minimum of $y=a\sin x+b\cos x+d$ are $d\pm\sqrt{a^2+b^2}$.`,
     w: R`The expression $a\sin x+b\cos x$ is a dot product of two vectors, and by the Cauchy–Schwarz inequality its absolute value does not exceed the product of the lengths. Equality is reached at some value of $x$.`,
-    p: R`Adding the constant $d$ to both ends of the interval but forgetting that the upper and lower bounds both shift by the same amount.`,
+    p: R`Thinking the maximum is $|a|+|b|$, although $\sin x$ and $\cos x$ do not reach their maxima at the same time.`,
     ex: [
       [R`Find the maximum and minimum of $y=3\sin x+4\cos x$.`, [
         [R`We have $\sqrt{a^2+b^2}=\sqrt{9+16}=5$.`, R`Substitute $a=3$ and $b=4$ into the formula.`],
@@ -267,7 +267,7 @@ export const g11Extra2En: Record<string, LessonEn> = {
     dr: [
       [R`Solve $4^x-5\cdot2^x+4=0$. What is the larger solution for $x$?`, R`The larger solution is $2$.`, R`Setting $t=2^x$ gives $t^2-5t+4=0$, so $t=1$ or $t=4$; the larger solution corresponds to $2^x=4$.`],
       [R`Solve $9^x-10\cdot3^x+9=0$. What is the larger solution for $x$?`, R`The larger solution is $2$.`, R`Setting $t=3^x$ gives $t=1$ or $t=9$; the larger solution corresponds to $3^x=9$.`],
-      [R`For the equation $4^x+2^x-2=0$, what is the positive value of $t=2^x$?`, R`It equals $1$, so $x=0$.`, R`The equation $t^2+t-2=0$ has roots $t=1$ and $t=-2$, and only $t=1$ is positive.`],
+      [R`The equation $4^x-3\cdot2^x+m=0$ has exactly one solution $x$ when $t=2^x$ is a positive double root. Find $m$.`, R`The required value is $m=\frac{9}{4}$.`, R`The equation $t^2-3t+m=0$ has a double root when $\Delta=9-4m=0$, and then $t=\frac{3}{2}>0$.`],
     ],
   },
   "bpt-log-dk": {
@@ -302,7 +302,7 @@ export const g11Extra2En: Record<string, LessonEn> = {
       ], R`After at least $8$ years.`],
       [R`The population of a town grows $2\%$ per year. After at least how many years does the population double?`, [
         [R`We need $1.02^n\ge2$, so $n\ge\frac{\ln2}{\ln1.02}\approx35.0$.`, R`Take logarithms of both sides to bring the exponent $n$ down as a factor.`],
-        [R`The value $35.0$ is slightly more than $35$, so $n=36$.`, R`For $n=35$ the power $1.02^{35}$ is still slightly less than $2$.`],
+        [R`The value $35.0$ is slightly more than $35$, so $n=36$.`, R`We get $1.02^{35}\approx1.9999$, still less than $2$, while $1.02^{36}\approx2.04$ is already more than $2$.`],
       ], R`After at least $36$ years.`],
     ],
     dr: [

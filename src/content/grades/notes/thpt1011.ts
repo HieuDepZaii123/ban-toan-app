@@ -23,11 +23,11 @@ export const thpt1011Notes: NoteBook = {
   ),
   "10/toa-do-vt": note(
     R`Vectơ chỉ phụ thuộc hiệu của hai điểm, nên lấy tọa độ điểm cuối trừ điểm đầu. Các phép cộng và nhân với số được làm trên từng tọa độ độc lập.`,
-    R`Lấy điểm đầu trừ điểm cuối nên đổi dấu cả hai tọa độ, hoặc quên căn bậc hai khi tính độ dài.`,
+    R`Nhầm $\overrightarrow{AB}$ với $\overrightarrow{BA}$ nên ra tọa độ đối nhau, hoặc cộng độ dài hai vectơ thay vì cộng tọa độ khi tính độ dài của tổng.`,
   ),
   "10/trung-diem-trong-tam": note(
     R`Trung điểm là điểm chia đoạn thành hai phần bằng nhau nên tọa độ là trung bình cộng. Trọng tâm cân bằng ba điểm nên tọa độ là trung bình cộng của ba tọa độ.`,
-    R`Chia cho $2$ thay vì $3$ khi tìm trọng tâm, hoặc quên tìm cả hai tọa độ của điểm.`,
+    R`Nhầm thứ tự khi tìm đầu mút còn lại từ trung điểm: phải lấy $B=2M-A$ chứ không phải $M-A$, và không dùng công thức chia $2$ cho trọng tâm.`,
   ),
   "10/goc-hai-vt": note(
     R`Tích vô hướng đo mức hai vectơ cùng hướng: bằng tích hai độ dài nhân với $\cos\varphi$. Biết tích vô hướng và độ dài thì suy ra góc, và tích vô hướng bằng $0$ nghĩa là góc vuông.`,
@@ -51,7 +51,7 @@ export const thpt1011Notes: NoteBook = {
   ),
   "11/gtln-lg": note(
     R`Biểu thức $a\sin x+b\cos x$ là tích vô hướng của hai vectơ, và theo bất đẳng thức Cauchy–Schwarz trị tuyệt đối của nó không vượt quá tích hai độ dài. Dấu bằng đạt được ở một giá trị $x$ nào đó.`,
-    R`Cộng hằng số $d$ vào cả hai đầu của khoảng nhưng quên rằng cận trên và cận dưới đều dịch cùng một lượng.`,
+    R`Cho rằng giá trị lớn nhất là $|a|+|b|$, vì hai hàm $\sin x$ và $\cos x$ không đạt giá trị lớn nhất cùng lúc.`,
   ),
   "11/pt-mu-an-phu": note(
     R`Viết $a^{2x}=(a^x)^2$ đưa phương trình về bậc hai theo $t=a^x$. Vì lũy thừa của cơ số dương luôn dương nên nghiệm $t\le0$ không ứng với giá trị $x$ nào.`,

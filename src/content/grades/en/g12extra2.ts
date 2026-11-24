@@ -245,7 +245,7 @@ export const g12Extra2En: Record<string, LessonEn> = {
     ],
     dr: [
       [R`Find $t$ for the point $M(2;\ 0;\ 0)$ and the plane $x+y+z-1=0$.`, R`The value is $t=\frac{1}{3}$.`, R`We have $\frac{2-1}{3}=\frac{1}{3}$.`],
-      [R`Find the reflection of $M(3;\ 0;\ 0)$ in the plane $x-3=0$ (give the x-coordinate).`, R`The x-coordinate of the reflection is $3$.`, R`The point $M$ lies on the plane, so $t=0$ and the reflection coincides with $M$.`],
+      [R`Find the reflection $M'$ of $M(1;\ 2;\ 3)$ in the plane $x+y+z-9=0$ and then the sum of the three coordinates of $M'$.`, R`The sum of the coordinates is $12$, since $M'=(3;\ 4;\ 5)$.`, R`We have $t=\frac{6-9}{3}=-1$, so $M'=M-2t\vec{n}=(1;\ 2;\ 3)+2(1;\ 1;\ 1)=(3;\ 4;\ 5)$.`],
       [R`Find the x-coordinate of the projection of $M(2;\ 2;\ 2)$ onto the plane $x+y+z-3=0$.`, R`The x-coordinate is $1$.`, R`We have $t=\frac{3}{3}=1$ and the x-coordinate is $2-1\cdot1=1$.`],
     ],
   },

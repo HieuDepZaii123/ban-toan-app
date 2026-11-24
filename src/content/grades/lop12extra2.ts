@@ -228,7 +228,7 @@ export const lop12OxyzNC: GradeChapter = chuong("oxyz-nang-cao", "Hình học Ox
     [
       luyen(R`Xét vị trí của $d:\ x=t;\ y=t;\ z=1$ và $(P):\ x-y=0$.`, R`Đường thẳng nằm trong mặt phẳng.`, [{ expr: "expand(x-x)", expect: "0" }], R`Thay vào được $t-t=0$, đúng với mọi $t$, nên $d$ nằm trong $(P)$.`),
       luyen(R`Đường thẳng $d:\ x=2t;\ y=1;\ z=t$ cắt mặt phẳng $(P):\ x+z-3=0$ tại giá trị $t$ nào?`, R`Tại $t=1$.`, [{ expr: "solve(2*x+x-3, x)[0]", expect: "1" }], R`Thay vào: $2t+t-3=0$ nên $t=1$.`),
-      luyen(R`Tìm $m$ để $d:\ x=t;\ y=1;\ z=t$ song song với $(P):\ x-z+m=0$ và không nằm trong $(P)$.`, R`Mọi $m\ne0$.`, [{ expr: "expand(x-x+7)", expect: "7" }], R`Thay vào được $t-t+m=m$, nên phải có $m\ne0$ để phương trình $m=0$ vô nghiệm.`),
+      luyen(R`Tìm $m$ để $d:\ x=t;\ y=1;\ z=t$ song song với $(P):\ x-z+m=0$ và không nằm trong $(P)$.`, R`Mọi $m\ne0$.`, [{ expr: "expand(x-x+m)", expect: "m" }], R`Thay vào được $t-t+m=m$, nên phải có $m\ne0$ để phương trình $m=0$ vô nghiệm.`),
     ],
     { topicId: "analytic" }),
   bai("kc-hai-dt", "Khoảng cách giữa hai đường thẳng chéo nhau",
@@ -300,7 +300,7 @@ export const lop12OxyzNC: GradeChapter = chuong("oxyz-nang-cao", "Hình học Ox
     ],
     [
       luyen(R`Tìm $t$ của điểm $M(2;\ 0;\ 0)$ với mặt phẳng $x+y+z-1=0$.`, R`Giá trị $t=\frac{1}{3}$.`, [{ expr: "Rational(2+0+0-1, 3)", expect: "Rational(1,3)" }], R`Ta có $\frac{2-1}{3}=\frac{1}{3}$.`),
-      luyen(R`Tìm điểm đối xứng của $M(3;\ 0;\ 0)$ qua mặt phẳng $x-3=0$ (lấy hoành độ).`, R`Hoành độ điểm đối xứng bằng $3$.`, [{ expr: "3-2*Rational(3-3, 1)", expect: "3" }], R`Điểm $M$ nằm trên mặt phẳng nên $t=0$ và điểm đối xứng trùng $M$.`),
+      luyen(R`Tìm điểm đối xứng $M'$ của $M(1;\ 2;\ 3)$ qua mặt phẳng $x+y+z-9=0$ rồi tính tổng ba tọa độ của $M'$.`, R`Tổng ba tọa độ bằng $12$, vì $M'=(3;\ 4;\ 5)$.`, [{ expr: "sum(Matrix([1,2,3])-2*Rational(1+2+3-9,3)*Matrix([1,1,1]))", expect: "12" }], R`Ta có $t=\frac{6-9}{3}=-1$ nên $M'=M-2t\vec{n}=(1;\ 2;\ 3)+2(1;\ 1;\ 1)=(3;\ 4;\ 5)$.`),
       luyen(R`Tìm hoành độ hình chiếu của $M(2;\ 2;\ 2)$ lên mặt phẳng $x+y+z-3=0$.`, R`Hoành độ bằng $1$.`, [{ expr: "2-Rational(2+2+2-3, 3)", expect: "1" }], R`Ta có $t=\frac{3}{3}=1$ và hoành độ là $2-1\cdot1=1$.`),
     ],
     { topicId: "analytic" }),

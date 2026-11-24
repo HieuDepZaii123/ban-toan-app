@@ -18,7 +18,7 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
       vd(R`Tìm tập xác định của $y=\sqrt{3-x}$.`,
         [
           buoc(R`Biểu thức dưới căn phải không âm, tức là $3-x\ge0$.`, R`Căn bậc hai của số âm không có nghĩa trong tập số thực.`),
-          buoc(R`Suy ra $x\le3$, vì $3-x=0$ tại $x=3$ và $3-x$ giảm khi $x$ tăng.`, R`Điểm $x=3$ làm biểu thức bằng $0$, nên thuộc tập xác định.`),
+          buoc(R`Chuyển vế được $x\le3$.`, R`Cộng $x$ vào hai vế của $3-x\ge0$; giá trị $x=3$ làm biểu thức bằng $0$ nên vẫn thuộc tập xác định.`),
         ],
         R`Tập xác định là $(-\infty;\ 3]$.`,
         [{ expr: "solve(3-x, x)[0]", expect: "3" }]),
@@ -48,7 +48,7 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
         [{ expr: "(-1)**2+(-1)", expect: "0" }, { expr: "1**2+1", expect: "2" }]),
     ],
     [
-      luyen(R`Cho $f(x)=x^3-3x$. Tính $f(2)+f(-2)$ để quyết định hàm số chẵn hay lẻ.`, R`Bằng $0$, nên hàm số lẻ.`, [{ expr: "2**3-3*2+(-2)**3-3*(-2)", expect: "0" }], R`Hàm số lẻ có $f(-2)=-f(2)$, nên tổng của hai giá trị bằng $0$.`),
+      luyen(R`Với $f(x)=x^3-3x$, rút gọn $f(x)+f(-x)$ để quyết định hàm số chẵn hay lẻ.`, R`Bằng $0$ với mọi $x$, nên hàm số lẻ.`, [{ expr: "expand((-x)**3-3*(-x)+x**3-3*x)", expect: "0" }], R`Ta có $f(-x)=-x^3+3x=-f(x)$, nên $f(x)+f(-x)=0$ với mọi $x$, đúng là hàm số lẻ.`),
       luyen(R`Với $f(x)=x^2+1$, giá trị $f(3)-f(-3)$ bằng bao nhiêu?`, R`Bằng $0$.`, [{ expr: "3**2+1-((-3)**2+1)", expect: "0" }], R`Hàm số chẵn nên $f(-3)=f(3)$, và hiệu bằng $0$.`),
       luyen(R`Tìm $m$ để $f(x)=x^3+mx^2$ là hàm số lẻ.`, R`Giá trị cần tìm là $m=0$.`, [{ expr: "solve((1+x)+(-1+x), x)[0]", expect: "0" }], R`Hàm số lẻ cần $f(1)+f(-1)=2m=0$, và khi $m=0$ thì $f(x)=x^3$ đúng là hàm số lẻ.`),
     ],
@@ -58,7 +58,7 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
     [
       vd(R`Đồ thị $y=x^2$ tịnh tiến sang phải $2$ đơn vị và lên $3$ đơn vị. Viết hàm số mới và tìm đỉnh.`,
         [
-          buoc(R`Tịnh tiến sang phải $2$ đơn vị thay $x$ bằng $x-2$, rồi lên $3$ đơn vị thì cộng $3$.`, R`Hai phép tịnh tiến dùng hai công thức vừa nêu.`),
+          buoc(R`Tịnh tiến sang phải $2$ đơn vị thay $x$ bằng $x-2$, rồi lên $3$ đơn vị thì cộng $3$.`, R`Sang phải $2$ đơn vị là thay $x$ bằng $x-2$, lên $3$ đơn vị là cộng $3$ vào hàm số.`),
           buoc(R`Hàm số mới là $y=(x-2)^2+3$, có đỉnh $(2;\ 3)$.`, R`Đỉnh của $y=x^2$ là $(0;\ 0)$ đi theo phép tịnh tiến sang $(2;\ 3)$.`),
         ],
         R`Hàm số mới là $y=(x-2)^2+3$ với đỉnh $(2;\ 3)$.`,
@@ -72,8 +72,8 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
         [{ expr: "(0+1)**2-2", expect: "-1" }]),
     ],
     [
-      luyen(R`Đồ thị $y=x^2$ tịnh tiến sang phải $3$ đơn vị. Tại $x=3$ hàm số mới nhận giá trị nào?`, R`Giá trị bằng $0$.`, [{ expr: "(3-3)**2", expect: "0" }], R`Hàm số mới là $y=(x-3)^2$, nên tại $x=3$ có $y=0$.`),
-      luyen(R`Đồ thị $y=x^2$ tịnh tiến lên $5$ đơn vị. Tại $x=0$ hàm số mới nhận giá trị nào?`, R`Giá trị bằng $5$.`, [{ expr: "0**2+5", expect: "5" }], R`Hàm số mới là $y=x^2+5$, nên tại $x=0$ có $y=5$.`),
+      luyen(R`Đồ thị $y=|x|$ tịnh tiến sang trái $2$ đơn vị và xuống $1$ đơn vị. Hàm số mới đạt giá trị nhỏ nhất bằng bao nhiêu?`, R`Giá trị nhỏ nhất bằng $-1$.`, [{ expr: "abs(-2+2)-1", expect: "-1" }], R`Hàm số mới là $y=|x+2|-1$, nhỏ nhất khi $x=-2$ và bằng $0-1=-1$.`),
+      luyen(R`Đồ thị $y=x^2$ tịnh tiến sang phải $a$ đơn vị và lên $5$ đơn vị đi qua điểm $(4;\ 6)$ với $a<4$. Tìm $a$.`, R`Giá trị cần tìm là $a=3$.`, [{ expr: "Min(*solve((4-x)**2-1, x))", expect: "3" }], R`Hàm số mới là $y=(x-a)^2+5$ nên $(4-a)^2+5=6$, tức $(4-a)^2=1$, và với $a<4$ được $a=3$.`),
       luyen(R`Đồ thị $y=x^2$ tịnh tiến sang phải $2$ đơn vị và lên $b$ đơn vị thì đi qua điểm $(0;\ 7)$. Tìm $b$.`, R`Giá trị cần tìm là $b=3$.`, [{ expr: "solve((0-2)**2+x-7, x)[0]", expect: "3" }], R`Hàm số mới là $y=(x-2)^2+b$, thay $(0;\ 7)$ được $4+b=7$ nên $b=3$.`),
     ],
     { topicId: "quadratic" }),
@@ -96,8 +96,8 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
         [{ expr: "Rational(-8,2*(-2))", expect: "2" }]),
     ],
     [
-      luyen(R`Tìm hoành độ đỉnh của $y=x^2+6x$.`, R`Hoành độ đỉnh bằng $-3$.`, [{ expr: "Rational(-6,2)", expect: "-3" }], R`Ta có $-\frac{6}{2\cdot1}=-3$.`),
-      luyen(R`Tìm hoành độ đỉnh của $y=-x^2+2x-5$.`, R`Hoành độ đỉnh bằng $1$.`, [{ expr: "Rational(-2,2*(-1))", expect: "1" }], R`Ta có $-\frac{2}{2\cdot(-1)}=1$.`),
+      luyen(R`Hàm số $y=x^2+6x$ nghịch biến trên khoảng $(-\infty;\ a)$. Tìm $a$ lớn nhất.`, R`Giá trị lớn nhất là $a=-3$.`, [{ expr: "Rational(-6,2)", expect: "-3" }], R`Parabol quay lên nên nghịch biến bên trái đỉnh, và đỉnh có hoành độ $-\frac{6}{2\cdot1}=-3$.`),
+      luyen(R`Hàm số $y=-x^2+2x-5$ đồng biến trên khoảng $(-\infty;\ a)$. Tìm $a$ lớn nhất.`, R`Giá trị lớn nhất là $a=1$.`, [{ expr: "Rational(-2,2*(-1))", expect: "1" }], R`Parabol quay xuống nên đồng biến bên trái đỉnh, và đỉnh có hoành độ $-\frac{2}{2\cdot(-1)}=1$.`),
       luyen(R`Tìm $m$ để hàm số $y=x^2-mx+1$ nghịch biến trên $(-\infty;\ 3)$ và đồng biến trên $(3;\ +\infty)$.`, R`Giá trị cần tìm là $m=6$.`, [{ expr: "solve(x/2-3, x)[0]", expect: "6" }], R`Đỉnh nằm ở $x=\frac{m}{2}$ và phải bằng $3$, nên $m=6$.`),
     ],
     { topicId: "quadratic" }),
@@ -125,7 +125,7 @@ export const lop10ToaDoVt: GradeChapter = chuong("vt-toa-do-10", "Tọa độ c�
     [
       luyen(R`Cho $A(1;\ 1)$ và $B(7;\ 9)$. Tính độ dài $AB$.`, R`Độ dài bằng $10$.`, [{ expr: "sqrt(6**2+8**2)", expect: "10" }], R`Vectơ $\overrightarrow{AB}=(6;\ 8)$ có độ dài $\sqrt{36+64}=10$.`),
       luyen(R`Cho $\vec a=(3;\ 1)$ và $\vec b=(-1;\ 2)$. Tung độ của $\vec a+\vec b$ bằng bao nhiêu?`, R`Tung độ bằng $3$.`, [{ expr: "1+2", expect: "3" }], R`Cộng hai tung độ tương ứng của hai vectơ: $1+2=3$.`),
-      luyen(R`Tính độ dài của vectơ $(5;\ 12)$.`, R`Độ dài bằng $13$.`, [{ expr: "sqrt(5**2+12**2)", expect: "13" }], R`Ta có $\sqrt{25+144}=13$.`),
+      luyen(R`Tìm $m$ dương để vectơ $(m;\ 4)$ có độ dài bằng $5$.`, R`Giá trị cần tìm là $m=3$.`, [{ expr: "Max(*solve(x**2+16-25, x))", expect: "3" }], R`Cần $\sqrt{m^2+16}=5$, tức $m^2=9$, và lấy giá trị dương $m=3$.`),
     ],
     { topicId: "vector" }),
   bai("trung-diem-trong-tam", "Tọa độ trung điểm và trọng tâm",
@@ -223,9 +223,9 @@ export const lop11LuongGiacNC: GradeChapter = chuong("luong-giac-nc", "Phương 
         [{ expr: "3**2-(1**2+1**2)", expect: "7" }]),
     ],
     [
-      luyen(R`Có bao nhiêu số nguyên $c$ để phương trình $3\sin x+4\cos x=c$ có nghiệm?`, R`Có $11$ số nguyên.`, [{ expr: "2*5+1", expect: "11" }], R`Cần $c^2\le9+16=25$, tức $-5\le c\le5$, gồm $11$ số nguyên.`),
+      luyen(R`Có bao nhiêu số nguyên $c$ để phương trình $3\sin x+4\cos x=c$ có nghiệm?`, R`Có $11$ số nguyên.`, [{ expr: "2*floor(sqrt(3**2+4**2))+1", expect: "11" }], R`Cần $c^2\le9+16=25$, tức $-5\le c\le5$, gồm $11$ số nguyên.`),
       luyen(R`Giá trị nguyên dương lớn nhất của $c$ để $\sin x+\sqrt3\cos x=c$ có nghiệm là bao nhiêu?`, R`Bằng $2$.`, [{ expr: "floor(sqrt(1+3))", expect: "2" }], R`Cần $c^2\le1+3=4$, tức $c\le2$; giá trị $c=2$ vẫn có nghiệm vì xảy ra dấu bằng.`),
-      luyen(R`Giải $\sin x+\cos x=\sqrt2$ trên $[0;\ 2\pi)$. Nghiệm đó bằng bao nhiêu độ?`, R`Bằng $45$ độ, tức $x=\frac{\pi}{4}$.`, [{ expr: "180/4", expect: "45" }], R`Ta có $\sqrt2\sin\left(x+\frac{\pi}{4}\right)=\sqrt2$ nên $x+\frac{\pi}{4}=\frac{\pi}{2}$ và $x=\frac{\pi}{4}$.`),
+      luyen(R`Giải $\sin x+\cos x=\sqrt2$ trên $[0;\ 2\pi)$. Nghiệm đó bằng bao nhiêu độ?`, R`Bằng $45$ độ, tức $x=\frac{\pi}{4}$.`, [{ expr: "sin(pi/4)+cos(pi/4)-sqrt(2)", expect: "0" }], R`Ta có $\sqrt2\sin\left(x+\frac{\pi}{4}\right)=\sqrt2$ nên $x+\frac{\pi}{4}=\frac{\pi}{2}$ và $x=\frac{\pi}{4}$.`),
     ],
     { topicId: "trig" }),
   bai("pt-bac-hai-lg", "Phương trình bậc hai theo một hàm lượng giác",
@@ -272,8 +272,8 @@ export const lop11LuongGiacNC: GradeChapter = chuong("luong-giac-nc", "Phương 
         [{ expr: "acos(-Rational(1,2))", expect: "2*pi/3" }, { expr: "2*pi-2*pi/3", expect: "4*pi/3" }]),
     ],
     [
-      luyen(R`Nghiệm của $\tan x=1$ trong $[0;\ \pi)$ là gì?`, R`Nghiệm là $x=\frac{\pi}{4}$.`, [{ expr: "atan(1)", expect: "pi/4" }], R`Ta có $\tan\frac{\pi}{4}=1$ và hàm tan có chu kỳ $\pi$ nên chỉ có một nghiệm trong $[0;\ \pi)$.`),
-      luyen(R`Nghiệm của $\sin x=1$ trong $[0;\ 2\pi]$ là gì?`, R`Nghiệm là $x=\frac{\pi}{2}$.`, [{ expr: "asin(1)", expect: "pi/2" }], R`Hai họ nghiệm trùng nhau, và chỉ có một nghiệm trong khoảng.`),
+      luyen(R`Nghiệm của $\tan x=1$ trong $[0;\ \pi)$ bằng bao nhiêu độ?`, R`Bằng $45$ độ, tức $x=\frac{\pi}{4}$.`, [{ expr: "atan(1)*180/pi", expect: "45" }], R`Ta có $\tan\frac{\pi}{4}=1$ và hàm tan có chu kỳ $\pi$ nên chỉ có một nghiệm trong $[0;\ \pi)$.`),
+      luyen(R`Nghiệm của $\sin x=1$ trong $[0;\ 2\pi]$ bằng bao nhiêu độ?`, R`Bằng $90$ độ, tức $x=\frac{\pi}{2}$.`, [{ expr: "asin(1)*180/pi", expect: "90" }], R`Hai họ nghiệm trùng nhau, và chỉ có một nghiệm trong khoảng.`),
       luyen(R`Tính tổng hai nghiệm của $\sin x=-\frac12$ trong $[0;\ 2\pi]$ theo đơn vị độ.`, R`Tổng bằng $540$ độ, tức $3\pi$.`, [{ expr: "7*180/6+11*180/6", expect: "540" }], R`Hai nghiệm là $\frac{7\pi}{6}$ và $\frac{11\pi}{6}$, tổng là $3\pi$ tức $540^\circ$.`),
     ],
     { topicId: "trig" }),
@@ -326,7 +326,7 @@ export const lop11MuLogNC: GradeChapter = chuong("mu-log-nc", "Mũ và logarit n
     [
       luyen(R`Giải $4^x-5\cdot2^x+4=0$. Nghiệm lớn của $x$ là bao nhiêu?`, R`Nghiệm lớn bằng $2$.`, [{ expr: "log(4)/log(2)", expect: "2" }], R`Đặt $t=2^x$ được $t^2-5t+4=0$, nên $t=1$ hoặc $t=4$; nghiệm lớn ứng với $2^x=4$.`),
       luyen(R`Giải $9^x-10\cdot3^x+9=0$. Nghiệm lớn của $x$ là bao nhiêu?`, R`Nghiệm lớn bằng $2$.`, [{ expr: "log(9)/log(3)", expect: "2" }], R`Đặt $t=3^x$ được $t=1$ hoặc $t=9$; nghiệm lớn ứng với $3^x=9$.`),
-      luyen(R`Phương trình $4^x+2^x-2=0$ có $t=2^x$ dương bằng bao nhiêu?`, R`Bằng $1$, nên $x=0$.`, [{ expr: "Max(*solve(x**2+x-2, x))", expect: "1" }], R`Phương trình $t^2+t-2=0$ có nghiệm $t=1$ và $t=-2$, chỉ $t=1$ dương.`),
+      luyen(R`Phương trình $4^x-3\cdot2^x+m=0$ có đúng một nghiệm $x$ khi $t=2^x$ là nghiệm kép dương. Tìm $m$.`, R`Giá trị cần tìm là $m=\frac{9}{4}$.`, [{ expr: "solve(9-4*x, x)[0]", expect: "Rational(9,4)" }], R`Phương trình $t^2-3t+m=0$ có nghiệm kép khi $\Delta=9-4m=0$, và khi đó $t=\frac{3}{2}>0$.`),
     ],
     { topicId: "exp" }),
   bai("bpt-log-dk", "Bất phương trình logarit và điều kiện xác định",
@@ -367,7 +367,7 @@ export const lop11MuLogNC: GradeChapter = chuong("mu-log-nc", "Mũ và logarit n
       vd(R`Dân số một thị trấn tăng $2\%$ mỗi năm. Sau ít nhất bao nhiêu năm dân số gấp đôi?`,
         [
           buoc(R`Cần $1{,}02^n\ge2$, nên $n\ge\frac{\ln2}{\ln1{,}02}\approx35{,}0$.`, R`Lấy logarit hai vế để đưa số mũ $n$ xuống thành thừa số.`),
-          buoc(R`Giá trị $35{,}0$ hơi lớn hơn $35$ nên $n=36$.`, R`Với $n=35$ thì $1{,}02^{35}$ vẫn nhỏ hơn $2$ một chút.`),
+          buoc(R`Giá trị $35{,}0$ hơi lớn hơn $35$ nên $n=36$.`, R`Tính được $1{,}02^{35}\approx1{,}9999$ vẫn nhỏ hơn $2$, còn $1{,}02^{36}\approx2{,}04$ đã lớn hơn $2$.`),
         ],
         R`Sau ít nhất $36$ năm.`,
         [{ expr: "ceiling(log(2)/log(Rational(51,50)))", expect: "36" }]),
@@ -397,7 +397,7 @@ export const lop11MuLogNC: GradeChapter = chuong("mu-log-nc", "Mũ và logarit n
         [{ expr: "Rational(1,2)**3", expect: "Rational(1,8)" }]),
     ],
     [
-      { ...luyen(R`Số nào lớn hơn: $\log_{1/2}3$ hay $\log_{1/2}5$?`, R`Số $\log_{1/2}3$ lớn hơn, vì cơ số nằm giữa $0$ và $1$ nên hàm nghịch biến.`, [{ expr: "ceiling(log(3)/log(Rational(1,2)))", expect: "-1" }], R`Cơ số $\frac12$ nằm giữa $0$ và $1$ nên $3<5$ cho $\log_{1/2}3>\log_{1/2}5$; thật vậy $\log_{1/2}3\approx-1{,}58$ còn $\log_{1/2}5\approx-2{,}32$.`), ask: { kind: "choice", options: ["$\\log_{1/2}3$", "$\\log_{1/2}5$"], correct: 0 } },
+      { ...luyen(R`Số nào lớn hơn: $\log_{1/2}3$ hay $\log_{1/2}5$?`, R`Số $\log_{1/2}3$ lớn hơn, vì cơ số nằm giữa $0$ và $1$ nên hàm nghịch biến.`, [{ expr: "sign(N(log(3)/log(Rational(1,2))-log(5)/log(Rational(1,2))))", expect: "1" }], R`Cơ số $\frac12$ nằm giữa $0$ và $1$ nên $3<5$ cho $\log_{1/2}3>\log_{1/2}5$; thật vậy $\log_{1/2}3\approx-1{,}58$ còn $\log_{1/2}5\approx-2{,}32$.`), ask: { kind: "choice", options: ["$\\log_{1/2}3$", "$\\log_{1/2}5$"], correct: 0 } },
       luyen(R`Tính $\log_3\frac19$.`, R`Bằng $-2$.`, [{ expr: "log(Rational(1,9),3)", expect: "-2" }], R`Theo định nghĩa logarit, vì $3^{-2}=\frac19$ nên kết quả là $-2$.`),
       luyen(R`Tính $\log_{1/2}4$.`, R`Bằng $-2$.`, [{ expr: "log(4)/log(Rational(1,2))", expect: "-2" }], R`Theo định nghĩa logarit, vì $\left(\frac12\right)^{-2}=4$ nên kết quả là $-2$.`),
     ],
