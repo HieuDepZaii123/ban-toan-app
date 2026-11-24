@@ -1113,7 +1113,7 @@ const grade12More: Template[] = [
 ];
 
 /** Mẫu vận dụng cao lớp 12: tham số, bội của nghiệm, bài toán tối ưu, khối đa diện, tích phân đổi biến, xác suất Bayes, Oxyz hai bước. */
-export const HARD_KEYS = new Set(["thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "chopvuong", "tdiencb", "langtru", "tpdoibien", "tpphanh", "bayes", "giaodiem", "tdiemoabc", "bbtcucdai", "bbtnghiem"]);
+export const HARD_KEYS = new Set(["thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "chopvuong", "tdiencb", "langtru", "tpdoibien", "tpphanh", "bayes", "giaodiem", "tdiemoabc", "bbtcucdai", "bbtnghiem", "dothinghiem"]);
 
 /** Thừa số $(x-u)^e$ của đạo hàm, viết gọn khi $u=0$ hay $e=1$. */
 function factor(root: number, e: number): string {
@@ -1225,6 +1225,20 @@ const grade12Hard: Template[] = [
       [`Nghiệm của $f(x)=${k}$ là hoành độ giao điểm của đồ thị với đường thẳng $y=${k}$.`, `Giá trị cực đại là $${t.M}$ và giá trị cực tiểu là $${t.m}$, nên so sánh $${k}$ với hai giá trị này.`, `Đường thẳng $y=${k}$ cắt đồ thị tại $${count}$ điểm.`],
       `len(set(Poly(${bbtSympy(t.a, t.b, t.c)}-(${k}), x).real_roots()))`, String(count));
   } },
+  { key: "dothicucdai", make: (r) => {
+    const a = r.int(-3, 1), c = r.int(-5, 5), t = bbt(a, a + 2 * r.int(1, 2), c);
+    return made(`Cho hàm số bậc ba $y=f(x)$ có đồ thị như hình vẽ: ${t.plot} Hàm số đạt cực đại tại điểm $x$ bằng`, nums(t.a, [t.b, t.M, t.m, -t.a]),
+      ["Cực đại là điểm đồ thị đi lên rồi bắt đầu đi xuống, tức là đỉnh cao nhất trong một khoảng quanh nó.", `Trên hình, đỉnh bên trái có hoành độ $x=${t.a}$ và đỉnh bên phải có hoành độ $x=${t.b}$.`, `Đỉnh bên trái là điểm cực đại nên hàm số đạt cực đại tại $x=${t.a}$.`],
+      `Min(*solve(diff(${bbtSympy(t.a, t.b, t.c)}, x), x))`, String(t.a));
+  } },
+  { key: "dothinghiem", make: (r) => {
+    const a = r.int(-3, 1), c = r.int(-5, 5), t = bbt(a, a + 2 * r.int(1, 2), c), kind = r.int(0, 3);
+    const k = kind === 0 ? t.m + 1 : kind === 1 ? t.M : kind === 2 ? t.M + r.int(1, 3) : t.m - r.int(1, 3);
+    const count = kind === 0 ? 3 : kind === 1 ? 2 : 1;
+    return made(`Cho hàm số bậc ba $y=f(x)$ có đồ thị như hình vẽ: ${t.plot} Số nghiệm thực phân biệt của phương trình $f(x)=${k}$ là`, nums(count, [0, 1, 2, 3, 4], m, 0),
+      [`Nghiệm của $f(x)=${k}$ là hoành độ giao điểm của đồ thị với đường thẳng nằm ngang $y=${k}$.`, `Đọc trên hình: đỉnh cao có tung độ $${t.M}$ và đỉnh thấp có tung độ $${t.m}$; so sánh $${k}$ với hai giá trị này.`, `Đường thẳng $y=${k}$ cắt đồ thị tại $${count}$ điểm phân biệt.`],
+      `len(set(Poly(${bbtSympy(t.a, t.b, t.c)}-(${k}), x).real_roots()))`, String(count));
+  } },
   { key: "tdiemoabc", make: (r) => {
     let a = 1, b = 1, c = 1;
     do {
@@ -1255,7 +1269,7 @@ export const thptTopics: { id: string; grade: number; vi: string; en: string; ke
   { id: "g11-mu-log", grade: 11, vi: "Mũ và logarit", en: "Exponents and logarithms", keys: ["log", "mu", "loghieu"] },
   { id: "g11-dao-ham", grade: 11, vi: "Đạo hàm", en: "Derivatives", keys: ["daoham", "daohamhop"] },
   { id: "g11-xac-suat", grade: 11, vi: "Xác suất", en: "Probability", keys: ["xsdoclap", "xscodien"] },
-  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem"] },
+  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem", "dothicucdai", "dothinghiem"] },
   { id: "g12-tiem-can", grade: 12, vi: "Tiệm cận", en: "Asymptotes", keys: ["tcngang", "tcdung"] },
   { id: "g12-tich-phan", grade: 12, vi: "Nguyên hàm và tích phân", en: "Antiderivatives and integrals", keys: ["nguyenham", "tp1", "tp2", "dientich", "tpdoibien", "tpphanh"] },
   { id: "g12-khong-gian", grade: 12, vi: "Tọa độ trong không gian", en: "Space coordinates", keys: ["kc3d", "kcmp", "matcau", "vuonggoc", "ptmp", "giaodiem", "tdiemoabc"] },

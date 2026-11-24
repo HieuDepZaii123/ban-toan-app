@@ -1861,3 +1861,9 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
   main .lecture-note a { display: inline-block; padding: 11px 6px; margin: -11px -6px; }
   .tab, .topic-bar a { min-height: 44px; }
 }
+
+.plot-svg { display: block; width: min(100%, 360px); height: auto; margin: 0.5rem auto; background: var(--surface, #fff); border: 1px solid var(--line, #d0d7de); border-radius: 8px; }
+.plot-grid { stroke: var(--line, #d0d7de); stroke-width: 0.6; }
+.plot-axis { stroke: currentColor; stroke-width: 1.4; }
+.plot-tick { fill: currentColor; font-size: 10px; }
+.plot-curve { fill: none; stroke: var(--accent, #2563eb); stroke-width: 2.2; stroke-linejoin: round; }

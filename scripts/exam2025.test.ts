@@ -14,8 +14,10 @@ assert.equal(parseShort("-1,5"), -1.5);
 assert.equal(parseShort(" 12 "), 12);
 assert.equal(parseShort("1/2"), null);
 
+let plotCount = 0;
 for (let seed = 1; seed <= 300; seed += 1) {
   const paper = buildPaper(seed);
+  if (JSON.stringify(paper).includes("{{plot:") || paper.mcq.some((id) => thptById.get(id)?.prompt.includes("{{plot:"))) plotCount += 1;
   assert.equal(paper.mcq.length, 12, `seed ${seed} part I`);
   assert.equal(paper.tf.length, 4, `seed ${seed} part II`);
   assert.equal(paper.short.length, 6, `seed ${seed} part III`);
@@ -59,4 +61,5 @@ for (let seed = 1; seed <= 300; seed += 1) {
   three.tf["0:0"] = !paper.tf[0]!.statements[0]!.truth;
   assert.equal(scorePaper(paper, three, name).total, 9.5);
 }
-console.log("exam 2025 ok (300 papers)");
+assert.ok(plotCount >= 60, `đề có đồ thị vẽ thật quá ít: ${plotCount}/300`);
+console.log(`exam 2025 ok (300 papers, ${plotCount} có đồ thị vẽ thật)`);

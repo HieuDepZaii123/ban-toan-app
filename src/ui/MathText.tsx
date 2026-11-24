@@ -1,6 +1,7 @@
 import katex from "katex";
 import { useMemo } from "react";
 import "katex/dist/katex.min.css";
+import { plotFromToken } from "../lib/plotSvg.ts";
 
 function escapeHtml(value: string): string {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -8,8 +9,11 @@ function escapeHtml(value: string): string {
 
 function renderMixed(text: string): string {
   return text
-    .split(/(\$[^$]+\$)/g)
+    .split(/(\{\{plot:[^}]+\}\}|\$[^$]+\$)/g)
     .map((part) => {
+      if (part.startsWith("{{plot:") && part.endsWith("}}")) {
+        return plotFromToken(part.slice(7, -2)) ?? "";
+      }
       if (part.startsWith("$") && part.endsWith("$") && part.length > 2) {
         return katex.renderToString(part.slice(1, -1), { throwOnError: false, output: "htmlAndMathml" });
       }

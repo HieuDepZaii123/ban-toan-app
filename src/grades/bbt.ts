@@ -3,7 +3,7 @@
  * có y' = 3(x − a)(x − b): đồng biến trên (−∞; a), nghịch biến trên (a; b), đồng biến trên (b; +∞).
  * Dùng chung cho câu trắc nghiệm và câu Đúng/Sai của đề thi thử, nên bảng và đáp số luôn khớp nhau.
  */
-export type Bbt = { a: number; b: number; c: number; M: number; m: number; poly: string; table: string };
+export type Bbt = { a: number; b: number; c: number; M: number; m: number; poly: string; table: string; plot: string };
 
 const value = (a: number, b: number, c: number, x: number): number => x ** 3 - (3 * (a + b) * x * x) / 2 + 3 * a * b * x + c;
 
@@ -21,7 +21,8 @@ export function bbt(a: number, b: number, c: number): Bbt {
   const con = c === 0 ? "" : signed(c);
   const poly = `x^3${quad}${lin}${con}`;
   const table = String.raw`\begin{array}{c|ccccccc} x & -\infty & & ${a} & & ${b} & & +\infty \\ \hline f'(x) & & + & 0 & - & 0 & + & \\ \hline f(x) & & \nearrow & ${M} & \searrow & ${m} & \nearrow & \end{array}`;
-  return { a, b, c, M, m, poly, table };
+  const plot = `{{plot:1,${-3 * s},${q},${c}|${a - 2}|${b + 2}|${Math.floor(m) - 4}|${Math.ceil(M) + 4}}}`;
+  return { a, b, c, M, m, poly, table, plot };
 }
 
 /** Biểu thức sympy của hàm số, để đối chiếu độc lập. */

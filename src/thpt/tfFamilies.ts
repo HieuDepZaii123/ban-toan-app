@@ -401,30 +401,32 @@ const derivativeSign: Family = {
 };
 
 /* ---------- 9. Đọc bảng biến thiên ---------- */
-const variationTable: Family = {
-  topic: "variation-table",
-  vi: "Đọc bảng biến thiên",
-  en: "Reading a variation table",
+const variationBase = (graph: boolean): Family => ({
+  topic: graph ? "graph-reading" : "variation-table",
+  vi: graph ? "Đọc đồ thị hàm số" : "Đọc bảng biến thiên",
+  en: graph ? "Reading a graph" : "Reading a variation table",
   make: (rng) => {
+    const up = graph ? { vi: "đồ thị đi lên", en: "the graph goes up" } : { vi: "${up.vi}", en: "${up.en}" };
+    const down = graph ? { vi: "đồ thị đi xuống", en: "the graph goes down" } : { vi: "${down.vi}", en: "${down.en}" };
     const a = int(rng, -3, 1);
     const t = bbt(a, a + 2 * int(rng, 1, 2), pick(rng, [-4, -2, 0, 1, 3, 5]));
     const k = t.m + 1;
     const high = t.M + 1;
     return {
-      topic: "variation-table",
-      contextVi: `Hàm số $y=f(x)$ xác định trên $\\mathbb{R}$ và có bảng biến thiên: $${t.table}$.`,
-      contextEn: `The function $y=f(x)$ is defined on $\\mathbb{R}$ and has the variation table: $${t.table}$.`,
+      topic: graph ? "graph-reading" : "variation-table",
+      contextVi: graph ? `Hàm số bậc ba $y=f(x)$ có đồ thị như hình vẽ: ${t.plot}` : `Hàm số $y=f(x)$ xác định trên $\\mathbb{R}$ và có bảng biến thiên: $${t.table}$.`,
+      contextEn: graph ? `The cubic function $y=f(x)$ has the graph shown: ${t.plot}` : `The function $y=f(x)$ is defined on $\\mathbb{R}$ and has the variation table: $${t.table}$.`,
       statements: assemble(rng, [
         prop(
-          [`Hàm số đồng biến trên khoảng $(-\\infty;\\ ${t.a})$.`, `The function is increasing on $(-\\infty,\\ ${t.a})$.`, `Trên khoảng này $f'(x)>0$, mũi tên đi lên.`, `On this interval $f'(x)>0$ and the arrow goes up.`],
-          [`Hàm số nghịch biến trên khoảng $(-\\infty;\\ ${t.a})$.`, `The function is decreasing on $(-\\infty,\\ ${t.a})$.`, `Trên khoảng này $f'(x)>0$, mũi tên đi lên, nên hàm số đồng biến.`, `On this interval $f'(x)>0$ and the arrow goes up, so the function is increasing.`],
+          [`Hàm số đồng biến trên khoảng $(-\\infty;\\ ${t.a})$.`, `The function is increasing on $(-\\infty,\\ ${t.a})$.`, `Trên khoảng này $f'(x)>0$, ${up.vi}.`, `On this interval $f'(x)>0$ and ${up.en}.`],
+          [`Hàm số nghịch biến trên khoảng $(-\\infty;\\ ${t.a})$.`, `The function is decreasing on $(-\\infty,\\ ${t.a})$.`, `Trên khoảng này $f'(x)>0$, ${up.vi}, nên hàm số đồng biến.`, `On this interval $f'(x)>0$ and ${up.en}, so the function is increasing.`],
         ),
         prop(
           [`Hàm số đạt cực đại tại $x=${t.a}$.`, `The function has a maximum at $x=${t.a}$.`, `$f'(x)$ đổi dấu từ dương sang âm khi đi qua $x=${t.a}$.`, `$f'(x)$ changes from positive to negative at $x=${t.a}$.`],
           [`Hàm số đạt cực đại tại $x=${t.b}$.`, `The function has a maximum at $x=${t.b}$.`, `Tại $x=${t.b}$ thì $f'(x)$ đổi dấu từ âm sang dương nên đó là cực tiểu.`, `At $x=${t.b}$ the derivative changes from negative to positive, so it is a minimum.`],
         ),
         prop(
-          [`Giá trị cực tiểu của hàm số bằng $${t.m}$.`, `The minimum value of the function is $${t.m}$.`, `Giá trị tại điểm cực tiểu $x=${t.b}$ trong bảng là $${t.m}$.`, `The table gives the value $${t.m}$ at the minimum point $x=${t.b}$.`],
+          [`Giá trị cực tiểu của hàm số bằng $${t.m}$.`, `The minimum value of the function is $${t.m}$.`, `Giá trị tại điểm cực tiểu $x=${t.b}$ là $${t.m}$.`, `The value at the minimum point is $${t.m}$ at the minimum point $x=${t.b}$.`],
           [`Giá trị cực tiểu của hàm số bằng $${t.M}$.`, `The minimum value of the function is $${t.M}$.`, `Giá trị $${t.M}$ là giá trị cực đại; giá trị cực tiểu là $${t.m}$.`, `The value $${t.M}$ is the maximum; the minimum value is $${t.m}$.`],
         ),
         prop(
@@ -432,8 +434,8 @@ const variationTable: Family = {
           [`Phương trình $f(x)=${high}$ có ba nghiệm phân biệt.`, `The equation $f(x)=${high}$ has three distinct roots.`, `Vì $${high}>${t.M}$ nên đường thẳng $y=${high}$ chỉ cắt đồ thị tại một điểm.`, `Since $${high}>${t.M}$, the line $y=${high}$ meets the graph at only one point.`],
         ),
         prop(
-          [`Hàm số nghịch biến trên khoảng $(${t.a};\\ ${t.b})$.`, `The function is decreasing on $(${t.a},\\ ${t.b})$.`, `Trên khoảng này $f'(x)<0$, mũi tên đi xuống.`, `On this interval $f'(x)<0$ and the arrow goes down.`],
-          [`Hàm số nghịch biến trên khoảng $(${t.b};\\ +\\infty)$.`, `The function is decreasing on $(${t.b},\\ +\\infty)$.`, `Trên khoảng này $f'(x)>0$, mũi tên đi lên, nên hàm số đồng biến.`, `On this interval $f'(x)>0$ and the arrow goes up, so the function is increasing.`],
+          [`Hàm số nghịch biến trên khoảng $(${t.a};\\ ${t.b})$.`, `The function is decreasing on $(${t.a},\\ ${t.b})$.`, `Trên khoảng này $f'(x)<0$, ${down.vi}.`, `On this interval $f'(x)<0$ and ${down.en}.`],
+          [`Hàm số nghịch biến trên khoảng $(${t.b};\\ +\\infty)$.`, `The function is decreasing on $(${t.b},\\ +\\infty)$.`, `Trên khoảng này $f'(x)>0$, ${up.vi}, nên hàm số đồng biến.`, `On this interval $f'(x)>0$ and ${up.en}, so the function is increasing.`],
         ),
         prop(
           [`$f(${t.a})>f(${t.b})$.`, `$f(${t.a})>f(${t.b})$.`, `$f(${t.a})=${t.M}$ lớn hơn $f(${t.b})=${t.m}$.`, `$f(${t.a})=${t.M}$ is greater than $f(${t.b})=${t.m}$.`],
@@ -442,6 +444,8 @@ const variationTable: Family = {
       ]),
     };
   },
-};
+});
+const variationTable: Family = variationBase(false);
+const graphReading: Family = variationBase(true);
 
-export const TF_FAMILIES: readonly Family[] = [cubic, rational, integral, space, conditional, arithmetic, exponential, derivativeSign, variationTable];
+export const TF_FAMILIES: readonly Family[] = [cubic, rational, integral, space, conditional, arithmetic, exponential, derivativeSign, variationTable, graphReading];
