@@ -46,10 +46,20 @@ export function ThinkCard({ item, index }: { item: Think; index: number }) {
           {shown === 0 ? t(lang, "Xem lời giải", "Show the solution") : shown <= last ? t(lang, "Bước tiếp", "Next step") : t(lang, "Ẩn lời giải", "Hide solution")}
         </button>
       </div>
-      <div id={`${uid}-hint`} aria-live="polite">
+      {/* One short announcement instead of a live region around the whole list, which would read every step again. */}
+      <p className="sr-only" role="status">
+        {shown > last
+          ? t(lang, "Đã hiện đáp số.", "The answer is shown.")
+          : shown > 0
+            ? t(lang, `Đã hiện bước ${shown} trên ${last}.`, `Step ${shown} of ${last} shown.`)
+            : hint
+              ? t(lang, "Đã mở gợi ý.", "Hint opened.")
+              : ""}
+      </p>
+      <div id={`${uid}-hint`}>
         {hint ? <p className="note think-hint"><MathText text={say(item.hint)} /></p> : null}
       </div>
-      <div id={`${uid}-steps`} aria-live="polite">
+      <div id={`${uid}-steps`}>
       {shown > 0 ? (
         <ol className="steps">
           {item.steps.slice(0, Math.min(shown, last)).map((step) => (

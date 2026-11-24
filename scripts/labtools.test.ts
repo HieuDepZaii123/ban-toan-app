@@ -57,6 +57,14 @@ const tex: [string, string][] = [
   ["Bằng", "Bằng"],
   ["Khi dừng", "Khi dừng"],
   ["1,5 phút", "$1{,}5$ phút"],
+  ["x³/3", "$\\frac{x^3}{3}$"],
+  ["F(x) = x²/2 + C", "$F(x) = \\frac{x^2}{2} + C$"],
+  ["(x+1)/(x−1)", "$\\frac{x+1}{x-1}$"],
+  ["2^(-3)", "$2^{-3}$"],
+  ["e^(2x)", "$e^{2x}$"],
+  ["√(x+1)", "$\\sqrt{x+1}$"],
+  ["lim x→2 f(x) = 4", "$\\lim_{x\\to 2} f(x) = 4$"],
+  ["1/x", "$\\frac{1}{x}$"],
 ];
 for (const [input, want] of tex) expect(toTex(input) === want, `toTex(${input}) = ${toTex(input)}, cần ${want}`);
 

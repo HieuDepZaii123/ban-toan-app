@@ -184,7 +184,7 @@ const ineq: Challenge[] = [
         say,
         [
           [near(v.a + v.b, 10, 1e-9), `Tổng đang là $${say.n(v.a + v.b)}$, cần giữ bằng $10$.`, `The sum is $${say.n(v.a + v.b)}$, it must stay $10$.`],
-          [v.a * v.b >= 24.999, `Tích hiện là $${say.n(v.a * v.b)}$, còn lớn hơn được.`, `The product is $${say.n(v.a * v.b)}$, it can still grow.`],
+          [v.a * v.b >= 25 - 1e-9, `Tích hiện là $${say.n(v.a * v.b)}$, còn lớn hơn được.`, `The product is $${say.n(v.a * v.b)}$, it can still grow.`],
         ],
         [`$a=b=5$ cho tích lớn nhất $25$, đúng vì $ab\\le\\left(\\frac{a+b}{2}\\right)^2=25$.`, `$a=b=5$ gives the largest product $25$, since $ab\\le\\left(\\frac{a+b}{2}\\right)^2=25$.`],
       ),
@@ -387,8 +387,8 @@ const sequence: Challenge[] = [
   {
     id: "s-bounce",
     level: 3,
-    vi: "Quả bóng nảy lên bằng một nửa độ cao trước. Chọn độ cao thả và tỉ số để quãng đường tổng cộng đúng $24$ m.",
-    en: "A ball rebounds to half its previous height. Choose the drop height and ratio so the total path is exactly $24$ m.",
+    vi: "Quả bóng nảy lên bằng một nửa độ cao trước, tức tỉ số $0{,}5$. Chọn độ cao thả để quãng đường tổng cộng đúng $24$ m.",
+    en: "A ball rebounds to half its previous height, that is ratio $0.5$. Choose the drop height so the total path is exactly $24$ m.",
     set: { scene: 2, drop: 4, ratio: 0.5, months: 12 },
     sol: { scene: 2, drop: 8, ratio: 0.5, months: 12 },
     check: (v, say) => {
@@ -864,7 +864,7 @@ const vector: Challenge[] = [
         say,
         [
           [sol !== null, `Định thức bằng $0$ nên hệ không có nghiệm duy nhất.`, `The determinant is $0$ so there is no single solution.`],
-          [sol !== null && near(sol.x, 1, 0.01) && near(sol.y, 2, 0.01), `Nghiệm hiện tại là $(${say.n(sol?.x ?? 0)};\\ ${say.n(sol?.y ?? 0)})$.`.replace(/;\\ /, say.en ? ",\\ " : ";\\ "), `The current solution is $(${say.n(sol?.x ?? 0)},\\ ${say.n(sol?.y ?? 0)})$.`],
+          [sol !== null && near(sol.x, 1, 1e-9) && near(sol.y, 2, 1e-9), `Nghiệm hiện tại là $(${say.n(sol?.x ?? 0)};\\ ${say.n(sol?.y ?? 0)})$.`.replace(/;\\ /, say.en ? ",\\ " : ";\\ "), `The current solution is $(${say.n(sol?.x ?? 0)},\\ ${say.n(sol?.y ?? 0)})$.`],
         ],
         [`Hai đường thẳng cắt nhau đúng tại $(1;\\ 2)$.`, `The two lines meet exactly at $(1,\\ 2)$.`],
       );

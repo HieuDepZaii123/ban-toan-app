@@ -123,8 +123,9 @@ export function LabChallenges({ id, onPreset }: { id: string; onPreset: () => vo
       <div className="chips" role="group" aria-label={t(lang, "Chọn thử thách", "Pick a challenge")}>
         {spec.challenges.map((c, i) => (
           <button key={c.id} type="button" aria-pressed={i === index} onClick={() => pick(i)}>
-            {done.includes(c.id) ? "✓ " : revealed.includes(c.id) ? "👁 " : ""}
+            {done.includes(c.id) ? <span aria-hidden="true">✓ </span> : revealed.includes(c.id) ? <span aria-hidden="true">👁 </span> : null}
             {t(lang, `Thử thách ${i + 1}`, `Challenge ${i + 1}`)}
+            {done.includes(c.id) ? <span className="sr-only">{t(lang, " (đã giải)", " (solved)")}</span> : revealed.includes(c.id) ? <span className="sr-only">{t(lang, " (đã xem đáp án)", " (sample answer seen)")}</span> : null}
           </button>
         ))}
       </div>

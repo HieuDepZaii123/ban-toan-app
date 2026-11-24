@@ -66,6 +66,23 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
   const [, bump] = useState(0);
   const [speed, setSpeed] = useState(getLabSpeed());
   const [status, setStatus] = useState("");
+  const [keysOn, setKeysOnState] = useState<boolean>(() => {
+    try {
+      return window.localStorage.getItem("ban-toan:lab-keys") !== "off";
+    } catch {
+      return true;
+    }
+  });
+  const keysOnRef = useRef(keysOn);
+  const setKeysOn = (on: boolean) => {
+    keysOnRef.current = on;
+    setKeysOnState(on);
+    try {
+      window.localStorage.setItem("ban-toan:lab-keys", on ? "on" : "off");
+    } catch {
+      /* private window: the choice lasts until the page closes */
+    }
+  };
   const [shareUrl, setShareUrl] = useState("");
   const [saved, setSaved] = useState<Saved[]>(() => loadSaved(id));
   const [name, setName] = useState("");
@@ -128,6 +145,7 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
     const onKey = (event: KeyboardEvent) => {
       const el = event.target;
       if (!(el instanceof HTMLElement)) return;
+      const singleKeysOn = keysOnRef.current;
       const typing = (el instanceof HTMLInputElement && el.type !== "range") || el instanceof HTMLTextAreaElement || el.isContentEditable;
       if (typing) return;
       const mod = event.ctrlKey || event.metaKey;
@@ -138,7 +156,7 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
       } else if (mod && (key === "y" || (key === "z" && event.shiftKey))) {
         event.preventDefault();
         actions.current.redo();
-      } else if (!mod && !event.altKey) {
+      } else if (!mod && !event.altKey && singleKeysOn) {
         const area = main();
         const onControl = el instanceof HTMLButtonElement || el instanceof HTMLAnchorElement || el instanceof HTMLInputElement || el instanceof HTMLSelectElement;
         if (event.key === " " && !onControl) {
@@ -326,6 +344,10 @@ export function LabTools({ id, onPreset }: { id: string; onPreset: () => void })
       ) : null}
       <details className="lab-keys" open>
         <summary>{t(lang, "Phím tắt", "Keyboard shortcuts")}</summary>
+        <label className="lab-keys-switch">
+          <input type="checkbox" checked={keysOn} onChange={(event) => setKeysOn(event.target.checked)} />
+          {t(lang, "Bật phím tắt một phím (dấu cách, 1 đến 4, mũi tên). Ctrl+Z và Ctrl+Y luôn dùng được.", "Turn on single-key shortcuts (space, 1 to 4, arrows). Ctrl+Z and Ctrl+Y always work.")}
+        </label>
         <ul>
           <li>{t(lang, "Dấu cách: chạy hoặc dừng.", "Space: play or stop.")}</li>
           <li>{t(lang, "Phím 1 đến 4: chọn cảnh.", "Keys 1 to 4: pick a scene.")}</li>

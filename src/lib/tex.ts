@@ -10,7 +10,7 @@ type Atom = { kind: Kind; tex: string };
 const UNITS = new Set(["m", "s", "g", "h", "l", "cm", "kg", "mm", "km", "min", "m/s", "km/h", "m/phút"]);
 const FUNCTIONS = new Set(["log", "ln", "sin", "cos", "tan", "cot", "lim", "max", "min"]);
 const MATH_WORDS = new Set(["Ox", "Oy", "Oz", "Oxy", "Oxyz"]);
-const SUP: Record<string, string> = { "²": "2", "³": "3", "ˣ": "x", "ⁿ": "n" };
+const SUP: Record<string, string> = { "¹": "1", "²": "2", "³": "3", "ˣ": "x", "ⁿ": "n" };
 const SUB: Record<string, string> = { "₀": "0", "₁": "1", "₂": "2", "₃": "3", "₄": "4", "₅": "5", "₆": "6", "₇": "7", "₈": "8", "₉": "9", "ₙ": "n" };
 const SYMBOL: Record<string, string> = {
   "≥": "\\ge ", "≤": "\\le ", "≠": "\\ne ", "≈": "\\approx ", "·": "\\cdot ", "×": "\\times ", "÷": ":", "∞": "\\infty ",
@@ -24,11 +24,15 @@ const RULES: { kind: Kind; re: RegExp }[] = [
   { kind: "space", re: /^\s+/ },
   // khoảng và toạ độ: (−∞; 2], [−1; 3), (2; 3; 4)
   { kind: "math", re: /^[(\[][^()[\]$]*;[^()[\]$]*[)\]]/ },
+  // một căn, một số mũ hay một phân số có ngoặc đi liền nhau phải nằm trong cùng một thành phần để đổi được sang TeX
+  { kind: "math", re: /^√\([^()]*\)/ },
+  { kind: "math", re: /^\^\([^()]*\)/ },
+  { kind: "math", re: /^\([^()]*\)\/(?:\([^()]*\)|\d+|[A-Za-z])/ },
   { kind: "math", re: /^(?:m\/s|km\/h)(?![A-Za-z])/ },
   { kind: "math", re: /^\d+(?:[.,]\d+)?/ },
   { kind: "text", re: new RegExp(`^[${LETTER}]{2,}`) },
   { kind: "math", re: new RegExp(`^[A-Za-z](?![${LETTER}])`) },
-  { kind: "math", re: /^[²³ˣⁿ₀-₉ₙ′″°%]/ },
+  { kind: "math", re: /^[¹²³ˣⁿ₀-₉ₙ′″°%]/ },
   { kind: "punct", re: /^[.,;:]/ },
   { kind: "math", re: /^[=<>+\-−±≥≤≠≈·×÷∞π∆Δ∫√→∈|!/^()[\]{}]/ },
 ];
@@ -37,7 +41,10 @@ const RULES: { kind: Kind; re: RegExp }[] = [
 function convertMath(source: string): string {
   let out = source;
   out = out.replace(/√(\d+)/g, "\\sqrt{$1}").replace(/√\(([^)]*)\)/g, "\\sqrt{$1}").replace(/√([A-Za-z])/g, "\\sqrt{$1}");
-  out = out.replace(/([A-Za-z\d)}])([²³ˣⁿ])/g, (_m, base: string, sup: string) => `${base}^${SUP[sup] ?? sup}`);
+  out = out.replace(/√\(([^()]*)\)/g, "\\sqrt{$1}");
+  out = out.replace(/\^\(([^()]*)\)/g, "^{$1}");
+  out = out.replace(/∫([₀-₉ₙ])([¹²³ˣⁿ])?/g, (_m, sub: string, sup: string | undefined) => `\\int_{${SUB[sub] ?? sub}}${sup ? `^{${SUP[sup] ?? sup}}` : ""} `);
+  out = out.replace(/([A-Za-z\d)}])([¹²³ˣⁿ])/g, (_m, base: string, sup: string) => `${base}^${SUP[sup] ?? sup}`);
   out = out.replace(/([A-Za-z])((?:[₀-₉ₙ])+)/g, (_m, base: string, sub: string) => `${base}_{${[...sub].map((c) => SUB[c] ?? c).join("")}}`);
   out = out.replace(/″/g, "''").replace(/′/g, "'");
   out = out.replace(/\^\s*[-−]\s*(\d+)/g, "^{-$1}").replace(/\^(\d{2,})/g, "^{$1}");
@@ -47,10 +54,17 @@ function convertMath(source: string): string {
   out = out.replace(/[≥≤≠≈·×÷∞πΔ∆∫→∈±−]/g, (c) => SYMBOL[c] ?? c);
   out = out.replace(/\\(ge|le|ne|approx|cdot|times|infty|pi|Delta|int|to|in|pm) ?/g, "\\$1 ");
   // phân số a/b, kể cả tử và mẫu là căn hoặc π
+  // phân số có tử là luỹ thừa hay biểu thức trong ngoặc: x²/2, (x+1)/(x−1)
+  out = out.replace(/\(([^()]+)\)\s*\/\s*\(([^()]+)\)/g, "\\frac{$1}{$2}");
+  out = out.replace(/\(([^()]+)\)\s*\/\s*(\d+|[A-Za-z])(?![A-Za-z\d])/g, "\\frac{$1}{$2}");
+  out = out.replace(/([A-Za-z\d]\^(?:\{[^}]*\}|\d))\s*\/\s*(\d+|[A-Za-z])(?![A-Za-z\d])/g, "\\frac{$1}{$2}");
   const NUM = "(?:\\d+(?:\\{,\\}\\d+)?)?(?:\\\\pi ?|\\\\sqrt\\{\\d+\\})?";
   const DEN = "\\d+(?:\\{,\\}\\d+)?|\\\\sqrt\\{\\d+\\}|\\d*\\\\pi";
   out = out.replace(new RegExp(`(${NUM})\\s*\\/\\s*(${DEN})`, "g"), (m, num: string, den: string) => (num.trim() ? `\\frac{${num.trim()}}{${den.trim()}}` : m));
-  if (out.includes("\\int")) out = out.replace(/\s+d([a-z])\s*$/, "\\,d$1");
+  // a/b và 1/x giữa hai ký hiệu đơn; m/s và km/h giữ nguyên là đơn vị
+  out = out.replace(/(?<![\\\w{])([A-Za-z]|\d+)\/([A-Za-z]|\d+)(?![\w])/g, (m, a: string, b: string) => (a === "m" && b === "s" ? m : `\\frac{${a}}{${b}}`));
+  if (out.includes("\\int")) out = out.replace(/\s+d([a-z])(?![A-Za-z])/g, "\\,d$1");
+  out = out.replace(/\\lim\s+([a-z])\s*\\to ?\s*(-?[\w.{},]+)/g, "\\lim_{$1\\to $2}");
   return out.replace(/\s{2,}/g, " ").trim();
 }
 

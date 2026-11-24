@@ -1901,9 +1901,9 @@
         {
           "id": "l3-2",
           "title": "Giảm đi",
-          "prompt": "Bể có $36$ lít nước, đổ vào các chậu sao cho mỗi chậu bằng $36$ giảm đi $4$ lần. Mỗi chậu có mấy lít?",
+          "prompt": "Bể A có $36$ lít nước. Bể B chứa lượng nước bằng bể A giảm đi $4$ lần. Bể B có mấy lít?",
           "steps": [
-            "Giảm đi $4$ lần là chia $36$ thành $4$ phần bằng nhau.",
+            "Giảm đi $4$ lần là chia $36$ thành $4$ phần bằng nhau, rồi lấy một phần.",
             "$36:4=9$. Kiểm: $9\\times4=36$."
           ],
           "result": "$9$ lít"
@@ -3080,11 +3080,11 @@
         },
         {
           "id": "l7c-p2",
-          "prompt": "Tam giác $ABC$ cân tại $A$ có chu vi $16$ và $AB=AC=5$. Tìm $BC$.",
-          "answer": "$6$",
+          "prompt": "Tam giác $ABC$ cân tại $A$, $M$ là trung điểm của $BC$ và $BC=6$. Chứng minh hai tam giác $ABM$ và $ACM$ bằng nhau rồi tìm $BM$.",
+          "answer": "$BM=3$",
           "steps": [
-            "Hai cạnh bên bằng nhau: $AB+AC=10$.",
-            "$BC=16-10=6$."
+            "Hai tam giác có $AB=AC$, $MB=MC$ và chung cạnh $AM$ nên bằng nhau (c.c.c).",
+            "$BM=\\frac{BC}{2}=3$."
           ]
         }
       ],
@@ -3116,8 +3116,8 @@
         },
         {
           "where": "l7c-p2",
-          "lhs": "16-5-5",
-          "rhs": "6"
+          "lhs": "Rational(6,2)",
+          "rhs": "3"
         }
       ]
     },
