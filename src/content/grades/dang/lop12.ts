@@ -232,6 +232,44 @@ const lop12: GradeDang[] = [
     mistake: b(R`Tính tích phân của $f$ trên cả đoạn rồi mới lấy giá trị tuyệt đối.`, R`Integrating $f$ over the whole interval and only then taking the absolute value.`),
     drill: { prompt: b(R`Tính $\int_0^4|x-2|\,dx$.`, R`Compute $\int_0^4|x-2|\,dx$.`), answer: b(R`Bằng $4$.`, R`It is $4$.`), checks: [{ expr: "integrate(2-x, (x, 0, 2))+integrate(x-2, (x, 2, 4))", expect: "4" }] },
   },
+  {
+    name: b(R`Khoảng cách giữa hai đường thẳng chéo nhau`, R`Distance between two skew lines`),
+    spot: b(R`Cho hai đường thẳng bằng điểm và vectơ chỉ phương trong $Oxyz$ và hỏi khoảng cách giữa chúng.`, R`Two lines given by a point and a direction vector in $Oxyz$, with a question on the distance between them.`),
+    method: [
+      b(R`Tính tích có hướng $\left[\vec{u_1},\vec{u_2}\right]$ và vectơ nối hai điểm $\overrightarrow{AB}$.`, R`Compute the cross product $\left[\vec{u_1},\vec{u_2}\right]$ and the vector $\overrightarrow{AB}$ joining the two points.`),
+      b(R`Lấy $\frac{\left|\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}\right|}{\left|\left[\vec{u_1},\vec{u_2}\right]\right|}$.`, R`Take $\frac{\left|\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}\right|}{\left|\left[\vec{u_1},\vec{u_2}\right]\right|}$.`),
+    ],
+    example: {
+      prompt: b(R`Đường $\Delta_1$ qua $O$ có $\vec{u_1}=(2;\ 0;\ 0)$ và $\Delta_2$ qua $B(1;\ 5;\ 4)$ có $\vec{u_2}=(0;\ 3;\ 0)$. Tính khoảng cách.`, R`The line $\Delta_1$ passes through $O$ with $\vec{u_1}=(2;\ 0;\ 0)$ and $\Delta_2$ passes through $B(1;\ 5;\ 4)$ with $\vec{u_2}=(0;\ 3;\ 0)$. Find the distance.`),
+      steps: [
+        b(R`Tích có hướng là $(0;\ 0;\ 6)$ và tích vô hướng với $\overrightarrow{OB}$ bằng $24$.`, R`The cross product is $(0;\ 0;\ 6)$ and its dot product with $\overrightarrow{OB}$ is $24$.`),
+        b(R`Độ dài tích có hướng là $6$ nên khoảng cách là $\frac{24}{6}=4$.`, R`The cross product has length $6$, so the distance is $\frac{24}{6}=4$.`),
+      ],
+      ket: b(R`Khoảng cách bằng $4$.`, R`The distance is $4$.`),
+      checks: [{ expr: "abs(Matrix([1,5,4]).dot(Matrix([2,0,0]).cross(Matrix([0,3,0]))))/Matrix([2,0,0]).cross(Matrix([0,3,0])).norm()", expect: "4" }],
+    },
+    mistake: b(R`Quên trị tuyệt đối ở tử số, hoặc dùng công thức khi hai đường song song.`, R`Forgetting the absolute value in the numerator, or using the formula when the lines are parallel.`),
+    drill: { prompt: b(R`Tìm độ dài của tích có hướng của $(1;\ 0;\ 0)$ và $(0;\ 2;\ 0)$.`, R`Find the length of the cross product of $(1;\ 0;\ 0)$ and $(0;\ 2;\ 0)$.`), answer: b(R`Bằng $2$.`, R`It is $2$.`), checks: [{ expr: "Matrix([1,0,0]).cross(Matrix([0,2,0])).norm()", expect: "2" }] },
+  },
+  {
+    name: b(R`Diện tích hình phẳng giữa hai đồ thị`, R`Area between two graphs`),
+    spot: b(R`Hai đồ thị cắt nhau và đề hỏi diện tích phần giới hạn bởi chúng.`, R`Two graphs meet and the question asks for the area bounded by them.`),
+    method: [
+      b(R`Giải phương trình hoành độ giao điểm để tìm cận.`, R`Solve the equation of intersection to find the limits.`),
+      b(R`Lấy hàm trên trừ hàm dưới trên từng đoạn rồi tích phân.`, R`Take the upper function minus the lower one on each piece and integrate.`),
+    ],
+    example: {
+      prompt: b(R`Tính diện tích hình phẳng giới hạn bởi $y=x^2$ và $y=x+2$.`, R`Find the area bounded by $y=x^2$ and $y=x+2$.`),
+      steps: [
+        b(R`Giao điểm tại $x=-1$ và $x=2$.`, R`The graphs meet at $x=-1$ and $x=2$.`),
+        b(R`Đường thẳng nằm trên nên $S=\int_{-1}^2(x+2-x^2)\,dx=\frac{9}{2}$.`, R`The line is above, so $S=\int_{-1}^2(x+2-x^2)\,dx=\frac{9}{2}$.`),
+      ],
+      ket: b(R`Diện tích bằng $\frac{9}{2}$.`, R`The area is $\frac{9}{2}$.`),
+      checks: [{ expr: "integrate(x+2-x**2, (x, -1, 2))", expect: "Rational(9,2)" }],
+    },
+    mistake: b(R`Lấy hiệu theo một thứ tự cố định dù hai đồ thị cắt nhau ở giữa.`, R`Taking the difference in a fixed order even though the graphs cross in between.`),
+    drill: { prompt: b(R`Tính diện tích hình phẳng giới hạn bởi $y=x^2$ và $y=4$.`, R`Find the area bounded by $y=x^2$ and $y=4$.`), answer: b(R`Bằng $\frac{32}{3}$.`, R`It is $\frac{32}{3}$.`), checks: [{ expr: "integrate(4-x**2, (x, -2, 2))", expect: "Rational(32,3)" }] },
+  },
 ];
 
 export default lop12;

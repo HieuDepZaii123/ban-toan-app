@@ -17,7 +17,7 @@ export const DANG_CHAPTER: Record<number, string[]> = {
   9: ["can", "can", "he-pt", "he-pt", "pt-b2", "bpt", "ham-b2", "lg-vuong", "tron", "khoi", "tan-so"],
   10: ["menh-de", "bpt-hai-an", "ham-bac-hai", "ham-bac-hai", "ham-bac-hai", "luong-giac", "vecto", "toa-do", "toa-do", "to-hop", "thong-ke", "ham-so-10"],
   11: ["luong-giac", "luong-giac", "luong-giac", "day-so", "gioi-han", "gioi-han", "mu-log", "mu-log", "dao-ham", "khong-gian", "xs-11", "luong-giac-nc"],
-  12: ["khao-sat", "khao-sat", "khao-sat", "khao-sat", "tich-phan", "tich-phan", "tich-phan", "tich-phan", "oxyz", "xs-12", "do-thi-ham", "tp-nang-cao"],
+  12: ["khao-sat", "khao-sat", "khao-sat", "khao-sat", "tich-phan", "tich-phan", "tich-phan", "tich-phan", "oxyz", "xs-12", "do-thi-ham", "tp-nang-cao", "oxyz-nang-cao", "tp-nang-cao"],
 };
 
 /** Chương của từng bài tư duy theo lớp, theo thứ tự trong src/content/think/*.ts (5 bài mỗi lớp). */

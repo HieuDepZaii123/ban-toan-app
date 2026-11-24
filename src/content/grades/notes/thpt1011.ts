@@ -69,4 +69,36 @@ export const thpt1011Notes: NoteBook = {
     R`Hàm mũ và logarit cùng cơ số là hai hàm ngược nhau và cùng chiều biến thiên. Biết chiều biến thiên thì so sánh hai giá trị bằng cách so sánh hai đối số.`,
     R`Quên rằng cơ số nằm giữa $0$ và $1$ làm đổi chiều so sánh, hoặc nhầm $\log_ab$ với $\log_ba$.`,
   ),
+  "10/vi-tri-hai-dt": note(
+    R`Hai đường thẳng có pháp tuyến không cùng phương thì cắt nhau đúng một điểm. Khi hai pháp tuyến cùng phương, hai đường hoặc không có điểm chung hoặc trùng nhau, và một điểm thử phân biệt hai trường hợp.`,
+    R`Kết luận song song chỉ vì định thức bằng $0$ mà quên kiểm tra trùng nhau, hoặc nhân sai hệ số khi so sánh tỉ lệ ba hệ số.`,
+  ),
+  "10/goc-hai-dt": note(
+    R`Góc giữa hai đường thẳng bằng góc giữa hai pháp tuyến hoặc bù với nó. Lấy trị tuyệt đối của tích vô hướng để luôn được góc không tù.`,
+    R`Bỏ trị tuyệt đối nên ra góc tù cho hai đường thẳng, hoặc dùng chỉ phương của một đường và pháp tuyến của đường kia.`,
+  ),
+  "10/kc-hai-song-song": note(
+    R`Khoảng cách giữa hai đường song song bằng khoảng cách từ một điểm bất kì của đường này đến đường kia. Khi cùng hệ số $a$ và $b$, điều đó rút gọn thành hiệu hai hằng số chia cho độ dài pháp tuyến.`,
+    R`Dùng công thức khi hai phương trình chưa có cùng hệ số $a$, $b$, chẳng hạn $x+y-2=0$ và $2x+2y+3=0$. Phải đưa về cùng hệ số trước.`,
+  ),
+  "10/lap-pt-dt": note(
+    R`Đường song song giữ nguyên pháp tuyến, nên chỉ còn hằng số chưa biết và một điểm đủ để tìm nó. Đường vuông góc dùng chỉ phương của đường kia làm pháp tuyến.`,
+    R`Nhầm pháp tuyến với chỉ phương khi viết đường vuông góc, hoặc quên đổi dấu hằng số khi chuyển từ dạng $a(x-x_0)+b(y-y_0)=0$ sang $ax+by+c=0$.`,
+  ),
+  "10/so-trung-binh": note(
+    R`Số trung bình là tổng chia cho cỡ mẫu, và mỗi giá trị lặp lại được tính bằng tần số của nó. Biết số trung bình và cỡ mẫu thì suy ra tổng, rồi tìm được giá trị thêm hoặc bớt.`,
+    R`Chia cho số giá trị khác nhau thay vì cỡ mẫu, hoặc khi thêm một giá trị vẫn dùng cỡ mẫu cũ để tính trung bình mới.`,
+  ),
+  "10/so-ngoai-le": note(
+    R`Khoảng tứ phân vị chứa nửa số liệu ở giữa, nên các giá trị cách xa nó hơn một lần rưỡi bề rộng ấy là bất thường so với phần lớn mẫu. Ta dùng tứ phân vị vì chúng ít bị ảnh hưởng bởi chính các giá trị cực đoan.`,
+    R`Tính cận bằng độ lệch chuẩn thay vì khoảng tứ phân vị, hoặc cho rằng giá trị ngoại lệ luôn là dữ liệu sai nên có thể bỏ ngay.`,
+  ),
+  "11/phep-chieu-ss": note(
+    R`Phép chiếu song song biến các đường song song thành đường song song và giữ tỉ số trên mỗi đường, nên giữ trung điểm. Nó không giữ độ dài hay góc vì các đường chiếu nghiêng so với mặt phẳng.`,
+    R`Cho rằng hình chiếu của góc vuông vẫn vuông, hoặc của đoạn bằng nhau trên hai đường không song song vẫn bằng nhau. Chỉ tỉ số trên cùng đường hoặc đường song song được giữ.`,
+  ),
+  "11/hinh-hop-11": note(
+    R`Đường chéo đáy và chiều cao là hai cạnh góc vuông của một tam giác vuông có đường chéo hình hộp là cạnh huyền. Áp dụng Pi-ta-go hai lần cho công thức $\sqrt{a^2+b^2+c^2}$.`,
+    R`Dùng công thức đường chéo hình lập phương $a\sqrt3$ cho hình hộp chữ nhật không đều, hoặc tính diện tích toàn phần thiếu hệ số $2$.`,
+  ),
 };

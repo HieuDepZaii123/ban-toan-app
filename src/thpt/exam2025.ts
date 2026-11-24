@@ -33,7 +33,7 @@ export const PART_POINTS = { mcq: 3, tf: 4, short: 3 } as const;
 type Slot = { grade: number; hard?: true; graph?: true };
 
 /** Mẫu câu hỏi đọc đồ thị hoặc bảng biến thiên; đề thật có nhiều câu loại này nên mỗi đề dành sẵn các ô cho chúng. */
-const GRAPH_KEYS = new Set(["dothicucdai", "dothinghiem", "dothidongbien", "dothipttcd", "dothipttcn", "dothiptdbien", "bbtcucdai", "bbtnghiem"]);
+const GRAPH_KEYS = new Set(["dothicucdai", "dothinghiem", "dothidongbien", "dothipttcd", "dothipttcn", "dothiptdbien", "dothib4cuctieu", "dothib4nghiem", "bbtcucdai", "bbtnghiem"]);
 const MCQ_SLOTS: readonly Slot[] = [
   { grade: 12 }, { grade: 12 }, { grade: 12 }, { grade: 12, graph: true }, { grade: 12, graph: true },
   { grade: 11 }, { grade: 11 }, { grade: 10 },

@@ -1260,6 +1260,20 @@ const grade12Hard: Template[] = [
       [`Hàm số không xác định tại $x=${p}$ nên chỉ xét trên từng khoảng, không nói trên $\\mathbb{R}$.`, `Trên mỗi nhánh, đi từ trái sang phải thì đồ thị đi ${up ? "lên" : "xuống"}.`, `Vậy hàm số ${up ? "đồng" : "nghịch"} biến trên mỗi khoảng xác định.`],
       `diff((${h}*x+(${k - h * p}))/(x-(${p})), x).subs(x, ${p + 1})`, String(-k));
   } },
+  { key: "dothib4cuctieu", make: (r) => {
+    const k = r.int(1, 3), c = r.int(-3, 3), lo = c - k * k, w = Math.ceil(Math.sqrt(k)) + 2;
+    return made(`Cho hàm số trùng phương $y=f(x)$ có đồ thị như hình vẽ: {{plot:1,0,${-2 * k},0,${c}|${-w}|${w}|${lo - 3}|${c + 4}}} Giá trị cực tiểu của hàm số bằng`, nums(lo, [c, -c, k, -k]),
+      ["Cực tiểu là điểm thấp nhất trong một khoảng quanh nó, và giá trị cực tiểu là tung độ của điểm đó.", `Trên hình, hai điểm thấp nhất đối xứng nhau qua trục tung và có tung độ $${lo}$, còn điểm giữa là cực đại có tung độ $${c}$.`, `Vậy giá trị cực tiểu của hàm số bằng $${lo}$.`],
+      `(x**4-2*${k}*x**2+(${c})).subs(x, sqrt(${k}))`, String(lo));
+  } },
+  { key: "dothib4nghiem", make: (r) => {
+    const k = r.int(1, 3), c = r.int(-3, 3), lo = c - k * k, w = Math.ceil(Math.sqrt(k)) + 2, kind = r.int(0, 4);
+    const m0 = kind === 0 ? c + r.int(1, 2) : kind === 1 ? c : kind === 2 ? lo + 1 : kind === 3 ? lo : lo - r.int(1, 2);
+    const count = kind === 0 ? 2 : kind === 1 ? 3 : kind === 2 ? 4 : kind === 3 ? 2 : 0;
+    return made(`Cho hàm số trùng phương $y=f(x)$ có đồ thị như hình vẽ: {{plot:1,0,${-2 * k},0,${c}|${-w}|${w}|${lo - 3}|${c + 4}}} Số nghiệm thực phân biệt của phương trình $f(x)=${m0}$ là`, nums(count, [0, 1, 2, 3, 4], m, 0),
+      [`Nghiệm của $f(x)=${m0}$ là hoành độ giao điểm của đồ thị với đường thẳng nằm ngang $y=${m0}$.`, `Đọc trên hình: cực đại có tung độ $${c}$ và hai cực tiểu có tung độ $${lo}$; so sánh $${m0}$ với hai giá trị này.`, `Đường thẳng $y=${m0}$ cắt đồ thị tại $${count}$ điểm phân biệt.`],
+      `len(Poly(x**4-2*${k}*x**2+(${c})-(${m0}), x).sqf_part().real_roots())`, String(count));
+  } },
   { key: "tdiemoabc", make: (r) => {
     let a = 1, b = 1, c = 1;
     do {
@@ -1290,7 +1304,7 @@ export const thptTopics: { id: string; grade: number; vi: string; en: string; ke
   { id: "g11-mu-log", grade: 11, vi: "Mũ và logarit", en: "Exponents and logarithms", keys: ["log", "mu", "loghieu"] },
   { id: "g11-dao-ham", grade: 11, vi: "Đạo hàm", en: "Derivatives", keys: ["daoham", "daohamhop"] },
   { id: "g11-xac-suat", grade: 11, vi: "Xác suất", en: "Probability", keys: ["xsdoclap", "xscodien"] },
-  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem", "dothicucdai", "dothinghiem", "dothipttcd", "dothipttcn", "dothiptdbien"] },
+  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem", "dothicucdai", "dothinghiem", "dothipttcd", "dothipttcn", "dothiptdbien", "dothib4cuctieu", "dothib4nghiem"] },
   { id: "g12-tiem-can", grade: 12, vi: "Tiệm cận", en: "Asymptotes", keys: ["tcngang", "tcdung"] },
   { id: "g12-tich-phan", grade: 12, vi: "Nguyên hàm và tích phân", en: "Antiderivatives and integrals", keys: ["nguyenham", "tp1", "tp2", "dientich", "tpdoibien", "tpphanh"] },
   { id: "g12-khong-gian", grade: 12, vi: "Tọa độ trong không gian", en: "Space coordinates", keys: ["kc3d", "kcmp", "matcau", "vuonggoc", "ptmp", "giaodiem", "tdiemoabc"] },

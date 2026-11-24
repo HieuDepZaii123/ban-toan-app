@@ -4380,7 +4380,8 @@
       "blurb": "Lớp 12: đưa phương trình về dạng hàm bằng hằng số rồi so hằng số với cực đại và cực tiểu.",
       "spot": [
         "Đề hỏi số nghiệm của phương trình có tham số $m$, hoặc số giao điểm của đồ thị với một đường thẳng ngang.",
-        "Phương trình có thể tách thành $f(x)=m$ với $f$ là hàm bậc ba."
+        "Phương trình có thể tách thành $f(x)=m$ với $f$ là hàm bậc ba.",
+        "Đồ thị là hàm trùng phương có ba cực trị, và đề cho giá trị cực đại, cực tiểu."
       ],
       "thinking": [
         "Tách tham số về một vế để được $f(x)=m$.",
@@ -4389,7 +4390,8 @@
       ],
       "care": [
         "Khi $m$ bằng đúng giá trị cực trị thì có nghiệm kép, nên số nghiệm phân biệt là hai.",
-        "Chỉ dùng cách này khi $f$ là hàm bậc ba có hai cực trị."
+        "Chỉ dùng cách này khi $f$ là hàm bậc ba có hai cực trị.",
+        "Với hàm trùng phương, hai cực tiểu có cùng giá trị nên khi $m$ bằng giá trị đó thì có hai nghiệm kép và chỉ hai nghiệm phân biệt."
       ],
       "formulas": [
         "$y_{CT}<m<y_{CD}$ cho ba nghiệm phân biệt của $x^3-3x=m$."
@@ -4414,6 +4416,16 @@
             "Đường thẳng $y=2$ tiếp xúc đồ thị tại cực đại và cắt thêm một điểm."
           ],
           "result": "Có $2$ nghiệm phân biệt."
+        },
+        {
+          "id": "tuong-giao-do-thi-3",
+          "title": "Hàm trùng phương",
+          "prompt": "Đồ thị $y=x^4-2x^2$ có cực đại $0$ tại $x=0$ và hai cực tiểu $-1$ tại $x=\\pm1$. Phương trình $x^4-2x^2=-\\frac12$ có bao nhiêu nghiệm?",
+          "steps": [
+            "Giá trị $-\\frac12$ nằm giữa cực tiểu $-1$ và cực đại $0$.",
+            "Đường thẳng $y=-\\frac12$ cắt đồ thị tại bốn điểm."
+          ],
+          "result": "Có $4$ nghiệm."
         }
       ],
       "mistakes": [
@@ -4470,6 +4482,11 @@
           "where": "tuong-giao-do-thi-p2",
           "lhs": "0**3-3*0",
           "rhs": "0"
+        },
+        {
+          "where": "tuong-giao-do-thi-3",
+          "lhs": "2*Rational(1,2)+2*Rational(3,2)-(Rational(1,2)+Rational(3,2))+2",
+          "rhs": "4"
         }
       ]
     },

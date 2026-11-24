@@ -2,6 +2,7 @@ import type { GradeBook } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 import { lop10UngDung } from "./lopExtra.ts";
 import { lop10HamSo, lop10ToaDoVt } from "./lop1011extra.ts";
+import { lop10DuongThangNC, lop10ThongKeNC } from "./lop1011extra2.ts";
 
 const R = String.raw;
 
@@ -467,5 +468,5 @@ const lop10Base: GradeBook = {
 /** Chương bổ sung xen vào cạnh chương cùng mạch. */
 export const lop10: GradeBook = {
   ...lop10Base,
-  chapters: lop10Base.chapters.flatMap((chapter) => (chapter.id === "ham-bac-hai" ? [chapter, lop10UngDung, lop10HamSo] : chapter.id === "vecto" ? [chapter, lop10ToaDoVt] : [chapter])),
+  chapters: lop10Base.chapters.flatMap((chapter) => (chapter.id === "ham-bac-hai" ? [chapter, lop10UngDung, lop10HamSo] : chapter.id === "vecto" ? [chapter, lop10ToaDoVt] : chapter.id === "toa-do" ? [chapter, lop10DuongThangNC] : chapter.id === "thong-ke" ? [chapter, lop10ThongKeNC] : [chapter])),
 };
