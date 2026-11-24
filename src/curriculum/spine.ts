@@ -28,8 +28,8 @@ const STRAND: Record<number, Record<string, Strand>> = {
   7: { "huu-ti": S, "ti-le": S, "dai-so": S, "tam-giac": H, thong: T, "thong-ke": T, "goc-song-song": H, "hinh-khoi-7": H, "bai-toan-7": S },
   8: { "dang-thuc": S, "pt-ham": S, "tam-giac": H, "tu-giac": H, thales: H, "xac-suat-8": T, "pt-tich-mau-8": S },
   9: { can: S, "ham-b2": S, "he-pt": S, "pt-b2": S, bpt: S, "lg-vuong": H, tron: H, khoi: H, "tan-so": T, "thuc-te-9": S, "on-vao-10": S },
-  10: { "menh-de": S, "bpt-hai-an": S, "ham-bac-hai": S, "ung-dung-b2": S, "luong-giac": H, vecto: H, "toa-do": H, "to-hop": S, "thong-ke": T, xs: T },
-  11: { "luong-giac": S, "day-so": S, "gioi-han": S, "mu-log": S, "dao-ham": S, "khong-gian": H, "goc-kc-11": H, "tk-11": T, "xs-11": T },
+  10: { "menh-de": S, "bpt-hai-an": S, "ham-bac-hai": S, "ung-dung-b2": S, "ham-so-10": S, "luong-giac": H, vecto: H, "vt-toa-do-10": H, "toa-do": H, "to-hop": S, "thong-ke": T, xs: T },
+  11: { "luong-giac": S, "luong-giac-nc": S, "mu-log-nc": S, "day-so": S, "gioi-han": S, "mu-log": S, "dao-ham": S, "khong-gian": H, "goc-kc-11": H, "tk-11": T, "xs-11": T },
   12: { "khao-sat": S, "ung-dung-dh": S, "tich-phan": S, "ky-thuat-tp": S, "do-thi-ham": S, "tp-nang-cao": S, oxyz: H, "oxyz-nang-cao": H, "tk-12": T, "tk-nang-cao": T, "xs-12": T, "xs-nang-cao": T },
 };
 
