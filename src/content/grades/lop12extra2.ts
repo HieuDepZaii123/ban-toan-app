@@ -102,7 +102,7 @@ export const lop12DoThi: GradeChapter = chuong("do-thi-ham", "Đồ thị hàm s
     [
       luyen(R`Hệ số góc của tiếp tuyến của $y=x^2-4x$ tại $x=3$ bằng bao nhiêu?`, R`Hệ số góc bằng $2$.`, [{ expr: "diff(x**2-4*x, x).subs(x, 3)", expect: "2" }], R`Ta có $y'=2x-4$ nên $y'(3)=2$.`),
       luyen(R`Viết tiếp tuyến của $y=x^2$ tại điểm có hoành độ $x=1$.`, R`Tiếp tuyến là $y=2x-1$.`, [{ expr: "2*(0-1)+1", expect: "-1" }, { expr: "diff(x**2, x).subs(x, 1)", expect: "2" }], R`Hệ số góc $y'(1)=2$ và $y(1)=1$ nên $y=2(x-1)+1=2x-1$.`),
-      luyen(R`Tiếp tuyến của $y=x^3$ vuông góc với đường thẳng $y=-\frac{x}{3}$ có hoành độ tiếp điểm là bao nhiêu (lấy giá trị dương)?`, R`Hoành độ là $x=1$.`, [{ expr: "Max(*solve(3*x**2-3, x))", expect: "1" }], R`Hệ số góc phải bằng $3$ vì $3\cdot\left(-\frac{1}{3}\right)=-1$, nên $3x^2=3$ và $x=1$.`),
+      luyen(R`Có bao nhiêu tiếp tuyến của đồ thị $y=x^3$ vuông góc với đường thẳng $y=-\frac{x}{3}$?`, R`Có $2$ tiếp tuyến, vì $3x^2=3$ có hai nghiệm.`, [{ expr: "len(solve(3*x**2-3, x))", expect: "2" }], R`Hệ số góc phải bằng $3$ vì $3\cdot\left(-\frac{1}{3}\right)=-1$, nên $3x^2=3$ cho hai hoành độ $x=\pm1$.`),
     ],
     { topicId: "derivative" }),
 ]);
@@ -250,8 +250,8 @@ export const lop12OxyzNC: GradeChapter = chuong("oxyz-nang-cao", "Hình học Ox
         [{ expr: "abs(Matrix([1,0,2]).dot(Matrix([1,1,0]).cross(Matrix([0,1,1]))))/sqrt(3)", expect: "sqrt(3)" }]),
     ],
     [
-      luyen(R`Tính tích có hướng của $\vec{u}=(1;\ 2;\ 0)$ và $\vec{v}=(0;\ 1;\ 1)$ rồi cho biết tọa độ thứ ba.`, R`Tọa độ thứ ba bằng $1$.`, [{ expr: "Matrix([1,2,0]).cross(Matrix([0,1,1]))[2]", expect: "1" }], R`Tọa độ thứ ba là $1\cdot1-2\cdot0=1$.`),
-      luyen(R`Tìm độ dài của tích có hướng của $\vec{u}=(1;\ 0;\ 0)$ và $\vec{v}=(0;\ 2;\ 0)$.`, R`Độ dài bằng $2$.`, [{ expr: "Matrix([1,0,0]).cross(Matrix([0,2,0])).norm()", expect: "2" }], R`Tích có hướng là $(0;\ 0;\ 2)$ nên độ dài bằng $2$.`),
+      luyen(R`Đường $\Delta_1$ qua $O$ có $\vec{u_1}=(2;\ 0;\ 0)$ và đường $\Delta_2$ qua $B(1;\ 5;\ 4)$ có $\vec{u_2}=(0;\ 3;\ 0)$. Tính khoảng cách giữa hai đường.`, R`Khoảng cách bằng $4$.`, [{ expr: "abs(Matrix([1,5,4]).dot(Matrix([2,0,0]).cross(Matrix([0,3,0]))))/Matrix([2,0,0]).cross(Matrix([0,3,0])).norm()", expect: "4" }], R`Tích có hướng là $(0;\ 0;\ 6)$, tích vô hướng với $\overrightarrow{OB}$ là $24$ và độ dài là $6$, nên $d=\frac{24}{6}=4$.`),
+      { ...luyen(R`Hai đường có $\vec{u_1}=(1;\ 2;\ 3)$ và $\vec{u_2}=(2;\ 4;\ 6)$. Có dùng được công thức khoảng cách giữa hai đường chéo nhau không?`, R`Không dùng được, vì hai vectơ cùng phương nên tích có hướng bằng $\vec0$.`, [{ expr: "Matrix([1,2,3]).cross(Matrix([2,4,6])).norm()", expect: "0" }], R`Tích có hướng bằng $\vec0$ nên mẫu số của công thức bằng $0$, và hai đường song song hoặc trùng nhau.`), ask: { kind: "choice", options: ["Dùng được.", "Không dùng được."], correct: 1 } },
       luyen(R`Tính khoảng cách giữa $\Delta_1$ qua $O(0;\ 0;\ 0)$ với $\vec{u_1}=(1;\ 0;\ 0)$ và $\Delta_2$ qua $B(0;\ 0;\ 3)$ với $\vec{u_2}=(0;\ 1;\ 0)$.`, R`Khoảng cách bằng $3$.`, [{ expr: "abs(Matrix([0,0,3]).dot(Matrix([1,0,0]).cross(Matrix([0,1,0]))))", expect: "3" }], R`Tích có hướng $(0;\ 0;\ 1)$, tích vô hướng với $\overrightarrow{OB}$ bằng $3$ và độ dài bằng $1$, nên $d=3$.`),
     ],
     { topicId: "analytic" }),
@@ -275,7 +275,7 @@ export const lop12OxyzNC: GradeChapter = chuong("oxyz-nang-cao", "Hình học Ox
     ],
     [
       luyen(R`Tính khoảng cách từ $I(0;\ 0;\ 0)$ đến mặt phẳng $2x+y+2z-9=0$.`, R`Khoảng cách bằng $3$.`, [{ expr: "abs(-9)/sqrt(4+1+4)", expect: "3" }], R`Ta có $\frac{|-9|}{\sqrt{4+1+4}}=\frac{9}{3}=3$.`),
-      luyen(R`Mặt cầu tâm $I(0;\ 0;\ 0)$ bán kính $3$ có tiếp xúc với mặt phẳng $2x+y+2z-9=0$ không?`, R`Có, vì khoảng cách bằng bán kính.`, [{ expr: "abs(-9)/sqrt(9) - 3 + 1", expect: "1" }], R`Khoảng cách là $3$, đúng bằng bán kính, nên có tiếp xúc.`),
+      luyen(R`Tìm $D$ dương để mặt phẳng $x+2y+2z+D=0$ tiếp xúc với mặt cầu tâm $O$ bán kính $3$.`, R`Giá trị cần tìm là $D=9$.`, [{ expr: "Max(*solve(x**2-81, x))", expect: "9" }], R`Cần $\frac{|D|}{\sqrt{1+4+4}}=3$, tức $|D|=9$, và lấy giá trị dương $D=9$.`),
       luyen(R`Tìm bán kính mặt cầu tâm $I(1;\ 1;\ 1)$ tiếp xúc với mặt phẳng $x+y+z-6=0$ (kết quả dạng $\sqrt{3}$).`, R`Bán kính bằng $\sqrt{3}$.`, [{ expr: "abs(1+1+1-6)/sqrt(3)", expect: "sqrt(3)" }], R`Bán kính bằng khoảng cách $\frac{|3-6|}{\sqrt{3}}=\frac{3}{\sqrt{3}}=\sqrt{3}$.`),
     ],
     { topicId: "analytic" }),

@@ -9,7 +9,7 @@ const R = String.raw;
 const lop12Base: GradeBook = {
   grade: 12,
   band: "thpt",
-  title: "Khảo sát hàm số, tích phân, tọa độ không gian, thống kê và xác suất.",
+  title: "Khảo sát hàm số và đồ thị, tích phân, tọa độ không gian, thống kê và xác suất.",
   chapters: [
     chuong("khao-sat", "Khảo sát hàm số", [
       bai("cuc-tri", "Tính đơn điệu và cực trị",

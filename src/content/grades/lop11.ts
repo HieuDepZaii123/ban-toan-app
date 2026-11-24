@@ -8,7 +8,7 @@ const R = String.raw;
 const lop11Base: GradeBook = {
   grade: 11,
   band: "thpt",
-  title: "Lượng giác, dãy số, giới hạn, mũ, logarit và đạo hàm.",
+  title: "Lượng giác và phương trình lượng giác, dãy số, giới hạn, mũ và logarit, đạo hàm.",
   chapters: [
     chuong("luong-giac", "Lượng giác", [
       bai("goc-lg", "Góc lượng giác",

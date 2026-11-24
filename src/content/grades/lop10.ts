@@ -32,7 +32,7 @@ const W = {
 const lop10Base: GradeBook = {
   grade: 10,
   band: "thpt",
-  title: "Mệnh đề, bất phương trình hai ẩn, hàm số bậc hai, vectơ, tọa độ, tổ hợp và thống kê.",
+  title: "Mệnh đề, bất phương trình hai ẩn, hàm số và hàm số bậc hai, vectơ và tọa độ vectơ, tổ hợp và thống kê.",
   chapters: [
     chuong("menh-de", "Mệnh đề và tập hợp", [
       bai("menh-de-bai", "Mệnh đề",

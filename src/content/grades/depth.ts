@@ -42,8 +42,14 @@ function assumed(lesson: GradeLesson): string | undefined {
 /** How a number may appear in Vietnamese answer text: 15, -2, 0,25, 1/4. */
 function spellings(value: number, expect: string): string[] {
   const out = new Set<string>([expect.replace(/^Rational\((-?\d+),(-?\d+)\)$/, "$1/$2")]);
+  const frac = expect.match(/^Rational\((-?\d+),(-?\d+)\)$/) ?? expect.match(/^(-?\d+)\/(-?\d+)$/);
+  if (frac && Number(frac[2]) > 1) {
+    const top = Number(frac[1]);
+    out.add(`${top < 0 ? "-" : ""}\\frac{${Math.abs(top)}}{${frac[2]}}`);
+  }
   if (Number.isFinite(value)) {
     out.add(String(value));
+    out.add(String(Math.round(value * 1000) / 1000).replace(".", "{,}"));
     out.add(String(Math.round(value * 1000) / 1000).replace(".", ","));
   }
   return [...out];

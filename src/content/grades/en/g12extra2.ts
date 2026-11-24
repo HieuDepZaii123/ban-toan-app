@@ -28,12 +28,12 @@ export const g12Extra2En: Record<string, LessonEn> = {
   },
   "tuong-giao": {
     s: R`The number of roots of $f(x)=k$ equals the number of intersections of the graph $y=f(x)$ with the horizontal line $y=k$. For a cubic with maximum $y_{CD}$ and minimum $y_{CT}$, the equation has three roots when $y_{CT}<k<y_{CD}$, two roots when $k$ equals one of those values, and one root when $k$ lies outside the interval $[y_{CT};\ y_{CD}]$.`,
-    w: R`A root of $f(x)=k$ is the abscissa of an intersection of the graph with the line $y=k$. The number of intersections depends on where $k$ lies relative to the maximum and the minimum, so only those two values need computing.`,
+    w: R`A root of $f(x)=k$ is the x-coy-coordinate of an intersection of the graph with the line $y=k$. The number of intersections depends on where $k$ lies relative to the maximum and the minimum, so only those two values need computing.`,
     p: R`Counting a double root as two roots. When $k$ equals exactly an extreme value the line touches the graph, giving one double root that is still a single intersection.`,
     ex: [
       [R`How many real roots does $x^3-3x=1$ have?`, [
         [R`The function $f(x)=x^3-3x$ has $f'(x)=3x^2-3=0$ at $x=\pm1$.`, R`The extreme points are roots of the derivative.`],
-        [R`The maximum is $f(-1)=2$ and the minimum is $f(1)=-2$.`, R`Substitute the two abscissas into the function.`],
+        [R`The maximum is $f(-1)=2$ and the minimum is $f(1)=-2$.`, R`Substitute the two x-coy-coy-coordinates into the function.`],
         [R`Since $-2<1<2$, the line $y=1$ meets the graph at three points.`, R`The value $k=1$ lies between the minimum and the maximum.`],
       ], R`The equation has three real roots.`],
       [R`At how many points does the line $y=-4$ meet the graph of $y=x^3-3x^2$?`, [
@@ -69,11 +69,11 @@ export const g12Extra2En: Record<string, LessonEn> = {
     ],
   },
   "tiep-tuyen-hs": {
-    s: R`The tangent to $y=f(x)$ at the point with abscissa $x_0$ has equation $y=f'(x_0)(x-x_0)+f(x_0)$. Its slope is $f'(x_0)$. Parallel lines have equal slopes, and lines are perpendicular when the product of their slopes is $-1$.`,
+    s: R`The tangent to $y=f(x)$ at the point with x-coy-coordinate $x_0$ has equation $y=f'(x_0)(x-x_0)+f(x_0)$. Its slope is $f'(x_0)$. Parallel lines have equal slopes, and lines are perpendicular when the product of their slopes is $-1$.`,
     w: R`The derivative at a point is the slope of the line that hugs the graph there. Knowing the slope and one point on the line gives its equation.`,
     p: R`Using an arbitrary point instead of the point of tangency, or forgetting to check whether the tangent found coincides with the given line when the problem asks for a parallel one.`,
     ex: [
-      [R`Write the tangent to $y=x^3-3x$ at the point with abscissa $x=2$.`, [
+      [R`Write the tangent to $y=x^3-3x$ at the point with x-coy-coordinate $x=2$.`, [
         [R`We have $y(2)=8-6=2$ and $y'(x)=3x^2-3$, so $y'(2)=9$.`, R`We need the point of tangency and the slope there.`],
         [R`The equation is $y=9(x-2)+2=9x-16$.`, R`Substitute into $y=f'(x_0)(x-x_0)+f(x_0)$.`],
       ], R`The tangent is $y=9x-16$.`],
@@ -84,8 +84,8 @@ export const g12Extra2En: Record<string, LessonEn> = {
     ],
     dr: [
       [R`What is the slope of the tangent to $y=x^2-4x$ at $x=3$?`, R`The slope is $2$.`, R`We have $y'=2x-4$, so $y'(3)=2$.`],
-      [R`Write the tangent to $y=x^2$ at the point with abscissa $x=1$.`, R`The tangent is $y=2x-1$.`, R`The slope is $y'(1)=2$ and $y(1)=1$, so $y=2(x-1)+1=2x-1$.`],
-      [R`A tangent to $y=x^3$ is perpendicular to the line $y=-\frac{x}{3}$. What is the abscissa of the point of tangency (take the positive value)?`, R`The abscissa is $x=1$.`, R`The slope must be $3$ because $3\cdot\left(-\frac{1}{3}\right)=-1$, so $3x^2=3$ and $x=1$.`],
+      [R`Write the tangent to $y=x^2$ at the point with x-coy-coordinate $x=1$.`, R`The tangent is $y=2x-1$.`, R`The slope is $y'(1)=2$ and $y(1)=1$, so $y=2(x-1)+1=2x-1$.`],
+      [R`How many tangents to the graph of $y=x^3$ are perpendicular to the line $y=-\frac{x}{3}$?`, R`There are $2$ tangents, because $3x^2=3$ has two roots.`, R`The slope must be $3$ because $3\cdot\left(-\frac{1}{3}\right)=-1$, so $3x^2=3$ gives the two x-coy-coy-coordinates $x=\pm1$.`],
     ],
   },
   "tp-tuyet-doi": {
@@ -129,16 +129,16 @@ export const g12Extra2En: Record<string, LessonEn> = {
     ],
   },
   "dt-hai-do-thi": {
-    s: R`The area of the region bounded by the graphs $y=f(x)$ and $y=g(x)$ is $\int_a^b|f(x)-g(x)|\,dx$, where $a$ and $b$ are consecutive abscissas of intersections. When the graphs cross several times, split the interval at every intersection and take the upper function minus the lower function on each piece.`,
+    s: R`The area of the region bounded by the graphs $y=f(x)$ and $y=g(x)$ is $\int_a^b|f(x)-g(x)|\,dx$, where $a$ and $b$ are consecutive x-coy-coy-coordinates of the intersections. When the graphs cross several times, split the interval at every intersection and take the upper function minus the lower function on each piece.`,
     w: R`The area is the integral of the upper function minus the lower function, because this difference is the height of a thin strip at each $x$. The intersections are where the two functions swap places.`,
     p: R`Taking the difference in a fixed order over the whole interval even though the graphs cross in between. Then the negative parts are subtracted from the positive ones and the area comes out too small.`,
     ex: [
       [R`Find the area of the region bounded by $y=x^2$ and $y=x+2$.`, [
-        [R`Abscissas of intersections: $x^2=x+2\iff x^2-x-2=0$, so $x=-1$ or $x=2$.`, R`Solve the equation of intersections to find the limits.`],
+        [R`The x-coy-coy-coordinates of the intersections: $x^2=x+2\iff x^2-x-2=0$, so $x=-1$ or $x=2$.`, R`Solve the equation of intersections to find the limits.`],
         [R`On $[-1;\ 2]$ the line lies above the parabola, so $S=\displaystyle\int_{-1}^2(x+2-x^2)\,dx=\frac{9}{2}$.`, R`Take upper minus lower, for instance at $x=0$: $2>0$.`],
       ], R`The area is $\frac{9}{2}$.`],
       [R`Find the area of the region bounded by $y=x^3$ and $y=x$.`, [
-        [R`Abscissas of intersections: $x^3=x$ gives $x=-1$, $x=0$, $x=1$.`, R`The equation $x(x-1)(x+1)=0$ has three roots.`],
+        [R`The x-coy-coy-coordinates of the intersections: $x^3=x$ gives $x=-1$, $x=0$, $x=1$.`, R`The equation $x(x-1)(x+1)=0$ has three roots.`],
         [R`The two parts are symmetric: $S=\displaystyle\int_{-1}^0(x^3-x)\,dx+\int_0^1(x-x^3)\,dx=\frac{1}{4}+\frac{1}{4}$.`, R`On $[-1;\ 0]$ the graph $y=x^3$ is above, and on $[0;\ 1]$ the line is above.`],
       ], R`The area is $\frac{1}{2}$.`],
     ],
@@ -169,7 +169,7 @@ export const g12Extra2En: Record<string, LessonEn> = {
     ],
   },
   "vtt-d-mp": {
-    s: R`Substitute the parametric coordinates of the line $d$ into the equation of the plane $(P)$ to get an equation $\alpha t+\beta=0$. If $\alpha\ne0$ then $d$ meets $(P)$ at one point. If $\alpha=0$ and $\beta\ne0$ then $d$ is parallel to $(P)$. If $\alpha=0$ and $\beta=0$ then $d$ lies in $(P)$.`,
+    s: R`Substitute the parametric coy-coy-coordinates of the line $d$ into the equation of the plane $(P)$ to get an equation $\alpha t+\beta=0$. If $\alpha\ne0$ then $d$ meets $(P)$ at one point. If $\alpha=0$ and $\beta\ne0$ then $d$ is parallel to $(P)$. If $\alpha=0$ and $\beta=0$ then $d$ lies in $(P)$.`,
     w: R`A common point of the line and the plane corresponds to a value $t$ satisfying the equation after substitution. A linear equation in $t$ has one solution, no solution, or every $t$ as a solution.`,
     p: R`Concluding parallel when the coefficient of $t$ is $0$ without looking at the remaining constant. If the constant is also $0$ then the line lies in the plane.`,
     ex: [
@@ -198,13 +198,13 @@ export const g12Extra2En: Record<string, LessonEn> = {
         [R`The dot product is $(0;\ 0;\ 1)\cdot(0;\ 1;\ 1)=1$ and the length is $\left|\left[\vec{u_1},\vec{u_2}\right]\right|=1$, so $d=1$.`, R`Substitute into the distance formula.`],
       ], R`The distance is $1$.`],
       [R`Find the distance between $\Delta_1$ through $A(0;\ 0;\ 0)$ with $\vec{u_1}=(1;\ 1;\ 0)$ and $\Delta_2$ through $B(1;\ 0;\ 2)$ with $\vec{u_2}=(0;\ 1;\ 1)$.`, [
-        [R`The cross product is $\left[\vec{u_1},\vec{u_2}\right]=(1;\ -1;\ 1)$ and $\overrightarrow{AB}=(1;\ 0;\ 2)$.`, R`Compute $1\cdot1-0\cdot1$, $0\cdot0-1\cdot1$ and $1\cdot1-1\cdot0$ for the three coordinates.`],
+        [R`The cross product is $\left[\vec{u_1},\vec{u_2}\right]=(1;\ -1;\ 1)$ and $\overrightarrow{AB}=(1;\ 0;\ 2)$.`, R`Compute $1\cdot1-0\cdot1$, $0\cdot0-1\cdot1$ and $1\cdot1-1\cdot0$ for the three coy-coy-coordinates.`],
         [R`The dot product is $1+0+2=3$ and the length is $\sqrt{3}$, so $d=\frac{3}{\sqrt{3}}=\sqrt{3}$.`, R`Simplify the fraction by dividing numerator and denominator by $\sqrt{3}$.`],
       ], R`The distance is $\sqrt{3}$.`],
     ],
     dr: [
-      [R`Compute the cross product of $\vec{u}=(1;\ 2;\ 0)$ and $\vec{v}=(0;\ 1;\ 1)$ and give its third coordinate.`, R`The third coordinate is $1$.`, R`The third coordinate is $1\cdot1-2\cdot0=1$.`],
-      [R`Find the length of the cross product of $\vec{u}=(1;\ 0;\ 0)$ and $\vec{v}=(0;\ 2;\ 0)$.`, R`The length is $2$.`, R`The cross product is $(0;\ 0;\ 2)$, so its length is $2$.`],
+      [R`The line $\Delta_1$ passes through $O$ with $\vec{u_1}=(2;\ 0;\ 0)$ and the line $\Delta_2$ passes through $B(1;\ 5;\ 4)$ with $\vec{u_2}=(0;\ 3;\ 0)$. Find the distance between them.`, R`The distance is $4$.`, R`The cross product is $(0;\ 0;\ 6)$, its dot product with $\overrightarrow{OB}$ is $24$ and its length is $6$, so $d=\frac{24}{6}=4$.`],
+      [R`Two lines have $\vec{u_1}=(1;\ 2;\ 3)$ and $\vec{u_2}=(2;\ 4;\ 6)$. Can the formula for the distance between skew lines be used?`, R`No, because the vectors are parallel so the cross product is $\vec0$.`, R`The cross product is $\vec0$, so the denominator of the formula is $0$, and the lines are parallel or coincide.`, [], ["It can be used.", "It cannot be used."]],
       [R`Find the distance between $\Delta_1$ through $O(0;\ 0;\ 0)$ with $\vec{u_1}=(1;\ 0;\ 0)$ and $\Delta_2$ through $B(0;\ 0;\ 3)$ with $\vec{u_2}=(0;\ 1;\ 0)$.`, R`The distance is $3$.`, R`The cross product is $(0;\ 0;\ 1)$, its dot product with $\overrightarrow{OB}$ is $3$ and its length is $1$, so $d=3$.`],
     ],
   },
@@ -224,7 +224,7 @@ export const g12Extra2En: Record<string, LessonEn> = {
     ],
     dr: [
       [R`Find the distance from $I(0;\ 0;\ 0)$ to the plane $2x+y+2z-9=0$.`, R`The distance is $3$.`, R`We have $\frac{|-9|}{\sqrt{4+1+4}}=\frac{9}{3}=3$.`],
-      [R`Is the sphere with centre $I(0;\ 0;\ 0)$ and radius $3$ tangent to the plane $2x+y+2z-9=0$?`, R`Yes, because the distance equals the radius.`, R`The distance is $3$, exactly the radius, so it is tangent.`],
+      [R`Find the positive $D$ so that the plane $x+2y+2z+D=0$ is tangent to the sphere with centre $O$ and radius $3$.`, R`The required value is $D=9$.`, R`We need $\frac{|D|}{\sqrt{1+4+4}}=3$, that is $|D|=9$, and we take the positive value $D=9$.`],
       [R`Find the radius of the sphere with centre $I(1;\ 1;\ 1)$ tangent to the plane $x+y+z-6=0$ (answer in the form $\sqrt{3}$).`, R`The radius is $\sqrt{3}$.`, R`The radius equals the distance $\frac{|3-6|}{\sqrt{3}}=\frac{3}{\sqrt{3}}=\sqrt{3}$.`],
     ],
   },
@@ -234,19 +234,19 @@ export const g12Extra2En: Record<string, LessonEn> = {
     p: R`Getting the sign of $t$ wrong and going the wrong way, or taking the projection as the reflection. The projection is the midpoint of the segment joining $M$ to its reflection.`,
     ex: [
       [R`Find the projection and the reflection of $M(1;\ 2;\ 3)$ in the plane $(P):\ x+y+z-3=0$.`, [
-        [R`We have $\vec{n}=(1;\ 1;\ 1)$ and $t=\frac{1+2+3-3}{3}=1$.`, R`Substitute the coordinates of $M$ into the left side and divide by $A^2+B^2+C^2=3$.`],
+        [R`We have $\vec{n}=(1;\ 1;\ 1)$ and $t=\frac{1+2+3-3}{3}=1$.`, R`Substitute the coy-coy-coordinates of $M$ into the left side and divide by $A^2+B^2+C^2=3$.`],
         [R`The projection is $H=M-\vec{n}=(0;\ 1;\ 2)$.`, R`Go from $M$ against the normal by $t\vec{n}$.`],
         [R`The reflection is $M'=M-2\vec{n}=(-1;\ 0;\ 1)$.`, R`$H$ is the midpoint of $MM'$, so $M'=2H-M$.`],
       ], R`The projection is $H(0;\ 1;\ 2)$ and the reflection is $M'(-1;\ 0;\ 1)$.`],
       [R`Find the reflection of $M(4;\ 2;\ 4)$ in the plane $(P):\ 2x+y+2z-9=0$.`, [
-        [R`We have $\vec{n}=(2;\ 1;\ 2)$ and $t=\frac{8+2+8-9}{9}=1$.`, R`Substitute the coordinates of $M$ and divide by $4+1+4=9$.`],
+        [R`We have $\vec{n}=(2;\ 1;\ 2)$ and $t=\frac{8+2+8-9}{9}=1$.`, R`Substitute the coy-coy-coordinates of $M$ and divide by $4+1+4=9$.`],
         [R`The projection is $H=M-\vec{n}=(2;\ 1;\ 2)$ and the reflection is $M'=M-2\vec{n}=(0;\ 0;\ 0)$.`, R`Subtract the normal vector once and twice from $M$.`],
       ], R`The reflection is $M'(0;\ 0;\ 0)$.`],
     ],
     dr: [
       [R`Find $t$ for the point $M(2;\ 0;\ 0)$ and the plane $x+y+z-1=0$.`, R`The value is $t=\frac{1}{3}$.`, R`We have $\frac{2-1}{3}=\frac{1}{3}$.`],
-      [R`Find the reflection of $M(3;\ 0;\ 0)$ in the plane $x-3=0$ (give the abscissa).`, R`The abscissa of the reflection is $3$.`, R`The point $M$ lies on the plane, so $t=0$ and the reflection coincides with $M$.`],
-      [R`Find the abscissa of the projection of $M(2;\ 2;\ 2)$ onto the plane $x+y+z-3=0$.`, R`The abscissa is $1$.`, R`We have $t=\frac{3}{3}=1$ and the abscissa is $2-1\cdot1=1$.`],
+      [R`Find the reflection of $M(3;\ 0;\ 0)$ in the plane $x-3=0$ (give the x-coy-coordinate).`, R`The x-coy-coordinate of the reflection is $3$.`, R`The point $M$ lies on the plane, so $t=0$ and the reflection coincides with $M$.`],
+      [R`Find the x-coy-coordinate of the projection of $M(2;\ 2;\ 2)$ onto the plane $x+y+z-3=0$.`, R`The x-coy-coordinate is $1$.`, R`We have $t=\frac{3}{3}=1$ and the x-coy-coordinate is $2-1\cdot1=1$.`],
     ],
   },
 };

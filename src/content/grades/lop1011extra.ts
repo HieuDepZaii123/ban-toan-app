@@ -26,7 +26,7 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
     [
       luyen(R`Hàm số $y=\frac{1}{x+5}$ không xác định tại giá trị $x$ nào?`, R`Tại $x=-5$.`, [{ expr: "solve(x+5, x)[0]", expect: "-5" }], R`Mẫu bằng $0$ khi $x+5=0$, tức $x=-5$.`),
       luyen(R`Giá trị nhỏ nhất của $x$ để $\sqrt{2x-6}$ có nghĩa là bao nhiêu?`, R`Giá trị nhỏ nhất bằng $3$.`, [{ expr: "solve(2*x-6, x)[0]", expect: "3" }], R`Cần $2x-6\ge0$, tức $x\ge3$.`),
-      luyen(R`Hàm số $y=\frac{1}{\sqrt{x-1}}$ xác định khi $x$ lớn hơn số nào?`, R`Khi $x$ lớn hơn $1$.`, [{ expr: "solve(x-1, x)[0]", expect: "1" }], R`Biểu thức dưới căn nằm ở mẫu nên phải dương, tức $x-1>0$.`),
+      luyen(R`Có bao nhiêu số nguyên $x$ thuộc tập xác định của $y=\sqrt{6-x}+\sqrt{x+2}$?`, R`Có $9$ số nguyên.`, [{ expr: "6-(-2)+1", expect: "9" }], R`Cần $6-x\ge0$ và $x+2\ge0$, tức $-2\le x\le6$, có $6-(-2)+1=9$ số nguyên.`),
     ],
     { topicId: "quadratic" }),
   bai("chan-le", "Hàm số chẵn và hàm số lẻ",
@@ -48,9 +48,9 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
         [{ expr: "(-1)**2+(-1)", expect: "0" }, { expr: "1**2+1", expect: "2" }]),
     ],
     [
-      luyen(R`Tính $f(-2)$ với $f(x)=x^3-3x$.`, R`Bằng $-2$.`, [{ expr: "(-2)**3-3*(-2)", expect: "-2" }], R`Ta có $(-2)^3-3\cdot(-2)=-8+6=-2$.`),
+      luyen(R`Cho $f(x)=x^3-3x$. Tính $f(2)+f(-2)$ để quyết định hàm số chẵn hay lẻ.`, R`Bằng $0$, nên hàm số lẻ.`, [{ expr: "2**3-3*2+(-2)**3-3*(-2)", expect: "0" }], R`Hàm số lẻ có $f(-2)=-f(2)$, nên tổng của hai giá trị bằng $0$.`),
       luyen(R`Với $f(x)=x^2+1$, giá trị $f(3)-f(-3)$ bằng bao nhiêu?`, R`Bằng $0$.`, [{ expr: "3**2+1-((-3)**2+1)", expect: "0" }], R`Hàm số chẵn nên $f(-3)=f(3)$, và hiệu bằng $0$.`),
-      luyen(R`Với $f(x)=2x$, tổng $f(1)+f(-1)$ bằng bao nhiêu?`, R`Bằng $0$, đây là dấu hiệu của hàm số lẻ.`, [{ expr: "2*1+2*(-1)", expect: "0" }], R`Hàm số lẻ có $f(-1)=-f(1)$ nên tổng bằng $0$.`),
+      luyen(R`Tìm $m$ để $f(x)=x^3+mx^2$ là hàm số lẻ.`, R`Giá trị cần tìm là $m=0$.`, [{ expr: "solve((1+x)+(-1+x), x)[0]", expect: "0" }], R`Hàm số lẻ cần $f(1)+f(-1)=2m=0$, và khi $m=0$ thì $f(x)=x^3$ đúng là hàm số lẻ.`),
     ],
     { topicId: "quadratic" }),
   bai("tinh-tien-do-thi", "Tịnh tiến đồ thị hàm số",
@@ -74,7 +74,7 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
     [
       luyen(R`Đồ thị $y=x^2$ tịnh tiến sang phải $3$ đơn vị. Tại $x=3$ hàm số mới nhận giá trị nào?`, R`Giá trị bằng $0$.`, [{ expr: "(3-3)**2", expect: "0" }], R`Hàm số mới là $y=(x-3)^2$, nên tại $x=3$ có $y=0$.`),
       luyen(R`Đồ thị $y=x^2$ tịnh tiến lên $5$ đơn vị. Tại $x=0$ hàm số mới nhận giá trị nào?`, R`Giá trị bằng $5$.`, [{ expr: "0**2+5", expect: "5" }], R`Hàm số mới là $y=x^2+5$, nên tại $x=0$ có $y=5$.`),
-      luyen(R`Hoành độ đỉnh của đồ thị $y=(x+4)^2$ bằng bao nhiêu?`, R`Bằng $-4$.`, [{ expr: "solve(x+4, x)[0]", expect: "-4" }], R`Đỉnh đạt khi $x+4=0$, tức $x=-4$ (đồ thị $y=x^2$ tịnh tiến sang trái $4$ đơn vị).`),
+      luyen(R`Đồ thị $y=x^2$ tịnh tiến sang phải $2$ đơn vị và lên $b$ đơn vị thì đi qua điểm $(0;\ 7)$. Tìm $b$.`, R`Giá trị cần tìm là $b=3$.`, [{ expr: "solve((0-2)**2+x-7, x)[0]", expect: "3" }], R`Hàm số mới là $y=(x-2)^2+b$, thay $(0;\ 7)$ được $4+b=7$ nên $b=3$.`),
     ],
     { topicId: "quadratic" }),
   bai("don-dieu-bac-hai", "Tính đơn điệu của hàm số bậc hai",
@@ -98,7 +98,7 @@ export const lop10HamSo: GradeChapter = chuong("ham-so-10", "Hàm số và các 
     [
       luyen(R`Tìm hoành độ đỉnh của $y=x^2+6x$.`, R`Hoành độ đỉnh bằng $-3$.`, [{ expr: "Rational(-6,2)", expect: "-3" }], R`Ta có $-\frac{6}{2\cdot1}=-3$.`),
       luyen(R`Tìm hoành độ đỉnh của $y=-x^2+2x-5$.`, R`Hoành độ đỉnh bằng $1$.`, [{ expr: "Rational(-2,2*(-1))", expect: "1" }], R`Ta có $-\frac{2}{2\cdot(-1)}=1$.`),
-      luyen(R`Giá trị nhỏ nhất của $y=x^2-6x+1$ bằng bao nhiêu?`, R`Giá trị nhỏ nhất bằng $-8$.`, [{ expr: "3**2-6*3+1", expect: "-8" }], R`Đỉnh ở $x=3$, và $y(3)=9-18+1=-8$; vì $a>0$ nên đó là giá trị nhỏ nhất.`),
+      luyen(R`Tìm $m$ để hàm số $y=x^2-mx+1$ nghịch biến trên $(-\infty;\ 3)$ và đồng biến trên $(3;\ +\infty)$.`, R`Giá trị cần tìm là $m=6$.`, [{ expr: "solve(x/2-3, x)[0]", expect: "6" }], R`Đỉnh nằm ở $x=\frac{m}{2}$ và phải bằng $3$, nên $m=6$.`),
     ],
     { topicId: "quadratic" }),
 ]);
@@ -223,9 +223,9 @@ export const lop11LuongGiacNC: GradeChapter = chuong("luong-giac-nc", "Phương 
         [{ expr: "3**2-(1**2+1**2)", expect: "7" }]),
     ],
     [
-      luyen(R`Với $a=3$, $b=4$, tính $a^2+b^2$.`, R`Bằng $25$.`, [{ expr: "3**2+4**2", expect: "25" }], R`Ta có $9+16=25$, nên phương trình $3\sin x+4\cos x=5$ có nghiệm vì $c^2=25$.`),
-      luyen(R`Với phương trình $2\sin x+\cos x=3$, tính hiệu $c^2-(a^2+b^2)$.`, R`Bằng $4$, nên phương trình vô nghiệm.`, [{ expr: "3**2-(2**2+1**2)", expect: "4" }], R`Ta có $9-5=4>0$, tức $c^2>a^2+b^2$.`),
-      luyen(R`Tính $\sin x-\cos x$ tại $x=\frac{\pi}{2}$.`, R`Bằng $1$, nên $x=\frac{\pi}{2}$ là một nghiệm của $\sin x-\cos x=1$.`, [{ expr: "sin(pi/2)-cos(pi/2)", expect: "1" }], R`Thay vào được $1-0=1$, đúng bằng vế phải của phương trình.`),
+      luyen(R`Có bao nhiêu số nguyên $c$ để phương trình $3\sin x+4\cos x=c$ có nghiệm?`, R`Có $11$ số nguyên.`, [{ expr: "2*5+1", expect: "11" }], R`Cần $c^2\le9+16=25$, tức $-5\le c\le5$, gồm $11$ số nguyên.`),
+      luyen(R`Giá trị nguyên dương lớn nhất của $c$ để $\sin x+\sqrt3\cos x=c$ có nghiệm là bao nhiêu?`, R`Bằng $2$.`, [{ expr: "floor(sqrt(1+3))", expect: "2" }], R`Cần $c^2\le1+3=4$, tức $c\le2$; giá trị $c=2$ vẫn có nghiệm vì xảy ra dấu bằng.`),
+      luyen(R`Giải $\sin x+\cos x=\sqrt2$ trên $[0;\ 2\pi)$. Nghiệm đó bằng bao nhiêu độ?`, R`Bằng $45$ độ, tức $x=\frac{\pi}{4}$.`, [{ expr: "180/4", expect: "45" }], R`Ta có $\sqrt2\sin\left(x+\frac{\pi}{4}\right)=\sqrt2$ nên $x+\frac{\pi}{4}=\frac{\pi}{2}$ và $x=\frac{\pi}{4}$.`),
     ],
     { topicId: "trig" }),
   bai("pt-bac-hai-lg", "Phương trình bậc hai theo một hàm lượng giác",
@@ -274,7 +274,7 @@ export const lop11LuongGiacNC: GradeChapter = chuong("luong-giac-nc", "Phương 
     [
       luyen(R`Nghiệm của $\tan x=1$ trong $[0;\ \pi)$ là gì?`, R`Nghiệm là $x=\frac{\pi}{4}$.`, [{ expr: "atan(1)", expect: "pi/4" }], R`Ta có $\tan\frac{\pi}{4}=1$ và hàm tan có chu kỳ $\pi$ nên chỉ có một nghiệm trong $[0;\ \pi)$.`),
       luyen(R`Nghiệm của $\sin x=1$ trong $[0;\ 2\pi]$ là gì?`, R`Nghiệm là $x=\frac{\pi}{2}$.`, [{ expr: "asin(1)", expect: "pi/2" }], R`Hai họ nghiệm trùng nhau, và chỉ có một nghiệm trong khoảng.`),
-      luyen(R`Một nghiệm của $\sin x=-\frac12$ trong $[0;\ 2\pi]$ là $\frac{7\pi}{6}$. Hãy tính $\pi+\frac{\pi}{6}$.`, R`Bằng $\frac{7\pi}{6}$.`, [{ expr: "pi+pi/6", expect: "7*pi/6" }], R`Nghiệm là $\pi+\alpha$ với $\alpha=\frac{\pi}{6}$, tức $\frac{7\pi}{6}$; nghiệm còn lại là $2\pi-\frac{\pi}{6}=\frac{11\pi}{6}$.`),
+      luyen(R`Tính tổng hai nghiệm của $\sin x=-\frac12$ trong $[0;\ 2\pi]$ theo đơn vị độ.`, R`Tổng bằng $540$ độ, tức $3\pi$.`, [{ expr: "7*180/6+11*180/6", expect: "540" }], R`Hai nghiệm là $\frac{7\pi}{6}$ và $\frac{11\pi}{6}$, tổng là $3\pi$ tức $540^\circ$.`),
     ],
     { topicId: "trig" }),
   bai("gtln-lg", "Giá trị lớn nhất và nhỏ nhất của biểu thức lượng giác",
@@ -397,7 +397,7 @@ export const lop11MuLogNC: GradeChapter = chuong("mu-log-nc", "Mũ và logarit n
         [{ expr: "Rational(1,2)**3", expect: "Rational(1,8)" }]),
     ],
     [
-      luyen(R`Tính $\log_232$.`, R`Bằng $5$.`, [{ expr: "log(32,2)", expect: "5" }], R`Theo định nghĩa logarit, vì $2^5=32$ nên kết quả là $5$.`),
+      { ...luyen(R`Số nào lớn hơn: $\log_{1/2}3$ hay $\log_{1/2}5$?`, R`Số $\log_{1/2}3$ lớn hơn, vì cơ số nằm giữa $0$ và $1$ nên hàm nghịch biến.`, [{ expr: "ceiling(log(3)/log(Rational(1,2)))", expect: "-1" }], R`Cơ số $\frac12$ nằm giữa $0$ và $1$ nên $3<5$ cho $\log_{1/2}3>\log_{1/2}5$; thật vậy $\log_{1/2}3\approx-1{,}58$ còn $\log_{1/2}5\approx-2{,}32$.`), ask: { kind: "choice", options: ["$\\log_{1/2}3$", "$\\log_{1/2}5$"], correct: 0 } },
       luyen(R`Tính $\log_3\frac19$.`, R`Bằng $-2$.`, [{ expr: "log(Rational(1,9),3)", expect: "-2" }], R`Theo định nghĩa logarit, vì $3^{-2}=\frac19$ nên kết quả là $-2$.`),
       luyen(R`Tính $\log_{1/2}4$.`, R`Bằng $-2$.`, [{ expr: "log(4)/log(Rational(1,2))", expect: "-2" }], R`Theo định nghĩa logarit, vì $\left(\frac12\right)^{-2}=4$ nên kết quả là $-2$.`),
     ],

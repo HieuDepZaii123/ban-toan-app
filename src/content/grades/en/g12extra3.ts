@@ -5,33 +5,33 @@ const R = String.raw;
 
 export const g12Extra3En: Record<string, LessonEn> = {
   "trung-vi-nhom": {
-    s: R`The second quartile $Q_2$ is the median of a grouped sample. Let $n$ be the sample size; the group containing the mark $\frac{n}{2}$ is the first group whose cumulative frequency is not less than $\frac{n}{2}$. Then $Q_2=a+\frac{\frac{n}{2}-N}{n_i}h$, where $a$ is the left end of that group, $N$ the cumulative frequency before it, $n_i$ its frequency and $h$ its width.`,
-    w: R`The median splits the sample into two halves of equal size. Interpolating inside the group that contains the mark $\frac{n}{2}$ treats the values in the group as evenly spread, so the extra distance to go is the fraction $\frac{\frac{n}{2}-N}{n_i}$ of the group width.`,
+    s: R`The second quartile $Q_2$ is the median of grouped data. Let $n$ be the sample size; the group containing the position $\frac{n}{2}$ is the first group whose cumulative frequency is not less than $\frac{n}{2}$. Then $Q_2=a+\frac{\frac{n}{2}-N}{n_i}h$, where $a$ is the left end of that group, $N$ the cumulative frequency before it, $n_i$ its frequency and $h$ its width.`,
+    w: R`The median splits the sample into two halves of equal size. Interpolating inside the group that contains the position $\frac{n}{2}$ treats the values in the group as evenly spread, so the extra distance to go is the fraction $\frac{\frac{n}{2}-N}{n_i}$ of the group width.`,
     p: R`Choosing the group by the largest frequency instead of the cumulative frequency, or using the sample size $n$ instead of $\frac{n}{2}$ in the numerator. The right group is the first one whose cumulative frequency reaches the mark.`,
     ex: [
       [R`Four groups $[0;10)$, $[10;20)$, $[20;30)$, $[30;40)$ have frequencies $3;\ 5;\ 8;\ 4$. Find $Q_2$.`, [
-        [R`The sample size is $n=20$, so the mark is $\frac{n}{2}=10$.`, R`The frequencies add up to $3+5+8+4=20$.`],
-        [R`The cumulative frequencies are $3;\ 8;\ 16;\ 20$, so the first group whose cumulative frequency is not less than $10$ is $[20;30)$.`, R`The group $[10;20)$ only accumulates $8<10$, so it does not contain the mark yet.`],
+        [R`The sample size is $n=20$, so the position is $\frac{n}{2}=10$.`, R`The frequencies add up to $3+5+8+4=20$.`],
+        [R`The cumulative frequencies are $3;\ 8;\ 16;\ 20$, so the first group whose cumulative frequency is not less than $10$ is $[20;30)$.`, R`The group $[10;20)$ only accumulates $8<10$, so it does not reach that position yet.`],
         [R`We get $Q_2=20+\frac{10-8}{8}\cdot10=\frac{45}{2}$.`, R`Substitute $a=20$, $N=8$, $n_i=8$ and $h=10$ into the formula.`],
       ], R`The median of the sample is $\frac{45}{2}$.`],
       [R`Three groups $[0;5)$, $[5;10)$, $[10;15)$ have frequencies $5;\ 10;\ 5$. Find $Q_2$.`, [
-        [R`The sample size is $n=20$, so the mark is $10$, and the cumulative frequencies are $5;\ 15;\ 20$.`, R`The first group with cumulative frequency at least $10$ is $[5;10)$.`],
+        [R`The sample size is $n=20$, so the position is $10$, and the cumulative frequencies are $5;\ 15;\ 20$.`, R`The first group with cumulative frequency at least $10$ is $[5;10)$.`],
         [R`We get $Q_2=5+\frac{10-5}{10}\cdot5=\frac{15}{2}$.`, R`Substitute $a=5$, $N=5$, $n_i=10$ and $h=5$ into the formula.`],
       ], R`The median of the sample is $\frac{15}{2}$.`],
     ],
     dr: [
-      [R`Three groups $[0;10)$, $[10;20)$, $[20;30)$ have frequencies $2;\ 6;\ 2$. Find $Q_2$.`, R`The median is $15$.`, R`The mark is $5$, the group containing it is $[10;20)$ and $Q_2=10+\frac{5-2}{6}\cdot10=15$.`],
-      [R`Three groups $[0;5)$, $[5;10)$, $[10;15)$ have frequencies $4;\ 4;\ 12$. What is the cumulative frequency before the group containing the median?`, R`It is $8$.`, R`The mark $10$ is greater than $8$, so the group containing the median is $[10;15)$ and the cumulative frequency before it is $4+4=8$.`],
-      [R`For the table in the previous question, find $Q_2$.`, R`The median is $\frac{65}{6}$.`, R`We have $Q_2=10+\frac{10-8}{12}\cdot5=10+\frac{5}{6}=\frac{65}{6}$.`],
+      [R`Three groups $[0;10)$, $[10;20)$, $[20;30)$ have frequencies $2;\ 6;\ 2$. Find $Q_2$.`, R`The median is $15$.`, R`The position is $5$, the group containing it is $[10;20)$ and $Q_2=10+\frac{5-2}{6}\cdot10=15$.`],
+      [R`Three groups $[0;5)$, $[5;10)$, $[10;15)$ have frequencies $4;\ 4;\ 12$. What is the cumulative frequency before the group containing the median?`, R`It is $8$.`, R`The position $10$ is greater than $8$, so the group containing the median is $[10;15)$ and the cumulative frequency before it is $4+4=8$.`],
+      [R`Three groups $[0;5)$, $[5;10)$, $[10;15)$ have frequencies $4;\ 4;\ 12$. Find $Q_2$.`, R`The median is $\frac{65}{6}$.`, R`We have $Q_2=10+\frac{10-8}{12}\cdot5=10+\frac{5}{6}=\frac{65}{6}$.`],
     ],
   },
   "phuong-sai-ngan": {
-    s: R`The variance of a grouped sample can also be computed as $s^2=\frac{1}{n}\sum n_ic_i^2-\bar x^2$, that is, the mean of the squares minus the square of the mean. This needs only one computation of $\bar x$ and one of the mean of the squares.`,
+    s: R`The variance of grouped data can also be computed as $s^2=\frac{1}{n}\sum n_ic_i^2-\bar x^2$, that is, the mean of the squares minus the square of the mean. This needs only one computation of $\bar x$ and one of the mean of the squares.`,
     w: R`Expand $(c_i-\bar x)^2=c_i^2-2c_i\bar x+\bar x^2$ and take the mean; the middle terms combine into $-2\bar x^2$, leaving the mean of the squares minus the square of the mean.`,
     p: R`Squaring the mean of the squares, or forgetting to subtract $\bar x^2$. The mean of the squares is never smaller than the square of the mean, so a negative result signals a mistake.`,
     ex: [
       [R`Three groups have representative values $5;\ 15;\ 25$ and frequencies $2;\ 3;\ 5$. Find the variance with the short formula.`, [
-        [R`The mean is $\bar x=18$ and the sample size is $n=10$.`, R`We computed $\frac{2\cdot5+3\cdot15+5\cdot25}{10}=18$ in the previous lesson.`],
+        [R`The mean is $\bar x=18$ and the sample size is $n=10$.`, R`Compute $\frac{2\cdot5+3\cdot15+5\cdot25}{10}=\frac{150}{10}$, so $\bar x=18$.`],
         [R`The mean of the squares is $\frac{2\cdot25+3\cdot225+5\cdot625}{10}=385$.`, R`Square each representative value and multiply by its frequency.`],
         [R`The variance is $385-18^2=61$.`, R`Take the mean of the squares minus the square of the mean.`],
       ], R`The variance is $61$, the same as from the definition.`],
@@ -62,8 +62,8 @@ export const g12Extra3En: Record<string, LessonEn> = {
     ],
     dr: [
       [R`What is the variance of the sample with representative values $5;\ 15;\ 25$ and frequencies $1;\ 8;\ 1$?`, R`The variance is $20$.`, R`The mean is $15$ and the deviations of the two outer groups are both $10$, so $s^2=\frac{100+100}{10}=20$.`],
-      [R`How many times larger is the variance of sample $B$ in the first example than that of sample $A$?`, R`It is $4$ times larger.`, R`We have $\frac{80}{20}=4$.`],
-      [R`How many times larger is the standard deviation of class $Y$ than that of class $X$ in the second example?`, R`It is $2$ times larger.`, R`We have $\frac{\sqrt{8}}{\sqrt{2}}=\sqrt{4}=2$.`],
+      [R`Sample $A$ has variance $20$ and sample $B$ has variance $80$, in the same unit. How many times larger is the variance of $B$ than that of $A$?`, R`It is $4$ times larger.`, R`We have $\frac{80}{20}=4$.`],
+      [R`Class $X$ has variance $2$ and class $Y$ has variance $8$, in the same unit. How many times larger is the standard deviation of $Y$ than that of $X$?`, R`It is $2$ times larger.`, R`We have $\frac{\sqrt{8}}{\sqrt{2}}=\sqrt{4}=2$.`],
     ],
   },
   "bien-doi-mau": {

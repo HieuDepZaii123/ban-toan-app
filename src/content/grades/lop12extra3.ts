@@ -27,7 +27,7 @@ export const lop12TkNC: GradeChapter = chuong("tk-nang-cao", "Thống kê ghép 
     [
       luyen(R`Ba nhóm $[0;10)$, $[10;20)$, $[20;30)$ có tần số $2;\ 6;\ 2$. Tính $Q_2$.`, R`Trung vị bằng $15$.`, [{ expr: "10+Rational(5-2,6)*10", expect: "15" }], R`Mốc là $5$, nhóm chứa mốc là $[10;20)$ và $Q_2=10+\frac{5-2}{6}\cdot10=15$.`),
       luyen(R`Ba nhóm $[0;5)$, $[5;10)$, $[10;15)$ có tần số $4;\ 4;\ 12$. Tần số tích lũy trước nhóm chứa trung vị bằng bao nhiêu?`, R`Bằng $8$.`, [{ expr: "4+4", expect: "8" }], R`Mốc là $10$ lớn hơn $8$, nên nhóm chứa trung vị là $[10;15)$ và tần số tích lũy trước nó là $4+4=8$.`),
-      luyen(R`Với bảng ở câu trên, tính $Q_2$.`, R`Trung vị bằng $\frac{65}{6}$.`, [{ expr: "10+Rational(10-8,12)*5", expect: "Rational(65,6)" }], R`Ta có $Q_2=10+\frac{10-8}{12}\cdot5=10+\frac{5}{6}=\frac{65}{6}$.`),
+      luyen(R`Ba nhóm $[0;5)$, $[5;10)$, $[10;15)$ có tần số $4;\ 4;\ 12$. Tính $Q_2$.`, R`Trung vị bằng $\frac{65}{6}$.`, [{ expr: "10+Rational(10-8,12)*5", expect: "Rational(65,6)" }], R`Ta có $Q_2=10+\frac{10-8}{12}\cdot5=10+\frac{5}{6}=\frac{65}{6}$.`),
     ],
     { topicId: "combo" }),
   bai("phuong-sai-ngan", "Công thức rút gọn của phương sai",
@@ -35,7 +35,7 @@ export const lop12TkNC: GradeChapter = chuong("tk-nang-cao", "Thống kê ghép 
     [
       vd(R`Ba nhóm có giá trị đại diện $5;\ 15;\ 25$ và tần số $2;\ 3;\ 5$. Tính phương sai theo công thức rút gọn.`,
         [
-          buoc(R`Số trung bình $\bar x=18$ và cỡ mẫu $n=10$.`, R`Ta đã tính $\frac{2\cdot5+3\cdot15+5\cdot25}{10}=18$ ở bài trước.`),
+          buoc(R`Số trung bình $\bar x=18$ và cỡ mẫu $n=10$.`, R`Tính $\frac{2\cdot5+3\cdot15+5\cdot25}{10}=\frac{150}{10}$ nên $\bar x=18$.`),
           buoc(R`Trung bình bình phương là $\frac{2\cdot25+3\cdot225+5\cdot625}{10}=385$.`, R`Bình phương từng giá trị đại diện rồi nhân với tần số.`),
           buoc(R`Phương sai là $385-18^2=61$.`, R`Lấy trung bình bình phương trừ bình phương của trung bình.`),
         ],
@@ -75,8 +75,8 @@ export const lop12TkNC: GradeChapter = chuong("tk-nang-cao", "Thống kê ghép 
     ],
     [
       luyen(R`Mẫu có giá trị đại diện $5;\ 15;\ 25$ với tần số $1;\ 8;\ 1$ có phương sai bằng bao nhiêu?`, R`Phương sai bằng $20$.`, [{ expr: "Rational(100+0+100,10)", expect: "20" }], R`Trung bình bằng $15$ và độ lệch của hai nhóm biên đều bằng $10$ nên $s^2=\frac{100+100}{10}=20$.`),
-      luyen(R`Phương sai của mẫu $B$ ở ví dụ đầu gấp mấy lần phương sai của mẫu $A$?`, R`Gấp $4$ lần.`, [{ expr: "Rational(80,20)", expect: "4" }], R`Ta có $\frac{80}{20}=4$.`),
-      luyen(R`Độ lệch chuẩn của lớp $Y$ gấp mấy lần độ lệch chuẩn của lớp $X$ ở ví dụ thứ hai?`, R`Gấp $2$ lần.`, [{ expr: "sqrt(8)/sqrt(2)", expect: "2" }], R`Ta có $\frac{\sqrt{8}}{\sqrt{2}}=\sqrt{4}=2$.`),
+      luyen(R`Mẫu $A$ có phương sai $20$ và mẫu $B$ có phương sai $80$, cùng đơn vị. Phương sai của $B$ gấp mấy lần phương sai của $A$?`, R`Gấp $4$ lần.`, [{ expr: "Rational(80,20)", expect: "4" }], R`Ta có $\frac{80}{20}=4$.`),
+      luyen(R`Lớp $X$ có phương sai $2$ và lớp $Y$ có phương sai $8$, cùng đơn vị. Độ lệch chuẩn của $Y$ gấp mấy lần của $X$?`, R`Gấp $2$ lần.`, [{ expr: "sqrt(8)/sqrt(2)", expect: "2" }], R`Ta có $\frac{\sqrt{8}}{\sqrt{2}}=\sqrt{4}=2$.`),
     ],
     { topicId: "combo" }),
   bai("bien-doi-mau", "Biến đổi mẫu số liệu và các số đặc trưng",
