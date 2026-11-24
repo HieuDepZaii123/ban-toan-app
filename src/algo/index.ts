@@ -1209,6 +1209,37 @@ export function sphereSliceRadius(R: number, d: number): number | null {
   return gap < -1e-12 ? null : Math.sqrt(Math.max(0, gap));
 }
 
+/** Cạnh thứ ba theo định lí cosin: c² = a² + b² − 2ab·cos C, với C là góc xen giữa (radian). */
+export function cosineSide(a: number, b: number, angleC: number): number {
+  return Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(angleC));
+}
+
+/** Phân loại tam giác theo cạnh lớn nhất: c² so với a² + b². */
+export function triangleKind(a: number, b: number, c: number): "nhon" | "vuong" | "tu" {
+  const [x, y, z] = [a, b, c].sort((p, q) => p - q) as [number, number, number];
+  const gap = z * z - (x * x + y * y);
+  return Math.abs(gap) < 1e-9 ? "vuong" : gap > 0 ? "tu" : "nhon";
+}
+
+/** Diện tích tam giác theo công thức Heron. */
+export function heronArea(a: number, b: number, c: number): number {
+  const p = (a + b + c) / 2;
+  return Math.sqrt(Math.max(0, p * (p - a) * (p - b) * (p - c)));
+}
+
+/** Tam giác vuông tại A có cạnh huyền a và góc nhọn B = phi: các cạnh góc vuông, hai đoạn BH, CH của đường cao AH và AH. */
+export function rightTriangleAltitude(a: number, phi: number): { b: number; c: number; bh: number; ch: number; h: number } {
+  const c = a * Math.cos(phi);
+  const b = a * Math.sin(phi);
+  return { b, c, bh: (c * c) / a, ch: (b * b) / a, h: (b * c) / a };
+}
+
+/** Thể tích tứ diện có ba cạnh xuất phát từ một đỉnh là các vectơ e1, e2, e3 nhân với hệ số k: |det| / 6. */
+export function tetraVolumeScaled(e1: V3, e2: V3, e3: V3, k: number): number {
+  const s = (v: V3): V3 => [v[0] * k, v[1] * k, v[2] * k];
+  return Math.abs(dot3(s(e1), cross3(s(e2), s(e3)))) / 6;
+}
+
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
 export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
   const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);

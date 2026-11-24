@@ -568,6 +568,22 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("x + y = 4 tiếp xúc x² + y² = 8", lc.points.length === 1 && Math.abs(lc.d - Math.sqrt(8)) < 1e-9);
 }
 
+// Tam giác: cosin, phân loại, Heron, đường cao tam giác vuông, tỉ số đồng dạng.
+{
+  near("cosin: hai cạnh 7, 8 hợp 60° cho c² = 57", A.cosineSide(7, 8, Math.PI / 3) ** 2, 57, 1e-9);
+  near("cosin ở 90° cho Pythagore", A.cosineSide(3, 4, Math.PI / 2), 5, 1e-12);
+  is("5-12-13 vuông", A.triangleKind(5, 12, 13) === "vuong");
+  is("3-4-6 tù", A.triangleKind(3, 4, 6) === "tu");
+  is("4-5-6 nhọn", A.triangleKind(4, 5, 6) === "nhon");
+  near("Heron 3-4-5 = 6", A.heronArea(3, 4, 5), 6, 1e-12);
+  near("diện tích gấp k² khi các cạnh gấp k", A.heronArea(6, 8, 10) / A.heronArea(3, 4, 5), 4, 1e-12);
+  const rt = A.rightTriangleAltitude(5, Math.acos(3 / 5));
+  near("đường cao: c² = a·BH", rt.c * rt.c, 5 * rt.bh, 1e-9);
+  near("đường cao: BH + CH = a", rt.bh + rt.ch, 5, 1e-9);
+  near("đường cao: a·h = b·c", 5 * rt.h, rt.b * rt.c, 1e-9);
+  near("tứ diện: thể tích gấp k³", A.tetraVolumeScaled([1, 0, 0], [0, 1, 0], [0, 0, 1], 2) / A.tetraVolumeScaled([1, 0, 0], [0, 1, 0], [0, 0, 1], 1), 8, 1e-12);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

@@ -42,6 +42,16 @@ export const triangleKnowledge: TopicKnowledge = {
             R`Bất đẳng thức tam giác: đoạn thẳng là đường ngắn nhất nối hai điểm, nên đi thẳng từ $B$ đến $C$ ngắn hơn đi vòng qua $A$, tức $a<b+c$. Viết điều tương tự cho hai cạnh kia, $b<a+c$ và $c<a+b$, rồi chuyển vế được $a>|b-c|$.`,
             R`Góc đối diện cạnh lớn hơn: giả sử $b>c$. Trên cạnh $AC$ lấy điểm $D$ với $AD=c$. Tam giác $ABD$ cân tại $A$ nên hai góc ở $B$ và $D$ của nó bằng nhau. Góc ở $D$ là góc ngoài của tam giác $BDC$ nên lớn hơn góc $C$, còn góc $B$ của tam giác lớn chứa góc $ABD$. Vậy góc $B$ lớn hơn góc $C$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Tổng ba góc bằng cách đi vòng quanh tam giác",
+              buoc: [
+                R`Đi dọc các cạnh của tam giác theo thứ tự $A\to B\to C\to A$ và quay về đúng hướng xuất phát. Tới mỗi đỉnh phải rẽ một góc bằng góc ngoài tại đỉnh đó, tức $180^\circ-A$, $180^\circ-B$, $180^\circ-C$.`,
+                R`Đi hết một vòng khép kín thì hướng đi đã quay đúng một vòng, tức $360^\circ$. Vậy $(180^\circ-A)+(180^\circ-B)+(180^\circ-C)=360^\circ$.`,
+                R`Chuyển vế: $540^\circ-(A+B+C)=360^\circ$, nên $A+B+C=180^\circ$. Cách này chỉ chứng minh phần tổng ba góc, và dựa vào điều ta thấy trực tiếp rằng đi hết một vòng thì quay $360^\circ$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-nghia", title: "Bốn điểm đặc biệt",
@@ -71,6 +81,16 @@ export const triangleKnowledge: TopicKnowledge = {
             R`Tính diện tích hình vuông lớn theo hai cách: $(b+c)^2=4\cdot\frac{1}{2}bc+a^2$. Khai triển vế trái được $b^2+2bc+c^2=2bc+a^2$, bỏ $2bc$ ở hai vế còn $a^2=b^2+c^2$.`,
             R`Chiều đảo: nếu $a^2=b^2+c^2$, dựng một tam giác vuông có hai cạnh góc vuông $b$ và $c$. Cạnh huyền của nó bằng $\sqrt{b^2+c^2}=a$. Hai tam giác có ba cạnh bằng nhau thì bằng nhau, nên tam giác ban đầu cũng có góc vuông.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng tam giác đồng dạng (chiều thuận)",
+              buoc: [
+                R`Cho tam giác $ABC$ vuông tại $A$ và $H$ là chân đường cao hạ từ $A$ xuống $BC$. Tam giác $HBA$ và tam giác $ABC$ có góc vuông và chung góc $B$, nên đồng dạng.`,
+                R`Từ đồng dạng: $\frac{HB}{AB}=\frac{AB}{BC}$, tức $c^2=a\cdot HB$. Làm tương tự với tam giác $HAC$ và tam giác $ABC$ (chung góc $C$) được $b^2=a\cdot HC$.`,
+                R`Cộng hai đẳng thức: $b^2+c^2=a\,(HB+HC)=a\cdot a=a^2$, vì hai góc $B$ và $C$ đều nhọn (tổng bằng $90^\circ$) nên chân đường cao $H$ nằm giữa $B$ và $C$, do đó $HB+HC=BC=a$. Cách này không dùng diện tích; chiều đảo vẫn chứng minh như ở trên.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Hệ thức trong tam giác vuông",
@@ -88,6 +108,16 @@ export const triangleKnowledge: TopicKnowledge = {
             R`Đồng dạng với tỉ số $k$ nghĩa là mọi độ dài của tam giác này bằng $k$ lần độ dài tương ứng của tam giác kia. Chu vi mới là $ka+kb+kc=k(a+b+c)$, gấp $k$ lần chu vi cũ.`,
             R`Diện tích bằng nửa đáy nhân chiều cao. Đáy nhân với $k$ và chiều cao cũng nhân với $k$, nên diện tích nhân với $k\cdot k=k^2$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng lát tam giác nhỏ",
+              buoc: [
+                R`Với $k=n$ nguyên: chia mỗi cạnh của tam giác lớn thành $n$ phần bằng nhau rồi kẻ các đường song song với ba cạnh qua các điểm chia. Tam giác lớn được lát kín bởi $\frac{n(n+1)}{2}$ tam giác cùng chiều với tam giác nhỏ và $\frac{n(n-1)}{2}$ tam giác ngược chiều, tất cả đều bằng tam giác nhỏ, tổng cộng $n^2$ tam giác.`,
+                R`Vậy khi $k=n$ nguyên, diện tích tăng đúng $n^2$ lần. Với $k=\frac{m}{n}$ hữu tỉ: gọi $T'$ là tam giác đồng dạng với $T$ tỉ số $\frac mn$. Phóng $T'$ lên $n$ lần được tam giác đồng dạng với $T$ tỉ số $m$, nên $n^2S(T')=m^2S(T)$ và $\frac{S(T')}{S(T)}=\frac{m^2}{n^2}=k^2$.`,
+                R`Với $k$ vô tỉ: tam giác phóng to hơn thì chứa tam giác phóng nhỏ hơn nên diện tích tăng theo $k$. Kẹp $k$ giữa hai số hữu tỉ gần nhau tùy ý thì tỉ số diện tích bị kẹp giữa hai bình phương tương ứng, và bằng $k^2$. Cách này không cần chiều cao hay công thức sin.`,
+              ],
+            },
+          ],
         },
         { kind: "vi-du", text: R`Tam giác $3$, $4$, $5$ vuông vì $9+16=25$. Đường cao ứng với cạnh huyền là $\frac{3\cdot 4}{5}=\frac{12}{5}$ và trung tuyến ứng với cạnh huyền là $\frac{5}{2}$. Tam giác đồng dạng với tỉ số $2$ có diện tích gấp $4$ lần: từ $6$ thành $24$.` },
       ],
@@ -103,6 +133,24 @@ export const triangleKnowledge: TopicKnowledge = {
             R`Dùng Pythagore cho tam giác vuông $CHB$: $a^2=(b\sin A)^2+(c-b\cos A)^2=b^2\sin^2A+b^2\cos^2A+c^2-2bc\cos A$. Vì $\sin^2A+\cos^2A=1$ nên $a^2=b^2+c^2-2bc\cos A$.`,
             R`Cũng đường cao đó tính từ phía góc $B$ là $CH=a\sin B$. Vậy $b\sin A=a\sin B$, tức $\frac{a}{\sin A}=\frac{b}{\sin B}$.`,
             R`Tỉ số chung bằng $2R$: vẽ đường kính $BD$ của đường tròn ngoại tiếp. Tam giác $BCD$ vuông tại $C$, và góc $D$ bằng góc $A$ vì cùng chắn cung $BC$, nên $a=BD\sin D=2R\sin A$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Định lí cosin bằng tọa độ (dùng được cho góc tù)",
+              buoc: [
+                R`Đặt hệ tọa độ có $A$ ở gốc và $B=(c;0)$. Điểm $C$ cách $A$ một đoạn $b$ theo hướng tạo với trục hoành góc $A$, nên $C=(b\cos A;\,b\sin A)$ theo định nghĩa của $\cos$ và $\sin$, đúng cả khi $A$ tù.`,
+                R`Theo công thức khoảng cách, $a^2=BC^2=(b\cos A-c)^2+(b\sin A)^2=b^2\cos^2A-2bc\cos A+c^2+b^2\sin^2A$.`,
+                R`Vì $\sin^2A+\cos^2A=1$ nên $a^2=b^2+c^2-2bc\cos A$. Cách này không phải chia trường hợp góc nhọn hay tù và không cần kẻ đường cao.`,
+              ],
+            },
+            {
+              cach: "Định lí sin bằng diện tích",
+              buoc: [
+                R`Tính diện tích tam giác bằng nửa tích đáy với chiều cao. Với đáy $c$, chiều cao hạ từ $C$ là $b\sin A$; cũng với đáy $c$, chiều cao ấy là $a\sin B$; với đáy $a$, chiều cao hạ từ $B$ hoặc $C$ cho $S=\frac{1}{2}ab\sin C$. Vậy $S=\frac{1}{2}bc\sin A=\frac{1}{2}ac\sin B=\frac{1}{2}ab\sin C$.`,
+                R`Chia cả ba biểu thức cho $\frac{1}{2}abc$: $\frac{\sin A}{a}=\frac{\sin B}{b}=\frac{\sin C}{c}$. Lấy nghịch đảo được $\frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}$.`,
+                R`Cách này cho ba tỉ số bằng nhau một cách đối xứng. Việc tỉ số chung bằng $2R$ vẫn dùng đường kính $BD$ như ở cách thứ nhất.`,
+              ],
+            },
           ],
         },
         {
@@ -199,6 +247,18 @@ export const triangleKnowledge: TopicKnowledge = {
             R`Khi đó $\vec{u}\cdot\vec{c}=m(\vec{u}\cdot\vec{a})+n(\vec{u}\cdot\vec{b})=0$, nên đường thẳng vuông góc với mọi đường trong mặt phẳng.`,
             R`Phải là hai đường cắt nhau: nếu chúng song song thì $\vec{a}$ và $\vec{b}$ cùng phương, không ghép ra được các hướng khác, và kết luận có thể sai.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng tam giác bằng nhau (hình học thuần túy)",
+              buoc: [
+                R`Gọi $O$ là giao điểm của đường thẳng $d$ với mặt phẳng, $a$ và $b$ là hai đường cắt nhau tại $O$ trong mặt phẳng, cùng vuông góc với $d$. Lấy $P$, $P'$ trên $d$ đối xứng qua $O$, tức $OP=OP'$.`,
+                R`Vì $a$ vuông góc với $PP'$ tại trung điểm $O$, đường $a$ là trung trực của $PP'$ trong mặt phẳng chứa $d$ và $a$: mọi điểm $A$ trên $a$ có $AP=AP'$. Tương tự mọi điểm $B$ trên $b$ có $BP=BP'$.`,
+                R`Lấy một đường thẳng trong mặt phẳng, không đi qua $O$ và không song song với $a$ hay $b$, cắt $a$ tại $A$ và $b$ tại $B$. Tam giác $PAB$ và $P'AB$ có $PA=P'A$, $PB=P'B$ và chung $AB$ nên bằng nhau, suy ra góc $PAB$ bằng góc $P'AB$.`,
+                R`Với $X$ bất kì trên $AB$: tam giác $PAX$ và $P'AX$ có $PA=P'A$, chung $AX$ và góc $PAX$ bằng góc $P'AX$ nên bằng nhau, do đó $XP=XP'$. Mỗi điểm $X\neq O$ của mặt phẳng nằm trên một đường như thế (kẻ từ $X$ một đường không song song với $a$, $b$ và không qua $O$, vì $a$, $b$ cắt nhau), nên $XP=XP'$ với mọi $X$.`,
+                R`Tam giác $XPP'$ cân tại $X$ với trung tuyến $XO$, nên $XO\perp PP'$. Vậy $d$ vuông góc với mọi đường thẳng $OX$ qua $O$ trong mặt phẳng, và một đường thẳng bất kì trong mặt phẳng song song với một đường như vậy nên cũng vuông góc với $d$. Cách này không dùng tích vô hướng.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Hai mặt phẳng vuông góc",
@@ -207,6 +267,16 @@ export const triangleKnowledge: TopicKnowledge = {
             R`Giả sử mặt phẳng thứ nhất chứa đường thẳng $d$ vuông góc với mặt phẳng thứ hai. Đường $d$ chỉ hướng pháp tuyến của mặt phẳng thứ hai; mà $d$ nằm trong mặt phẳng thứ nhất nên vuông góc với pháp tuyến của mặt phẳng thứ nhất. Hai pháp tuyến vuông góc nhau, nên hai mặt phẳng vuông góc.`,
             R`Phần sau: cho hai mặt phẳng vuông góc, và đường $a$ nằm trong mặt thứ nhất, vuông góc với giao tuyến. Trong mặt thứ nhất có đường $d$ vuông góc với mặt thứ hai, nên $d$ vuông góc với giao tuyến.`,
             R`Trong cùng một mặt phẳng, hai đường $a$ và $d$ cùng vuông góc với giao tuyến nên song song với nhau. Vì $d$ vuông góc với mặt thứ hai, đường $a$ cũng vậy.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng góc phẳng nhị diện",
+              buoc: [
+                R`Gọi $\Delta$ là giao tuyến của hai mặt phẳng $(\alpha)$ và $(\beta)$. Tại một điểm $O$ trên $\Delta$, kẻ $a\subset(\alpha)$ và $b\subset(\beta)$ cùng vuông góc với $\Delta$. Góc giữa hai mặt phẳng được định nghĩa là góc giữa $a$ và $b$, và không phụ thuộc vào chọn $O$ vì các đường tương ứng ở điểm khác song song với chúng.`,
+                R`Nếu $(\alpha)$ chứa đường $d$ vuông góc với $(\beta)$, thì $d$ cắt $(\beta)$ tại một điểm thuộc cả hai mặt phẳng, tức nằm trên $\Delta$; lấy $O$ là điểm đó. Ta có thể lấy $a=d$ (vì $d$ vuông góc với mọi đường trong $(\beta)$, kể cả $\Delta$). Khi đó $d\perp b$, tức góc giữa hai mặt phẳng là $90^\circ$.`,
+                R`Ngược lại, nếu hai mặt phẳng vuông góc thì $a\perp b$; mà $a\perp\Delta$ nên $a$ vuông góc với hai đường cắt nhau $b$ và $\Delta$ trong $(\beta)$. Theo định lí trước, $a\perp(\beta)$ và $a$ nằm trong $(\alpha)$.`,
+              ],
+            },
           ],
         },
         {
@@ -319,6 +389,16 @@ export const triangleKnowledge: TopicKnowledge = {
     { id: "integral", vi: R`Thể tích khối tròn xoay là $\pi\int f^2$, và các công thức hình nón, hình cầu suy ra được từ đó.` },
   ],
   checks: [
+    { expr: "simplify(((b**2+c**2)/sqrt(b**2+c**2)).subs(b, 3).subs(c, 4)-5)", expect: "0" },
+    { expr: "5*Rational(9,5)", expect: "9" },
+    { expr: "5*Rational(16,5)", expect: "16" },
+    { expr: "Rational(9,5)+Rational(16,5)", expect: "5" },
+    { expr: "expand((180-x1)+(180-x2)+(180-x3)-360-(180-(x1+x2+x3)))", expect: "0" },
+    { expr: "expand((u1-v1)**2+(u2-v2)**2-(u1**2+u2**2)-(v1**2+v2**2)+2*(u1*v1+u2*v2))", expect: "0" },
+    { expr: "simplify((k*b)*(k*c)/2-k**2*(b*c/2))", expect: "0" },
+    { expr: "simplify(n*(n+1)/2+n*(n-1)/2-n**2)", expect: "0" },
+    { expr: "expand((b*cos(x)-c)**2+(b*sin(x))**2-(b**2*(cos(x)**2+sin(x)**2)-2*b*c*cos(x)+c**2))", expect: "0" },
+    { expr: "simplify((2*T/(b*c))/a-(2*T/(a*c))/b)", expect: "0" },
     { expr: "3**2+4**2", expect: "25" },
     { expr: "Rational(3*4,5)", expect: "Rational(12,5)" },
     { expr: "Rational(1,1)/Rational(12,5)**2", expect: "Rational(1,9)+Rational(1,16)" },

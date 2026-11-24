@@ -9,9 +9,9 @@ export const triangleLesson: Lesson = {
     { k: "vd", vi: R`Tam giác đáy $6$, cao $4$: $S=\dfrac{6\cdot 4}{2}=12$.`, en: R`A triangle with base $6$ and height $4$: $S=\dfrac{6\cdot 4}{2}=12$.` },
   ],
   exam: [
-    { k: "dinh", vi: R`Phóng cạnh theo $k$ thì diện tích nhân $k^2$, thể tích nhân $k^3$.`, en: R`Scaling edges by $k$ multiplies area by $k^2$ and volume by $k^3$.` },
+    { k: "dinh", vi: R`Phóng mọi cạnh lên $k$ lần thì diện tích nhân $k^2$ và thể tích nhân $k^3$.`, en: R`Scaling all edges by $k$ multiplies the area by $k^2$ and the volume by $k^3$.` },
     { k: "vd", vi: R`Chóp đáy vuông cạnh $6$, cao $4$: $S=36$, $V=\dfrac13\cdot 36\cdot 4=48$.`, en: R`Pyramid with square base of side $6$ and height $4$: $S=36$, $V=\dfrac13\cdot 36\cdot 4=48$.` },
-    { k: "loi", vi: R`Bỏ $\dfrac12$ thì đáy $6$, cao $4$ thành $24$. Diện tích đúng là $12$.`, en: R`Dropping $\dfrac12$ turns base $6$ and height $4$ into $24$. The area is $12$.` },
+    { k: "loi", vi: R`Lỗi hay gặp: bỏ quên $\dfrac12$ thì đáy $6$ và cao $4$ cho $24$. Diện tích đúng là $12$.`, en: R`A common mistake: forgetting $\dfrac12$ turns base $6$ and height $4$ into $24$. The area is $12$.` },
     { k: "kiem", vi: R`Hộp $3\times 4\times 5$ có $V=60$. Cạnh gấp đôi thì diện tích đáy nhân $4$.`, en: R`A $3\times 4\times 5$ box has $V=60$. Doubling the edges multiplies the base area by $4$.` },
   ],
 };

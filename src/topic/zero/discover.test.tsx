@@ -11,6 +11,7 @@ import { CALC_CARDS } from "./calcCards.ts";
 import { STATS_CARDS } from "./statsCards.ts";
 import { DISCRETE_CARDS } from "./discreteCards.ts";
 import { ANALYTIC_CARDS } from "./analyticCards.ts";
+import { TRIANGLE_CARDS } from "./triangleCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -123,5 +124,14 @@ describe("Thẻ khám phá", () => {
     expect(label(ANALYTIC_CARDS.parallel)).toBe("Song song");
     expect(label(ANALYTIC_CARDS.skew)).toBe("Chéo nhau");
     expect(label(ANALYTIC_CARDS.slice)).toBe("$4$");
+  });
+
+  test("các thẻ tam giác có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(TRIANGLE_CARDS.k51213)).toBe("Tam giác vuông");
+    expect(label(TRIANGLE_CARDS.k346)).toBe("Tam giác tù");
+    expect(label(TRIANGLE_CARDS.cosine)).toBe("$\\sqrt{57}$");
+    expect(label(TRIANGLE_CARDS.areaRatio)).toBe("Gấp 4 lần");
+    expect(label(TRIANGLE_CARDS.volume)).toBe("Gấp 8 lần");
   });
 });
