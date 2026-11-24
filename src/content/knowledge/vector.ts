@@ -6,12 +6,12 @@ export const vectorKnowledge: TopicKnowledge = {
   id: "vector",
   tongQuat: {
     la: R`Vectơ là một đoạn thẳng có hướng: có điểm đầu, điểm cuối, độ dài và hướng. Trong hệ tọa độ, một vectơ được xác định bởi một bộ số, và các phép toán hình học như cộng, nhân với một số, tích vô hướng đều quy về phép tính trên các số đó. Ma trận là bảng số vuông dùng để ghi các phép biến đổi và hệ phương trình.`,
-    dungDe: R`Mô tả lực, vận tốc, độ dời, và mọi đại lượng có hướng. Trong bài thi, chuyên đề cho bài chứng minh đẳng thức vectơ, bài tính độ dài và góc bằng tọa độ, bài về ba điểm thẳng hàng và hai đường vuông góc, và bài giải hệ hai ẩn bằng định thức.`,
+    dungDe: R`Vectơ mô tả lực, vận tốc, độ dời và mọi đại lượng có hướng. Trong bài thi, chuyên đề này cho các bài chứng minh đẳng thức vectơ, tính độ dài và góc bằng tọa độ, chứng minh ba điểm thẳng hàng hay hai đường vuông góc, và giải hệ hai ẩn bằng định thức.`,
     lienHe: R`Tích vô hướng chứa $\cos$ của góc giữa hai vectơ nên nối với Lượng giác. Phương trình đường thẳng và khoảng cách trong Hình giải tích đều xây trên vectơ pháp tuyến và chỉ phương. Định thức cấp hai cho diện tích hình bình hành ở chuyên đề Hình phẳng.`,
   },
   tuDau: [
     R`Chỉ đường cho một người bạn: «đi $300$ mét» thì chưa đủ, phải nói «đi $300$ mét về hướng đông». Nhiều đại lượng cần cả độ lớn lẫn hướng như vậy: quãng dịch chuyển, vận tốc gió, lực kéo. Vectơ là cách ghi lại một đại lượng có hướng, và được vẽ bằng một mũi tên: mũi tên dài bao nhiêu là độ lớn, chỉ về đâu là hướng.`,
-    R`Điều quan trọng nhất về vectơ là nó là một «chỉ dẫn di chuyển», không gắn với nơi xuất phát. «Sang phải $3$, lên $2$» là cùng một chỉ dẫn dù bạn đứng ở đâu. Vì vậy hai mũi tên cùng hướng và cùng độ dài được coi là một vectơ, dù vẽ ở hai chỗ khác nhau.`,
+    R`Điều cần nắm đầu tiên: vectơ là một «chỉ dẫn di chuyển», không gắn với nơi xuất phát. «Sang phải $3$, lên $2$» là cùng một chỉ dẫn dù bạn đứng ở đâu. Vì vậy hai mũi tên cùng hướng và cùng độ dài được coi là một vectơ, dù vẽ ở hai chỗ khác nhau.`,
     R`Cộng hai vectơ là làm theo hai chỉ dẫn nối tiếp nhau. Nhân vectơ với một số là lặp lại hoặc co giãn chỉ dẫn đó. Khi viết chỉ dẫn bằng hai con số (đi ngang bao nhiêu; đi dọc bao nhiêu) thì mọi phép toán hình học biến thành cộng và nhân các con số, máy tính nào cũng làm được. Đó là sức mạnh của tọa độ.`,
     R`Ma trận là bước tiếp theo: một bảng số ghi lại một phép biến đổi áp dụng cho mọi vectơ cùng lúc, như quay, co giãn hay kéo xiên. Định thức của bảng cho biết phép biến đổi làm diện tích phóng to hay thu nhỏ bao nhiêu lần, và chính con số đó quyết định một hệ hai phương trình có đúng một nghiệm hay không.`,
   ],
