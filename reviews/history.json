@@ -24,5 +24,10 @@
     "id": "2026-11-23-e",
     "note": "Vòng 10 vai trùng sau khi bổ sung nội dung: bài lớp 1–12, bốn mảng Khoa học, ví dụ có lời giải, đề thi thử có câu vận dụng cao.",
     "scores": { "gv12": 6, "hs12": 4, "thcs": 7, "lecturer": 7, "a11y": 7, "mobile": 6, "katex": 7, "creative": 5, "qa": 5, "pm": 6 }
+  },
+  {
+    "id": "2026-11-24-f",
+    "note": "Vòng 10 vai trùng sau các sửa: không tính tiến độ khi chưa đặt đề, Phần II đề thi dựng từ dạng đọc dữ kiện, phím tắt lab có nút tắt, mặc định tiếng Việt, toTex phân số và căn có ngoặc.",
+    "scores": { "gv12": 7, "hs12": 4, "thcs": 7, "lecturer": 8, "a11y": 7, "mobile": 7, "katex": 6, "creative": 6, "qa": 6, "pm": 6 }
   }
 ]
