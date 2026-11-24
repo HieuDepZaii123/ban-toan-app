@@ -1104,41 +1104,24 @@ html[data-lamp="on"] body::before {
 @keyframes fogDrift { from { background-position: 0 0, 100% 0; } to { background-position: 120% 0, -40% 0; } }
 .hero-welcome { margin: 4px 0 16px; }
 .hero-welcome .kicker { margin-bottom: 2px; }
-.hero-welcome .hero-manifesto { margin-top: 10px; }
-.hero-welcome .hero-call { margin-top: 10px; font-weight: 600; color: var(--ink); }
-/* Three pillars under the title: one sheet of paper each, the app's teal for the drawing and links. */
+/* Three entry points under the title: one sheet of paper each, the app's teal for the drawing and links. */
 .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
-.pillar { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 14px; display: grid; grid-template-rows: auto auto auto 1fr auto; gap: 6px; min-width: 0; }
+.pillar { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 14px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 6px; min-width: 0; }
 .pillar h2 { margin: 2px 0 0; font-size: 1.15rem; }
 .pillar-mark { width: 72px; height: 44px; color: var(--accent); }
 .pillar-mark path, .pillar-mark circle { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .pillar-mark circle { fill: currentColor; stroke: none; }
 .pillar-mark .soft { stroke-dasharray: 3 4; opacity: 0.55; }
-/* "Không …, hãy …": the clause to drop is quiet, the clause to do carries the weight. */
-.hero-welcome .no, .pillar-gist .no, .why-card h3 .no { color: var(--muted); font-weight: 500; }
-.hero-welcome h1 .no { color: var(--ink-soft); font-weight: inherit; }
-.hero-welcome h1 .yes { color: var(--accent); }
-.pillar-gist .yes, .why-card h3 .yes { color: var(--ink); }
-.pillar-gist { margin: 0; font-weight: 600; color: var(--ink); }
 .pillar-body { margin: 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
 .pillar-links { margin: 4px 0 0; align-self: end; display: flex; flex-wrap: wrap; gap: 6px 14px; font-weight: 600; }
 .pillar-links a { color: var(--accent); }
 @media (max-width: 860px) { .pillars { grid-template-columns: minmax(0, 1fr); } }
-/* "Vì sao Bàn Toán khác": eight reasons in the pillar style, then a from → to table. */
+/* "Cách Bàn Toán hoạt động": one card per feature. */
 .why > h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); text-transform: none; letter-spacing: 0; color: var(--ink); margin-bottom: 0; text-wrap: balance; }
-.why .lead { margin-top: 6px; }
 .why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
 .why-card { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .why-card h3 { margin: 0; font-size: 1.02rem; }
 .why-card p { margin: 0; color: var(--ink-soft); font-size: 0.93rem; line-height: 1.55; }
-.why-shift { margin-top: 18px; background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; overflow-x: auto; }
-.why-shift h3 { margin: 0 0 8px; font-size: 1.02rem; }
-.why-shift table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-.why-shift td:first-child, .why-shift th:first-child { width: 42%; }
-.why-shift th { text-align: left; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 4px 8px; }
-.why-shift td { padding: 8px; border-top: 1px solid var(--line); color: var(--ink-soft); vertical-align: top; }
-.why-shift td b { color: var(--ink); }
-.why-shift .why-arrow { color: var(--accent); width: 1.5em; text-align: center; }
 .tier-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 0 0 16px; }
 .tier-row article { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: grid; gap: 4px; }
 .tier-row b { color: var(--accent); font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 1.15rem; }
@@ -1452,7 +1435,7 @@ html[data-lamp="on"] body::before {
 @media print { .site-foot { display: none; } }
 
 /* Trang chủ: nhãn nhỏ, tiêu đề, một hàng bắt đầu (tờ đang mở | tìm + tiến độ), rồi các chuyên đề; góc bàn ở cuối. */
-.hero-welcome h1 { margin-top: 4px; max-width: 24ch; text-wrap: balance; }
+.hero-welcome h1 { margin-top: 4px; text-wrap: balance; }
 .home-start {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);

@@ -1,13 +1,5 @@
 # Bàn Toán
 
-**Không học thuộc công thức toán học, hãy hiểu nó.** Bàn Toán – nơi học tập, nghiên cứu và sáng tạo.
-
-Không chép công thức rồi giải theo bài mẫu, hãy nhìn toán chuyển động, tự đặt câu hỏi và tự kiểm chứng. Hãy biến những ý tưởng của bạn thành hiện thực.
-
-- **Học tập** – không chép công thức, hãy nhìn nó chuyển động: kéo một tham số, đồ thị đổi theo ngay trước mắt.
-- **Nghiên cứu** – không làm theo bài mẫu, hãy tự đặt câu hỏi: nêu giả thuyết, tự đo, rồi đối chiếu với chứng minh.
-- **Sáng tạo** – không chỉ giải đề có sẵn, hãy tự làm ra đề: dựng hình, xoay khối, soạn đề của riêng mình.
-
 Bàn Toán là bàn làm việc cho toán từ lớp 1 đến lớp 12. Học sinh kéo tham số, nhìn đồ thị đổi, rồi làm câu có gợi ý và lời giải.
 
 Giao diện tiếng Việt, có thể chuyển EN. Có hai giao diện Giấy và Đêm. Trên trang chủ có đèn bàn, đồng hồ Hà Nội cùng Tokyo, London và New York, và cửa sổ đổi cảnh Sáng / Trưa / Chiều / Đêm theo giờ trên máy (chọn tay được). App chạy được khi mất mạng sau lần mở đầu (PWA).
@@ -129,7 +121,6 @@ Service worker đăng ký sau khi trang đã hiện, chỉ ở bản production.
 | `server/` | API: `pay/` (thanh toán), `chat/` (trợ lý), `db/` (SQLite/Postgres), `http/` (cầu nối) |
 | `api/` | Hàm Vercel, mỗi tệp gọi một handler trong `server/` |
 | `scripts/` | Bộ test, oracle SymPy (`*_sympy.py`), công cụ cơ sở dữ liệu. Các helper test dùng chung nằm ở `testkit.ts` |
-| `graphify-out/` | Bản đồ tri thức của mã nguồn (`graph.html`, `GRAPH_REPORT.md`), cập nhật bằng `graphify update .` |
 
 ## Thêm một tờ
 

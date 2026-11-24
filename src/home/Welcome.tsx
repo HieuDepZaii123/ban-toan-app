@@ -8,35 +8,27 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ, viết theo một giọng: "Không …, hãy …". Vế "Không" nhạt, vế "hãy" đậm. */
+/** Đầu trang chủ: Bàn Toán có gì, ba lối vào chính, rồi phần miễn phí và Premium. */
 export function Welcome() {
   const lang = useLang();
   return (
     <section className="hero-welcome">
-      <p className="kicker">{t(lang, "Bàn Toán – nơi học tập, nghiên cứu và sáng tạo", "Bàn Toán – a place to learn, research and create")}</p>
-      <h1>
-        <span className="no">{t(lang, "Không học thuộc công thức toán học,", "Don't memorise maths formulas.")}</span>{" "}
-        <span className="yes">{t(lang, "hãy hiểu nó.", "Understand them.")}</span>
-      </h1>
-      <p className="lead hero-manifesto">
+      <p className="kicker">{t(lang, "Toán lớp 1–12", "Maths, grades 1–12")}</p>
+      <h1>{t(lang, "Kéo hình, làm bài, xem lời giải từng bước.", "Drag the figure, try the problem, read each step.")}</h1>
+      <p className="lead">
         {t(
           lang,
-          "Không chép công thức rồi giải theo bài mẫu, hãy nhìn toán chuyển động, tự đặt câu hỏi và tự kiểm chứng. Không nhớ trước rồi mới hiểu, hãy hiểu vì sao trước, rồi bạn sẽ nhớ.",
-          "Don't copy formulas and follow the worked example. Watch maths move, ask your own questions and test them yourself. Don't remember first and hope to understand later. Understand why first, and you will remember.",
+          "Mười bốn chuyên đề THPT, 182 bài từ lớp 1 đến lớp 12 và 28 bài nghiên cứu, có gợi ý và lời giải.",
+          "Fourteen upper-secondary topics, 182 lessons from grade 1 to 12 and 28 investigations, with hints and worked solutions.",
         )}{" "}
-        <a href="#vi-sao">{t(lang, "Vì sao Bàn Toán khác?", "Why is Bàn Toán different?")}</a>
+        <a href="#vi-sao">{t(lang, "Cách Bàn Toán hoạt động", "How Bàn Toán works")}</a>
       </p>
-      <p className="lead hero-call">{t(lang, "Hãy biến những ý tưởng của bạn thành hiện thực.", "Turn your ideas into reality.")}</p>
-      {/* One block per word of the title. Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies). */}
+      {/* Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies). */}
       <div className="pillars">
         {PILLARS.map((pillar) => (
           <article key={pillar.id} className="pillar" aria-labelledby={`pillar-${pillar.id}`}>
             <PillarMark id={pillar.id} />
             <h2 id={`pillar-${pillar.id}`}>{t(lang, pillar.vi, pillar.en)}</h2>
-            <p className="pillar-gist">
-              <span className="no">{t(lang, pillar.noVi, pillar.noEn)}</span>{" "}
-              <span className="yes">{t(lang, pillar.yesVi, pillar.yesEn)}</span>
-            </p>
             <p className="pillar-body">{t(lang, pillar.bodyVi, pillar.bodyEn)}</p>
             <p className="pillar-links">
               {pillar.links.map((link) => (
@@ -65,19 +57,14 @@ type PillarId = "hoc" | "nghien-cuu" | "sang-tao";
 const PILLARS: {
   id: PillarId;
   vi: string; en: string;
-  /** "Không …," then "hãy …": the habit to drop, then what to do instead. */
-  noVi: string; noEn: string;
-  yesVi: string; yesEn: string;
   bodyVi: string; bodyEn: string;
   links: { href: string; vi: string; en: string }[];
 }[] = [
   {
     id: "hoc",
-    vi: "Học tập", en: "Learn",
-    noVi: "Không chép công thức,", noEn: "Don't copy the formula.",
-    yesVi: "hãy nhìn nó chuyển động.", yesEn: "Watch it move.",
-    bodyVi: "Kéo một tham số, đồ thị đổi theo ngay trước mắt. Mười bốn chuyên đề THPT và 182 bài từ lớp 1 đến lớp 12, bài nào cũng giải từng bước và nói rõ vì sao.",
-    bodyEn: "Drag a parameter and the graph changes right in front of you. Fourteen upper-secondary topics and 182 lessons from grade 1 to 12, each worked step by step with the reason for every step.",
+    vi: "Học", en: "Learn",
+    bodyVi: "Kéo một tham số, đồ thị và con số đổi theo. Mỗi bài giải từng bước, bước nào cũng ghi lý do.",
+    bodyEn: "Drag a parameter and the graph and the numbers follow. Every lesson is worked step by step, with a reason for each step.",
     links: [
       { href: "#chuyen-de", vi: "Chuyên đề", en: "Topics" },
       { href: "/kien-thuc", vi: "Lớp 1–12", en: "Grades 1–12" },
@@ -86,11 +73,9 @@ const PILLARS: {
   },
   {
     id: "nghien-cuu",
-    vi: "Nghiên cứu", en: "Research",
-    noVi: "Không làm theo bài mẫu,", noEn: "Don't follow the example.",
-    yesVi: "hãy tự đặt câu hỏi.", yesEn: "Ask your own question.",
-    bodyVi: "Nêu giả thuyết, tự đo, tự vẽ đồ thị, rồi đối chiếu với chứng minh. 28 bài nghiên cứu dẫn bạn đi từ phỏng đoán đến chắc chắn.",
-    bodyEn: "Make a guess, measure it, plot it yourself, then check it against the proof. 28 investigations take you from a hunch to certainty.",
+    vi: "Nghiên cứu", en: "Investigate",
+    bodyVi: "Nêu giả thuyết, đo năm dòng số liệu, xem đồ thị, viết kết luận, rồi đối chiếu với chứng minh.",
+    bodyEn: "State a guess, measure five rows of data, read the graph, write a conclusion, then compare it with the proof.",
     links: [
       { href: "/nghien-cuu", vi: "Nghiên cứu", en: "Research" },
       { href: "/khoa-hoc", vi: "Khoa học", en: "Science" },
@@ -98,11 +83,9 @@ const PILLARS: {
   },
   {
     id: "sang-tao",
-    vi: "Sáng tạo", en: "Create",
-    noVi: "Không chỉ giải đề có sẵn,", noEn: "Don't just solve set problems.",
-    yesVi: "hãy tự làm ra đề.", yesEn: "Make your own.",
-    bodyVi: "Dựng hình phẳng, xoay khối không gian, soạn đề và phiếu học có công thức. Điều bạn nghĩ ra, bạn làm ra được ở đây.",
-    bodyEn: "Build plane figures, turn solids in space, write tests and worksheets with formulas. What you think up, you can make here.",
+    vi: "Dựng hình và soạn đề", en: "Build and write",
+    bodyVi: "Dựng hình phẳng, xoay tám loại khối, soạn đề và phiếu học có công thức rồi xuất PDF hoặc Word.",
+    bodyEn: "Build plane figures, turn eight kinds of solid, write tests and worksheets with formulas and export them to PDF or Word.",
     links: [
       { href: "/xuong-hinh", vi: "Xưởng hình", en: "Workshop" },
       { href: "/soan-tai-lieu", vi: "Soạn tài liệu", en: "Documents" },
@@ -139,14 +122,13 @@ function PillarMark({ id }: { id: PillarId }) {
   );
 }
 
-/** Các tiện ích nhỏ của góc bàn: đường tiến độ, tiếp tuyến, sổ tay, bàn bên cạnh. */
+/** Các tiện ích nhỏ của góc bàn: đường tiến độ, tiếp tuyến, sổ tay. */
 export function DeskTools() {
   return (
     <div className="home-tools">
       <ProgressCurve />
       <FormulaPeek />
       <NotePad />
-      <Circle />
     </div>
   );
 }
@@ -252,28 +234,6 @@ function NotePad() {
           try { localStorage.setItem(NOTE_KEY, event.target.value); } catch { /* ignore */ }
         }}
       />
-    </section>
-  );
-}
-
-function Circle() {
-  const lang = useLang();
-  const done = useSlice((data) => countRight(data.right));
-  const friends = [
-    { name: "Lan", line: "Đạo hàm · 11 câu" },
-    { name: "Minh", line: "Xác suất · 8 câu" },
-    { name: "Hà", line: "Hình · 13 câu" },
-  ];
-  return (
-    <section className="tool-card" aria-label={t(lang, "Bảng trên máy này", "Scores on this device")}>
-      <b>{t(lang, "Bàn bên cạnh", "Nearby desk")}</b>
-      <p className="lecture-note">{t(lang, "Bảng giả lập, không có máy chủ.", "A local board, with no server.")}</p>
-      <ul>
-        <li><span>{t(lang, "Bạn", "You")}</span><b>{done}</b></li>
-        {friends.map((friend) => (
-          <li key={friend.name}><span>{friend.name}</span><small>{friend.line}</small></li>
-        ))}
-      </ul>
     </section>
   );
 }
