@@ -2,32 +2,111 @@
   {
     "id": "2026-11-18-a",
     "note": "Vòng 20 vai đầu tiên của bộ này, trước các nền móng.",
-    "scores": { "gv12": 7, "parent5": 6, "thcs": 8, "hs6": 6, "hs10": 6, "hs12": 5, "lecturer": 7, "a11y": 7, "keyboard": 6, "mobile": 6, "english": 8, "katex": 5, "pedagogy": 7, "game": 4, "qa": 7, "perf": 6, "security": 8, "curriculum": 6, "creative": 4, "pm": 5 }
+    "scores": {
+      "gv12": 7,
+      "parent5": 6,
+      "thcs": 8,
+      "hs6": 6,
+      "hs10": 6,
+      "hs12": 5,
+      "lecturer": 7,
+      "a11y": 7,
+      "keyboard": 6,
+      "mobile": 6,
+      "english": 8,
+      "katex": 5,
+      "pedagogy": 7,
+      "game": 4,
+      "qa": 7,
+      "perf": 6,
+      "security": 8,
+      "curriculum": 6,
+      "creative": 4,
+      "pm": 5
+    }
   },
   {
     "id": "2026-11-19-b",
     "note": "Vòng 10 vai sau vòng sửa lỗi, trước các nền móng.",
-    "scores": { "gv12": 7, "hs12": 6, "thcs": 7, "lecturer": 7, "a11y": 6, "mobile": 7, "katex": 6, "creative": 5, "qa": 6, "pm": 5 }
+    "scores": {
+      "gv12": 7,
+      "hs12": 6,
+      "thcs": 7,
+      "lecturer": 7,
+      "a11y": 6,
+      "mobile": 7,
+      "katex": 6,
+      "creative": 5,
+      "qa": 6,
+      "pm": 5
+    }
   },
   {
     "id": "2026-11-19-c",
     "note": "Vòng 10 vai trùng sau bốn nền móng (chương trình trục, ký hiệu lab, điều hướng, cổng chất lượng).",
-    "scores": { "gv12": 7, "hs12": 4, "thcs": 7, "lecturer": 7, "a11y": 7, "mobile": 6, "katex": 7, "creative": 4, "qa": 7, "pm": 5 }
+    "scores": {
+      "gv12": 7,
+      "hs12": 4,
+      "thcs": 7,
+      "lecturer": 7,
+      "a11y": 7,
+      "mobile": 6,
+      "katex": 7,
+      "creative": 4,
+      "qa": 7,
+      "pm": 5
+    }
   },
   {
     "id": "2026-11-19-d",
     "note": "Chỉ vai hs12, sau khi sửa đề thi thử (không lặp dạng, lớp 12 đa số, ẩn đã khai báo).",
     "regressionNote": "Một vai duy nhất, lệch ngẫu nhiên của người chấm là đáng kể; lỗi nêu chủ yếu về độ khó và chiều sâu ngân hàng đề, chưa được sửa ở vòng này.",
-    "scores": { "hs12": 3 }
+    "scores": {
+      "hs12": 3
+    }
   },
   {
     "id": "2026-11-23-e",
     "note": "Vòng 10 vai trùng sau khi bổ sung nội dung: bài lớp 1–12, bốn mảng Khoa học, ví dụ có lời giải, đề thi thử có câu vận dụng cao.",
-    "scores": { "gv12": 6, "hs12": 4, "thcs": 7, "lecturer": 7, "a11y": 7, "mobile": 6, "katex": 7, "creative": 5, "qa": 5, "pm": 6 }
+    "scores": {
+      "gv12": 6,
+      "hs12": 4,
+      "thcs": 7,
+      "lecturer": 7,
+      "a11y": 7,
+      "mobile": 6,
+      "katex": 7,
+      "creative": 5,
+      "qa": 5,
+      "pm": 6
+    }
   },
   {
     "id": "2026-11-24-f",
     "note": "Vòng 10 vai trùng sau các sửa: không tính tiến độ khi chưa đặt đề, Phần II đề thi dựng từ dạng đọc dữ kiện, phím tắt lab có nút tắt, mặc định tiếng Việt, toTex phân số và căn có ngoặc.",
-    "scores": { "gv12": 7, "hs12": 4, "thcs": 7, "lecturer": 8, "a11y": 7, "mobile": 7, "katex": 6, "creative": 6, "qa": 6, "pm": 6 }
+    "scores": {
+      "gv12": 7,
+      "hs12": 4,
+      "thcs": 7,
+      "lecturer": 8,
+      "a11y": 7,
+      "mobile": 7,
+      "katex": 6,
+      "creative": 6,
+      "qa": 6,
+      "pm": 6
+    }
+  },
+  {
+    "id": "2026-11-24-g",
+    "note": "Vòng chỉ nhắm nội dung học mới lớp 10–12 (36 bài, phương pháp, bài tư duy, bản tiếng Anh): 6 vai.",
+    "scores": {
+      "lecturer": 6,
+      "hs10": 5,
+      "hs12": 5,
+      "curriculum": 5,
+      "english": 6,
+      "pedagogy": 6
+    }
   }
 ]
