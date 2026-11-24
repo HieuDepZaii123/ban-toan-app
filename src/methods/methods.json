@@ -267,6 +267,30 @@
       "methodId": "so-sanh-phan-tan",
       "topicHref": "/kien-thuc/12/dang",
       "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Tìm tập xác định của hàm số có mẫu hoặc căn.",
+      "methodId": "tap-xac-dinh-ham",
+      "topicHref": "/kien-thuc/10/dang",
+      "topicLabel": "Dạng bài lớp 10"
+    },
+    {
+      "when": "Tìm tham số để hai vectơ cùng phương hoặc vuông góc.",
+      "methodId": "vt-cung-phuong",
+      "topicHref": "/kien-thuc/10/dang",
+      "topicLabel": "Dạng bài lớp 10"
+    },
+    {
+      "when": "Phương trình có cả sin và cos bậc nhất, hoặc giá trị lớn nhất của biểu thức đó.",
+      "methodId": "pt-lg-bac-nhat",
+      "topicHref": "/kien-thuc/11/dang",
+      "topicLabel": "Dạng bài lớp 11"
+    },
+    {
+      "when": "Phương trình mũ có hai cơ số là bình phương của nhau.",
+      "methodId": "pt-mu-dat-an",
+      "topicHref": "/kien-thuc/11/dang",
+      "topicLabel": "Dạng bài lớp 11"
     }
   ],
   "methods": [
@@ -4850,6 +4874,410 @@
           "where": "so-sanh-phan-tan-p2",
           "lhs": "4*2**2",
           "rhs": "16"
+        }
+      ]
+    },
+    {
+      "id": "tap-xac-dinh-ham",
+      "grade": 10,
+      "title": "Tìm tập xác định của hàm số",
+      "titleEn": "Finding the domain of a function",
+      "blurb": "Lớp 10: đặt điều kiện cho mẫu và căn rồi giải chung các điều kiện.",
+      "spot": [
+        "Đề cho hàm số bằng công thức có mẫu số hoặc căn bậc hai và hỏi tập xác định.",
+        "Đề hỏi giá trị $x$ để biểu thức có nghĩa."
+      ],
+      "thinking": [
+        "Liệt kê mọi điều kiện: mẫu khác $0$, biểu thức dưới căn không âm.",
+        "Giải từng điều kiện rồi lấy phần chung.",
+        "Viết tập xác định dưới dạng khoảng hoặc đoạn."
+      ],
+      "care": [
+        "Căn nằm ở mẫu thì biểu thức dưới căn phải dương, không chỉ không âm.",
+        "Đầu mút làm biểu thức bằng $0$ vẫn thuộc tập xác định nếu chỉ nằm dưới căn."
+      ],
+      "formulas": [
+        "$\\sqrt{u}$ xác định khi $u\\ge0$ và $\\frac1{\\sqrt u}$ xác định khi $u>0$."
+      ],
+      "examples": [
+        {
+          "id": "tap-xac-dinh-ham-1",
+          "title": "Có căn",
+          "prompt": "Tìm tập xác định của $y=\\sqrt{3-x}$.",
+          "steps": [
+            "Cần $3-x\\ge0$.",
+            "Do đó $x\\le3$."
+          ],
+          "result": "Tập xác định là $(-\\infty;\\ 3]$."
+        },
+        {
+          "id": "tap-xac-dinh-ham-2",
+          "title": "Có mẫu",
+          "prompt": "Tìm giá trị $x$ làm $y=\\frac{x+1}{x^2-4}$ không xác định.",
+          "steps": [
+            "Mẫu bằng $0$ khi $x^2=4$.",
+            "Do đó $x=2$ hoặc $x=-2$."
+          ],
+          "result": "Không xác định tại $x=\\pm2$."
+        }
+      ],
+      "mistakes": [
+        "Giữ lại giá trị làm mẫu bằng $0$.",
+        "Quên điều kiện của biểu thức dưới căn."
+      ],
+      "practice": [
+        {
+          "id": "tap-xac-dinh-ham-p1",
+          "prompt": "Giá trị nhỏ nhất của $x$ để $\\sqrt{2x-6}$ có nghĩa là bao nhiêu?",
+          "answer": "Bằng $3$.",
+          "steps": [
+            "Cần $2x-6\\ge0$.",
+            "Do đó $x\\ge3$."
+          ]
+        },
+        {
+          "id": "tap-xac-dinh-ham-p2",
+          "prompt": "Hàm $y=\\frac{1}{\\sqrt{x-1}}$ xác định khi $x$ lớn hơn số nào?",
+          "answer": "Lớn hơn $1$.",
+          "steps": [
+            "Biểu thức dưới căn nằm ở mẫu nên phải dương.",
+            "Do đó $x-1>0$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/quadratic",
+          "label": "Hàm bậc hai"
+        },
+        {
+          "href": "/kien-thuc/10/dang",
+          "label": "Dạng bài lớp 10"
+        }
+      ],
+      "verify": [
+        {
+          "where": "tap-xac-dinh-ham-1",
+          "lhs": "3-3",
+          "rhs": "0"
+        },
+        {
+          "where": "tap-xac-dinh-ham-2",
+          "lhs": "2**2-4",
+          "rhs": "0"
+        },
+        {
+          "where": "tap-xac-dinh-ham-p1",
+          "lhs": "2*3-6",
+          "rhs": "0"
+        },
+        {
+          "where": "tap-xac-dinh-ham-p2",
+          "lhs": "1-1",
+          "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "vt-cung-phuong",
+      "grade": 10,
+      "title": "Điều kiện cùng phương và vuông góc của vectơ",
+      "titleEn": "Parallel and perpendicular vector conditions",
+      "blurb": "Lớp 10: dùng định thức cho cùng phương và tích vô hướng cho vuông góc để tìm tham số.",
+      "spot": [
+        "Đề hỏi tham số $m$ để hai vectơ cùng phương hoặc vuông góc.",
+        "Đề hỏi ba điểm có thẳng hàng không."
+      ],
+      "thinking": [
+        "Viết tọa độ hai vectơ, nếu đề cho điểm thì lấy điểm cuối trừ điểm đầu.",
+        "Dùng $x_1y_2-x_2y_1=0$ cho cùng phương hoặc $x_1x_2+y_1y_2=0$ cho vuông góc.",
+        "Giải phương trình theo $m$ rồi thử lại."
+      ],
+      "care": [
+        "Hai điều kiện dùng hai biểu thức khác nhau, cần chọn đúng theo đề.",
+        "Thẳng hàng ba điểm quy về hai vectơ chung một điểm gốc cùng phương."
+      ],
+      "formulas": [
+        "$\\vec a\\parallel\\vec b\\iff x_1y_2-x_2y_1=0$ và $\\vec a\\perp\\vec b\\iff x_1x_2+y_1y_2=0$."
+      ],
+      "examples": [
+        {
+          "id": "vt-cung-phuong-1",
+          "title": "Vuông góc",
+          "prompt": "Tìm $m$ để $\\vec a=(1;\\ m)$ vuông góc với $\\vec b=(2;\\ 4)$.",
+          "steps": [
+            "Cần $1\\cdot2+m\\cdot4=0$.",
+            "Do đó $m=-\\frac12$."
+          ],
+          "result": "Giá trị cần tìm là $m=-\\frac12$."
+        },
+        {
+          "id": "vt-cung-phuong-2",
+          "title": "Thẳng hàng",
+          "prompt": "Ba điểm $A(0;\\ 0)$, $B(1;\\ 2)$, $C(3;\\ m)$ thẳng hàng. Tìm $m$.",
+          "steps": [
+            "Hai vectơ $(1;\\ 2)$ và $(3;\\ m)$ phải cùng phương.",
+            "Cần $1\\cdot m-3\\cdot2=0$ nên $m=6$."
+          ],
+          "result": "Giá trị cần tìm là $m=6$."
+        }
+      ],
+      "mistakes": [
+        "Dùng điều kiện cùng phương khi đề hỏi vuông góc.",
+        "Quên rằng vectơ phải xuất phát từ cùng một điểm."
+      ],
+      "practice": [
+        {
+          "id": "vt-cung-phuong-p1",
+          "prompt": "Tìm $m$ để $(1;\\ 2)$ cùng phương với $(3;\\ m)$.",
+          "answer": "Giá trị cần tìm là $m=6$.",
+          "steps": [
+            "Cần $1\\cdot m-3\\cdot2=0$.",
+            "Do đó $m=6$."
+          ]
+        },
+        {
+          "id": "vt-cung-phuong-p2",
+          "prompt": "Tìm $m$ để $(m;\\ 3)$ vuông góc với $(2;\\ -1)$.",
+          "answer": "Giá trị cần tìm là $m=\\frac32$.",
+          "steps": [
+            "Cần $2m-3=0$.",
+            "Do đó $m=\\frac32$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/vector",
+          "label": "Vectơ"
+        },
+        {
+          "href": "/kien-thuc/10/dang",
+          "label": "Dạng bài lớp 10"
+        }
+      ],
+      "verify": [
+        {
+          "where": "vt-cung-phuong-1",
+          "lhs": "1*2+(-Rational(1,2))*4",
+          "rhs": "0"
+        },
+        {
+          "where": "vt-cung-phuong-2",
+          "lhs": "1*6-3*2",
+          "rhs": "0"
+        },
+        {
+          "where": "vt-cung-phuong-p1",
+          "lhs": "1*6-3*2",
+          "rhs": "0"
+        },
+        {
+          "where": "vt-cung-phuong-p2",
+          "lhs": "2*Rational(3,2)-3",
+          "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "pt-lg-bac-nhat",
+      "grade": 11,
+      "title": "Phương trình bậc nhất theo sin và cos, và giá trị lớn nhất",
+      "titleEn": "The equation a sin x + b cos x = c and its maximum",
+      "blurb": "Lớp 11: kiểm tra điều kiện có nghiệm rồi đưa về một hàm sin.",
+      "spot": [
+        "Phương trình có cả $\\sin x$ và $\\cos x$ bậc nhất.",
+        "Đề hỏi giá trị lớn nhất hoặc nhỏ nhất của $a\\sin x+b\\cos x$."
+      ],
+      "thinking": [
+        "Tính $a^2+b^2$ và so với $c^2$.",
+        "Nếu $c^2\\le a^2+b^2$, chia hai vế cho $\\sqrt{a^2+b^2}$ rồi đưa về $\\sin(x+\\alpha)$.",
+        "Với bài giá trị lớn nhất, đáp số là $\\pm\\sqrt{a^2+b^2}$ cộng hằng số."
+      ],
+      "care": [
+        "Nếu $c^2>a^2+b^2$ phương trình vô nghiệm.",
+        "Hằng số cộng thêm dịch cả hai cận."
+      ],
+      "formulas": [
+        "$-\\sqrt{a^2+b^2}\\le a\\sin x+b\\cos x\\le\\sqrt{a^2+b^2}$."
+      ],
+      "examples": [
+        {
+          "id": "pt-lg-bac-nhat-1",
+          "title": "Vô nghiệm",
+          "prompt": "Phương trình $\\sin x+\\cos x=3$ có nghiệm không?",
+          "steps": [
+            "Ta có $a^2+b^2=2$ và $c^2=9$.",
+            "Vì $9>2$ nên vô nghiệm."
+          ],
+          "result": "Phương trình vô nghiệm."
+        },
+        {
+          "id": "pt-lg-bac-nhat-2",
+          "title": "Giá trị lớn nhất",
+          "prompt": "Tìm giá trị lớn nhất của $y=3\\sin x+4\\cos x$.",
+          "steps": [
+            "Ta có $\\sqrt{9+16}=5$.",
+            "Do đó $y$ nhận mọi giá trị trong $[-5;\\ 5]$."
+          ],
+          "result": "Giá trị lớn nhất bằng $5$."
+        }
+      ],
+      "mistakes": [
+        "Giải mà quên kiểm tra điều kiện có nghiệm.",
+        "Quên cộng hằng số vào hai cận."
+      ],
+      "practice": [
+        {
+          "id": "pt-lg-bac-nhat-p1",
+          "prompt": "Tìm giá trị lớn nhất của $y=5\\sin x+12\\cos x$.",
+          "answer": "Bằng $13$.",
+          "steps": [
+            "Ta có $\\sqrt{25+144}=13$.",
+            "Đây là cận trên của biểu thức."
+          ]
+        },
+        {
+          "id": "pt-lg-bac-nhat-p2",
+          "prompt": "Tìm giá trị nhỏ nhất của $y=\\sin x-\\cos x+3$.",
+          "answer": "Bằng $3-\\sqrt2$.",
+          "steps": [
+            "Phần lượng giác có giá trị nhỏ nhất là $-\\sqrt2$.",
+            "Cộng với $3$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/trig",
+          "label": "Lượng giác"
+        },
+        {
+          "href": "/kien-thuc/11/dang",
+          "label": "Dạng bài lớp 11"
+        }
+      ],
+      "verify": [
+        {
+          "where": "pt-lg-bac-nhat-1",
+          "lhs": "3**2-2",
+          "rhs": "7"
+        },
+        {
+          "where": "pt-lg-bac-nhat-2",
+          "lhs": "sqrt(25)",
+          "rhs": "5"
+        },
+        {
+          "where": "pt-lg-bac-nhat-p1",
+          "lhs": "sqrt(169)",
+          "rhs": "13"
+        },
+        {
+          "where": "pt-lg-bac-nhat-p2",
+          "lhs": "3-sqrt(2)",
+          "rhs": "3-sqrt(1+1)"
+        }
+      ]
+    },
+    {
+      "id": "pt-mu-dat-an",
+      "grade": 11,
+      "title": "Phương trình mũ giải bằng ẩn phụ",
+      "titleEn": "Exponential equations with a substitution",
+      "blurb": "Lớp 11: đặt ẩn phụ cho lũy thừa, giải bậc hai và bỏ nghiệm không dương.",
+      "spot": [
+        "Phương trình có $a^{2x}$ và $a^x$ cùng xuất hiện.",
+        "Phương trình có hai cơ số là bình phương của nhau như $4^x$ và $2^x$."
+      ],
+      "thinking": [
+        "Viết $a^{2x}=(a^x)^2$ rồi đặt $t=a^x>0$.",
+        "Giải phương trình bậc hai theo $t$ và bỏ nghiệm không dương.",
+        "Quay về $a^x=t$ để tìm $x$."
+      ],
+      "care": [
+        "Lũy thừa của cơ số dương luôn dương nên $t\\le0$ không dùng được.",
+        "Giải xong $t$ phải tìm $x$ chứ không dừng lại."
+      ],
+      "formulas": [
+        "$a^{2x}+b\\,a^x+c=0\\Rightarrow t^2+bt+c=0$ với $t=a^x>0$."
+      ],
+      "examples": [
+        {
+          "id": "pt-mu-dat-an-1",
+          "title": "Hai nghiệm",
+          "prompt": "Giải $4^x-3\\cdot2^x+2=0$.",
+          "steps": [
+            "Đặt $t=2^x$ được $t^2-3t+2=0$ nên $t=1$ hoặc $t=2$.",
+            "Do đó $x=0$ hoặc $x=1$."
+          ],
+          "result": "Hai nghiệm $x=0$ và $x=1$."
+        },
+        {
+          "id": "pt-mu-dat-an-2",
+          "title": "Loại nghiệm",
+          "prompt": "Giải $4^x+2^x-6=0$.",
+          "steps": [
+            "Đặt $t=2^x$ được $t=2$ hoặc $t=-3$.",
+            "Nghiệm $t=-3$ bị loại nên $x=1$."
+          ],
+          "result": "Nghiệm $x=1$."
+        }
+      ],
+      "mistakes": [
+        "Giữ nghiệm $t$ âm.",
+        "Dừng ở $t$ mà không tìm $x$."
+      ],
+      "practice": [
+        {
+          "id": "pt-mu-dat-an-p1",
+          "prompt": "Giải $4^x-5\\cdot2^x+4=0$. Nghiệm lớn của $x$ là bao nhiêu?",
+          "answer": "Bằng $2$.",
+          "steps": [
+            "Đặt $t=2^x$ được $t=1$ hoặc $t=4$.",
+            "Nghiệm lớn ứng với $2^x=4$."
+          ]
+        },
+        {
+          "id": "pt-mu-dat-an-p2",
+          "prompt": "Phương trình $4^x+2^x-2=0$ có nghiệm $x$ bằng bao nhiêu?",
+          "answer": "Bằng $0$.",
+          "steps": [
+            "Đặt $t=2^x$ được $t=1$ hoặc $t=-2$.",
+            "Chỉ $t=1$ dương nên $x=0$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/exp",
+          "label": "Mũ và logarit"
+        },
+        {
+          "href": "/kien-thuc/11/dang",
+          "label": "Dạng bài lớp 11"
+        }
+      ],
+      "verify": [
+        {
+          "where": "pt-mu-dat-an-1",
+          "lhs": "1-3+2",
+          "rhs": "0"
+        },
+        {
+          "where": "pt-mu-dat-an-2",
+          "lhs": "2**2+2-6",
+          "rhs": "0"
+        },
+        {
+          "where": "pt-mu-dat-an-p1",
+          "lhs": "4**2-5*2**2+4",
+          "rhs": "0"
+        },
+        {
+          "where": "pt-mu-dat-an-p2",
+          "lhs": "4**0+2**0-2",
+          "rhs": "0"
         }
       ]
     }

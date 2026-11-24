@@ -214,6 +214,25 @@ const lop11: GradeDang[] = [
     mistake: b(R`Cộng $0{,}8+0{,}7$ mà quên trừ phần chung nên ra hơn $1$.`, R`Adding $0.8+0.7$ without subtracting the overlap and getting more than $1$.`),
     drill: { prompt: b(R`Tung hai đồng xu cân đối độc lập. Xác suất cả hai ngửa là bao nhiêu?`, R`Toss two fair coins independently. What is the probability that both land tails?`), answer: b(R`Bằng $\frac{1}{4}$.`, R`It is $\frac{1}{4}$.`), checks: [{ expr: "Rational(1,2)*Rational(1,2)", expect: "Rational(1,4)" }] },
   },
+  {
+    name: b(R`Phương trình $a\sin x+b\cos x=c$`, R`The equation $a\sin x+b\cos x=c$`),
+    spot: b(R`Phương trình có cả $\sin x$ và $\cos x$ bậc nhất, hoặc hỏi giá trị lớn nhất của biểu thức đó.`, R`An equation with both $\sin x$ and $\cos x$ to the first power, or a question on the maximum of such an expression.`),
+    method: [
+      b(R`Kiểm tra điều kiện có nghiệm $c^2\le a^2+b^2$.`, R`Check the condition for solutions, $c^2\le a^2+b^2$.`),
+      b(R`Chia hai vế cho $\sqrt{a^2+b^2}$ rồi đưa về $\sin(x+\alpha)$.`, R`Divide both sides by $\sqrt{a^2+b^2}$ and reduce to $\sin(x+\alpha)$.`),
+    ],
+    example: {
+      prompt: b(R`Phương trình $\sin x+\cos x=3$ có nghiệm không?`, R`Does $\sin x+\cos x=3$ have a solution?`),
+      steps: [
+        b(R`Ta có $a^2+b^2=2$ và $c^2=9$.`, R`We have $a^2+b^2=2$ and $c^2=9$.`),
+        b(R`Vì $9>2$ nên phương trình vô nghiệm.`, R`Since $9>2$ the equation has no solution.`),
+      ],
+      ket: b(R`Phương trình vô nghiệm.`, R`The equation has no solution.`),
+      checks: [{ expr: "3**2-(1**2+1**2)", expect: "7" }],
+    },
+    mistake: b(R`Giải phương trình mà quên kiểm tra điều kiện có nghiệm.`, R`Solving without checking the condition for solutions.`),
+    drill: { prompt: b(R`Tìm giá trị lớn nhất của $y=5\sin x+12\cos x$.`, R`Find the maximum of $y=5\sin x+12\cos x$.`), answer: b(R`Bằng $13$.`, R`It is $13$.`), checks: [{ expr: "sqrt(5**2+12**2)", expect: "13" }] },
+  },
 ];
 
 export default lop11;

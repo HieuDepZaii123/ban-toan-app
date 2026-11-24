@@ -215,6 +215,25 @@ const lop10: GradeDang[] = [
     mistake: b(R`Tìm trung vị mà quên sắp xếp số liệu trước.`, R`Finding the median without sorting the data first.`),
     drill: { prompt: b(R`Tìm trung vị của $3$, $9$, $5$, $7$.`, R`Find the median of $3$, $9$, $5$, $7$.`), answer: b(R`Sắp xếp được $3$, $5$, $7$, $9$ nên trung vị là $\frac{5+7}{2}=6$.`, R`Sorted: $3$, $5$, $7$, $9$, so the median is $\frac{5+7}{2}=6$.`), checks: [{ expr: "Rational(5+7,2)", expect: "6" }] },
   },
+  {
+    name: b(R`Tập xác định và tính chẵn lẻ của hàm số`, R`Domain and parity of a function`),
+    spot: b(R`Có hàm số cho bằng công thức có mẫu hoặc căn, hoặc hỏi hàm số chẵn hay lẻ.`, R`A function given by a formula with a denominator or a root, or a question on whether it is even or odd.`),
+    method: [
+      b(R`Đặt điều kiện: mẫu khác $0$, biểu thức dưới căn không âm, rồi giải hệ điều kiện.`, R`Set the conditions: denominator different from $0$, expression under a root non-negative, then solve them together.`),
+      b(R`Với tính chẵn lẻ, kiểm tra tập xác định đối xứng rồi so $f(-x)$ với $f(x)$.`, R`For parity, check that the domain is symmetric, then compare $f(-x)$ with $f(x)$.`),
+    ],
+    example: {
+      prompt: b(R`Tìm tập xác định của $y=\sqrt{3-x}$.`, R`Find the domain of $y=\sqrt{3-x}$.`),
+      steps: [
+        b(R`Cần $3-x\ge0$.`, R`We need $3-x\ge0$.`),
+        b(R`Do đó $x\le3$.`, R`Hence $x\le3$.`),
+      ],
+      ket: b(R`Tập xác định là $(-\infty;\ 3]$.`, R`The domain is $(-\infty;\ 3]$.`),
+      checks: [{ expr: "solve(3-x, x)[0]", expect: "3" }],
+    },
+    mistake: b(R`Kết luận hàm chẵn chỉ từ một giá trị cụ thể.`, R`Concluding that a function is even from a single value.`),
+    drill: { prompt: b(R`Hàm $y=\frac{1}{x+5}$ không xác định tại giá trị $x$ nào?`, R`At which value of $x$ is $y=\frac{1}{x+5}$ undefined?`), answer: b(R`Tại $x=-5$.`, R`At $x=-5$.`), checks: [{ expr: "solve(x+5, x)[0]", expect: "-5" }] },
+  },
 ];
 
 export default lop10;

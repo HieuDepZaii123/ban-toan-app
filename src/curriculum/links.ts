@@ -15,8 +15,8 @@ export const DANG_CHAPTER: Record<number, string[]> = {
   7: ["huu-ti", "huu-ti", "ti-le", "ti-le", "dai-so", "dai-so", "tam-giac", "tam-giac", "goc-song-song", "hinh-khoi-7", "thong-ke"],
   8: ["dang-thuc", "dang-thuc", "dang-thuc", "dang-thuc", "pt-ham", "pt-ham", "pt-ham", "tam-giac", "thales", "tu-giac", "xac-suat-8"],
   9: ["can", "can", "he-pt", "he-pt", "pt-b2", "bpt", "ham-b2", "lg-vuong", "tron", "khoi", "tan-so"],
-  10: ["menh-de", "bpt-hai-an", "ham-bac-hai", "ham-bac-hai", "ham-bac-hai", "luong-giac", "vecto", "toa-do", "toa-do", "to-hop", "thong-ke"],
-  11: ["luong-giac", "luong-giac", "luong-giac", "day-so", "gioi-han", "gioi-han", "mu-log", "mu-log", "dao-ham", "khong-gian", "xs-11"],
+  10: ["menh-de", "bpt-hai-an", "ham-bac-hai", "ham-bac-hai", "ham-bac-hai", "luong-giac", "vecto", "toa-do", "toa-do", "to-hop", "thong-ke", "ham-so-10"],
+  11: ["luong-giac", "luong-giac", "luong-giac", "day-so", "gioi-han", "gioi-han", "mu-log", "mu-log", "dao-ham", "khong-gian", "xs-11", "luong-giac-nc"],
   12: ["khao-sat", "khao-sat", "khao-sat", "khao-sat", "tich-phan", "tich-phan", "tich-phan", "tich-phan", "oxyz", "xs-12", "do-thi-ham", "tp-nang-cao"],
 };
 
@@ -31,8 +31,8 @@ export const THINK_CHAPTER: Record<number, string[]> = {
   7: ["ti-le", "huu-ti", "ti-le", "tam-giac", "tam-giac", "goc-song-song"],
   8: ["dang-thuc", "dang-thuc", "pt-ham", "dang-thuc", "tam-giac"],
   9: ["pt-b2", "can", "can", "lg-vuong", "he-pt", "tan-so", "can"],
-  10: ["menh-de", "menh-de", "ham-bac-hai", "vecto", "ham-bac-hai", "thong-ke"],
-  11: ["gioi-han", "dao-ham", "gioi-han", "xs-11", "xs-11", "khong-gian"],
+  10: ["menh-de", "menh-de", "ham-bac-hai", "vecto", "ham-bac-hai", "thong-ke", "ham-so-10", "vt-toa-do-10"],
+  11: ["gioi-han", "dao-ham", "gioi-han", "xs-11", "xs-11", "khong-gian", "luong-giac-nc", "mu-log-nc"],
   12: ["khao-sat", "tich-phan", "tich-phan", "xs-12", "oxyz", "do-thi-ham", "tp-nang-cao", "tp-nang-cao", "oxyz-nang-cao", "tk-nang-cao", "xs-nang-cao", "xs-nang-cao"],
 };
 
@@ -77,6 +77,10 @@ export const METHOD_NODE: Record<string, { grade: number; chapter: string; stran
   "toi-uu-thuc-te": { grade: 12, chapter: "ung-dung-dh" },
   "xac-suat-bayes": { grade: 12, chapter: "xs-12" },
   "giao-diem-oxyz": { grade: 12, chapter: "oxyz" },
+  "tap-xac-dinh-ham": { grade: 10, chapter: "ham-so-10" },
+  "vt-cung-phuong": { grade: 10, chapter: "vt-toa-do-10" },
+  "pt-lg-bac-nhat": { grade: 11, chapter: "luong-giac-nc" },
+  "pt-mu-dat-an": { grade: 11, chapter: "mu-log-nc" },
   "tuong-giao-do-thi": { grade: 12, chapter: "do-thi-ham" },
   "tp-tach-doan": { grade: 12, chapter: "tp-nang-cao" },
   "khoang-cach-oxyz": { grade: 12, chapter: "oxyz-nang-cao" },
