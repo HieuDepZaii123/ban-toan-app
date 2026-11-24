@@ -12,6 +12,7 @@ import { STATS_CARDS } from "./statsCards.ts";
 import { DISCRETE_CARDS } from "./discreteCards.ts";
 import { ANALYTIC_CARDS } from "./analyticCards.ts";
 import { TRIANGLE_CARDS } from "./triangleCards.ts";
+import { COMBO_CARDS } from "./comboCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -133,5 +134,14 @@ describe("Thẻ khám phá", () => {
     expect(label(TRIANGLE_CARDS.cosine)).toBe("$\\sqrt{57}$");
     expect(label(TRIANGLE_CARDS.areaRatio)).toBe("Gấp 4 lần");
     expect(label(TRIANGLE_CARDS.volume)).toBe("Gấp 8 lần");
+  });
+
+  test("các thẻ tổ hợp có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(COMBO_CARDS.line5)).toBe("120 cách");
+    expect(label(COMBO_CARDS.pick3)).toBe("120 nhóm");
+    expect(label(COMBO_CARDS.symmetry)).toContain("bằng");
+    expect(label(COMBO_CARDS.rowSum)).toBe("$64$");
+    expect(label(COMBO_CARDS.coefficient)).toBe("$10$");
   });
 });

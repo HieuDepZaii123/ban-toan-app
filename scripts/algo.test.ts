@@ -584,6 +584,18 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   near("tứ diện: thể tích gấp k³", A.tetraVolumeScaled([1, 0, 0], [0, 1, 0], [0, 0, 1], 2) / A.tetraVolumeScaled([1, 0, 0], [0, 1, 0], [0, 0, 1], 1), 8, 1e-12);
 }
 
+// Tổ hợp: cây đếm, Pascal, tổ hợp, chỉnh hợp.
+{
+  is("cây 3×2×2 có 12 lá", A.treeLevelCounts([3, 2, 2]).join() === "1,3,6,12");
+  is("C(10,3) = 120", A.choose(10, 3) === 120);
+  is("C(10,3) = C(10,7)", A.choose(10, 3) === A.choose(10, 7));
+  is("A(10,3) = 3!·C(10,3)", A.arrange(10, 3) === A.factorial(3) * A.choose(10, 3));
+  is("hệ thức Pascal", [[9, 3], [9, 4], [12, 5]].every(([n, k]) => A.choose(n!, k!) + A.choose(n!, k! + 1) === A.choose(n! + 1, k! + 1)));
+  is("tổng hàng thứ n của Pascal là 2^n", [0, 1, 5, 10].every((n) => A.pascalRows(n)[n]!.reduce((a, b) => a + b, 0) === 2 ** n));
+  is("số hoán vị của 5 phần tử là 120", A.permutations([1, 2, 3, 4, 5]).length === 120);
+  is("hệ số x² trong (1+x)^5 là 10", A.choose(5, 2) === 10);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

@@ -40,6 +40,16 @@ export const comboKnowledge: TopicKnowledge = {
             R`Nếu hai phương án không có cách nào chung thì danh sách các cách gồm hai đoạn rời nhau: đoạn đầu có $m$ cách, đoạn sau có $n$ cách.`,
             R`Đếm toàn bộ danh sách thì lấy độ dài hai đoạn cộng lại: $m+n$. Điều kiện «không có cách chung» là để không đếm một cách hai lần.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng quy nạp theo số cách của phương án thứ hai",
+              buoc: [
+                R`Quy nạp theo $n$. Với $n=0$, phương án thứ hai không có cách nào nên tổng số cách là $m=m+0$.`,
+                R`Giả sử khi phương án thứ hai có $n$ cách thì tổng là $m+n$. Thêm một cách mới thứ $n+1$ cho phương án thứ hai; vì hai phương án không có cách chung nên cách này chưa được đếm, và tổng tăng đúng $1$, thành $m+n+1$.`,
+                R`Nếu hai phương án có $c$ cách chung thì tách phương án thứ hai thành các cách đã có ở phương án thứ nhất ($c$ cách) và các cách còn lại ($n-c$ cách, rời với phương án thứ nhất). Áp dụng kết quả trên cho phần rời được $m+(n-c)$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Quy tắc nhân",
@@ -47,6 +57,16 @@ export const comboKnowledge: TopicKnowledge = {
           suy: [
             R`Viết bước một là các hàng, bước hai là các cột của một bảng. Mỗi cách chọn ở bước một ứng với một hàng, và hàng đó có đúng $n$ ô, mỗi ô là một cách chọn ở bước hai.`,
             R`Bảng có $m$ hàng, mỗi hàng $n$ ô, nên có $m\cdot n$ ô. Mỗi ô là một cách hoàn thành công việc, và hai ô khác nhau cho hai cách khác nhau.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng cộng lặp lại",
+              buoc: [
+                R`Gọi các cách ở bước một là $c_1,c_2,\dots,c_m$. Chọn $c_i$ xong thì bước hai có $n$ cách, nên các cách hoàn thành công việc bắt đầu bằng $c_i$ làm thành một nhóm gồm $n$ cách.`,
+                R`Hai nhóm ứng với hai cách $c_i\neq c_j$ ở bước một không có cách nào chung, vì cách đầu tiên của chúng đã khác nhau. Vậy mọi cách của công việc nằm trong đúng một nhóm.`,
+                R`Theo quy tắc cộng cho $m$ nhóm rời nhau, tổng số cách là $n+n+\dots+n$ ($m$ số hạng), tức $m\cdot n$. Quy tắc cộng cho hai phương án mở rộng được cho $m$ phương án rời nhau bằng quy nạp theo $m$ (gộp $m-1$ nhóm đầu thành một phương án). Cách này đưa quy tắc nhân về quy tắc cộng, không cần vẽ bảng.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Nhận ra cộng hay nhân", text: R`Hỏi: các lựa chọn là phương án thay thế nhau, hay là các bước nối tiếp nhau? Thay thế nhau thì cộng, nối tiếp nhau thì nhân. Một bài thường dùng cả hai: cộng các trường hợp, mỗi trường hợp tính bằng nhân.` },
@@ -71,6 +91,16 @@ export const comboKnowledge: TopicKnowledge = {
             R`Chỗ đầu tiên có $n$ cách chọn vật. Chọn xong, chỗ thứ hai còn $n-1$ vật nên có $n-1$ cách, rồi chỗ thứ ba có $n-2$ cách, và cứ thế đến chỗ cuối chỉ còn $1$ cách.`,
             R`Đây là các bước nối tiếp nhau nên theo quy tắc nhân, tổng số cách là $n(n-1)(n-2)\cdots 1=n!$.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng quy nạp theo số phần tử",
+              buoc: [
+                R`Với $n=1$ chỉ có một cách xếp, và $1!=1$. Giả sử xếp $n$ vật khác nhau thành hàng có $n!$ cách.`,
+                R`Xét $n+1$ vật. Chọn vị trí cho vật thứ $n+1$: có $n+1$ vị trí khả dĩ. Với mỗi vị trí đó, $n$ vật còn lại xếp vào $n$ chỗ còn lại theo $n!$ cách (giả thiết quy nạp).`,
+                R`Hai cách xếp có vật thứ $n+1$ ở hai vị trí khác nhau thì khác nhau, nên các trường hợp rời nhau. Tổng số cách là $(n+1)\cdot n!=(n+1)!$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Chỉnh hợp",
@@ -86,6 +116,16 @@ export const comboKnowledge: TopicKnowledge = {
           suy: [
             R`Chọn $k$ người có xếp thứ tự thì có $A_n^k$ cách. Nhưng ta chỉ cần nhóm người, không cần thứ tự.`,
             R`Mỗi nhóm $k$ người cố định xếp thành hàng được $k!$ cách, nên trong $A_n^k$ mỗi nhóm bị đếm đúng $k!$ lần. Đếm số nhóm thì chia cho $k!$: $C_n^k=\frac{A_n^k}{k!}=\frac{n!}{k!\,(n-k)!}$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng hệ thức Pascal và quy nạp",
+              buoc: [
+                R`Hệ thức Pascal $C_{n+1}^{k+1}=C_n^k+C_n^{k+1}$ được chứng minh ở mục «Tính chất của tổ hợp» ngay sau đây bằng cách đếm (chọn hay không chọn một người cố định), không dùng công thức giai thừa. Ta dùng nó để chứng minh công thức bằng quy nạp theo $n$.`,
+                R`Với $n=0$ có $C_0^0=1=\frac{0!}{0!\,0!}$. Giả sử $C_n^j=\frac{n!}{j!\,(n-j)!}$ với mọi $0\le j\le n$. Với $0\le k\le n-1$, theo Pascal $C_{n+1}^{k+1}=\frac{n!}{k!\,(n-k)!}+\frac{n!}{(k+1)!\,(n-k-1)!}$.`,
+                R`Quy đồng về mẫu $(k+1)!\,(n-k)!$: tử số là $n!\,(k+1)+n!\,(n-k)=n!\,(n+1)=(n+1)!$. Vậy $C_{n+1}^{k+1}=\frac{(n+1)!}{(k+1)!\,(n-k)!}$. Hai giá trị biên đúng trực tiếp: $C_{n+1}^{0}=1=\frac{(n+1)!}{0!\,(n+1)!}$ và $C_{n+1}^{n+1}=1=\frac{(n+1)!}{(n+1)!\,0!}$, nên công thức đúng cho $n+1$.`,
+              ],
+            },
           ],
         },
         {
@@ -112,6 +152,16 @@ export const comboKnowledge: TopicKnowledge = {
             R`Viết $(a+b)^n=(a+b)(a+b)\cdots(a+b)$ với $n$ ngoặc. Phá ngoặc là chọn trong mỗi ngoặc một trong hai chữ $a$ hoặc $b$ rồi nhân lại.`,
             R`Mỗi cách chọn cho một số hạng dạng $a^{n-k}b^k$, trong đó $k$ là số ngoặc đã chọn $b$. Số cách chọn đúng $k$ ngoặc trong $n$ ngoặc để lấy $b$ là $C_n^k$.`,
             R`Gom các số hạng giống nhau lại: số hạng $a^{n-k}b^k$ xuất hiện $C_n^k$ lần, nên hệ số của nó là $C_n^k$. Cộng theo $k$ từ $0$ đến $n$ được công thức.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng quy nạp qua hệ thức Pascal",
+              buoc: [
+                R`Với $n=0$: $(a+b)^0=1=C_0^0$. Giả sử $(a+b)^n=\sum_{k=0}^{n}C_n^k\,a^{n-k}b^k$.`,
+                R`Nhân hai vế với $(a+b)$: $(a+b)^{n+1}=\sum_{k=0}^{n}C_n^k\,a^{n+1-k}b^k+\sum_{k=0}^{n}C_n^k\,a^{n-k}b^{k+1}$. Ở tổng thứ hai đổi chỉ số $k+1\to k$ để cũng được lũy thừa $a^{n+1-k}b^k$.`,
+                R`Với $1\le k\le n$, hệ số của $a^{n+1-k}b^k$ là $C_n^k+C_n^{k-1}$, và theo hệ thức Pascal bằng $C_{n+1}^k$. Hai biên chỉ có một tổng đóng góp: $k=0$ cho hệ số $C_n^0=1=C_{n+1}^0$, và $k=n+1$ cho $C_n^n=1=C_{n+1}^{n+1}$. Vậy $(a+b)^{n+1}=\sum_{k=0}^{n+1}C_{n+1}^k\,a^{n+1-k}b^k$.`,
+              ],
+            },
           ],
         },
         {
@@ -214,6 +264,11 @@ export const comboKnowledge: TopicKnowledge = {
     { id: "sequence", vi: R`Số trung bình của cấp số cộng chính là trung bình cộng của số hạng đầu và số hạng cuối.` },
   ],
   checks: [
+    { expr: "binomial(9,3)+binomial(9,4)-binomial(10,4)", expect: "0" },
+    { expr: "simplify((k+1)+(n-k)-(n+1))", expect: "0" },
+    { expr: "binomial(5,2)+binomial(5,3)-binomial(6,3)", expect: "0" },
+    { expr: "expand((a+b)*(a**3+3*a**2*b+3*a*b**2+b**3)-(a**4+4*a**3*b+6*a**2*b**2+4*a*b**3+b**4))", expect: "0" },
+    { expr: "(5+1)*factorial(5)-factorial(6)", expect: "0" },
     { expr: "5*4*3", expect: "60" },
     { expr: "2*4*3", expect: "24" },
     { expr: "factorial(5)", expect: "120" },

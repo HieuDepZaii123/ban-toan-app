@@ -1240,6 +1240,26 @@ export function tetraVolumeScaled(e1: V3, e2: V3, e3: V3, k: number): number {
   return Math.abs(dot3(s(e1), cross3(s(e2), s(e3)))) / 6;
 }
 
+/** Cây đếm: số nút ở mỗi tầng khi tầng i có branches[i] nhánh con ở mỗi nút (tầng 0 là gốc). Lá cuối bằng tích các nhánh. */
+export function treeLevelCounts(branches: readonly number[]): number[] {
+  const out = [1];
+  for (const b of branches) out.push((out[out.length - 1] as number) * b);
+  return out;
+}
+
+/** Số tổ hợp C(n, k) bằng tam giác Pascal (không dùng giai thừa, để tránh số quá lớn). */
+export function choose(n: number, k: number): number {
+  if (k < 0 || k > n) return 0;
+  return (pascalRows(n)[n] as number[])[k] as number;
+}
+
+/** Chỉnh hợp A(n, k) = n(n−1)…(n−k+1). */
+export function arrange(n: number, k: number): number {
+  let r = 1;
+  for (let i = 0; i < k; i++) r *= n - i;
+  return r;
+}
+
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
 export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
   const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);
