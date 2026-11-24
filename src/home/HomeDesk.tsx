@@ -94,8 +94,8 @@ export function HomeDesk() {
             {sciences.map((item) => (
               <A key={item.id} className="study-card" href={`/khoa-hoc/${item.id}`}>
                 <span>
-                  <strong>{item.title}</strong>
-                  <small className="lecture-note">{item.blurb}</small>
+                  <strong>{t(lang, item.title, item.titleEn)}</strong>
+                  <small className="lecture-note">{t(lang, item.blurb, item.blurbEn)}</small>
                 </span>
               </A>
             ))}
