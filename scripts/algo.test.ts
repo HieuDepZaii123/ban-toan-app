@@ -596,6 +596,24 @@ near("Cauchy: tại x", hc[hc.length - 1]!.x, 2, 1e-3);
   is("hệ số x² trong (1+x)^5 là 10", A.choose(5, 2) === 10);
 }
 
+// Xác suất: tần suất tự nhiên, cây hai tầng, hàng nhị thức theo lần thử cuối.
+{
+  const f = A.naturalFrequencies(1000, 0.01, 0.95, 0.05);
+  near("1000 người: 10 người mắc", f.sick, 10, 1e-9);
+  near("tần suất tự nhiên: dương tính 59 người", f.positive, 59, 1e-9);
+  near("tần suất tự nhiên khớp Bayes", f.posterior, A.bayes(0.01, 0.95, 0.05).pBgA, 1e-12);
+  near("tần suất tự nhiên: các ô cộng lại bằng n", f.tp + f.fn + f.fp + f.tn, 1000, 1e-9);
+  const t = A.twoStageLeaves([0.6, 0.4], [0.02, 0.05]);
+  near("cây hai tầng: xác suất toàn phần", t.total, 0.032, 1e-12);
+  near("cây hai tầng: các lá cộng bằng 1", t.leaves.reduce((a, l) => a + l.yes + l.no, 0), 1, 1e-12);
+  near("cây hai tầng khớp bayes()", t.total, A.bayes(0.6, 0.02, 0.05).pA, 1e-12);
+  let row: number[] = [1];
+  for (let n = 1; n <= 8; n++) row = A.binomialNext(row, 0.3);
+  is("hàng nhị thức dựng theo lần thử cuối khớp binomialPmf", row.every((v, k) => Math.abs(v - (A.binomialPmf(8, 0.3)[k] as number)) < 1e-12));
+  near("ít nhất một lần: 1 − 0,9^10", A.atLeastOnce(0.1, 10), 1 - 0.9 ** 10, 1e-12);
+  near("ngày sinh: 23 người ≈ 50,7%", A.birthdayExact(23), 0.5073, 5e-4);
+}
+
 if (fails.length) {
   console.error(fails.join("\n"));
   process.exit(1);

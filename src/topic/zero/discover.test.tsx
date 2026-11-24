@@ -13,6 +13,7 @@ import { DISCRETE_CARDS } from "./discreteCards.ts";
 import { ANALYTIC_CARDS } from "./analyticCards.ts";
 import { TRIANGLE_CARDS } from "./triangleCards.ts";
 import { COMBO_CARDS } from "./comboCards.ts";
+import { PROB_CARDS } from "./probCards.ts";
 
 describe("Thẻ khám phá", () => {
   beforeEach(() => {
@@ -143,5 +144,15 @@ describe("Thẻ khám phá", () => {
     expect(label(COMBO_CARDS.symmetry)).toContain("bằng");
     expect(label(COMBO_CARDS.rowSum)).toBe("$64$");
     expect(label(COMBO_CARDS.coefficient)).toBe("$10$");
+  });
+
+  test("các thẻ xác suất có đáp án đúng do thuật toán tính", () => {
+    const label = (card: { options: { label: [string, string] }[]; answer: () => number }) => card.options[card.answer()]?.label[0] ?? "";
+    expect(label(PROB_CARDS.positive)).toBe("khoảng $16\\%$");
+    expect(label(PROB_CARDS.birthday)).toBe("khoảng $50\\%$");
+    expect(label(PROB_CARDS.atLeast)).toBe("khoảng $65\\%$");
+    expect(label(PROB_CARDS.independence)).toContain("độc lập");
+    expect(label(PROB_CARDS.independence)).not.toContain("Không");
+    expect(label(PROB_CARDS.exactly)).toBe("$0{,}375$");
   });
 });

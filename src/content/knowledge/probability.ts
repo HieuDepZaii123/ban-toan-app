@@ -77,6 +77,16 @@ export const probabilityKnowledge: TopicKnowledge = {
             R`Vẽ $A$ và $B$ thành hai vòng tròn chồng nhau. Cộng $n(A)+n(B)$ thì phần chung bị đếm hai lần.`,
             R`Trừ đi phần chung một lần để mỗi kết quả chỉ được đếm một lần: $n(A\cup B)=n(A)+n(B)-n(A\cap B)$. Chia cho $n(\Omega)$ được công thức xác suất.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng hàm chỉ thị (không cần vẽ hình)",
+              buoc: [
+                R`Với mỗi kết quả, đặt $1_A=1$ nếu kết quả thuộc $A$ và $1_A=0$ nếu không; tương tự cho $B$. Kết quả nằm ngoài $A\cup B$ khi và chỉ khi nó nằm ngoài cả $A$ lẫn $B$, nên $1-1_{A\cup B}=(1-1_A)(1-1_B)$.`,
+                R`Khai triển vế phải: $1-1_{A\cup B}=1-1_A-1_B+1_A1_B$. Vậy $1_{A\cup B}=1_A+1_B-1_A1_B$, và $1_A1_B=1_{A\cap B}$ vì tích bằng $1$ đúng khi kết quả thuộc cả hai.`,
+                R`Với các kết quả đồng khả năng, xác suất của một biến cố là trung bình của hàm chỉ thị của nó trên mọi kết quả. Lấy trung bình hai vế được $P(A\cup B)=P(A)+P(B)-P(A\cap B)$.`,
+              ],
+            },
+          ],
         },
         {
           kind: "cong-thuc", title: "Biến cố xung khắc",
@@ -128,6 +138,17 @@ export const probabilityKnowledge: TopicKnowledge = {
             R`Các nhánh $B_1,\dots,B_n$ chia $\Omega$ thành những phần rời nhau phủ kín, nên $A$ cũng bị chia thành các phần $A\cap B_1,\dots,A\cap B_n$ rời nhau.`,
             R`Cộng xác suất các phần: $P(A)=\sum P(A\cap B_i)$. Dùng quy tắc nhân cho mỗi phần, $P(A\cap B_i)=P(B_i)P(A\mid B_i)$, được công thức.`,
           ],
+          suyKhac: [
+            {
+              cach: "Bằng quy nạp theo số nhánh, gộp các nhánh",
+              buoc: [
+                R`Giả sử mọi $P(B_i)>0$. Với một nhánh ($n=1$) thì $B_1=\Omega$ và $P(A)=P(B_1)P(A\mid B_1)$ đúng, vì $P(B_1)=1$ và $P(A\mid\Omega)=P(A)$. Giả sử công thức đúng cho mọi nhóm đầy đủ có $n-1$ nhánh trên mọi không gian xác suất.`,
+                R`Với $n$ nhánh, gộp $C=B_2\cup\dots\cup B_n$. Khi đó $B_1$ và $C$ rời nhau và phủ kín $\Omega$, nên $A$ tách thành $A\cap B_1$ và $A\cap C$ rời nhau. Theo quy tắc nhân, $P(A)=P(B_1)P(A\mid B_1)+P(C)P(A\mid C)$.`,
+                R`Xác suất có điều kiện $P(\cdot\mid C)$ cũng là một xác suất (không âm, $P(C\mid C)=1$, cộng được cho biến cố rời nhau) trên không gian thu hẹp thành $C$, trong đó $B_2,\dots,B_n$ là nhóm đầy đủ có $n-1$ nhánh. Theo giả thiết quy nạp, $P(A\mid C)=\sum_{i=2}^{n}P(B_i\mid C)\,P(A\mid B_i\cap C)$, với $B_i\cap C=B_i$ và $P(B_i\mid C)=\frac{P(B_i)}{P(C)}$.`,
+                R`Thay vào bước hai: $P(C)P(A\mid C)=\sum_{i=2}^{n}P(B_i)P(A\mid B_i)$, nên $P(A)=\sum_{i=1}^{n}P(B_i)P(A\mid B_i)$. Cách này đi từ trường hợp hai nhánh lên $n$ nhánh, không cần tách $A$ thành $n$ phần cùng lúc.`,
+              ],
+            },
+          ],
         },
         {
           kind: "dinh-ly", title: "Công thức Bayes",
@@ -135,6 +156,17 @@ export const probabilityKnowledge: TopicKnowledge = {
           suy: [
             R`Quy tắc nhân cho $P(B_i\cap A)$ theo hai cách: $P(B_i\cap A)=P(A)\,P(B_i\mid A)=P(B_i)\,P(A\mid B_i)$.`,
             R`Chia hai vế cho $P(A)$ được $P(B_i\mid A)=\frac{P(B_i)P(A\mid B_i)}{P(A)}$, và mẫu số $P(A)$ tính bằng xác suất toàn phần. Công thức đổi chiều điều kiện.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng tỉ lệ cược giữa hai nhánh",
+              buoc: [
+                R`Cố định $B=B_i$ và $\overline{B}$ là hợp các nhánh còn lại; giả sử $P(A)>0$, $P(\overline{B})>0$. Theo định nghĩa, $P(B\mid A)=\frac{P(B\cap A)}{P(A)}$ và $P(\overline{B}\mid A)=\frac{P(\overline{B}\cap A)}{P(A)}$. Lập tỉ số hai xác suất: $P(A)$ triệt tiêu, được $r=\frac{P(B\mid A)}{P(\overline{B}\mid A)}=\frac{P(B\cap A)}{P(\overline{B}\cap A)}$ (giả sử $P(\overline{B}\cap A)>0$).`,
+                R`Áp dụng quy tắc nhân cho cả tử và mẫu: $r=\frac{P(B)}{P(\overline{B})}\cdot\frac{P(A\mid B)}{P(A\mid \overline{B})}$. Vế phải là tỉ lệ cược lúc đầu nhân với tỉ số khả dĩ của bằng chứng $A$; đến đây chưa cần tính $P(A)$.`,
+                R`Hai xác suất sau khi biết $A$ có tổng bằng $1$, tức $P(B\mid A)(1+r)=1$, nên $P(B\mid A)=\frac{r}{1+r}$. Nhân tử số và mẫu số của $\frac{r}{1+r}$ với $P(\overline{B})P(A\mid \overline{B})$ được $P(B\mid A)=\frac{P(B)P(A\mid B)}{P(B)P(A\mid B)+P(\overline{B})P(A\mid \overline{B})}$.`,
+                R`Mẫu số là $P(A)$ theo xác suất toàn phần với nhóm hai nhánh $B,\overline{B}$, nên đây đúng là công thức Bayes cho nhánh $B_i$.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Sơ đồ cây", text: R`Vẽ nhánh theo từng giai đoạn, ghi xác suất có điều kiện lên mỗi nhánh. Nhân các số dọc theo một đường đi, rồi cộng các đường dẫn tới cùng một kết quả. Tổng xác suất các nhánh xuất phát từ một nút luôn bằng $1$.` },
@@ -161,6 +193,17 @@ export const probabilityKnowledge: TopicKnowledge = {
           suy: [
             R`Mỗi dãy kết quả cụ thể có đúng $k$ lần thành công và $n-k$ lần thất bại có xác suất $p^k(1-p)^{n-k}$, nhờ tích các biến cố độc lập.`,
             R`Số dãy như vậy là số cách chọn $k$ vị trí cho các lần thành công trong $n$ lần thử, tức $C_n^k$. Các dãy khác nhau xung khắc nhau nên xác suất cộng lại: $C_n^k\,p^k(1-p)^{n-k}$.`,
+          ],
+          suyKhac: [
+            {
+              cach: "Bằng quy nạp theo số lần thử",
+              buoc: [
+                R`Gọi $b(n,k)$ là xác suất đúng $k$ lần thành công trong $n$ lần thử, đặt $q=1-p$, và quy ước $b(m,k)=0$, $C_m^k=0$ khi $k<0$ hoặc $k>m$. Với $n=1$: $b(1,0)=q$ và $b(1,1)=p$, khớp công thức $C_1^k p^k q^{1-k}$.`,
+                R`Với $n\ge2$, chia theo kết quả của lần thử cuối, hai khả năng này xung khắc và đủ. Lần cuối thành công thì $n-1$ lần đầu có đúng $k-1$ thành công; lần cuối thất bại thì $n-1$ lần đầu có đúng $k$ thành công. Các lần thử độc lập nên $b(n,k)=p\,b(n-1,k-1)+q\,b(n-1,k)$ với mọi $k=0,\dots,n$ (số hạng ngoài phạm vi bằng $0$).`,
+                R`Giả sử công thức đúng với $n-1$ lần, với mọi $k$. Thay vào: $b(n,k)=p\,C_{n-1}^{k-1}p^{k-1}q^{n-k}+q\,C_{n-1}^{k}p^{k}q^{n-1-k}=\left(C_{n-1}^{k-1}+C_{n-1}^{k}\right)p^kq^{n-k}$; số hạng có $C$ bằng $0$ biến mất đúng ở $k=0$ và $k=n$.`,
+                R`Theo hệ thức Pascal, $C_{n-1}^{k-1}+C_{n-1}^{k}=C_n^k$ (đúng cả ở hai biên theo quy ước), nên $b(n,k)=C_n^k\,p^kq^{n-k}$. Cách này không cần đếm các dãy kết quả mà dựng công thức từ lần thử cuối.`,
+              ],
+            },
           ],
         },
         { kind: "cach-lam", title: "Ít nhất một lần thành công", text: R`Dùng biến cố đối: xác suất ít nhất một lần thành công là $1-(1-p)^n$. Cách này nhanh hơn nhiều so với cộng từng trường hợp có $1,2,\dots,n$ lần thành công.` },
@@ -242,5 +285,11 @@ export const probabilityKnowledge: TopicKnowledge = {
     { expr: "Rational(5*5+10*15+5*25,20)", expect: "15" },
     { expr: "10+Rational(10-5,10)*10", expect: "15" },
     { expr: "Rational(5*25+10*225+5*625,20)-15**2", expect: "50" },
+    { expr: "expand((1-a)*(1-b))", expect: "1-a-b+a*b" },
+    { expr: "Rational(95,10000)/Rational(59,1000)", expect: "Rational(19,118)" },
+    { expr: "(Rational(19,99))/(1+Rational(19,99))", expect: "Rational(19,118)" },
+    { expr: "expand(p*binomial(5,1)*p*(1-p)**4+(1-p)*binomial(5,2)*p**2*(1-p)**3-binomial(6,2)*p**2*(1-p)**4)", expect: "0" },
+    { expr: "binomial(5,1)+binomial(5,2)", expect: "binomial(6,2)" },
+    { expr: "Rational(1,2)*Rational(1,10)+Rational(3,10)*Rational(2,10)+Rational(2,10)*Rational(5,10)", expect: "Rational(1,2)*Rational(1,10)+Rational(5,10)*(Rational(3,5)*Rational(2,10)+Rational(2,5)*Rational(5,10))" },
   ],
 };

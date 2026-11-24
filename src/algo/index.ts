@@ -1260,6 +1260,34 @@ export function arrange(n: number, k: number): number {
   return r;
 }
 
+/** Tần suất tự nhiên: trong n người, tỉ lệ mắc pB, dương tính ở người mắc pAgB và ở người khỏe pAgNotB. */
+export function naturalFrequencies(n: number, pB: number, pAgB: number, pAgNotB: number) {
+  const sick = n * pB;
+  const tp = sick * pAgB;
+  const healthy = n - sick;
+  const fp = healthy * pAgNotB;
+  const positive = tp + fp;
+  return { sick, tp, fn: sick - tp, healthy, fp, tn: healthy - fp, positive, posterior: positive === 0 ? 0 : tp / positive };
+}
+
+/** Hàng nhị thức kế tiếp từ hàng trước theo lần thử cuối: b(n,k) = p·b(n−1,k−1) + (1−p)·b(n−1,k). */
+export function binomialNext(prev: readonly number[], p: number): number[] {
+  const out = Array<number>(prev.length + 1).fill(0);
+  for (let k = 0; k <= prev.length; k++) out[k] = (k > 0 ? p * (prev[k - 1] as number) : 0) + (k < prev.length ? (1 - p) * (prev[k] as number) : 0);
+  return out;
+}
+
+/** Xác suất ít nhất một lần thành công trong n lần thử độc lập: dùng biến cố đối. */
+export function atLeastOnce(p: number, n: number): number {
+  return 1 - (1 - p) ** n;
+}
+
+/** Cây hai tầng: nhánh i có xác suất pB[i], rồi «xảy ra A» với xác suất pAgB[i]. Các lá cho xác suất chung; tổng các lá A là xác suất toàn phần. */
+export function twoStageLeaves(pB: readonly number[], pAgB: readonly number[]) {
+  const leaves = pB.map((b, i) => ({ branch: i, yes: b * (pAgB[i] as number), no: b * (1 - (pAgB[i] as number)) }));
+  return { leaves, total: leaves.reduce((a, l) => a + l.yes, 0) };
+}
+
 /** Bảng biến thiên: các điểm tới hạn trong (a;b) và dấu của f' ở từng khoảng, tìm bằng nghiệm rồi thử điểm giữa. */
 export function variationTable(f: Fn, a: number, b: number): { cuts: number[]; signs: (1 | -1)[]; values: number[] } {
   const crit = findRoots((x) => diff(f, x, 1e-5), a, b, 4000);
