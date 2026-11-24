@@ -33,7 +33,7 @@ export const THINK_CHAPTER: Record<number, string[]> = {
   9: ["pt-b2", "can", "can", "lg-vuong", "he-pt", "tan-so", "can"],
   10: ["menh-de", "menh-de", "ham-bac-hai", "vecto", "ham-bac-hai", "thong-ke"],
   11: ["gioi-han", "dao-ham", "gioi-han", "xs-11", "xs-11", "khong-gian"],
-  12: ["khao-sat", "tich-phan", "tich-phan", "xs-12", "oxyz"],
+  12: ["khao-sat", "tich-phan", "tich-phan", "xs-12", "oxyz", "do-thi-ham", "tp-nang-cao", "tp-nang-cao", "oxyz-nang-cao", "tk-nang-cao"],
 };
 
 /** Nút của từng phương pháp: [lớp, chương] và mạch nếu khác mạch của chương. */

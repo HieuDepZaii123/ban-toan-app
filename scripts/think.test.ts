@@ -55,7 +55,7 @@ for (const id of Object.keys(allLabSpecs)) {
 for (const id of Object.keys(thinkByTopic)) if (!allLabSpecs[id]) fail(`chuyên đề ${id}`, "không có lab tương ứng");
 for (let g = 1; g <= 12; g += 1) {
   const list = thinkByGrade[g] ?? [];
-  if (list.length < 5 || list.length > 7) fail(`lớp ${g}`, `có ${list.length} bài, cần từ 5 đến 7`);
+  if (list.length < 5 || list.length > 10) fail(`lớp ${g}`, `có ${list.length} bài, cần từ 5 đến 10`);
   list.forEach((t, i) => {
     total += 1;
     item(`lớp ${g} #${i + 1}`, t);
