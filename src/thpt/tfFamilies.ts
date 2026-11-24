@@ -4,6 +4,8 @@
  * đúng theo cách dựng và mỗi lần rút đề ra số liệu khác.
  */
 
+import { bbt } from "../grades/bbt.ts";
+
 export type Stmt = { vi: string; en: string; truth: boolean; whyVi: string; whyEn: string };
 export type FamilyQuestion = { topic: string; contextVi: string; contextEn: string; statements: [Stmt, Stmt, Stmt, Stmt] };
 export type Family = { topic: string; vi: string; en: string; make: (rng: () => number) => FamilyQuestion };
@@ -398,4 +400,48 @@ const derivativeSign: Family = {
   },
 };
 
-export const TF_FAMILIES: readonly Family[] = [cubic, rational, integral, space, conditional, arithmetic, exponential, derivativeSign];
+/* ---------- 9. Đọc bảng biến thiên ---------- */
+const variationTable: Family = {
+  topic: "variation-table",
+  vi: "Đọc bảng biến thiên",
+  en: "Reading a variation table",
+  make: (rng) => {
+    const a = int(rng, -3, 1);
+    const t = bbt(a, a + 2 * int(rng, 1, 2), pick(rng, [-4, -2, 0, 1, 3, 5]));
+    const k = t.m + 1;
+    const high = t.M + 1;
+    return {
+      topic: "variation-table",
+      contextVi: `Hàm số $y=f(x)$ xác định trên $\\mathbb{R}$ và có bảng biến thiên: $${t.table}$.`,
+      contextEn: `The function $y=f(x)$ is defined on $\\mathbb{R}$ and has the variation table: $${t.table}$.`,
+      statements: assemble(rng, [
+        prop(
+          [`Hàm số đồng biến trên khoảng $(-\\infty;\\ ${t.a})$.`, `The function is increasing on $(-\\infty,\\ ${t.a})$.`, `Trên khoảng này $f'(x)>0$, mũi tên đi lên.`, `On this interval $f'(x)>0$ and the arrow goes up.`],
+          [`Hàm số nghịch biến trên khoảng $(-\\infty;\\ ${t.a})$.`, `The function is decreasing on $(-\\infty,\\ ${t.a})$.`, `Trên khoảng này $f'(x)>0$, mũi tên đi lên, nên hàm số đồng biến.`, `On this interval $f'(x)>0$ and the arrow goes up, so the function is increasing.`],
+        ),
+        prop(
+          [`Hàm số đạt cực đại tại $x=${t.a}$.`, `The function has a maximum at $x=${t.a}$.`, `$f'(x)$ đổi dấu từ dương sang âm khi đi qua $x=${t.a}$.`, `$f'(x)$ changes from positive to negative at $x=${t.a}$.`],
+          [`Hàm số đạt cực đại tại $x=${t.b}$.`, `The function has a maximum at $x=${t.b}$.`, `Tại $x=${t.b}$ thì $f'(x)$ đổi dấu từ âm sang dương nên đó là cực tiểu.`, `At $x=${t.b}$ the derivative changes from negative to positive, so it is a minimum.`],
+        ),
+        prop(
+          [`Giá trị cực tiểu của hàm số bằng $${t.m}$.`, `The minimum value of the function is $${t.m}$.`, `Giá trị tại điểm cực tiểu $x=${t.b}$ trong bảng là $${t.m}$.`, `The table gives the value $${t.m}$ at the minimum point $x=${t.b}$.`],
+          [`Giá trị cực tiểu của hàm số bằng $${t.M}$.`, `The minimum value of the function is $${t.M}$.`, `Giá trị $${t.M}$ là giá trị cực đại; giá trị cực tiểu là $${t.m}$.`, `The value $${t.M}$ is the maximum; the minimum value is $${t.m}$.`],
+        ),
+        prop(
+          [`Phương trình $f(x)=${k}$ có ba nghiệm phân biệt.`, `The equation $f(x)=${k}$ has three distinct roots.`, `Vì $${t.m}<${k}<${t.M}$ nên đường thẳng $y=${k}$ cắt đồ thị tại ba điểm.`, `Since $${t.m}<${k}<${t.M}$, the line $y=${k}$ meets the graph at three points.`],
+          [`Phương trình $f(x)=${high}$ có ba nghiệm phân biệt.`, `The equation $f(x)=${high}$ has three distinct roots.`, `Vì $${high}>${t.M}$ nên đường thẳng $y=${high}$ chỉ cắt đồ thị tại một điểm.`, `Since $${high}>${t.M}$, the line $y=${high}$ meets the graph at only one point.`],
+        ),
+        prop(
+          [`Hàm số nghịch biến trên khoảng $(${t.a};\\ ${t.b})$.`, `The function is decreasing on $(${t.a},\\ ${t.b})$.`, `Trên khoảng này $f'(x)<0$, mũi tên đi xuống.`, `On this interval $f'(x)<0$ and the arrow goes down.`],
+          [`Hàm số nghịch biến trên khoảng $(${t.b};\\ +\\infty)$.`, `The function is decreasing on $(${t.b},\\ +\\infty)$.`, `Trên khoảng này $f'(x)>0$, mũi tên đi lên, nên hàm số đồng biến.`, `On this interval $f'(x)>0$ and the arrow goes up, so the function is increasing.`],
+        ),
+        prop(
+          [`$f(${t.a})>f(${t.b})$.`, `$f(${t.a})>f(${t.b})$.`, `$f(${t.a})=${t.M}$ lớn hơn $f(${t.b})=${t.m}$.`, `$f(${t.a})=${t.M}$ is greater than $f(${t.b})=${t.m}$.`],
+          [`$f(${t.a})<f(${t.b})$.`, `$f(${t.a})<f(${t.b})$.`, `$f(${t.a})=${t.M}$ không nhỏ hơn $f(${t.b})=${t.m}$.`, `$f(${t.a})=${t.M}$ is not less than $f(${t.b})=${t.m}$.`],
+        ),
+      ]),
+    };
+  },
+};
+
+export const TF_FAMILIES: readonly Family[] = [cubic, rational, integral, space, conditional, arithmetic, exponential, derivativeSign, variationTable];

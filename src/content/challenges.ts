@@ -570,7 +570,10 @@ const derivative: Challenge[] = [
       const p = projectile(v.v0, v.time);
       return judge(
         say,
-        [[near(p.v, 0, 0.01), `Tại $t=${say.n(v.time)}$ s vận tốc là $${say.n(p.v)}$ m/s, chưa bằng $0$.`, `At $t=${say.n(v.time)}$ s the velocity is $${say.n(p.v)}$ m/s, not $0$ yet.`]],
+        [
+          [near(v.v0, 20, 1e-9), `Đề cho $v_0=20$ m/s, hiện là $${say.n(v.v0)}$ m/s.`, `The problem gives $v_0=20$ m/s, now it is $${say.n(v.v0)}$ m/s.`],
+          [near(p.v, 0, 0.01), `Tại $t=${say.n(v.time)}$ s vận tốc là $${say.n(p.v)}$ m/s, chưa bằng $0$.`, `At $t=${say.n(v.time)}$ s the velocity is $${say.n(p.v)}$ m/s, not $0$ yet.`],
+        ],
         [`$v=v_0-10t=0$ tại $t=${say.n(apex(v.v0).t)}$ s, độ cao $${say.n(apex(v.v0).h)}$ m.`, `$v=v_0-10t=0$ at $t=${say.n(apex(v.v0).t)}$ s, height $${say.n(apex(v.v0).h)}$ m.`],
       );
     },
@@ -587,7 +590,7 @@ const derivative: Challenge[] = [
       return judge(
         say,
         [
-          [near(p.h, 15, 0.2), `Độ cao là $${say.n(p.h)}$ m, cần $15$ m.`, `The height is $${say.n(p.h)}$ m, it should be $15$ m.`],
+          [near(p.h, 15, 0.2), `Độ cao là $${say.n(p.h)}$ m, cần $15$ m (cho phép lệch $0{,}2$ m).`, `The height is $${say.n(p.h)}$ m, it should be $15$ m (a difference of $0.2$ m is allowed).`],
           [p.v > 0, `Vận tốc $${say.n(p.v)}$ m/s không dương: vật đang rơi xuống.`, `The velocity $${say.n(p.v)}$ m/s is not positive: the ball is falling.`],
         ],
         [`Cao $${say.n(p.h)}$ m, vận tốc $${say.n(p.v)}>0$: vẫn đang lên.`, `Height $${say.n(p.h)}$ m with velocity $${say.n(p.v)}>0$: still rising.`],
@@ -672,8 +675,8 @@ const integral: Challenge[] = [
     id: "g-riemann",
     level: 2,
     open: true,
-    vi: "Với $b=2$, chọn số dải $n$ để tổng hình chữ nhật chỉ lệch diện tích đúng $\\frac{4}{3}$ chưa tới $0{,}02$.",
-    en: "With $b=2$, choose the number of strips $n$ so the rectangle sum is within $0.02$ of the exact area $\\frac{4}{3}$.",
+    vi: "Hình vẽ lấy điểm giữa của mỗi dải. Với $b=2$, chọn số dải $n$ để tổng hình chữ nhật chỉ lệch diện tích đúng $\\frac{4}{3}$ chưa tới $0{,}02$.",
+    en: "The figure takes the midpoint of each strip. With $b=2$, choose the number of strips $n$ so the rectangle sum is within $0.02$ of the exact area $\\frac{4}{3}$.",
     set: { scene: 0, upper: 2, strips: 1 },
     sol: { scene: 0, upper: 2, strips: 12 },
     check: (v, say) => {
@@ -707,15 +710,15 @@ const integral: Challenge[] = [
   {
     id: "g-between",
     level: 3,
-    vi: "Chọn $b$ để diện tích giữa $y=x$ và $y=x^2$ đạt giá trị lớn nhất (bằng $\\frac{1}{6}$).",
-    en: "Choose $b$ so the area between $y=x$ and $y=x^2$ is as large as possible (the largest value is $\\frac{1}{6}$).",
+    vi: "Chọn $b$ để diện tích giữa $y=x$ và $y=x^2$ trên $[0;\\ b]$ đúng bằng diện tích cả hình giới hạn bởi hai đường, tức $\\frac{1}{6}$.",
+    en: "Choose $b$ so the area between $y=x$ and $y=x^2$ on $[0,\\ b]$ equals the area of the whole region the two curves enclose, that is $\\frac{1}{6}$.",
     set: { scene: 1, gap: 0.5 },
     sol: { scene: 1, gap: 1 },
     check: (v, say) => {
       const area = betweenIntegral(v.gap);
       return judge(
         say,
-        [[area >= 1 / 6 - 1e-9, `Với $b=${say.n(v.gap)}$ diện tích mới là $${say.n(area)}$, còn nhỏ hơn $\\frac{1}{6}$.`, `With $b=${say.n(v.gap)}$ the area is only $${say.n(area)}$, below $\\frac{1}{6}$.`]],
+        [[near(area, 1 / 6, 1e-9), `Với $b=${say.n(v.gap)}$ diện tích là $${say.n(area)}$, chưa bằng $\\frac{1}{6}$.`, `With $b=${say.n(v.gap)}$ the area is $${say.n(area)}$, not yet $\\frac{1}{6}$.`]],
         [`Hai đường gặp nhau tại $x=1$ nên $b=1$ cho $\\frac{1}{2}-\\frac{1}{3}=\\frac{1}{6}$.`, `The curves meet at $x=1$, so $b=1$ gives $\\frac{1}{2}-\\frac{1}{3}=\\frac{1}{6}$.`],
       );
     },
@@ -1015,7 +1018,7 @@ const triangle: Challenge[] = [
       const vol = tetraVolume(v.edge);
       return judge(
         say,
-        [[near(vol, 18 * Math.SQRT2, 0.01), `$V=\\frac{a^3\\sqrt{2}}{12}=${say.n(vol)}$, cần $18\\sqrt{2}\\approx${say.n(18 * Math.SQRT2)}$.`, `$V=\\frac{a^3\\sqrt{2}}{12}=${say.n(vol)}$, it should be $18\\sqrt{2}\\approx${say.n(18 * Math.SQRT2)}$.`]],
+        [[near(vol, 18 * Math.SQRT2, 1e-9), `$V=\\frac{a^3\\sqrt{2}}{12}=${say.n(vol)}$, cần $18\\sqrt{2}\\approx${say.n(18 * Math.SQRT2)}$.`, `$V=\\frac{a^3\\sqrt{2}}{12}=${say.n(vol)}$, it should be $18\\sqrt{2}\\approx${say.n(18 * Math.SQRT2)}$.`]],
         [`$\\frac{6^3\\sqrt{2}}{12}=18\\sqrt{2}$.`, `$\\frac{6^3\\sqrt{2}}{12}=18\\sqrt{2}$.`],
       );
     },

@@ -10,7 +10,9 @@ type Atom = { kind: Kind; tex: string };
 const UNITS = new Set(["m", "s", "g", "h", "l", "cm", "kg", "mm", "km", "min", "m/s", "km/h", "m/phút"]);
 const FUNCTIONS = new Set(["log", "ln", "sin", "cos", "tan", "cot", "lim", "max", "min"]);
 const MATH_WORDS = new Set(["Ox", "Oy", "Oz", "Oxy", "Oxyz"]);
-const SUP: Record<string, string> = { "¹": "1", "²": "2", "³": "3", "ˣ": "x", "ⁿ": "n" };
+const SUP: Record<string, string> = { "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9", "⁺": "+", "⁻": "-", "ˣ": "x", "ⁿ": "n" };
+const SUP_CLASS = "\\u2070\\u00B9\\u00B2\\u00B3\\u2074-\\u207B\\u02E3\\u207F";
+const VULGAR: Record<string, string> = { "½": "\\frac{1}{2}", "¼": "\\frac{1}{4}", "¾": "\\frac{3}{4}", "⅓": "\\frac{1}{3}", "⅔": "\\frac{2}{3}" };
 const SUB: Record<string, string> = { "₀": "0", "₁": "1", "₂": "2", "₃": "3", "₄": "4", "₅": "5", "₆": "6", "₇": "7", "₈": "8", "₉": "9", "ₙ": "n" };
 const SYMBOL: Record<string, string> = {
   "≥": "\\ge ", "≤": "\\le ", "≠": "\\ne ", "≈": "\\approx ", "·": "\\cdot ", "×": "\\times ", "÷": ":", "∞": "\\infty ",
@@ -32,9 +34,9 @@ const RULES: { kind: Kind; re: RegExp }[] = [
   { kind: "math", re: /^\d+(?:[.,]\d+)?/ },
   { kind: "text", re: new RegExp(`^[${LETTER}]{2,}`) },
   { kind: "math", re: new RegExp(`^[A-Za-z](?![${LETTER}])`) },
-  { kind: "math", re: /^[¹²³ˣⁿ₀-₉ₙ′″°%]/ },
+  { kind: "math", re: new RegExp(`^[${SUP_CLASS}₀-₉ₙ′″°%½¼¾⅓⅔]`) },
   { kind: "punct", re: /^[.,;:]/ },
-  { kind: "math", re: /^[=<>+\-−±≥≤≠≈·×÷∞π∆Δ∫√→∈|!/^()[\]{}]/ },
+  { kind: "math", re: /^[=<>+\-−±≥≤≠≈·×÷∞π∆Δ∫√∛→∈|!/^_()[\]{}]/ },
 ];
 
 /** Một đoạn toán thuần (không có từ) sang TeX. */
@@ -44,7 +46,13 @@ function convertMath(source: string): string {
   out = out.replace(/√\(([^()]*)\)/g, "\\sqrt{$1}");
   out = out.replace(/\^\(([^()]*)\)/g, "^{$1}");
   out = out.replace(/∫([₀-₉ₙ])([¹²³ˣⁿ])?/g, (_m, sub: string, sup: string | undefined) => `\\int_{${SUB[sub] ?? sub}}${sup ? `^{${SUP[sup] ?? sup}}` : ""} `);
-  out = out.replace(/([A-Za-z\d)}])([¹²³ˣⁿ])/g, (_m, base: string, sup: string) => `${base}^${SUP[sup] ?? sup}`);
+  out = out.replace(new RegExp(`([A-Za-z\\d)}])([${SUP_CLASS}]+)`, "g"), (_m, base: string, sup: string) => {
+    const mapped = [...sup].map((c) => SUP[c] ?? c).join("");
+    return `${base}^${mapped.length === 1 ? mapped : `{${mapped}}`}`;
+  });
+  out = out.replace(/[½¼¾⅓⅔]/g, (c) => VULGAR[c] ?? c);
+  out = out.replace(/∛(\d+|[A-Za-z])/g, "\\sqrt[3]{$1}").replace(/√([ΔΔ∆π])/g, (_m, c: string) => `\\sqrt{${c === "π" ? "\\pi" : "\\Delta"}}`);
+  out = out.replace(/([A-Za-z\\]+)_([A-Za-z\d]+)/g, "$1_{$2}");
   out = out.replace(/([A-Za-z])((?:[₀-₉ₙ])+)/g, (_m, base: string, sub: string) => `${base}_{${[...sub].map((c) => SUB[c] ?? c).join("")}}`);
   out = out.replace(/″/g, "''").replace(/′/g, "'");
   out = out.replace(/\^\s*[-−]\s*(\d+)/g, "^{-$1}").replace(/\^(\d{2,})/g, "^{$1}");
@@ -61,10 +69,11 @@ function convertMath(source: string): string {
   const NUM = "(?:\\d+(?:\\{,\\}\\d+)?)?(?:\\\\pi ?|\\\\sqrt\\{\\d+\\})?";
   const DEN = "\\d+(?:\\{,\\}\\d+)?|\\\\sqrt\\{\\d+\\}|\\d*\\\\pi";
   out = out.replace(new RegExp(`(${NUM})\\s*\\/\\s*(${DEN})`, "g"), (m, num: string, den: string) => (num.trim() ? `\\frac{${num.trim()}}{${den.trim()}}` : m));
+  out = out.replace(/(?<![\\\w])(d[a-z])\/(d[a-z])(?![\w])/g, "\\frac{$1}{$2}");
   // a/b và 1/x giữa hai ký hiệu đơn; m/s và km/h giữ nguyên là đơn vị
   out = out.replace(/(?<![\\\w{])([A-Za-z]|\d+)\/([A-Za-z]|\d+)(?![\w])/g, (m, a: string, b: string) => (a === "m" && b === "s" ? m : `\\frac{${a}}{${b}}`));
   if (out.includes("\\int")) out = out.replace(/\s+d([a-z])(?![A-Za-z])/g, "\\,d$1");
-  out = out.replace(/\\lim\s+([a-z])\s*\\to ?\s*(-?[\w.{},]+)/g, "\\lim_{$1\\to $2}");
+  out = out.replace(/\\lim\s+([a-z])\s*\\to ?\s*(-?(?:[\w.{},]+|\\infty ?))/g, (_m, v: string, to: string) => `\\lim_{${v}\\to ${to.trim()}}`);
   return out.replace(/\s{2,}/g, " ").trim();
 }
 
@@ -104,6 +113,13 @@ export function toTex(input: string): string {
     const a = atoms[i]!;
     if (a.kind === "text" && (FUNCTIONS.has(a.tex) || MATH_WORDS.has(a.tex) || /^[A-Z]{2,3}$/.test(a.tex))) a.kind = "math";
     else if (a.kind === "text" && /^d[a-z]$/.test(a.tex) && atoms.slice(0, i).some((p) => p.tex.includes("∫"))) a.kind = "math";
+    else if (a.kind === "text" && /^[a-z]{2,3}$/.test(a.tex) && !UNITS.has(a.tex) && !FUNCTIONS.has(a.tex)) {
+      // Chữ viết liền sau một số, một chữ cái hay dấu gạch chéo là tích các biến: 4ac, 2xy, dy/dx.
+      const before = atoms[i - 1];
+      const after = atoms[i + 1];
+      const glued = before?.kind === "math" && /[\d)a-z]$/.test(before.tex);
+      if (glued || after?.tex === "/" || before?.tex === "/") a.kind = "math";
+    }
   }
   // Đơn vị đi sau một số: 5 s, 50 m, 20 m/s, 4 m².
   for (let i = 0; i < atoms.length; i += 1) {

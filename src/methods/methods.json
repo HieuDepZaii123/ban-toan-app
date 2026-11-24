@@ -3041,14 +3041,14 @@
       "examples": [
         {
           "id": "l7c-1",
-          "title": "Cạnh–cạnh–cạnh",
-          "prompt": "Tam giác $ABC$ có $AB=3$, $AC=4$, $BC=5$. Tam giác $DEF$ có $DE=3$, $DF=4$, $EF=5$. Hai tam giác có bằng nhau không, và chúng có vuông không?",
+          "title": "Cạnh–cạnh–cạnh: liệt kê đủ điều kiện",
+          "prompt": "Tam giác $ABC$ có $AB=5$, $BC=7$, $CA=6$. Tam giác $DEF$ có $DE=5$ và $EF=7$. Cần biết thêm gì để hai tam giác bằng nhau theo c.c.c, và các đỉnh tương ứng là gì?",
           "steps": [
-            "Ba cặp cạnh tương ứng bằng nhau: $AB=DE$, $AC=DF$, $BC=EF$.",
-            "Theo trường hợp c.c.c, hai tam giác bằng nhau.",
-            "Vì $3^2+4^2=25=5^2$ nên tam giác $ABC$ vuông tại $A$, và $DEF$ vuông tại $D$."
+            "Trường hợp c.c.c cần ba cặp cạnh tương ứng bằng nhau. Đã có $AB=DE$ và $BC=EF$.",
+            "Còn thiếu cặp thứ ba: $CA=FD$, tức là cần $FD=6$.",
+            "Khi đó $\\triangle ABC=\\triangle DEF$ theo c.c.c, với $A\\leftrightarrow D$, $B\\leftrightarrow E$, $C\\leftrightarrow F$."
           ],
-          "result": "Bằng nhau theo c.c.c và cùng là tam giác vuông"
+          "result": "Cần thêm $FD=6$; khi đó hai tam giác bằng nhau theo c.c.c"
         },
         {
           "id": "l7c-2",
@@ -3101,8 +3101,8 @@
       "verify": [
         {
           "where": "l7c-1",
-          "lhs": "3**2+4**2",
-          "rhs": "5**2"
+          "lhs": "5+7+6",
+          "rhs": "18"
         },
         {
           "where": "l7c-2",

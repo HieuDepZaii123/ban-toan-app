@@ -4,6 +4,7 @@
  * Đáp số tính bằng TypeScript; `check` là biểu thức sympy tính lại độc lập.
  */
 import type { GradeQuestion } from "./practiceBank.ts";
+import { bbt, bbtSympy } from "./bbt.ts";
 
 export const PER_TEMPLATE = 10;
 
@@ -1112,7 +1113,7 @@ const grade12More: Template[] = [
 ];
 
 /** Mẫu vận dụng cao lớp 12: tham số, bội của nghiệm, bài toán tối ưu, khối đa diện, tích phân đổi biến, xác suất Bayes, Oxyz hai bước. */
-export const HARD_KEYS = new Set(["thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "chopvuong", "tdiencb", "langtru", "tpdoibien", "tpphanh", "bayes", "giaodiem", "tdiemoabc"]);
+export const HARD_KEYS = new Set(["thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "chopvuong", "tdiencb", "langtru", "tpdoibien", "tpphanh", "bayes", "giaodiem", "tdiemoabc", "bbtcucdai", "bbtnghiem"]);
 
 /** Thừa số $(x-u)^e$ của đạo hàm, viết gọn khi $u=0$ hay $e=1$. */
 function factor(root: number, e: number): string {
@@ -1210,6 +1211,20 @@ const grade12Hard: Template[] = [
       [`Tham số hóa $d$: $x=${lin([[P[0], ""], [u[0], "t"]])}$, $y=${lin([[P[1], ""], [u[1], "t"]])}$, $z=${lin([[P[2], ""], [u[2], "t"]])}$.`, `Thay vào $(P)$: $${lin([[coef, "t"], [rest, ""]])}=0$ nên $t=${t0}$, và $I(${I.join(";")})$.`, `$x_I+y_I+z_I=${sum}$.`],
       `solve(${n[0]}*(${P[0]}+${u[0]}*x)+(${n[1]})*(${P[1]}+${u[1]}*x)+(${n[2]})*(${P[2]}+${u[2]}*x)+(${d}), x)[0]*(${u[0]}+${u[1]}+${u[2]})+(${P[0]})+(${P[1]})+(${P[2]})`, String(sum));
   } },
+  { key: "bbtcucdai", make: (r) => {
+    const a = r.int(-3, 1), c = r.int(-5, 5), t = bbt(a, a + 2 * r.int(1, 2), c);
+    return made(`Cho hàm số $y=f(x)$ có bảng biến thiên như sau: $${t.table}$. Hàm số đạt cực đại tại điểm $x$ bằng`, nums(t.a, [t.b, t.M, t.m, -t.a]),
+      ["Cực đại nằm ở chỗ mũi tên đi lên chuyển sang đi xuống, tức là chỗ $f'(x)$ đổi dấu từ dương sang âm.", `Trong bảng, dấu $+$ chuyển sang dấu $-$ khi đi qua $x=${t.a}$.`, `Hàm số đạt cực đại tại $x=${t.a}$ với giá trị cực đại $${t.M}$.`],
+      `Min(*solve(diff(${bbtSympy(t.a, t.b, t.c)}, x), x))`, String(t.a));
+  } },
+  { key: "bbtnghiem", make: (r) => {
+    const a = r.int(-3, 1), c = r.int(-5, 5), t = bbt(a, a + 2 * r.int(1, 2), c), kind = r.int(0, 3);
+    const k = kind === 0 ? t.m + 1 : kind === 1 ? t.M : kind === 2 ? t.M + r.int(1, 3) : t.m - r.int(1, 3);
+    const count = kind === 0 ? 3 : kind === 1 ? 2 : 1;
+    return made(`Cho hàm số $y=f(x)$ có bảng biến thiên như sau: $${t.table}$. Số nghiệm của phương trình $f(x)=${k}$ là`, nums(count, [0, 1, 2, 3, 4], m, 0),
+      [`Nghiệm của $f(x)=${k}$ là hoành độ giao điểm của đồ thị với đường thẳng $y=${k}$.`, `Giá trị cực đại là $${t.M}$ và giá trị cực tiểu là $${t.m}$, nên so sánh $${k}$ với hai giá trị này.`, `Đường thẳng $y=${k}$ cắt đồ thị tại $${count}$ điểm.`],
+      `len(set(Poly(${bbtSympy(t.a, t.b, t.c)}-(${k}), x).real_roots()))`, String(count));
+  } },
   { key: "tdiemoabc", make: (r) => {
     let a = 1, b = 1, c = 1;
     do {
@@ -1240,7 +1255,7 @@ export const thptTopics: { id: string; grade: number; vi: string; en: string; ke
   { id: "g11-mu-log", grade: 11, vi: "Mũ và logarit", en: "Exponents and logarithms", keys: ["log", "mu", "loghieu"] },
   { id: "g11-dao-ham", grade: 11, vi: "Đạo hàm", en: "Derivatives", keys: ["daoham", "daohamhop"] },
   { id: "g11-xac-suat", grade: 11, vi: "Xác suất", en: "Probability", keys: ["xsdoclap", "xscodien"] },
-  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap"] },
+  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem"] },
   { id: "g12-tiem-can", grade: 12, vi: "Tiệm cận", en: "Asymptotes", keys: ["tcngang", "tcdung"] },
   { id: "g12-tich-phan", grade: 12, vi: "Nguyên hàm và tích phân", en: "Antiderivatives and integrals", keys: ["nguyenham", "tp1", "tp2", "dientich", "tpdoibien", "tpphanh"] },
   { id: "g12-khong-gian", grade: 12, vi: "Tọa độ trong không gian", en: "Space coordinates", keys: ["kc3d", "kcmp", "matcau", "vuonggoc", "ptmp", "giaodiem", "tdiemoabc"] },

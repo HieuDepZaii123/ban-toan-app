@@ -1843,3 +1843,21 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 @media (pointer: coarse) {
   .text-btn, .chips button, .lab-tools button, .challenge-actions button { min-height: 44px; }
 }
+
+/* Thanh tab ngang: mép phải mờ dần cho biết còn mục phía sau, và mục cuối cuộn được ra khỏi vùng mờ. */
+.sub-nav, .area-nav {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 26px), transparent);
+}
+.sub-nav { padding-right: 34px; }
+.area-nav { padding-right: 30px; }
+.area-nav::-webkit-scrollbar { display: none; }
+.area-nav a { flex: none; }
+
+/* Liên kết trong dòng chữ nhỏ (danh sách lớp ở trang phương pháp): mở rộng vùng chạm mà không đổi bố cục dòng. */
+@media (pointer: coarse) {
+  main .lecture-note a { display: inline-block; padding: 11px 6px; margin: -11px -6px; }
+  .tab, .topic-bar a { min-height: 44px; }
+}

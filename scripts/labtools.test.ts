@@ -65,6 +65,15 @@ const tex: [string, string][] = [
   ["√(x+1)", "$\\sqrt{x+1}$"],
   ["lim x→2 f(x) = 4", "$\\lim_{x\\to 2} f(x) = 4$"],
   ["1/x", "$\\frac{1}{x}$"],
+  ["Δ = b² − 4ac", "$\\Delta = b^2 - 4ac$"],
+  ["dy/dx = 2x", "$\\frac{dy}{dx} = 2x$"],
+  ["(−b ± √Δ)/(2a)", "$\\frac{-b \\pm \\sqrt{\\Delta }}{2a}$"],
+  ["lim x→∞ 1/x", "$\\lim_{x\\to \\infty} \\frac{1}{x}$"],
+  ["2ˣ⁺¹", "$2^{x+1}$"],
+  ["x⁻¹", "$x^{-1}$"],
+  ["log_2 8", "$\\log_{2} 8$"],
+  ["∛8", "$\\sqrt[3]{8}$"],
+  ["½ + ¼", "$\\frac{1}{2} + \\frac{1}{4}$"],
 ];
 for (const [input, want] of tex) expect(toTex(input) === want, `toTex(${input}) = ${toTex(input)}, cần ${want}`);
 

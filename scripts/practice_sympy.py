@@ -38,6 +38,8 @@ ns = {
     "maximum": sp.maximum,
     "Max": sp.Max,
     "sum": sum,
+    "Poly": sp.Poly,
+    "set": set,
 }
 
 

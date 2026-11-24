@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import katex from "katex";
 import { buildPaper, declared, emptyAnswers, parseShort, scorePaper, shortValue, tfPoints, TF_TOPIC_NAMES, type Answers } from "../src/thpt/exam2025.ts";
 import { thptById, topicById } from "../src/thpt/bank.ts";
 import { HARD_KEYS, templateKeyOf } from "../src/grades/practiceGen.ts";
@@ -27,6 +28,9 @@ for (let seed = 1; seed <= 300; seed += 1) {
   assert.ok(paper.mcq.filter((id) => thptById.get(id)!.grade === 12).length >= 8, `seed ${seed} part I is not mostly grade 12`);
   for (const id of paper.short) assert.notEqual(shortValue(thptById.get(id)!), null, `${id} is not a short-answer number`);
   for (const q of paper.tf) {
+    for (const text of [q.contextVi, q.contextEn, ...q.statements.flatMap((x) => [x.vi, x.en, x.whyVi, x.whyEn])]) {
+      for (const tex of text.match(/\$[^$]+\$/g) ?? []) katex.renderToString(tex.slice(1, -1), { throwOnError: true, strict: "error" });
+    }
     assert.ok(!/Chưa đủ|not enough/i.test(q.contextVi + q.contextEn), `${q.id} keeps the in-app instruction`);
     for (const s of q.statements) assert.ok(s.vi && s.en && s.whyVi && s.whyEn, `${q.id} statement incomplete`);
     for (const s of q.statements) {
