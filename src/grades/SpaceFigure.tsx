@@ -20,10 +20,11 @@ function fit(points: Record<string, P3>, view?: { dx: number; dz: number }) {
   const scale = Math.min((W - 2 * PAD) / (maxX - minX || 1), (H - 2 * PAD) / (maxY - minY || 1));
   const offX = (W - scale * (maxX - minX)) / 2 - scale * minX;
   const offY = (H - scale * (maxY - minY)) / 2 + scale * maxY;
-  return (p: P3): P2 => {
+  const map = (p: P3): P2 => {
     const q = project(p, view);
     return [offX + scale * q[0], offY - scale * q[1]];
   };
+  return Object.assign(map, { scale });
 }
 
 const CLASS: Record<EdgeStyle, string> = { solid: "sp-edge", hidden: "sp-edge sp-hidden", hl: "sp-edge sp-hl", hl2: "sp-edge sp-hl2", arrow: "sp-edge sp-vec", arrowhl: "sp-edge sp-vec sp-hl" };
@@ -34,18 +35,27 @@ function norm(v: P2): P2 {
 }
 
 export function SpaceFigure({ spec, english = false }: { spec: Spec; english?: boolean }) {
-  const f = fit(spec.points, spec.view);
-  const pt = (n: string): P2 => f(spec.points[n]!);
+  const points: Record<string, P3> = { ...spec.points };
+  if (spec.axes) {
+    if (!points.O) points.O = [0, 0, 0];
+    points.x = [spec.axes[0], 0, 0];
+    points.y = [0, spec.axes[1], 0];
+    points.z = [0, 0, spec.axes[2]];
+  }
+  const f = fit(points, spec.view);
+  const pt = (n: string): P2 => f(points[n]!);
   const all = Object.keys(spec.points).map(pt);
   const cx = all.reduce((s, p) => s + p[0], 0) / all.length;
   const cy = all.reduce((s, p) => s + p[1], 0) / all.length;
   const alt = english ? spec.alt.en : spec.alt.vi;
-  const labelled = Object.keys(spec.points);
+  const labelled = Object.keys(points).filter((n) => !(spec.hide ?? []).includes(n));
   return (
     <svg className="space-figure" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={alt}>
       <defs>
         <marker id="sp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" className="sp-arrowhead" /></marker>
       </defs>
+      {spec.axes ? ["x", "y", "z"].map((n) => <line key={`ax-${n}`} x1={f([0, 0, 0])[0]} y1={f([0, 0, 0])[1]} x2={pt(n)[0]} y2={pt(n)[1]} className="sp-edge sp-axis" markerEnd="url(#sp-arrow)" />) : null}
+      {(spec.spheres ?? []).map((sp, i) => <circle key={`sph-${i}`} cx={pt(sp.c)[0]} cy={pt(sp.c)[1]} r={sp.r * f.scale} className="sp-sphere" />)}
       {(spec.planes ?? []).map((pl, i) => <polygon key={i} points={pl.pts.map((n) => pt(n).join(",")).join(" ")} className={pl.tone === "b" ? "sp-plane sp-plane-b" : "sp-plane"} />)}
       {spec.edges.map((e, i) => {
         const a = pt(e.a), b = pt(e.b);

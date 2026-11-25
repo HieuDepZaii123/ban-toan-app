@@ -19,7 +19,7 @@ import { ThinkView } from "./GradeThink.tsx";
 const PathView = lazy(() => import("./GradePath.tsx").then((mod) => ({ default: mod.PathView })));
 import { LessonPicture } from "./LessonPicture.tsx";
 import { SpaceFigure } from "./SpaceFigure.tsx";
-import { spaceFigures } from "../content/grades/space.ts";
+import { allSpaceFigures as spaceFigures } from "../content/grades/spaceAll.ts";
 import { pictures } from "../content/grades/pictures.ts";
 import { GradeWidgetView } from "./GradeWidgets.tsx";
 import { doneCount, markDone, readDone } from "./progress.ts";

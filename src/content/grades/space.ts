@@ -16,36 +16,42 @@ export type SpaceFigure = {
   angles?: { at: string; p: string; q: string; label?: string }[];
   /** Điểm phụ vẽ chấm tròn (chân đường vuông góc, trung điểm). */
   dots?: string[];
+  /** Vẽ ba trục tọa độ Oxyz với độ dài cho trước (tự thêm điểm O). */
+  axes?: [number, number, number];
+  /** Mặt cầu vẽ bằng đường tròn quanh tâm với bán kính tính theo đơn vị của hình. */
+  spheres?: { c: string; r: number }[];
+  /** Điểm không ghi nhãn (điểm phụ). */
+  hide?: string[];
   /** Hệ số lùi của trục y theo chiều ngang và chiều dọc; mặc định 0,45 cho cả hai. */
   view?: { dx: number; dz: number };
   alt: { vi: string; en: string };
 };
 
-const box = (w: number, d: number, h: number): Record<string, P3> => ({
+export const box = (w: number, d: number, h: number): Record<string, P3> => ({
   A: [0, 0, 0], B: [w, 0, 0], C: [w, d, 0], D: [0, d, 0],
   "A'": [0, 0, h], "B'": [w, 0, h], "C'": [w, d, h], "D'": [0, d, h],
 });
-const boxEdges: SpaceFigure["edges"] = [
+export const boxEdges: SpaceFigure["edges"] = [
   { a: "A", b: "B" }, { a: "B", b: "C" }, { a: "C", b: "D", s: "hidden" }, { a: "D", b: "A", s: "hidden" },
   { a: "A'", b: "B'" }, { a: "B'", b: "C'" }, { a: "C'", b: "D'" }, { a: "D'", b: "A'" },
   { a: "A", b: "A'" }, { a: "B", b: "B'" }, { a: "C", b: "C'" }, { a: "D", b: "D'", s: "hidden" },
 ];
-const withStyle = (edges: SpaceFigure["edges"], over: Record<string, { s?: EdgeStyle; label?: string }>): SpaceFigure["edges"] =>
+export const withStyle = (edges: SpaceFigure["edges"], over: Record<string, { s?: EdgeStyle; label?: string }>): SpaceFigure["edges"] =>
   edges.map((e) => ({ ...e, ...(over[`${e.a}${e.b}`] ?? over[`${e.b}${e.a}`] ?? {}) }));
 
-const pyr = (apex: P3, base: Record<string, P3>, hiddenBase: string[] = []): { points: Record<string, P3>; edges: SpaceFigure["edges"] } => {
+export const pyr = (apex: P3, base: Record<string, P3>, hiddenBase: string[] = []): { points: Record<string, P3>; edges: SpaceFigure["edges"] } => {
   const names = Object.keys(base);
   const edges: SpaceFigure["edges"] = [];
   names.forEach((n, i) => edges.push({ a: n, b: names[(i + 1) % names.length]!, s: hiddenBase.includes(`${n}${names[(i + 1) % names.length]}`) ? "hidden" : "solid" }));
   names.forEach((n) => edges.push({ a: "S", b: n }));
   return { points: { S: apex, ...base }, edges };
 };
-const lerp = (a: P3, b: P3, t: number): P3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+export const lerp = (a: P3, b: P3, t: number): P3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 
 // Hình chóp S.ABCD có SA vuông góc đáy, đáy là hình chữ nhật.
-const sabcd = pyr([0, 0, 3], { A: [0, 0, 0], B: [3, 0, 0], C: [3, 3, 0], D: [0, 3, 0] }, ["CD", "DA"]);
+export const sabcd = pyr([0, 0, 3], { A: [0, 0, 0], B: [3, 0, 0], C: [3, 3, 0], D: [0, 3, 0] }, ["CD", "DA"]);
 sabcd.edges = sabcd.edges.map((e) => ((e.a === "S" && e.b === "D") || (e.a === "S" && e.b === "C") ? e : e));
-const sabc = pyr([0, 0, 3], { A: [0, 0, 0], B: [4, 0, 0], C: [0.5, 2.4, 0] }, ["CA"]);
+export const sabc = pyr([0, 0, 3], { A: [0, 0, 0], B: [4, 0, 0], C: [0.5, 2.4, 0] }, ["CA"]);
 
 export const spaceFigures: Record<string, SpaceFigure> = {
   "11/quy-tac-vecto-kg": {
