@@ -1274,6 +1274,23 @@ const grade12Hard: Template[] = [
       [`Nghiệm của $f(x)=${m0}$ là hoành độ giao điểm của đồ thị với đường thẳng nằm ngang $y=${m0}$.`, `Đọc trên hình: cực đại có tung độ $${c}$ và hai cực tiểu có tung độ $${lo}$; so sánh $${m0}$ với hai giá trị này.`, `Đường thẳng $y=${m0}$ cắt đồ thị tại $${count}$ điểm phân biệt.`],
       `len(Poly(x**4-2*${k}*x**2+(${c})-(${m0}), x).sqf_part().real_roots())`, String(count));
   } },
+  { key: "dothigiao", make: (r) => {
+    const a = r.int(-3, 1), c = r.int(-3, 3), t = bbt(a, a + 2 * r.int(1, 2), c);
+    const s = (t.a + t.b) / 2, k0 = -((t.b - t.a) ** 2) / 2, n0 = t.M - k0 * t.a, d = r.pick([0, 0, 0, 2, -2, 3]);
+    const B = -3 * s, C = 3 * t.a * t.b - k0, D = c - n0 - d;
+    const disc = 18 * B * C * D - 4 * B ** 3 * D + B * B * C * C - 4 * C ** 3 - 27 * D * D;
+    const count = disc > 0 ? 3 : disc === 0 ? 2 : 1;
+    return made(`Cho hàm số bậc ba $y=f(x)$ và đường thẳng $y=g(x)$ có đồ thị như hình vẽ (đường nét đứt là đường thẳng): {{plot:1,${-3 * s},${3 * t.a * t.b},${c}|${t.a - 3}|${t.b + 3}|${Math.floor(t.m) - 6}|${Math.ceil(t.M) + 6}|${k0},${n0 + d}}} Số nghiệm thực phân biệt của phương trình $f(x)=g(x)$ là`, nums(count, [0, 1, 2, 3, 4], m, 0),
+      ["Nghiệm của $f(x)=g(x)$ là hoành độ các giao điểm của hai đồ thị.", "Đếm số điểm chung của đường cong liền nét và đường thẳng nét đứt trên hình.", `Hai đồ thị có $${count}$ điểm chung nên phương trình có $${count}$ nghiệm phân biệt.`],
+      `len(Poly(${bbtSympy(t.a, t.b, t.c)}-(${k0}*x+${n0 + d}), x).sqf_part().real_roots())`, String(count));
+  } },
+  { key: "dothigiaohd", make: (r) => {
+    const a = r.int(-3, 1), c = r.int(-3, 3), t = bbt(a, a + 2 * r.int(1, 2), c);
+    const s = (t.a + t.b) / 2, k0 = -((t.b - t.a) ** 2) / 2, n0 = t.M - k0 * t.a;
+    return made(`Cho hàm số bậc ba $y=f(x)$ và đường thẳng $y=g(x)$ có đồ thị như hình vẽ (đường nét đứt là đường thẳng): {{plot:1,${-3 * s},${3 * t.a * t.b},${c}|${t.a - 3}|${t.b + 3}|${Math.floor(t.m) - 6}|${Math.ceil(t.M) + 6}|${k0},${n0}}} Hai đồ thị cắt nhau tại ba điểm, hai điểm trong đó có hoành độ $${t.a}$ và $${t.b}$. Hoành độ của giao điểm còn lại là`, nums(s, [t.a, t.b, -s, s + 1]),
+      ["Ba hoành độ giao điểm là ba nghiệm của phương trình bậc ba $f(x)-g(x)=0$, và tổng ba nghiệm bằng $-\\frac{b}{a}$ với $a=1$.", `Tổng ba hoành độ bằng $${3 * s}$, đọc từ hệ số của $x^2$ trong $f(x)$.`, `Hoành độ còn lại là $${3 * s}-(${t.a})-(${t.b})=${s}$.`],
+      `Rational(3*(${t.a}+${t.b}),2)-(${t.a})-(${t.b})`, String(s));
+  } },
   { key: "tdiemoabc", make: (r) => {
     let a = 1, b = 1, c = 1;
     do {
@@ -1304,7 +1321,7 @@ export const thptTopics: { id: string; grade: number; vi: string; en: string; ke
   { id: "g11-mu-log", grade: 11, vi: "Mũ và logarit", en: "Exponents and logarithms", keys: ["log", "mu", "loghieu"] },
   { id: "g11-dao-ham", grade: 11, vi: "Đạo hàm", en: "Derivatives", keys: ["daoham", "daohamhop"] },
   { id: "g11-xac-suat", grade: 11, vi: "Xác suất", en: "Probability", keys: ["xsdoclap", "xscodien"] },
-  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem", "dothicucdai", "dothinghiem", "dothipttcd", "dothipttcn", "dothiptdbien", "dothib4cuctieu", "dothib4nghiem"] },
+  { id: "g12-ung-dung", grade: 12, vi: "Ứng dụng đạo hàm", en: "Applications of derivatives", keys: ["cucdai", "dongbien", "gtln", "thamsodb", "cucdaim", "cuctrinhi", "hopkhongnap", "bbtcucdai", "bbtnghiem", "dothicucdai", "dothinghiem", "dothipttcd", "dothipttcn", "dothiptdbien", "dothib4cuctieu", "dothib4nghiem", "dothigiao", "dothigiaohd"] },
   { id: "g12-tiem-can", grade: 12, vi: "Tiệm cận", en: "Asymptotes", keys: ["tcngang", "tcdung"] },
   { id: "g12-tich-phan", grade: 12, vi: "Nguyên hàm và tích phân", en: "Antiderivatives and integrals", keys: ["nguyenham", "tp1", "tp2", "dientich", "tpdoibien", "tpphanh"] },
   { id: "g12-khong-gian", grade: 12, vi: "Tọa độ trong không gian", en: "Space coordinates", keys: ["kc3d", "kcmp", "matcau", "vuonggoc", "ptmp", "giaodiem", "tdiemoabc"] },

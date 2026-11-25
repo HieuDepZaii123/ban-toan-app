@@ -85,4 +85,32 @@ export const thptExtra2Notes: NoteBook = {
     R`Mỗi đường đi trên cây là một cách dẫn tới kết quả, và xác suất của nó là tích các nhánh. Biết kết quả $A$ đã xảy ra thì xác suất của một nguyên nhân là phần đóng góp của đường đi qua nguyên nhân ấy trong tổng các đường dẫn tới $A$.`,
     R`Chia cho xác suất của nguyên nhân thay vì chia cho tổng các đường dẫn tới kết quả. Với bệnh hiếm, xác suất mắc bệnh sau xét nghiệm dương tính thường nhỏ hơn nhiều so với mức nhiều người đoán.`,
   ),
+  "12/giao-do-thi-duong-thang": note(
+    R`Một điểm chung của hai đồ thị có cùng hoành độ và cùng tung độ, nên hoành độ làm hai hàm số nhận cùng giá trị. Vì vậy mỗi giao điểm ứng với đúng một nghiệm phân biệt của phương trình $f(x)=g(x)$.`,
+    R`Đếm nghiệm kép là hai giao điểm. Nghiệm kép chỉ cho một điểm chung, nên $(x-1)^2(x+2)=0$ ứng với hai giao điểm chứ không phải ba.`,
+  ),
+  "12/tuong-giao-tham-so": note(
+    R`Số nghiệm của phương trình bậc hai quyết định số giao điểm, và dấu của $\Delta$ cho biết số nghiệm. Khi phương trình có nghiệm không phụ thuộc tham số, tách nghiệm đó ra thì phần còn lại đơn giản hơn.`,
+    R`Quên điều kiện hai nghiệm khác nhau khi một nghiệm phụ thuộc $m$, hoặc quên rằng hệ số của $x^2$ có thể bằng $0$ với một giá trị nào đó của tham số.`,
+  ),
+  "12/tiep-xuc-hai-do-thi": note(
+    R`Hai đồ thị tiếp xúc tại một điểm khi chạm nhau mà không cắt, nên hiệu $f-g$ không đổi dấu qua điểm đó. Điều này xảy ra khi hiệu có nghiệm kép, tức cả $f-g$ và đạo hàm của nó cùng bằng $0$.`,
+    R`Chỉ kiểm tra $f(x_0)=g(x_0)$ mà quên $f'(x_0)=g'(x_0)$, nên nhầm điểm cắt thường với điểm tiếp xúc.`,
+  ),
+  "12/tinh-tich-co-huong": note(
+    R`Mỗi tọa độ của tích có hướng là một định thức cấp hai, và tích vô hướng của nó với $\vec a$ hay $\vec b$ khai triển ra bằng $0$. Vì vậy nó vuông góc với cả hai vectơ.`,
+    R`Sai dấu ở tọa độ thứ hai, vì thứ tự là $a_3b_1-a_1b_3$ chứ không phải $a_1b_3-a_3b_1$, hoặc đảo thứ tự hai vectơ nên đổi dấu cả vectơ kết quả.`,
+  ),
+  "12/dien-tich-tam-giac": note(
+    R`Độ dài tích có hướng bằng $|\vec a|\,|\vec b|\sin\varphi$, đúng là diện tích hình bình hành dựng trên hai vectơ. Tam giác là một nửa hình bình hành đó.`,
+    R`Quên chia đôi khi tính diện tích tam giác, hoặc lấy tích vô hướng thay cho tích có hướng.`,
+  ),
+  "12/the-tich-hon-tap": note(
+    R`Tích có hướng của hai vectơ cho diện tích đáy, và tích vô hướng với vectơ thứ ba cho chiều cao nhân diện tích đáy, tức thể tích. Ba vectơ nằm trong một mặt phẳng thì chiều cao bằng $0$.`,
+    R`Quên trị tuyệt đối nên thể tích âm, hoặc quên chia cho $6$ khi tính thể tích tứ diện.`,
+  ),
+  "12/mp-qua-ba-diem": note(
+    R`Hai vectơ $\overrightarrow{AB}$ và $\overrightarrow{AC}$ nằm trong mặt phẳng, nên tích có hướng của chúng vuông góc với mặt phẳng và là một vectơ pháp tuyến. Điều kiện này chỉ đúng khi ba điểm không thẳng hàng.`,
+    R`Dùng một điểm khác $A$ trong công thức mà thay sai tọa độ, hoặc không kiểm tra lại bằng cách thay cả ba điểm vào phương trình vừa viết.`,
+  ),
 };

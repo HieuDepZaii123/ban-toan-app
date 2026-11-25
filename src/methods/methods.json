@@ -291,6 +291,18 @@
       "methodId": "pt-mu-dat-an",
       "topicHref": "/kien-thuc/11/dang",
       "topicLabel": "Dạng bài lớp 11"
+    },
+    {
+      "when": "Đếm giao điểm của hai đồ thị, hoặc tìm tham số để hai đồ thị cắt hay tiếp xúc nhau.",
+      "methodId": "phuong-trinh-hoanh-do",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Diện tích tam giác, thể tích tứ diện, mặt phẳng qua ba điểm trong không gian.",
+      "methodId": "tich-co-huong-oxyz",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
     }
   ],
   "methods": [
@@ -5294,6 +5306,208 @@
         {
           "where": "pt-mu-dat-an-p2",
           "lhs": "4**0+2**0-2",
+          "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "phuong-trinh-hoanh-do",
+      "grade": 12,
+      "title": "Tương giao hai đồ thị bằng phương trình hoành độ",
+      "titleEn": "Intersections of two graphs with the equation of x-coordinates",
+      "blurb": "Lớp 12: lập phương trình hoành độ, đếm nghiệm phân biệt và dùng biệt thức khi có tham số.",
+      "spot": [
+        "Đề hỏi số giao điểm của hai đồ thị hoặc tìm tham số để hai đồ thị cắt, tiếp xúc nhau.",
+        "Đề cho một hàm bậc ba, bậc bốn hoặc parabol cùng một đường thẳng."
+      ],
+      "thinking": [
+        "Lập phương trình hoành độ giao điểm $f(x)=g(x)$ rồi chuyển về một vế.",
+        "Phân tích thành nhân tử nếu có nghiệm cố định, rồi đếm các nghiệm phân biệt.",
+        "Với tham số, dùng biệt thức $\\Delta$ cho bậc hai: dương cắt hai điểm, bằng $0$ tiếp xúc, âm không giao."
+      ],
+      "care": [
+        "Nghiệm kép chỉ cho một giao điểm, và tiếp xúc cần cả $f=g$ lẫn $f'=g'$.",
+        "Kiểm tra trường hợp hệ số của $x^2$ bằng $0$ khi hệ số đó chứa tham số."
+      ],
+      "formulas": [
+        "$f(x_0)=g(x_0)$ và $f'(x_0)=g'(x_0)$ là điều kiện tiếp xúc tại $x_0$."
+      ],
+      "examples": [
+        {
+          "id": "phuong-trinh-hoanh-do-1",
+          "title": "Đếm giao điểm",
+          "prompt": "Tìm số giao điểm của $y=x^3-3x$ và $y=x$.",
+          "steps": [
+            "Phương trình hoành độ là $x^3-4x=0$.",
+            "Phân tích $x(x-2)(x+2)=0$ nên có ba nghiệm."
+          ],
+          "result": "Có $3$ giao điểm."
+        },
+        {
+          "id": "phuong-trinh-hoanh-do-2",
+          "title": "Tiếp xúc có tham số",
+          "prompt": "Tìm $m$ để $y=2x+m$ tiếp xúc với $y=x^2$.",
+          "steps": [
+            "Phương trình hoành độ là $x^2-2x-m=0$.",
+            "Nghiệm kép khi $\\Delta=4+4m=0$ nên $m=-1$."
+          ],
+          "result": "Giá trị cần tìm là $m=-1$."
+        }
+      ],
+      "mistakes": [
+        "Đếm nghiệm kép thành hai giao điểm.",
+        "Bỏ qua điều kiện hai nghiệm khác nhau khi một nghiệm phụ thuộc tham số."
+      ],
+      "practice": [
+        {
+          "id": "phuong-trinh-hoanh-do-p1",
+          "prompt": "Đồ thị $y=x^3-3x$ cắt đường thẳng $y=-2$ tại bao nhiêu điểm phân biệt?",
+          "answer": "Tại $2$ điểm.",
+          "steps": [
+            "Phương trình $x^3-3x+2=(x-1)^2(x+2)=0$.",
+            "Có nghiệm kép $x=1$ và nghiệm đơn $x=-2$."
+          ]
+        },
+        {
+          "id": "phuong-trinh-hoanh-do-p2",
+          "prompt": "Tìm $m$ để $y=x^2$ tiếp xúc với $y=4x+m$.",
+          "answer": "Giá trị cần tìm là $m=-4$.",
+          "steps": [
+            "Phương trình $x^2-4x-m=0$.",
+            "Nghiệm kép khi $16+4m=0$ nên $m=-4$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/survey",
+          "label": "Khảo sát hàm số"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "phuong-trinh-hoanh-do-1",
+          "lhs": "2**3-4*2",
+          "rhs": "0"
+        },
+        {
+          "where": "phuong-trinh-hoanh-do-2",
+          "lhs": "4+4*(-1)",
+          "rhs": "0"
+        },
+        {
+          "where": "phuong-trinh-hoanh-do-p1",
+          "lhs": "1**3-3*1+2",
+          "rhs": "0"
+        },
+        {
+          "where": "phuong-trinh-hoanh-do-p2",
+          "lhs": "16+4*(-4)",
+          "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "tich-co-huong-oxyz",
+      "grade": 12,
+      "title": "Dùng tích có hướng cho diện tích, thể tích và mặt phẳng",
+      "titleEn": "Using the cross product for area, volume and planes",
+      "blurb": "Lớp 12: một phép tính tích có hướng cho diện tích tam giác, thể tích tứ diện, và vectơ pháp tuyến của mặt phẳng.",
+      "spot": [
+        "Đề cho tọa độ ba hoặc bốn điểm trong $Oxyz$ và hỏi diện tích, thể tích hoặc phương trình mặt phẳng.",
+        "Đề hỏi ba điểm có thẳng hàng hoặc bốn điểm có đồng phẳng không."
+      ],
+      "thinking": [
+        "Lập các vectơ $\\overrightarrow{AB}$, $\\overrightarrow{AC}$, $\\overrightarrow{AD}$ từ cùng một điểm gốc.",
+        "Tính tích có hướng $\\left[\\overrightarrow{AB},\\overrightarrow{AC}\\right]$.",
+        "Dùng độ dài nó cho diện tích, tích vô hướng với $\\overrightarrow{AD}$ cho thể tích, hoặc dùng làm pháp tuyến."
+      ],
+      "care": [
+        "Diện tích tam giác là một nửa độ dài, thể tích tứ diện là một phần sáu trị tuyệt đối của tích hỗn tạp.",
+        "Phải đúng thứ tự khi tính, đổi chỗ hai vectơ làm đổi dấu kết quả."
+      ],
+      "formulas": [
+        "$S_{ABC}=\\frac12\\left|\\left[\\overrightarrow{AB},\\overrightarrow{AC}\\right]\\right|$ và $V_{ABCD}=\\frac16\\left|\\left[\\overrightarrow{AB},\\overrightarrow{AC}\\right]\\cdot\\overrightarrow{AD}\\right|$."
+      ],
+      "examples": [
+        {
+          "id": "tich-co-huong-oxyz-1",
+          "title": "Diện tích",
+          "prompt": "Tính diện tích tam giác $ABC$ với $A(0;\\ 0;\\ 0)$, $B(3;\\ 0;\\ 0)$, $C(0;\\ 4;\\ 0)$.",
+          "steps": [
+            "Tích có hướng của $(3;\\ 0;\\ 0)$ và $(0;\\ 4;\\ 0)$ là $(0;\\ 0;\\ 12)$.",
+            "Diện tích là một nửa độ dài, tức $6$."
+          ],
+          "result": "Diện tích bằng $6$."
+        },
+        {
+          "id": "tich-co-huong-oxyz-2",
+          "title": "Mặt phẳng",
+          "prompt": "Viết mặt phẳng đi qua $A(1;\\ 0;\\ 0)$, $B(0;\\ 1;\\ 0)$, $C(0;\\ 0;\\ 1)$.",
+          "steps": [
+            "Tích có hướng của $\\overrightarrow{AB}$ và $\\overrightarrow{AC}$ là $(1;\\ 1;\\ 1)$.",
+            "Phương trình là $x+y+z-1=0$."
+          ],
+          "result": "Mặt phẳng là $x+y+z-1=0$."
+        }
+      ],
+      "mistakes": [
+        "Quên chia đôi hoặc chia sáu.",
+        "Đảo thứ tự hai vectơ làm sai dấu pháp tuyến."
+      ],
+      "practice": [
+        {
+          "id": "tich-co-huong-oxyz-p1",
+          "prompt": "Tứ diện $OABC$ có $A(2;\\ 0;\\ 0)$, $B(0;\\ 3;\\ 0)$, $C(0;\\ 0;\\ 4)$. Tính thể tích.",
+          "answer": "Thể tích bằng $4$.",
+          "steps": [
+            "Tích hỗn tạp là $24$.",
+            "Thể tích là $\\frac{24}{6}=4$."
+          ]
+        },
+        {
+          "id": "tich-co-huong-oxyz-p2",
+          "prompt": "Tìm $m$ để $A(0;\\ 0;\\ 0)$, $B(1;\\ 2;\\ 3)$, $C(2;\\ 4;\\ m)$ thẳng hàng.",
+          "answer": "Giá trị cần tìm là $m=6$.",
+          "steps": [
+            "Cần tích có hướng của $\\overrightarrow{AB}$ và $\\overrightarrow{AC}$ bằng $\\vec0$.",
+            "Tọa độ thứ hai là $3\\cdot2-m=0$ nên $m=6$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/analytic",
+          "label": "Hình giải tích"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "tich-co-huong-oxyz-1",
+          "lhs": "3*4",
+          "rhs": "12"
+        },
+        {
+          "where": "tich-co-huong-oxyz-2",
+          "lhs": "-1+1+1",
+          "rhs": "1"
+        },
+        {
+          "where": "tich-co-huong-oxyz-p1",
+          "lhs": "Rational(2*3*4,6)",
+          "rhs": "4"
+        },
+        {
+          "where": "tich-co-huong-oxyz-p2",
+          "lhs": "3*2-6",
           "rhs": "0"
         }
       ]
