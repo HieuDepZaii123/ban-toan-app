@@ -113,4 +113,20 @@ export const thptExtra2Notes: NoteBook = {
     R`Hai vectơ $\overrightarrow{AB}$ và $\overrightarrow{AC}$ nằm trong mặt phẳng, nên tích có hướng của chúng vuông góc với mặt phẳng và là một vectơ pháp tuyến. Điều kiện này chỉ đúng khi ba điểm không thẳng hàng.`,
     R`Dùng một điểm khác $A$ trong công thức mà thay sai tọa độ, hoặc không kiểm tra lại bằng cách thay cả ba điểm vào phương trình vừa viết.`,
   ),
+  "12/tich-vo-huong-kg": note(
+    R`Tích vô hướng bằng tích hai độ dài nhân $\cos\varphi$, nên suy ra $\cos\varphi$ khi biết tích vô hướng và độ dài. Tích vô hướng bằng $0$ nghĩa là $\cos\varphi=0$, tức hai vectơ vuông góc.`,
+    R`Quên căn bậc hai khi tính độ dài, hoặc nhầm tích vô hướng, là một số, với tích có hướng, là một vectơ.`,
+  ),
+  "12/goc-hai-dt-kg": note(
+    R`Góc giữa hai đường thẳng chỉ phụ thuộc phương của chúng, nên dùng hai vectơ chỉ phương và lấy trị tuyệt đối để được góc không tù. Hai đường chéo nhau vẫn có góc xác định theo cách này.`,
+    R`Bỏ trị tuyệt đối nên ra góc tù, hoặc kết luận hai đường vuông góc rồi cho rằng chúng cắt nhau. Hai đường chéo nhau cũng có thể vuông góc.`,
+  ),
+  "12/song-song-vuong-goc-mp": note(
+    R`Mỗi mặt phẳng vuông góc với pháp tuyến của nó, nên góc giữa hai mặt phẳng bằng góc giữa hai pháp tuyến hoặc bù với nó. Pháp tuyến cùng phương cho hai mặt song song hoặc trùng, và hằng số quyết định trường hợp nào.`,
+    R`Kết luận song song chỉ vì pháp tuyến cùng phương mà quên kiểm tra hai mặt có trùng nhau không.`,
+  ),
+  "12/duong-mat-quan-he": note(
+    R`Đường thẳng song song với mặt phẳng khi chỉ phương vuông góc với pháp tuyến, và vuông góc với mặt phẳng khi chỉ phương cùng phương với pháp tuyến. Góc giữa đường và mặt là phần bù của góc giữa đường và pháp tuyến nên dùng sin.`,
+    R`Dùng cos thay cho sin trong góc giữa đường thẳng và mặt phẳng, hoặc quên thử điểm nên nhầm song song với nằm trong mặt phẳng.`,
+  ),
 };

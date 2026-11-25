@@ -30,7 +30,7 @@ const STRAND: Record<number, Record<string, Strand>> = {
   9: { can: S, "ham-b2": S, "he-pt": S, "pt-b2": S, bpt: S, "lg-vuong": H, tron: H, khoi: H, "tan-so": T, "thuc-te-9": S, "on-vao-10": S },
   10: { "menh-de": S, "bpt-hai-an": S, "ham-bac-hai": S, "ung-dung-b2": S, "ham-so-10": S, "luong-giac": H, vecto: H, "vt-toa-do-10": H, "toa-do": H, "duong-thang-nc": H, "to-hop": S, "thong-ke": T, "thong-ke-nc": T, xs: T },
   11: { "luong-giac": S, "luong-giac-nc": S, "mu-log-nc": S, "day-so": S, "gioi-han": S, "mu-log": S, "dao-ham": S, "khong-gian": H, "goc-kc-11": H, "chieu-ss-11": H, "tk-11": T, "xs-11": T },
-  12: { "khao-sat": S, "ung-dung-dh": S, "tich-phan": S, "ky-thuat-tp": S, "do-thi-ham": S, "tuong-giao-nc": S, "tp-nang-cao": S, oxyz: H, "oxyz-nang-cao": H, "tich-co-huong": H, "tk-12": T, "tk-nang-cao": T, "xs-12": T, "xs-nang-cao": T },
+  12: { "khao-sat": S, "ung-dung-dh": S, "tich-phan": S, "ky-thuat-tp": S, "do-thi-ham": S, "tuong-giao-nc": S, "tp-nang-cao": S, oxyz: H, "oxyz-nang-cao": H, "tich-co-huong": H, "quan-he-oxyz": H, "tk-12": T, "tk-nang-cao": T, "xs-12": T, "xs-nang-cao": T },
 };
 
 export type Node = { id: string; grade: number; chapter: string; title: string; strand: Strand };

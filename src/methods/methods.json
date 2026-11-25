@@ -303,6 +303,12 @@
       "methodId": "tich-co-huong-oxyz",
       "topicHref": "/kien-thuc/12/dang",
       "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Tham số để hai đường, hai mặt hoặc đường với mặt song song hay vuông góc, và các bài về góc trong không gian.",
+      "methodId": "quan-he-vecto-oxyz",
+      "topicHref": "/kien-thuc/12/dang",
+      "topicLabel": "Dạng bài lớp 12"
     }
   ],
   "methods": [
@@ -5508,6 +5514,107 @@
         {
           "where": "tich-co-huong-oxyz-p2",
           "lhs": "3*2-6",
+          "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "quan-he-vecto-oxyz",
+      "grade": 12,
+      "title": "Song song và vuông góc trong Oxyz bằng vectơ",
+      "titleEn": "Parallel and perpendicular in Oxyz with vectors",
+      "blurb": "Lớp 12: đổi mọi quan hệ song song, vuông góc và góc thành phép tính với chỉ phương và pháp tuyến.",
+      "spot": [
+        "Đề hỏi tham số để hai đường, hai mặt hoặc đường với mặt song song hay vuông góc.",
+        "Đề hỏi góc giữa hai đường thẳng, hai mặt phẳng, hoặc đường thẳng với mặt phẳng."
+      ],
+      "thinking": [
+        "Lấy chỉ phương $\\vec u$ của đường thẳng và pháp tuyến $\\vec n$ của mặt phẳng từ hệ số phương trình.",
+        "Vuông góc dùng tích vô hướng bằng $0$, song song dùng hai vectơ cùng phương.",
+        "Đường với đường và mặt với mặt dùng cos có trị tuyệt đối, còn đường với mặt dùng sin."
+      ],
+      "care": [
+        "Song song cần thêm kiểm tra không trùng, bằng cách thử một điểm hoặc so hằng số.",
+        "Đường thẳng song song với mặt phẳng khi chỉ phương vuông góc với pháp tuyến, không phải cùng phương."
+      ],
+      "formulas": [
+        "$\\cos\\varphi=\\frac{|\\vec a\\cdot\\vec b|}{|\\vec a|\\,|\\vec b|}$ cho hai đường hoặc hai mặt, và $\\sin\\varphi=\\frac{|\\vec u\\cdot\\vec n|}{|\\vec u|\\,|\\vec n|}$ cho đường với mặt."
+      ],
+      "examples": [
+        {
+          "id": "quan-he-vecto-oxyz-1",
+          "title": "Hai mặt vuông góc",
+          "prompt": "Tìm $m$ để $x+y+z=0$ vuông góc với $2x-y+mz+1=0$.",
+          "steps": [
+            "Hai pháp tuyến là $(1;\\ 1;\\ 1)$ và $(2;\\ -1;\\ m)$.",
+            "Cần $2-1+m=0$ nên $m=-1$."
+          ],
+          "result": "Giá trị cần tìm là $m=-1$."
+        },
+        {
+          "id": "quan-he-vecto-oxyz-2",
+          "title": "Góc đường và mặt",
+          "prompt": "Tính góc giữa đường có chỉ phương $(0;\\ 0;\\ 1)$ và mặt phẳng $x+z=0$.",
+          "steps": [
+            "Pháp tuyến $(1;\\ 0;\\ 1)$ cho $\\sin\\varphi=\\frac{1}{\\sqrt2}$.",
+            "Do đó $\\varphi=45^\\circ$."
+          ],
+          "result": "Góc bằng $45^\\circ$."
+        }
+      ],
+      "mistakes": [
+        "Dùng cos cho góc giữa đường thẳng và mặt phẳng.",
+        "Kết luận song song mà quên kiểm tra trùng nhau."
+      ],
+      "practice": [
+        {
+          "id": "quan-he-vecto-oxyz-p1",
+          "prompt": "Tìm $m$ để đường có chỉ phương $(1;\\ 2;\\ m)$ vuông góc với mặt phẳng có pháp tuyến $(2;\\ 4;\\ 6)$.",
+          "answer": "Giá trị cần tìm là $m=3$.",
+          "steps": [
+            "Chỉ phương phải cùng phương với pháp tuyến.",
+            "Do đó $\\frac12=\\frac{m}{6}$ và $m=3$."
+          ]
+        },
+        {
+          "id": "quan-he-vecto-oxyz-p2",
+          "prompt": "Tìm $m$ để hai đường có chỉ phương $(m;\\ 1;\\ 2)$ và $(1;\\ -3;\\ 1)$ vuông góc.",
+          "answer": "Giá trị cần tìm là $m=1$.",
+          "steps": [
+            "Cần tích vô hướng bằng $0$.",
+            "Tức $m-3+2=0$ nên $m=1$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/analytic",
+          "label": "Hình giải tích"
+        },
+        {
+          "href": "/kien-thuc/12/dang",
+          "label": "Dạng bài lớp 12"
+        }
+      ],
+      "verify": [
+        {
+          "where": "quan-he-vecto-oxyz-1",
+          "lhs": "2-1+(-1)",
+          "rhs": "0"
+        },
+        {
+          "where": "quan-he-vecto-oxyz-2",
+          "lhs": "sin(pi/4)*sqrt(2)",
+          "rhs": "1"
+        },
+        {
+          "where": "quan-he-vecto-oxyz-p1",
+          "lhs": "Rational(1,2)*6",
+          "rhs": "3"
+        },
+        {
+          "where": "quan-he-vecto-oxyz-p2",
+          "lhs": "1-3+2",
           "rhs": "0"
         }
       ]
