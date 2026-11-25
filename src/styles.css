@@ -1869,3 +1869,18 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .plot-curve { fill: none; stroke: var(--accent, #2563eb); stroke-width: 2.2; stroke-linejoin: round; }
 .plot-asym { stroke: currentColor; stroke-width: 1; stroke-dasharray: 5 4; opacity: 0.55; }
 .plot-curve2 { fill: none; stroke: var(--accent-2, #c2410c); stroke-width: 2; stroke-dasharray: 7 4; }
+
+.space-figure { display: block; width: min(100%, 340px); height: auto; margin: 0.6rem auto; color: var(--ink, #1f2937); }
+.sp-edge { stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+.sp-hidden { stroke-dasharray: 5 4; opacity: 0.6; }
+.sp-hl { stroke: var(--accent, #2563eb); stroke-width: 2.6; }
+.sp-hl2 { stroke: var(--accent-2, #c2410c); stroke-width: 2.6; }
+.sp-vec { stroke-width: 2; }
+.sp-arrowhead { fill: currentColor; }
+.sp-plane { fill: var(--accent, #2563eb); opacity: 0.14; stroke: none; }
+.sp-plane-b { fill: var(--accent-2, #c2410c); opacity: 0.16; }
+.sp-right { stroke: currentColor; stroke-width: 1.2; }
+.sp-angle { stroke: var(--accent, #2563eb); stroke-width: 1.6; }
+.sp-dot { fill: currentColor; }
+.sp-label { fill: currentColor; font-size: 13px; font-weight: 600; }
+.sp-edge-label { fill: currentColor; font-size: 11px; font-style: italic; }

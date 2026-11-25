@@ -18,6 +18,8 @@ import { DangView } from "./GradeDang.tsx";
 import { ThinkView } from "./GradeThink.tsx";
 const PathView = lazy(() => import("./GradePath.tsx").then((mod) => ({ default: mod.PathView })));
 import { LessonPicture } from "./LessonPicture.tsx";
+import { SpaceFigure } from "./SpaceFigure.tsx";
+import { spaceFigures } from "../content/grades/space.ts";
 import { pictures } from "../content/grades/pictures.ts";
 import { GradeWidgetView } from "./GradeWidgets.tsx";
 import { doneCount, markDone, readDone } from "./progress.ts";
@@ -208,6 +210,7 @@ function LessonView({ book, chapterId, chapterTitle, lesson: source }: { book: G
             </>
           ) : null}
           {pictures[`${book.grade}/${lesson.id}`] ? <LessonPicture spec={pictures[`${book.grade}/${lesson.id}`]!} english={Boolean(english)} /> : lesson.figure ? <GradeFigure kind={lesson.figure} /> : null}
+          {spaceFigures[`${book.grade}/${lesson.id}`] ? <SpaceFigure spec={spaceFigures[`${book.grade}/${lesson.id}`]!} english={Boolean(english)} /> : null}
           {lesson.widget ? <GradeWidgetView kind={lesson.widget} /> : null}
           {topic ? <p><A href={`/t/${topic.id}`}>{t(lang, `Mở chuyên đề ${topic.title}`, `Open the topic ${topic.titleEn}`)}</A></p> : null}
         </article>
