@@ -3,6 +3,7 @@ import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 import { lop11GocKhongGian } from "./lopExtra.ts";
 import { lop11LuongGiacNC, lop11MuLogNC } from "./lop1011extra.ts";
 import { lop11ChieuSongSong } from "./lop1011extra2.ts";
+import { lop11GocVuongGoc, lop11KhoangCachKg, lop11TyLeKg, lop11VectoKg } from "./lop11extra3.ts";
 
 const R = String.raw;
 
@@ -429,5 +430,5 @@ const lop11Base: GradeBook = {
 /** Chương bổ sung xen vào cạnh chương cùng mạch. */
 export const lop11: GradeBook = {
   ...lop11Base,
-  chapters: lop11Base.chapters.flatMap((chapter) => (chapter.id === "khong-gian" ? [chapter, lop11GocKhongGian, lop11ChieuSongSong] : chapter.id === "luong-giac" ? [chapter, lop11LuongGiacNC] : chapter.id === "mu-log" ? [chapter, lop11MuLogNC] : [chapter])),
+  chapters: lop11Base.chapters.flatMap((chapter) => (chapter.id === "khong-gian" ? [chapter, lop11GocKhongGian, lop11ChieuSongSong, lop11VectoKg, lop11GocVuongGoc, lop11KhoangCachKg, lop11TyLeKg] : chapter.id === "luong-giac" ? [chapter, lop11LuongGiacNC] : chapter.id === "mu-log" ? [chapter, lop11MuLogNC] : [chapter])),
 };

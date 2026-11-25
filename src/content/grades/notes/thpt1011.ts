@@ -101,4 +101,56 @@ export const thpt1011Notes: NoteBook = {
     R`Đường chéo đáy và chiều cao là hai cạnh góc vuông của một tam giác vuông có đường chéo hình hộp là cạnh huyền. Áp dụng Pi-ta-go hai lần cho công thức $\sqrt{a^2+b^2+c^2}$.`,
     R`Dùng công thức đường chéo hình lập phương $a\sqrt3$ cho hình hộp chữ nhật không đều, hoặc tính diện tích toàn phần thiếu hệ số $2$.`,
   ),
+  "11/quy-tac-vecto-kg": note(
+    R`Mỗi quy tắc cộng chỉ là cách đi từ điểm đầu đến điểm cuối qua các điểm trung gian, và kết quả không phụ thuộc đường đi. Hình hộp có ba cạnh xuất phát từ một đỉnh, nên tổng ba vectơ đó là đường chéo qua đỉnh ấy.`,
+    R`Cộng hai vectơ mà điểm cuối vectơ đầu không trùng điểm đầu vectơ sau, hoặc dùng quy tắc hình hộp cho ba vectơ không cùng xuất phát từ một đỉnh.`,
+  ),
+  "11/phan-tich-vecto": note(
+    R`Ba cạnh của hình hộp là ba vectơ không đồng phẳng nên làm cơ sở, và mọi vectơ đi từ đỉnh này đến đỉnh khác là một đường đi dọc cạnh. Đổi chiều một cạnh đổi dấu hệ số tương ứng.`,
+    R`Quên đổi dấu khi đi ngược chiều cạnh, như viết $\overrightarrow{BA}=\vec a$, hoặc bỏ sót hệ số $\frac12$ khi đi tới trung điểm.`,
+  ),
+  "11/tich-vo-huong-hinh": note(
+    R`Tích vô hướng đo mức hai vectơ cùng hướng, bằng tích hai độ dài nhân $\cos\varphi$. Bình phương độ dài của tổng khai triển như bình phương một tổng, và số hạng giữa chính là tích vô hướng.`,
+    R`Lấy góc của hai đoạn thẳng thay cho góc của hai vectơ. Khi hai vectơ không cùng điểm đầu phải tịnh tiến về cùng một điểm trước.`,
+  ),
+  "11/dong-phang-3-vecto": note(
+    R`Nếu $\vec c=m\vec a+n\vec b$ thì $\vec c$ nằm trong mặt phẳng của $\vec a$ và $\vec b$, nên ba vectơ cùng nằm trong một mặt phẳng. Ngược lại ba cạnh của hình hộp không đồng phẳng.`,
+    R`Cho rằng ba vectơ đồng phẳng chỉ vì có một cặp cùng phương. Điều kiện đúng là một vectơ viết được qua hai vectơ không cùng phương còn lại.`,
+  ),
+  "11/goc-hai-dt-cheo": note(
+    R`Góc giữa hai đường thẳng chỉ phụ thuộc phương của chúng, nên tịnh tiến một đường thẳng cắt đường kia mà không đổi góc. Dùng vectơ chỉ phương cho công thức gọn và không cần dựng hình.`,
+    R`Bỏ trị tuyệt đối nên ra góc tù, hoặc lấy góc giữa hai vectơ nối các đỉnh thay cho góc giữa hai đường thẳng.`,
+  ),
+  "11/goc-duong-mat-11": note(
+    R`Hình chiếu vuông góc của đường thẳng lên mặt phẳng là đường thẳng gần nhất với nó, nên góc giữa đường và hình chiếu là góc nhỏ nhất giữa đường và mặt. Tam giác vuông tạo bởi đường, hình chiếu và đường vuông góc cho tỉ số lượng giác.`,
+    R`Dùng cos thay cho sin khi biết khoảng cách từ điểm đến mặt phẳng, hoặc lấy góc giữa đường và đường vuông góc với mặt phẳng.`,
+  ),
+  "11/goc-nhi-dien-11": note(
+    R`Đường thẳng trong mỗi mặt vuông góc với giao tuyến tại cùng một điểm cho góc phẳng của nhị diện. Nếu đường vuông góc với mặt phẳng kia nằm trong mặt thứ nhất thì hai mặt vuông góc nhau.`,
+    R`Lấy góc giữa hai cạnh bất kì của hai mặt thay vì góc giữa hai đường cùng vuông góc với giao tuyến.`,
+  ),
+  "11/kc-diem-duong": note(
+    R`Hai cách tính diện tích tam giác, nửa tích hai cạnh góc vuông và nửa đáy nhân đường cao, bằng nhau nên đường cao bằng tích hai cạnh góc vuông chia cạnh huyền. Khoảng cách luôn đo theo đường vuông góc.`,
+    R`Lấy độ dài một cạnh nghiêng thay cho đường vuông góc, hoặc quên chia cho cạnh huyền khi dùng công thức đường cao.`,
+  ),
+  "11/kc-song-song-kg": note(
+    R`Mọi điểm của đường thẳng song song với mặt phẳng cách mặt phẳng một khoảng như nhau, và mọi điểm của mặt phẳng này cách mặt phẳng song song với nó một khoảng như nhau. Vì vậy chỉ cần chọn điểm thuận tiện.`,
+    R`Chọn điểm rồi tính khoảng cách đến một mặt phẳng không phải mặt phẳng cần tìm, hoặc không chứng minh được hạ vuông góc xuống đúng mặt phẳng.`,
+  ),
+  "11/kc-cheo-nhau": note(
+    R`Hai đường chéo nhau có đúng một đoạn vuông góc chung, và nó bằng khoảng cách giữa đường này và mặt phẳng chứa đường kia song song với nó. Khi một đường vuông góc mặt phẳng chứa đường kia, chiếu đường đó thành một điểm.`,
+    R`Lấy khoảng cách giữa hai điểm bất kì của hai đường thay cho độ dài đoạn vuông góc chung, hoặc quên chiếu về cùng một mặt phẳng.`,
+  ),
+  "11/kc-the-tich": note(
+    R`Thể tích tứ diện tính theo hai cách: đáy này với chiều cao đã biết, hoặc đáy kia với chiều cao cần tìm. Cho hai kết quả bằng nhau thì chiều cao cần tìm là $\frac{3V}{S}$.`,
+    R`Quên nhân $3$ trong $\frac{3V}{S}$, hoặc dùng diện tích sai mặt, tức không phải mặt đang cần tính khoảng cách tới.`,
+  ),
+  "11/thales-kg": note(
+    R`Các mặt phẳng song song cắt hai đường thẳng tạo ra các tam giác đồng dạng, nên các cặp đoạn tương ứng cùng tỉ lệ. Chọn đúng cặp đoạn tương ứng, đo từ cùng một phía.`,
+    R`Viết sai thứ tự đoạn thẳng trong tỉ lệ thức, chẳng hạn $\frac{SM}{MA}$ thay cho $\frac{SM}{SA}$ khi tính $MN$.`,
+  ),
+  "11/thiet-dien-ss": note(
+    R`Mặt phẳng song song với đáy cắt hình chóp thành hình đồng dạng với đáy, và hình chóp nhỏ đồng dạng với hình chóp lớn. Độ dài nhân $k$, diện tích nhân $k^2$ và thể tích nhân $k^3$.`,
+    R`Dùng $k$ thay cho $k^2$ khi tính diện tích, hoặc quên rằng tỉ số $k$ được tính từ đỉnh chứ không từ đáy.`,
+  ),
 };

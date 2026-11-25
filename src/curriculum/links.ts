@@ -32,7 +32,7 @@ export const THINK_CHAPTER: Record<number, string[]> = {
   8: ["dang-thuc", "dang-thuc", "pt-ham", "dang-thuc", "tam-giac"],
   9: ["pt-b2", "can", "can", "lg-vuong", "he-pt", "tan-so", "can"],
   10: ["menh-de", "menh-de", "ham-bac-hai", "vecto", "ham-bac-hai", "thong-ke", "ham-so-10", "vt-toa-do-10"],
-  11: ["gioi-han", "dao-ham", "gioi-han", "xs-11", "xs-11", "khong-gian", "luong-giac-nc", "mu-log-nc"],
+  11: ["gioi-han", "dao-ham", "gioi-han", "xs-11", "xs-11", "khong-gian", "luong-giac-nc", "mu-log-nc", "khoang-cach-11", "vecto-kg-11"],
   12: ["khao-sat", "tich-phan", "tich-phan", "xs-12", "oxyz", "do-thi-ham", "tp-nang-cao", "tp-nang-cao", "oxyz-nang-cao", "tk-nang-cao", "xs-nang-cao", "xs-nang-cao"],
 };
 
@@ -84,6 +84,8 @@ export const METHOD_NODE: Record<string, { grade: number; chapter: string; stran
   "phuong-trinh-hoanh-do": { grade: 12, chapter: "tuong-giao-nc" },
   "tich-co-huong-oxyz": { grade: 12, chapter: "tich-co-huong" },
   "quan-he-vecto-oxyz": { grade: 12, chapter: "quan-he-oxyz" },
+  "khoang-cach-kg-11": { grade: 11, chapter: "khoang-cach-11" },
+  "goc-kg-11": { grade: 11, chapter: "goc-vuong-goc-11" },
   "tuong-giao-do-thi": { grade: 12, chapter: "do-thi-ham" },
   "tp-tach-doan": { grade: 12, chapter: "tp-nang-cao" },
   "khoang-cach-oxyz": { grade: 12, chapter: "oxyz-nang-cao" },

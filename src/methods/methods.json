@@ -309,6 +309,18 @@
       "methodId": "quan-he-vecto-oxyz",
       "topicHref": "/kien-thuc/12/dang",
       "topicLabel": "Dạng bài lớp 12"
+    },
+    {
+      "when": "Khoảng cách giữa hai đường chéo nhau, giữa đường và mặt song song, hoặc từ điểm đến mặt phẳng trong hình chóp, lăng trụ.",
+      "methodId": "khoang-cach-kg-11",
+      "topicHref": "/kien-thuc/11/dang",
+      "topicLabel": "Dạng bài lớp 11"
+    },
+    {
+      "when": "Góc giữa đường thẳng và mặt phẳng, giữa hai mặt phẳng, hoặc giữa hai đường chéo nhau.",
+      "methodId": "goc-kg-11",
+      "topicHref": "/kien-thuc/11/dang",
+      "topicLabel": "Dạng bài lớp 11"
     }
   ],
   "methods": [
@@ -5616,6 +5628,208 @@
           "where": "quan-he-vecto-oxyz-p2",
           "lhs": "1-3+2",
           "rhs": "0"
+        }
+      ]
+    },
+    {
+      "id": "khoang-cach-kg-11",
+      "grade": 11,
+      "title": "Tính khoảng cách trong hình không gian",
+      "titleEn": "Computing distances in a space figure",
+      "blurb": "Lớp 11: đưa mọi khoảng cách về khoảng cách từ điểm đến mặt phẳng hoặc đường thẳng rồi dùng tam giác vuông hay thể tích.",
+      "spot": [
+        "Đề hỏi khoảng cách giữa hai đường chéo nhau, giữa đường và mặt song song, hoặc từ điểm đến mặt phẳng.",
+        "Hình chóp hoặc lăng trụ có một cạnh vuông góc với đáy."
+      ],
+      "thinking": [
+        "Tìm mặt phẳng chứa một đường và song song với đường kia, hoặc chiếu đường vuông góc với đáy thành một điểm.",
+        "Đưa về khoảng cách từ một điểm đến một mặt phẳng hoặc đường thẳng.",
+        "Tính bằng đường cao của tam giác vuông, hoặc bằng $\\frac{3V}{S}$ khi khó dựng đường vuông góc."
+      ],
+      "care": [
+        "Khoảng cách luôn đo theo đường vuông góc, không phải theo cạnh nghiêng.",
+        "Với $\\frac{3V}{S}$ phải dùng đúng diện tích mặt đang cần tính khoảng cách tới."
+      ],
+      "formulas": [
+        "$h=\\frac{3V}{S}$ và đường cao tam giác vuông $AH=\\frac{AB\\cdot AC}{BC}$."
+      ],
+      "examples": [
+        {
+          "id": "khoang-cach-kg-11-1",
+          "title": "Đường chéo nhau",
+          "prompt": "Hình hộp chữ nhật có $AB=6$, $AD=8$. Tính khoảng cách giữa $AA'$ và $BD$.",
+          "steps": [
+            "Chiếu $AA'$ lên đáy thành điểm $A$ nên cần $d(A;\\ BD)$.",
+            "Tam giác $ABD$ vuông tại $A$ có $BD=10$ nên $d=\\frac{48}{10}=\\frac{24}{5}$."
+          ],
+          "result": "Khoảng cách bằng $\\frac{24}{5}$."
+        },
+        {
+          "id": "khoang-cach-kg-11-2",
+          "title": "Bằng thể tích",
+          "prompt": "Tứ diện có thể tích $6$ và một mặt có diện tích $9$. Tính chiều cao hạ từ đỉnh còn lại.",
+          "steps": [
+            "Chiều cao là $\\frac{3V}{S}$.",
+            "Thay vào được $\\frac{18}{9}=2$."
+          ],
+          "result": "Chiều cao bằng $2$."
+        }
+      ],
+      "mistakes": [
+        "Dùng độ dài cạnh nghiêng thay cho đường vuông góc.",
+        "Quên nhân $3$ khi dùng thể tích."
+      ],
+      "practice": [
+        {
+          "id": "khoang-cach-kg-11-p1",
+          "prompt": "Tính khoảng cách giữa $AA'$ và $BD$ của hình lập phương cạnh $2$.",
+          "answer": "Khoảng cách bằng $\\sqrt2$.",
+          "steps": [
+            "Khoảng cách bằng $d(A;\\ BD)$.",
+            "Đó là $\\frac{2}{\\sqrt2}=\\sqrt2$."
+          ]
+        },
+        {
+          "id": "khoang-cach-kg-11-p2",
+          "prompt": "Tứ diện $OABC$ có $OA=OB=OC=6$ đôi một vuông góc. Tính khoảng cách từ $O$ đến $(ABC)$.",
+          "answer": "Khoảng cách bằng $2\\sqrt3$.",
+          "steps": [
+            "Với ba cạnh bằng $a$ thì khoảng cách là $\\frac{a}{\\sqrt3}$.",
+            "Do đó $\\frac{6}{\\sqrt3}=2\\sqrt3$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/triangle",
+          "label": "Hình học"
+        },
+        {
+          "href": "/kien-thuc/11/dang",
+          "label": "Dạng bài lớp 11"
+        }
+      ],
+      "verify": [
+        {
+          "where": "khoang-cach-kg-11-1",
+          "lhs": "Rational(6*8,10)",
+          "rhs": "Rational(24,5)"
+        },
+        {
+          "where": "khoang-cach-kg-11-2",
+          "lhs": "Rational(3*6,9)",
+          "rhs": "2"
+        },
+        {
+          "where": "khoang-cach-kg-11-p1",
+          "lhs": "2/sqrt(2)",
+          "rhs": "sqrt(2)"
+        },
+        {
+          "where": "khoang-cach-kg-11-p2",
+          "lhs": "6/sqrt(3)",
+          "rhs": "2*sqrt(3)"
+        }
+      ]
+    },
+    {
+      "id": "goc-kg-11",
+      "grade": 11,
+      "title": "Tính góc trong hình không gian",
+      "titleEn": "Computing angles in a space figure",
+      "blurb": "Lớp 11: tìm hình chiếu hoặc giao tuyến rồi tính góc trong một tam giác vuông.",
+      "spot": [
+        "Đề hỏi góc giữa đường thẳng và mặt phẳng, giữa hai mặt phẳng hoặc giữa hai đường chéo nhau.",
+        "Hình có một cạnh vuông góc với mặt đáy."
+      ],
+      "thinking": [
+        "Với đường và mặt: tìm hình chiếu của đường lên mặt, góc là góc giữa đường và hình chiếu.",
+        "Với hai mặt: tìm giao tuyến rồi hai đường cùng vuông góc với giao tuyến trong mỗi mặt.",
+        "Với hai đường chéo nhau: dùng vectơ chỉ phương và lấy trị tuyệt đối của $\\cos$."
+      ],
+      "care": [
+        "Góc giữa đường và mặt dùng sin khi biết khoảng cách từ một điểm đến mặt.",
+        "Góc giữa hai đường không vượt quá $90^\\circ$."
+      ],
+      "formulas": [
+        "$\\sin\\varphi=\\frac{h}{AB}$ và $\\tan\\varphi=\\frac{SA}{AB}$ khi $SA\\perp(ABC)$."
+      ],
+      "examples": [
+        {
+          "id": "goc-kg-11-1",
+          "title": "Đường và mặt",
+          "prompt": "Hình chóp $S.ABC$ có $SA\\perp(ABC)$, $SA=3$, $AB=3$. Tính góc giữa $SB$ và $(ABC)$.",
+          "steps": [
+            "Hình chiếu của $SB$ là $AB$ nên góc là $SBA$.",
+            "$\\tan SBA=\\frac33=1$ nên góc bằng $45^\\circ$."
+          ],
+          "result": "Góc bằng $45^\\circ$."
+        },
+        {
+          "id": "goc-kg-11-2",
+          "title": "Hai mặt phẳng",
+          "prompt": "Đáy hình vuông cạnh $2$, $SA\\perp(ABCD)$ và $SA=2$. Tính góc giữa $(SBC)$ và $(ABCD)$.",
+          "steps": [
+            "Giao tuyến là $BC$ và $BC\\perp(SAB)$ nên góc là $SBA$.",
+            "$\\tan SBA=\\frac22=1$ nên góc bằng $45^\\circ$."
+          ],
+          "result": "Góc bằng $45^\\circ$."
+        }
+      ],
+      "mistakes": [
+        "Dùng cos thay cho sin khi biết khoảng cách từ điểm đến mặt phẳng.",
+        "Lấy góc giữa hai cạnh bất kì thay cho góc giữa hai đường cùng vuông góc với giao tuyến."
+      ],
+      "practice": [
+        {
+          "id": "goc-kg-11-p1",
+          "prompt": "Hình chóp $S.ABC$ có $SA\\perp(ABC)$, $SA=2$ và $AB=2\\sqrt3$. Tính góc giữa $SB$ và $(ABC)$.",
+          "answer": "Góc bằng $30^\\circ$.",
+          "steps": [
+            "$\\tan SBA=\\frac{2}{2\\sqrt3}=\\frac{1}{\\sqrt3}$.",
+            "Do đó góc bằng $30^\\circ$."
+          ]
+        },
+        {
+          "id": "goc-kg-11-p2",
+          "prompt": "Điểm $A$ cách mặt phẳng $(P)$ khoảng $4$, $AB=4\\sqrt2$ với $B\\in(P)$. Tính góc giữa $AB$ và $(P)$.",
+          "answer": "Góc bằng $45^\\circ$.",
+          "steps": [
+            "$\\sin\\varphi=\\frac{4}{4\\sqrt2}=\\frac{\\sqrt2}{2}$.",
+            "Do đó $\\varphi=45^\\circ$."
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "/t/triangle",
+          "label": "Hình học"
+        },
+        {
+          "href": "/kien-thuc/11/dang",
+          "label": "Dạng bài lớp 11"
+        }
+      ],
+      "verify": [
+        {
+          "where": "goc-kg-11-1",
+          "lhs": "tan(pi/4)",
+          "rhs": "Rational(3,3)"
+        },
+        {
+          "where": "goc-kg-11-2",
+          "lhs": "tan(pi/4)",
+          "rhs": "Rational(2,2)"
+        },
+        {
+          "where": "goc-kg-11-p1",
+          "lhs": "tan(pi/6)",
+          "rhs": "2/(2*sqrt(3))"
+        },
+        {
+          "where": "goc-kg-11-p2",
+          "lhs": "sin(pi/4)",
+          "rhs": "4/(4*sqrt(2))"
         }
       ]
     }

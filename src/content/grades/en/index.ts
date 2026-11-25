@@ -19,11 +19,12 @@ import { g12Extra4En } from "./g12extra4.ts";
 import { g12Extra5En } from "./g12extra5.ts";
 import { g10Extra2En, g11Extra2En } from "./g1011extra.ts";
 import { g10Extra3En, g11Extra3En } from "./g1011extra2.ts";
+import { g11Extra4En } from "./g11extra3.ts";
 import { g10ExtraEn, g11ExtraEn, g9ExtraEn } from "./gExtra.ts";
 import { g1ExtraEn, g2ExtraEn, g3ExtraEn, g4ExtraEn, g5ExtraEn, g6ExtraEn, g7ExtraEn, g8ExtraEn } from "./gLower.ts";
 
 /** Bản dịch theo khóa "<lớp>/<mã bài>". */
-const byGrade: [number, Record<string, LessonEn>][] = [[1, { ...g1En, ...g1ExtraEn }], [2, { ...g2En, ...g2ExtraEn }], [3, { ...g3En, ...g3ExtraEn }], [4, { ...g4En, ...g4ExtraEn }], [5, { ...g5En, ...g5ExtraEn }], [6, { ...g6En, ...g6ExtraEn }], [7, { ...g7En, ...g7ExtraEn }], [8, { ...g8En, ...g8ExtraEn }], [9, { ...g9En, ...g9ExtraEn }], [10, { ...g10En, ...g10ExtraEn, ...g10Extra2En, ...g10Extra3En }], [11, { ...g11En, ...g11ExtraEn, ...g11Extra2En, ...g11Extra3En }], [12, { ...g12En, ...g12ExtraEn, ...g12Extra2En, ...g12Extra3En, ...g12Extra4En, ...g12Extra5En }]];
+const byGrade: [number, Record<string, LessonEn>][] = [[1, { ...g1En, ...g1ExtraEn }], [2, { ...g2En, ...g2ExtraEn }], [3, { ...g3En, ...g3ExtraEn }], [4, { ...g4En, ...g4ExtraEn }], [5, { ...g5En, ...g5ExtraEn }], [6, { ...g6En, ...g6ExtraEn }], [7, { ...g7En, ...g7ExtraEn }], [8, { ...g8En, ...g8ExtraEn }], [9, { ...g9En, ...g9ExtraEn }], [10, { ...g10En, ...g10ExtraEn, ...g10Extra2En, ...g10Extra3En }], [11, { ...g11En, ...g11ExtraEn, ...g11Extra2En, ...g11Extra3En, ...g11Extra4En }], [12, { ...g12En, ...g12ExtraEn, ...g12Extra2En, ...g12Extra3En, ...g12Extra4En, ...g12Extra5En }]];
 
 export const lessonsEn: Record<string, LessonEn> = Object.fromEntries(
   byGrade.flatMap(([grade, lessons]) => Object.entries(lessons).map(([id, item]) => [`${grade}/${id}`, item])),
