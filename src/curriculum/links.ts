@@ -84,6 +84,8 @@ export const METHOD_NODE: Record<string, { grade: number; chapter: string; stran
   "phuong-trinh-hoanh-do": { grade: 12, chapter: "tuong-giao-nc" },
   "tich-co-huong-oxyz": { grade: 12, chapter: "tich-co-huong" },
   "quan-he-vecto-oxyz": { grade: 12, chapter: "quan-he-oxyz" },
+  "vtt-hai-duong-oxyz": { grade: 12, chapter: "dt-oxyz-nc" },
+  "lap-duong-oxyz": { grade: 12, chapter: "pt-oxyz" },
   "khoang-cach-kg-11": { grade: 11, chapter: "khoang-cach-11" },
   "goc-kg-11": { grade: 11, chapter: "goc-vuong-goc-11" },
   "tuong-giao-do-thi": { grade: 12, chapter: "do-thi-ham" },
