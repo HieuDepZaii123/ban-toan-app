@@ -220,7 +220,7 @@ Repo đã có `vercel.json`: build `npm run build`, thư mục `dist`, rewrite S
 
 Lỗi trong hàm trả JSON 500 không kèm chi tiết. Log của hàm có dòng `[pay] <method> <đường> <x-request-id>`; mã đó cũng nằm trong header `x-request-id` của phản hồi, nên có thể dò từ trình duyệt tới log.
 
-Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `AFFILIATE_RATE_BPS`, `CRYPTO_*`, và `DATABASE_URL` trỏ tới Postgres (Vercel Postgres/Neon tự đặt `POSTGRES_URL`, cũng dùng được). `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy. Không đặt khóa riêng của ví.
+Đặt biến: `MOMO_*`, `PREMIUM_PRICE_*`, `PUBLIC_BASE_URL` (không dấu `/` cuối), `BANK_*`, `BANK_WEBHOOK_SECRET`, `ADMIN_TOKEN`, `AFFILIATE_RATE_BPS`, `PAY_CREATE_HOURLY` (số đơn mới tối đa mỗi IP mỗi giờ, mặc định 30, quá thì 429 `rate`), `CRYPTO_*`, và `DATABASE_URL` trỏ tới Postgres (Vercel Postgres/Neon tự đặt `POSTGRES_URL`, cũng dùng được). `PUBLIC_BASE_URL` phải là origin mà MoMo và trình duyệt cùng thấy. Không đặt khóa riêng của ví.
 
 Service worker không nuốt `/api/` (`navigateFallbackDenylist`).
 

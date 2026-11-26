@@ -1,8 +1,7 @@
 import { licenseHash, storeFor } from "../pay/store.ts";
 import { payEnv, termMs } from "../pay/env.ts";
 import { demoReply } from "./policy.ts";
-import { sharedClient } from "../db/sql.ts";
-import { createQuota, pgQuota, type Quota } from "./limit.ts";
+import { quotaFor, type Quota } from "./limit.ts";
 import type { ChatEnv, ChatTurn } from "./handlers.ts";
 import type { CheckEnv } from "./check.ts";
 import { completeLive, hasLiveKey } from "./model.ts";
@@ -23,11 +22,6 @@ async function premiumNow(license: string, now = Date.now()): Promise<boolean> {
 }
 
 /** Có Postgres thì đếm lượt chung cho mọi instance; không thì đếm trong bộ nhớ của tiến trình. */
-function quotaFor(source: NodeJS.ProcessEnv): Quota {
-  const url = source.DATABASE_URL?.trim() || source.POSTGRES_URL?.trim() || "";
-  return url ? pgQuota(sharedClient(url)) : sharedQuota;
-}
-
 export function chatEnv(source: NodeJS.ProcessEnv = process.env, quota: Quota = quotaFor(source)): ChatEnv {
   const live = hasLiveKey(source);
   return {
@@ -55,4 +49,3 @@ export function checkEnv(source: NodeJS.ProcessEnv = process.env, quota: Quota =
   };
 }
 
-const sharedQuota = createQuota();

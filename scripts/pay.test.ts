@@ -10,6 +10,7 @@ import { handlePremium } from "../server/pay/handlers.ts";
 import { CREATE_FIELDS, CREATE_RESPONSE_FIELDS, IPN_FIELDS, hmacSha256, rawSignature, signFields } from "../server/pay/sign.ts";
 import { buildVietQr, crc16CcittFalse, decodeVietQr, verifyVietQr } from "../server/pay/vietqr.ts";
 import { withTestStore } from "./testDb.ts";
+import { createQuota } from "../server/chat/limit.ts";
 
 const SECRET = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
 const ACCESS = "F8BBA842ECF85";
@@ -272,6 +273,18 @@ assert(!dev.live && dev.momoReady && dev.adminToken === "", "sandbox works local
 assert(dev.samplePrices === false, "PREMIUM_SAMPLE defaults off");
 assert(payEnv({ PREMIUM_SAMPLE: "1" }).samplePrices === true, "PREMIUM_SAMPLE=1 marks demo prices");
 assert(payEnv({ PREMIUM_SAMPLE: "0" }).samplePrices === false, "PREMIUM_SAMPLE=0 stays off");
+
+// One IP may only open so many orders per hour; another IP is counted on its own.
+const limited: PayEnv = { ...env, quota: createQuota(), createHourly: 2 };
+const createFrom = async (ip: string) => (await handlePremium(new Request("http://pay.local/api/premium/create", {
+  method: "POST",
+  headers: { "content-type": "application/json", "x-real-ip": ip },
+  body: JSON.stringify({ email: "hieu@example.com", plan: "month", method: "bank" }),
+}), limited));
+assert((await createFrom("9.9.9.9")).status === 200 && (await createFrom("9.9.9.9")).status === 200, "orders under the hourly limit");
+const blocked = await createFrom("9.9.9.9");
+assert(blocked.status === 429 && ((await blocked.json()) as { error?: string }).error === "rate", "third order in the hour is refused");
+assert((await createFrom("8.8.8.8")).status === 200, "another IP has its own limit");
 
 if (fails.length > 0) {
   console.error(fails.join("\n"));

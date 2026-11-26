@@ -3,7 +3,9 @@ import { tutorTopics } from "./topics.ts";
 import { createHash } from "node:crypto";
 import { normalizeMath } from "./format.ts";
 import { verifiedNote } from "./facts.ts";
-import type { Limit, Quota } from "./limit.ts";
+import { clientIp, type Limit, type Quota } from "./limit.ts";
+
+export { clientIp };
 import type { ChatImage } from "./model.ts";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -168,12 +170,4 @@ function readMessages(value: unknown): ChatTurn[] {
     turns.push({ role, content: content.slice(0, MAX_CHARS) });
   }
   return turns.slice(-MAX_TURNS);
-}
-
-/** Prefer headers the platform sets itself (Vercel overwrites these), then the first forwarded hop. */
-export function clientIp(request: Request): string {
-  const platform = request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip")?.trim();
-  if (platform) return platform;
-  const forwarded = request.headers.get("x-forwarded-for") ?? "";
-  return forwarded.split(",")[0]?.trim() || "local";
 }

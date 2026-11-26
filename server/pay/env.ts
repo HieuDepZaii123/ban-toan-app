@@ -1,4 +1,5 @@
 import type { PayStore } from "./store.ts";
+import { quotaFor, type Quota } from "../chat/limit.ts";
 import { SAMPLE_BSC_ADDRESS, SAMPLE_SOL_ADDRESS, SAMPLE_TRON_ADDRESS } from "./crypto.ts";
 
 export type PlanId = "month" | "year";
@@ -45,6 +46,10 @@ export type PayEnv = {
   live: boolean;
   /** MoMo has a real merchant secret (never the public sandbox one when live). */
   momoReady: boolean;
+  /** Shared hit counter (same one the tutor uses), for the per-IP order limit. */
+  quota: Quota;
+  /** New orders one IP may create per hour. */
+  createHourly: number;
   now: () => number;
   fetchImpl: typeof fetch;
 };
@@ -132,6 +137,8 @@ export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => numbe
     affiliateRateBps: bounded(source.AFFILIATE_RATE_BPS, 1000, 0, 5000),
     live,
     momoReady: !(live && sandbox),
+    quota: quotaFor(source),
+    createHourly: bounded(source.PAY_CREATE_HOURLY, 30, 1, 10_000),
     now,
     fetchImpl,
   };

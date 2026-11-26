@@ -1,5 +1,5 @@
 import { ensureSchema } from "../db/schema.ts";
-import { num, type SqlClient } from "../db/sql.ts";
+import { num, sharedClient, type SqlClient } from "../db/sql.ts";
 
 /** One allowance to respect: at most `max` hits on `key` within `windowMs`. */
 export type Limit = { key: string; windowMs: number; max: number };
@@ -104,4 +104,20 @@ export function pgQuota(client: SqlClient): Quota {
       }
     },
   };
+}
+
+/** Prefer headers the platform sets itself (Vercel overwrites these), then the first forwarded hop. */
+export function clientIp(request: Request): string {
+  const platform = request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip")?.trim();
+  if (platform) return platform;
+  const forwarded = request.headers.get("x-forwarded-for") ?? "";
+  return forwarded.split(",")[0]?.trim() || "local";
+}
+
+const sharedQuota = createQuota();
+
+/** Postgres when the deploy has one (every instance shares the count), else this process's memory. */
+export function quotaFor(source: NodeJS.ProcessEnv): Quota {
+  const url = source.DATABASE_URL?.trim() || source.POSTGRES_URL?.trim() || "";
+  return url ? pgQuota(sharedClient(url)) : sharedQuota;
 }

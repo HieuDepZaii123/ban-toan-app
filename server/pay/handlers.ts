@@ -21,6 +21,7 @@ import { priceOf, termMs, type PayEnv, type PayMethod, type PlanId } from "./env
 import { createMomoPayment, ipnSignatureOk, readIpn } from "./momo.ts";
 import { CRYPTO_LATE_MS, CryptoAmountTaken, licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
 import { buildVietQr, emvName } from "./vietqr.ts";
+import { clientIp } from "../chat/limit.ts";
 
 const ORDER_TTL_MS = 15 * 60 * 1000;
 
@@ -164,6 +165,11 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
   }
   const amount = priceOf(env, plan);
   const now = env.now();
+  // Orders reserve a crypto amount and a transfer code, so one IP may only open so many per hour.
+  const claim = await env.quota.claim([{ key: `pay-create:${clientIp(request)}`, windowMs: 60 * 60 * 1000, max: env.createHourly }], now);
+  if (!claim.ok) {
+    return json(429, { error: "rate", message: "Bạn đã tạo quá nhiều đơn. Thử lại sau một giờ. / Too many orders from this network. Try again in an hour." });
+  }
   const referred = await acceptedRef(store, body, email, env.affiliateRateBps);
   const order: OrderRow = {
     orderId: `BT${idPart(8)}`,
