@@ -111,9 +111,12 @@ button, input, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 a { color: inherit; }
 h1, h2, h3, p { margin: 0; }
-h1, h2, h3, .brand {
-  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, "Be Vietnam Pro", serif;
+/* Headings use the bundled Be Vietnam Pro: serif fallbacks (Iowan, Palatino, Georgia) lack many Vietnamese glyphs,
+   so letters like ư, ơ, ế were drawn from another font and words looked broken. Only weights 400 and 600 ship. */
+h1, h2, h3, h4, .brand {
+  font-family: "Be Vietnam Pro", "Noto Sans", "Segoe UI", sans-serif;
 }
+h3, h4 { font-weight: 600; }
 h1 {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   font-weight: 600;
@@ -1118,13 +1121,21 @@ html[data-lamp="on"] body::before {
 @media (max-width: 860px) { .pillars { grid-template-columns: minmax(0, 1fr); } }
 /* "Cách Bàn Toán hoạt động": one card per feature. */
 .why > h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); text-transform: none; letter-spacing: 0; color: var(--ink); margin-bottom: 0; text-wrap: balance; }
+.why-story { background: var(--sheet); border: 1px solid var(--line); border-left: 5px solid var(--logo-accent); border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; display: grid; gap: 8px; }
+.why-story h2 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 1.85rem); text-transform: none; letter-spacing: 0; color: var(--ink); text-wrap: balance; }
+.why-story p { margin: 0; color: var(--ink-soft); line-height: 1.6; max-width: 68ch; }
+.why-story h3 { margin: 10px 0 0; font-size: 1.15rem; color: var(--ink); }
+.why-story ul { margin: 0; padding-left: 1.2em; color: var(--ink-soft); line-height: 1.6; display: grid; gap: 4px; }
+.why-story .why-grid { margin-top: 4px; }
+.why-card h4 { margin: 0; font-size: 1.02rem; }
+.why-card ul { font-size: 0.93rem; line-height: 1.5; }
 .why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
 .why-card { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .why-card h3 { margin: 0; font-size: 1.02rem; }
 .why-card p { margin: 0; color: var(--ink-soft); font-size: 0.93rem; line-height: 1.55; }
 .tier-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 0 0 16px; }
 .tier-row article { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: grid; gap: 4px; }
-.tier-row b { color: var(--accent); font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 1.15rem; }
+.tier-row b { color: var(--accent); font-weight: 600; font-size: 1.15rem; }
 .tier-row span, .tool-card small { color: var(--ink-soft); font-size: 0.86rem; }
 .home-tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 0 0 18px; }
 .tool-card { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: grid; gap: 8px; }
