@@ -129,4 +129,20 @@ export const thptExtra2Notes: NoteBook = {
     R`Đường thẳng song song với mặt phẳng khi chỉ phương vuông góc với pháp tuyến, và vuông góc với mặt phẳng khi chỉ phương cùng phương với pháp tuyến. Góc giữa đường và mặt là phần bù của góc giữa đường và pháp tuyến nên dùng sin.`,
     R`Dùng cos thay cho sin trong góc giữa đường thẳng và mặt phẳng, hoặc quên thử điểm nên nhầm song song với nằm trong mặt phẳng.`,
   ),
+  "12/pt-dt-oxyz": note(
+    R`Mọi điểm của đường thẳng có dạng điểm đầu cộng $t$ lần vectơ chỉ phương, nên mỗi giá trị $t$ cho đúng một điểm. Một điểm thuộc đường thẳng khi cùng một giá trị $t$ thỏa cả ba tọa độ.`,
+    R`Tìm $t$ từ một tọa độ rồi không kiểm tra hai tọa độ còn lại, hoặc dùng chính tọa độ điểm làm vectơ chỉ phương.`,
+  ),
+  "12/doan-thang-oxyz": note(
+    R`Với $0\le t\le1$ điểm $A+t\overrightarrow{AB}$ chạy từ $A$ đến $B$, nên $t$ chính là tỉ số $AM:AB$. Giao điểm nằm trên đoạn thẳng chỉ khi $t$ thuộc đoạn $[0;\ 1]$.`,
+    R`Kết luận đoạn thẳng cắt mặt phẳng chỉ vì đường thẳng cắt, mà không kiểm tra $t$ có thuộc $[0;\ 1]$ hay không.`,
+  ),
+  "12/pt-mp-dang": note(
+    R`Mọi cách viết đều quy về tìm một pháp tuyến và một điểm của mặt phẳng; tích có hướng cho pháp tuyến khi có hai chỉ phương, còn dạng chắn trục chỉ dùng khi ba giao điểm với trục khác gốc.`,
+    R`Quên rằng pháp tuyến nhân với một số khác $0$ vẫn là pháp tuyến, hoặc quên thay điểm để tìm hằng số.`,
+  ),
+  "12/lap-dt-mp": note(
+    R`Quan hệ vuông góc cho phép lấy pháp tuyến làm chỉ phương và ngược lại, còn quan hệ song song giữ nguyên pháp tuyến và chỉ đổi hằng số. Hình chiếu của một điểm là giao điểm của mặt phẳng với đường thẳng đi qua điểm đó và vuông góc mặt phẳng.`,
+    R`Giữ nguyên hằng số khi lập mặt phẳng song song, hoặc nhầm chỉ phương với pháp tuyến giữa hai vật khác nhau.`,
+  ),
 };

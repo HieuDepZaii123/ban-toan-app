@@ -156,6 +156,31 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   assert.ok(near(dot(sub(on(k, "D2"), on(k, "D1")), [1, -2, 1]), 0), "chỉ phương vuông góc pháp tuyến");
 }
 
+// Hình của chương phương trình trong Oxyz.
+{
+  const k = "12/pt-dt-oxyz";
+  const A = on(k, "A"), M = on(k, "M"), D1 = on(k, "D1"), D2 = on(k, "D2");
+  assert.ok(near(len(cross(sub(M, A), [2, -1, 4])), 0), "M thuộc đường thẳng qua A chỉ phương (2; -1; 4)");
+  assert.ok(near(len(cross(sub(D2, D1), [2, -1, 4])), 0) && near(len(cross(sub(D1, A), [2, -1, 4])), 0), "hai đầu mút vẽ nằm trên đường thẳng");
+}
+{
+  const k = "12/doan-thang-oxyz";
+  const A = on(k, "A"), B = on(k, "B"), I = on(k, "I"), N = on(k, "N");
+  const at = (t: number): number[] => [0, 1, 2].map((i) => A[i]! + t * (B[i]! - A[i]!));
+  assert.ok(near(len(sub(I, at(0.5) as [number, number, number])), 0), "I là trung điểm");
+  assert.ok(near(len(sub(N, at(0.75) as [number, number, number])), 0), "N ứng với t = 3/4");
+}
+{
+  const k = "12/pt-mp-dang";
+  for (const n of ["M", "P1", "P2", "P3", "P4"]) assert.ok(near(on(k, n)[0] + 2 * on(k, n)[1] - on(k, n)[2] - 2, 0), `${n} thuộc mặt phẳng x + 2y - z - 2 = 0`);
+  assert.ok(near(len(cross(sub(on(k, "N"), on(k, "G")), [1, 2, -1])), 0), "n cùng phương pháp tuyến (1; 2; -1)");
+}
+{
+  const k = "12/lap-dt-mp";
+  for (const n of ["H", "P1", "P2", "P3", "P4"]) assert.ok(near(on(k, n)[0] - 2 * on(k, n)[1] + on(k, n)[2] + 1, 0), `${n} thuộc mặt phẳng (P)`);
+  assert.ok(near(len(cross(sub(on(k, "H"), on(k, "A")), [1, -2, 1])), 0), "AH vuông góc với (P)");
+}
+
 // Hình của chương đại cương lớp 11.
 {
   const k = "11/giao-tuyen";
