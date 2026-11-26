@@ -51,6 +51,68 @@ const REASONS: { id: string; vi: string; en: string; bodyVi: string; bodyEn: str
   },
 ];
 
+/** Thực trạng: the problems Bàn Toán was made to address, in the founder's words. */
+const PROBLEMS: { id: string; vi: string; en: string; bodyVi: string; bodyEn: string }[] = [
+  {
+    id: "hoc-sinh",
+    vi: "Học sinh:", en: "Students:",
+    bodyVi: "chỉ học để thi, thi xong rồi quên, không áp dụng được vào đời sống.",
+    bodyEn: "learn only for the exam, forget it afterwards, and cannot use it in everyday life.",
+  },
+  {
+    id: "giao-vien",
+    vi: "Giáo viên:", en: "Teachers:",
+    bodyVi: "nhiều nội dung và cách dạy đã lỗi thời, chưa theo kịp công nghệ.",
+    bodyEn: "much of what is taught, and how, is out of date and has not kept up with technology.",
+  },
+  {
+    id: "phu-huynh",
+    vi: "Phụ huynh:", en: "Parents:",
+    bodyVi: "chi nhiều tiền cho việc học của con nhưng không hiệu quả.",
+    bodyEn: "spend a lot on their children's learning without much effect.",
+  },
+];
+
+/** Lợi ích: each line is something the app does today (route or file in the comment). */
+const BENEFITS: { id: string; vi: string; en: string; items: { vi: string; en: string }[] }[] = [
+  {
+    id: "hoc-sinh",
+    vi: "Học sinh", en: "Students",
+    items: [
+      // src/labs/*
+      { vi: "Kéo hình, đổi tham số để tự thấy vì sao công thức đúng, thay vì học thuộc.", en: "Drag figures and change parameters to see why a formula holds, instead of memorising it." },
+      // /nghien-cuu
+      { vi: "Bài nghiên cứu: nêu giả thuyết, đo số liệu, viết kết luận như một nhà nghiên cứu.", en: "Investigations: state a guess, measure data and write a conclusion like a researcher." },
+      // src/thpt/review.ts, /cham-bai
+      { vi: "Câu sai quay lại theo lịch 1, 3, 7, 14 ngày để nhớ lâu; chấm bài chỉ ra bước sai đầu tiên.", en: "Missed questions come back after 1, 3, 7 and 14 days so they stick; marking shows the first wrong step." },
+    ],
+  },
+  {
+    id: "giao-vien",
+    vi: "Giáo viên", en: "Teachers",
+    items: [
+      // src/labs/*, /xuong-hinh
+      { vi: "Hình động kéo được và Xưởng hình để minh họa trực tiếp trên lớp.", en: "Draggable figures and the Workshop to demonstrate live in class." },
+      // /soan-tai-lieu
+      { vi: "Soạn tài liệu có công thức, xuất PDF hoặc Word ngay.", en: "Write handouts with formulas and export to PDF or Word straight away." },
+      // src/content/vary/*, scripts/*
+      { vi: "Bài tập sinh số mới mỗi lần, đáp án được kiểm bằng SymPy.", en: "Exercises with new numbers each time, answers checked with SymPy." },
+    ],
+  },
+  {
+    id: "phu-huynh",
+    vi: "Phụ huynh", en: "Parents",
+    items: [
+      // /nang-cap
+      { vi: "Bài học và luyện tập miễn phí; Premium chỉ dành cho phần nâng cao.", en: "Lessons and practice are free; Premium is only for the extras." },
+      // /phu-huynh, /bao-cao
+      { vi: "Báo cáo tuần: số đề thi thử con đã làm, số bài được chấm và số lỗi đã tự sửa.", en: "A weekly report: mock papers your child finished, problems marked and mistakes they fixed." },
+      // src/parent/parentMode.ts
+      { vi: "Chế độ phụ huynh có mã PIN: trợ lý chỉ gợi ý, không đưa lời giải sẵn.", en: "PIN-protected parent mode: the tutor hints instead of handing over solutions." },
+    ],
+  },
+];
+
 export function WhyDifferent() {
   const lang = useLang();
   return (
@@ -71,6 +133,28 @@ export function WhyDifferent() {
             "“Bàn Toán” means “maths desk”: a desk for learning, working on, investigating and creating maths. The idea comes from a study desk, in warm wood-yellow tones, with every tool a learner needs.",
           )}
         </p>
+        <h3>{t(lang, "Thực trạng học toán hiện nay", "How maths is learned today")}</h3>
+        <ul className="why-problems">
+          {PROBLEMS.map((item) => (
+            <li key={item.id}>
+              <strong>{t(lang, item.vi, item.en)}</strong> {t(lang, item.bodyVi, item.bodyEn)}
+            </li>
+          ))}
+        </ul>
+        <p>{t(lang, "Bàn Toán được làm ra để sửa những vấn đề này.", "Bàn Toán is built to fix these problems.")}</p>
+        <h3>{t(lang, "Lợi ích cho từng người", "What each person gets")}</h3>
+        <div className="why-grid">
+          {BENEFITS.map((group) => (
+            <article key={group.id} className="why-card" aria-labelledby={`benefit-${group.id}`}>
+              <h4 id={`benefit-${group.id}`}>{t(lang, group.vi, group.en)}</h4>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item.vi}>{t(lang, item.vi, item.en)}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </div>
       <h2 id="why-title">{t(lang, "Cách Bàn Toán hoạt động", "How Bàn Toán works")}</h2>
       <div className="why-grid">
