@@ -73,6 +73,8 @@ export async function activateLicense(raw: string): Promise<number | null | "off
  * Premium status for this device. A confirmed licence is remembered until its term ends, so
  * Premium features keep working offline; online, the server is asked again on each visit
  * (a refunded key stops working).
+ * shortcut: Premium pages are unlocked in the browser, so a faked cache plus a blocked status request
+ * opens them (the tutor is checked on the server); serve Premium content from an API if that matters.
  */
 export function usePremium(): PremiumState {
   const [state, setState] = useState<PremiumState>(() => {

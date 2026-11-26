@@ -6,9 +6,8 @@
 import { ensureSchema } from "../db/schema.ts";
 import { isUniqueViolation, num, numOrNull, type SqlClient, type SqlQuery } from "../db/sql.ts";
 import { newAffiliateCode } from "./affiliate.ts";
-import { CryptoAmountTaken, fromSql, hashKey, newLicenseKey, type AffiliateStats, type MarkPaid, type OrderRow, type PayStore, type SqlOrder } from "./store.ts";
-
-const DAY_MS = 86_400_000;
+import { termMs } from "./env.ts";
+import { CRYPTO_LATE_MS, CryptoAmountTaken, fromSql, hashKey, newLicenseKey, type AffiliateStats, type MarkPaid, type OrderRow, type PayStore, type SqlOrder } from "./store.ts";
 
 /** BIGINT có thể về dạng chuỗi tùy driver; đưa mọi cột số về number trước khi dùng chung `fromSql`. */
 function toSqlOrder(row: Record<string, unknown>): SqlOrder {
@@ -22,10 +21,6 @@ function toSqlOrder(row: Record<string, unknown>): SqlOrder {
     crypto_suffix: numOrNull(row.crypto_suffix),
     ref_bps: numOrNull(row.ref_bps),
   };
-}
-
-function termMs(order: OrderRow): number {
-  return (order.plan === "year" ? 365 : 30) * DAY_MS;
 }
 
 export function pgStore(client: SqlClient): PayStore {
@@ -99,11 +94,20 @@ export function pgStore(client: SqlClient): PayStore {
       await client.query("UPDATE orders SET pay_url = $1, deeplink = $2, qr_code_url = $3 WHERE order_id = $4", [payUrl, deeplink, qrCodeUrl, orderId]);
     },
 
-    async cryptoTaken(chain, asset, units, exceptId) {
+    async cryptoTaken(chain, asset, units, exceptId, now) {
       await ready();
+      // The unique index covers status 'pending' only, so a stale pending holder must be marked expired first.
+      await client.query(
+        "UPDATE orders SET status = 'expired' WHERE crypto_chain = $1 AND crypto_asset = $2 AND crypto_units = $3 AND status = 'pending' AND expires_at < $4",
+        [chain, asset, units, now],
+      );
       const found = await client.query(
-        "SELECT 1 FROM orders WHERE crypto_chain = $1 AND crypto_asset = $2 AND crypto_units = $3 AND order_id <> $4 LIMIT 1",
-        [chain, asset, units, exceptId],
+        `SELECT 1 FROM orders
+         WHERE crypto_chain = $1 AND crypto_asset = $2 AND crypto_units = $3 AND order_id <> $4
+           AND status IN ('pending', 'expired')
+           AND expires_at >= $5 - CASE WHEN COALESCE(crypto_tx, '') = '' THEN 0 ELSE $6::BIGINT END
+         LIMIT 1`,
+        [chain, asset, units, exceptId, now, CRYPTO_LATE_MS],
       );
       return found.rows.length > 0;
     },
@@ -137,16 +141,16 @@ export function pgStore(client: SqlClient): PayStore {
       await ready();
       const rows = (await client.query(
         `SELECT * FROM orders
-         WHERE method = 'crypto' AND status = 'pending' AND COALESCE(crypto_tx, '') <> ''
+         WHERE method = 'crypto' AND status IN ('pending', 'expired') AND COALESCE(crypto_tx, '') <> '' AND expires_at >= $1
          ORDER BY created_at ASC
          LIMIT 20`,
+        [now - CRYPTO_LATE_MS],
       )).rows.map(toSqlOrder);
       const out: OrderRow[] = [];
       for (const row of rows) {
         const order = fromSql(row, now);
-        if (order.status === "expired") {
+        if (order.status === "expired" && row.status === "pending") {
           await client.query("UPDATE orders SET status = 'expired' WHERE order_id = $1 AND status = 'pending'", [order.orderId]);
-          continue;
         }
         if (order.cryptoTx) out.push(order);
       }
@@ -167,7 +171,7 @@ export function pgStore(client: SqlClient): PayStore {
         const order = fromSql(current, now);
         if (order.amount !== amount) return { ok: false, error: "amount" };
         if (order.status === "paid" && order.licenseKey) {
-          return { ok: true, applied: false, licenseKey: order.licenseKey, expiresAt: (order.paidAt ?? now) + termMs(order) };
+          return { ok: true, applied: false, licenseKey: order.licenseKey, expiresAt: (order.paidAt ?? now) + termMs(order.plan) };
         }
         if (allowLate) {
           if (current.status === "expired") {
@@ -196,7 +200,7 @@ export function pgStore(client: SqlClient): PayStore {
             [order.orderId, order.refCode, order.amount, Math.floor((order.amount * order.refBps) / 10_000), now],
           );
         }
-        return { ok: true, applied: true, licenseKey, expiresAt: now + termMs(order) };
+        return { ok: true, applied: true, licenseKey, expiresAt: now + termMs(order.plan) };
       });
     },
 

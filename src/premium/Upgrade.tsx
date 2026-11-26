@@ -412,7 +412,7 @@ function OrderPanel({
       ) : null}
       {waiting ? <p className="pay-note">{t(lang, "Trang tự cập nhật khi đơn được xác nhận.", "This page updates itself when the order is confirmed.")}</p> : null}
       {order.status === "expired" ? (
-        <p className="pay-note">{expiredOrderNote(order.method).text}</p>
+        <p className="pay-note">{expiredOrderNote(order.method, Boolean(order.crypto?.txHash)).text}</p>
       ) : (
         <A href="/nang-cap">{t(lang, "Tạo đơn khác", "Create another order")}</A>
       )}

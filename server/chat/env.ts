@@ -1,13 +1,11 @@
 import { licenseHash, storeFor } from "../pay/store.ts";
-import { payEnv } from "../pay/env.ts";
+import { payEnv, termMs } from "../pay/env.ts";
 import { demoReply } from "./policy.ts";
 import { sharedClient } from "../db/sql.ts";
 import { createQuota, pgQuota, type Quota } from "./limit.ts";
 import type { ChatEnv, ChatTurn } from "./handlers.ts";
 import type { CheckEnv } from "./check.ts";
 import { completeLive, hasLiveKey } from "./model.ts";
-
-const DAY = 86_400_000;
 
 function integer(value: string | undefined, fallback: number): number {
   const parsed = Number(value);
@@ -18,8 +16,7 @@ async function premiumNow(license: string, now = Date.now()): Promise<boolean> {
   try {
     const order = await storeFor(payEnv()).getByLicense(licenseHash(license));
     if (!order?.paidAt) return false;
-    const term = (order.plan === "year" ? 365 : 30) * DAY;
-    return now < order.paidAt + term;
+    return now < order.paidAt + termMs(order.plan);
   } catch {
     return false;
   }

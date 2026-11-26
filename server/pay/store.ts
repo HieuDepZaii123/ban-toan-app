@@ -6,7 +6,7 @@ import type { DatabaseSync as SqliteDatabase } from "node:sqlite";
 import { sharedClient } from "../db/sql.ts";
 import { newAffiliateCode } from "./affiliate.ts";
 import { pgStore } from "./pgStore.ts";
-import type { PayMethod, PlanId } from "./env.ts";
+import { termMs, type PayMethod, type PlanId } from "./env.ts";
 
 type OrderStatus = "pending" | "paid" | "expired" | "refunded";
 
@@ -88,9 +88,15 @@ type SyncStore = {
   getByTransfer(code: string, now: number): OrderRow | null;
   getByLicense(hash: string): OrderRow | null;
   setMomo(orderId: string, payUrl: string, deeplink: string, qrCodeUrl: string): void;
-  cryptoTaken(chain: string, asset: string, units: string, exceptId: string): boolean;
-  setCryptoQuote(orderId: string, quote: CryptoQuoteRow): boolean;
+  /**
+   * Is this token amount held by a live order? Pending orders hold it until they expire; an order
+   * whose tx hash came in before expiry holds it for CRYPTO_LATE_MS more. Paid, refunded and
+   * abandoned orders free it, since a tx hash already used is refused by `payment_events`.
+   */
+  cryptoTaken(chain: string, asset: string, units: string, exceptId: string, now: number): boolean;
+  setCryptoQuote(orderId: string, quote: CryptoQuoteRow, now: number): boolean;
   setCryptoTx(orderId: string, tx: string): void;
+  /** Orders with a tx hash still to check: pending, or expired within CRYPTO_LATE_MS of a hash sent in time. */
   listPendingCrypto(now: number): OrderRow[];
   eventOrder(kind: string, id: string): string | null;
   /**
@@ -123,6 +129,9 @@ export class CryptoAmountTaken extends Error {
     this.name = "CryptoAmountTaken";
   }
 }
+
+/** A crypto order whose tx hash came in before expiry may still settle this long after expiry (confirmations, RPC outages). */
+export const CRYPTO_LATE_MS = 24 * 60 * 60 * 1000;
 
 export type AffiliateStats = {
   visits: number;
@@ -285,6 +294,8 @@ function openSqlite(dbPath: string): SyncStore {
   const taken = db.prepare(`
     SELECT order_id FROM orders
     WHERE crypto_chain = ? AND crypto_asset = ? AND crypto_units = ? AND order_id != ?
+      AND status IN ('pending', 'expired')
+      AND expires_at >= ? - CASE WHEN IFNULL(crypto_tx, '') = '' THEN 0 ELSE ? END
     LIMIT 1
   `);
   const setQuote = db.prepare(`
@@ -295,7 +306,7 @@ function openSqlite(dbPath: string): SyncStore {
   const setTx = db.prepare("UPDATE orders SET crypto_tx = ? WHERE order_id = ? AND status = 'pending'");
   const pendingCrypto = db.prepare(`
     SELECT * FROM orders
-    WHERE method = 'crypto' AND status = 'pending' AND IFNULL(crypto_tx, '') != ''
+    WHERE method = 'crypto' AND status IN ('pending', 'expired') AND IFNULL(crypto_tx, '') != '' AND expires_at >= ?
     ORDER BY created_at ASC
     LIMIT 20
   `);
@@ -364,10 +375,10 @@ function openSqlite(dbPath: string): SyncStore {
     setMomo(orderId, payUrl, deeplink, qrCodeUrl) {
       setMomo.run(payUrl, deeplink, qrCodeUrl, orderId);
     },
-    cryptoTaken(chain, asset, units, exceptId) {
-      return taken.get(chain, asset, units, exceptId) !== undefined;
+    cryptoTaken(chain, asset, units, exceptId, now) {
+      return taken.get(chain, asset, units, exceptId, now, CRYPTO_LATE_MS) !== undefined;
     },
-    setCryptoQuote(orderId, quote) {
+    setCryptoQuote(orderId, quote, now) {
       db.exec("BEGIN IMMEDIATE");
       try {
         const current = byId.get(orderId) as SqlOrder | undefined;
@@ -375,7 +386,7 @@ function openSqlite(dbPath: string): SyncStore {
           db.exec("ROLLBACK");
           return false;
         }
-        if (taken.get(quote.chain, quote.asset, quote.units, orderId) !== undefined) {
+        if (taken.get(quote.chain, quote.asset, quote.units, orderId, now, CRYPTO_LATE_MS) !== undefined) {
           db.exec("ROLLBACK");
           return false;
         }
@@ -399,11 +410,11 @@ function openSqlite(dbPath: string): SyncStore {
       setTx.run(tx, orderId);
     },
     listPendingCrypto(now) {
-      return (pendingCrypto.all() as SqlOrder[]).map((row) => {
+      return (pendingCrypto.all(now - CRYPTO_LATE_MS) as SqlOrder[]).map((row) => {
         const order = fromSql(row, now);
         if (order.status === "expired" && row.status === "pending") expire.run(order.orderId);
         return order;
-      }).filter((order) => order.status === "pending" && order.cryptoTx);
+      }).filter((order) => order.cryptoTx);
     },
     eventOrder(kind, id) {
       const row = eventOf.get(kind, id) as { order_id: string } | undefined;
@@ -436,8 +447,7 @@ function openSqlite(dbPath: string): SyncStore {
         }
         if (order.status === "paid" && order.licenseKey) {
           db.exec("ROLLBACK");
-          const term = order.plan === "year" ? 365 : 30;
-          return { ok: true, applied: false, licenseKey: order.licenseKey, expiresAt: (order.paidAt ?? now) + term * 86_400_000 };
+          return { ok: true, applied: false, licenseKey: order.licenseKey, expiresAt: (order.paidAt ?? now) + termMs(order.plan) };
         }
         if (allowLate && current.status === "expired") reopen.run(orderId);
         else if (!allowLate && (order.status === "expired" || now > order.expiresAt)) {
@@ -462,8 +472,7 @@ function openSqlite(dbPath: string): SyncStore {
           insertCommission.run(order.orderId, order.refCode, order.amount, commission, now);
         }
         db.exec("COMMIT");
-        const term = order.plan === "year" ? 365 : 30;
-        return { ok: true, applied: true, licenseKey, expiresAt: now + term * 86_400_000 };
+        return { ok: true, applied: true, licenseKey, expiresAt: now + termMs(order.plan) };
       } catch (error) {
         try {
           db.exec("ROLLBACK");

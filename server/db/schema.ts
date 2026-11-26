@@ -74,6 +74,13 @@ export const MIGRATIONS: readonly (readonly string[])[] = [
     )`,
     "CREATE INDEX IF NOT EXISTS chat_hits_key_at ON chat_hits (key, at)",
   ],
+  [
+    // Only pending orders hold a token amount, so paid and abandoned orders free theirs for reuse.
+    // Expired orders still waiting on a tx hash are guarded by the store's `cryptoTaken` check.
+    "DROP INDEX IF EXISTS orders_crypto_amount",
+    "CREATE UNIQUE INDEX IF NOT EXISTS orders_crypto_amount ON orders (crypto_chain, crypto_asset, crypto_units) WHERE crypto_units IS NOT NULL AND status = 'pending'",
+    "CREATE INDEX IF NOT EXISTS orders_crypto_units ON orders (crypto_chain, crypto_asset, crypto_units) WHERE crypto_units IS NOT NULL",
+  ],
 ];
 
 /** Khóa advisory riêng của app (số tùy chọn, cố định). */

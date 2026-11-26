@@ -328,6 +328,32 @@ world.block = 40;
 const tronPaid = await post(env, "/api/premium/crypto", { orderId: tronOrder.json.orderId, txHash: tronTx });
 assert(tronPaid.status === 200 && (await get(`/api/premium/status?orderId=${String(tronOrder.json.orderId)}`)).json.status === "paid", "tron payment");
 
+// A tx hash pasted before expiry still settles once its confirmations land after the 15 minutes.
+clock = anchor + 3000;
+const slowOrder = await post(env, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "tron-usdt" });
+const slowTx = "bb".repeat(32);
+world.tronInfo = {
+  id: slowTx,
+  blockNumber: 10,
+  receipt: { result: "SUCCESS" },
+  log: [{
+    address: tronContract,
+    topics: [TRANSFER_TOPIC.slice(2), `${"0".repeat(24)}${"ab".repeat(20)}`, `${"0".repeat(24)}${tronTo}`],
+    data: word(BigInt(cryptoOf(slowOrder.json).smallest)).slice(2),
+  }],
+};
+world.block = 15;
+const slowWait = await post(env, "/api/premium/crypto", { orderId: slowOrder.json.orderId, txHash: slowTx });
+assert((slowWait.json.cryptoCheck as { error?: string }).error === "confirmations", "slow tx waits for confirmations");
+clock = anchor + 3000 + 16 * 60 * 1000;
+assert((await get(`/api/premium/status?orderId=${String(slowOrder.json.orderId)}`)).json.status === "expired", "slow order shows expired");
+const slowOther = await post(env, "/api/premium/crypto", { orderId: slowOrder.json.orderId, txHash: "cc".repeat(32) });
+assert(slowOther.status === 409 && slowOther.json.error === "expired", "a new hash after expiry is refused");
+world.block = 40;
+const slowPaid = await post(env, "/api/premium/crypto", { orderId: slowOrder.json.orderId });
+assert(slowPaid.status === 200 && (await get(`/api/premium/status?orderId=${String(slowOrder.json.orderId)}`)).json.status === "paid", `slow tx settles late ${JSON.stringify(slowPaid.json)}`);
+clock = anchor + 2000;
+
 const rebound = await post(env, "/api/premium/create", { email: "hieu@example.com", plan: "month", method: "crypto", chain: "tron-usdt" });
 const switched = await post(env, "/api/premium/crypto", { orderId: rebound.json.orderId, chain: "sol-usdc" });
 const solCrypto = cryptoOf(switched.json);

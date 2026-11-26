@@ -137,6 +137,11 @@ export function payEnv(source: NodeJS.ProcessEnv = process.env, now: () => numbe
   };
 }
 
+/** How long a paid plan lasts. */
+export function termMs(plan: PlanId): number {
+  return (plan === "year" ? 365 : 30) * 86_400_000;
+}
+
 export function priceOf(env: PayEnv, plan: PlanId): number {
   const amount = plan === "month" ? env.priceMonth : env.priceYear;
   if (!Number.isInteger(amount) || amount < 1000 || amount > 50_000_000) {

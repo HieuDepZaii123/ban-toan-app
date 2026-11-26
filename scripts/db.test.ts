@@ -11,7 +11,7 @@ import { QUOTA_KEEP_MS, pgQuota } from "../server/chat/limit.ts";
 import { MIGRATIONS, migrate } from "../server/db/schema.ts";
 import { payEnv } from "../server/pay/env.ts";
 import { pgStore } from "../server/pay/pgStore.ts";
-import { CryptoAmountTaken, openStore, storeFor, type OrderRow } from "../server/pay/store.ts";
+import { CRYPTO_LATE_MS, CryptoAmountTaken, openStore, storeFor, type OrderRow } from "../server/pay/store.ts";
 import { copySqliteToPg } from "./dbTools.ts";
 import { testClient } from "./testDb.ts";
 
@@ -71,15 +71,25 @@ assert.deepEqual(await store.markPaid("nope", NOW, 1, null, "bank", "tx-4"), { o
 const crypto = { method: "crypto" as const, cryptoChain: "bsc", cryptoAsset: "USDT", cryptoUnits: "1960001", cryptoRate: 25_000.5, cryptoSuffix: 1, cryptoSource: "config" as const };
 await store.insertOrder(order("c1", crypto));
 await assert.rejects(store.insertOrder(order("c2", crypto)), CryptoAmountTaken);
-assert.equal(await store.cryptoTaken("bsc", "USDT", "1960001", ""), true);
-assert.equal(await store.cryptoTaken("bsc", "USDT", "1960001", "c1"), false);
+assert.equal(await store.cryptoTaken("bsc", "USDT", "1960001", "", NOW), true);
+assert.equal(await store.cryptoTaken("bsc", "USDT", "1960001", "c1", NOW), false);
 assert.equal((await store.getOrder("c1", NOW))?.cryptoRate, 25_000.5, "tỷ giá lẻ giữ nguyên");
 await store.insertOrder(order("c3", { ...crypto, cryptoUnits: "1960002" }));
-assert.equal(await store.setCryptoQuote("c3", { chain: "bsc", asset: "USDT", units: "1960001", rate: 25_000, suffix: 2, source: "config" }), false, "đổi sang số đã có đơn giữ thì từ chối");
-assert.equal(await store.setCryptoQuote("c3", { chain: "bsc", asset: "USDT", units: "1960003", rate: 25_000, suffix: 3, source: "config" }), true);
+assert.equal(await store.setCryptoQuote("c3", { chain: "bsc", asset: "USDT", units: "1960001", rate: 25_000, suffix: 2, source: "config" }, NOW), false, "đổi sang số đã có đơn giữ thì từ chối");
+assert.equal(await store.setCryptoQuote("c3", { chain: "bsc", asset: "USDT", units: "1960003", rate: 25_000, suffix: 3, source: "config" }, NOW), true);
 await store.setCryptoTx("c3", "0xabc");
 assert.deepEqual((await store.listPendingCrypto(NOW)).map((item) => item.orderId), ["c3"]);
-assert.equal(await store.setCryptoQuote("c3", { chain: "bsc", asset: "USDT", units: "1960004", rate: 25_000, suffix: 4, source: "config" }), false, "đã có giao dịch thì khóa báo giá");
+assert.equal(await store.setCryptoQuote("c3", { chain: "bsc", asset: "USDT", units: "1960004", rate: 25_000, suffix: 4, source: "config" }, NOW), false, "đã có giao dịch thì khóa báo giá");
+
+// Đơn chết trả số token lại; đơn đã dán mã trước hạn giữ số thêm CRYPTO_LATE_MS và vẫn chờ đối soát.
+const afterExpiry = NOW + 16 * 60_000;
+assert.equal(await store.cryptoTaken("bsc", "USDT", "1960001", "", afterExpiry), false, "đơn chờ quá hạn trả số");
+await store.insertOrder(order("c4", { ...crypto, createdAt: afterExpiry, expiresAt: afterExpiry + 15 * 60_000 }));
+assert.equal(await store.cryptoTaken("bsc", "USDT", "1960003", "", afterExpiry), true, "đã dán mã trước hạn thì còn giữ");
+assert.deepEqual((await store.listPendingCrypto(afterExpiry)).map((item) => item.orderId), ["c3"]);
+const pastGrace = NOW + 15 * 60_000 + CRYPTO_LATE_MS + 1;
+assert.equal(await store.cryptoTaken("bsc", "USDT", "1960003", "", pastGrace), false, "hết thời gian chờ thì trả số");
+assert.deepEqual((await store.listPendingCrypto(pastGrace)).map((item) => item.orderId), []);
 
 // Giới thiệu bạn bè.
 const aff = await store.ensureAffiliate("owner-1", null, NOW);

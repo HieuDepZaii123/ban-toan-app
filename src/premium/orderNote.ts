@@ -2,9 +2,16 @@ type CheckoutMethod = "wallet" | "qr" | "bank" | "crypto";
 
 /**
  * Đơn hết 15 phút. Chuyển khoản, QR và MoMo vẫn ghi nhận tiền đến muộn vào đúng đơn.
- * Tiền mã hóa hết hạn thì không đối soát nữa. Không đẩy «Tạo đơn khác» ở cả hai trường hợp.
+ * Tiền mã hóa hết hạn thì không đối soát nữa, trừ khi mã giao dịch đã gửi trước hạn (server còn kiểm 24 giờ).
+ * Không đẩy «Tạo đơn khác» ở mọi trường hợp.
  */
-export function expiredOrderNote(method: CheckoutMethod): { lateStillCredits: boolean; text: string } {
+export function expiredOrderNote(method: CheckoutMethod, txSent = false): { lateStillCredits: boolean; text: string } {
+  if (method === "crypto" && txSent) {
+    return {
+      lateStillCredits: true,
+      text: "Mã giao dịch đã gửi trước khi đơn hết hạn, nên vẫn được đối soát khi đủ xác nhận. Đừng chuyển thêm. Liên hệ kèm mã đơn nếu sau 24 giờ chưa thấy quyền.",
+    };
+  }
   if (method === "crypto") {
     return {
       lateStillCredits: false,

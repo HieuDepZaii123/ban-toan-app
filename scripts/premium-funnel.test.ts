@@ -30,4 +30,8 @@ assert.equal(crypto.text.includes("Tạo đơn khác"), false);
 assert.equal(crypto.text.includes("vẫn được ghi nhận"), false);
 assert.match(crypto.text, /không còn đối soát/);
 
+const cryptoSent = expiredOrderNote("crypto", true);
+assert.equal(cryptoSent.lateStillCredits, true);
+assert.match(cryptoSent.text, /vẫn được đối soát/);
+
 console.log("premium funnel ok");

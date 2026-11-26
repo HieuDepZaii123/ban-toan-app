@@ -51,7 +51,7 @@ VietQR: tag `38` chứa GUID `A000000727`, BIN, số tài khoản và dịch v�
 
 Premium mở: đề thi thử chuẩn THPT 2025 không giới hạn ở `/thi-thu` (đề đầu tiên miễn phí), bảng điểm theo phần và chủ đề, trợ lý 40 câu mỗi ngày tính theo mã, ba chế độ Premium của trợ lý (lời giải đầy đủ, kiểm tra bài làm, ảnh đề bài; xem `docs/TRO-LY.md`), kế hoạch ôn lỗi sai ở `/on-loi-sai`, tài liệu ôn tập 14 chuyên đề ở `/tai-lieu`, và nhập mã trên máy khác ở `/nang-cap`. Trình duyệt kiểm mã qua `/api/premium/status?license=` mỗi lần mở trang (`src/premium/license.ts`) và nhớ kết quả tới hết hạn để dùng khi mất mạng. Kế hoạch ôn lỗi sai (`src/thpt/review.ts`, khóa `ban-toan-review-v1`): khi nộp một đề, câu trắc nghiệm và trả lời ngắn làm sai vào kế hoạch, quay lại sau 1, 3, 7, 14 ngày; sai thì về hộp đầu, đúng ở hộp cuối thì rời kế hoạch. Câu sai được ghi cho mọi người, ôn thì cần Premium. Tài liệu ôn tập (`src/premium/studyPack.ts`, trang `src/pages/StudyPackPage.tsx`): mỗi tờ một bộ, ghép từ nội dung đã kiểm của chính tờ đó (ý chính, bài giảng viết, bẫy, ba ví dụ có lời giải, đề tự luyện kèm đáp án và gợi ý), nên không có số liệu mới cần đối chiếu. Phần «Ý chính» đọc miễn phí; toàn bộ tài liệu và tệp PDF, Word (bộ xuất của `src/docs/`) cần Premium. Video bài giảng: ô «Cơ bản» xem miễn phí, ô «Chuẩn thi» cần Premium (`src/topic/LectureVideos.tsx`); hiện chưa ô nào có video thật, xem `docs/TRO-LY.md`. Chính sách và điều kiện hoàn tiền ở `/chinh-sach` (`REFUND_DAYS` trong `src/premium/terms.ts`, email liên hệ qua `VITE_SUPPORT_EMAIL`).
 
-Khi chạy production (`VERCEL_ENV=production`, `NODE_ENV=production` hoặc `PAY_LIVE=1`), server không nhận IPN MoMo và không tạo đơn ví/QR nếu chỉ có khóa sandbox, và bỏ qua `ADMIN_TOKEN` / `BANK_WEBHOOK_SECRET` mẫu hoặc ngắn hơn 16 ký tự. Chuyển khoản đã xác nhận (webhook, IPN, admin) đến sau khi đơn hết 15 phút vẫn được cấp quyền; crypto giữ hạn chặt vì tỷ giá đã khóa.
+Khi chạy production (`VERCEL_ENV=production`, `NODE_ENV=production` hoặc `PAY_LIVE=1`), server không nhận IPN MoMo và không tạo đơn ví/QR nếu chỉ có khóa sandbox, và bỏ qua `ADMIN_TOKEN` / `BANK_WEBHOOK_SECRET` mẫu hoặc ngắn hơn 16 ký tự. Chuyển khoản đã xác nhận (webhook, IPN, admin) đến sau khi đơn hết 15 phút vẫn được cấp quyền; crypto giữ hạn chặt vì tỷ giá đã khóa, trừ khi mã giao dịch đã dán trước khi hết hạn: khi đó server còn đối soát đúng mã đó thêm 24 giờ (`CRYPTO_LATE_MS`) để đợi đủ xác nhận.
 
 Cờ `PREMIUM_LOCK` / `VITE_PREMIUM_LOCK` mặc định tắt. Không tờ nào đọc cờ này để giấu bài. Bật `1` chỉ để một lớp sau này khóa phần mới, không đụng công thức hay câu hỏi đã có.
 
@@ -82,7 +82,7 @@ Có hai kho, cùng giao diện `PayStore` (`server/pay/store.ts`), chọn theo b
 
 - Lược đồ nằm ở `server/db/schema.ts`, đánh số phiên bản. Lần đầu một instance chạm tới cơ sở dữ liệu, nó áp các phiên bản còn thiếu trong một transaction dưới advisory lock, nên nhiều instance khởi động cùng lúc không đua nhau. Muốn áp trước khi deploy thì chạy `npm run db:migrate`. Thêm thay đổi lược đồ bằng một phiên bản mới ở cuối `MIGRATIONS`, không sửa phiên bản cũ.
 - `markPaid` khóa dòng đơn (`SELECT … FOR UPDATE`), ghi `payment_events` với `ON CONFLICT DO NOTHING`, nên hai webhook cùng lúc chỉ cấp một mã và hoa hồng chỉ ghi một lần.
-- Số token của đơn tiền mã hóa có chỉ mục `UNIQUE`; hai đơn tạo cùng lúc mà trùng số thì đơn sau được báo giá lại.
+- Số token của đơn tiền mã hóa đang chờ có chỉ mục `UNIQUE`; hai đơn tạo cùng lúc mà trùng số thì đơn sau được báo giá lại.
 - Bộ đếm lượt hỏi trợ lý (`chat_hits`) cũng nằm ở Postgres khi có `DATABASE_URL`, nên mọi instance đếm chung. Không có Postgres thì mỗi instance đếm riêng trong bộ nhớ.
 - Thời gian lưu dạng mili giây (`BIGINT`), tiền lưu bằng đồng (`BIGINT`).
 - Kích thước pool mỗi instance: `PG_POOL_MAX` (mặc định 3). Trên serverless, dùng chuỗi kết nối qua pooler: Supabase dùng cổng 6543 (transaction mode), Neon dùng host `-pooler`.
@@ -120,7 +120,7 @@ Bốn lựa chọn, hợp đồng mainnet gắn trong mã, không đọc từ bi
 | `bsc-usdc` | BSC, chain id 56 | USDC | 18 | `0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d` |
 | `sol-usdc` | Solana | USDC | 6 | `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v` |
 
-USDT và USDC trên BSC là bản Binance-Peg, 18 số lẻ, không phải 6. Số hiển thị vẫn có 6 số sau dấu phẩy. Phần nguyên và hai số xu lấy từ giá VND chia tỷ giá. Bốn số còn lại là hậu tố `1…9999` riêng từng đơn, để hai đơn cùng giá không trùng số token. Hậu tố đã dùng không được cấp lại.
+USDT và USDC trên BSC là bản Binance-Peg, 18 số lẻ, không phải 6. Số hiển thị vẫn có 6 số sau dấu phẩy. Phần nguyên và hai số xu lấy từ giá VND chia tỷ giá. Bốn số còn lại là hậu tố `1…9999` riêng từng đơn, để hai đơn cùng giá không trùng số token. Một số token chỉ bị giữ khi đơn còn sống: đơn chờ chưa hết hạn, hoặc đơn đã dán mã giao dịch trước hạn (thêm 24 giờ). Đơn đã trả, đã hoàn hoặc bỏ dở thì trả số lại để cấp cho đơn sau; mã giao dịch cũ vẫn bị `payment_events` chặn dùng lại.
 
 Tỷ giá là số nguyên đồng cho 1 USD. `CRYPTO_VND_PER_USD` mặc định `25000`. Nếu `CRYPTO_RATE_URL` có giá trị (mặc định Frankfurter `USD→VND`), server thử tỷ giá công khai và làm tròn. Lỗi mạng, JSON lạ, hoặc tỷ giá ngoài khoảng 1.000–1.000.000 thì dùng mức cấu hình. Đơn giữ tỷ giá lúc tạo trong 15 phút, không đổi khi thị trường chạy.
 
@@ -136,7 +136,7 @@ Xác nhận đọc RPC/API công khai, không ký gì:
 - TRON: `wallet/gettransactioninfobyid`, `wallet/gettransactionbyid`, `wallet/getnowblock` trên `CRYPTO_TRON_API` (mặc định TronGrid). Mặc định 19 khối.
 - Solana: `getTransaction` và `getSignatureStatuses`. Mặc định chỉ nhận `finalized`. Đặt `CRYPTO_SOL_REQUIRE_FINALIZED=0` thì nhận khi đủ `CRYPTO_SOL_CONFIRMATIONS` (mặc định 32) hoặc đã finalized. Số USDC lấy từ chênh lệch số dư token của đúng ví và đúng mint.
 
-`payment_events` khóa `(crypto, tx hash)`. Gửi lại cùng mã cho cùng đơn thì `applied: false`. Cùng mã cho đơn khác thì 409 `reuse`. Đơn hết 15 phút thì không đối soát và không duyệt tay. Trang tự hỏi lại mỗi 5 giây sau khi đã dán mã. Worker:
+`payment_events` khóa `(crypto, tx hash)`. Gửi lại cùng mã cho cùng đơn thì `applied: false`. Cùng mã cho đơn khác thì 409 `reuse`. Đơn hết 15 phút thì không đối soát và không duyệt tay, trừ mã giao dịch đã dán trước hạn (còn đối soát 24 giờ, cả trang lẫn worker). Trang tự hỏi lại mỗi 5 giây sau khi đã dán mã. Worker:
 
 ```bash
 curl -s -X POST http://127.0.0.1:43123/api/premium/crypto \

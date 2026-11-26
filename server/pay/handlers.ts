@@ -17,9 +17,9 @@ import {
   type CryptoQuote,
 } from "./crypto.ts";
 import { commissionOf, normalizeCode, sameReferrer, secretHash } from "./affiliate.ts";
-import { priceOf, type PayEnv, type PayMethod, type PlanId } from "./env.ts";
+import { priceOf, termMs, type PayEnv, type PayMethod, type PlanId } from "./env.ts";
 import { createMomoPayment, ipnSignatureOk, readIpn } from "./momo.ts";
-import { CryptoAmountTaken, licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
+import { CRYPTO_LATE_MS, CryptoAmountTaken, licenseHash, storeFor, type OrderRow, type PayStore } from "./store.ts";
 import { buildVietQr, emvName } from "./vietqr.ts";
 
 const ORDER_TTL_MS = 15 * 60 * 1000;
@@ -61,10 +61,6 @@ function planOf(value: unknown): PlanId | null {
 
 function methodOf(value: unknown): PayMethod | null {
   return value === "wallet" || value === "qr" || value === "bank" || value === "crypto" ? value : null;
-}
-
-function termMs(plan: PlanId): number {
-  return (plan === "year" ? 365 : 30) * 86_400_000;
 }
 
 async function qrImage(payload: string): Promise<string> {
@@ -203,7 +199,7 @@ async function create(request: Request, env: PayEnv, store: PayStore): Promise<R
     // Hai request song song có thể cùng chọn một số token; Postgres chặn bằng chỉ mục UNIQUE, ta báo giá lại.
     for (let attempt = 0; ; attempt += 1) {
       try {
-        const quote = await quoteCrypto(env, chain, amount, (units) => store.cryptoTaken(chain, CHAINS[chain].asset, units, ""));
+        const quote = await quoteCrypto(env, chain, amount, (units) => store.cryptoTaken(chain, CHAINS[chain].asset, units, "", now));
         order.cryptoChain = quote.chain;
         order.cryptoAsset = quote.asset;
         order.cryptoUnits = quote.units;
@@ -376,7 +372,7 @@ async function rebindCrypto(env: PayEnv, store: PayStore, order: OrderRow, chain
   if (order.cryptoTx) return json(409, { error: "tx" });
     let quote: CryptoQuote;
     try {
-      quote = await quoteCrypto(env, chainRaw, order.amount, (units) => store.cryptoTaken(chainRaw, CHAINS[chainRaw].asset, units, order.orderId));
+      quote = await quoteCrypto(env, chainRaw, order.amount, (units) => store.cryptoTaken(chainRaw, CHAINS[chainRaw].asset, units, order.orderId, env.now()));
   } catch (error) {
     const message = error instanceof Error ? error.message : "quote";
     return json(400, { error: "quote", message });
@@ -388,7 +384,7 @@ async function rebindCrypto(env: PayEnv, store: PayStore, order: OrderRow, chain
     rate: quote.rate,
     suffix: quote.suffix,
     source: quote.rateSource,
-  });
+  }, env.now());
   if (!saved) return json(409, { error: "order" });
   const fresh = await store.getOrder(order.orderId, env.now());
   if (!fresh) return json(404, { error: "not_found" });
@@ -412,11 +408,15 @@ async function watchCrypto(request: Request, env: PayEnv, store: PayStore): Prom
 type Settle = { applied?: boolean; error?: string; field?: string; have?: number; need?: number };
 
 async function settleCrypto(env: PayEnv, store: PayStore, order: OrderRow, txRaw: string): Promise<Settle> {
-  if (order.status === "expired") return { error: "expired" };
   if (order.status === "paid") return { applied: false };
+  if (order.status !== "pending" && order.status !== "expired") return { error: "expired" };
   if (!isCryptoChain(order.cryptoChain) || !order.cryptoUnits) return { error: "chain" };
   const tx = normalizeTx(order.cryptoChain, txRaw);
   if (!tx) return { error: "tx" };
+  // The rate is locked for 15 minutes, but a tx hash saved while the order was pending was sent in
+  // time; it may still settle once its confirmations land. Any other hash on an expired order is refused.
+  const late = order.status === "expired";
+  if (late && (tx !== order.cryptoTx || env.now() > order.expiresAt + CRYPTO_LATE_MS)) return { error: "expired" };
   const owner = await store.eventOrder("crypto", tx);
   if (owner && owner !== order.orderId) return { error: "reuse" };
   if (owner === order.orderId) return { applied: false };
@@ -431,7 +431,7 @@ async function settleCrypto(env: PayEnv, store: PayStore, order: OrderRow, txRaw
   if (!checked.ok) {
     return { error: checked.error, field: checked.field, have: checked.have, need: checked.need };
   }
-  const marked = await store.markPaid(order.orderId, env.now(), order.amount, tx, "crypto", tx);
+  const marked = await store.markPaid(order.orderId, env.now(), order.amount, tx, "crypto", tx, late);
   if (!marked.ok) {
     if (marked.error === "duplicate") {
       const who = await store.eventOrder("crypto", tx);

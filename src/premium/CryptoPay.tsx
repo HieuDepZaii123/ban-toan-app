@@ -131,7 +131,8 @@ export function CryptoPay({
   });
 
   useEffect(() => {
-    if (status !== "pending" || !crypto.txHash) return;
+    // An expired order whose tx hash came in time is still checked by the server, so keep asking.
+    if (status === "paid" || !crypto.txHash) return;
     let live = true;
     const pull = () => {
       void fetch("/api/premium/crypto", {
