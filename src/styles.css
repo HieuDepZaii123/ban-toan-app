@@ -1118,6 +1118,9 @@ html[data-lamp="on"] body::before {
 @media (max-width: 860px) { .pillars { grid-template-columns: minmax(0, 1fr); } }
 /* "Cách Bàn Toán hoạt động": one card per feature. */
 .why > h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); text-transform: none; letter-spacing: 0; color: var(--ink); margin-bottom: 0; text-wrap: balance; }
+.why-story { background: var(--sheet); border: 1px solid var(--line); border-left: 5px solid var(--logo-accent); border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; display: grid; gap: 8px; }
+.why-story h2 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 1.85rem); text-transform: none; letter-spacing: 0; color: var(--ink); text-wrap: balance; }
+.why-story p { margin: 0; color: var(--ink-soft); line-height: 1.6; max-width: 68ch; }
 .why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
 .why-card { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .why-card h3 { margin: 0; font-size: 1.02rem; }

@@ -55,6 +55,23 @@ export function WhyDifferent() {
   const lang = useLang();
   return (
     <section id="vi-sao" className="stream why" aria-labelledby="why-title">
+      <div className="why-story">
+        <h2 id="why-story-title">{t(lang, "Vì sao có Bàn Toán", "Why Bàn Toán exists")}</h2>
+        <p>
+          {t(
+            lang,
+            "Mình tạo ra Bàn Toán vì muốn thay đổi tận gốc cách học, tiếp cận và nhìn nhận toán: theo hướng nghiên cứu, sáng tạo và tạo ra những ý tưởng thiết thực cho đời sống hằng ngày, không gò bó.",
+            "I built Bàn Toán to change, from the ground up, how maths is learned, approached and seen: through investigation and creativity, producing ideas that are useful in everyday life, without being boxed in.",
+          )}
+        </p>
+        <p>
+          {t(
+            lang,
+            "“Bàn Toán” là một chiếc bàn để học, làm việc, nghiên cứu và sáng tạo toán. Ý tưởng lấy từ chiếc bàn học: tông màu vàng gỗ, và có đầy đủ công cụ cho người học.",
+            "“Bàn Toán” means “maths desk”: a desk for learning, working on, investigating and creating maths. The idea comes from a study desk, in warm wood-yellow tones, with every tool a learner needs.",
+          )}
+        </p>
+      </div>
       <h2 id="why-title">{t(lang, "Cách Bàn Toán hoạt động", "How Bàn Toán works")}</h2>
       <div className="why-grid">
         {REASONS.map((reason) => (
