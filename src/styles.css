@@ -1886,3 +1886,12 @@ html { scroll-padding-top: 96px; scroll-padding-bottom: calc(var(--dock-h) + var
 .sp-edge-label { fill: currentColor; font-size: 11px; font-style: italic; }
 .sp-axis { stroke-width: 1.1; opacity: 0.55; }
 .sp-sphere { fill: var(--accent, #2563eb); fill-opacity: 0.06; stroke: currentColor; stroke-width: 1.2; }
+
+.space-wrap { display: block; }
+.space-turnable { touch-action: none; cursor: grab; outline-offset: 2px; }
+.space-turnable:active { cursor: grabbing; }
+.space-tools { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin: 0.25rem 0 0.5rem; }
+.space-btn { min-height: 44px; padding: 0.4rem 0.9rem; border: 1px solid var(--line, #d0d7de); border-radius: 999px; background: var(--surface, #fff); color: inherit; font: inherit; cursor: pointer; }
+.space-btn[aria-pressed="true"] { border-color: var(--accent, #2563eb); box-shadow: 0 0 0 2px var(--accent, #2563eb) inset; }
+.space-hint { margin: 0 0 0.5rem; text-align: center; font-size: 0.85rem; opacity: 0.75; }
+.space-turnable, .space-turnable text { user-select: none; -webkit-user-select: none; }

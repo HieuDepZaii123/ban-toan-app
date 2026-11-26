@@ -5,6 +5,7 @@
  */
 import assert from "node:assert/strict";
 import { gradeBooks as books } from "../src/content/grades/index.ts";
+import { rotate, startViewFor } from "../src/lib/rotate3d.ts";
 import type { P3 } from "../src/content/grades/space.ts";
 import { allSpaceFigures as spaceFigures } from "../src/content/grades/spaceAll.ts";
 
@@ -153,5 +154,23 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   const M = on(k, "M");
   assert.ok(!near(M[0] - 2 * M[1] + M[2] - 3, 0), "M không thuộc mặt phẳng");
   assert.ok(near(dot(sub(on(k, "D2"), on(k, "D1")), [1, -2, 1]), 0), "chỉ phương vuông góc pháp tuyến");
+}
+
+// Phép quay của chế độ xoay: giữ độ dài và tích vô hướng, và góc nhìn ban đầu không nhìn mặt phẳng nào đúng cạnh.
+{
+  const a: P3 = [1, 2, 3], b: P3 = [-2, 0.5, 4];
+  for (const [yaw, pitch] of [[0, 0], [0.7, -0.3], [-2.1, 1.2], [3, 0.9]] as const) {
+    const ra = rotate(a, yaw, pitch), rb = rotate(b, yaw, pitch);
+    assert.ok(near(len(ra), len(a)) && near(dot(ra, rb), dot(a, b)), "phép quay giữ độ dài và tích vô hướng");
+  }
+  assert.deepEqual(rotate(a, 0, 0).map((x) => Math.round(x * 1e9) / 1e9), a, "quay góc 0 là phép đồng nhất");
+  for (const [key, fig] of Object.entries(spaceFigures)) {
+    const normals = (fig.planes ?? []).map((pl) => cross(sub(fig.points[pl.pts[1]!]!, fig.points[pl.pts[0]!]!), sub(fig.points[pl.pts[2]!]!, fig.points[pl.pts[0]!]!)));
+    const view = startViewFor(normals);
+    for (const n of normals) {
+      const turned = rotate(n, view.yaw, view.pitch);
+      assert.ok(Math.abs(turned[1]) / len(n) > 0.2, `${key}: mặt phẳng bị nhìn gần đúng cạnh ở góc nhìn ban đầu (${(Math.abs(turned[1]) / len(n)).toFixed(2)})`);
+    }
+  }
 }
 console.log(`space ok: ${Object.keys(spaceFigures).length} hình`);
