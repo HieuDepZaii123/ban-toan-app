@@ -980,15 +980,83 @@ html[data-lamp="on"] body::before {
 .chat-mode.is-on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .chat-mode:disabled { opacity: 0.6; cursor: default; }
 .chat-lock { opacity: 0.7; font-size: 0.72rem; }
-.chat-photo { display: flex; gap: 8px; align-items: center; }
-.chat-photo img { max-height: 72px; max-width: 120px; border-radius: 6px; object-fit: cover; }
 .chat-photo-btn { flex: none; }
 .chat-photo-row { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
 .chat-photo-row .chat-photo-btn { display: inline-flex; gap: 6px; align-items: center; }
-.chat-camera { display: grid; gap: 8px; }
-.chat-camera video { width: 100%; max-height: min(34vh, 320px); border-radius: 10px; background: #000; object-fit: contain; }
-.chat-camera-tip { margin: 0; color: var(--muted); font-size: 0.88rem; }
-.chat-camera-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.chat-photo-hint { color: var(--muted); font-size: 0.8rem; }
+@media (hover: none) { .chat-photo-hint { display: none; } }
+.chat-photo { display: flex; gap: 10px; align-items: center; padding: 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.chat-photo img { width: 88px; height: 88px; max-width: none; max-height: none; border-radius: 8px; object-fit: cover; flex: none; }
+.chat-photo-copy { display: grid; gap: 4px; min-width: 0; }
+.chat-photo-copy small { color: var(--ink-soft); font-size: 0.82rem; line-height: 1.4; }
+.chat-photo-copy span { display: flex; gap: 12px; }
+.chat-shot { display: block; max-width: 100%; max-height: 180px; border-radius: 10px; object-fit: contain; background: #fff; }
+.chat-panel.is-dropping { outline: 3px dashed var(--accent); outline-offset: -6px; }
+
+/* Photo studio: full-screen camera and crop editor for "Hỏi toán". Dark in both themes, like a camera app. */
+.studio {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; flex-direction: column;
+  background: #0d0b09; color: #f6ead7;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  touch-action: none;
+}
+.studio-top, .studio-bottom, .studio-tools { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; }
+.studio-tools { justify-content: center; flex-wrap: wrap; padding-top: 0; padding-bottom: 0; }
+.studio-bottom { justify-content: space-around; padding-bottom: 18px; }
+.studio-title { font-weight: 600; text-align: center; flex: 1; }
+.studio-spacer { min-width: 64px; }
+.studio-btn {
+  min-height: 44px; min-width: 44px; padding: 0 14px;
+  border: 1px solid rgb(246 234 215 / 22%); border-radius: 999px;
+  background: rgb(246 234 215 / 8%); color: inherit; font-weight: 600;
+}
+.studio-btn:disabled { opacity: 0.45; cursor: default; }
+.studio-btn.is-on { background: #f6ead7; color: #1c140c; }
+.studio-btn.is-primary { background: var(--logo-accent); color: #1c140c; border-color: transparent; }
+.studio-btn.is-wide { flex: 1; max-width: 420px; min-height: 50px; font-size: 1.02rem; }
+.studio-btn:focus-visible, .studio-shutter:focus-visible, .studio-crop:focus-visible { outline: 3px solid var(--logo-accent); outline-offset: 3px; }
+.studio-view { position: relative; flex: 1; min-height: 0; display: grid; place-items: center; overflow: hidden; margin: 0 10px; }
+.studio-view video { width: 100%; height: 100%; object-fit: contain; }
+.studio-view video.is-mirror { transform: scaleX(-1); }
+.studio-view video { position: absolute; inset: 0; }
+.studio-frame { position: relative; pointer-events: none; }
+.studio-guide { position: absolute; inset: 7%; }
+.studio-guide i { position: absolute; width: 34px; height: 34px; border: 0 solid rgb(255 255 255 / 85%); }
+.studio-guide i:nth-child(1) { top: 0; left: 0; border-top-width: 3px; border-left-width: 3px; border-top-left-radius: 10px; }
+.studio-guide i:nth-child(2) { top: 0; right: 0; border-top-width: 3px; border-right-width: 3px; border-top-right-radius: 10px; }
+.studio-guide i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 3px; border-left-width: 3px; border-bottom-left-radius: 10px; }
+.studio-guide i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 3px; border-right-width: 3px; border-bottom-right-radius: 10px; }
+.studio-flash { position: absolute; inset: 0; background: #fff; animation: studioFlash .25s ease-out forwards; pointer-events: none; }
+@keyframes studioFlash { from { opacity: 0.9; } to { opacity: 0; } }
+.studio-tip { margin: 0; padding: 8px 16px 10px; text-align: center; color: #d4c4ae; font-size: 0.9rem; line-height: 1.45; }
+.studio-shutter {
+  width: 76px; height: 76px; border-radius: 50%;
+  border: 5px solid #f6ead7; background: var(--logo-accent);
+  box-shadow: inset 0 0 0 4px #0d0b09;
+  transition: transform .12s ease;
+}
+.studio-shutter:active:not(:disabled) { transform: scale(0.92); }
+.studio-shutter:disabled { opacity: 0.4; cursor: default; }
+.studio-center { flex: 1; display: grid; place-content: center; gap: 16px; padding: 24px; text-align: center; max-width: 30rem; margin: 0 auto; line-height: 1.5; }
+.studio-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.studio-photo { position: relative; user-select: none; }
+.studio-photo img { display: block; width: 100%; height: 100%; max-width: none; pointer-events: none; }
+.studio-crop {
+  position: absolute; cursor: move; touch-action: none;
+  border: 2px solid var(--logo-accent);
+  box-shadow: 0 0 0 9999px rgb(0 0 0 / 55%);
+  background-image:
+    linear-gradient(to right, transparent calc(33.33% - 0.5px), rgb(255 255 255 / 35%) calc(33.33% - 0.5px), rgb(255 255 255 / 35%) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgb(255 255 255 / 35%) calc(66.66% - 0.5px), rgb(255 255 255 / 35%) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(33.33% - 0.5px), rgb(255 255 255 / 35%) calc(33.33% - 0.5px), rgb(255 255 255 / 35%) calc(33.33% + 0.5px), transparent calc(33.33% + 0.5px), transparent calc(66.66% - 0.5px), rgb(255 255 255 / 35%) calc(66.66% - 0.5px), rgb(255 255 255 / 35%) calc(66.66% + 0.5px), transparent calc(66.66% + 0.5px));
+}
+.studio-grip { position: absolute; width: 36px; height: 36px; touch-action: none; }
+.studio-grip::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--logo-accent); border: 2px solid #0d0b09; }
+.studio-grip.is-nw { left: -18px; top: -18px; cursor: nwse-resize; }
+.studio-grip.is-ne { right: -18px; top: -18px; cursor: nesw-resize; }
+.studio-grip.is-sw { left: -18px; bottom: -18px; cursor: nesw-resize; }
+.studio-grip.is-se { right: -18px; bottom: -18px; cursor: nwse-resize; }
+@media (prefers-reduced-motion: reduce) { .studio-flash { animation: none; opacity: 0; } .studio-shutter { transition: none; } }
 @media (max-width: 520px) {
   .chat-panel .quick-row, .chat-modes { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .chat-panel .quick-row > *, .chat-modes > * { flex: none; white-space: nowrap; }
