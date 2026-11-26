@@ -145,4 +145,20 @@ export const thptExtra2Notes: NoteBook = {
     R`Quan hệ vuông góc cho phép lấy pháp tuyến làm chỉ phương và ngược lại, còn quan hệ song song giữ nguyên pháp tuyến và chỉ đổi hằng số. Hình chiếu của một điểm là giao điểm của mặt phẳng với đường thẳng đi qua điểm đó và vuông góc mặt phẳng.`,
     R`Giữ nguyên hằng số khi lập mặt phẳng song song, hoặc nhầm chỉ phương với pháp tuyến giữa hai vật khác nhau.`,
   ),
+  "12/vtt-hai-dt": note(
+    R`Hai chỉ phương cùng phương cho song song hoặc trùng; nếu không, tích hỗn tạp bằng $0$ nghĩa là hai vectơ chỉ phương và vectơ nối hai điểm đồng phẳng, tức hai đường cắt nhau, còn khác $0$ là chéo nhau.`,
+    R`Kết luận song song chỉ vì chỉ phương cùng phương mà quên kiểm tra hai đường có trùng nhau không, hoặc gọi hai đường chéo nhau là song song.`,
+  ),
+  "12/giao-hai-dt": note(
+    R`Giao điểm là điểm có cùng tọa độ trên cả hai đường, nên hai tham số phải thỏa đồng thời ba phương trình; hai phương trình đầu tìm tham số, phương trình thứ ba là phép kiểm tra.`,
+    R`Dùng cùng một chữ cái $t$ cho cả hai đường, hoặc quên thử phương trình thứ ba nên nhận nhầm hai đường chéo nhau là cắt nhau.`,
+  ),
+  "12/duong-cat-hai-dt": note(
+    R`Đường thẳng cắt cả hai đường đi qua một điểm của mỗi đường, nên ba điểm thẳng hàng cho hai điều kiện đủ để tìm hai tham số; đường vuông góc chung thì thay thẳng hàng bằng hai điều kiện vuông góc.`,
+    R`Chọn cùng một tham số cho cả hai đường, hoặc quên rằng đường vuông góc chung chỉ duy nhất khi hai đường chéo nhau.`,
+  ),
+  "12/dt-trong-mp": note(
+    R`Đường nằm trong mặt phẳng phải vuông góc với pháp tuyến, và vuông góc thêm một đường nữa thì chỉ phương là tích có hướng của hai vectơ đó. Hình chiếu là giao của mặt phẳng ban đầu với mặt phẳng chứa đường và vuông góc với nó.`,
+    R`Đảo thứ tự trong tích có hướng khi cần chiều của vectơ, hoặc quên kiểm tra điểm đi qua có thật nằm trong mặt phẳng hay không.`,
+  ),
 };

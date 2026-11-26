@@ -6,6 +6,7 @@ import { lop12DoThi, lop12OxyzNC, lop12TichPhanNC } from "./lop12extra2.ts";
 import { lop12TichCoHuong, lop12TuongGiao } from "./lop12extra4.ts";
 import { lop12QuanHeOxyz } from "./lop12extra5.ts";
 import { lop12PtOxyz } from "./lop12extra6.ts";
+import { lop12DtOxyzNC } from "./lop12extra7.ts";
 
 const R = String.raw;
 
@@ -315,5 +316,5 @@ const lop12Base: GradeBook = {
 /** Hai chương bổ sung xen vào sau chương cùng mạch: ứng dụng đạo hàm sau khảo sát, kĩ thuật tích phân sau tích phân. */
 export const lop12: GradeBook = {
   ...lop12Base,
-  chapters: lop12Base.chapters.flatMap((chapter) => (chapter.id === "khao-sat" ? [chapter, lop12UngDung, lop12DoThi, lop12TuongGiao] : chapter.id === "tich-phan" ? [chapter, lop12KyThuat, lop12TichPhanNC] : chapter.id === "oxyz" ? [chapter, lop12PtOxyz, lop12OxyzNC, lop12TichCoHuong, lop12QuanHeOxyz] : chapter.id === "tk-12" ? [chapter, lop12TkNC] : chapter.id === "xs-12" ? [chapter, lop12XsNC] : [chapter])),
+  chapters: lop12Base.chapters.flatMap((chapter) => (chapter.id === "khao-sat" ? [chapter, lop12UngDung, lop12DoThi, lop12TuongGiao] : chapter.id === "tich-phan" ? [chapter, lop12KyThuat, lop12TichPhanNC] : chapter.id === "oxyz" ? [chapter, lop12PtOxyz, lop12DtOxyzNC, lop12OxyzNC, lop12TichCoHuong, lop12QuanHeOxyz] : chapter.id === "tk-12" ? [chapter, lop12TkNC] : chapter.id === "xs-12" ? [chapter, lop12XsNC] : [chapter])),
 };

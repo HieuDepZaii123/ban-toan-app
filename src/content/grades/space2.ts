@@ -306,5 +306,38 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     view: { dx: 0.3, dz: 0.25 },
     alt: { vi: "Đường thẳng qua điểm A(1; 2; 3) vuông góc với mặt phẳng (P) cắt (P) tại H, hình chiếu của A lên (P).", en: "The line through the point A(1, 2, 3) perpendicular to the plane (P) meets (P) at H, the projection of A onto (P)." },
   },
+  "12/vtt-hai-dt": {
+    points: { A: [1, 2, 3], C: [1, 0, -1], D1: [-1, 3, 2], D2: [4, 0.5, 4.5], E1: [0.5, -1, -1], E2: [2.5, 3, -1] },
+    edges: [{ a: "D1", b: "D2", s: "hl", label: "d1" }, { a: "E1", b: "E2", label: "d3" }],
+    dots: ["A", "C"],
+    hide: ["D1", "D2", "E1", "E2"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Hai đường thẳng chéo nhau d1 qua điểm A và d3 qua điểm C: chúng không song song và không có điểm chung.", en: "Two skew lines d1 through the point A and d3 through the point C: they are not parallel and have no common point." },
+  },
+  "12/giao-hai-dt": {
+    points: { M: [2, 1, 5], D1: [0.5, 2.5, 2], D2: [3, 0, 7], E1: [0.5, -0.5, 6.5], E2: [3.5, 2.5, 3.5] },
+    edges: [{ a: "D1", b: "D2", s: "hl", label: "d" }, { a: "E1", b: "E2", label: "d'" }],
+    dots: ["M"],
+    hide: ["D1", "D2", "E1", "E2"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Hai đường thẳng d và d' cắt nhau tại điểm M có tọa độ (2; 1; 5).", en: "Two lines d and d' meet at the point M with coordinates (2, 1, 5)." },
+  },
+  "12/duong-cat-hai-dt": {
+    points: { P: [-2, 0, 0], Q: [0, 0.5, 1], A: [2, 1, 2], X1: [-3, 0, 0], X2: [3, 0, 0], Y1: [0, -1, 1], Y2: [0, 2, 1], F: [4, 1.5, 3] },
+    edges: [{ a: "X1", b: "X2", label: "d1" }, { a: "Y1", b: "Y2", label: "d2" }, { a: "P", b: "F", s: "hl" }],
+    dots: ["P", "Q", "A"],
+    hide: ["X1", "X2", "Y1", "Y2", "F"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Đường thẳng đi qua điểm A cắt đường thẳng d1 tại P và cắt đường thẳng d2 tại Q; ba điểm A, P, Q thẳng hàng.", en: "A line through the point A meets the line d1 at P and the line d2 at Q; the three points A, P, Q are collinear." },
+  },
+  "12/dt-trong-mp": {
+    points: { M: [1, 2, 3], ...quad([2.5, 2, 1.5], [-6, 3, 3], [3, -3, 0]), B1: [0, 0, 3], B2: [2, 4, 3], F1: [2.6, 1.2, 2.2], F2: [-0.6, 2.8, 3.8] },
+    edges: [...quadEdges(["P1", "P2", "P3", "P4"]), { a: "B1", b: "B2", label: "d" }, { a: "F1", b: "F2", s: "hl", label: "Δ" }],
+    planes: [{ pts: ["P1", "P2", "P3", "P4"], tone: "a" }],
+    dots: ["M"],
+    hide: ["P1", "P2", "P3", "P4", "B1", "B2", "F1", "F2"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Đường thẳng d cắt mặt phẳng (P) tại M; đường thẳng Δ nằm trong (P), đi qua M và vuông góc với d.", en: "The line d meets the plane (P) at M; the line Δ lies in (P), passes through M and is perpendicular to d." },
+  },
 };
 export { cross };

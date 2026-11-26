@@ -181,6 +181,36 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   assert.ok(near(len(cross(sub(on(k, "H"), on(k, "A")), [1, -2, 1])), 0), "AH vuông góc với (P)");
 }
 
+{
+  const k = "12/vtt-hai-dt";
+  const A = on(k, "A"), C = on(k, "C"), D1 = on(k, "D1"), D2 = on(k, "D2"), E1 = on(k, "E1"), E2 = on(k, "E2");
+  assert.ok(near(len(cross(sub(D2, D1), [2, -1, 1])), 0) && near(len(cross(sub(A, D1), [2, -1, 1])), 0), "d1 qua A chỉ phương (2; -1; 1)");
+  assert.ok(near(len(cross(sub(E2, E1), [1, 2, 0])), 0) && near(len(cross(sub(C, E1), [1, 2, 0])), 0), "d3 qua C chỉ phương (1; 2; 0)");
+  assert.ok(!near(dot(cross([2, -1, 1], [1, 2, 0]), sub(C, A)), 0), "hai đường chéo nhau");
+}
+{
+  const k = "12/giao-hai-dt";
+  const M = on(k, "M");
+  assert.ok(near(len(cross(sub(on(k, "D2"), on(k, "D1")), [1, -1, 2])), 0) && near(len(cross(sub(M, on(k, "D1")), [1, -1, 2])), 0), "M thuộc d");
+  assert.ok(near(len(cross(sub(on(k, "E2"), on(k, "E1")), [1, 1, -1])), 0) && near(len(cross(sub(M, on(k, "E1")), [1, 1, -1])), 0), "M thuộc d'");
+}
+{
+  const k = "12/duong-cat-hai-dt";
+  const P = on(k, "P"), Q = on(k, "Q"), A = on(k, "A");
+  assert.ok(near(len(cross(sub(P, A), sub(Q, A))), 0), "A, P, Q thẳng hàng");
+  assert.ok(near(P[1], 0) && near(P[2], 0), "P thuộc d1");
+  assert.ok(near(Q[0], 0) && near(Q[2], 1), "Q thuộc d2");
+  assert.ok(near(len(cross(sub(on(k, "F"), A), [4, 1, 2])), 0), "đầu mút vẽ nằm trên đường thẳng");
+}
+{
+  const k = "12/dt-trong-mp";
+  for (const n of ["M", "P1", "P2", "P3", "P4", "F1", "F2"]) assert.ok(near(on(k, n)[0] + on(k, n)[1] + on(k, n)[2] - 6, 0), `${n} thuộc mặt phẳng (P)`);
+  const M = on(k, "M");
+  assert.ok(near(len(cross(sub(on(k, "F2"), on(k, "F1")), [-2, 1, 1])), 0) && near(len(cross(sub(M, on(k, "F1")), [-2, 1, 1])), 0), "Δ qua M chỉ phương (-2; 1; 1)");
+  assert.ok(near(dot(sub(on(k, "B2"), on(k, "B1")), [-2, 1, 1]), 0), "Δ vuông góc d");
+  assert.ok(near(len(cross(sub(on(k, "B2"), on(k, "B1")), [1, 2, 0])), 0) && near(len(cross(sub(M, on(k, "B1")), [1, 2, 0])), 0), "d qua M chỉ phương (1; 2; 0)");
+}
+
 // Hình của chương đại cương lớp 11.
 {
   const k = "11/giao-tuyen";
