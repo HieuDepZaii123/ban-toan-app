@@ -983,6 +983,12 @@ html[data-lamp="on"] body::before {
 .chat-photo { display: flex; gap: 8px; align-items: center; }
 .chat-photo img { max-height: 72px; max-width: 120px; border-radius: 6px; object-fit: cover; }
 .chat-photo-btn { flex: none; }
+.chat-photo-row { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.chat-photo-row .chat-photo-btn { display: inline-flex; gap: 6px; align-items: center; }
+.chat-camera { display: grid; gap: 8px; }
+.chat-camera video { width: 100%; max-height: min(34vh, 320px); border-radius: 10px; background: #000; object-fit: contain; }
+.chat-camera-tip { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.chat-camera-actions { display: flex; justify-content: flex-end; gap: 10px; }
 @media (max-width: 520px) {
   .chat-panel .quick-row, .chat-modes { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .chat-panel .quick-row > *, .chat-modes > * { flex: none; white-space: nowrap; }

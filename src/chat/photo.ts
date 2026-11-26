@@ -34,3 +34,8 @@ export async function shrinkPhoto(file: File): Promise<string | null> {
     bitmap.close();
   }
 }
+
+/** True when this browser can show a live camera view (needs a secure context: https or localhost). */
+export function canUseCamera(): boolean {
+  return typeof navigator !== "undefined" && typeof navigator.mediaDevices?.getUserMedia === "function";
+}
