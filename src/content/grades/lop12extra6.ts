@@ -85,7 +85,7 @@ export const lop12PtOxyz: GradeChapter = chuong("pt-oxyz", "Phương trình đư
           buoc(R`Chỉ phương là pháp tuyến $(1;\ -2;\ 1)$, nên $x=1+t$, $y=2-2t$, $z=3+t$.`, R`Đường thẳng vuông góc với mặt phẳng nhận pháp tuyến làm chỉ phương.`),
           buoc(R`Thay vào $(P)$: $(1+t)-2(2-2t)+(3+t)+1=6t+1=0$ nên $t=-\frac16$.`, R`Giao điểm với $(P)$ là hình chiếu cần tìm.`),
         ],
-        R`Hình chiếu ứng với $t=-\frac16$.`,
+        R`Hình chiếu ứng với $t=-\frac16$, tức là điểm $\left(\frac56;\ \frac73;\ \frac{17}{6}\right)$.`,
         [{ expr: "solve((1+x)-2*(2-2*x)+(3+x)+1, x)[0]", expect: "-Rational(1,6)" }]),
       vd(R`Viết mặt phẳng qua $A(1;\ 0;\ 0)$ và chứa đường thẳng $d:\ x=t,\ y=1+t,\ z=2$.`,
         [

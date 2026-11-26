@@ -47,7 +47,7 @@ export const g12Extra6En: Record<string, LessonEn> = {
   "pt-mp-dang": {
     s: R`The plane through $M(x_0;\ y_0;\ z_0)$ with normal $\vec n=(A;\ B;\ C)$ is $A(x-x_0)+B(y-y_0)+C(z-z_0)=0$. If two non-parallel direction vectors $\vec u$, $\vec v$ are known, then $\vec n=\left[\vec u,\vec v\right]$. The plane meeting the three axes at $(a;\ 0;\ 0)$, $(0;\ b;\ 0)$, $(0;\ 0;\ c)$ has equation $\frac xa+\frac yb+\frac zc=1$. The perpendicular bisector plane of $AB$ passes through the midpoint of $AB$ and has $\overrightarrow{AB}$ as normal.`,
     w: R`Every method reduces to finding a normal and a point of the plane; the cross product gives the normal when two direction vectors are known, and the intercept form is used only when the three axis intercepts are nonzero.`,
-    p: R`Forgetting that a normal multiplied by a nonzero number is still a normal, but a number other than $0$ must be used, or forgetting to substitute the point to find the constant.`,
+    p: R`Forgetting that a normal multiplied by a nonzero number is still a normal, so multiplying by a number other than $0$ is allowed, or forgetting to substitute the point to find the constant.`,
     ex: [
       [R`Write the equation of the plane through $M(1;\ 2;\ 3)$ with direction vectors $\vec u=(1;\ 0;\ 1)$ and $\vec v=(0;\ 1;\ 2)$.`, [
         [R`The cross product is $\left[\vec u,\vec v\right]=(-1;\ -2;\ 1)$, and we choose the normal $(1;\ 2;\ -1)$.`, R`Changing the sign of the whole vector makes the $x$ coefficient positive and the plane stays the same.`],
@@ -72,7 +72,7 @@ export const g12Extra6En: Record<string, LessonEn> = {
       [R`Write the line through $A(1;\ 2;\ 3)$ perpendicular to $(P):\ x-2y+z+1=0$ and find the value of $t$ for the projection of $A$ onto $(P)$.`, [
         [R`The direction vector is the normal $(1;\ -2;\ 1)$, so $x=1+t$, $y=2-2t$, $z=3+t$.`, R`A line perpendicular to a plane has the normal as direction vector.`],
         [R`Substituting into $(P)$: $(1+t)-2(2-2t)+(3+t)+1=6t+1=0$, so $t=-\frac16$.`, R`The intersection with $(P)$ is the required projection.`],
-      ], R`The projection corresponds to $t=-\frac16$.`],
+      ], R`The projection corresponds to $t=-\frac16$, that is, the point $\left(\frac56;\ \frac73;\ \frac{17}{6}\right)$.`],
       [R`Write the plane through $A(1;\ 0;\ 0)$ containing the line $d:\ x=t,\ y=1+t,\ z=2$.`, [
         [R`The point $B(0;\ 1;\ 2)\in d$, the direction vector is $\vec u=(1;\ 1;\ 0)$ and $\overrightarrow{AB}=(-1;\ 1;\ 2)$.`, R`Take the point of $d$ for $t=0$.`],
         [R`The normal $\left[\vec u,\overrightarrow{AB}\right]=(2;\ -2;\ 2)$, so we choose $(1;\ -1;\ 1)$; passing through $A$ gives $x-y+z-1=0$.`, R`Substitute the coordinates of $A$ to find the constant.`],

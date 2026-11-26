@@ -12,7 +12,7 @@ export const g12Extra7En: Record<string, LessonEn> = {
       [R`Let $d_1$ pass through $A(1;\ 2;\ 3)$ with direction vector $\vec{u_1}=(2;\ -1;\ 1)$. Consider $d_2$ through $B(3;\ 1;\ 4)$ with direction vector $(4;\ -2;\ 2)$ and $d_3$ through $C(1;\ 0;\ -1)$ with direction vector $(1;\ 2;\ 0)$. Find the relative position of $d_1$ with each line.`, [
         [R`The direction vector of $d_2$ is twice $\vec{u_1}$, so the lines are parallel or coincide.`, R`Parallel vectors mean the two lines cannot meet at a single point.`],
         [R`For $t=1$ on $d_1$ we get $(3;\ 1;\ 4)=B$, so $B\in d_1$ and the lines coincide.`, R`One common point is enough to conclude that two parallel lines coincide.`],
-        [R`For $d_3$: $\left[\vec{u_1},\vec{u_3}\right]=(-2;\ 1;\ 5)$ and $\overrightarrow{AC}=(0;\ -2;\ -4)$, and the dot product is $-22$.`, R`The directions are not parallel, so we use the mixed product with the vector joining the points.`],
+        [R`For $d_3$: $\left[\vec{u_1},\vec{u_3}\right]=(-2;\ 1;\ 5)$ and $\overrightarrow{AC}=(0;\ -2;\ -4)$, and the mixed product is $-22$.`, R`The directions are not parallel, so we use the mixed product with the vector joining the points.`],
         [R`The mixed product is different from $0$, so $d_1$ and $d_3$ are skew.`, R`A mixed product equal to $0$ is the condition for the lines to lie in one plane.`],
       ], R`The line $d_1$ coincides with $d_2$ and is skew to $d_3$.`],
       [R`What is the relative position of $d:\ x=1+t,\ y=2,\ z=3-t$ and $d':\ x=2+s,\ y=2+s,\ z=2$?`, [
@@ -22,8 +22,8 @@ export const g12Extra7En: Record<string, LessonEn> = {
     ],
     dr: [
       [R`Let $d_1$ pass through $A(0;\ 0;\ 0)$ with direction vector $(1;\ 0;\ 1)$ and $d_2$ through $B(1;\ 1;\ 0)$ with direction vector $(0;\ 1;\ 1)$. Compute $\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}$.`, R`The result is $-2$, so the lines are skew.`, R`The cross product is $(-1;\ -1;\ 1)$ and $\overrightarrow{AB}=(1;\ 1;\ 0)$, so the dot product is $-2$.`],
-      [R`The lines $d:\ x=t,\ y=t,\ z=2t$ and $d':\ x=2+s,\ y=1+s,\ z=m+2s$. Find $m$ so that the lines coincide.`, R`The required value is $m=2$.`, R`The direction vectors are equal; the point $(2;\ 1;\ m)$ lies on $d$ for $t=1$ and then $y=1$ matches, so $z=2$ and $m=2$.`],
-      [R`What is the relative position of $d:\ x=1+t,\ y=2,\ z=3-t$ and $d':\ x=2+s,\ y=2+s,\ z=2$?`, R`The lines meet at the point $(2;\ 2;\ 2)$.`, R`The directions are not parallel and the point $(2;\ 2;\ 2)$ corresponds to $t=1$ on $d$ and $s=0$ on $d'$.`, [], ["Coincident.", "Parallel.", "Meeting.", "Skew."]],
+      [R`The lines $d:\ x=t,\ y=t,\ z=2t$ and $d':\ x=1+s,\ y=1+s,\ z=m+2s$. Find $m$ so that the lines coincide.`, R`The required value is $m=2$.`, R`The direction vectors are equal; the point $(1;\ 1;\ m)$ lies on $d$ for $t=1$, so $z=2$ and $m=2$.`],
+      [R`What is the relative position of $d:\ x=1+t,\ y=1,\ z=2-t$ and $d':\ x=s,\ y=1+s,\ z=3+s$?`, R`The lines meet at the point $(0;\ 1;\ 3)$.`, R`The directions are not parallel; from $y=1$ we get $s=0$, and the point $(0;\ 1;\ 3)$ corresponds to $t=-1$ on $d$.`, [], ["Coincident.", "Parallel.", "Meeting.", "Skew."]],
     ],
   },
   "giao-hai-dt": {
