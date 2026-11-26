@@ -153,4 +153,28 @@ export const thpt1011Notes: NoteBook = {
     R`Mặt phẳng song song với đáy cắt hình chóp thành hình đồng dạng với đáy, và hình chóp nhỏ đồng dạng với hình chóp lớn. Độ dài nhân $k$, diện tích nhân $k^2$ và thể tích nhân $k^3$.`,
     R`Dùng $k$ thay cho $k^2$ khi tính diện tích, hoặc quên rằng tỉ số $k$ được tính từ đỉnh chứ không từ đáy.`,
   ),
+  "11/vi-tri-tuong-doi-kg": note(
+    R`Trong không gian hai đường thẳng không có điểm chung vẫn có thể không song song, vì chúng có thể không cùng nằm trong một mặt phẳng. Chỉ khi đồng phẳng mới chia thành cắt nhau hoặc song song.`,
+    R`Cho rằng hai đường không cắt nhau thì song song, như trong hình phẳng. Phải kiểm tra thêm hai đường có cùng nằm trong một mặt phẳng hay không.`,
+  ),
+  "11/giao-tuyen": note(
+    R`Hai điểm phân biệt xác định một đường thẳng, nên hai điểm chung của hai mặt phẳng xác định giao tuyến. Khi hai mặt phẳng chứa hai đường song song, giao tuyến không thể cắt chúng nên phải song song với chúng.`,
+    R`Tìm được một điểm chung rồi vội vẽ giao tuyến, hoặc nhầm hai đường chéo của hình thang với hai đường chéo của hình bình hành khi tìm điểm chung.`,
+  ),
+  "11/thiet-dien": note(
+    R`Mỗi mặt của khối cắt mặt phẳng theo một đoạn thẳng, nên thiết diện là đa giác có số cạnh không vượt quá số mặt của khối. Mặt phẳng song song với đáy giữ nguyên hình dạng và chỉ đổi tỉ lệ.`,
+    R`Quên nối các điểm cùng nằm trên một mặt, hoặc tính diện tích thiết diện song song với đáy bằng tỉ số $k$ thay cho $k^2$.`,
+  ),
+  "11/hinh-chop-deu": note(
+    R`Chân đường cao trùng tâm đáy đều nên khoảng cách từ chân đường cao đến mọi đỉnh đáy bằng nhau. Do đó mọi cạnh bên bằng nhau và tam giác vuông $SOA$ cho chiều cao qua cạnh bên.`,
+    R`Nhầm trung đoạn, đường cao của mặt bên, với cạnh bên, hoặc dùng cạnh đáy thay cho nửa đường chéo khi tính chiều cao của hình chóp tứ giác đều.`,
+  ),
+  "11/song-song": note(
+    R`Đường thẳng song song với một đường của mặt phẳng không thể cắt mặt phẳng, vì giao điểm sẽ phải nằm trên đường của mặt phẳng mà nó không cắt. Vì vậy chỉ cần một đường của mặt phẳng.`,
+    R`Quên kiểm tra đường thẳng không nằm trong mặt phẳng. Đường nằm trong mặt phẳng song song với nhiều đường của nó nhưng không gọi là song song với mặt phẳng.`,
+  ),
+  "11/vuong-goc": note(
+    R`Đường vuông góc với mặt phẳng thì vuông góc với mọi đường của mặt phẳng đi qua chân của nó, và định lí ba đường vuông góc mở rộng điều đó cho mọi đường trong mặt phẳng. Vì vậy chỉ cần hai đường cắt nhau.`,
+    R`Chỉ chứng minh vuông góc với một đường của mặt phẳng rồi kết luận sớm. Cần hai đường cắt nhau, không phải hai đường song song.`,
+  ),
 };

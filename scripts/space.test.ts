@@ -156,6 +156,27 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   assert.ok(near(dot(sub(on(k, "D2"), on(k, "D1")), [1, -2, 1]), 0), "chỉ phương vuông góc pháp tuyến");
 }
 
+// Hình của chương đại cương lớp 11.
+{
+  const k = "11/giao-tuyen";
+  const S = on(k, "S"), A = on(k, "A"), B = on(k, "B"), C = on(k, "C"), D = on(k, "D"), E = on(k, "E"), F = on(k, "F"), O = on(k, "O");
+  assert.ok(near(len(cross(sub(B, A), sub(C, D))), 0), "ABCD là hình bình hành: AB song song CD");
+  assert.ok(near(len(cross(sub(F, E), sub(B, A))), 0) && near(len(cross(sub(F, E), sub(S, E))), 0), "giao tuyến đi qua S và song song AB");
+  assert.ok(near(O[0] * 2, A[0] + C[0]) && near(O[0] * 2, B[0] + D[0]) && near(O[1] * 2, A[1] + C[1]) && near(O[1] * 2, B[1] + D[1]), "O là trung điểm của hai đường chéo");
+}
+{
+  const k = "11/thiet-dien";
+  const pts = ["M1", "M2", "M3", "M4", "M5", "M6"].map((n) => on(k, n));
+  for (const p of pts) assert.ok(near(p[0] - p[1] + p[2], 1), "sáu trung điểm cùng thuộc mặt phẳng x - y + z = 1");
+  for (let i = 0; i < 6; i += 1) assert.ok(near(len(sub(pts[i]!, pts[(i + 1) % 6]!)), Math.SQRT2), "cạnh lục giác dài căn hai");
+}
+{
+  const k = "11/hinh-chop-deu";
+  const S = on(k, "S"), O = on(k, "O"), A = on(k, "A");
+  assert.ok(near(len(sub(S, A)), Math.sqrt(len(sub(S, O)) ** 2 + len(sub(O, A)) ** 2)), "SA là cạnh huyền của tam giác SOA");
+  for (const n of ["A", "B", "C", "D"]) assert.ok(near(len(sub(on(k, n), S)), len(sub(A, S))), "các cạnh bên bằng nhau");
+}
+
 // Phép quay của chế độ xoay: giữ độ dài và tích vô hướng, và góc nhìn ban đầu không nhìn mặt phẳng nào đúng cạnh.
 {
   const a: P3 = [1, 2, 3], b: P3 = [-2, 0.5, 4];

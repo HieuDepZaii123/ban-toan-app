@@ -104,6 +104,42 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     alt: { vi: "Hình hộp chữ nhật ABCD.A'B'C'D' có ba kích thước a, b, c và đường chéo AC' (tô màu) dài căn bậc hai của a bình phương cộng b bình phương cộng c bình phương.", en: "A rectangular box ABCD.A'B'C'D' with dimensions a, b, c and the diagonal AC' (highlighted) of length the square root of a squared plus b squared plus c squared." },
   },
 
+  "11/vi-tri-tuong-doi-kg": {
+    points: box(3, 2.5, 2.5),
+    edges: withStyle(boxEdges, { "AA'": { s: "hl" }, "CC'": { s: "hl" }, BC: { s: "hl2" } }),
+    alt: { vi: "Hình hộp với hai cạnh bên AA' và CC' song song với nhau (cùng màu), và cạnh BC khác màu chéo với AA'.", en: "A box with the two lateral edges AA' and CC' parallel to each other (same colour), and the edge BC in another colour skew to AA'." },
+  },
+  "11/giao-tuyen": {
+    points: { S: [2, 1, 3], A: [0, 0, 0], B: [4, 0, 0], C: [5, 3, 0], D: [1, 3, 0], E: [-1, 1, 3], F: [5, 1, 3], O: [2.5, 1.5, 0] },
+    edges: [
+      { a: "A", b: "B" }, { a: "B", b: "C" }, { a: "C", b: "D", s: "hidden" }, { a: "D", b: "A", s: "hidden" },
+      { a: "S", b: "A" }, { a: "S", b: "B" }, { a: "S", b: "C" }, { a: "S", b: "D", s: "hidden" },
+      { a: "E", b: "F", s: "hl" }, { a: "A", b: "C", s: "hidden" }, { a: "B", b: "D", s: "hidden" },
+    ],
+    planes: [{ pts: ["S", "A", "B"], tone: "a" }, { pts: ["S", "C", "D"], tone: "b" }],
+    dots: ["O"],
+    hide: ["E", "F"],
+    alt: { vi: "Hình chóp S.ABCD có đáy là hình bình hành; hai mặt phẳng (SAB) và (SCD) tô hai màu cắt nhau theo đường thẳng qua S song song với AB, và hai đường chéo của đáy cắt nhau tại O.", en: "A pyramid S.ABCD with a parallelogram base; the two planes (SAB) and (SCD), shaded in two colours, meet along a line through S parallel to AB, and the two diagonals of the base meet at O." },
+  },
+  "11/thiet-dien": {
+    points: { ...box(2, 2, 2), M1: [1, 0, 0], M2: [2, 1, 0], M3: [2, 2, 1], M4: [1, 2, 2], M5: [0, 1, 2], M6: [0, 0, 1] },
+    edges: withStyle(boxEdges, {}).concat([
+      { a: "M1", b: "M2", s: "hl" }, { a: "M2", b: "M3", s: "hl" }, { a: "M3", b: "M4", s: "hl" }, { a: "M4", b: "M5", s: "hl" }, { a: "M5", b: "M6", s: "hl" }, { a: "M6", b: "M1", s: "hl" },
+    ]),
+    planes: [{ pts: ["M1", "M2", "M3", "M4", "M5", "M6"], tone: "b" }],
+    dots: ["M1", "M2", "M3", "M4", "M5", "M6"],
+    hide: ["M1", "M2", "M3", "M4", "M5", "M6"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Hình lập phương bị cắt bởi mặt phẳng qua trung điểm của sáu cạnh, thiết diện là một lục giác đều (tô màu).", en: "A cube cut by the plane through the midpoints of six edges, the cross-section being a regular hexagon (shaded)." },
+  },
+  "11/hinh-chop-deu": {
+    points: { ...pyrDeu.points, O: [2, 2, 0] },
+    edges: pyrDeu.edges.map((e) => (e.a === "S" && e.b === "D" ? { ...e, s: "hidden" as const } : e.a === "S" && e.b === "A" ? { ...e, s: "hl" as const } : e)).concat([{ a: "S", b: "O", s: "hl2" }, { a: "O", b: "A", s: "hl2" }]),
+    right: [{ at: "O", p: "S", q: "A" }],
+    dots: ["O"],
+    alt: { vi: "Hình chóp tứ giác đều S.ABCD với chân đường cao O là tâm của đáy; tam giác vuông SOA có cạnh bên SA là cạnh huyền, SO là chiều cao và OA là nửa đường chéo đáy.", en: "A regular quadrilateral pyramid S.ABCD whose foot of altitude O is the centre of the base; the right triangle SOA has the lateral edge SA as hypotenuse, SO as the height and OA as half the base diagonal." },
+  },
+
   // --- Lớp 12: Oxyz ---
   "12/vecto-kg": {
     points: { O: [0, 0, 0], U: [1, 2, 2], V: [2, -1, 0] },
