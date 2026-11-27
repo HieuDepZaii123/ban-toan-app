@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { QUESTION_TOTAL } from "../content/cards.ts";
 import { A } from "../lib/route.tsx";
 import { countRight, useSlice } from "../lib/store.ts";
@@ -8,8 +8,11 @@ import { useLang } from "../ui/useLang.ts";
 const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
-/** Đầu trang chủ: Bàn Toán có gì, ba lối vào chính, rồi phần miễn phí và Premium. */
-export function Welcome() {
+/**
+ * Đầu trang chủ: tiêu đề, rồi `start` (học tiếp và tìm tờ: việc chính nên nằm ngay dưới tiêu đề),
+ * rồi ba lối vào chính và phần miễn phí / Premium.
+ */
+export function Welcome({ start, searching = false }: { start?: ReactNode; searching?: boolean }) {
   const lang = useLang();
   return (
     <section className="hero-welcome">
@@ -23,6 +26,9 @@ export function Welcome() {
         )}{" "}
         <a href="#vi-sao">{t(lang, "Cách Bàn Toán hoạt động", "How Bàn Toán works")}</a>
       </p>
+      {start}
+      {/* While searching, the results come straight after the search box. */}
+      {searching ? null : <>
       {/* Counts are the app's real numbers (14 topics, 182 grade lessons, 28 studies). */}
       <div className="pillars">
         {PILLARS.map((pillar) => (
@@ -48,6 +54,7 @@ export function Welcome() {
         )}{" "}
         <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
       </p>
+      </>}
     </section>
   );
 }

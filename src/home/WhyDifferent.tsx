@@ -73,42 +73,94 @@ const PROBLEMS: { id: string; vi: string; en: string; bodyVi: string; bodyEn: st
   },
 ];
 
-/** Lợi ích: each line is something the app does today (route or file in the comment). */
-const BENEFITS: { id: string; vi: string; en: string; items: { vi: string; en: string }[] }[] = [
+/**
+ * Lợi ích: one card per group. `aimVi` says which problem above it answers; each item is an outcome (bold)
+ * and how the app delivers it today (route or file in the comment). No promised results: the app has no outcome data.
+ */
+type Benefit = { vi: string; en: string; howVi: string; howEn: string };
+const BENEFITS: { id: string; vi: string; en: string; aimVi: string; aimEn: string; items: Benefit[] }[] = [
   {
     id: "hoc-sinh",
     vi: "Học sinh", en: "Students",
+    aimVi: "Từ “học để thi rồi quên” sang hiểu, nhớ lâu và dùng được.",
+    aimEn: "From “learn for the exam, then forget” to understanding, remembering and using it.",
     items: [
       // src/labs/*
-      { vi: "Kéo hình, đổi tham số để tự thấy vì sao công thức đúng, thay vì học thuộc.", en: "Drag figures and change parameters to see why a formula holds, instead of memorising it." },
-      // /nghien-cuu
-      { vi: "Bài nghiên cứu: nêu giả thuyết, đo số liệu, viết kết luận như một nhà nghiên cứu.", en: "Investigations: state a guess, measure data and write a conclusion like a researcher." },
-      // src/thpt/review.ts, /cham-bai
-      { vi: "Câu sai quay lại theo lịch 1, 3, 7, 14 ngày để nhớ lâu; chấm bài chỉ ra bước sai đầu tiên.", en: "Missed questions come back after 1, 3, 7 and 14 days so they stick; marking shows the first wrong step." },
+      {
+        vi: "Hiểu thay vì học thuộc.", en: "Understand instead of memorising.",
+        howVi: "Kéo hình, đổi một con số là đồ thị đổi theo, nên em tự thấy vì sao công thức đúng.",
+        howEn: "Drag the figure or change a number and the graph follows, so you see for yourself why a formula holds.",
+      },
+      // src/research/briefs.ts
+      {
+        vi: "Dùng toán cho chuyện hằng ngày.", en: "Use maths on everyday things.",
+        howVi: "Bài nghiên cứu xuất phát từ chuyện thật: ly trà nguội dần, tiền gửi bao lâu thì gấp đôi, xét nghiệm dương tính thì khả năng mắc bệnh là bao nhiêu. Em tự đoán, đo số liệu rồi kết luận.",
+        howEn: "Investigations start from real things: a cup of tea cooling, how long savings take to double, what a positive test really means. You guess, measure and conclude.",
+      },
+      // src/thpt/review.ts
+      {
+        vi: "Nhớ lâu sau kỳ thi.", en: "Remember after the exam.",
+        howVi: "Câu làm sai tự quay lại sau 1, 3, 7 rồi 14 ngày; sai lại thì lịch bắt đầu lại từ đầu.",
+        howEn: "Questions you miss come back after 1, 3, 7 and then 14 days; miss one again and its schedule restarts.",
+      },
+      // /cham-bai
+      {
+        vi: "Biết mình sai ở đâu.", en: "Know where you went wrong.",
+        howVi: "Gửi bài làm, máy chấm chỉ ra bước sai đầu tiên thay vì chỉ báo đúng hay sai.",
+        howEn: "Send your working and the marker points to the first wrong step, not just right or wrong.",
+      },
     ],
   },
   {
     id: "giao-vien",
     vi: "Giáo viên", en: "Teachers",
+    aimVi: "Dạy với công cụ hiện đại mà không mất thêm thời gian chuẩn bị.",
+    aimEn: "Teach with modern tools without spending more time preparing.",
     items: [
       // src/labs/*, /xuong-hinh
-      { vi: "Hình động kéo được và Xưởng hình để minh họa trực tiếp trên lớp.", en: "Draggable figures and the Workshop to demonstrate live in class." },
+      {
+        vi: "Bài giảng sinh động hơn.", en: "Livelier lessons.",
+        howVi: "Chiếu hình kéo được lên lớp: đổi tham số, cả lớp thấy đồ thị và hình khối thay đổi ngay.",
+        howEn: "Project draggable figures in class: change a parameter and everyone sees the graph or solid change at once.",
+      },
       // /soan-tai-lieu
-      { vi: "Soạn tài liệu có công thức, xuất PDF hoặc Word ngay.", en: "Write handouts with formulas and export to PDF or Word straight away." },
+      {
+        vi: "Soạn tài liệu nhanh.", en: "Write handouts quickly.",
+        howVi: "Gõ đề có công thức toán ngay trên trang, xuất ra PDF hoặc Word để in.",
+        howEn: "Type problems with formulas on the page and export to PDF or Word to print.",
+      },
       // src/content/vary/*, scripts/*
-      { vi: "Bài tập sinh số mới mỗi lần, đáp án được kiểm bằng SymPy.", en: "Exercises with new numbers each time, answers checked with SymPy." },
+      {
+        vi: "Đề không trùng, đáp án tin được.", en: "Fresh exercises you can trust.",
+        howVi: "Mỗi lần tạo là một bộ số mới nên học sinh khó chép nhau; đáp án đã được máy kiểm lại bằng SymPy.",
+        howEn: "Each attempt gets new numbers, so copying is harder; answers are machine-checked with SymPy.",
+      },
     ],
   },
   {
     id: "phu-huynh",
     vi: "Phụ huynh", en: "Parents",
+    aimVi: "Biết rõ tiền và thời gian của con đang đi đâu.",
+    aimEn: "Know where your child's time and your money go.",
     items: [
       // /nang-cap
-      { vi: "Bài học và luyện tập miễn phí; Premium chỉ dành cho phần nâng cao.", en: "Lessons and practice are free; Premium is only for the extras." },
+      {
+        vi: "Tốn ít tiền.", en: "Costs little.",
+        howVi: "Toàn bộ bài học và luyện tập miễn phí. Premium chỉ cần cho đề thi không giới hạn, ôn lỗi theo lịch và trợ lý sâu hơn.",
+        howEn: "All lessons and practice are free. Premium is only for unlimited papers, scheduled review and a deeper tutor.",
+      },
       // /phu-huynh, /bao-cao
-      { vi: "Báo cáo tuần: số đề thi thử con đã làm, số bài được chấm và số lỗi đã tự sửa.", en: "A weekly report: mock papers your child finished, problems marked and mistakes they fixed." },
+      {
+        vi: "Thấy con học thật hay không.", en: "See whether your child is really studying.",
+        howVi: "Báo cáo tuần gửi qua đường link: số đề thi thử con đã làm, số bài được chấm và số lỗi con đã tự sửa.",
+        howEn: "A weekly report by link: mock papers finished, problems marked and mistakes your child fixed.",
+      },
       // src/parent/parentMode.ts
-      { vi: "Chế độ phụ huynh có mã PIN: trợ lý chỉ gợi ý, không đưa lời giải sẵn.", en: "PIN-protected parent mode: the tutor hints instead of handing over solutions." },
+      {
+        vi: "Con tự làm, không chép lời giải.", en: "Your child works it out, not copies it.",
+        howVi: "Bật chế độ phụ huynh bằng mã PIN: trợ lý chỉ gợi ý từng bước, không đưa lời giải sẵn.",
+        howEn: "Turn on parent mode with a PIN: the tutor hints step by step and never hands over the answer.",
+      },
     ],
   },
 ];
@@ -143,13 +195,17 @@ export function WhyDifferent() {
         </ul>
         <p>{t(lang, "Bàn Toán được làm ra để sửa những vấn đề này.", "Bàn Toán is built to fix these problems.")}</p>
         <h3>{t(lang, "Lợi ích cho từng người", "What each person gets")}</h3>
+        <p>{t(lang, "Mỗi thẻ dưới đây trả lời một vấn đề ở trên.", "Each card below answers one of the problems above.")}</p>
         <div className="why-grid">
           {BENEFITS.map((group) => (
             <article key={group.id} className="why-card" aria-labelledby={`benefit-${group.id}`}>
               <h4 id={`benefit-${group.id}`}>{t(lang, group.vi, group.en)}</h4>
+              <p className="why-aim">{t(lang, group.aimVi, group.aimEn)}</p>
               <ul>
                 {group.items.map((item) => (
-                  <li key={item.vi}>{t(lang, item.vi, item.en)}</li>
+                  <li key={item.vi}>
+                    <strong>{t(lang, item.vi, item.en)}</strong> {t(lang, item.howVi, item.howEn)}
+                  </li>
                 ))}
               </ul>
             </article>
