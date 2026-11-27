@@ -2,52 +2,59 @@ import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 
 /**
- * "Cách Bàn Toán hoạt động": what the app does, one card per feature, each a thing it does today
+ * "Cách Bàn Toán hoạt động": what the app does, one card per feature, each a thing it does today.
+ * Card titles read "Không …, hãy …": the habit to drop, then what the feature lets you do instead
  * (see the file named in each comment). No promised results: the app has no outcome data yet.
  * Learning, investigating and building are covered by the three blocks at the top of the page.
  */
-const REASONS: { id: string; vi: string; en: string; bodyVi: string; bodyEn: string }[] = [
+const REASONS: { id: string; noVi: string; noEn: string; yesVi: string; yesEn: string; bodyVi: string; bodyEn: string }[] = [
   {
     // src/labs/*, src/lib/math.ts
     id: "hinh-keo",
-    vi: "Hình kéo được ở mỗi chuyên đề", en: "A figure to drag on every topic",
-    bodyVi: "Đổi tham số là đồ thị và con số đổi theo ngay. Hình và lời giải tính từ cùng một nguồn nên khớp nhau.",
-    bodyEn: "Change a parameter and the graph and the numbers follow at once. The figure and the solution are computed from one source, so they match.",
+    noVi: "Không học thuộc công thức,", noEn: "Don't memorise the formula.",
+    yesVi: "hãy nhìn nó thay đổi.", yesEn: "Watch it change.",
+    bodyVi: "Đổi một con số là đồ thị và kết quả đổi theo ngay. Hình vẽ và lời giải được tính cùng một cách nên luôn khớp nhau.",
+    bodyEn: "Change one number and the graph and the result change at once. The picture and the solution are worked out the same way, so they always match.",
   },
   {
     // src/content/dang/types.ts: a step is a claim and its reason
     id: "ly-do",
-    vi: "Mỗi bước có lý do", en: "A reason for every step",
-    bodyVi: "Lời giải viết thành từng cặp: điều khẳng định và vì sao nó đúng.",
-    bodyEn: "Solutions are written as pairs: what is claimed and why it holds.",
+    noVi: "Không chỉ chép các bước,", noEn: "Don't just copy the steps.",
+    yesVi: "hãy hiểu vì sao có bước đó.", yesEn: "Know why each step is there.",
+    bodyVi: "Mỗi bước trong lời giải có hai phần: làm gì, và vì sao làm vậy là đúng.",
+    bodyEn: "Every step of a solution has two parts: what to do, and why it is right.",
   },
   {
     // src/content/vary/*, src/lib/prng.ts, dss/
     id: "so-moi",
-    vi: "Số mới mỗi lần làm", en: "New numbers every attempt",
-    bodyVi: "Mỗi lần làm là một bộ số mới, đáp án đúng đổi chỗ, và các đáp án sai là những lỗi hay gặp. Câu Đúng / Sai / Chưa đủ hỏi xem điều kiện đã đủ chưa.",
-    bodyEn: "Each attempt has new numbers, the right answer moves, and the wrong choices are common mistakes. True / False / Not enough questions ask whether a condition is enough.",
+    noVi: "Không học vẹt đáp án,", noEn: "Don't memorise answers.",
+    yesVi: "hãy hiểu vì sao nó đúng.", yesEn: "Know why they are right.",
+    bodyVi: "Mỗi lần làm lại là một bộ số mới và đáp án đúng đổi chỗ, nên không thể nhớ đáp án. Các lựa chọn sai là những lỗi hay gặp. Câu Đúng / Sai / Chưa đủ tập cho em xem đề đã cho đủ dữ kiện chưa.",
+    bodyEn: "Each try has new numbers and the right answer moves, so you cannot just remember it. The wrong choices are common mistakes. True / False / Not enough questions train you to check whether you have enough information.",
   },
   {
     // scripts/*: SymPy oracles run in CI on every change
     id: "kiem-chung",
-    vi: "Kiểm bằng SymPy", en: "Checked with SymPy",
-    bodyVi: "Các con số trong bài được đối chiếu với SymPy và một bộ tính độc lập, hơn 1.800 phép kiểm, chạy lại mỗi khi nội dung thay đổi.",
-    bodyEn: "The numbers in lessons are checked against SymPy and an independent calculator, over 1,800 checks, re-run whenever the content changes.",
+    noVi: "Không đoán mò,", noEn: "Don't guess.",
+    yesVi: "hãy học trên số đã được máy kiểm.", yesEn: "Learn from numbers a computer has checked.",
+    bodyVi: "Con số trong bài được hai chương trình tính riêng kiểm lại (một trong hai là SymPy), tổng cộng hơn 1.800 lần kiểm. Mỗi lần sửa bài, máy kiểm lại từ đầu.",
+    bodyEn: "The numbers in lessons are checked by two separate programs (one is SymPy), over 1,800 checks in all. Every time a lesson is edited, the checks run again.",
   },
   {
     // src/thpt/review.ts: INTERVAL_DAYS = [1, 3, 7, 14]
     id: "on-lai",
-    vi: "Ôn lại câu sai theo lịch", en: "Missed questions on a schedule",
-    bodyVi: "Câu sai trong đề thi thử quay lại sau 1, 3, 7 và 14 ngày. Sai lần nữa thì lịch bắt đầu lại.",
-    bodyEn: "Questions missed in a mock exam come back after 1, 3, 7 and 14 days. Miss one again and its schedule starts over.",
+    noVi: "Không ôn lại cả đề,", noEn: "Don't redo whole papers.",
+    yesVi: "hãy ôn đúng câu đã sai.", yesEn: "Review exactly what you missed.",
+    bodyVi: "Câu làm sai trong đề thi thử tự quay lại sau 1, 3, 7 và 14 ngày. Sai lần nữa thì đếm lại từ đầu.",
+    bodyEn: "Questions you miss in a mock exam come back after 1, 3, 7 and 14 days. Miss one again and the count starts over.",
   },
   {
     // server/chat/policy.ts, facts.ts, check.ts; src/parent/parentMode.ts
     id: "tro-ly",
-    vi: "Trợ lý và chấm bài", en: "Tutor and marking",
-    bodyVi: "Trợ lý chỉ trả lời câu hỏi toán. Bản miễn phí gợi ý từng bước; lời giải đầy đủ có trong Premium. Máy chủ tự tính Δ và nghiệm để AI không nhầm. Chấm bài chỉ ra bước sai đầu tiên trong bài làm của bạn.",
-    bodyEn: "The tutor only answers maths questions. The free version hints step by step; full solutions are in Premium. The server works out Δ and the roots so the AI does not slip. Marking points to the first wrong step in your own working.",
+    noVi: "Không chép lời giải,", noEn: "Don't copy a solution.",
+    yesVi: "hãy tự tìm chỗ mình sai.", yesEn: "Find where you went wrong.",
+    bodyVi: "Trợ lý chỉ trả lời câu hỏi về toán. Bản miễn phí gợi ý từng bước; lời giải đầy đủ có trong Premium. Máy tự tính trước các con số chính, như nghiệm của phương trình, để AI không tính nhầm. Gửi bài làm, máy chấm chỉ ra bước sai đầu tiên.",
+    bodyEn: "The tutor only answers maths questions. The free version gives hints step by step; full solutions come with Premium. The computer works out key numbers first, such as the roots of an equation, so the AI does not get them wrong. Send your working and the marker points to the first wrong step.",
   },
 ];
 
@@ -120,8 +127,8 @@ const BENEFITS: { id: string; vi: string; en: string; aimVi: string; aimEn: stri
       // src/labs/*, /xuong-hinh
       {
         vi: "Bài giảng sinh động hơn.", en: "Livelier lessons.",
-        howVi: "Chiếu hình kéo được lên lớp: đổi tham số, cả lớp thấy đồ thị và hình khối thay đổi ngay.",
-        howEn: "Project draggable figures in class: change a parameter and everyone sees the graph or solid change at once.",
+        howVi: "Chiếu hình kéo được lên lớp: đổi một con số, cả lớp thấy đồ thị và hình khối thay đổi ngay.",
+        howEn: "Project draggable figures in class: change one number and everyone sees the graph or solid change at once.",
       },
       // /soan-tai-lieu
       {
@@ -132,8 +139,8 @@ const BENEFITS: { id: string; vi: string; en: string; aimVi: string; aimEn: stri
       // src/content/vary/*, scripts/*
       {
         vi: "Đề không trùng, đáp án tin được.", en: "Fresh exercises you can trust.",
-        howVi: "Mỗi lần tạo là một bộ số mới nên học sinh khó chép nhau; đáp án đã được máy kiểm lại bằng SymPy.",
-        howEn: "Each attempt gets new numbers, so copying is harder; answers are machine-checked with SymPy.",
+        howVi: "Mỗi lần tạo là một bộ số mới nên học sinh khó chép nhau; đáp án đã được máy kiểm lại.",
+        howEn: "Each attempt gets new numbers, so copying is harder; answers are checked by computer.",
       },
     ],
   },
@@ -216,7 +223,10 @@ export function WhyDifferent() {
       <div className="why-grid">
         {REASONS.map((reason) => (
           <article key={reason.id} className="why-card" aria-labelledby={`why-${reason.id}`}>
-            <h3 id={`why-${reason.id}`}>{t(lang, reason.vi, reason.en)}</h3>
+            <h3 id={`why-${reason.id}`}>
+              <span className="no">{t(lang, reason.noVi, reason.noEn)}</span>{" "}
+              <span className="yes">{t(lang, reason.yesVi, reason.yesEn)}</span>
+            </h3>
             <p>{t(lang, reason.bodyVi, reason.bodyEn)}</p>
           </article>
         ))}

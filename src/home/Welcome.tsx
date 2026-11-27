@@ -9,7 +9,7 @@ const CURVE_KEY = "bt-curve";
 const NOTE_KEY = "bt-notes-pad";
 
 /**
- * Đầu trang chủ: tiêu đề, rồi `start` (học tiếp và tìm tờ: việc chính nên nằm ngay dưới tiêu đề),
+ * Đầu trang chủ: tiêu đề, một câu "Không …, hãy …", rồi `start` (học tiếp và tìm tờ: việc chính nên nằm ngay dưới tiêu đề),
  * rồi ba lối vào chính và phần miễn phí / Premium.
  */
 export function Welcome({ start, searching = false }: { start?: ReactNode; searching?: boolean }) {
@@ -17,12 +17,15 @@ export function Welcome({ start, searching = false }: { start?: ReactNode; searc
   return (
     <section className="hero-welcome">
       <p className="kicker">{t(lang, "Toán lớp 1–12", "Maths, grades 1–12")}</p>
-      <h1>{t(lang, "Kéo hình, làm bài, xem lời giải từng bước.", "Drag the figure, try the problem, read each step.")}</h1>
+      <h1>
+        <span className="no">{t(lang, "Không học thuộc công thức toán học,", "Don't memorise maths formulas.")}</span>{" "}
+        <span className="yes">{t(lang, "hãy hiểu nó.", "Understand them.")}</span>
+      </h1>
       <p className="lead">
         {t(
           lang,
-          "Mười bốn chuyên đề THPT, 182 bài từ lớp 1 đến lớp 12 và 28 bài nghiên cứu, có gợi ý và lời giải.",
-          "Fourteen upper-secondary topics, 182 lessons from grade 1 to 12 and 28 investigations, with hints and worked solutions.",
+          "Có 182 bài học từ lớp 1 đến lớp 12, 14 chuyên đề ôn thi THPT và 28 bài tự khám phá. Kèm gợi ý và lời giải.",
+          "182 lessons from grade 1 to 12, 14 topics for the upper-secondary exam and 28 hands-on investigations. With hints and worked solutions.",
         )}{" "}
         <a href="#vi-sao">{t(lang, "Cách Bàn Toán hoạt động", "How Bàn Toán works")}</a>
       </p>
@@ -35,6 +38,10 @@ export function Welcome({ start, searching = false }: { start?: ReactNode; searc
           <article key={pillar.id} className="pillar" aria-labelledby={`pillar-${pillar.id}`}>
             <PillarMark id={pillar.id} />
             <h2 id={`pillar-${pillar.id}`}>{t(lang, pillar.vi, pillar.en)}</h2>
+            <p className="pillar-gist">
+              <span className="no">{t(lang, pillar.noVi, pillar.noEn)}</span>{" "}
+              <span className="yes">{t(lang, pillar.yesVi, pillar.yesEn)}</span>
+            </p>
             <p className="pillar-body">{t(lang, pillar.bodyVi, pillar.bodyEn)}</p>
             <p className="pillar-links">
               {pillar.links.map((link) => (
@@ -49,8 +56,8 @@ export function Welcome({ start, searching = false }: { start?: ReactNode; searc
       <p className="lead home-premium">
         {t(
           lang,
-          "Bài học và luyện tập miễn phí. Đề thi thử đầu tiên miễn phí. Premium dành cho đề không giới hạn, ôn lỗi sai theo lịch và trợ lý sâu hơn.",
-          "Lessons and practice stay free. The first mock exam is free. Premium is for unlimited papers, scheduled mistake review and a deeper tutor.",
+          "Bài học và luyện tập miễn phí. Đề thi thử đầu tiên cũng miễn phí. Gói Premium mở thêm: làm đề không giới hạn, tự nhắc ôn câu sai và trợ lý có lời giải đầy đủ.",
+          "Lessons and practice are free. The first mock exam is free too. Premium adds unlimited papers, reminders to review what you missed and full solutions from the tutor.",
         )}{" "}
         <A href="/nang-cap">{t(lang, "Xem Premium", "See Premium")}</A>
       </p>
@@ -64,14 +71,19 @@ type PillarId = "hoc" | "nghien-cuu" | "sang-tao";
 const PILLARS: {
   id: PillarId;
   vi: string; en: string;
+  /** "Không …," then "hãy …": the habit to drop, then what to do instead. */
+  noVi: string; noEn: string;
+  yesVi: string; yesEn: string;
   bodyVi: string; bodyEn: string;
   links: { href: string; vi: string; en: string }[];
 }[] = [
   {
     id: "hoc",
     vi: "Học", en: "Learn",
-    bodyVi: "Kéo một tham số, đồ thị và con số đổi theo. Mỗi bài giải từng bước, bước nào cũng ghi lý do.",
-    bodyEn: "Drag a parameter and the graph and the numbers follow. Every lesson is worked step by step, with a reason for each step.",
+    noVi: "Không chép công thức,", noEn: "Don't copy the formula.",
+    yesVi: "hãy nhìn nó chuyển động.", yesEn: "Watch it move.",
+    bodyVi: "Kéo thanh trượt, đồ thị và con số đổi theo ngay. Lời giải đi từng bước, bước nào cũng nói rõ vì sao.",
+    bodyEn: "Move a slider and the graph and the numbers change right away. Solutions go step by step and say why at every step.",
     links: [
       { href: "#chuyen-de", vi: "Chuyên đề", en: "Topics" },
       { href: "/kien-thuc", vi: "Lớp 1–12", en: "Grades 1–12" },
@@ -81,8 +93,10 @@ const PILLARS: {
   {
     id: "nghien-cuu",
     vi: "Nghiên cứu", en: "Investigate",
-    bodyVi: "Nêu giả thuyết, đo năm dòng số liệu, xem đồ thị, viết kết luận, rồi đối chiếu với chứng minh.",
-    bodyEn: "State a guess, measure five rows of data, read the graph, write a conclusion, then compare it with the proof.",
+    noVi: "Không làm theo bài mẫu,", noEn: "Don't follow the example.",
+    yesVi: "hãy tự đặt câu hỏi.", yesEn: "Ask your own question.",
+    bodyVi: "Đoán trước kết quả, đo vài con số, nhìn đồ thị rồi tự rút ra kết luận. Cuối bài, so kết luận của mình với lời chứng minh.",
+    bodyEn: "Guess first, measure a few numbers, look at the graph and draw your own conclusion. Then check it against the proof.",
     links: [
       { href: "/nghien-cuu", vi: "Nghiên cứu", en: "Research" },
       { href: "/khoa-hoc", vi: "Khoa học", en: "Science" },
@@ -91,8 +105,10 @@ const PILLARS: {
   {
     id: "sang-tao",
     vi: "Dựng hình và soạn đề", en: "Build and write",
-    bodyVi: "Dựng hình phẳng, xoay tám loại khối, soạn đề và phiếu học có công thức rồi xuất PDF hoặc Word.",
-    bodyEn: "Build plane figures, turn eight kinds of solid, write tests and worksheets with formulas and export them to PDF or Word.",
+    noVi: "Không chỉ giải đề có sẵn,", noEn: "Don't just solve set problems.",
+    yesVi: "hãy tự ra đề.", yesEn: "Make your own.",
+    bodyVi: "Vẽ hình, xoay tám loại hình khối. Tự soạn đề và phiếu học có công thức, rồi lưu ra PDF hoặc Word để in.",
+    bodyEn: "Draw figures and turn eight kinds of solid. Write tests and worksheets with formulas, then save them as PDF or Word to print.",
     links: [
       { href: "/xuong-hinh", vi: "Xưởng hình", en: "Workshop" },
       { href: "/soan-tai-lieu", vi: "Soạn tài liệu", en: "Documents" },
@@ -174,7 +190,7 @@ function FormulaPeek() {
   return (
     <section className="tool-card peek" tabIndex={0}>
       <b>{t(lang, "Tiếp tuyến của y = x²", "Tangent to y = x²")}</b>
-      <p className="lecture-note">{t(lang, "Rê vào thẻ: tiếp tuyến chạy theo x.", "Hover the card: the tangent follows x.")}</p>
+      <p className="lecture-note">{t(lang, "Kéo thanh trượt: đường tiếp tuyến chạy theo x.", "Move the slider: the tangent line follows x.")}</p>
       <div className="peek-stage">
         <svg viewBox="-2.2 -0.4 4.4 4.6" className="peek-plot" aria-hidden="true">
           <line x1="-2" y1="0" x2="2" y2="0" className="axis" />

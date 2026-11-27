@@ -1203,12 +1203,18 @@ html[data-lamp="on"] body::before {
 .hero-welcome .kicker { margin-bottom: 2px; }
 /* Three entry points under the title: one sheet of paper each, the app's teal for the drawing and links. */
 .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
-.pillar { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 14px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 6px; min-width: 0; }
+.pillar { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 14px; display: grid; grid-template-rows: auto auto auto 1fr auto; gap: 6px; min-width: 0; }
 .pillar h2 { margin: 2px 0 0; font-size: 1.15rem; }
 .pillar-mark { width: 72px; height: 44px; color: var(--accent); }
 .pillar-mark path, .pillar-mark circle { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .pillar-mark circle { fill: currentColor; stroke: none; }
 .pillar-mark .soft { stroke-dasharray: 3 4; opacity: 0.55; }
+/* "Không …, hãy …": the clause to drop is quiet, the clause to do carries the weight. */
+.pillar-gist { margin: 0; font-weight: 600; }
+.hero-welcome .no, .pillar-gist .no, .why-card h3 .no { color: var(--muted); font-weight: 500; }
+.hero-welcome h1 .no { color: var(--ink-soft); font-weight: inherit; }
+.hero-welcome h1 .yes { color: var(--accent); }
+.pillar-gist .yes, .why-card h3 .yes { color: var(--ink); }
 .pillar-body { margin: 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
 .pillar-links { margin: 4px 0 0; align-self: end; display: flex; flex-wrap: wrap; gap: 6px 14px; font-weight: 600; }
 .pillar-links a { color: var(--accent); }
@@ -1234,6 +1240,10 @@ html[data-lamp="on"] body::before {
 .why-card li strong { color: var(--ink); }
 .why-card .why-aim { color: var(--accent); font-weight: 600; font-size: 0.93rem; line-height: 1.45; }
 .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 14px; }
+/* Six 'Cách Bàn Toán hoạt động' cards: 3 + 3, never 4 + 2. */
+.why > .why-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 860px) { .why > .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .why > .why-grid { grid-template-columns: minmax(0, 1fr); } }
 .why-card { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .why-card h3 { margin: 0; font-size: 1.02rem; }
 .why-card p { margin: 0; color: var(--ink-soft); font-size: 0.93rem; line-height: 1.55; }
@@ -1554,7 +1564,7 @@ html[data-lamp="on"] body::before {
 @media print { .site-foot { display: none; } }
 
 /* Trang chủ: nhãn nhỏ, tiêu đề, một hàng bắt đầu (tờ đang mở | tìm + tiến độ), rồi các chuyên đề; góc bàn ở cuối. */
-.hero-welcome h1 { margin-top: 4px; text-wrap: balance; }
+.hero-welcome h1 { margin-top: 4px; max-width: 24ch; text-wrap: balance; }
 /* Học tiếp + tìm tờ: the first thing under the headline. */
 .home-start {
   display: grid;

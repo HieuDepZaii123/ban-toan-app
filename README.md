@@ -1,5 +1,7 @@
 # Bàn Toán
 
+**Không học thuộc công thức toán học, hãy hiểu nó.**
+
 Bàn Toán là bàn làm việc cho toán từ lớp 1 đến lớp 12. Học sinh kéo tham số, nhìn đồ thị đổi, rồi làm câu có gợi ý và lời giải.
 
 Giao diện tiếng Việt, có thể chuyển EN. Có hai giao diện Giấy và Đêm. Trên trang chủ có đèn bàn, đồng hồ Hà Nội cùng Tokyo, London và New York, và cửa sổ đổi cảnh Sáng / Trưa / Chiều / Đêm theo giờ trên máy (chọn tay được). App chạy được khi mất mạng sau lần mở đầu (PWA).
