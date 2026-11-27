@@ -308,7 +308,7 @@ export const g10En: Record<string, LessonEn> = {
     ],
   },
   "ba-conic": {
-    s: R`The ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ with $a>b>0$ is longer along the horizontal axis. The hyperbola $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ is a difference of two squares. The parabola $y^2=2px$ with $p>0$ has focus $F\left(\frac{p}{2},0\right)$.`,
+    s: R`The ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ with $a>b>0$ is longer along the horizontal axis. The hyperbola $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ has a minus sign between its two terms. The parabola $y^2=2px$ with $p>0$ has focus $F\left(\frac{p}{2},0\right)$.`,
     w: R`Each curve is defined by distances: an ellipse has a constant sum of distances to two foci, a hyperbola a constant difference, and a parabola equal distances to the focus and to the directrix. Writing those conditions in coordinates gives the three standard equations.`,
     p: R`Taking $a^2$ and $b^2$ as the semi-axis lengths. The ellipse $\frac{x^2}{9}+\frac{y^2}{4}=1$ has semi-major axis $3$ and semi-minor axis $2$.`,
     ex: [

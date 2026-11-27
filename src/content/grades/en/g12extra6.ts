@@ -39,7 +39,7 @@ export const g12Extra6En: Record<string, LessonEn> = {
       ], R`Yes, the intersection is $(2;\ 0;\ 0)$.`],
     ],
     dr: [
-      [R`Let $A(0;\ 0;\ 0)$ and $B(6;\ 3;\ 9)$. The point $M$ on $AB$ has $AM=\frac13AB$. Find the height of $M$.`, R`The height is $3$.`, R`The point $M$ has $t=\frac13$, so $z=\frac13\cdot9=3$.`],
+      [R`Let $A(0;\ 0;\ 0)$ and $B(6;\ 3;\ 9)$. The point $M$ on $AB$ has $AM=\frac13AB$. Find the third coordinate of $M$.`, R`The third coordinate is $3$.`, R`The point $M$ has $t=\frac13$, so $z=\frac13\cdot9=3$.`],
       [R`The point $M$ lies on segment $AB$, where $A$ has abscissa $2$ and $B$ has abscissa $10$, and $AM=\frac14AB$. Find the abscissa of $M$.`, R`The abscissa is $4$.`, R`The abscissa is $2+\frac14\cdot(10-2)=4$.`],
       [R`Does the segment $AB$ with $A(1;\ 1;\ 2)$ and $B(3;\ 1;\ 4)$ meet the plane $z=0$?`, R`No, because the intersection has $t=-1$, outside $[0;\ 1]$.`, R`The segment equations give $z=2+2t=0$, so $t=-1$, which is not in $[0;\ 1]$; the line $AB$ meets the plane but the segment does not.`, [], ["Yes, because the line $AB$ meets the plane.", "No, because the intersection has $t=-1$, outside the segment.", "Not enough information."]],
     ],

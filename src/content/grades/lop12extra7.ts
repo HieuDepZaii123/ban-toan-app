@@ -27,13 +27,13 @@ export const lop12DtOxyzNC: GradeChapter = chuong("dt-oxyz-nc", "Đường thẳ
     ],
     [
       luyen(R`Cho $d_1$ qua $A(0;\ 0;\ 0)$ chỉ phương $(1;\ 0;\ 1)$ và $d_2$ qua $B(1;\ 1;\ 0)$ chỉ phương $(0;\ 1;\ 1)$. Tính $\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}$.`, R`Kết quả bằng $-2$, nên hai đường chéo nhau.`, [{ expr: "Matrix([1,0,1]).cross(Matrix([0,1,1])).dot(Matrix([1,1,0]))", expect: "-2" }], R`Tích có hướng là $(-1;\ -1;\ 1)$ và $\overrightarrow{AB}=(1;\ 1;\ 0)$ nên tích vô hướng bằng $-2$.`),
-      luyen(R`Hai đường $d:\ x=t,\ y=t,\ z=2t$ và $d':\ x=1+s,\ y=1+s,\ z=m+2s$. Tìm $m$ để hai đường trùng nhau.`, R`Giá trị cần tìm là $m=2$.`, [{ expr: "2*1", expect: "2" }], R`Hai chỉ phương bằng nhau; điểm $(1;\ 1;\ m)$ thuộc $d$ khi $t=1$, nên $z=2$ và $m=2$.`),
+      luyen(R`Hai đường $d:\ x=t,\ y=t,\ z=2t$ và $d':\ x=1+s,\ y=1+s,\ z=m+2s$. Tìm $m$ để hai đường trùng nhau.`, R`Giá trị cần tìm là $m=2$.`, [{ expr: "solve(2*1-m, m)[0]", expect: "2" }], R`Hai chỉ phương bằng nhau; điểm $(1;\ 1;\ m)$ thuộc $d$ khi $t=1$, nên $z=2$ và $m=2$.`),
       { ...luyen(R`Hai đường $d:\ x=1+t;\ y=1;\ z=2-t$ và $d':\ x=s,\ y=1+s,\ z=3+s$ có vị trí tương đối nào?`, R`Hai đường cắt nhau tại điểm $(0;\ 1;\ 3)$.`, [{ expr: "solve(1+x, x)[0]", expect: "-1" }], R`Chỉ phương không cùng phương; từ $y=1$ ta được $s=0$, và điểm $(0;\ 1;\ 3)$ ứng với $t=-1$ trên $d$.`), ask: { kind: "choice", options: ["Trùng nhau.", "Song song.", "Cắt nhau.", "Chéo nhau."], correct: 2 } },
       { ...luyen(R`Cho $d_1$ qua $A(0;\ 0;\ 0)$ với chỉ phương $(1;\ 0;\ 1)$ và $d_2$ qua $B(1;\ 1;\ 0)$ với chỉ phương $(0;\ 1;\ 1)$. Xét tính đúng sai của từng ý.`, R`Ý a đúng, ý b sai, ý c đúng, ý d sai.`, [{ expr: "Matrix([1,0,1]).cross(Matrix([0,1,1])).dot(Matrix([1,1,0]))", expect: "-2" }], R`Tích hỗn tạp bằng $-2$ khác $0$ nên hai đường chéo nhau, không cắt nhau và không cùng nằm trong một mặt phẳng.`), ask: { kind: "truefalse", statements: [R`Hai đường không song song vì hai chỉ phương không cùng phương.`, R`Hai đường cắt nhau.`, R`Tích hỗn tạp $\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}$ bằng $-2$.`, R`Hai đường cùng nằm trong một mặt phẳng.`], truth: [true, false, true, false] } },
     ],
     { topicId: "analytic" }),
   bai("giao-hai-dt", "Giao điểm của hai đường thẳng và điều kiện cắt nhau",
-    R`Để tìm giao điểm của $d$ và $d'$, ta cho hai tọa độ bằng nhau và giải hệ hai ẩn $t$, $s$, rồi thay vào tọa độ còn lại để kiểm tra. Hệ có đúng một nghiệm khi hai đường cắt nhau; hệ vô nghiệm khi hai đường song song hoặc chéo nhau. Bài toán chứa tham số $m$ thường đưa về việc cho ba phương trình cùng thỏa với một cặp $(t;\ s)$.`,
+    R`Để tìm giao điểm của $d$ và $d'$, ta cho hai tọa độ bằng nhau và giải hệ hai ẩn $t$, $s$, rồi thay vào tọa độ còn lại để kiểm tra. Hệ có đúng một nghiệm thỏa cả ba phương trình khi hai đường cắt nhau; khi hai đường chéo nhau thì nghiệm của hai phương trình đầu không thỏa phương trình thứ ba, và khi song song thì hai phương trình đầu vô nghiệm. Bài toán chứa tham số $m$ thường đưa về việc cho ba phương trình cùng thỏa với một cặp $(t;\ s)$.`,
     [
       vd(R`Tìm giao điểm của $d:\ x=1+t,\ y=2-t,\ z=3+2t$ và $d':\ x=2+s,\ y=1+s,\ z=5-s$.`,
         [
@@ -52,8 +52,8 @@ export const lop12DtOxyzNC: GradeChapter = chuong("dt-oxyz-nc", "Đường thẳ
         [{ expr: "3-1", expect: "2" }]),
     ],
     [
-      luyen(R`Hai đường $d:\ x=t,\ y=1+t,\ z=2t$ và $d':\ x=2+s,\ y=3-s,\ z=4+s$ cắt nhau. Tìm hoành độ giao điểm.`, R`Hoành độ giao điểm bằng $2$.`, [{ expr: "1+1", expect: "2" }], R`Từ $t=2+s$ và $1+t=3-s$ ta được $s=0$ và $t=2$, nên hoành độ bằng $2$.`),
-      luyen(R`Hai đường $d:\ x=1+t,\ y=t,\ z=m$ và $d':\ x=1+s,\ y=2-s,\ z=1+s$ cắt nhau. Tìm $m$.`, R`Giá trị cần tìm là $m=2$.`, [{ expr: "(1+1)*1", expect: "2" }], R`Từ $t=s$ và $t=2-s$ ta được $s=1$, rồi $z=1+1=2$ nên $m=2$.`),
+      luyen(R`Hai đường $d:\ x=t,\ y=1+t,\ z=2t$ và $d':\ x=2+s,\ y=3-s,\ z=4+s$ cắt nhau. Tìm hoành độ giao điểm.`, R`Hoành độ giao điểm bằng $2$.`, [{ expr: "2+solve(1+(2+x)-(3-x), x)[0]", expect: "2" }], R`Từ $t=2+s$ và $1+t=3-s$ ta được $s=0$ và $t=2$, nên hoành độ bằng $2$.`),
+      luyen(R`Hai đường $d:\ x=1+t,\ y=t,\ z=m$ và $d':\ x=1+s,\ y=2-s,\ z=1+s$ cắt nhau. Tìm $m$.`, R`Giá trị cần tìm là $m=2$.`, [{ expr: "solve(m-(1+1), m)[0]", expect: "2" }], R`Từ $t=s$ và $t=2-s$ ta được $s=1$, rồi $z=1+1=2$ nên $m=2$.`),
       luyen(R`Hai đường $d:\ x=2t,\ y=1+t,\ z=3$ và $d':\ x=1+s,\ y=2s,\ z=3$ cắt nhau. Tìm $t$ của giao điểm.`, R`Giá trị cần tìm là $t=1$.`, [{ expr: "solve(2*(2*x-1)-1-x, x)[0]", expect: "1" }], R`Từ $2t=1+s$ và $1+t=2s$ ta được $s=2t-1$ rồi $3t=3$, nên $t=1$.`),
     ],
     { topicId: "analytic" }),
@@ -65,7 +65,7 @@ export const lop12DtOxyzNC: GradeChapter = chuong("dt-oxyz-nc", "Đường thẳ
           buoc(R`Lấy $P(t;\ 0;\ 0)\in d_1$ và $Q(0;\ s;\ 1)\in d_2$, khi đó $\overrightarrow{AP}=(t-2;\ -1;\ -2)$ và $\overrightarrow{AQ}=(-2;\ s-1;\ -1)$.`, R`Ba điểm thẳng hàng khi hai vectơ này cùng phương.`),
           buoc(R`Cho $\overrightarrow{AP}=k\overrightarrow{AQ}$: từ tọa độ $z$ ta có $-2=-k$ nên $k=2$.`, R`Tọa độ $z$ không chứa tham số nên cho ngay hệ số tỉ lệ.`),
           buoc(R`Từ $t-2=-4$ ta được $t=-2$, và từ $-1=2(s-1)$ ta được $s=\frac12$.`, R`Lần lượt dùng tọa độ $x$ và $y$ để tìm $t$ và $s$.`),
-          buoc(R`Chỉ phương là $\overrightarrow{AQ}$ nhân hai, tức $(4;\ 1;\ 2)$, nên đường thẳng là $x=2+4k,\ y=1+k,\ z=2+2k$.`, R`Có điểm $A$ và một chỉ phương là viết được phương trình.`),
+          buoc(R`Chỉ phương là $-2\overrightarrow{AQ}$, tức $(4;\ 1;\ 2)$, nên đường thẳng là $x=2+4k,\ y=1+k,\ z=2+2k$.`, R`Có điểm $A$ và một chỉ phương là viết được phương trình.`),
         ],
         R`Đường thẳng cần tìm là $x=2+4k,\ y=1+k,\ z=2+2k$.`,
         [{ expr: "solve(-1-2*(x-1), x)[0]", expect: "Rational(1,2)" }]),
@@ -85,7 +85,7 @@ export const lop12DtOxyzNC: GradeChapter = chuong("dt-oxyz-nc", "Đường thẳ
     ],
     { topicId: "analytic" }),
   bai("dt-trong-mp", "Đường thẳng nằm trong mặt phẳng và hình chiếu của đường thẳng",
-    R`Đường thẳng $\Delta$ nằm trong $(P)$ có chỉ phương vuông góc với pháp tuyến $\vec n$ của $(P)$. Nếu $\Delta$ còn vuông góc với đường $d$ có chỉ phương $\vec u$ thì chỉ phương của $\Delta$ là $\left[\vec n,\vec u\right]$. Khi $d$ không vuông góc với $(P)$, hình chiếu của $d$ lên $(P)$ là giao của $(P)$ với mặt phẳng $(Q)$ chứa $d$ và vuông góc với $(P)$, với pháp tuyến của $(Q)$ là $\left[\vec u,\vec n\right]$.`,
+    R`Đường thẳng $\Delta$ nằm trong $(P)$ có chỉ phương vuông góc với pháp tuyến $\vec n$ của $(P)$. Nếu $\Delta$ còn vuông góc với đường $d$ có chỉ phương $\vec u$ và $\vec n$ không cùng phương với $\vec u$ thì chỉ phương của $\Delta$ là $\left[\vec n,\vec u\right]$. Khi $d$ không vuông góc với $(P)$, hình chiếu của $d$ lên $(P)$ là giao của $(P)$ với mặt phẳng $(Q)$ chứa $d$ và vuông góc với $(P)$, với pháp tuyến của $(Q)$ là $\left[\vec u,\vec n\right]$.`,
     [
       vd(R`Cho $(P):\ x+y+z-6=0$ và $d:\ x=1+t,\ y=2+2t,\ z=3$. Viết đường thẳng $\Delta$ nằm trong $(P)$, đi qua giao điểm của $d$ với $(P)$ và vuông góc với $d$.`,
         [

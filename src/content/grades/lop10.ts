@@ -296,7 +296,7 @@ const lop10Base: GradeBook = {
           luyen(R`Bán kính của $(x+2)^2+(y-1)^2=4$ bằng bao nhiêu?`, R`Bán kính bằng $2$.`, [{ expr: "sqrt(4)", expect: "2" }], "Tâm là $(-2;1)$. Bán kính là căn không âm của vế phải."),
         ]),
       bai("ba-conic", "Elip, hypebol và parabol",
-        R`Elip $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ với $a>b>0$ dài theo trục hoành. Hypebol $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ là hiệu hai bình phương. Parabol $y^2=2px$ với $p>0$ có tiêu điểm $F\left(\frac{p}{2};0\right)$.`,
+        R`Elip $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ với $a>b>0$ dài theo trục hoành. Hypebol $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ có dấu trừ giữa hai số hạng. Parabol $y^2=2px$ với $p>0$ có tiêu điểm $F\left(\frac{p}{2};0\right)$.`,
         [vd(R`Elip $\frac{x^2}{9}+\frac{y^2}{4}=1$ có các bán trục bằng bao nhiêu?`,
           [
             buoc(R`Mẫu dưới $x^2$ là $a^2=9$, nên $a=3$.`, "Bán trục lấy căn không âm của mẫu. Không lấy cả mẫu làm độ dài bán trục."),

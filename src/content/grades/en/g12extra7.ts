@@ -6,14 +6,14 @@ const R = String.raw;
 export const g12Extra7En: Record<string, LessonEn> = {
   "vtt-hai-dt": {
     s: R`Let $d_1$ pass through $A$ with direction vector $\vec{u_1}$ and $d_2$ pass through $B$ with direction vector $\vec{u_2}$. If $\vec{u_1}$, $\vec{u_2}$ are parallel the lines are parallel or coincide, and they coincide when $A$ lies on $d_2$. If they are not parallel, the lines meet when $\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}=0$ and are skew when this product is different from $0$.`,
-    w: R`Parallel direction vectors give parallel or coincident lines; otherwise a mixed product equal to $0$ means the two direction vectors and the vector joining the points are coplanar, so the lines meet, while a product different from $0$ means they are skew.`,
+    w: R`Parallel direction vectors give parallel or coincident lines; otherwise a scalar triple product equal to $0$ means the two direction vectors and the vector joining the points are coplanar, so the lines meet, while a product different from $0$ means they are skew.`,
     p: R`Concluding that lines are parallel just because the direction vectors are parallel without checking whether they coincide, or calling skew lines parallel.`,
     ex: [
       [R`Let $d_1$ pass through $A(1;\ 2;\ 3)$ with direction vector $\vec{u_1}=(2;\ -1;\ 1)$. Consider $d_2$ through $B(3;\ 1;\ 4)$ with direction vector $(4;\ -2;\ 2)$ and $d_3$ through $C(1;\ 0;\ -1)$ with direction vector $(1;\ 2;\ 0)$. Find the relative position of $d_1$ with each line.`, [
         [R`The direction vector of $d_2$ is twice $\vec{u_1}$, so the lines are parallel or coincide.`, R`Parallel vectors mean the two lines cannot meet at a single point.`],
         [R`For $t=1$ on $d_1$ we get $(3;\ 1;\ 4)=B$, so $B\in d_1$ and the lines coincide.`, R`One common point is enough to conclude that two parallel lines coincide.`],
-        [R`For $d_3$: $\left[\vec{u_1},\vec{u_3}\right]=(-2;\ 1;\ 5)$ and $\overrightarrow{AC}=(0;\ -2;\ -4)$, and the mixed product is $-22$.`, R`The directions are not parallel, so we use the mixed product with the vector joining the points.`],
-        [R`The mixed product is different from $0$, so $d_1$ and $d_3$ are skew.`, R`A mixed product equal to $0$ is the condition for the lines to lie in one plane.`],
+        [R`For $d_3$: $\left[\vec{u_1},\vec{u_3}\right]=(-2;\ 1;\ 5)$ and $\overrightarrow{AC}=(0;\ -2;\ -4)$, and the scalar triple product is $-22$.`, R`The directions are not parallel, so we use the scalar triple product with the vector joining the points.`],
+        [R`The scalar triple product is different from $0$, so $d_1$ and $d_3$ are skew.`, R`A scalar triple product equal to $0$ is the condition for the lines to lie in one plane.`],
       ], R`The line $d_1$ coincides with $d_2$ and is skew to $d_3$.`],
       [R`What is the relative position of $d:\ x=1+t,\ y=2,\ z=3-t$ and $d':\ x=2+s,\ y=2+s,\ z=2$?`, [
         [R`The direction vectors $(1;\ 0;\ -1)$ and $(1;\ 1;\ 0)$ are not parallel.`, R`The two sets of coefficients are not proportional, so the lines are not parallel.`],
@@ -23,12 +23,12 @@ export const g12Extra7En: Record<string, LessonEn> = {
     dr: [
       [R`Let $d_1$ pass through $A(0;\ 0;\ 0)$ with direction vector $(1;\ 0;\ 1)$ and $d_2$ through $B(1;\ 1;\ 0)$ with direction vector $(0;\ 1;\ 1)$. Compute $\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}$.`, R`The result is $-2$, so the lines are skew.`, R`The cross product is $(-1;\ -1;\ 1)$ and $\overrightarrow{AB}=(1;\ 1;\ 0)$, so the dot product is $-2$.`],
       [R`The lines $d:\ x=t,\ y=t,\ z=2t$ and $d':\ x=1+s,\ y=1+s,\ z=m+2s$. Find $m$ so that the lines coincide.`, R`The required value is $m=2$.`, R`The direction vectors are equal; the point $(1;\ 1;\ m)$ lies on $d$ for $t=1$, so $z=2$ and $m=2$.`],
-      [R`What is the relative position of $d:\ x=1+t,\ y=1,\ z=2-t$ and $d':\ x=s,\ y=1+s,\ z=3+s$?`, R`The lines meet at the point $(0;\ 1;\ 3)$.`, R`The directions are not parallel; from $y=1$ we get $s=0$, and the point $(0;\ 1;\ 3)$ corresponds to $t=-1$ on $d$.`, [], ["Coincident.", "Parallel.", "Meeting.", "Skew."]],
-      [R`Let $d_1$ pass through $A(0;\ 0;\ 0)$ with direction vector $(1;\ 0;\ 1)$ and $d_2$ pass through $B(1;\ 1;\ 0)$ with direction vector $(0;\ 1;\ 1)$. Decide whether each statement is true or false.`, R`Statements a and c are true, statements b and d are false.`, R`The mixed product equals $-2$, which is different from $0$, so the lines are skew: they do not meet and do not lie in one plane.`, [], [R`The lines are not parallel because the direction vectors are not parallel.`, R`The lines meet.`, R`The mixed product $\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}$ equals $-2$.`, R`The lines lie in one plane.`]],
+      [R`What is the relative position of $d:\ x=1+t,\ y=1,\ z=2-t$ and $d':\ x=s,\ y=1+s,\ z=3+s$?`, R`The lines meet at the point $(0;\ 1;\ 3)$.`, R`The directions are not parallel; from $y=1$ we get $s=0$, and the point $(0;\ 1;\ 3)$ corresponds to $t=-1$ on $d$.`, [], ["The lines coincide.", "The lines are parallel.", "The lines intersect.", "The lines are skew."]],
+      [R`Let $d_1$ pass through $A(0;\ 0;\ 0)$ with direction vector $(1;\ 0;\ 1)$ and $d_2$ pass through $B(1;\ 1;\ 0)$ with direction vector $(0;\ 1;\ 1)$. Decide whether each statement is true or false.`, R`Statements a and c are true, statements b and d are false.`, R`The scalar triple product equals $-2$, which is different from $0$, so the lines are skew: they do not meet and do not lie in one plane.`, [], [R`The lines are not parallel because the direction vectors are not parallel.`, R`The lines meet.`, R`The scalar triple product $\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}$ equals $-2$.`, R`The lines lie in one plane.`]],
     ],
   },
   "giao-hai-dt": {
-    s: R`To find the intersection of $d$ and $d'$ we equate two coordinates and solve the system in the two unknowns $t$, $s$, then substitute into the remaining coordinate to check. The system has exactly one solution when the lines meet; it has none when the lines are parallel or skew. A problem with a parameter $m$ usually reduces to making all three equations hold for one pair $(t;\ s)$.`,
+    s: R`To find the intersection of $d$ and $d'$ we equate two coordinates and solve the system in the two unknowns $t$, $s$, then substitute into the remaining coordinate to check. The system has exactly one solution satisfying all three equations when the lines meet; when the lines are skew, the solution of the first two equations fails the third, and when they are parallel the first two equations have no solution. A problem with a parameter $m$ usually reduces to making all three equations hold for one pair $(t;\ s)$.`,
     w: R`An intersection point has the same coordinates on both lines, so the two parameters must satisfy all three equations at once; the first two equations find the parameters and the third is a check.`,
     p: R`Using the same letter $t$ for both lines, or forgetting to test the third equation and wrongly accepting skew lines as meeting.`,
     ex: [
@@ -57,7 +57,7 @@ export const g12Extra7En: Record<string, LessonEn> = {
         [R`Take $P(t;\ 0;\ 0)\in d_1$ and $Q(0;\ s;\ 1)\in d_2$; then $\overrightarrow{AP}=(t-2;\ -1;\ -2)$ and $\overrightarrow{AQ}=(-2;\ s-1;\ -1)$.`, R`Three points are collinear when these two vectors are parallel.`],
         [R`Setting $\overrightarrow{AP}=k\overrightarrow{AQ}$: the $z$-coordinate gives $-2=-k$, so $k=2$.`, R`The $z$-coordinate has no parameter, so it gives the ratio at once.`],
         [R`From $t-2=-4$ we get $t=-2$, and from $-1=2(s-1)$ we get $s=\frac12$.`, R`Use the $x$ and $y$ coordinates in turn to find $t$ and $s$.`],
-        [R`A direction vector is twice $\overrightarrow{AQ}$, that is $(4;\ 1;\ 2)$, so the line is $x=2+4k,\ y=1+k,\ z=2+2k$.`, R`With the point $A$ and a direction vector we can write the equations.`],
+        [R`A direction vector is $-2\overrightarrow{AQ}$, that is $(4;\ 1;\ 2)$, so the line is $x=2+4k,\ y=1+k,\ z=2+2k$.`, R`With the point $A$ and a direction vector we can write the equations.`],
       ], R`The required line is $x=2+4k,\ y=1+k,\ z=2+2k$.`],
       [R`Find the common perpendicular of $d_1:\ x=t,\ y=0,\ z=0$ and $d_2:\ x=1+s,\ y=s,\ z=1$.`, [
         [R`Take $P(t;\ 0;\ 0)$ and $Q(1+s;\ s;\ 1)$; then $\overrightarrow{PQ}=(1+s-t;\ s;\ 1)$.`, R`The two feet of the common perpendicular lie on the two lines.`],
@@ -72,7 +72,7 @@ export const g12Extra7En: Record<string, LessonEn> = {
     ],
   },
   "dt-trong-mp": {
-    s: R`A line $\Delta$ inside $(P)$ has a direction vector perpendicular to the normal $\vec n$ of $(P)$. If $\Delta$ is also perpendicular to the line $d$ with direction vector $\vec u$, the direction vector of $\Delta$ is $\left[\vec n,\vec u\right]$. When $d$ is not perpendicular to $(P)$, the projection of $d$ onto $(P)$ is the intersection of $(P)$ with the plane $(Q)$ containing $d$ and perpendicular to $(P)$, where the normal of $(Q)$ is $\left[\vec u,\vec n\right]$.`,
+    s: R`A line $\Delta$ inside $(P)$ has a direction vector perpendicular to the normal $\vec n$ of $(P)$. If $\Delta$ is also perpendicular to the line $d$ with direction vector $\vec u$, and $\vec n$ is not parallel to $\vec u$, the direction vector of $\Delta$ is $\left[\vec n,\vec u\right]$. When $d$ is not perpendicular to $(P)$, the projection of $d$ onto $(P)$ is the intersection of $(P)$ with the plane $(Q)$ containing $d$ and perpendicular to $(P)$, where the normal of $(Q)$ is $\left[\vec u,\vec n\right]$.`,
     w: R`A line inside a plane must be perpendicular to the normal, and being perpendicular to another line as well makes its direction the cross product of the two vectors. The projection is the intersection of the original plane with the plane containing the line and perpendicular to it.`,
     p: R`Swapping the order in the cross product when the orientation of the vector matters, or forgetting to check that the point used really lies in the plane.`,
     ex: [
