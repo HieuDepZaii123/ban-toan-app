@@ -5,8 +5,8 @@ const R = String.raw;
 
 const arith: DssItem = {
   id: "seq-d-arith",
-  context: (p) => R`Cấp số cộng có $u_1=${p.u}$, công sai $d=${p.d}\neq 0$, chỉ số $n\ge 1$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`An arithmetic sequence has $u_1=${p.u}$, common difference $d=${p.d}\neq 0$, and an unknown index $n\ge 1$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cấp số cộng có $u_1=${p.u}$, công sai $d=${p.d}\neq 0$, chỉ số $n\ge 1$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`An arithmetic sequence has $u_1=${p.u}$, common difference $d=${p.d}\neq 0$, and an unknown index $n\ge 1$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Công thức đúng là $u_n=u_1+(n-1)d$. Lệch một bước thì thành $u_1+nd$.`,
   hintEn: R`The right formula is $u_n=u_1+(n-1)d$. One extra step makes it $u_1+nd$.`,
   rows: [
@@ -84,8 +84,8 @@ const arith: DssItem = {
 
 const geom: DssItem = {
   id: "seq-d-geom",
-  context: (p) => R`Cấp số nhân có $u_1=${p.u}>0$ và $|q|<1$, chưa biết $q$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`A geometric sequence has $u_1=${p.u}>0$ and $|q|<1$. The value of $q$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cấp số nhân có $u_1=${p.u}>0$ và $|q|<1$, chưa biết $q$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`A geometric sequence has $u_1=${p.u}>0$ and $|q|<1$. The value of $q$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$|q|<1$ thì tổng vô hạn $S=\dfrac{u_1}{1-q}$ hữu hạn. Giá trị $q$ vẫn còn tự do trong khoảng đó.`,
   hintEn: R`$|q|<1$ makes the infinite sum $S=\dfrac{u_1}{1-q}$ finite. $q$ is still free inside that range.`,
   rows: [{ u: 8 }, { u: 4 }, { u: 6 }, { u: 10 }],
@@ -158,8 +158,8 @@ const geom: DssItem = {
 
 const four: DssItem = {
   id: "seq-d-four",
-  context: (p) => R`Bốn số đầu là $${p.u}$, $${(p.u ?? 0) + (p.d ?? 0)}$, $${(p.u ?? 0) + 2 * (p.d ?? 0)}$, $${(p.u ?? 0) + 3 * (p.d ?? 0)}$. Số hạng thứ năm chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`The first four terms are $${p.u}$, $${(p.u ?? 0) + (p.d ?? 0)}$, $${(p.u ?? 0) + 2 * (p.d ?? 0)}$, $${(p.u ?? 0) + 3 * (p.d ?? 0)}$. The fifth term is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Bốn số đầu là $${p.u}$, $${(p.u ?? 0) + (p.d ?? 0)}$, $${(p.u ?? 0) + 2 * (p.d ?? 0)}$, $${(p.u ?? 0) + 3 * (p.d ?? 0)}$. Số hạng thứ năm chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`The first four terms are $${p.u}$, $${(p.u ?? 0) + (p.d ?? 0)}$, $${(p.u ?? 0) + 2 * (p.d ?? 0)}$, $${(p.u ?? 0) + 3 * (p.d ?? 0)}$. The fifth term is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Bốn số đã cho cách đều. Số hạng thứ năm không bị bốn số đó buộc.`,
   hintEn: R`The four given terms are equally spaced. They do not force the fifth term.`,
   rows: [

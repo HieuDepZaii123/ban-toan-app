@@ -82,7 +82,7 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
     <section className="practice" aria-labelledby="practice-title">
       <p className="kicker">
         {shown.kind === "concept" ? <span className="theory-tag">{t(lang, "Lý thuyết", "Concept")}</span> : null}
-        {shown.kind === "dss" ? <span className="theory-tag">{t(lang, "Đúng/Sai/Chưa đủ", "True/False/Not enough")}</span> : null}
+        {shown.kind === "dss" ? <span className="theory-tag">{t(lang, "Đúng/Sai/Chưa đủ/Không liên quan", "True/False/Not enough/Unrelated")}</span> : null}
         {t(lang, `Câu ${index + 1} / ${ordered.length} · Điểm ${Math.min(saved, ordered.length)}/${ordered.length}`, `Question ${index + 1} / ${ordered.length} · Score ${Math.min(saved, ordered.length)}/${ordered.length}`)}
       </p>
       <h2 id="practice-title"><MathText text={prompt} /></h2>

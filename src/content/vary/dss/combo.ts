@@ -5,8 +5,8 @@ const R = String.raw;
 
 const pick: DssItem = {
   id: "cmb-d-pick",
-  context: (p) => R`Chọn $${p.k}$ phần tử từ $${p.n}$ phần tử phân biệt. Số nguyên $m$ với $0\le m\le n$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Choose $${p.k}$ elements from $${p.n}$ distinct elements. An integer $m$ with $0\le m\le n$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Chọn $${p.k}$ phần tử từ $${p.n}$ phần tử phân biệt. Số nguyên $m$ với $0\le m\le n$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Choose $${p.k}$ elements from $${p.n}$ distinct elements. An integer $m$ with $0\le m\le n$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$C_n^k=C_n^{n-k}$ và $A_n^k=k!\,C_n^k$. Với $k\ge 2$ thì $C_n^k\neq A_n^k$.`,
   hintEn: R`$C_n^k=C_n^{n-k}$ and $A_n^k=k!\,C_n^k$. For $k\ge 2$, $C_n^k\neq A_n^k$.`,
   rows: [
@@ -84,8 +84,8 @@ const pick: DssItem = {
 
 const med: DssItem = {
   id: "cmb-d-med",
-  context: (p) => R`Năm số $${p.b}$, $${(p.b ?? 0) + 1}$, $${(p.b ?? 0) + 2}$, $${(p.b ?? 0) + 3}$, $m$ với $m\ge ${(p.b ?? 0) + 4}$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`The five numbers $${p.b}$, $${(p.b ?? 0) + 1}$, $${(p.b ?? 0) + 2}$, $${(p.b ?? 0) + 3}$, $m$ satisfy $m\ge ${(p.b ?? 0) + 4}$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Năm số $${p.b}$, $${(p.b ?? 0) + 1}$, $${(p.b ?? 0) + 2}$, $${(p.b ?? 0) + 3}$, $m$ với $m\ge ${(p.b ?? 0) + 4}$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`The five numbers $${p.b}$, $${(p.b ?? 0) + 1}$, $${(p.b ?? 0) + 2}$, $${(p.b ?? 0) + 3}$, $m$ satisfy $m\ge ${(p.b ?? 0) + 4}$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Khi $m$ lớn hơn cả bốn số đầu, dãy sắp xếp giữ nguyên và trung vị là số ở giữa, tức $b+2$.`,
   hintEn: R`When $m$ is larger than the first four numbers, sorting keeps their order and the median is the middle one, $b+2$.`,
   rows: [{ b: 2 }, { b: 3 }, { b: 4 }, { b: 5 }],
@@ -158,8 +158,8 @@ const med: DssItem = {
 
 const one: DssItem = {
   id: "cmb-d-one",
-  context: (p) => R`Chọn $1$ phần tử từ $${p.n}$ phần tử. Số nguyên $k$ với $0\le k\le 3$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Choose $1$ element from $${p.n}$ elements. An integer $k$ with $0\le k\le 3$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Chọn $1$ phần tử từ $${p.n}$ phần tử. Số nguyên $k$ với $0\le k\le 3$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Choose $1$ element from $${p.n}$ elements. An integer $k$ with $0\le k\le 3$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Với $k=1$, chỉnh hợp và tổ hợp trùng nhau và cùng bằng $n$. $C_n^0=1$, không phải $0$.`,
   hintEn: R`For $k=1$, permutations and combinations agree and both equal $n$. $C_n^0=1$, not $0$.`,
   rows: [{ n: 4 }, { n: 5 }, { n: 6 }, { n: 8 }],

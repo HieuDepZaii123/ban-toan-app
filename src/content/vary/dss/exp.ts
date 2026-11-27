@@ -8,8 +8,8 @@ const growth = exp(mul(wr("t"), ln(add(num(1), rate))));
 
 const logs: DssItem = {
   id: "exp-d-log",
-  context: (p) => R`Cho $x>0$, $y>0$ và cơ số $a=${p.a}>1$. Chưa biết $x$ và $y$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $x>0$, $y>0$ and base $a=${p.a}>1$. The values of $x$ and $y$ are unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $x>0$, $y>0$ và cơ số $a=${p.a}>1$. Chưa biết $x$ và $y$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $x>0$, $y>0$ and base $a=${p.a}>1$. The values of $x$ and $y$ are unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$\log(xy)=\log x+\log y$ luôn đúng khi $x,y>0$. $\log(x+y)$ thì không.`,
   hintEn: R`$\log(xy)=\log x+\log y$ holds for $x,y>0$. $\log(x+y)$ does not follow that rule.`,
   rows: [{ a: 2 }, { a: 3 }, { a: 5 }, { a: 10 }],
@@ -91,8 +91,8 @@ const logs: DssItem = {
 
 const compound: DssItem = {
   id: "exp-d-grow",
-  context: (p) => R`Lãi kép $A=P(1+r)^t$ với $P=${p.P}$, $r=\dfrac{${p.num}}{${p.den}}>0$ và số kỳ $t\ge 1$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Compound interest $A=P(1+r)^t$ with $P=${p.P}$, $r=\dfrac{${p.num}}{${p.den}}>0$, and an unknown period count $t\ge 1$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Lãi kép $A=P(1+r)^t$ với $P=${p.P}$, $r=\dfrac{${p.num}}{${p.den}}>0$ và số kỳ $t\ge 1$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Compound interest $A=P(1+r)^t$ with $P=${p.P}$, $r=\dfrac{${p.num}}{${p.den}}>0$, and an unknown period count $t\ge 1$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Công thức nhân $(1+r)$ mỗi kỳ. Thời gian gấp đôi chỉ phụ thuộc $r$.`,
   hintEn: R`Each period multiplies by $(1+r)$. The doubling time depends only on $r$.`,
   rows: [
@@ -170,8 +170,8 @@ const compound: DssItem = {
 
 const pairLog: DssItem = {
   id: "exp-d-pair",
-  context: (p) => R`Cho $x=${p.x}>0$, $y=${p.y}>0$ và số mũ $n$ nguyên dương chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $x=${p.x}>0$, $y=${p.y}>0$, and an unknown positive integer $n$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $x=${p.x}>0$, $y=${p.y}>0$ và số mũ $n$ nguyên dương chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $x=${p.x}>0$, $y=${p.y}>0$, and an unknown positive integer $n$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Cặp $(x; y)$ đã chốt. Số mũ $n$ thì chưa.`,
   hintEn: R`The pair $(x, y)$ is fixed. The exponent $n$ is not.`,
   rows: [

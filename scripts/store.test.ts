@@ -150,12 +150,14 @@ const keptScores = load(JSON.stringify({
   v: 1,
   scores: {
     ok: { picks: [0, 1, 2, 0], score: 2 },
+    unrelated: { picks: [3, 1, 2, 0], score: 3 },
     bad: { picks: [0, 1, 4, 0], score: 2 },
     short: { picks: [0, 1], score: 1 },
   },
 }));
 assert(keptScores.scores.ok?.score === 2 && keptScores.scores.ok.picks[2] === 2, "a Đúng/Sai/Chưa đủ mark keeps four picks and the score");
-assert(!("bad" in keptScores.scores) && !("short" in keptScores.scores), "a pick outside 0–2 or a short row is dropped");
+assert(keptScores.scores.unrelated?.picks[0] === 3, "a saved Không liên quan pick (3) survives a reload");
+assert(!("bad" in keptScores.scores) && !("short" in keptScores.scores), "a pick outside 0–3 or a short row is dropped");
 
 resetStore();
 recordDss("quadratic", "quad-d-ad", [0, 0, 2, 1], ["dung", "sai", "thieu", "dung"]);
@@ -168,6 +170,10 @@ recordDss("quadratic", "quad-d-ad", [0, 1, 2, 0], ["dung", "sai", "thieu", "dung
 assert(getData().scores["quadratic:quad-d-ad"]?.score === 4, "four matches score 4");
 assert(getData().right["quadratic:quad-d-ad"] === true, "a perfect Đúng/Sai/Chưa đủ item counts as solved");
 assert(!("quadratic:quad-d-ad" in getData().wrong), "a perfect score clears the partial miss");
+recordDss("quadratic", "quad-d-ad", [3, 1, 2, 0], ["khong", "sai", "thieu", "dung"]);
+assert(getData().scores["quadratic:quad-d-ad"]?.score === 4, "Không liên quan scores when picked for an unrelated statement");
+recordDss("quadratic", "quad-d-ad", [0, 1, 2, 0], ["khong", "sai", "thieu", "dung"]);
+assert(getData().scores["quadratic:quad-d-ad"]?.score === 3, "calling an unrelated statement Đúng loses its point, even if it is true on its own");
 resetAttempt("quadratic:quad-d-ad");
 assert(!("quadratic:quad-d-ad" in getData().scores), "a new draw clears the saved picks");
 assert(!("quadratic:quad-d-ad" in getData().right), "a new draw clears the solved mark");

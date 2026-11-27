@@ -5,8 +5,8 @@ const R = String.raw;
 
 const boy: DssItem = {
   id: "prob-d-boy",
-  context: (p) => R`Một nhà có hai người con và có ít nhất một bé trai. Ba khả năng đồng khả năng là trai-trai, anh trai em gái, anh gái em trai. Mốc gia đình $${p.mark}$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`A family has two children and at least one boy. The three equally likely possibilities are boy-boy, older boy, and older girl. Family marker $${p.mark}$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Một nhà có hai người con và có ít nhất một bé trai. Ba khả năng đồng khả năng là trai-trai, anh trai em gái, anh gái em trai. Mốc gia đình $${p.mark}$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`A family has two children and at least one boy. The three equally likely possibilities are boy-boy, older boy, and older girl. Family marker $${p.mark}$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Điều kiện loại trường hợp gái-gái. Còn ba khả năng, nên xác suất cả hai là trai bằng $\dfrac{1}{3}$.`,
   hintEn: R`The condition removes girl-girl. Three possibilities remain, so the probability both are boys is $\dfrac{1}{3}$.`,
   rows: [{ mark: 1 }, { mark: 2 }, { mark: 3 }, { mark: 4 }],
@@ -79,8 +79,8 @@ const boy: DssItem = {
 
 const dice: DssItem = {
   id: "prob-d-dice",
-  context: (p) => R`Tung hai xúc xắc và biết có ít nhất một mặt $6$. Lần tung mẫu $${p.mark}$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Two dice are rolled and at least one face is $6$. Sample roll $${p.mark}$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Tung hai xúc xắc và biết có ít nhất một mặt $6$. Lần tung mẫu $${p.mark}$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Two dice are rolled and at least one face is $6$. Sample roll $${p.mark}$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Có $6+5=11$ kết quả. Đúng một kết quả là hai mặt $6$, nên xác suất là $\dfrac{1}{11}$.`,
   hintEn: R`There are $6+5=11$ outcomes. Exactly one of them is double six, so the probability is $\dfrac{1}{11}$.`,
   rows: [{ mark: 1 }, { mark: 2 }, { mark: 3 }, { mark: 4 }],
@@ -153,8 +153,8 @@ const dice: DssItem = {
 
 const bayes: DssItem = {
   id: "prob-d-bayes",
-  context: (p) => R`Tỉ lệ bệnh trong dân số là $1\%$, độ nhạy của xét nghiệm là $99\%$, tỉ lệ dương tính giả là $5\%$. Hồ sơ $${p.mark}$ có kết quả dương tính. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`The disease rate is $1\%$, the test sensitivity is $99\%$, and the false-positive rate is $5\%$. Record $${p.mark}$ came back positive. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Tỉ lệ bệnh trong dân số là $1\%$, độ nhạy của xét nghiệm là $99\%$, tỉ lệ dương tính giả là $5\%$. Hồ sơ $${p.mark}$ có kết quả dương tính. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`The disease rate is $1\%$, the test sensitivity is $99\%$, and the false-positive rate is $5\%$. Record $${p.mark}$ came back positive. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$\dfrac{0{,}99\cdot 0{,}01}{0{,}99\cdot 0{,}01+0{,}05\cdot 0{,}99}=\dfrac{0{,}0099}{0{,}0594}=\dfrac{1}{6}$. Một hồ sơ dương tính vẫn có thể là dương tính giả.`,
   hintEn: R`$\dfrac{0{,}99\cdot 0{,}01}{0{,}99\cdot 0{,}01+0{,}05\cdot 0{,}99}=\dfrac{0{,}0099}{0{,}0594}=\dfrac{1}{6}$. One positive record can still be a false positive.`,
   rows: [{ mark: 1 }, { mark: 2 }, { mark: 3 }, { mark: 4 }],

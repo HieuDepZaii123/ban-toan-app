@@ -25,8 +25,8 @@ const REASONS: { id: string; vi: string; en: string; bodyVi: string; bodyEn: str
     // src/content/vary/*, src/lib/prng.ts, dss/
     id: "so-moi",
     vi: "Số mới mỗi lần làm", en: "New numbers every attempt",
-    bodyVi: "Mỗi lần làm là một bộ số mới, đáp án đúng đổi chỗ, và các đáp án sai là những lỗi hay gặp. Câu Đúng / Sai / Chưa đủ hỏi xem điều kiện đã đủ chưa.",
-    bodyEn: "Each attempt has new numbers, the right answer moves, and the wrong choices are common mistakes. True / False / Not enough questions ask whether a condition is enough.",
+    bodyVi: "Mỗi lần làm là một bộ số mới, đáp án đúng đổi chỗ, và các đáp án sai là những lỗi hay gặp. Câu Đúng / Sai / Chưa đủ / Không liên quan hỏi xem điều kiện đã đủ chưa, và mệnh đề có dùng dữ kiện của đề hay không.",
+    bodyEn: "Each attempt has new numbers, the right answer moves, and the wrong choices are common mistakes. True / False / Not enough / Unrelated questions ask whether a condition is enough, and whether a statement uses the problem's data at all.",
   },
   {
     // scripts/*: SymPy oracles run in CI on every change

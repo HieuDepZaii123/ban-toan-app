@@ -486,8 +486,9 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dss-list { display: grid; gap: 14px; }
 .dss-item { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
 .dss-stmt { margin: 0; }
-/* Đúng / Sai / Chưa đủ: one row of three equal choices, so each statement takes one line of buttons. */
-.dss-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; max-width: 30rem; }
+/* Đúng / Sai / Chưa đủ / Không liên quan: four equal choices in one row, two rows of two on phones. */
+.dss-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; max-width: 40rem; }
+@media (max-width: 600px) { .dss-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .dss-opt {
   display: inline-flex;
   align-items: center;
@@ -508,7 +509,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dss-opt:has(input:disabled) { cursor: default; }
 .dss-opt:not(.is-right):not(.is-wrong):has(input:checked) { border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
 .dss-opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
-/* The 1–3 key hints only help with a keyboard. */
+/* The 1–4 key hints only help with a keyboard. */
 @media (hover: none) { .dss-opt .key { display: none; } }
 .dss-opt.is-right { border-color: var(--ok); border-style: solid; background: var(--ok-soft); }
 .dss-opt.is-wrong { border-color: var(--clay); border-style: dashed; background: var(--clay-soft); }

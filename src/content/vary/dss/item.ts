@@ -2,10 +2,13 @@ import type { Question } from "../../types.ts";
 import type { Draw, Stem, Vary } from "../types.ts";
 import { holds, worldFits, type Claim, type Params, type Pred, type World } from "./expr.ts";
 import { joinMath } from "../stem.ts";
+import { unrelatedFor, type Unrelated } from "./unrelated.ts";
 
+/** What the grid can decide for an item's own statements. Không liên quan comes from ./unrelated.ts. */
 export type Verdict = "dung" | "sai" | "thieu";
 
-export const VERDICT_CODE: Record<Verdict, 0 | 1 | 2> = { dung: 0, sai: 1, thieu: 2 };
+/** Share of draws that swap one decided statement for a Không liên quan one. */
+export const UNRELATED_SHARE = 0.4;
 
 type Axis = { name: string; values: readonly number[] };
 
@@ -24,7 +27,7 @@ export function fact(
 
 type Fact = {
   id: string;
-  verdict: Verdict;
+  verdict: Verdict | "khong";
   vi: string;
   en: string;
   reasonVi: (params: Params) => string;
@@ -101,7 +104,25 @@ function quad<T>(items: readonly T[]): [T, T, T, T] {
   return [a, b, c, d];
 }
 
-/** One Chưa đủ is always in the four. `rng() === 0` keeps the first row and a stable set. */
+/** A Không liên quan statement as a fact; its reason says why the problem's data has nothing to do with it. */
+function unrelatedFact(item: Unrelated): Fact {
+  return {
+    id: item.id,
+    verdict: "khong",
+    vi: item.vi,
+    en: item.en,
+    reasonVi: () => `${item.ownVi}, nhưng mệnh đề không dùng dữ kiện nào của đề, nên đề không quyết định được nó: Không liên quan.`,
+    reasonEn: () => `${item.ownEn}, but it uses none of the problem's data, so the problem cannot decide it: unrelated.`,
+    claim: item.claim,
+  };
+}
+
+/**
+ * One Chưa đủ is always in the four. `rng() === 0` keeps the first row and a stable set.
+ * In some draws (UNRELATED_SHARE) one decided statement is swapped for a Không liên quan one from another
+ * topic. Those rng calls come last, so a draw that keeps all four statements is the same as before they existed,
+ * and `rng() === 0` never swaps.
+ */
 export function drawFacts(item: DssItem, rng: () => number): { params: Params; facts: [Fact, Fact, Fact, Fact] } {
   const row = item.rows[Math.floor(rng() * item.rows.length)] ?? item.rows[0];
   if (!row) throw new Error(`${item.id} has no rows`);
@@ -109,7 +130,15 @@ export function drawFacts(item: DssItem, rng: () => number): { params: Params; f
   const must = open[Math.floor(rng() * open.length)] ?? open[0];
   if (!must) throw new Error(`${item.id} has no Chưa đủ statement`);
   const rest = shuffle(item.facts.filter((fact) => fact !== must), rng).slice(0, 3);
-  return { params: row, facts: quad(shuffle([must, ...rest], rng)) };
+  const facts = quad(shuffle([must, ...rest], rng));
+  const pool = unrelatedFor(item.id);
+  if (pool.length > 0 && rng() >= 1 - UNRELATED_SHARE) {
+    const extra = pool[Math.floor(rng() * pool.length)];
+    const slots = facts.flatMap((fact, index) => (fact.verdict === "thieu" ? [] : [index]));
+    const slot = slots[Math.floor(rng() * slots.length)];
+    if (extra && slot !== undefined) facts[slot] = unrelatedFact(extra);
+  }
+  return { params: row, facts };
 }
 
 function stemFrom(item: DssItem, params: Params, facts: readonly [Fact, Fact, Fact, Fact]): Stem {
@@ -130,12 +159,12 @@ function stemFrom(item: DssItem, params: Params, facts: readonly [Fact, Fact, Fa
     hintEn: item.hintEn,
     steps: [
       item.hint,
-      "Đúng cần một lý do, Sai cần một phản ví dụ, Chưa đủ cần hai trường hợp trái nhau.",
+      "Đúng cần một lý do, Sai cần một phản ví dụ, Chưa đủ cần hai trường hợp trái nhau, Không liên quan là mệnh đề không dùng dữ kiện nào của đề.",
       "Mỗi mệnh đề đúng được một điểm.",
     ],
     stepsEn: [
       item.hintEn,
-      "True needs a reason, false needs a counterexample, and not-enough needs two cases that disagree.",
+      "True needs a reason, false needs a counterexample, not-enough needs two cases that disagree, and unrelated means the statement uses none of the problem's data.",
       "Each true statement is worth one point.",
     ],
     verdicts: [facts[0].verdict, facts[1].verdict, facts[2].verdict, facts[3].verdict],

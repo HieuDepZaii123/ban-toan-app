@@ -5,8 +5,8 @@ const R = String.raw;
 
 const am: DssItem = {
   id: "ineq-d-am",
-  context: (p) => R`Cho $a>0$, $b>0$. Chưa biết $a$ và $b$, chỉ biết chúng dương. Mốc đang xét là $${p.mark}$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $a>0$, $b>0$, with the values otherwise unknown. The marker in view is $${p.mark}$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $a>0$, $b>0$. Chưa biết $a$ và $b$, chỉ biết chúng dương. Mốc đang xét là $${p.mark}$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $a>0$, $b>0$, with the values otherwise unknown. The marker in view is $${p.mark}$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`AM–GM cần $a,b>0$. Đẳng thức chỉ khi $a=b$, mà đề chưa cho $a=b$.`,
   hintEn: R`AM–GM needs $a,b>0$. Equality holds only when $a=b$, which is not given.`,
   rows: [{ mark: 1 }, { mark: 2 }, { mark: 3 }, { mark: 4 }],
@@ -84,8 +84,8 @@ const pair = (params: Params, a: number): World => ({ a, b: (params.s ?? 0) - a 
 
 const prod: DssItem = {
   id: "ineq-d-prod",
-  context: (p) => R`Cho $a+b=${p.s}$ với $a>0$, $b>0$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $a+b=${p.s}$ with $a>0$, $b>0$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $a+b=${p.s}$ với $a>0$, $b>0$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $a+b=${p.s}$ with $a>0$, $b>0$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Tích $ab$ lớn nhất khi $a=b=\dfrac{s}{2}$, và giá trị đó là $\dfrac{s^2}{4}$.`,
   hintEn: R`The product $ab$ is greatest when $a=b=\dfrac{s}{2}$, and that value is $\dfrac{s^2}{4}$.`,
   rows: [{ s: 6 }, { s: 8 }, { s: 10 }, { s: 12 }],
@@ -161,8 +161,8 @@ const prod: DssItem = {
 
 const cauchy: DssItem = {
   id: "ineq-d-cauchy",
-  context: (p) => R`Cho $\vec u=(${p.a}; 2\cdot ${p.a})$ và $\vec v=(1; t)$, $t\in\mathbb{R}$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $\vec u=(${p.a}, 2\cdot ${p.a})$ and $\vec v=(1, t)$, $t\in\mathbb{R}$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $\vec u=(${p.a}; 2\cdot ${p.a})$ và $\vec v=(1; t)$, $t\in\mathbb{R}$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $\vec u=(${p.a}, 2\cdot ${p.a})$ and $\vec v=(1, t)$, $t\in\mathbb{R}$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Cauchy luôn đúng. Đẳng thức chỉ khi hai vectơ tỉ lệ, tức $t=2$.`,
   hintEn: R`Cauchy always holds. Equality needs the vectors proportional, so $t=2$.`,
   rows: [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }],

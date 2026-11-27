@@ -3,6 +3,7 @@ import { snap } from "./format.ts";
 import { isRecord } from "./isRecord.ts";
 import { nextPos, slotRng } from "./prng.ts";
 import type { Range } from "../content/params.ts";
+import type { Verdict } from "../content/types.ts";
 
 type ThemeName = "paper" | "night";
 type LangName = "vi" | "en";
@@ -15,7 +16,7 @@ type ThinkFlags = { nhin: boolean; lam: boolean; ket: boolean };
  */
 type Attempt = { seed: number; pos: number; done?: boolean };
 
-/** Four Đúng/Sai/Chưa đủ picks (0, 1, 2) and how many matched. */
+/** Four Đúng/Sai/Chưa đủ/Không liên quan picks (0, 1, 2, 3) and how many matched. */
 type DssMark = { picks: [number, number, number, number]; score: number };
 
 /** One recorded row from Ghi. Keys are short names; values are finite measurements. */
@@ -184,7 +185,7 @@ function scoreMap(value: unknown): Record<string, DssMark> {
     const d = picks[3];
     const score = item.score;
     if (typeof a !== "number" || typeof b !== "number" || typeof c !== "number" || typeof d !== "number") continue;
-    if (![a, b, c, d].every((pick) => pick === 0 || pick === 1 || pick === 2)) continue;
+    if (![a, b, c, d].every((pick) => pick === 0 || pick === 1 || pick === 2 || pick === 3)) continue;
     if (typeof score !== "number" || !Number.isInteger(score) || score < 0 || score > 4) continue;
     out[key] = { picks: [a, b, c, d], score };
   }
@@ -642,14 +643,14 @@ export function recordAnswer(topicId: string, questionId: string, choice: number
   commit({ ...data, attempts, right, wrong: { ...data.wrong, [key]: choice } });
 }
 
-const VERDICT_CODE = { dung: 0, sai: 1, thieu: 2 } as const;
+const VERDICT_CODE = { dung: 0, sai: 1, thieu: 2, khong: 3 } as const;
 
 /** Save the four picks. One point per match, full marks when the score is 4. */
 export function recordDss(
   topicId: string,
   questionId: string,
   picks: [number, number, number, number],
-  verdicts: readonly ["dung" | "sai" | "thieu", "dung" | "sai" | "thieu", "dung" | "sai" | "thieu", "dung" | "sai" | "thieu"],
+  verdicts: readonly [Verdict, Verdict, Verdict, Verdict],
 ): void {
   const key = questionKey(topicId, questionId);
   let score = 0;

@@ -5,12 +5,13 @@ import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
 
-const CODE: Record<Verdict, 0 | 1 | 2> = { dung: 0, sai: 1, thieu: 2 };
+const CODE: Record<Verdict, 0 | 1 | 2 | 3> = { dung: 0, sai: 1, thieu: 2, khong: 3 };
 
 const LABELS = [
   ["Đúng", "True"],
   ["Sai", "False"],
   ["Chưa đủ", "Not enough"],
+  ["Không liên quan", "Unrelated"],
 ] as const;
 
 function asPicks(picks: readonly (number | null)[]): [number, number, number, number] | null {
@@ -58,7 +59,7 @@ export function DssForm({ topicId, question }: { topicId: string; question: Ques
               aria-labelledby={`dss-stmt-${question.id}-${index}`}
               className="dss-options"
               onKeyDown={(event) => {
-                if (event.key < "1" || event.key > "3") return;
+                if (event.key < "1" || event.key > "4") return;
                 event.preventDefault();
                 choose(index, Number(event.key) - 1);
               }}
@@ -97,8 +98,8 @@ export function DssForm({ topicId, question }: { topicId: string; question: Ques
       {locked ? null : (
         <p className="note">{t(
           lang,
-          "Mỗi mệnh đề chọn một trong ba: Đúng, Sai, hoặc Chưa đủ. Phím 1–3 khi đang ở nhóm đó. Đủ bốn mệnh đề thì hiện lý do và điểm x/4.",
-          "Mark each statement true, false, or not enough. Keys 1–3 work inside that group. After all four, the reason and the score x/4 appear.",
+          "Mỗi mệnh đề chọn một trong bốn: Đúng, Sai, Chưa đủ (đề chưa cho đủ để kết luận), hoặc Không liên quan (mệnh đề không dùng dữ kiện nào của đề). Phím 1–4 khi đang ở nhóm đó. Đủ bốn mệnh đề thì hiện lý do và điểm x/4.",
+          "Mark each statement true, false, not enough (the data cannot settle it), or unrelated (it uses none of the problem's data). Keys 1–4 work inside that group. After all four, the reason and the score x/4 appear.",
         )}</p>
       )}
     </div>

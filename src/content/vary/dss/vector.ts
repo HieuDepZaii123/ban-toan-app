@@ -5,8 +5,8 @@ const R = String.raw;
 
 const perp: DssItem = {
   id: "vec-d-perp",
-  context: (p) => R`Trong không gian, $\vec u\cdot\vec v=0$, $\vec u\neq \vec 0$, $\vec v\neq \vec 0$ và $|\vec u|=${p.len}$. Chưa biết $|\vec v|$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`In space, $\vec u\cdot\vec v=0$, $\vec u\neq \vec 0$, $\vec v\neq \vec 0$ and $|\vec u|=${p.len}$. $|\vec v|$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Trong không gian, $\vec u\cdot\vec v=0$, $\vec u\neq \vec 0$, $\vec v\neq \vec 0$ và $|\vec u|=${p.len}$. Chưa biết $|\vec v|$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`In space, $\vec u\cdot\vec v=0$, $\vec u\neq \vec 0$, $\vec v\neq \vec 0$ and $|\vec u|=${p.len}$. $|\vec v|$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Tích vô hướng bằng $0$ và cả hai khác $\vec 0$ thì hai vectơ vuông góc, và $|\vec u\times\vec v|=|\vec u||\vec v|$.`,
   hintEn: R`A zero dot product with both vectors nonzero means they are perpendicular, and $|\vec u\times\vec v|=|\vec u||\vec v|$.`,
   rows: [{ len: 1 }, { len: 2 }, { len: 3 }, { len: 5 }],
@@ -79,8 +79,8 @@ const perp: DssItem = {
 
 const det: DssItem = {
   id: "vec-d-det",
-  context: (p) => R`Hệ $${p.a}x+${signed(p.b)}y=${p.e}$, $${p.c}x+${signed(p.d)}y=k$ có định thức $0$. Chưa biết $k$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`The system $${p.a}x+${signed(p.b)}y=${p.e}$, $${p.c}x+${signed(p.d)}y=k$ has determinant $0$. $k$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Hệ $${p.a}x+${signed(p.b)}y=${p.e}$, $${p.c}x+${signed(p.d)}y=k$ có định thức $0$. Chưa biết $k$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`The system $${p.a}x+${signed(p.b)}y=${p.e}$, $${p.c}x+${signed(p.d)}y=k$ has determinant $0$. $k$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Định thức $0$ thì không bao giờ có đúng một nghiệm. Vô số nghiệm hay vô nghiệm tùy $k$ có làm hai phương trình tỉ lệ hay không.`,
   hintEn: R`Determinant $0$ never gives exactly one solution. Infinitely many solutions or none depends on whether $k$ makes the equations proportional.`,
   rows: [
@@ -168,8 +168,8 @@ function paren(value: number | undefined): string {
 
 const cross: DssItem = {
   id: "vec-d-cross",
-  context: (p) => R`Cho $\vec u=(${p.s},0,0)$ và $\vec v=(0,${p.s},0)$ với $s=${p.s}\neq 0$. Hệ số $t$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $\vec u=(${p.s},0,0)$ and $\vec v=(0,${p.s},0)$ with $s=${p.s}\neq 0$. A coefficient $t$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $\vec u=(${p.s},0,0)$ và $\vec v=(0,${p.s},0)$ với $s=${p.s}\neq 0$. Hệ số $t$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $\vec u=(${p.s},0,0)$ and $\vec v=(0,${p.s},0)$ with $s=${p.s}\neq 0$. A coefficient $t$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$\vec u\times\vec v=(0,0,s^2)$ và $\vec v\times\vec u=(0,0,-s^2)$.`,
   hintEn: R`$\vec u\times\vec v=(0,0,s^2)$ and $\vec v\times\vec u=(0,0,-s^2)$.`,
   rows: [{ s: 1 }, { s: 2 }, { s: 3 }, { s: 4 }],
