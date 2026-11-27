@@ -1240,6 +1240,10 @@ html[data-lamp="on"] body::before {
 .why-card li strong { color: var(--ink); }
 .why-card .why-aim { color: var(--accent); font-weight: 600; font-size: 0.93rem; line-height: 1.45; }
 .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 14px; }
+/* Six 'Cách Bàn Toán hoạt động' cards: 3 + 3, never 4 + 2. */
+.why > .why-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 860px) { .why > .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .why > .why-grid { grid-template-columns: minmax(0, 1fr); } }
 .why-card { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .why-card h3 { margin: 0; font-size: 1.02rem; }
 .why-card p { margin: 0; color: var(--ink-soft); font-size: 0.93rem; line-height: 1.55; }
