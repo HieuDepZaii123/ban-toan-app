@@ -53,6 +53,7 @@ export const lop10ConicNC: GradeChapter = chuong("conic-nc", "Elip, hypebol và 
       luyen(R`Hypebol $\frac{x^2}{4}-\frac{y^2}{5}=1$ có tiêu cự bằng bao nhiêu?`, R`Tiêu cự bằng $6$.`, [{ expr: "2*sqrt(4+5)", expect: "6" }], R`Ta có $c^2=4+5=9$ nên $c=3$ và tiêu cự $2c=6$.`),
       luyen(R`Tính tâm sai của hypebol $\frac{x^2}{16}-\frac{y^2}{9}=1$.`, R`Tâm sai bằng $\frac54$.`, [{ expr: "5*1/4", expect: "5/4" }], R`Ta có $c^2=16+9=25$ nên $c=5$ và $e=\frac{c}{a}=\frac{5}{4}$.`),
       { ...luyen(R`Hypebol $\frac{x^2}{4}-\frac{y^2}{16}=1$ có hai tiệm cận nào?`, R`Hai tiệm cận là $y=\pm2x$.`, [{ expr: "sqrt(16)/sqrt(4)", expect: "2" }], R`Hệ số góc tiệm cận bằng $\frac{b}{a}=\frac{4}{2}=2$.`), ask: { kind: "choice", options: [R`$y=\pm2x$`, R`$y=\pm\frac12x$`, R`$y=\pm4x$`], correct: 0 } },
+      { ...luyen(R`Cho hypebol $\frac{x^2}{9}-\frac{y^2}{16}=1$. Xét tính đúng sai của từng ý.`, R`Ý a đúng, ý b đúng, ý c sai, ý d sai.`, [{ expr: "9+16", expect: "25" }], R`Ta có $c=5$ nên tiêu cự là $10$ và tâm sai là $\frac53$; tiệm cận có hệ số góc $\frac43$ chứ không phải $\frac34$, và điểm $(0;\ 4)$ cho vế trái bằng $-1$.`), ask: { kind: "truefalse", statements: [R`Tiêu cự của hypebol bằng $10$.`, R`Tâm sai của hypebol bằng $\frac53$.`, R`Hai tiệm cận là $y=\pm\frac34x$.`, R`Điểm $(0;\ 4)$ thuộc hypebol.`], truth: [true, true, false, false] } },
     ],
     { topicId: "analytic" }),
   bai("parabol-chuan", "Tiêu điểm và đường chuẩn của parabol",

@@ -44,6 +44,7 @@ export const g10Extra4En: Record<string, LessonEn> = {
       [R`What is the focal length of the hyperbola $\frac{x^2}{4}-\frac{y^2}{5}=1$?`, R`The focal length is $6$.`, R`We have $c^2=4+5=9$, so $c=3$ and the focal length is $2c=6$.`],
       [R`Find the eccentricity of the hyperbola $\frac{x^2}{16}-\frac{y^2}{9}=1$.`, R`The eccentricity is $\frac54$.`, R`We have $c^2=16+9=25$, so $c=5$ and $e=\frac{c}{a}=\frac{5}{4}$.`],
       [R`What are the two asymptotes of the hyperbola $\frac{x^2}{4}-\frac{y^2}{16}=1$?`, R`The two asymptotes are $y=\pm2x$.`, R`The slope of an asymptote is $\frac{b}{a}=\frac{4}{2}=2$.`, [], [R`$y=\pm2x$`, R`$y=\pm\frac12x$`, R`$y=\pm4x$`]],
+      [R`Let $\frac{x^2}{9}-\frac{y^2}{16}=1$ be a hyperbola. Decide whether each statement is true or false.`, R`Statements a and b are true, statements c and d are false.`, R`We have $c=5$, so the focal length is $10$ and the eccentricity is $\frac53$; the asymptotes have slope $\frac43$ and not $\frac34$, and the point $(0;\ 4)$ gives a left side of $-1$.`, [], [R`The focal length of the hyperbola equals $10$.`, R`The eccentricity of the hyperbola equals $\frac53$.`, R`The two asymptotes are $y=\pm\frac34x$.`, R`The point $(0;\ 4)$ lies on the hyperbola.`]],
     ],
   },
   "parabol-chuan": {

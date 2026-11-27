@@ -23,6 +23,7 @@ export const g12Extra8En: Record<string, LessonEn> = {
       [R`Let $(P):\ z=0$, $A(0;\ 0;\ 1)$ and $B(0;\ 3;\ 3)$. Find the minimum of $MA+MB$ for $M\in(P)$.`, R`The minimum equals $5$.`, R`The points are on the same side, $A'(0;\ 0;\ -1)$ and $A'B=\sqrt{0+9+16}=5$.`],
       [R`The point $M$ of the line $d:\ x=t;\ y=0;\ z=2t$ is at distance $4$ from $(P):\ z=0$. Find the positive value of $t$.`, R`The required value is $t=2$.`, R`The distance is $\left|2t\right|=4$, so $t=2$ for the positive value.`],
       [R`Let $(P):\ z=0$, $A(0;\ 0;\ 1)$ and $B(0;\ 0;\ -1)$ on opposite sides of $(P)$. What is the minimum of $MA+MB$ and when is it attained?`, R`The minimum equals $2$, attained when $M$ is the intersection of $AB$ with $(P)$.`, R`The points are on opposite sides so $MA+MB\ge AB=2$, with equality when $M$ lies on the segment $AB$.`, [], [R`Equal to $2$, attained when $M$ is the intersection of $AB$ with $(P)$.`, R`Equal to $0$.`, R`Equal to $\sqrt2$.`]],
+      [R`Let $(P):\ z=0$, $A(1;\ 2;\ 3)$ and $B(3;\ 0;\ 1)$, with $M\in(P)$. Decide whether each statement is true or false.`, R`Statements a, b and d are true, statement c is false.`, R`The points are on the same side, so the minimum is $A'B=\sqrt{4+4+16}=2\sqrt6$ and not $AB=2\sqrt3$.`, [], [R`The points $A$ and $B$ lie on the same side of $(P)$.`, R`The reflection of $A$ in $(P)$ is $A'(1;\ 2;\ -3)$.`, R`The minimum of $MA+MB$ equals $AB$.`, R`The minimum of $MA+MB$ equals $2\sqrt6$.`]],
     ],
   },
   "tong-hop-oxyz": {
@@ -45,6 +46,7 @@ export const g12Extra8En: Record<string, LessonEn> = {
       [R`Compute the volume of the tetrahedron $OABC$ with $A(2;\ 0;\ 0)$, $B(0;\ 3;\ 0)$, $C(0;\ 0;\ 4)$.`, R`The volume equals $4$.`, R`The tetrahedron has a right angle at $O$, so $V=\frac{2\cdot3\cdot4}{6}=4$.`],
       [R`Compute the distance from $O$ to the plane $6x+3y+2z-12=0$.`, R`The distance equals $\frac{12}{7}$.`, R`We have $\frac{|-12|}{\sqrt{36+9+4}}=\frac{12}{7}$.`],
       [R`The line through $O$ perpendicular to $6x+3y+2z-12=0$ has equations $x=6t,\ y=3t,\ z=2t$. Find $t$ for the projection of $O$.`, R`The required value is $t=\frac{12}{49}$.`, R`Substituting gives $49t-12=0$, so $t=\frac{12}{49}$.`],
+      [R`Let $A(1;\ 0;\ 0)$, $B(0;\ 2;\ 0)$ and $C(0;\ 0;\ 3)$. Decide whether each statement is true or false.`, R`Statements a and c are true, statements b and d are false.`, R`The volume of $OABC$ equals $\frac{1\cdot2\cdot3}{6}=1$ and the area of $ABC$ equals $\frac72$, so the distance from $O$ is $\frac{3}{\frac72}=\frac67$.`, [], [R`The equation of the plane $(ABC)$ is $6x+3y+2z-6=0$.`, R`The volume of the tetrahedron $OABC$ equals $2$.`, R`The distance from $O$ to $(ABC)$ equals $\frac67$.`, R`The area of the triangle $ABC$ equals $7$.`]],
     ],
   },
 };

@@ -302,10 +302,41 @@ function DrillBlock({ drill, index, lang, speech, correct, onCorrect }: { drill:
 function AskForm({ ask, index, lang, correct, onCorrect, onNote }: { ask: GradeAsk; index: number; lang: Lang; correct: boolean; onCorrect: () => void; onNote: (text: string) => void }) {
   const [text, setText] = useState("");
   const [choice, setChoice] = useState(-1);
+  const [marks, setMarks] = useState<(boolean | null)[]>(() => (ask.kind === "truefalse" ? ask.statements.map(() => null) : []));
   function check() {
+    if (ask.kind === "truefalse") {
+      if (marks.some((mark) => mark === null)) {
+        onNote(t(lang, "Hãy chọn Đúng hoặc Sai cho cả bốn ý trước khi kiểm tra.", "Choose True or False for every statement before checking."));
+        return;
+      }
+      const right = marks.filter((mark, i) => mark === ask.truth[i]).length;
+      const all = right === ask.truth.length;
+      onNote(all ? t(lang, "Đúng cả rồi.", "All correct.") : t(lang, `Đúng ${right}/${ask.truth.length} ý. Xem lại các ý còn lại rồi thử lại nhé.`, `${right} of ${ask.truth.length} correct. Look at the rest again and try once more.`));
+      if (all) onCorrect();
+      return;
+    }
     const ok = ask.kind === "number" ? near(text, ask.value, ask.tolerance ?? 0.001) : choice === ask.correct;
     onNote(ok ? t(lang, "Đúng rồi.", "Correct.") : t(lang, "Chưa đúng. Xem gợi ý rồi thử lại nhé.", "Not yet. Read a hint and try again."));
     if (ok) onCorrect();
+  }
+  if (ask.kind === "truefalse") {
+    return (
+      <fieldset className="grade-ask grade-tf">
+        <legend>{t(lang, `Chọn Đúng hoặc Sai cho từng ý của bài ${index + 1}`, `Choose True or False for each statement of exercise ${index + 1}`)}</legend>
+        {ask.statements.map((statement, i) => (
+          <div key={statement} className="tf-row" role="group" aria-label={t(lang, `Ý ${String.fromCharCode(97 + i)}`, `Statement ${String.fromCharCode(97 + i)}`)}>
+            <span className="tf-text"><b>{String.fromCharCode(97 + i)})</b> <MathText text={statement} /></span>
+            {[true, false].map((value) => (
+              <label key={String(value)} className="tf-pick">
+                <input type="radio" name={`tf-${index}-${i}`} checked={marks[i] === value} onChange={() => setMarks((all) => all.map((mark, j) => (j === i ? value : mark)))} />
+                {value ? t(lang, "Đúng", "True") : t(lang, "Sai", "False")}
+              </label>
+            ))}
+          </div>
+        ))}
+        <button type="button" className="text-btn" onClick={check} disabled={correct}>{t(lang, "Kiểm tra", "Check")}</button>
+      </fieldset>
+    );
   }
   if (ask.kind === "choice") {
     return (

@@ -661,6 +661,10 @@ html[data-lamp="on"] body::before {
 .grade-progress > span { display: block; height: 100%; background: var(--accent); }
 .grade-ask { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0; }
 .grade-ask input, .grade-ask button, .grade-widget input { min-height: 44px; max-width: 100%; }
+.grade-tf { flex-direction: column; align-items: stretch; }
+.grade-tf .tf-row { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line, #d6d6d6); }
+.grade-tf .tf-text { flex: 1 1 260px; }
+.grade-tf .tf-pick { display: inline-flex; gap: 6px; align-items: center; min-height: 44px; }
 .grade-ask input[type="range"], .grade-widget input[type="range"] { width: min(100%, 280px); }
 .grade-widget { width: min(100%, 420px); margin-top: 8px; }
 .grade-widget svg { width: 100%; height: auto; }

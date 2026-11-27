@@ -71,6 +71,11 @@ for (const book of gradeBooks) {
         pair(`${at} lý do`, drill.why, other.why);
         if ((drill.hints?.length ?? 0) !== (other.hints?.length ?? 0)) fail(at, "số gợi ý khác bản gốc");
         drill.hints?.forEach((hint, j) => pair(`${at} gợi ý ${j + 1}`, hint, other.hints?.[j]));
+        if (drill.ask?.kind === "truefalse") {
+          const statements = other.ask?.kind === "truefalse" ? other.ask.statements : [];
+          if (statements === drill.ask.statements || statements.length !== drill.ask.statements.length) fail(at, "thiếu các ý đúng/sai tiếng Anh");
+          else drill.ask.statements.forEach((statement, j) => pair(`${at} ý ${j + 1}`, statement, statements[j]));
+        }
         if (drill.ask?.kind === "choice") {
           const options = other.ask?.kind === "choice" ? other.ask.options : [];
           if (options === drill.ask.options || options.length !== drill.ask.options.length) fail(at, "thiếu phương án trắc nghiệm tiếng Anh");

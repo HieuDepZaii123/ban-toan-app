@@ -51,7 +51,7 @@ export function lessonInEnglish(grade: number, lesson: GradeLesson): GradeLesson
     }),
     drills: lesson.drills.map((drill, i) => {
       const [prompt, answer, why, hints, options] = en.dr[i]!;
-      const ask = drill.ask?.kind === "choice" && options ? { ...drill.ask, options } : drill.ask;
+      const ask = drill.ask?.kind === "choice" && options ? { ...drill.ask, options } : drill.ask?.kind === "truefalse" && options ? { ...drill.ask, statements: options } : drill.ask;
       return { ...drill, prompt, answer, why, hints, ask };
     }),
   };

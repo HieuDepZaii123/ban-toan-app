@@ -15,7 +15,9 @@ export type GradeExample = {
 
 export type AskNumber = { kind: "number"; value: number; tolerance?: number };
 export type AskChoice = { kind: "choice"; options: string[]; correct: number };
-export type GradeAsk = AskNumber | AskChoice;
+/** Câu đúng/sai theo cấu trúc Phần II đề THPT: mỗi ý một lựa chọn Đúng hoặc Sai. */
+export type AskTrueFalse = { kind: "truefalse"; statements: string[]; truth: boolean[] };
+export type GradeAsk = AskNumber | AskChoice | AskTrueFalse;
 
 export type GradeWidget = "fraction" | "line" | "linear" | "quadratic";
 
