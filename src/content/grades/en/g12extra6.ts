@@ -25,7 +25,7 @@ export const g12Extra6En: Record<string, LessonEn> = {
     ],
   },
   "doan-thang-oxyz": {
-    s: R`The segment $AB$ consists of the points $M=A+t\overrightarrow{AB}$ with $0\le t\le1$, that is $x=x_A+t(x_B-x_A)$ and similarly for $y$, $z$. Then $AM=t\cdot AB$, $t=\frac12$ gives the midpoint, and $AM:MB=t:(1-t)$. The line $AB$ meets a plane at the value of $t$ we find; the segment $AB$ meets the plane when that value lies in $[0;\ 1]$.`,
+    s: R`The segment $AB$ consists of the points $M=A+t\overrightarrow{AB}$ with $0\le t\le1$, that is $x=x_A+t(x_B-x_A)$ and similarly for $y$, $z$. Then $AM=t\cdot AB$, $t=\frac12$ gives the midpoint, and $AM:MB=t:(1-t)$. The line $AB$ meets a plane at the value of $t$ we find, and if $AB$ is parallel to the plane then no value or every value works; the segment $AB$ meets the plane when that value lies in $[0;\ 1]$.`,
     w: R`For $0\le t\le1$ the point $A+t\overrightarrow{AB}$ runs from $A$ to $B$, so $t$ is exactly the ratio $AM:AB$. An intersection point lies on the segment only when $t$ is in $[0;\ 1]$.`,
     p: R`Concluding that the segment meets a plane just because the line does, without checking that $t$ lies in $[0;\ 1]$.`,
     ex: [
@@ -45,7 +45,7 @@ export const g12Extra6En: Record<string, LessonEn> = {
     ],
   },
   "pt-mp-dang": {
-    s: R`The plane through $M(x_0;\ y_0;\ z_0)$ with normal $\vec n=(A;\ B;\ C)$ is $A(x-x_0)+B(y-y_0)+C(z-z_0)=0$. If two non-parallel direction vectors $\vec u$, $\vec v$ are known, then $\vec n=\left[\vec u,\vec v\right]$. The plane meeting the three axes at $(a;\ 0;\ 0)$, $(0;\ b;\ 0)$, $(0;\ 0;\ c)$ has equation $\frac xa+\frac yb+\frac zc=1$. The perpendicular bisector plane of $AB$ passes through the midpoint of $AB$ and has $\overrightarrow{AB}$ as normal.`,
+    s: R`The plane through $M(x_0;\ y_0;\ z_0)$ with normal $\vec n=(A;\ B;\ C)$ is $A(x-x_0)+B(y-y_0)+C(z-z_0)=0$. If two non-parallel direction vectors $\vec u$, $\vec v$ are known, then $\vec n=\left[\vec u,\vec v\right]$. The plane meeting the three axes at $(a;\ 0;\ 0)$, $(0;\ b;\ 0)$, $(0;\ 0;\ c)$ with $a$, $b$, $c$ different from $0$ has equation $\frac xa+\frac yb+\frac zc=1$. The perpendicular bisector plane of $AB$ passes through the midpoint of $AB$ and has $\overrightarrow{AB}$ as normal.`,
     w: R`Every method reduces to finding a normal and a point of the plane; the cross product gives the normal when two direction vectors are known, and the intercept form is used only when the three axis intercepts are nonzero.`,
     p: R`Forgetting that a normal multiplied by a nonzero number is still a normal, so multiplying by a number other than $0$ is allowed, or forgetting to substitute the point to find the constant.`,
     ex: [

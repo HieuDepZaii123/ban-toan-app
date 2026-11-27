@@ -30,7 +30,7 @@ export const lop12PtOxyz: GradeChapter = chuong("pt-oxyz", "Phương trình đư
     ],
     { topicId: "analytic" }),
   bai("doan-thang-oxyz", "Phương trình đoạn thẳng và điểm chia",
-    R`Đoạn thẳng $AB$ gồm các điểm $M=A+t\overrightarrow{AB}$ với $0\le t\le1$, tức $x=x_A+t(x_B-x_A)$ và tương tự cho $y$, $z$. Khi đó $AM=t\cdot AB$, $t=\frac12$ cho trung điểm, và $AM:MB=t:(1-t)$. Đường thẳng $AB$ cắt một mặt phẳng tại giá trị $t$ tìm được; đoạn thẳng $AB$ cắt mặt phẳng khi giá trị đó thuộc đoạn $[0;\ 1]$.`,
+    R`Đoạn thẳng $AB$ gồm các điểm $M=A+t\overrightarrow{AB}$ với $0\le t\le1$, tức $x=x_A+t(x_B-x_A)$ và tương tự cho $y$, $z$. Khi đó $AM=t\cdot AB$, $t=\frac12$ cho trung điểm, và $AM:MB=t:(1-t)$. Đường thẳng $AB$ cắt một mặt phẳng tại giá trị $t$ tìm được, và nếu $AB$ song song với mặt phẳng thì không có giá trị nào hoặc mọi giá trị đều thỏa; đoạn thẳng $AB$ cắt mặt phẳng khi giá trị đó thuộc đoạn $[0;\ 1]$.`,
     [
       vd(R`Cho $A(1;\ 2;\ 3)$ và $B(5;\ 6;\ 7)$. Tìm trung điểm của $AB$ và điểm $N$ trên $AB$ sao cho $AN=\frac34AB$.`,
         [
@@ -54,7 +54,7 @@ export const lop12PtOxyz: GradeChapter = chuong("pt-oxyz", "Phương trình đư
     ],
     { topicId: "analytic" }),
   bai("pt-mp-dang", "Các cách viết phương trình mặt phẳng",
-    R`Mặt phẳng qua $M(x_0;\ y_0;\ z_0)$ có pháp tuyến $\vec n=(A;\ B;\ C)$ là $A(x-x_0)+B(y-y_0)+C(z-z_0)=0$. Nếu biết hai vectơ chỉ phương không cùng phương $\vec u$, $\vec v$ thì $\vec n=\left[\vec u,\vec v\right]$. Mặt phẳng cắt ba trục tại $(a;\ 0;\ 0)$, $(0;\ b;\ 0)$, $(0;\ 0;\ c)$ có phương trình $\frac xa+\frac yb+\frac zc=1$. Mặt phẳng trung trực của $AB$ đi qua trung điểm của $AB$ và nhận $\overrightarrow{AB}$ làm pháp tuyến.`,
+    R`Mặt phẳng qua $M(x_0;\ y_0;\ z_0)$ có pháp tuyến $\vec n=(A;\ B;\ C)$ là $A(x-x_0)+B(y-y_0)+C(z-z_0)=0$. Nếu biết hai vectơ chỉ phương không cùng phương $\vec u$, $\vec v$ thì $\vec n=\left[\vec u,\vec v\right]$. Mặt phẳng cắt ba trục tại $(a;\ 0;\ 0)$, $(0;\ b;\ 0)$, $(0;\ 0;\ c)$ với $a$, $b$, $c$ khác $0$ có phương trình $\frac xa+\frac yb+\frac zc=1$. Mặt phẳng trung trực của $AB$ đi qua trung điểm của $AB$ và nhận $\overrightarrow{AB}$ làm pháp tuyến.`,
     [
       vd(R`Viết phương trình mặt phẳng qua $M(1;\ 2;\ 3)$ có hai vectơ chỉ phương $\vec u=(1;\ 0;\ 1)$ và $\vec v=(0;\ 1;\ 2)$.`,
         [

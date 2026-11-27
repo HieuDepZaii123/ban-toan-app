@@ -57,7 +57,7 @@ export const lop12DtOxyzNC: GradeChapter = chuong("dt-oxyz-nc", "Đường thẳ
     ],
     { topicId: "analytic" }),
   bai("duong-cat-hai-dt", "Đường thẳng cắt hai đường cho trước và đường vuông góc chung",
-    R`Đường thẳng đi qua điểm $A$ và cắt hai đường $d_1$, $d_2$ được dựng bằng cách lấy $P\in d_1$ và $Q\in d_2$ theo tham số, rồi đặt ba điểm $A$, $P$, $Q$ thẳng hàng, tức $\overrightarrow{AP}=k\overrightarrow{AQ}$. Đường vuông góc chung của hai đường chéo nhau cắt cả hai và vuông góc với cả hai: $\overrightarrow{PQ}$ phải vuông góc với $\vec{u_1}$ và $\vec{u_2}$, tức hai tích vô hướng đều bằng $0$.`,
+    R`Đường thẳng đi qua điểm $A$ không thuộc $d_1$ và $d_2$ và cắt hai đường đó được dựng bằng cách lấy $P\in d_1$ và $Q\in d_2$ theo tham số, rồi đặt ba điểm $A$, $P$, $Q$ thẳng hàng, tức $\overrightarrow{AP}=k\overrightarrow{AQ}$. Đường vuông góc chung của hai đường chéo nhau cắt cả hai và vuông góc với cả hai: $\overrightarrow{PQ}$ phải vuông góc với $\vec{u_1}$ và $\vec{u_2}$, tức hai tích vô hướng đều bằng $0$.`,
     [
       vd(R`Cho $d_1:\ x=t;\ y=0;\ z=0$ và $d_2:\ x=0;\ y=s;\ z=1$. Viết đường thẳng qua $A(2;\ 1;\ 2)$ cắt cả hai đường.`,
         [
@@ -84,7 +84,7 @@ export const lop12DtOxyzNC: GradeChapter = chuong("dt-oxyz-nc", "Đường thẳ
     ],
     { topicId: "analytic" }),
   bai("dt-trong-mp", "Đường thẳng nằm trong mặt phẳng và hình chiếu của đường thẳng",
-    R`Đường thẳng $\Delta$ nằm trong $(P)$ có chỉ phương vuông góc với pháp tuyến $\vec n$ của $(P)$. Nếu $\Delta$ còn vuông góc với đường $d$ có chỉ phương $\vec u$ thì chỉ phương của $\Delta$ là $\left[\vec n,\vec u\right]$. Hình chiếu của $d$ lên $(P)$ là giao của $(P)$ với mặt phẳng $(Q)$ chứa $d$ và vuông góc với $(P)$, với pháp tuyến của $(Q)$ là $\left[\vec u,\vec n\right]$.`,
+    R`Đường thẳng $\Delta$ nằm trong $(P)$ có chỉ phương vuông góc với pháp tuyến $\vec n$ của $(P)$. Nếu $\Delta$ còn vuông góc với đường $d$ có chỉ phương $\vec u$ thì chỉ phương của $\Delta$ là $\left[\vec n,\vec u\right]$. Khi $d$ không vuông góc với $(P)$, hình chiếu của $d$ lên $(P)$ là giao của $(P)$ với mặt phẳng $(Q)$ chứa $d$ và vuông góc với $(P)$, với pháp tuyến của $(Q)$ là $\left[\vec u,\vec n\right]$.`,
     [
       vd(R`Cho $(P):\ x+y+z-6=0$ và $d:\ x=1+t,\ y=2+2t,\ z=3$. Viết đường thẳng $\Delta$ nằm trong $(P)$, đi qua giao điểm của $d$ với $(P)$ và vuông góc với $d$.`,
         [

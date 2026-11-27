@@ -431,5 +431,5 @@ const lop11Base: GradeBook = {
 /** Chương bổ sung xen vào cạnh chương cùng mạch. */
 export const lop11: GradeBook = {
   ...lop11Base,
-  chapters: lop11Base.chapters.flatMap((chapter) => (chapter.id === "khong-gian" ? [lop11DaiCuong, { ...chapter, lessons: [songSongMoi, vuongGocMoi, gocKcMoi, theTichMoi] }, lop11GocKhongGian, lop11ChieuSongSong, lop11VectoKg, lop11GocVuongGoc, lop11KhoangCachKg, lop11TyLeKg] : chapter.id === "luong-giac" ? [chapter, lop11LuongGiacNC] : chapter.id === "mu-log" ? [chapter, lop11MuLogNC] : [chapter])),
+  chapters: lop11Base.chapters.flatMap((chapter) => (chapter.id === "khong-gian" ? [lop11DaiCuong, { ...chapter, lessons: [songSongMoi, vuongGocMoi] }, lop11ChieuSongSong, lop11TyLeKg, lop11VectoKg, { ...lop11GocVuongGoc, lessons: [gocKcMoi, ...lop11GocVuongGoc.lessons] }, { ...lop11GocKhongGian, lessons: [...lop11GocKhongGian.lessons.flatMap((l) => (l.id === "the-tich-goc" ? [l, theTichMoi] : [l]))] }, lop11KhoangCachKg] : chapter.id === "luong-giac" ? [chapter, lop11LuongGiacNC] : chapter.id === "mu-log" ? [chapter, lop11MuLogNC] : [chapter])),
 };

@@ -177,4 +177,20 @@ export const thpt1011Notes: NoteBook = {
     R`Đường vuông góc với mặt phẳng thì vuông góc với mọi đường của mặt phẳng đi qua chân của nó, và định lí ba đường vuông góc mở rộng điều đó cho mọi đường trong mặt phẳng. Vì vậy chỉ cần hai đường cắt nhau.`,
     R`Chỉ chứng minh vuông góc với một đường của mặt phẳng rồi kết luận sớm. Cần hai đường cắt nhau, không phải hai đường song song.`,
   ),
+  "10/elip-tieu-diem": note(
+    R`Elip là tập hợp các điểm có tổng khoảng cách đến hai tiêu điểm bằng $2a$, nên hệ thức $c^2=a^2-b^2$ cho biết tiêu điểm nằm gần tâm hơn đỉnh và tâm sai luôn nhỏ hơn $1$.`,
+    R`Dùng $c^2=a^2+b^2$ như hypebol, hoặc quên kiểm tra mẫu nào lớn hơn nên đặt tiêu điểm sai trục.`,
+  ),
+  "10/hypebol-tieu-diem": note(
+    R`Hypebol là tập hợp các điểm có hiệu khoảng cách đến hai tiêu điểm bằng $2a$ về giá trị tuyệt đối, nên $c$ lớn hơn $a$ và tâm sai luôn lớn hơn $1$. Hai tiệm cận là hai đường mà nhánh hypebol tiến sát khi đi ra xa.`,
+    R`Dùng dấu trừ trong $c^2=a^2+b^2$, hoặc lấy hệ số góc tiệm cận là $\frac{a}{b}$ thay cho $\frac{b}{a}$.`,
+  ),
+  "10/parabol-chuan": note(
+    R`Parabol là tập hợp các điểm cách đều tiêu điểm và đường chuẩn, nên khoảng cách đến tiêu điểm đổi thành khoảng cách đến một đường thẳng, dễ tính hơn nhiều.`,
+    R`Nhầm $p$ với $2p$ khi đọc phương trình, hoặc đặt tiêu điểm trên trục hoành cho parabol $x^2=2py$.`,
+  ),
+  "10/lap-pt-conic": note(
+    R`Mỗi phương trình chính tắc chỉ có hai số cần tìm, nên hai điều kiện độc lập là đủ; tâm sai và tiệm cận chỉ giúp đổi điều kiện về $a$, $b$ hoặc $c$.`,
+    R`Quên rằng $a$ là bán trục chứ không phải độ dài cả trục, nên trục lớn $10$ cho $a=5$ chứ không phải $a=10$.`,
+  ),
 };

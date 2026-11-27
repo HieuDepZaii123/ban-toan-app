@@ -48,7 +48,7 @@ export const g12Extra7En: Record<string, LessonEn> = {
     ],
   },
   "duong-cat-hai-dt": {
-    s: R`The line through a point $A$ meeting two lines $d_1$, $d_2$ is built by taking $P\in d_1$ and $Q\in d_2$ with parameters and requiring $A$, $P$, $Q$ to be collinear, that is $\overrightarrow{AP}=k\overrightarrow{AQ}$. The common perpendicular of two skew lines meets both and is perpendicular to both: $\overrightarrow{PQ}$ must be perpendicular to $\vec{u_1}$ and $\vec{u_2}$, so both dot products equal $0$.`,
+    s: R`The line through a point $A$ not on $d_1$ or $d_2$ and meeting those two lines is built by taking $P\in d_1$ and $Q\in d_2$ with parameters and requiring $A$, $P$, $Q$ to be collinear, that is $\overrightarrow{AP}=k\overrightarrow{AQ}$. The common perpendicular of two skew lines meets both and is perpendicular to both: $\overrightarrow{PQ}$ must be perpendicular to $\vec{u_1}$ and $\vec{u_2}$, so both dot products equal $0$.`,
     w: R`A line meeting both lines passes through one point of each, so collinearity of three points gives two conditions, enough to find two parameters; for the common perpendicular, collinearity is replaced by two perpendicularity conditions.`,
     p: R`Choosing the same parameter for both lines, or forgetting that the common perpendicular is unique only when the two lines are skew.`,
     ex: [
@@ -71,7 +71,7 @@ export const g12Extra7En: Record<string, LessonEn> = {
     ],
   },
   "dt-trong-mp": {
-    s: R`A line $\Delta$ inside $(P)$ has a direction vector perpendicular to the normal $\vec n$ of $(P)$. If $\Delta$ is also perpendicular to the line $d$ with direction vector $\vec u$, the direction vector of $\Delta$ is $\left[\vec n,\vec u\right]$. The projection of $d$ onto $(P)$ is the intersection of $(P)$ with the plane $(Q)$ containing $d$ and perpendicular to $(P)$, where the normal of $(Q)$ is $\left[\vec u,\vec n\right]$.`,
+    s: R`A line $\Delta$ inside $(P)$ has a direction vector perpendicular to the normal $\vec n$ of $(P)$. If $\Delta$ is also perpendicular to the line $d$ with direction vector $\vec u$, the direction vector of $\Delta$ is $\left[\vec n,\vec u\right]$. When $d$ is not perpendicular to $(P)$, the projection of $d$ onto $(P)$ is the intersection of $(P)$ with the plane $(Q)$ containing $d$ and perpendicular to $(P)$, where the normal of $(Q)$ is $\left[\vec u,\vec n\right]$.`,
     w: R`A line inside a plane must be perpendicular to the normal, and being perpendicular to another line as well makes its direction the cross product of the two vectors. The projection is the intersection of the original plane with the plane containing the line and perpendicular to it.`,
     p: R`Swapping the order in the cross product when the orientation of the vector matters, or forgetting to check that the point used really lies in the plane.`,
     ex: [
