@@ -8,6 +8,7 @@ import { useRoute } from "./lib/useRoute.ts";
 import { setTheme, useSlice } from "./lib/store.ts";
 import { t } from "./lib/text.ts";
 import { StudyPlayer } from "./study/StudyPlayer.tsx";
+import { useScrollDirection } from "./ui/scrollDirection.ts";
 import { Atmosphere } from "./ui/Atmosphere.tsx";
 import { RightMenu } from "./ui/RightMenu.tsx";
 import { effectiveTheme, readThemeMode } from "./ui/themeMode.ts";
@@ -40,6 +41,7 @@ const CalcPage = lazy(() => import("./pages/CalcPage.tsx").then((mod) => ({ defa
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
 export default function App() {
+  useScrollDirection();
   useEffect(() => {
     captureReferral();
     const id = window.setTimeout(() => sessionStorage.removeItem(CHUNK_RELOAD), 4000);
