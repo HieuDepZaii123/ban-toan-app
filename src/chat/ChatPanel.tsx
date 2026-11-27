@@ -8,7 +8,8 @@ import { ChatText } from "./ChatText.tsx";
 import { mockTutor } from "./mock.ts";
 import { deviceId } from "../lib/device.ts";
 import { parentModeOn, useParentMode } from "../parent/parentMode.ts";
-import { shrinkPhoto } from "./photo.ts";
+import { canUseCamera, thumbnail } from "./photo.ts";
+import { PhotoStudio, type StudioStart } from "./PhotoStudio.tsx";
 import { usePremium } from "../premium/license.ts";
 import { TOPIC_QUICK, topicById } from "./tutorCopy.ts";
 
@@ -106,10 +107,16 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
   const [localLeft, setLocalLeft] = useState(() => Math.max(0, LOCAL_LIMIT - usedToday()));
   const [tutorMode, setTutorMode] = useState<TutorMode>("hint");
   const [photo, setPhoto] = useState<string | null>(null);
+  const [studio, setStudio] = useState<StudioStart | null>(null);
+  /** Small copies of photos sent this session, shown in the log (not saved: photos stay off the device's storage). */
+  const [shots, setShots] = useState<Map<Turn, string>>(() => new Map());
+  const [dragging, setDragging] = useState(false);
   const premiumState = usePremium();
   const isPremium = premiumState.kind === "active" || meta.premium === true;
   const parentOn = useParentMode();
   const picker = useRef<HTMLInputElement>(null);
+  /** The device's own camera app, for browsers without a live camera view. */
+  const snap = useRef<HTMLInputElement>(null);
   const box = useRef<HTMLTextAreaElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
 
@@ -119,11 +126,13 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key !== "Escape") return;
+      if (studio) setStudio(null);
+      else onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [onClose, studio]);
 
   useEffect(() => {
     try { localStorage.setItem(HISTORY, JSON.stringify(turns)); } catch { /* ignore */ }
@@ -145,13 +154,27 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     setNote("");
   }
 
-  async function choosePhoto(file: File | undefined): Promise<void> {
+  /** Open a chosen, pasted or dropped picture in the studio for cropping. */
+  function openPhoto(file: Blob | undefined | null): void {
     if (!file) return;
     if (!isPremium) return premiumOnly();
-    const url = await shrinkPhoto(file);
-    if (!url) return setNote(t(lang, "Ảnh chưa đọc được. Thử ảnh khác.", "That photo could not be read. Try another."));
-    setPhoto(url);
+    if (!file.type.startsWith("image/")) return setNote(t(lang, "Chỉ nhận tệp ảnh (JPG, PNG…).", "Only image files (JPG, PNG…)."));
     setNote("");
+    setStudio({ kind: "file", file });
+  }
+
+  function openCamera(): void {
+    if (!isPremium) return premiumOnly();
+    setNote("");
+    if (canUseCamera()) setStudio({ kind: "camera" });
+    else snap.current?.click();
+  }
+
+  function imageIn(items: DataTransferItemList | undefined): File | null {
+    for (const item of Array.from(items ?? [])) {
+      if (item.kind === "file" && item.type.startsWith("image/")) return item.getAsFile();
+    }
+    return null;
   }
 
   async function send(text?: string): Promise<void> {
@@ -167,7 +190,13 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     const next = [...turns, { role: "user" as const, content }].slice(-12);
     const sentMode: TutorMode = text === undefined ? tutorMode : "hint";
     const label = attached ? t(lang, "(kèm ảnh) ", "(photo attached) ") : "";
-    setTurns([...turns, { role: "user" as const, content: label + content }].slice(-12));
+    const asked: Turn = { role: "user", content: label + content };
+    setTurns([...turns, asked].slice(-12));
+    if (attached) {
+      void thumbnail(attached).then((small) => {
+        if (small) setShots((current) => new Map(current).set(asked, small));
+      });
+    }
     setDraft("");
     if (attached) setPhoto(null);
     setBusy(true);
@@ -231,7 +260,25 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
     : t(lang, "8 câu hỏi miễn phí mỗi ngày, Premium 40.", "8 free questions a day, Premium 40.");
 
   return (
-    <section className="chat-panel" role="dialog" aria-label={t(lang, "Trợ lý toán", "Math tutor")}>
+    <section
+      className={`chat-panel${dragging ? " is-dropping" : ""}`}
+      role="dialog"
+      aria-label={t(lang, "Trợ lý toán", "Math tutor")}
+      onDragOver={(event) => {
+        if (!Array.from(event.dataTransfer.types).includes("Files")) return;
+        event.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDragging(false);
+      }}
+      onDrop={(event) => {
+        if (!Array.from(event.dataTransfer.types).includes("Files")) return;
+        event.preventDefault();
+        setDragging(false);
+        openPhoto(imageIn(event.dataTransfer.items) ?? event.dataTransfer.files[0]);
+      }}
+    >
       <header className="chat-head">
         <b>{t(lang, "Hỏi toán", "Ask maths")}</b>
         <button type="button" className="text-btn" onClick={onClose}>{t(lang, "Đóng", "Close")}</button>
@@ -249,6 +296,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
         {turns.map((turn, index) => (
           <article key={`${turn.role}-${index}`} className={`chat-turn is-${turn.role}`}>
             <b>{turn.role === "user" ? t(lang, "Bạn", "You") : t(lang, "Trợ lý", "Tutor")}</b>
+            {shots.get(turn) ? <img className="chat-shot" src={shots.get(turn)} alt={t(lang, "Ảnh đề bài đã gửi", "Photo you sent")} /> : null}
             <Bubble role={turn.role} content={turn.content} />
             {turn.role === "assistant" ? (
               <FollowUps content={turn.content} fallbackId={studying?.id} busy={busy} onAsk={(item) => void send(item)} />
@@ -294,30 +342,70 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       {photo ? (
         <div className="chat-photo">
           <img src={photo} alt={t(lang, "Ảnh đề bài sẽ gửi", "Photo to send")} />
-          <button type="button" className="text-btn" onClick={() => setPhoto(null)}>{t(lang, "Bỏ ảnh", "Remove photo")}</button>
+          <span className="chat-photo-copy">
+            <small>{t(lang, "Ảnh sẽ gửi kèm. Ghi thêm câu hỏi nếu muốn, rồi bấm Gửi.", "The photo goes with your message. Add a question if you like, then press Send.")}</small>
+            <span>
+              <button type="button" className="text-btn" onClick={() => void fetch(photo).then((res) => res.blob()).then((blob) => setStudio({ kind: "file", file: blob }))}>{t(lang, "Sửa", "Edit")}</button>
+              <button type="button" className="text-btn" onClick={() => setPhoto(null)}>{t(lang, "Bỏ ảnh", "Remove photo")}</button>
+            </span>
+          </span>
         </div>
+      ) : null}
+      {studio ? (
+        <PhotoStudio
+          start={studio}
+          onClose={() => setStudio(null)}
+          onDone={(url) => {
+            setStudio(null);
+            setPhoto(url);
+            box.current?.focus();
+          }}
+        />
       ) : null}
       <input
         ref={picker}
         type="file"
         accept="image/*"
-        capture="environment"
         hidden
         onChange={(event) => {
-          void choosePhoto(event.target.files?.[0]);
+          openPhoto(event.target.files?.[0]);
           event.target.value = "";
         }}
       />
-      <form className="chat-form" onSubmit={(event) => { event.preventDefault(); void send(); }}>
+      <input
+        ref={snap}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        hidden
+        onChange={(event) => {
+          openPhoto(event.target.files?.[0]);
+          event.target.value = "";
+        }}
+      />
+      <div className="chat-photo-row">
         <button
           type="button"
           className="text-btn chat-photo-btn"
           disabled={busy}
-          title={isPremium ? t(lang, "Chụp hoặc chọn ảnh đề bài", "Take or choose a photo of the problem") : t(lang, "Ảnh đề bài (Premium)", "Photo of a problem (Premium)")}
+          title={isPremium ? t(lang, "Chụp ảnh đề bài bằng máy ảnh", "Take a photo of the problem with the camera") : t(lang, "Chụp ảnh đề bài (Premium)", "Photo of a problem (Premium)")}
+          onClick={openCamera}
+        >
+          <CameraIcon /> {t(lang, "Chụp ảnh", "Take photo")}
+        </button>
+        <button
+          type="button"
+          className="text-btn chat-photo-btn"
+          disabled={busy}
+          title={isPremium ? t(lang, "Chọn ảnh đề bài có sẵn", "Choose a saved photo of the problem") : t(lang, "Ảnh đề bài (Premium)", "Photo of a problem (Premium)")}
           onClick={() => (isPremium ? picker.current?.click() : premiumOnly())}
         >
-          {t(lang, "Ảnh", "Photo")}
+          {t(lang, "Chọn ảnh", "Choose photo")}
         </button>
+        {isPremium ? null : <span className="chat-lock">Premium</span>}
+        <small className="chat-photo-hint">{t(lang, "hoặc dán (Ctrl+V), kéo ảnh vào đây", "or paste (Ctrl+V) or drop a picture here")}</small>
+      </div>
+      <form className="chat-form" onSubmit={(event) => { event.preventDefault(); void send(); }}>
         <label className="sr" htmlFor="chat-q">{t(lang, "Câu hỏi toán", "Math question")}</label>
         <textarea
           id="chat-q"
@@ -329,6 +417,12 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             ? t(lang, "Dán đề bài rồi bài làm của bạn, mỗi bước một dòng", "Paste the problem, then your working, one step per line")
             : t(lang, "Viết công thức trong $...$ nếu cần", "Put a formula inside $...$ if you need one")}
           onChange={(event) => setDraft(event.target.value)}
+          onPaste={(event) => {
+            const pasted = imageIn(event.clipboardData.items);
+            if (!pasted) return;
+            event.preventDefault();
+            openPhoto(pasted);
+          }}
           onKeyDown={(event) => {
             if (event.key === "Enter" && !event.shiftKey) {
               event.preventDefault();
@@ -431,5 +525,14 @@ function FollowUps({ content, fallbackId, busy, onAsk }: { content: string; fall
       {topic ? <A className="text-btn" href={`/t/${topic.id}`}>{t(lang, "Mở tờ", "Open sheet")}</A> : null}
       <button type="button" className="text-btn" disabled={busy} onClick={() => onAsk(t(lang, "Giải thích bước 2 bằng một số cụ thể", "Explain step 2 with one number"))}>{t(lang, "Giải thích bước 2", "Explain step 2")}</button>
     </div>
+  );
+}
+
+function CameraIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 8h3l2-3h6l2 3h3v11H4z" />
+      <circle cx="12" cy="13" r="3.5" />
+    </svg>
   );
 }
