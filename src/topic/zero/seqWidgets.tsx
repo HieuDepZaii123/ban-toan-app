@@ -89,7 +89,7 @@ export function ArithGeoLab() {
         `Arithmetic $u_n=1+(n-1)\\cdot${fmt(d)}$, geometric $v_n=${fmt(q, 2)}^{n-1}$. ${cross === null ? `Within the first ${N} terms the geometric one has not clearly overtaken.` : `From term number $${cross}$ on the geometric sequence is always larger: $u_{${cross}}=${fmt(arith(cross))}$, $v_{${cross}}=${fmt(geo(cross), 2)}$.`} Term ${N}: $u=${fmt(arith(N))}$, $v=${fmt(geo(N), 1)}$. ${log ? "Logarithmic scale: the geometric sequence is a straight line." : ""}`,
       )}
       why={tt(
-        R`Tăng tuyến tính nhân thêm một lượng cố định, tăng theo hàm mũ nhân thêm một tỉ lệ cố định của chính nó. Nên một khoản gửi lãi kép (nhân) sớm hay muộn vượt xa một khoản tiết kiệm đều đặn (cộng), và cũng vì vậy dịch bệnh lây theo hàm mũ khó kiểm soát hơn nhiều so với dự đoán tuyến tính.`,
+        R`Tăng tuyến tính là cộng thêm một lượng cố định, còn tăng theo hàm mũ là cộng thêm một tỉ lệ cố định của chính nó. Nên một khoản gửi lãi kép (nhân) sớm hay muộn vượt xa một khoản tiết kiệm đều đặn (cộng), và cũng vì vậy dịch bệnh lây theo hàm mũ khó kiểm soát hơn nhiều so với dự đoán tuyến tính.`,
         R`Linear growth adds a fixed amount; exponential growth adds a fixed share of itself. So a compound-interest deposit (multiplying) sooner or later far outruns steady saving (adding), and for the same reason an epidemic spreading exponentially is much harder to control than a linear forecast suggests.`,
       )}
     >

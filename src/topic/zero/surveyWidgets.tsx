@@ -210,8 +210,8 @@ export function SolutionsLab() {
         `For $m=${fmt(m, 2)}$: the machine counts ${count} solutions. The extreme values of the function: ${extremeValues.map((v) => fmt(v, 2)).join("; ") || "none"}; the number of solutions only changes when $m$ crosses these values.`,
       )}
       why={tt(
-        R`Giữa hai giá trị cực trị liên tiếp, hàm đơn điệu trên từng khoảng và liên tục nên đường ngang cắt đồ thị đúng một lần trên mỗi khoảng đơn điệu mà giá trị $m$ nằm trong tập giá trị của nó. Vì vậy chỉ cần đọc bảng biến thiên: so $m$ với giá trị cực đại, cực tiểu và giới hạn ở hai đầu.`,
-        R`Between two consecutive extreme values the function is continuous and monotonic on each stretch, so the horizontal line meets the graph exactly once on each monotonic stretch whose range contains $m$. So all you need is the variation table: compare $m$ with the maximum, the minimum and the limits at the two ends.`,
+        R`Giữa hai điểm cực trị liên tiếp, hàm liên tục và đơn điệu trên từng khoảng, nên đường ngang cắt đồ thị đúng một lần trên mỗi khoảng đơn điệu mà giá trị $m$ nằm trong tập giá trị của nó. Vì vậy chỉ cần đọc bảng biến thiên: so $m$ với giá trị cực đại, cực tiểu và giới hạn ở hai đầu.`,
+        R`Between two consecutive extreme points the function is continuous and monotonic on each stretch, so the horizontal line meets the graph exactly once on each monotonic stretch whose range contains $m$. So all you need is the variation table: compare $m$ with the maximum, the minimum and the limits at the two ends.`,
       )}
     >
       <div className="fz-pair">
