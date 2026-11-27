@@ -346,6 +346,14 @@ main {
   color: var(--accent);
   border-color: transparent;
 }
+/* Any toggle built from these shared buttons shows when it is on (DEG/RAD, Xưởng hình tools, shuffle…).
+   Before this only specific components styled aria-pressed, so these looked the same on and off. */
+.text-btn[aria-pressed="true"], .read-switch button[aria-pressed="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
 .read-bit { display: grid; gap: 4px; margin: 0; }
 .read-bit b {
   color: var(--accent);
@@ -970,6 +978,19 @@ html[data-lamp="on"] body::before {
 }
 .chat-quota, .chat-note, .chat-typing { margin: 0; color: var(--ink-soft); font-size: 0.88rem; }
 .chat-panel > * { flex: none; }
+/* Phones: a near-full-height bottom sheet, so the conversation gets the screen; it has its own Đóng,
+   so the floating button steps aside while it is open. */
+@media (max-width: 600px) {
+  .chat-panel {
+    left: 8px; right: 8px; width: auto;
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    height: calc(100dvh - 72px - env(safe-area-inset-bottom));
+    max-height: none;
+    border-radius: 18px;
+    box-shadow: 0 -8px 40px rgb(28 22 16 / 22%);
+  }
+  .chat-fab[aria-expanded="true"] { display: none; }
+}
 .chat-log { overflow: auto; display: grid; gap: 8px; align-content: start; flex: 1 1 auto; min-height: 72px; }
 .chat-turn { display: grid; gap: 4px; padding: 10px 12px; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); margin-right: 12%; }
 .chat-turn.is-user { margin-right: 0; margin-left: 16%; background: var(--accent); color: #f7f3ea; border-color: transparent; }
@@ -1329,6 +1350,10 @@ html[data-lamp="on"] body::before {
 .calc-result.is-error { text-align: left; font-size: 0.95rem; font-weight: 500; color: var(--accent); }
 .calc-mode, .calc-fns, .calc-keys { display: grid; gap: 8px; }
 .calc-mode { grid-template-columns: 1fr 1fr; }
+.calc-mode button, .calc-fns button { justify-content: center; text-align: center; }
+.calc-help { margin-top: 16px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); }
+.calc-help summary { cursor: pointer; font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.calc-help ul { margin: 6px 0 0; padding-left: 1.2em; line-height: 1.6; color: var(--ink-soft); }
 .calc-fns { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .calc-keys { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .calc-keys button, .calc-fns button, .calc-mode button { min-height: 44px; min-width: 0; font-size: 1.05rem; padding: 8px 4px; }
