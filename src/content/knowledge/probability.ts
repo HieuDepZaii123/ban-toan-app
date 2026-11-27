@@ -12,7 +12,7 @@ export const probabilityKnowledge: TopicKnowledge = {
   tuDau: [
     R`Tung một đồng xu: không ai biết trước mặt nào ngửa, nhưng tung hàng nghìn lần thì khoảng một nửa số lần là ngửa. Xác suất là con số mô tả sự ổn định ẩn trong sự ngẫu nhiên đó: điều không đoán được ở một lần thì lại đoán được rất chắc khi lặp thật nhiều lần.`,
     R`Cách tính đơn giản nhất: nếu mọi kết quả có cơ hội như nhau thì xác suất là số kết quả «ta quan tâm» chia cho tổng số kết quả. Tung xúc xắc, ra mặt chẵn có $3$ trong $6$ kết quả, nên xác suất là một nửa. Vì vậy xác suất luôn nằm giữa $0$ (không thể xảy ra) và $1$ (chắc chắn xảy ra).`,
-    R`Khi biết thêm thông tin thì xác suất đổi. Rút một lá bài từ cỗ bài, rồi rút lá thứ hai: lá thứ hai ít còn nguyên cơ hội như ban đầu, vì bộ bài đã thiếu một lá. Xác suất có điều kiện chính là «cơ hội mới sau khi đã biết điều đó». Công thức Bayes đảo chiều câu hỏi: từ kết quả quan sát được, suy ra nguyên nhân có khả năng nhất.`,
+    R`Khi biết thêm thông tin thì xác suất đổi. Rút một lá bài rồi rút tiếp lá thứ hai: lá thứ hai không còn nguyên cơ hội như ban đầu, vì bộ bài đã thiếu một lá. Xác suất có điều kiện chính là «cơ hội mới sau khi đã biết điều đó». Công thức Bayes đảo chiều câu hỏi: từ kết quả quan sát được, suy ra nguyên nhân có khả năng nhất.`,
     R`Chuyên đề cũng đo dữ liệu: khi số liệu chia theo nhóm, ta đại diện mỗi nhóm bằng điểm giữa của nó. Hãy dùng phòng mô phỏng trong trang: tung xúc xắc cả nghìn lần để thấy tỉ lệ dồn về con số mà phép đếm đã tính trước.`,
   ],
   kyHieu: [

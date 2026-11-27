@@ -138,7 +138,7 @@ export function BirthdayLab() {
     <Stage
       title={tt("Nghịch lí ngày sinh: 23 người đã đủ hơn một nửa cơ hội trùng ngày", "The birthday paradox: 23 people already give better than even odds of a shared birthday")}
       story={tt(
-        R`Trong một lớp 23 người, xác suất có hai người trùng ngày sinh là bao nhiêu? Trực giác nói «rất nhỏ» vì có 365 ngày. Nhưng cặp người có tới $\frac{23\cdot 22}{2}=253$ cặp, và mỗi cặp là một cơ hội trùng. Tính bằng biến cố đối: xác suất không ai trùng là $\frac{365}{365}\cdot\frac{364}{365}\cdots\frac{365-n+1}{365}$, rồi lấy $1$ trừ đi. Máy cũng mô phỏng 20000 lớp học để kiểm.`,
+        R`Trong một lớp 23 người, xác suất có hai người trùng ngày sinh là bao nhiêu? Trực giác nói «rất nhỏ» vì có 365 ngày. Nhưng 23 người tạo ra tới $\frac{23\cdot 22}{2}=253$ cặp, và mỗi cặp là một cơ hội trùng. Tính bằng biến cố đối: xác suất không ai trùng là $\frac{365}{365}\cdot\frac{364}{365}\cdots\frac{365-n+1}{365}$, rồi lấy $1$ trừ đi. Máy cũng mô phỏng 20000 lớp học để kiểm.`,
         R`In a class of 23 people, what is the probability that two share a birthday? Intuition says «very small» because there are 365 days. But 23 people form $\frac{23\cdot 22}{2}=253$ pairs, and each pair is a chance of a match. Compute it through the complement: the probability that nobody matches is $\frac{365}{365}\cdot\frac{364}{365}\cdots\frac{365-n+1}{365}$, then subtract from $1$. The machine also simulates 20000 classes to check.`,
       )}
       read={tt(

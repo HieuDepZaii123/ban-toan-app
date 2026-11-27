@@ -4,14 +4,14 @@ const R = String.raw;
 
 export const probabilityLesson: Lesson = {
   basic: [
-    { k: "mo", vi: R`Xác suất là số trường hợp thuận chia cho số trường hợp còn sau điều kiện đã biết.`, en: R`Probability is the favorable cases divided by the cases that remain after what is already known.` },
+    { k: "mo", vi: R`Xác suất là số trường hợp thuận lợi chia cho số trường hợp còn lại sau khi đã biết điều kiện.`, en: R`Probability is the number of favorable cases divided by the number of cases that remain once the condition is known.` },
     { k: "dinh", vi: R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ khi $P(B)\neq 0$. Mẫu số là $B$, không phải không gian cũ.`, en: R`$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$ when $P(B)\neq 0$. The denominator is $B$, not the original space.` },
     { k: "vd", vi: R`Ba đồng xu, ít nhất một mặt ngửa: $1-\left(\dfrac12\right)^3=\dfrac78$.`, en: R`Three coins, at least one head: $1-\left(\dfrac12\right)^3=\dfrac78$.` },
   ],
   exam: [
     { k: "dinh", vi: R`Hai xúc xắc, biết có ít nhất một mặt $6$: còn $36-25=11$ cặp, không còn $36$.`, en: R`Two dice, given at least one $6$: $36-25=11$ pairs remain, not $36$.` },
     { k: "vd", vi: R`Trong $11$ cặp đó chỉ có $(6;6)$. Xác suất cả hai đều $6$ là $\dfrac{1}{11}$.`, en: R`Among those $11$ pairs only $(6;6)$ works. The probability both are $6$ is $\dfrac{1}{11}$.` },
-    { k: "loi", vi: R`Chia $1$ cặp cho $36$ ra $\dfrac{1}{36}$. Mẫu còn $11$ cặp, nên đúng là $\dfrac{1}{11}$.`, en: R`Dividing $1$ pair by $36$ gives $\dfrac{1}{36}$. Eleven pairs remain, so the probability is $\dfrac{1}{11}$.` },
+    { k: "loi", vi: R`Lấy $1$ cặp chia cho $36$ thì được $\dfrac{1}{36}$, nhưng mẫu chỉ còn $11$ cặp nên đáp án đúng là $\dfrac{1}{11}$.`, en: R`Dividing $1$ pair by $36$ gives $\dfrac{1}{36}$. Eleven pairs remain, so the probability is $\dfrac{1}{11}$.` },
     { k: "kiem", vi: R`$10\,000$ người, bệnh $1\%$, độ nhạy $99\%$, dương giả $5\%$: $\dfrac{99}{99+495}=\dfrac16$.`, en: R`$10\,000$ people, prevalence $1\%$, sensitivity $99\%$, false positives $5\%$: $\dfrac{99}{99+495}=\dfrac16$.` },
   ],
 };
