@@ -25,7 +25,7 @@ export const lop12PtOxyz: GradeChapter = chuong("pt-oxyz", "Phương trình đư
     ],
     [
       luyen(R`Đường thẳng $d:\ x=1+t,\ y=-2t,\ z=3+t$. Điểm của $d$ có hoành độ $4$ có tung độ bằng bao nhiêu?`, R`Tung độ bằng $-6$.`, [{ expr: "-2*3", expect: "-6" }], R`Từ $1+t=4$ được $t=3$, nên $y=-2\cdot3=-6$.`),
-      luyen(R`Đường thẳng $d:\ x=1+2t,\ y=3-t,\ z=-2+t$. Tìm $m$ để điểm $A(5;\ m;\ 0)$ thuộc $d$.`, R`Giá trị cần tìm là $m=1$.`, [{ expr: "solve(1+2*x-5, x)[0]", expect: "2" }], R`Từ $1+2t=5$ được $t=2$, khi đó $z=-2+2=0$ khớp và $y=3-2=1$.`),
+      luyen(R`Đường thẳng $d:\ x=1+2t,\ y=3-t,\ z=-2+t$. Tìm $m$ để điểm $A(5;\ m;\ 0)$ thuộc $d$.`, R`Giá trị cần tìm là $m=1$.`, [{ expr: "3-solve(1+2*x-5, x)[0]", expect: "1" }], R`Từ $1+2t=5$ được $t=2$, khi đó $z=-2+2=0$ khớp và $y=3-2=1$.`),
       luyen(R`Đường thẳng qua $A(1;\ 2;\ 3)$ và $B(4;\ 2;\ 1)$ có phương trình tham số $z=3+ct$. Tìm $c$.`, R`Hệ số $c=-2$.`, [{ expr: "Matrix([4,2,1])[2]-Matrix([1,2,3])[2]", expect: "-2" }], R`Vectơ chỉ phương $\overrightarrow{AB}=(3;\ 0;\ -2)$ nên $c=1-3=-2$.`),
     ],
     { topicId: "analytic" }),
