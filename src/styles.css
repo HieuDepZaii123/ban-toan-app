@@ -486,20 +486,30 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .dss-list { display: grid; gap: 14px; }
 .dss-item { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
 .dss-stmt { margin: 0; }
-.dss-options { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Đúng / Sai / Chưa đủ: one row of three equal choices, so each statement takes one line of buttons. */
+.dss-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; max-width: 30rem; }
 .dss-opt {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   min-height: 44px;
-  padding: 8px 12px;
+  padding: 8px 10px;
+  text-align: center;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--sheet);
   cursor: pointer;
 }
-.dss-opt input { width: 1.15rem; height: 1.15rem; margin: 0; }
+/* The whole choice highlights when picked, so the radio dot is hidden visually but stays for keyboards and screen readers. */
+.dss-opt { position: relative; white-space: nowrap; }
+.dss-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: inherit; }
+.dss-opt .key { font-size: 0.78rem; color: var(--muted); }
 .dss-opt:has(input:disabled) { cursor: default; }
+.dss-opt:not(.is-right):not(.is-wrong):has(input:checked) { border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+.dss-opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+/* The 1–3 key hints only help with a keyboard. */
+@media (hover: none) { .dss-opt .key { display: none; } }
 .dss-opt.is-right { border-color: var(--ok); border-style: solid; background: var(--ok-soft); }
 .dss-opt.is-wrong { border-color: var(--clay); border-style: dashed; background: var(--clay-soft); }
 .dss-opt.is-right::after { content: " ✓"; color: var(--ok); font-weight: 700; }
@@ -1322,7 +1332,7 @@ html[data-lamp="on"] body::before {
 .calc-keys { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .calc-keys button, .calc-fns button, .calc-mode button { min-height: 44px; min-width: 0; font-size: 1.05rem; padding: 8px 4px; }
 .calc-keys button { border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); color: var(--ink); font: inherit; font-size: 1.05rem; }
-.calc-eq { grid-column: span 2; background: var(--accent) !important; color: #fff !important; border-color: transparent !important; }
+.calc-eq { grid-column: span 2; background: var(--accent) !important; color: var(--on-accent) !important; border-color: transparent !important; }
 .calc-history ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .calc-history li button { width: 100%; min-height: 44px; display: flex; justify-content: space-between; gap: 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--sheet); color: var(--ink); font: inherit; padding: 8px 12px; }
 .calc-history-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
@@ -1644,7 +1654,7 @@ html[data-lamp="on"] body::before {
 .practice-actions button:disabled { opacity: 0.5; }
 .practice-link { display: inline-flex; align-items: center; min-height: 40px; padding: 0 4px; color: var(--accent); }
 .card-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
-.card-nav .is-next { margin-left: auto; background: var(--accent); color: #fff; border-color: transparent; }
+.card-nav .is-next { margin-left: auto; background: var(--accent); color: var(--on-accent); border-color: transparent; }
 .fold { margin-top: 8px; }
 .fold > summary { cursor: pointer; min-height: 40px; display: flex; align-items: center; gap: 8px; color: var(--ink-soft); list-style: none; }
 .fold > summary::-webkit-details-marker { display: none; }
