@@ -12,14 +12,14 @@ export const songSongMoi: GradeLesson = bai("song-song", "Quan hệ song song",
       [
         buoc(R`Đoạn $MN$ là đường trung bình của tam giác $SAB$ nên $MN\parallel AB$ và $MN=\frac{AB}{2}$.`, R`Hai điểm $M$ và $N$ là trung điểm của hai cạnh của tam giác.`),
         buoc(R`Đáy là hình bình hành nên $AB=CD=8$ và $AB\parallel CD$, do đó $MN\parallel CD$ và $MN=4$.`, R`Hai cạnh đối của hình bình hành song song và bằng nhau.`),
-        buoc(R`Đường $CD$ nằm trong $(SCD)$ còn $MN$ không nằm trong $(SCD)$, nên $MN\parallel(SCD)$.`, R`Dùng điều kiện đường thẳng song song với mặt phẳng.`),
+        buoc(R`Đường $CD$ nằm trong $(SCD)$ còn $MN$ không nằm trong $(SCD)$, nên $MN\parallel(SCD)$.`, R`Nếu $MN\subset(SCD)$ thì $M$ cùng với $S$ là hai điểm chung của đường $SA$ và $(SCD)$, nên $SA\subset(SCD)$, vô lý vì $A\notin(SCD)$; do đó dùng được điều kiện đường thẳng song song với mặt phẳng.`),
       ],
       R`Đường $MN\parallel(SCD)$ và $MN=4$.`,
       [{ expr: "Matrix([2,0,0]).cross(Matrix([5-1,3-3,0])).norm()", expect: "0" }, { expr: "Rational(8,2)", expect: "4" }]),
     vd(R`Hình chóp $S.ABCD$ có đáy là hình bình hành. Tìm giao tuyến của $(SAB)$ và $(SCD)$.`,
       [
         buoc(R`Điểm $S$ thuộc cả hai mặt phẳng nên $S$ là một điểm chung.`, R`Một giao tuyến cần ít nhất một điểm chung.`),
-        buoc(R`Hai mặt phẳng chứa hai đường $AB$ và $CD$ song song nhau, nên giao tuyến là đường thẳng $d$ qua $S$ và song song với $AB$ (và $CD$).`, R`Theo tính chất: giao tuyến song song với hai đường song song đã cho.`),
+        buoc(R`Hai mặt phẳng phân biệt chứa hai đường $AB$ và $CD$ song song nhau, nên giao tuyến, vốn không trùng với $AB$ hay $CD$ vì $S$ không thuộc hai đường đó, là đường thẳng $d$ qua $S$ và song song với $AB$ (và $CD$).`, R`Theo tính chất: giao tuyến song song với hai đường song song đã cho.`),
       ],
       R`Giao tuyến là đường thẳng qua $S$ song song với $AB$.`,
       [{ expr: "Matrix([4,0,0]).cross(Matrix([5-1,3-3,0])).norm()", expect: "0" }]),
@@ -62,7 +62,7 @@ export const gocKcMoi: GradeLesson = bai("goc-kc", "Góc nhị diện và khoả
   [
     vd(R`Hình chóp đều có đáy là hình vuông cạnh $4$, chân đường cao $O$ là tâm đáy và $SO=2$. Gọi $M$ là trung điểm của một cạnh đáy, nên $OM=2$. Tính tang của góc phẳng của nhị diện giữa mặt bên và mặt đáy, biết góc phẳng đó là góc $\widehat{SMO}$.`,
       [
-        buoc(R`Vì $SO$ vuông góc với đáy và $OM$ vuông góc với cạnh đáy tại $M$, góc $\widehat{SMO}$ là một góc phẳng của nhị diện.`, R`Đường $OM$ và đường $SM$ cùng vuông góc với giao tuyến tại $M$, mỗi đường nằm trong một mặt.`),
+        buoc(R`Vì $SO$ vuông góc với đáy và $OM$ vuông góc với cạnh đáy tại $M$, góc $\widehat{SMO}$ là một góc phẳng của nhị diện.`, R`Cạnh đáy vuông góc với $SO$ và $OM$ cắt nhau nên vuông góc với $(SOM)$, do đó vuông góc với cả $SM$; vậy $OM$ và $SM$ cùng vuông góc với giao tuyến tại $M$, mỗi đường nằm trong một mặt.`),
         buoc(R`Tam giác $SOM$ vuông tại $O$, nên $\tan\widehat{SMO}=\frac{SO}{OM}=\frac{2}{2}=1$. Góc bằng $45^\circ$.`, R`Cạnh đối của góc tại $M$ là $SO$, cạnh kề là $OM$. Tang bằng $1$ cho góc $45^\circ$.`),
       ],
       R`Tang của góc phẳng bằng $1$, nên góc nhị diện bằng $45^\circ$.`,
@@ -109,7 +109,7 @@ export const theTichMoi: GradeLesson = bai("the-tich-11", "Thể tích lăng tr�
 
 export const lop11DaiCuong: GradeChapter = chuong("dai-cuong-kg-11", "Đại cương hình học không gian", [
   bai("vi-tri-tuong-doi-kg", "Vị trí tương đối của đường thẳng và mặt phẳng",
-    R`Hai đường thẳng trong không gian có ba vị trí: cắt nhau, song song, hoặc chéo nhau khi không cùng nằm trong một mặt phẳng. Đường thẳng và mặt phẳng có ba vị trí: cắt nhau tại một điểm, song song, hoặc đường thẳng nằm trong mặt phẳng. Hai mặt phẳng có ba vị trí: cắt nhau theo một đường thẳng, song song, hoặc trùng nhau.`,
+    R`Hai đường thẳng trong không gian có bốn vị trí: trùng nhau, cắt nhau, song song (phân biệt), hoặc chéo nhau khi không cùng nằm trong một mặt phẳng. Đường thẳng và mặt phẳng có ba vị trí: cắt nhau tại một điểm, song song, hoặc đường thẳng nằm trong mặt phẳng. Hai mặt phẳng có ba vị trí: cắt nhau theo một đường thẳng, song song, hoặc trùng nhau.`,
     [
       vd(R`Tứ diện $SABC$ có $SA\perp(ABC)$. Hai đường thẳng $SA$ và $BC$ có cắt nhau, song song hay chéo nhau?`,
         [
@@ -133,7 +133,7 @@ export const lop11DaiCuong: GradeChapter = chuong("dai-cuong-kg-11", "Đại cư
     ],
     { topicId: "triangle" }),
   bai("giao-tuyen", "Giao tuyến của hai mặt phẳng",
-    R`Giao tuyến của hai mặt phẳng phân biệt là đường thẳng gồm các điểm chung của chúng. Để tìm giao tuyến, tìm hai điểm chung. Nếu hai mặt phẳng lần lượt chứa hai đường thẳng song song thì giao tuyến song song với hai đường đó. Giao điểm của hai đường chéo của hình bình hành là trung điểm của mỗi đường.`,
+    R`Giao tuyến của hai mặt phẳng phân biệt là đường thẳng gồm các điểm chung của chúng. Để tìm giao tuyến, tìm hai điểm chung. Nếu hai mặt phẳng phân biệt lần lượt chứa hai đường thẳng song song thì giao tuyến song song với hai đường đó hoặc trùng với một trong hai đường. Giao điểm của hai đường chéo của hình bình hành là trung điểm của mỗi đường.`,
     [
       vd(R`Hình chóp $S.ABCD$ có đáy là hình bình hành tâm $O$. Tìm giao tuyến của $(SAC)$ và $(SBD)$.`,
         [
@@ -157,7 +157,7 @@ export const lop11DaiCuong: GradeChapter = chuong("dai-cuong-kg-11", "Đại cư
     ],
     { topicId: "triangle" }),
   bai("thiet-dien", "Thiết diện của hình khối",
-    R`Thiết diện là phần mặt phẳng cắt hình khối, là một đa giác. Mỗi cạnh của thiết diện là giao tuyến của mặt phẳng cắt với một mặt của khối. Mặt phẳng song song với đáy của hình chóp cho thiết diện đồng dạng với đáy. Hình lập phương cắt bởi mặt phẳng qua trung điểm sáu cạnh thích hợp cho thiết diện là lục giác đều.`,
+    R`Thiết diện là phần mặt phẳng cắt hình khối, là một đa giác. Mỗi cạnh của thiết diện là giao tuyến của mặt phẳng cắt với một mặt của khối. Mặt phẳng song song với đáy của hình chóp cho thiết diện đồng dạng với đáy. Hình lập phương cắt bởi mặt phẳng qua trung điểm sáu cạnh thích hợp cho thiết diện là lục giác đều, vì sáu trung điểm đồng phẳng và cùng cách tâm hình lập phương một khoảng bằng cạnh lục giác.`,
     [
       vd(R`Tứ diện đều cạnh $4$ bị cắt bởi mặt phẳng qua trung điểm ba cạnh cùng xuất phát từ một đỉnh. Tính diện tích thiết diện.`,
         [
@@ -168,7 +168,8 @@ export const lop11DaiCuong: GradeChapter = chuong("dai-cuong-kg-11", "Đại cư
         [{ expr: "sqrt(3)/4*2**2", expect: "sqrt(3)" }]),
       vd(R`Hình lập phương cạnh $2$ bị cắt bởi mặt phẳng qua trung điểm các cạnh $AB$, $BC$, $CC'$, $C'D'$, $D'A'$, $A'A$. Tính diện tích thiết diện.`,
         [
-          buoc(R`Mỗi cạnh thiết diện là đường chéo của một nửa mặt, nên dài $\sqrt{1^2+1^2}=\sqrt2$, và thiết diện là lục giác đều.`, R`Hai trung điểm liên tiếp nằm trên hai cạnh kề nhau của một mặt hình vuông cạnh $2$.`),
+          buoc(R`Chọn $A$ làm gốc với ba cạnh xuất phát từ $A$ dọc ba trục: sáu trung điểm đều thỏa $x-y+z=1$ nên đồng phẳng, và cùng cách tâm $I(1;\ 1;\ 1)$ một khoảng bằng $\sqrt2$.`, R`Sáu điểm nằm trên một đường tròn tâm $I$ trong mặt phẳng cắt, nên chỉ còn phải so sánh cạnh với bán kính.`),
+          buoc(R`Mỗi cạnh thiết diện là đường chéo của một nửa mặt, nên dài $\sqrt{1^2+1^2}=\sqrt2$, bằng bán kính đường tròn, nên thiết diện là lục giác đều.`, R`Hai trung điểm liên tiếp nằm trên hai cạnh kề nhau của một mặt hình vuông cạnh $2$.`),
           buoc(R`Diện tích lục giác đều cạnh $\sqrt2$ là $\frac{3\sqrt3}{2}\cdot(\sqrt2)^2=3\sqrt3$.`, R`Lục giác đều gồm sáu tam giác đều cạnh bằng cạnh lục giác.`),
         ],
         R`Diện tích thiết diện bằng $3\sqrt3$.`,

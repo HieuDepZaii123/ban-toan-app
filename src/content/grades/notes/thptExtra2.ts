@@ -189,4 +189,20 @@ export const thptExtra2Notes: NoteBook = {
     R`Tọa độ biến mỗi điều kiện hình học thành một phương trình, nên không cần dựng hình phụ; điều sáng tạo duy nhất là chọn gốc tại đỉnh có ba cạnh đôi một vuông góc.`,
     R`Chọn trục không vuông góc, hoặc đặt tọa độ đỉnh không khớp với các độ dài của đề.`,
   ),
+  "12/cau-cat-mp-dt": note(
+    R`Bán kính mặt cầu, khoảng cách từ tâm đến mặt phẳng và bán kính đường tròn giao tạo thành một tam giác vuông, nên một hệ thức Pi-ta-go cho bán kính đường tròn hoặc nửa dây cung.`,
+    R`Lấy bán kính mặt cầu làm bán kính đường tròn giao, hoặc quên rằng tâm đường tròn giao là hình chiếu của tâm mặt cầu chứ không phải chính tâm.`,
+  ),
+  "12/hai-cau-kc-ss": note(
+    R`Trừ vế hai phương trình mặt cầu làm mất các bình phương, chỉ còn phương trình bậc nhất, đúng là mặt phẳng đi qua mọi điểm chung; khoảng cách giữa các đối tượng song song không phụ thuộc điểm chọn nên chọn điểm thuận tiện nhất.`,
+    R`Quên kiểm tra hai đường thẳng phân biệt trước khi dùng công thức khoảng cách, hoặc lấy điểm của đối tượng thứ hai thay cho điểm của đường thẳng khi tính khoảng cách đến mặt phẳng.`,
+  ),
+  "12/mp-chua-dt-cuc-tri": note(
+    R`Mặt phẳng chứa $d$ xoay quanh $d$, và chân đường vuông góc hạ từ $A$ luôn nằm trên đường tròn đường kính $AH$, nên khoảng cách lớn nhất đạt khi mặt phẳng vuông góc với $AH$.`,
+    R`Lấy mặt phẳng đi qua cả $A$ và $d$, có khoảng cách bằng $0$, làm cực trị, hoặc quên kiểm tra mặt phẳng tìm được có chứa $d$.`,
+  ),
+  "12/cuc-tri-mat-cau": note(
+    R`Bất đẳng thức tam giác cho tam giác $IMA$ chặn $MA$ giữa hiệu và tổng của $IA$ và $R$, và cận đạt khi ba điểm thẳng hàng.`,
+    R`Dùng $IA-R$ cho điểm trong mặt cầu mà không lấy giá trị tuyệt đối, hoặc áp dụng khoảng từ $h-R$ đến $h+R$ khi mặt phẳng thật ra cắt mặt cầu.`,
+  ),
 };

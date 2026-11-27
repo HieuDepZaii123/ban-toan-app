@@ -193,4 +193,16 @@ export const thpt1011Notes: NoteBook = {
     R`Mỗi phương trình chính tắc chỉ có hai số cần tìm, nên hai điều kiện độc lập là đủ; tâm sai và tiệm cận chỉ giúp đổi điều kiện về $a$, $b$ hoặc $c$.`,
     R`Quên rằng $a$ là bán trục chứ không phải độ dài cả trục, nên trục lớn $10$ cho $a=5$ chứ không phải $a=10$.`,
   ),
+  "10/vtt-dt-tron": note(
+    R`Khoảng cách từ tâm đến đường thẳng cho biết đường thẳng cách tâm bao xa, nên so sánh nó với bán kính là đủ để biết đường thẳng không cắt, tiếp xúc hay cắt đường tròn; nửa dây cung, khoảng cách và bán kính tạo thành một tam giác vuông.`,
+    R`So khoảng cách với đường kính thay cho bán kính, hoặc quên trị tuyệt đối ở tử số của công thức khoảng cách.`,
+  ),
+  "10/tiep-tuyen-tron": note(
+    R`Tiếp tuyến vuông góc với bán kính tại tiếp điểm nên pháp tuyến của nó cho sẵn; với điểm ngoài đường tròn, điều kiện tiếp xúc thành một phương trình theo hệ số góc có tối đa hai nghiệm.`,
+    R`Quên đường thẳng đứng khi dùng hệ số góc, hoặc chỉ lấy nghiệm dương nên mất một trong hai tiếp tuyến.`,
+  ),
+  "10/hai-duong-tron": note(
+    R`Hai đường tròn chạm nhau khi khoảng cách hai tâm bằng tổng hoặc hiệu hai bán kính, nên vị trí tương đối được quyết định bởi việc so một số với hai mốc.`,
+    R`Dùng tổng hai bán kính cho trường hợp tiếp xúc trong, hoặc quên rằng hai đường tròn cùng bán kính khác nhau không thể tiếp xúc trong.`,
+  ),
 };

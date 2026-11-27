@@ -393,5 +393,33 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     right: [{ at: "A", p: "B", q: "D" }, { at: "A", p: "B", q: "S" }, { at: "A", p: "D", q: "S" }],
     alt: { vi: "Hình chóp S.ABCD có đáy là hình vuông cạnh hai và SA vuông góc với đáy; ba cạnh AB, AD, AS đôi một vuông góc nên được đặt dọc ba trục tọa độ, và mặt phẳng SBD được tô màu.", en: "A pyramid S.ABCD whose base is a square of side two and with SA perpendicular to the base; the three edges AB, AD, AS are pairwise perpendicular so they are placed along the three coordinate axes, and the plane SBD is shaded." },
   },
+  "12/cau-cat-mp-dt": {
+    points: { I: [0, 0, 0], K: [0, 0, 3], ...quad([-6, -5, 3], [12, 0, 0], [0, 10, 0]), ...Object.fromEntries(Array.from({ length: 25 }, (_, i) => [`R${i}`, [4 * Math.cos((2 * Math.PI * i) / 24), 4 * Math.sin((2 * Math.PI * i) / 24), 3] as P3])) },
+    edges: [...quadEdges(["P1", "P2", "P3", "P4"]), ...Array.from({ length: 24 }, (_, i) => ({ a: `R${i}`, b: `R${i + 1}`, s: "hl" as const })), { a: "I", b: "K", s: "hl2" }],
+    planes: [{ pts: ["P1", "P2", "P3", "P4"], tone: "a" }],
+    spheres: [{ c: "I", r: 5 }],
+    dots: ["I", "K"],
+    hide: ["P1", "P2", "P3", "P4", ...Array.from({ length: 25 }, (_, i) => `R${i}`)],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Mặt cầu tâm I bị mặt phẳng nằm ngang cắt theo một đường tròn tâm K; đoạn IK vuông góc với mặt phẳng, và bán kính mặt cầu, đoạn IK và bán kính đường tròn tạo thành một tam giác vuông.", en: "A sphere with centre I cut by a horizontal plane in a circle with centre K; the segment IK is perpendicular to the plane, and the radius of the sphere, the segment IK and the radius of the circle form a right triangle." },
+  },
+  "12/mp-chua-dt-cuc-tri": {
+    points: { A: [1, 0, 0], H: [0, 1, 0], D1: [-1, 0, -2], D2: [1.4, 2.4, 2.8], ...quad([-1.5, -0.5, -4], [3, 3, 6], [0, 0, 5]) },
+    edges: [...quadEdges(["P1", "P2", "P3", "P4"]), { a: "D1", b: "D2" }, { a: "A", b: "H", s: "hl" }],
+    planes: [{ pts: ["P1", "P2", "P3", "P4"], tone: "a" }],
+    right: [{ at: "H", p: "A", q: "D2" }],
+    dots: ["H"],
+    hide: ["P1", "P2", "P3", "P4", "D1", "D2"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Đường thẳng d nằm trong một mặt phẳng; điểm A nằm ngoài mặt phẳng và H là hình chiếu của A lên d, đoạn AH vuông góc với d; mặt phẳng vuông góc với AH cách A xa nhất trong các mặt phẳng chứa d.", en: "A line d lying in a plane; the point A lies off the plane and H is the projection of A onto d, with AH perpendicular to d; the plane perpendicular to AH is the farthest from A among the planes containing d." },
+  },
+  "12/cuc-tri-mat-cau": {
+    points: { I: [0, 0, 0], A: [3, 4, 0], N: [1.2, 1.6, 0], F: [-1.2, -1.6, 0] },
+    edges: [{ a: "F", b: "N", s: "hidden" }, { a: "N", b: "A", s: "hl" }],
+    spheres: [{ c: "I", r: 2 }],
+    dots: ["I", "A", "N", "F"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Mặt cầu tâm I và điểm A ở ngoài; đường thẳng IA cắt mặt cầu tại điểm gần A nhất là N và điểm xa A nhất là F, nên MA nhỏ nhất bằng IA trừ bán kính và lớn nhất bằng IA cộng bán kính.", en: "A sphere with centre I and a point A outside it; the line IA meets the sphere at the point N nearest to A and the point F farthest from A, so MA is least equal to IA minus the radius and greatest equal to IA plus the radius." },
+  },
 };
 export { cross };

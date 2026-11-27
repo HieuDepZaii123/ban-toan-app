@@ -12,11 +12,11 @@ export const g11Extra5En: Record<string, LessonEn> = {
       [R`The pyramid $S.ABCD$ has a parallelogram base, $M$ and $N$ are the midpoints of $SA$ and $SB$, and $CD=8$. Show that $MN\parallel(SCD)$ and find $MN$.`, [
         [R`The segment $MN$ is a midline of triangle $SAB$, so $MN\parallel AB$ and $MN=\frac{AB}{2}$.`, R`The points $M$ and $N$ are the midpoints of two sides of the triangle.`],
         [R`The base is a parallelogram so $AB=CD=8$ and $AB\parallel CD$, hence $MN\parallel CD$ and $MN=4$.`, R`Opposite sides of a parallelogram are parallel and equal.`],
-        [R`The line $CD$ lies in $(SCD)$ while $MN$ does not lie in $(SCD)$, so $MN\parallel(SCD)$.`, R`Use the condition for a line to be parallel to a plane.`],
+        [R`The line $CD$ lies in $(SCD)$ while $MN$ does not lie in $(SCD)$, so $MN\parallel(SCD)$.`, R`If $MN\subset(SCD)$ then $M$ together with $S$ would be two common points of the line $SA$ and $(SCD)$, so $SA\subset(SCD)$, which is absurd because $A\notin(SCD)$; hence we may use the condition for a line to be parallel to a plane.`],
       ], R`The line $MN\parallel(SCD)$ and $MN=4$.`],
       [R`The pyramid $S.ABCD$ has a parallelogram base. Find the line of intersection of $(SAB)$ and $(SCD)$.`, [
         [R`The point $S$ lies in both planes, so $S$ is a common point.`, R`A line of intersection needs at least one common point.`],
-        [R`The two planes contain the parallel lines $AB$ and $CD$, so the line of intersection is the line $d$ through $S$ parallel to $AB$ (and $CD$).`, R`By the property: the line of intersection is parallel to the two given parallel lines.`],
+        [R`The two distinct planes contain the parallel lines $AB$ and $CD$, so the line of intersection, which does not coincide with $AB$ or $CD$ because $S$ lies on neither of them, is the line $d$ through $S$ parallel to $AB$ (and $CD$).`, R`By the property: the line of intersection is parallel to the two given parallel lines.`],
       ], R`The line of intersection is the line through $S$ parallel to $AB$.`],
     ],
     dr: [
@@ -52,7 +52,7 @@ export const g11Extra5En: Record<string, LessonEn> = {
     p: R`Taking the angle between two arbitrary edges of the faces as the dihedral angle, or using the lateral edge itself as the height of an oblique prism.`,
     ex: [
       [R`A regular pyramid has a square base with side $4$, the foot of the altitude $O$ is the centre of the base and $SO=2$. Let $M$ be the midpoint of a base edge, so $OM=2$. Find the tangent of the plane angle of the dihedral angle between a lateral face and the base, given that this plane angle is $\widehat{SMO}$.`, [
-        [R`Since $SO$ is perpendicular to the base and $OM$ is perpendicular to the base edge at $M$, the angle $\widehat{SMO}$ is a plane angle of the dihedral angle.`, R`The lines $OM$ and $SM$ are both perpendicular to the line of intersection at $M$, each in one face.`],
+        [R`Since $SO$ is perpendicular to the base and $OM$ is perpendicular to the base edge at $M$, the angle $\widehat{SMO}$ is a plane angle of the dihedral angle.`, R`The base edge is perpendicular to $SO$ and $OM$, which meet, so it is perpendicular to $(SOM)$ and hence to $SM$ too; thus $OM$ and $SM$ are both perpendicular to the line of intersection at $M$, each in one face.`],
         [R`Triangle $SOM$ is right at $O$, so $\tan\widehat{SMO}=\frac{SO}{OM}=\frac{2}{2}=1$. The angle is $45^\circ$.`, R`The side opposite the angle at $M$ is $SO$ and the adjacent side is $OM$. A tangent of $1$ gives $45^\circ$.`],
       ], R`The tangent of the plane angle is $1$, so the dihedral angle is $45^\circ$.`],
       [R`The oblique prism $ABC.A'B'C'$ has lateral edge $AA'=10$ making a $30^\circ$ angle with the base. Find the distance between the two bases.`, [
@@ -87,7 +87,7 @@ export const g11Extra5En: Record<string, LessonEn> = {
     ],
   },
   "vi-tri-tuong-doi-kg": {
-    s: R`Two lines in space have three positions: they intersect, are parallel, or are skew when they do not lie in one plane. A line and a plane have three positions: they meet in one point, are parallel, or the line lies in the plane. Two planes have three positions: they meet along a line, are parallel, or coincide.`,
+    s: R`Two lines in space have four positions: they coincide, intersect, are parallel (distinct), or are skew when they do not lie in one plane. A line and a plane have three positions: they meet in one point, are parallel, or the line lies in the plane. Two planes have three positions: they meet along a line, are parallel, or coincide.`,
     w: R`In space two lines with no common point may still fail to be parallel, because they may not lie in one plane. Only when they are coplanar do they split into intersecting or parallel.`,
     p: R`Thinking that two lines that do not meet are parallel, as in plane geometry. One must also check whether the two lines lie in one plane.`,
     ex: [
@@ -107,7 +107,7 @@ export const g11Extra5En: Record<string, LessonEn> = {
     ],
   },
   "giao-tuyen": {
-    s: R`The line of intersection of two distinct planes is the line made of their common points. To find it, find two common points. If two planes contain two parallel lines respectively, the line of intersection is parallel to those lines. The intersection of the two diagonals of a parallelogram is the midpoint of each.`,
+    s: R`The line of intersection of two distinct planes is the line made of their common points. To find it, find two common points. If two distinct planes contain two parallel lines respectively, the line of intersection is parallel to those two lines or coincides with one of them. The intersection of the two diagonals of a parallelogram is the midpoint of each.`,
     w: R`Two distinct points determine a line, so two common points of two planes determine the line of intersection. When the planes contain two parallel lines, the line of intersection cannot meet them, so it must be parallel to them.`,
     p: R`Finding one common point and then drawing the line of intersection at once, or confusing the diagonals of a trapezoid with those of a parallelogram when looking for a common point.`,
     ex: [
@@ -127,7 +127,7 @@ export const g11Extra5En: Record<string, LessonEn> = {
     ],
   },
   "thiet-dien": {
-    s: R`A cross-section is the part of a cutting plane inside a solid, and it is a polygon. Each side of the cross-section is the line of intersection of the cutting plane with a face of the solid. A plane parallel to the base of a pyramid gives a cross-section similar to the base. A cube cut by the plane through the midpoints of six suitable edges gives a regular hexagon.`,
+    s: R`A cross-section is the part of a cutting plane inside a solid, and it is a polygon. Each side of the cross-section is the line of intersection of the cutting plane with a face of the solid. A plane parallel to the base of a pyramid gives a cross-section similar to the base. A cube cut by the plane through the midpoints of six suitable edges gives a regular hexagon, because the six midpoints are coplanar and equidistant from the centre of the cube at a distance equal to the side of the hexagon.`,
     w: R`Each face of the solid meets the cutting plane in a segment, so the cross-section is a polygon with no more sides than the solid has faces. A plane parallel to the base keeps the shape and only changes the scale.`,
     p: R`Forgetting to join the points that lie on one face, or computing the area of a cross-section parallel to the base with the ratio $k$ in place of $k^2$.`,
     ex: [
@@ -136,7 +136,8 @@ export const g11Extra5En: Record<string, LessonEn> = {
         [R`The cross-section is an equilateral triangle with side $2$ and area $\frac{\sqrt3}{4}\cdot2^2=\sqrt3$.`, R`Use the formula for the area of an equilateral triangle.`],
       ], R`The area of the cross-section is $\sqrt3$.`],
       [R`A cube with edge $2$ is cut by the plane through the midpoints of the edges $AB$, $BC$, $CC'$, $C'D'$, $D'A'$, $A'A$. Find the area of the cross-section.`, [
-        [R`Each side of the cross-section is a diagonal of half a face, so it has length $\sqrt{1^2+1^2}=\sqrt2$, and the cross-section is a regular hexagon.`, R`Two consecutive midpoints lie on two adjacent edges of a square face with side $2$.`],
+        [R`Take $A$ as the origin with the three edges from $A$ along the three axes: the six midpoints all satisfy $x-y+z=1$ so they are coplanar, and they are at the same distance $\sqrt2$ from the centre $I(1;\ 1;\ 1)$.`, R`The six points lie on a circle with centre $I$ in the cutting plane, so it remains to compare the side with the radius.`],
+        [R`Each side of the cross-section is a diagonal of half a face, so it has length $\sqrt{1^2+1^2}=\sqrt2$, equal to the radius of the circle, so the cross-section is a regular hexagon.`, R`Two consecutive midpoints lie on two adjacent edges of a square face with side $2$.`],
         [R`The area of a regular hexagon with side $\sqrt2$ is $\frac{3\sqrt3}{2}\cdot(\sqrt2)^2=3\sqrt3$.`, R`A regular hexagon consists of six equilateral triangles with side equal to the side of the hexagon.`],
       ], R`The area of the cross-section is $3\sqrt3$.`],
     ],

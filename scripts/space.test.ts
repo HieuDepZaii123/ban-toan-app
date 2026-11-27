@@ -282,6 +282,49 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   assert.ok(near(len(sub(S, A)), 2) && near(len(sub(B, A)), 2), "SA = AB = 2");
   assert.ok(near(dot(sub(C, S), sub(D, B)), 0), "SC vuông góc BD");
 }
+// Hình đường tròn lớp 10.
+{
+  const k = "10/vtt-dt-tron";
+  const I = on(k, "I"), F = on(k, "F"), A = on(k, "A"), B = on(k, "B");
+  assert.ok(near(len(sub(A, I)), 5) && near(len(sub(B, I)), 5), "A, B thuộc đường tròn bán kính 5");
+  assert.ok(near(dot(sub(F, I), sub(B, A)), 0) && near(len(sub(F, I)), 3), "IF vuông góc AB và bằng 3");
+  assert.ok(near(len(sub(B, A)), 8), "dây cung dài 8");
+}
+{
+  const k = "10/tiep-tuyen-tron";
+  const O = on(k, "O"), A = on(k, "A");
+  for (const n of ["T1", "T2"]) {
+    const T = on(k, n);
+    assert.ok(near(len(sub(T, O)), 3), `${n} thuộc đường tròn`);
+    assert.ok(near(dot(sub(T, O), sub(A, T)), 0), `OT vuông góc AT tại ${n}`);
+  }
+}
+{
+  const k = "10/hai-duong-tron";
+  const O = on(k, "O"), K = on(k, "K"), P = on(k, "P"), Q = on(k, "Q");
+  assert.ok(near(len(sub(P, O)), 5) && near(len(sub(P, K)), 5) && near(len(sub(Q, O)), 5) && near(len(sub(Q, K)), 5), "P, Q thuộc cả hai đường tròn");
+  assert.ok(near(len(sub(P, Q)), 6) && near(len(sub(K, O)), 8), "dây chung 6 và khoảng cách tâm 8");
+}
+// Hình mặt cầu và vận dụng cao lớp 12.
+{
+  const k = "12/cau-cat-mp-dt";
+  for (const n of Object.keys(spaceFigures[k]!.points).filter((x) => /^R\d+$/.test(x))) assert.ok(near(len(on(k, n)), 5) && near(on(k, n)[2], 3), `${n} thuộc mặt cầu và mặt phẳng z = 3`);
+  assert.ok(near(len(sub(on(k, "R0"), on(k, "K"))), 4), "bán kính đường tròn bằng 4");
+}
+{
+  const k = "12/mp-chua-dt-cuc-tri";
+  const A = on(k, "A"), H = on(k, "H"), D1 = on(k, "D1"), D2 = on(k, "D2");
+  assert.ok(near(len(cross(sub(D2, D1), [1, 1, 2])), 0) && near(len(cross(sub(H, D1), [1, 1, 2])), 0), "H thuộc d");
+  assert.ok(near(dot(sub(A, H), [1, 1, 2]), 0) && near(len(sub(A, H)), Math.sqrt(2)), "AH vuông góc d và bằng căn 2");
+  for (const n of ["H", "D1", "D2", "P1", "P2", "P3", "P4"]) assert.ok(near(on(k, n)[0] - on(k, n)[1] + 1, 0), `${n} thuộc mặt phẳng x - y + 1 = 0`);
+}
+{
+  const k = "12/cuc-tri-mat-cau";
+  const A = on(k, "A"), N = on(k, "N"), F = on(k, "F");
+  assert.ok(near(len(N), 2) && near(len(F), 2), "N và F thuộc mặt cầu");
+  assert.ok(near(len(sub(A, N)), 3) && near(len(sub(A, F)), 7), "NA = 3 và FA = 7");
+}
+
 // Hình của chương đại cương lớp 11.
 {
   const k = "11/giao-tuyen";

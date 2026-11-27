@@ -31,7 +31,42 @@ const hypAxes = cross("A", 6.2, 7.2);
 const par = curve("P", steps(36, -6.5, 6.5).map((z) => [(z * z) / 12, z] as [number, number]));
 const parAxes = cross("A", 4.2, 7.2);
 
+const circle = (prefix: string, cx: number, cz: number, r: number) =>
+  curve(prefix, steps(60, 0, 2 * Math.PI).map((t) => [cx + r * Math.cos(t), cz + r * Math.sin(t)] as [number, number]));
+const cA = circle("C", 1, -2, 5);
+const cT = circle("T", 0, 0, 3);
+const cO = circle("U", 0, 0, 5);
+const cO2 = circle("V", 8, 0, 5);
+const axesA = cross("A", 7.5, 7.5);
+const axesT = cross("A", 4.2, 4.2);
+
 export const spaceConic: Record<string, SpaceFigure> = {
+  "10/vtt-dt-tron": {
+    points: { ...cA.points, ...axesA.points, I: [1, 0, -2], F: [2.8, 0, 0.4], A: [-0.4, 0, 2.8], B: [6, 0, -2] },
+    edges: [...cA.edges, ...axesA.edges, { a: "A", b: "B", s: "hl" }, { a: "I", b: "F", s: "hl2" }],
+    right: [{ at: "F", p: "I", q: "B" }],
+    dots: ["I", "F", "A", "B"],
+    hide: [...cA.hide, ...axesA.hide],
+    view: FLAT,
+    alt: { vi: "Đường tròn tâm I bán kính 5 bị đường thẳng cắt tại hai điểm A và B; đoạn IF vuông góc với dây cung AB tại chân F và có độ dài 3, nên dây cung dài 8.", en: "A circle with centre I and radius 5 cut by a line at two points A and B; the segment IF is perpendicular to the chord AB at the foot F and has length 3, so the chord has length 8." },
+  },
+  "10/tiep-tuyen-tron": {
+    points: { ...cT.points, ...axesT.points, O: [0, 0, 0], A: [5, 0, 0], T1: [1.8, 0, 2.4], T2: [1.8, 0, -2.4] },
+    edges: [...cT.edges, ...axesT.edges, { a: "A", b: "T1", s: "hl" }, { a: "A", b: "T2", s: "hl" }, { a: "O", b: "T1", s: "hidden" }, { a: "O", b: "T2", s: "hidden" }],
+    right: [{ at: "T1", p: "O", q: "A" }, { at: "T2", p: "O", q: "A" }],
+    dots: ["O", "A", "T1", "T2"],
+    hide: [...cT.hide, ...axesT.hide],
+    view: FLAT,
+    alt: { vi: "Đường tròn tâm O bán kính 3 và điểm A ngoài đường tròn; hai tiếp tuyến từ A chạm đường tròn tại T1 và T2, và mỗi bán kính tới tiếp điểm vuông góc với tiếp tuyến.", en: "A circle with centre O and radius 3 and a point A outside it; the two tangents from A touch the circle at T1 and T2, and each radius to a point of contact is perpendicular to its tangent." },
+  },
+  "10/hai-duong-tron": {
+    points: { ...cO.points, ...cO2.points, O: [0, 0, 0], K: [8, 0, 0], P: [4, 0, 3], Q: [4, 0, -3] },
+    edges: [...cO.edges, ...cO2.edges, { a: "P", b: "Q", s: "hl" }, { a: "O", b: "K", s: "hidden" }],
+    dots: ["O", "K", "P", "Q"],
+    hide: [...cO.hide, ...cO2.hide],
+    view: FLAT,
+    alt: { vi: "Hai đường tròn cùng bán kính 5 có tâm O và K cách nhau 8, cắt nhau tại hai điểm P và Q; dây chung PQ dài 6 vuông góc với đường nối hai tâm.", en: "Two circles of the same radius 5 with centres O and K at distance 8 apart, meeting at two points P and Q; the common chord PQ has length 6 and is perpendicular to the line of centres." },
+  },
   "10/elip-tieu-diem": {
     points: { ...ell.points, ...ellAxes.points, O: [0, 0, 0], F1: [-4, 0, 0], F2: [4, 0, 0], M: [2.5, 0, 3 * Math.sin(Math.PI / 3)] },
     edges: [...ell.edges, ...ellAxes.edges, { a: "F1", b: "M", s: "hl" }, { a: "F2", b: "M", s: "hl2" }],
