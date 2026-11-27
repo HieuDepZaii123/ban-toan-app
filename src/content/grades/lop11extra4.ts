@@ -116,7 +116,7 @@ export const lop11DaiCuong: GradeChapter = chuong("dai-cuong-kg-11", "Đại cư
           buoc(R`Điểm $O=AC\cap BD$ nằm trên $AC\subset(SAC)$ và $BD\subset(SBD)$ nên $O$ cũng là điểm chung.`, R`Hai đường chéo của hình bình hành cắt nhau tại $O$.`),
         ],
         R`Giao tuyến là đường thẳng $SO$.`,
-        [{ expr: "Rational(0+5,2)", expect: "Rational(4+1,2)" }]),
+        [{ expr: "(Matrix([1,1,0])+Matrix([4,4,0]))[0]/2", expect: "5/2" }]),
       vd(R`Hình chóp $S.ABCD$ có đáy là hình thang với $AB\parallel CD$, $AB=6$ và $CD=3$. Hai đường $AD$ và $BC$ cắt nhau tại $I$ và $IB=10$. Tìm giao tuyến của $(SAD)$ và $(SBC)$, rồi tính $IC$.`,
         [
           buoc(R`Hai điểm $S$ và $I$ là hai điểm chung ($I\in AD\subset(SAD)$ và $I\in BC\subset(SBC)$), nên giao tuyến là $SI$.`, R`Có hai điểm chung phân biệt nên đã xác định giao tuyến.`),
@@ -144,7 +144,7 @@ export const lop11DaiCuong: GradeChapter = chuong("dai-cuong-kg-11", "Đại cư
       vd(R`Hình lập phương cạnh $2$ bị cắt bởi mặt phẳng qua trung điểm các cạnh $AB$, $BC$, $CC'$, $C'D'$, $D'A'$, $A'A$. Tính diện tích thiết diện.`,
         [
           buoc(R`Chọn $A$ làm gốc với ba cạnh xuất phát từ $A$ dọc ba trục: sáu trung điểm đều thỏa $x-y+z=1$ nên đồng phẳng, và cùng cách tâm $I(1;\ 1;\ 1)$ một khoảng bằng $\sqrt2$.`, R`Sáu điểm nằm trên một đường tròn tâm $I$ trong mặt phẳng cắt, nên chỉ còn phải so sánh cạnh với bán kính.`),
-          buoc(R`Mỗi cạnh thiết diện là đường chéo của một nửa mặt, nên dài $\sqrt{1^2+1^2}=\sqrt2$, bằng bán kính đường tròn, nên thiết diện là lục giác đều.`, R`Hai trung điểm liên tiếp nằm trên hai cạnh kề nhau của một mặt hình vuông cạnh $2$.`),
+          buoc(R`Mỗi cạnh thiết diện là cạnh huyền của tam giác vuông có hai cạnh góc vuông bằng $1$, nên dài $\sqrt{1^2+1^2}=\sqrt2$, bằng bán kính đường tròn, nên thiết diện là lục giác đều.`, R`Hai trung điểm liên tiếp nằm trên hai cạnh kề nhau của một mặt hình vuông cạnh $2$.`),
           buoc(R`Diện tích lục giác đều cạnh $\sqrt2$ là $\frac{3\sqrt3}{2}\cdot(\sqrt2)^2=3\sqrt3$.`, R`Lục giác đều gồm sáu tam giác đều cạnh bằng cạnh lục giác.`),
         ],
         R`Diện tích thiết diện bằng $3\sqrt3$.`,

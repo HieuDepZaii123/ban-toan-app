@@ -9,7 +9,7 @@ export const tySoTheTich: GradeLesson = bai("ty-so-the-tich", "Tỉ số thể t
   [
     vd(R`Cho hình chóp tam giác $S.ABC$ và các điểm $M$, $N$, $P$ thuộc $SA$, $SB$, $SC$ với $\frac{SM}{SA}=\frac12$, $\frac{SN}{SB}=\frac23$, $\frac{SP}{SC}=\frac34$. Tính $\frac{V_{S.MNP}}{V_{S.ABC}}$.`,
       [
-        buoc(R`Hai khối có chung đỉnh $S$ và chung góc ở đỉnh, nên tỉ số thể tích bằng tích ba tỉ số cạnh.`, R`Diện tích đáy và chiều cao đều đổi theo tỉ số các cạnh xuất phát từ $S$.`),
+        buoc(R`Hai khối có chung đỉnh $S$ và chung góc ở đỉnh, nên tỉ số thể tích bằng tích ba tỉ số cạnh.`, R`Thể tích bằng $\frac16\left|\overrightarrow{SM}\cdot\left[\overrightarrow{SN},\overrightarrow{SP}\right]\right|$, và mỗi vectơ từ $S$ được nhân với tỉ số cạnh tương ứng.`),
         buoc(R`Do đó tỉ số bằng $\frac12\cdot\frac23\cdot\frac34=\frac14$.`, R`Nhân ba tỉ số và rút gọn.`),
       ],
       R`Tỉ số thể tích bằng $\frac14$.`,

@@ -31,7 +31,7 @@ export const lop12MatCauVtt: GradeChapter = chuong("mat-cau-vtt", "Mặt cầu: 
     ],
     { topicId: "analytic" }),
   bai("hai-cau-kc-ss", "Hai mặt cầu và khoảng cách giữa các đối tượng song song",
-    R`Hai mặt cầu $(S)$, $(S')$ có tâm $I$, $I'$, bán kính $R$, $R'$ và $d=II'$ có vị trí giống hai đường tròn: ngoài nhau khi $d>R+R'$, tiếp xúc ngoài khi $d=R+R'$, cắt nhau theo một đường tròn khi $\left|R-R'\right|<d<R+R'$, tiếp xúc trong khi $d=\left|R-R'\right|$ và chứa nhau khi $d<\left|R-R'\right|$. Trừ vế hai phương trình được mặt phẳng chứa đường tròn giao. Khoảng cách giữa hai đường thẳng song song, hay giữa đường thẳng và mặt phẳng song song, bằng khoảng cách từ một điểm của đường thứ nhất đến đối tượng kia.`,
+    R`Hai mặt cầu $(S)$, $(S')$ có tâm $I$, $I'$, bán kính $R$, $R'$ và $d=II'$ có vị trí giống hai đường tròn: ngoài nhau khi $d>R+R'$, tiếp xúc ngoài khi $d=R+R'$, cắt nhau theo một đường tròn khi $\left|R-R'\right|<d<R+R'$, tiếp xúc trong khi $d=\left|R-R'\right|$ với $R\ne R'$, chứa nhau khi $d<\left|R-R'\right|$ và trùng nhau khi $d=0$ với $R=R'$. Trừ vế hai phương trình được mặt phẳng chứa đường tròn giao. Khoảng cách giữa hai đường thẳng song song, hay giữa đường thẳng và mặt phẳng song song, bằng khoảng cách từ một điểm của đường thứ nhất đến đối tượng kia.`,
     [
       vd(R`Cho $(S):\ x^2+y^2+z^2=25$ và $(S'):\ (x-8)^2+y^2+z^2=25$. Chứng tỏ hai mặt cầu cắt nhau và tìm mặt phẳng chứa đường tròn giao cùng bán kính của nó.`,
         [
@@ -81,7 +81,7 @@ export const lop12OxyzVanDungCao: GradeChapter = chuong("oxyz-van-dung-cao", "Ox
     [
       luyen(R`Cho $A$ là gốc $O$ và $d$ qua $P_0(3;\ 0;\ 0)$ với chỉ phương $(0;\ 3;\ 4)$. Tìm khoảng cách lớn nhất từ $O$ đến một mặt phẳng chứa $d$.`, R`Khoảng cách lớn nhất bằng $3$.`, [{ expr: "sqrt(0+144+81)/5", expect: "3" }], R`Vì $\overrightarrow{OP_0}\cdot\vec u=0$ nên $P_0$ là hình chiếu của $O$ lên $d$ và khoảng cách lớn nhất bằng $OP_0=3$.`),
       luyen(R`Mặt phẳng $2x+y+2z+m=0$ với $m>0$ tiếp xúc với mặt cầu $x^2+y^2+z^2=9$. Tìm $m$.`, R`Giá trị cần tìm là $m=9$.`, [{ expr: "sqrt(81)", expect: "9" }], R`Khoảng cách từ $O$ là $\frac{m}{3}$ và phải bằng bán kính $3$, nên $m=9$.`),
-      { ...luyen(R`Trong các mặt phẳng chứa đường thẳng $d$, mặt phẳng cách điểm $A$ xa nhất có tính chất nào?`, R`Mặt phẳng vuông góc với $AH$, với $H$ là hình chiếu của $A$ lên $d$.`, [{ expr: "sqrt(2)**2", expect: "2" }], R`Khoảng cách từ $A$ đến mọi mặt phẳng chứa $d$ không vượt quá $AH$, với dấu bằng khi mặt phẳng vuông góc với $AH$.`), ask: { kind: "choice", options: [R`Vuông góc với $AH$ với $H$ là hình chiếu của $A$ lên $d$.`, R`Song song với $AH$.`, R`Đi qua điểm $A$.`], correct: 0 } },
+      { ...luyen(R`Trong các mặt phẳng chứa đường thẳng $d$, mặt phẳng cách điểm $A$ xa nhất có tính chất nào?`, R`Mặt phẳng vuông góc với $AH$, với $H$ là hình chiếu của $A$ lên $d$.`, [{ expr: "sqrt((1-0)**2+(0-1)**2+0**2)", expect: "sqrt(2)" }], R`Khoảng cách từ $A$ đến mọi mặt phẳng chứa $d$ không vượt quá $AH$, với dấu bằng khi mặt phẳng vuông góc với $AH$.`), ask: { kind: "choice", options: [R`Vuông góc với $AH$ với $H$ là hình chiếu của $A$ lên $d$.`, R`Song song với $AH$.`, R`Đi qua điểm $A$.`], correct: 0 } },
     ],
     { topicId: "analytic" }),
   bai("cuc-tri-mat-cau", "Cực trị với mặt cầu: khoảng cách lớn nhất và nhỏ nhất",

@@ -28,7 +28,7 @@ export const g12Extra7En: Record<string, LessonEn> = {
     ],
   },
   "giao-hai-dt": {
-    s: R`To find the intersection of $d$ and $d'$ we equate two coordinates and solve the system in the two unknowns $t$, $s$, then substitute into the remaining coordinate to check. The system has exactly one solution satisfying all three equations when the lines meet; when the lines are skew, the solution of the first two equations fails the third, and when they are parallel the first two equations have no solution. A problem with a parameter $m$ usually reduces to making all three equations hold for one pair $(t;\ s)$.`,
+    s: R`To find the intersection of $d$ and $d'$ we equate two coordinates and solve the system in the two unknowns $t$, $s$, then substitute into the remaining coordinate to check. We choose two equations whose coefficients of $t$ and $s$ are not proportional and solve for $t$ and $s$, then test the remaining equation: if it holds the lines meet, if it fails they are skew, and if every pair of equations has proportional coefficients we examine the direction vectors as in the previous lesson. A problem with a parameter $m$ usually reduces to making all three equations hold for one pair $(t;\ s)$.`,
     w: R`An intersection point has the same coordinates on both lines, so the two parameters must satisfy all three equations at once; the first two equations find the parameters and the third is a check.`,
     p: R`Using the same letter $t$ for both lines, or forgetting to test the third equation and wrongly accepting skew lines as meeting.`,
     ex: [

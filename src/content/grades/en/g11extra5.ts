@@ -117,7 +117,7 @@ export const g11Extra5En: Record<string, LessonEn> = {
       ], R`The area of the cross-section is $\sqrt3$.`],
       [R`A cube with edge $2$ is cut by the plane through the midpoints of the edges $AB$, $BC$, $CC'$, $C'D'$, $D'A'$, $A'A$. Find the area of the cross-section.`, [
         [R`Take $A$ as the origin with the three edges from $A$ along the three axes: the six midpoints all satisfy $x-y+z=1$ so they are coplanar, and they are at the same distance $\sqrt2$ from the centre $I(1;\ 1;\ 1)$.`, R`The six points lie on a circle with centre $I$ in the cutting plane, so it remains to compare the side with the radius.`],
-        [R`Each side of the cross-section is a diagonal of half a face, so it has length $\sqrt{1^2+1^2}=\sqrt2$, equal to the radius of the circle, so the cross-section is a regular hexagon.`, R`Two consecutive midpoints lie on two adjacent edges of a square face with side $2$.`],
+        [R`Each side of the cross-section is the hypotenuse of a right triangle whose two legs equal $1$, so it has length $\sqrt{1^2+1^2}=\sqrt2$, equal to the radius of the circle, so the cross-section is a regular hexagon.`, R`Two consecutive midpoints lie on two adjacent edges of a square face with side $2$.`],
         [R`The area of a regular hexagon with side $\sqrt2$ is $\frac{3\sqrt3}{2}\cdot(\sqrt2)^2=3\sqrt3$.`, R`A regular hexagon consists of six equilateral triangles with side equal to the side of the hexagon.`],
       ], R`The area of the cross-section is $3\sqrt3$.`],
     ],

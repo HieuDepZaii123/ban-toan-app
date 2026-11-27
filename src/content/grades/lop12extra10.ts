@@ -6,7 +6,7 @@ const R = String.raw;
 
 export const lop12VectoUngDung: GradeChapter = chuong("vecto-kg-ung-dung", "Ứng dụng vectơ trong không gian: chứng minh, tính góc và đặt hệ trục", [
   bai("chung-minh-vecto-kg", "Chứng minh quan hệ bằng vectơ: thẳng hàng, song song và đồng phẳng",
-    R`Ba điểm $A$, $B$, $C$ thẳng hàng khi $\overrightarrow{AB}=k\overrightarrow{AC}$. Hai đường $AB$ và $CD$ song song khi $\overrightarrow{AB}=k\overrightarrow{CD}$ và $A$ không thuộc đường $CD$. Bốn điểm $A$, $B$, $C$, $D$ đồng phẳng khi $\overrightarrow{AD}=x\overrightarrow{AB}+y\overrightarrow{AC}$ với hai số $x$, $y$. Mỗi vectơ trong hình nên được viết qua ba vectơ cạnh không đồng phẳng rồi so sánh hệ số.`,
+    R`Ba điểm $A$, $B$, $C$ thẳng hàng khi $\overrightarrow{AB}=k\overrightarrow{AC}$. Hai đường $AB$ và $CD$ song song khi $\overrightarrow{AB}=k\overrightarrow{CD}$ và $A$ không thuộc đường $CD$. Bốn điểm $A$, $B$, $C$, $D$ đồng phẳng khi $\overrightarrow{AD}=x\overrightarrow{AB}+y\overrightarrow{AC}$ với hai số $x$, $y$, trong đó $A$, $B$, $C$ không thẳng hàng. Mỗi vectơ trong hình nên được viết qua ba vectơ cạnh không đồng phẳng rồi so sánh hệ số.`,
     [
       vd(R`Cho tứ diện $ABCD$, $M$ là trung điểm $AB$, $N$ là trung điểm $CD$ và $G$ là trung điểm $MN$. Chứng minh $\overrightarrow{GA}+\overrightarrow{GB}+\overrightarrow{GC}+\overrightarrow{GD}=\vec{0}$.`,
         [

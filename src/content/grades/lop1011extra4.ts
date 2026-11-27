@@ -55,7 +55,7 @@ export const lop10DuongTronNC: GradeChapter = chuong("duong-tron-nc", "Đường
     ],
     { topicId: "analytic" }),
   bai("hai-duong-tron", "Vị trí tương đối của hai đường tròn",
-    R`Cho $(C)$ tâm $I$ bán kính $R$ và $(C')$ tâm $I'$ bán kính $R'$, và đặt $d=II'$. Nếu $d>R+R'$ thì hai đường tròn ở ngoài nhau, nếu $d=R+R'$ thì tiếp xúc ngoài, nếu $\left|R-R'\right|<d<R+R'$ thì cắt nhau tại hai điểm, nếu $d=\left|R-R'\right|$ thì tiếp xúc trong, và nếu $d<\left|R-R'\right|$ thì đường tròn này chứa đường tròn kia. Khi hai đường tròn cắt nhau, trừ vế hai phương trình ta được đường thẳng chứa dây cung chung.`,
+    R`Cho $(C)$ tâm $I$ bán kính $R$ và $(C')$ tâm $I'$ bán kính $R'$, và đặt $d=II'$. Nếu $d>R+R'$ thì hai đường tròn ở ngoài nhau, nếu $d=R+R'$ thì tiếp xúc ngoài, nếu $\left|R-R'\right|<d<R+R'$ thì cắt nhau tại hai điểm, nếu $d=\left|R-R'\right|$ với $R\ne R'$ thì tiếp xúc trong, nếu $d<\left|R-R'\right|$ thì đường tròn này chứa đường tròn kia, và nếu $d=0$ với $R=R'$ thì hai đường tròn trùng nhau. Khi hai đường tròn cắt nhau, trừ vế hai phương trình ta được đường thẳng chứa dây cung chung.`,
     [
       vd(R`Xét vị trí của $(C):\ x^2+y^2=9$ và $(C'):\ (x-5)^2+y^2=4$.`,
         [

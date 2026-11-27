@@ -5,7 +5,7 @@ const R = String.raw;
 
 export const g10Extra4En: Record<string, LessonEn> = {
   "elip-tieu-diem": {
-    s: R`The ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ with $a>b>0$ has $c^2=a^2-b^2$, foci $F_1(-c;\ 0)$ and $F_2(c;\ 0)$, focal length $2c$ and eccentricity $e=\frac{c}{a}$ with $0<e<1$. Every point $M$ of the ellipse has $MF_1+MF_2=2a$. When the larger denominator lies under $y^2$, the major axis is the vertical axis and the foci also lie on it.`,
+    s: R`The ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ with $a>b>0$ has $c^2=a^2-b^2$, foci $F_1(-c;\ 0)$ and $F_2(c;\ 0)$, focal length $2c$ and eccentricity $e=\frac{c}{a}$ with $0<e<1$. Every point $M$ of the ellipse has $MF_1+MF_2=2a$. When the larger denominator lies under $y^2$, the major axis is the vertical axis and the foci also lie on it, with $c^2=b^2-a^2$.`,
     w: R`An ellipse is the set of points whose distances to the two foci add up to $2a$, so the relation $c^2=a^2-b^2$ shows that the foci lie closer to the centre than the vertices and the eccentricity is always less than $1$.`,
     p: R`Using $c^2=a^2+b^2$ as for the hyperbola, or forgetting to check which denominator is larger and placing the foci on the wrong axis.`,
     ex: [

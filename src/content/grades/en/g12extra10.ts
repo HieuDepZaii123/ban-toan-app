@@ -5,7 +5,7 @@ const R = String.raw;
 
 export const g12Extra10En: Record<string, LessonEn> = {
   "chung-minh-vecto-kg": {
-    s: R`Three points $A$, $B$, $C$ are collinear when $\overrightarrow{AB}=k\overrightarrow{AC}$. The lines $AB$ and $CD$ are parallel when $\overrightarrow{AB}=k\overrightarrow{CD}$ and $A$ does not lie on the line $CD$. Four points $A$, $B$, $C$, $D$ are coplanar when $\overrightarrow{AD}=x\overrightarrow{AB}+y\overrightarrow{AC}$ for two numbers $x$, $y$. Each vector of the figure should be written with three non-coplanar edge vectors and the coefficients compared.`,
+    s: R`Three points $A$, $B$, $C$ are collinear when $\overrightarrow{AB}=k\overrightarrow{AC}$. The lines $AB$ and $CD$ are parallel when $\overrightarrow{AB}=k\overrightarrow{CD}$ and $A$ does not lie on the line $CD$. Four points $A$, $B$, $C$, $D$ are coplanar when $\overrightarrow{AD}=x\overrightarrow{AB}+y\overrightarrow{AC}$ for two numbers $x$, $y$, where $A$, $B$, $C$ are not collinear. Each vector of the figure should be written with three non-coplanar edge vectors and the coefficients compared.`,
     w: R`Writing every vector with the same three edge vectors turns a geometric claim into a comparison of coefficients, which can be checked line by line without drawing auxiliary segments.`,
     p: R`Forgetting to rule out that the two lines coincide when proving parallelism, or using vectors that do not start at the same point when testing coplanarity.`,
     ex: [

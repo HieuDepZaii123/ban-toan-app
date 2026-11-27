@@ -46,7 +46,7 @@ export const g10Extra5En: Record<string, LessonEn> = {
     ],
   },
   "hai-duong-tron": {
-    s: R`Let $(C)$ have centre $I$ and radius $R$ and $(C')$ have centre $I'$ and radius $R'$, and put $d=II'$. If $d>R+R'$ the circles are outside each other, if $d=R+R'$ they are externally tangent, if $\left|R-R'\right|<d<R+R'$ they meet at two points, if $d=\left|R-R'\right|$ they are internally tangent, and if $d<\left|R-R'\right|$ one circle contains the other. When the circles meet, subtracting the two equations gives the line containing the common chord.`,
+    s: R`Let $(C)$ have centre $I$ and radius $R$ and $(C')$ have centre $I'$ and radius $R'$, and put $d=II'$. If $d>R+R'$ the circles are outside each other, if $d=R+R'$ they are externally tangent, if $\left|R-R'\right|<d<R+R'$ they meet at two points, if $d=\left|R-R'\right|$ with $R\ne R'$ they are internally tangent, if $d<\left|R-R'\right|$ one circle contains the other, and if $d=0$ with $R=R'$ the circles coincide. When the circles meet, subtracting the two equations gives the line containing the common chord.`,
     w: R`Two circles touch exactly when the distance between the centres equals the sum or the difference of the radii, so the position is decided by comparing one number with two thresholds.`,
     p: R`Using the sum of the radii in the case of internal tangency, or forgetting that equal radii give difference zero so the circles can never be internally tangent unless they coincide.`,
     ex: [

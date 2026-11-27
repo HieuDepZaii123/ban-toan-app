@@ -6,11 +6,11 @@ const R = String.raw;
 export const g11Extra6En: Record<string, LessonEn> = {
   "ty-so-the-tich": {
     s: R`For a triangular pyramid $S.ABC$ and points $M$, $N$, $P$ on $SA$, $SB$, $SC$ respectively, the ratio of volumes is $\frac{V_{S.MNP}}{V_{S.ABC}}=\frac{SM}{SA}\cdot\frac{SN}{SB}\cdot\frac{SP}{SC}$. For a pyramid with a quadrilateral base we split it into triangular pyramids with the same apex and add or subtract the volumes. Two solids with the same height have volumes proportional to their base areas.`,
-    w: R`Two pyramids sharing the apex and the angle at the apex have base areas and heights that both scale with the ratios of the edges from the apex, so the ratio of volumes is the product of the three edge ratios; every pyramid with a quadrilateral base splits into triangular pyramids.`,
+    w: R`The volume of a triangular pyramid is one sixth of the absolute value of the scalar triple product of the three edge vectors from the apex, so when the three vectors are multiplied by three ratios the volume is multiplied by the product of the three ratios; every pyramid with a quadrilateral base splits into triangular pyramids.`,
     p: R`Taking the edge ratios from the base instead of from the apex $S$, or using the product of three ratios when the two solids do not share an apex.`,
     ex: [
       [R`Let $S.ABC$ be a triangular pyramid and $M$, $N$, $P$ points of $SA$, $SB$, $SC$ with $\frac{SM}{SA}=\frac12$, $\frac{SN}{SB}=\frac23$, $\frac{SP}{SC}=\frac34$. Find $\frac{V_{S.MNP}}{V_{S.ABC}}$.`, [
-        [R`The two solids share the apex $S$ and the angle at the apex, so the ratio of volumes equals the product of the three edge ratios.`, R`Both the base area and the height change with the ratios of the edges from $S$.`],
+        [R`The two solids share the apex $S$ and the angle at the apex, so the ratio of volumes equals the product of the three edge ratios.`, R`The volume equals $\frac16\left|\overrightarrow{SM}\cdot\left[\overrightarrow{SN},\overrightarrow{SP}\right]\right|$, and each vector from $S$ is multiplied by the corresponding edge ratio.`],
         [R`Hence the ratio equals $\frac12\cdot\frac23\cdot\frac34=\frac14$.`, R`Multiply the three ratios and simplify.`],
       ], R`The ratio of volumes equals $\frac14$.`],
       [R`The pyramid $S.ABCD$ has a parallelogram base, $M$ is the midpoint of $SC$ and the plane $(ABM)$ meets $SD$ at $N$. Find the ratio of the volumes of the two parts into which $(ABM)$ cuts the solid.`, [

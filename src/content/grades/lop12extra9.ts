@@ -30,7 +30,7 @@ export const kcDiemOxyz: GradeLesson = bai("kc-diem-oxyz", "Khoảng cách trong
   { topicId: "analytic" });
 
 export const cucTriHieuOxyz: GradeLesson = bai("cuc-tri-hieu-oxyz", "Cực trị của hiệu hai khoảng cách và khoảng cách nhỏ nhất",
-  R`Với $M\in(P)$ và hai điểm $A$, $B$ nằm cùng phía $(P)$, ta có $\left|MA-MB\right|\le AB$ và dấu bằng xảy ra khi $M$ là giao điểm của đường thẳng $AB$ với $(P)$. Nếu $A$, $B$ nằm khác phía thì lấy đối xứng một điểm qua $(P)$ để đưa về trường hợp cùng phía. Khoảng cách nhỏ nhất từ một điểm $A$ đến một điểm $M$ chạy trên đường thẳng $d$ đạt tại hình chiếu vuông góc của $A$ lên $d$, tức khi $\overrightarrow{AM}\cdot\vec u=0$.`,
+  R`Với $M\in(P)$ và hai điểm $A$, $B$ nằm cùng phía $(P)$, ta có $\left|MA-MB\right|\le AB$ và dấu bằng xảy ra khi $M$ là giao điểm của đường thẳng $AB$ với $(P)$, với điều kiện $AB$ không song song với $(P)$. Nếu $A$, $B$ nằm khác phía thì lấy đối xứng một điểm qua $(P)$ để đưa về trường hợp cùng phía. Khoảng cách nhỏ nhất từ một điểm $A$ đến một điểm $M$ chạy trên đường thẳng $d$ đạt tại hình chiếu vuông góc của $A$ lên $d$, tức khi $\overrightarrow{AM}\cdot\vec u=0$.`,
   [
     vd(R`Cho $(P):\ z=0$, $A(1;\ 2;\ 3)$ và $B(3;\ 0;\ 1)$. Tìm giá trị lớn nhất của $\left|MA-MB\right|$ khi $M\in(P)$ và điểm $M$ tương ứng.`,
       [

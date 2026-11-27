@@ -33,7 +33,7 @@ export const lop12DtOxyzNC: GradeChapter = chuong("dt-oxyz-nc", "Đường thẳ
     ],
     { topicId: "analytic" }),
   bai("giao-hai-dt", "Giao điểm của hai đường thẳng và điều kiện cắt nhau",
-    R`Để tìm giao điểm của $d$ và $d'$, ta cho hai tọa độ bằng nhau và giải hệ hai ẩn $t$, $s$, rồi thay vào tọa độ còn lại để kiểm tra. Hệ có đúng một nghiệm thỏa cả ba phương trình khi hai đường cắt nhau; khi hai đường chéo nhau thì nghiệm của hai phương trình đầu không thỏa phương trình thứ ba, và khi song song thì hai phương trình đầu vô nghiệm. Bài toán chứa tham số $m$ thường đưa về việc cho ba phương trình cùng thỏa với một cặp $(t;\ s)$.`,
+    R`Để tìm giao điểm của $d$ và $d'$, ta cho hai tọa độ bằng nhau và giải hệ hai ẩn $t$, $s$, rồi thay vào tọa độ còn lại để kiểm tra. Ta chọn hai phương trình mà hệ số của $t$ và $s$ không tỉ lệ để giải ra $t$ và $s$, rồi thử vào phương trình còn lại: nếu thỏa thì hai đường cắt nhau, nếu không thỏa thì chéo nhau, còn nếu mọi cặp phương trình đều có hệ số tỉ lệ thì xét chỉ phương như bài trước. Bài toán chứa tham số $m$ thường đưa về việc cho ba phương trình cùng thỏa với một cặp $(t;\ s)$.`,
     [
       vd(R`Tìm giao điểm của $d:\ x=1+t,\ y=2-t,\ z=3+2t$ và $d':\ x=2+s,\ y=1+s,\ z=5-s$.`,
         [

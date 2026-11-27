@@ -6,7 +6,7 @@ const R = String.raw;
 
 export const lop10ConicNC: GradeChapter = chuong("conic-nc", "Elip, hypebol và parabol: tiêu điểm, tâm sai, đường chuẩn", [
   bai("elip-tieu-diem", "Tiêu điểm, tiêu cự và tâm sai của elip",
-    R`Elip $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ với $a>b>0$ có $c^2=a^2-b^2$, tiêu điểm $F_1(-c;\ 0)$ và $F_2(c;\ 0)$, tiêu cự $2c$ và tâm sai $e=\frac{c}{a}$ thỏa $0<e<1$. Mọi điểm $M$ của elip có $MF_1+MF_2=2a$. Khi mẫu lớn hơn nằm dưới $y^2$ thì trục lớn nằm trên trục tung và tiêu điểm cũng nằm trên trục tung.`,
+    R`Elip $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ với $a>b>0$ có $c^2=a^2-b^2$, tiêu điểm $F_1(-c;\ 0)$ và $F_2(c;\ 0)$, tiêu cự $2c$ và tâm sai $e=\frac{c}{a}$ thỏa $0<e<1$. Mọi điểm $M$ của elip có $MF_1+MF_2=2a$. Khi mẫu lớn hơn nằm dưới $y^2$ thì trục lớn nằm trên trục tung và tiêu điểm cũng nằm trên trục tung, với $c^2=b^2-a^2$.`,
     [
       vd(R`Tìm tiêu điểm, tiêu cự và tâm sai của elip $\frac{x^2}{25}+\frac{y^2}{9}=1$.`,
         [

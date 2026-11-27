@@ -25,7 +25,7 @@ export const g12Extra9En: Record<string, LessonEn> = {
     ],
   },
   "cuc-tri-hieu-oxyz": {
-    s: R`For $M\in(P)$ and two points $A$, $B$ on the same side of $(P)$, we have $\left|MA-MB\right|\le AB$, with equality when $M$ is the intersection of the line $AB$ with $(P)$. If $A$, $B$ lie on opposite sides, reflect one point in $(P)$ to reduce to the same-side case. The least distance from a point $A$ to a point $M$ moving on a line $d$ is attained at the orthogonal projection of $A$ onto $d$, that is when $\overrightarrow{AM}\cdot\vec u=0$.`,
+    s: R`For $M\in(P)$ and two points $A$, $B$ on the same side of $(P)$, we have $\left|MA-MB\right|\le AB$, with equality when $M$ is the intersection of the line $AB$ with $(P)$, provided $AB$ is not parallel to $(P)$. If $A$, $B$ lie on opposite sides, reflect one point in $(P)$ to reduce to the same-side case. The least distance from a point $A$ to a point $M$ moving on a line $d$ is attained at the orthogonal projection of $A$ onto $d$, that is when $\overrightarrow{AM}\cdot\vec u=0$.`,
     w: R`The difference of two sides of a triangle does not exceed the third side, so $\left|MA-MB\right|\le AB$; equality holds only when the three points are collinear. The least distance to a line is the perpendicular segment.`,
     p: R`Using the intersection of $AB$ with the plane, which gives the minimum of the sum, as the maximum of the difference, or forgetting to reflect when the points are on opposite sides.`,
     ex: [

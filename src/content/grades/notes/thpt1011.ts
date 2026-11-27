@@ -202,7 +202,7 @@ export const thpt1011Notes: NoteBook = {
     R`Dùng tổng hai bán kính cho trường hợp tiếp xúc trong, hoặc quên rằng hai đường tròn cùng bán kính khác nhau không thể tiếp xúc trong.`,
   ),
   "11/ty-so-the-tich": note(
-    R`Hai khối chóp chung đỉnh và chung góc ở đỉnh có diện tích đáy và chiều cao đều đổi theo tỉ số các cạnh từ đỉnh, nên tỉ số thể tích là tích ba tỉ số cạnh; mọi chóp đáy tứ giác chia được thành các chóp tam giác.`,
+    R`Thể tích khối chóp tam giác bằng một phần sáu giá trị tuyệt đối của tích hỗn tạp ba vectơ cạnh từ đỉnh, nên khi ba vectơ nhân với ba tỉ số thì thể tích nhân với tích ba tỉ số; mọi chóp đáy tứ giác chia được thành các chóp tam giác.`,
     R`Lấy tỉ số cạnh tính từ đáy thay vì từ đỉnh $S$, hoặc dùng công thức tích ba tỉ số khi hai khối không chung đỉnh.`,
   ),
 };
