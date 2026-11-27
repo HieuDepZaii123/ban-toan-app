@@ -296,24 +296,6 @@ const lop10Base: GradeBook = {
           luyen(R`Điểm $(0;5)$ có thuộc đường tròn $x^2+y^2=25$ không?`, R`Có, vì khoảng cách tới gốc bằng $5$.`, [{ expr: "sqrt(0**2+5**2)", expect: "5" }], "Điểm thuộc đường tròn khi bình phương khoảng cách bằng bình phương bán kính."),
           luyen(R`Bán kính của $(x+2)^2+(y-1)^2=4$ bằng bao nhiêu?`, R`Bán kính bằng $2$.`, [{ expr: "sqrt(4)", expect: "2" }], "Tâm là $(-2;1)$. Bán kính là căn không âm của vế phải."),
         ]),
-      bai("ba-conic", "Elip, hypebol và parabol",
-        R`Elip $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ với $a>b>0$ dài theo trục hoành. Hypebol $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ có dấu trừ giữa hai số hạng. Parabol $y^2=2px$ với $p>0$ có tiêu điểm $F\left(\frac{p}{2};0\right)$.`,
-        [vd(R`Elip $\frac{x^2}{9}+\frac{y^2}{4}=1$ có các bán trục bằng bao nhiêu?`,
-          [
-            buoc(R`Mẫu dưới $x^2$ là $a^2=9$, nên $a=3$.`, "Bán trục lấy căn không âm của mẫu. Không lấy cả mẫu làm độ dài bán trục."),
-            buoc(R`Mẫu dưới $y^2$ là $b^2=4$, nên $b=2$.`, "Vì $a>b>0$, trục lớn nằm trên trục hoành và trục nhỏ nằm trên trục tung."),
-          ],
-          R`Hai bán trục là $a=3$ và $b=2$, với $a>b>0$.`,
-          [
-            { expr: "sqrt(9)", expect: "3" },
-            { expr: "sqrt(4)", expect: "2" },
-          ],
-        )],
-        [
-          luyen(R`Hypebol $\frac{x^2}{9}-\frac{y^2}{4}=1$ có $a$ bằng bao nhiêu?`, R`Số $a$ bằng $3$.`, [{ expr: "sqrt(9)", expect: "3" }], "Mẫu dưới $x^2$ là $a^2$. Căn không âm của $9$ là $3$."),
-          luyen(R`Parabol $y^2=8x$ viết theo dạng $y^2=2px$. Tiêu điểm là điểm nào?`, R`Vì $2p=8$ nên $p=4$, tiêu điểm là $F(2;0)$.`, [{ expr: "(8/2)/2", expect: "2" }], "Từ $2p=8$ được $p=4$. Hoành độ tiêu điểm là $p$ chia $2$, bằng $2$."),
-          luyen(R`Điểm $(3;0)$ có thuộc elip $\frac{x^2}{9}+\frac{y^2}{4}=1$ không?`, R`Có, vì thế vào elip được $1$.`, [{ expr: "3**2/9+0", expect: "1" }], "Điểm thuộc elip khi vế trái của phương trình chính tắc bằng $1$."),
-        ]),
     ]),
     chuong("to-hop", "Đại số tổ hợp", [
       bai("quy-tac", "Quy tắc cộng và quy tắc nhân",

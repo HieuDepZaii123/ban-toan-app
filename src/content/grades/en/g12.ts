@@ -226,26 +226,6 @@ export const g12En: Record<string, LessonEn> = {
       [R`For the line through $(0,0,0)$ with direction $(0,1,0)$, what is the second coordinate at $t=4$?`, R`The second coordinate is $4$.`, R`Only the second coordinate of the direction is not $0$, so the parameter is added to the second coordinate alone.`],
     ],
   },
-  "goc-kc-12": {
-    s: R`The cosine of the angle between two non-zero vectors is their dot product divided by the product of their lengths. The distance from a point to a plane uses the absolute value of the equation divided by the length of the normal.`,
-    w: R`The distance from a point to a plane is the length of the projection of a connecting vector onto the normal. Dividing by the normal's length normalises it, and the absolute value is taken because distance is non-negative.`,
-    p: R`Forgetting to divide by the length of the normal. The result would then change if the whole equation were multiplied by a number, which cannot happen to a distance.`,
-    ex: [
-      [R`Find the distance from $(0,0,5)$ to the plane $z=0$, and the cosine of the angle between $(1,0,0)$ and $(1,1,0)$.`, [
-        [R`The distance is $5$ (length units).`, R`The normal $(0,0,1)$ has length $1$. The numerator is the absolute value of the height.`],
-        [R`The dot product is $1$, the lengths are $1$ and $\sqrt{2}$, so the cosine is $\frac{1}{\sqrt{2}}$.`, R`Both vectors are non-zero, so the cosine can be written. The result lies in $[-1,1]$.`],
-      ], R`The distance is $5$ (length units). The cosine is $\frac{\sqrt{2}}{2}$.`],
-      [R`Find the distance from $M(1,2,3)$ to the plane $(P): 2x-y+2z+1=0$.`, [
-        [R`Numerator: $|2\cdot 1-2+2\cdot 3+1|=7$.`, R`Substitute the point's coordinates into the left-hand side of the plane equation and take the absolute value.`],
-        [R`Denominator: $\sqrt{4+1+4}=3$.`, R`The denominator is the length of the normal vector.`],
-      ], R`The distance is $\frac{7}{3}$.`],
-    ],
-    dr: [
-      [R`What is the distance from $(1,2,2)$ to the origin?`, R`The distance is $3$ (length units).`, R`The three squares add up to $9$. The non-negative root is the distance to the origin.`],
-      [R`What is the cosine of the angle between $(1,0,0)$ and $(0,1,0)$?`, R`The cosine is $0$, so the angle is $90^\circ$.`, R`The dot product is $0$ and both lengths are $1$. The angle between the vectors is a right angle.`],
-      [R`What is the length of the normal $(0,0,2)$?`, R`The length is $2$.`, R`This length is the denominator of the point-to-plane distance formula.`],
-    ],
-  },
   "khoang-12": {
     s: R`Grouped data has class boundaries $a_1<a_2<\cdots<a_{k+1}$. The range is $R=a_{k+1}-a_1$. Quartiles are found by interpolation inside the group containing the mark: $Q_1=a+\frac{\frac{n}{4}-N}{n_i}h$ and $Q_3=a+\frac{\frac{3n}{4}-N}{n_i}h$, where $a$ is the group's left boundary, $N$ the cumulative frequency before the group, $n_i$ the group's frequency and $h$ the group's width.`,
     w: R`Inside the group containing the mark, the elements are treated as spread evenly along the group. The mark lies past the left boundary by a fraction equal to the number of elements still needed over the group's frequency.`,

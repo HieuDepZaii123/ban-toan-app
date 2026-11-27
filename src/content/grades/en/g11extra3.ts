@@ -204,26 +204,6 @@ export const g11Extra4En: Record<string, LessonEn> = {
       [R`The tetrahedron $OABC$ has $OA$, $OB$, $OC$ pairwise perpendicular, $OB=9$ and $OC=12$. Find the distance between $OA$ and $BC$.`, R`The distance is $\frac{36}{5}$.`, R`Since $OA\perp(OBC)$ the distance equals $d(O;\ BC)=\frac{9\cdot12}{15}=\frac{36}{5}$ with $BC=15$.`],
     ],
   },
-  "kc-the-tich": {
-    s: R`When it is hard to construct a height, use volume: if a tetrahedron has volume $V$ and a face of area $S$, the height from the remaining vertex is $h=\frac{3V}{S}$. The distance from a point to a plane equals the height of the tetrahedron that has that plane as its base.`,
-    w: R`The volume of a tetrahedron can be computed in two ways: one face with a known height, or another face with the unknown height. Setting the two results equal gives the unknown height as $\frac{3V}{S}$.`,
-    p: R`Forgetting the factor $3$ in $\frac{3V}{S}$, or using the area of the wrong face, not the one whose distance is wanted.`,
-    ex: [
-      [R`The tetrahedron $OABC$ has $OA=OB=OC=3$ pairwise perpendicular. Find the distance from $O$ to $(ABC)$.`, [
-        [R`The volume is $V=\frac{1}{6}\cdot27=\frac92$ and the equilateral triangle $ABC$ with side $3\sqrt2$ has area $\frac{9\sqrt3}{2}$.`, R`Compute the volume with the base $OAB$ and the height $OC$, then the area of the equilateral triangle.`],
-        [R`So $h=\frac{3\cdot\frac92}{\frac{9\sqrt3}{2}}=\sqrt3$.`, R`Substitute into $h=\frac{3V}{S}$.`],
-      ], R`The distance is $\sqrt3$.`],
-      [R`The pyramid $S.ABC$ has $SA\perp(ABC)$, $SA=2$ and triangle $ABC$ right isosceles at $A$ with $AB=AC=2$. Find the distance from $A$ to $(SBC)$.`, [
-        [R`The volume is $V=\frac13\cdot\frac{2\cdot2}{2}\cdot2=\frac43$ and the equilateral triangle $SBC$ with side $2\sqrt2$ has area $2\sqrt3$.`, R`The three sides $SB$, $SC$, $BC$ all equal $2\sqrt2$.`],
-        [R`So $d=\frac{3\cdot\frac43}{2\sqrt3}=\frac{2\sqrt3}{3}$.`, R`Substitute into $h=\frac{3V}{S}$.`],
-      ], R`The distance is $\frac{2\sqrt3}{3}$.`],
-    ],
-    dr: [
-      [R`A tetrahedron has volume $6$ and a face of area $9$. Find the height from the remaining vertex to that face.`, R`The height is $2$.`, R`We have $h=\frac{3V}{S}=\frac{18}{9}=2$.`],
-      [R`The pyramid $S.ABCD$ has a square base with side $3$, $SA\perp(ABCD)$ and $SA=4$. Find the distance from $A$ to $(SBC)$.`, R`The distance is $\frac{12}{5}$.`, R`The tetrahedron $SABC$ has $V=6$ and the triangle $SBC$ is right at $B$ with area $\frac{5\cdot3}{2}=\frac{15}{2}$, so $d=\frac{18}{\frac{15}{2}}=\frac{12}{5}$.`],
-      [R`The tetrahedron $OABC$ has $OA=OB=OC=6$ pairwise perpendicular. Find the distance from $O$ to $(ABC)$.`, R`The distance is $2\sqrt3$.`, R`With three edges equal to $a$ the distance is $\frac{a}{\sqrt3}$, that is $\frac{6}{\sqrt3}=2\sqrt3$.`],
-    ],
-  },
   "thales-kg": {
     s: R`Three parallel planes cut any two lines in proportional segments. In triangle $SAB$, if $M\in SA$, $N\in SB$ and $MN\parallel AB$ then $\frac{SM}{SA}=\frac{SN}{SB}=\frac{MN}{AB}$.`,
     w: R`Parallel planes cutting two lines form similar triangles, so corresponding pairs of segments are in the same ratio. Choose the corresponding pairs correctly, measured from the same side.`,

@@ -65,10 +65,6 @@ export const thptNotes: NoteBook = {
     R`Đường tròn là tập hợp các điểm cách tâm một khoảng $R$. Viết điều kiện khoảng cách bằng $R$ theo tọa độ rồi bình phương hai vế là ra phương trình.`,
     R`Đọc sai dấu của tâm và quên lấy căn bán kính. Phương trình $(x-1)^2+(y+2)^2=9$ có tâm $(1;-2)$ và bán kính $3$.`,
   ),
-  "10/ba-conic": note(
-    R`Mỗi đường được định nghĩa bằng khoảng cách: elip có tổng khoảng cách tới hai tiêu điểm không đổi, hypebol có hiệu khoảng cách không đổi, parabol có khoảng cách tới tiêu điểm bằng khoảng cách tới đường chuẩn. Viết các điều kiện ấy theo tọa độ thì được ba phương trình chính tắc.`,
-    R`Lấy $a^2$ và $b^2$ làm độ dài bán trục. Elip $\frac{x^2}{9}+\frac{y^2}{4}=1$ có bán trục lớn $3$ và bán trục bé $2$.`,
-  ),
   "10/quy-tac": note(
     R`Với mỗi cách làm bước một có đủ mọi cách làm bước hai, nên số cách nhân với nhau. Khi các phương án không thể xảy ra cùng lúc, mỗi cách thuộc đúng một phương án nên số cách cộng lại.`,
     R`Cộng khi công việc gồm các bước nối tiếp. Đi từ $A$ qua $B$ đến $C$ có $2\cdot 3=6$ cách, không phải $2+3=5$.`,
@@ -179,10 +175,6 @@ export const thptNotes: NoteBook = {
     R`Hai đường thẳng cắt nhau xác định phương của cả mặt phẳng: mọi vectơ trong mặt phẳng viết được qua hai vectơ chỉ phương của chúng. Vuông góc với cả hai thì tích vô hướng với mọi vectơ trong mặt phẳng đều bằng $0$.`,
     R`Kết luận đường thẳng vuông góc với mặt phẳng khi mới chỉ ra một đường, hoặc hai đường song song. Cần hai đường cắt nhau nằm trong mặt phẳng.`,
   ),
-  "11/goc-kc": note(
-    R`Hai đường thẳng cùng vuông góc với giao tuyến tại một điểm đo đúng độ mở giữa hai mặt, giống như đo góc mở của một quyển sách bằng hai mép giấy vuông góc với gáy. Khoảng cách luôn đo theo đoạn vuông góc vì đó là đoạn ngắn nhất.`,
-    R`Lấy góc giữa hai đường thẳng bất kỳ nằm trong hai mặt. Cả hai đường phải vuông góc với giao tuyến tại cùng một điểm.`,
-  ),
   "11/the-tich-11": note(
     R`Lăng trụ là các lát đáy bằng nhau xếp chồng, nên thể tích là diện tích đáy nhân chiều cao. Một lăng trụ tam giác cắt được thành ba hình chóp có thể tích bằng nhau, nên hình chóp bằng một phần ba lăng trụ cùng đáy và cùng chiều cao.`,
     R`Dùng cạnh bên của hình chóp hoặc lăng trụ xiên làm chiều cao. Chiều cao là khoảng cách vuông góc từ đỉnh tới mặt đáy.`,
@@ -252,10 +244,6 @@ export const thptNotes: NoteBook = {
   "12/duong-cau": note(
     R`Đi từ $M_0$ theo hướng $\vec u$ với mọi hệ số $t$ thì quét hết đường thẳng, nên mỗi điểm của đường thẳng ứng với đúng một giá trị $t$. Mặt cầu là điều kiện khoảng cách tới tâm bằng $R$ viết theo tọa độ.`,
     R`Viết vế phải của phương trình mặt cầu là $R$. Vế phải là $R^2$, nên mặt cầu bán kính $3$ có vế phải bằng $9$.`,
-  ),
-  "12/goc-kc-12": note(
-    R`Khoảng cách từ một điểm đến mặt phẳng là độ dài hình chiếu của một vectơ nối lên pháp tuyến. Chia cho độ dài pháp tuyến để chuẩn hóa, và lấy trị tuyệt đối vì khoảng cách không âm.`,
-    R`Quên chia cho độ dài của pháp tuyến. Kết quả lúc đó thay đổi nếu nhân cả phương trình với một số, điều không thể xảy ra với khoảng cách.`,
   ),
   "12/khoang-12": note(
     R`Trong nhóm chứa mốc, coi các phần tử trải đều dọc theo nhóm. Mốc cần tìm nằm cách mút trái một đoạn tỉ lệ với số phần tử còn thiếu so với tần số của nhóm.`,

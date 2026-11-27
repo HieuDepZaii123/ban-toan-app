@@ -10,6 +10,7 @@ import { lop12DtOxyzNC } from "./lop12extra7.ts";
 import { lop12VectoKg } from "./lop11extra3.ts";
 import { lop12VectoUngDung } from "./lop12extra10.ts";
 import { lop12MatCauVtt, lop12OxyzVanDungCao } from "./lop12extra11.ts";
+import { vdcCucTriBinhPhuong, vdcDungHinhOxyz } from "./lop12extra12.ts";
 import { lop12OxyzTongHop } from "./lop12extra8.ts";
 
 const R = String.raw;
@@ -207,22 +208,6 @@ const lop12Base: GradeBook = {
           luyen(R`Đường qua $(0;0;0)$ với chỉ phương $(0;1;0)$, tại $t=4$, có tung độ bao nhiêu?`, R`Tung độ bằng $4$.`, [{ expr: "0+4*1", expect: "4" }], "Chỉ tung độ của chỉ phương khác $0$, nên tham số cộng vào đúng tung độ."),
         ],
         { topicId: "analytic" }),
-      bai("goc-kc-12", "Góc và khoảng cách trong không gian tọa độ",
-        R`Côsin góc giữa hai vectơ khác vectơ không là tích vô hướng chia cho tích hai độ dài. Khoảng cách từ điểm đến mặt phẳng dùng trị tuyệt đối của phương trình chia cho độ dài pháp tuyến.`,
-        [vd(R`Tính khoảng cách từ $(0;0;5)$ đến mặt phẳng $z=0$, và côsin góc giữa $(1;0;0)$ và $(1;1;0)$.`,
-          [
-            buoc(R`Khoảng cách bằng $5$ (đơn vị đo dài).`, "Pháp tuyến $(0;0;1)$ có độ dài $1$. Tử là trị tuyệt đối của cao độ."),
-            buoc(R`Tích vô hướng bằng $1$, hai độ dài là $1$ và $\sqrt{2}$, nên côsin bằng $\frac{1}{\sqrt{2}}$.`, "Cả hai vectơ khác vectơ không nên được viết côsin. Kết quả thuộc $[-1;1]$."),
-          ],
-          R`Khoảng cách bằng $5$ (đơn vị đo dài). Côsin bằng $\frac{\sqrt{2}}{2}$.`,
-          [{ expr: "Abs(5)/1", expect: "5" }, { expr: "1/sqrt(1**2+1**2)", expect: "sqrt(2)/2" }],
-        )],
-        [
-          luyen(R`Khoảng cách từ $(1;2;2)$ đến gốc bằng bao nhiêu?`, R`Khoảng cách bằng $3$ (đơn vị đo dài).`, [{ expr: "sqrt(1+4+4)", expect: "3" }], "Ba bình phương cộng thành $9$. Căn không âm là khoảng cách tới gốc."),
-          luyen(R`Hai vectơ $(1;0;0)$ và $(0;1;0)$ có côsin góc bằng bao nhiêu?`, R`Côsin bằng $0$, nên góc bằng $90^\circ$.`, [{ expr: "0/(1*1)", expect: "0" }], "Tích vô hướng bằng $0$ và cả hai độ dài bằng $1$. Góc giữa hai vectơ là góc vuông."),
-          luyen(R`Độ dài pháp tuyến $(0;0;2)$ bằng bao nhiêu?`, R`Độ dài bằng $2$.`, [{ expr: "sqrt(0+0+4)", expect: "2" }], "Mẫu của công thức khoảng cách tới mặt phẳng là độ dài này."),
-        ],
-        { topicId: "analytic" }),
     ]),
     chuong("tk-12", "Thống kê mẫu ghép nhóm", [
       bai("khoang-12", "Khoảng biến thiên và khoảng tứ phân vị của mẫu ghép nhóm",
@@ -320,5 +305,5 @@ const lop12Base: GradeBook = {
 /** Hai chương bổ sung xen vào sau chương cùng mạch: ứng dụng đạo hàm sau khảo sát, kĩ thuật tích phân sau tích phân. */
 export const lop12: GradeBook = {
   ...lop12Base,
-  chapters: lop12Base.chapters.flatMap((chapter) => (chapter.id === "khao-sat" ? [chapter, lop12UngDung, lop12DoThi, lop12TuongGiao] : chapter.id === "tich-phan" ? [chapter, lop12KyThuat, lop12TichPhanNC] : chapter.id === "oxyz" ? [lop12VectoKg, lop12VectoUngDung, chapter, lop12TichCoHuong, lop12PtOxyz, lop12QuanHeOxyz, lop12DtOxyzNC, lop12OxyzNC, lop12MatCauVtt, lop12OxyzTongHop, lop12OxyzVanDungCao] : chapter.id === "tk-12" ? [chapter, lop12TkNC] : chapter.id === "xs-12" ? [chapter, lop12XsNC] : [chapter])),
+  chapters: lop12Base.chapters.flatMap((chapter) => (chapter.id === "khao-sat" ? [chapter, lop12UngDung, lop12DoThi, lop12TuongGiao] : chapter.id === "tich-phan" ? [chapter, lop12KyThuat, lop12TichPhanNC] : chapter.id === "oxyz" ? [lop12VectoKg, lop12VectoUngDung, chapter, lop12TichCoHuong, lop12PtOxyz, lop12QuanHeOxyz, lop12DtOxyzNC, lop12OxyzNC, lop12MatCauVtt, lop12OxyzTongHop, { ...lop12OxyzVanDungCao, lessons: [...lop12OxyzVanDungCao.lessons, vdcDungHinhOxyz, vdcCucTriBinhPhuong] }] : chapter.id === "tk-12" ? [chapter, lop12TkNC] : chapter.id === "xs-12" ? [chapter, lop12XsNC] : [chapter])),
 };

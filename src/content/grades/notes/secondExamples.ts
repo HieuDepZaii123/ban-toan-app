@@ -147,15 +147,6 @@ export const secondExamples: Record<string, GradeExample> = {
     R`Đường tròn có tâm $I(2;-3)$ và bán kính $4$.`,
     [{ expr: "sqrt(3+4+9)", expect: "4" }],
   ),
-  "10/ba-conic": vd(
-    R`Tìm tiêu điểm của elip $\frac{x^2}{25}+\frac{y^2}{9}=1$.`,
-    [
-      buoc(R`Ta có $a=5$, $b=3$, và $c^2=a^2-b^2=16$, nên $c=4$.`, R`Với elip, khoảng cách từ tâm đến tiêu điểm thỏa $c^2=a^2-b^2$.`),
-      buoc(R`Hai tiêu điểm nằm trên trục lớn là trục hoành: $F_1(-4;0)$ và $F_2(4;0)$.`, R`Trục lớn là trục ứng với mẫu lớn hơn trong phương trình chính tắc.`),
-    ],
-    R`Hai tiêu điểm là $F_1(-4;0)$ và $F_2(4;0)$.`,
-    [{ expr: "sqrt(25-9)", expect: "4" }],
-  ),
   "10/quy-tac": vd(
     R`Một bạn có $3$ áo và $4$ quần. Có bao nhiêu cách chọn một bộ gồm một áo và một quần?`,
     [
@@ -402,15 +393,6 @@ export const secondExamples: Record<string, GradeExample> = {
     R`Vậy $BC$ vuông góc với mặt phẳng $(SAB)$.`,
     [{ expr: "1*0+0*1", expect: "0" }],
   ),
-  "11/goc-kc": vd(
-    R`Hình lập phương $ABCD.A'B'C'D'$ cạnh $a$. Tính khoảng cách từ $A$ đến mặt phẳng $(A'B'C'D')$ và góc giữa $AC'$ với mặt đáy $(ABCD)$.`,
-    [
-      buoc(R`Đoạn $AA'$ vuông góc với mặt phẳng trên, nên khoảng cách bằng $AA'=a$.`, R`Khoảng cách từ một điểm đến mặt phẳng là độ dài đoạn vuông góc hạ từ điểm đó.`),
-      buoc(R`Hình chiếu của $AC'$ lên đáy là $AC=a\sqrt2$, và $CC'=a$, nên $\tan\varphi=\frac{a}{a\sqrt2}=\frac{\sqrt2}{2}$.`, R`Góc giữa đường thẳng và mặt phẳng là góc giữa đường đó và hình chiếu của nó lên mặt phẳng.`),
-    ],
-    R`Khoảng cách bằng $a$, và góc $\varphi$ thỏa $\tan\varphi=\frac{\sqrt2}{2}$, khoảng $35{,}3^\circ$.`,
-    [{ expr: "1/sqrt(2)", expect: "sqrt(2)/2" }],
-  ),
   "11/the-tich-11": vd(
     R`Hình chóp $S.ABC$ có đáy là tam giác đều cạnh $6$ và chiều cao $SH=4$. Tính thể tích.`,
     [
@@ -565,15 +547,6 @@ export const secondExamples: Record<string, GradeExample> = {
     ],
     R`Mặt cầu có phương trình $(x-2)^2+(y-1)^2+(z-2)^2=3$.`,
     [{ expr: "(1-2)**2+(2-1)**2+(3-2)**2", expect: "3" }],
-  ),
-  "12/goc-kc-12": vd(
-    R`Tính khoảng cách từ $M(1;2;3)$ đến mặt phẳng $(P): 2x-y+2z+1=0$.`,
-    [
-      buoc(R`Tử số: $|2\cdot 1-2+2\cdot 3+1|=7$.`, R`Thay tọa độ điểm vào vế trái của phương trình mặt phẳng rồi lấy trị tuyệt đối.`),
-      buoc(R`Mẫu số: $\sqrt{4+1+4}=3$.`, R`Mẫu là độ dài của vectơ pháp tuyến.`),
-    ],
-    R`Khoảng cách bằng $\frac{7}{3}$.`,
-    [{ expr: "Abs(2-2+6+1)/sqrt(4+1+4)", expect: "Rational(7,3)" }],
   ),
   "12/khoang-12": vd(
     R`Mẫu ghép nhóm có các nhóm $[0;10)$, $[10;20)$, $[20;30)$ với tần số $3$, $5$, $2$. Tính tứ phân vị thứ nhất.`,

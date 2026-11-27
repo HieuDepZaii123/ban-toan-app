@@ -46,26 +46,6 @@ export const g11Extra5En: Record<string, LessonEn> = {
       [R`The pyramid $S.ABCD$ has a rectangular base and $SA\perp(ABCD)$. Is $BC$ perpendicular to $SB$?`, R`Yes, because $BC\perp(SAB)$.`, R`The line $BC$ is perpendicular to $AB$ and $SA$ so it is perpendicular to $(SAB)$, and $SB$ lies in that plane.`, [], ["Yes, because $BC\\perp(SAB)$.", "No, the conditions are not enough.", "Only when the base is a square."]],
     ],
   },
-  "goc-kc": {
-    s: R`The plane angle of a dihedral angle is the angle between two lines that are both perpendicular to the line of intersection at a point of it, each lying in one of the two faces. The distance between the two parallel bases of a prism equals the height of the prism; for an oblique prism with lateral edge $\ell$ making an angle $\alpha$ with the base, the height is $\ell\sin\alpha$.`,
-    w: R`Two lines in the faces that are perpendicular to the line of intersection measure how far the faces open apart, in the plane perpendicular to that line. The height is the perpendicular distance between the parallel bases.`,
-    p: R`Taking the angle between two arbitrary edges of the faces as the dihedral angle, or using the lateral edge itself as the height of an oblique prism.`,
-    ex: [
-      [R`A regular pyramid has a square base with side $4$, the foot of the altitude $O$ is the centre of the base and $SO=2$. Let $M$ be the midpoint of a base edge, so $OM=2$. Find the tangent of the plane angle of the dihedral angle between a lateral face and the base, given that this plane angle is $\widehat{SMO}$.`, [
-        [R`Since $SO$ is perpendicular to the base and $OM$ is perpendicular to the base edge at $M$, the angle $\widehat{SMO}$ is a plane angle of the dihedral angle.`, R`The base edge is perpendicular to $SO$ and $OM$, which meet, so it is perpendicular to $(SOM)$ and hence to $SM$ too; thus $OM$ and $SM$ are both perpendicular to the line of intersection at $M$, each in one face.`],
-        [R`Triangle $SOM$ is right at $O$, so $\tan\widehat{SMO}=\frac{SO}{OM}=\frac{2}{2}=1$. The angle is $45^\circ$.`, R`The side opposite the angle at $M$ is $SO$ and the adjacent side is $OM$. A tangent of $1$ gives $45^\circ$.`],
-      ], R`The tangent of the plane angle is $1$, so the dihedral angle is $45^\circ$.`],
-      [R`The oblique prism $ABC.A'B'C'$ has lateral edge $AA'=10$ making a $30^\circ$ angle with the base. Find the distance between the two bases.`, [
-        [R`Drop $A'H$ perpendicular to $(ABC)$; then $A'H$ is the distance between the two bases.`, R`The bases are parallel so every point of the upper base is at the same distance from the lower base.`],
-        [R`The angle between $AA'$ and the base is $\widehat{A'AH}=30^\circ$, so $A'H=AA'\sin30^\circ=5$.`, R`In the right triangle $A'HA$ the opposite side over the hypotenuse is the sine.`],
-      ], R`The distance between the two bases is $5$.`],
-    ],
-    dr: [
-      [R`For the same pyramid as in the first example, if $SO=6$ and $OM=3$, what is the tangent of the plane angle?`, R`The tangent is $2$.`, R`The tangent of the plane angle equals the height divided by the distance from the centre of the base to the base edge.`],
-      [R`An oblique prism has lateral edge $8$ making a $60^\circ$ angle with the base. Find the distance between the two bases.`, R`The distance is $4\sqrt3$.`, R`The height equals $8\sin60^\circ=8\cdot\frac{\sqrt3}{2}=4\sqrt3$.`],
-      [R`If $SO=OM=5$, how many degrees is the plane angle $\widehat{SMO}$?`, R`The angle is $45$ degrees.`, R`The tangent is $1$ when the two legs of triangle $SOM$ are equal, that is, the angle is $45^\circ$.`],
-    ],
-  },
   "the-tich-11": {
     s: R`This lesson deals with prisms and pyramids whose base is a polygon. The volume of a prism equals the base area times the height. The volume of a pyramid is one third of that product. The height is perpendicular to the base, and for an oblique prism it equals the lateral edge times the sine of the angle between the lateral edge and the base. A solid with a circular base is not a pyramid.`,
     w: R`A prism fills its base times its height, and a pyramid with the same base and height fills exactly one third of it. For an oblique prism the volume still uses the perpendicular height, not the slanted edge.`,

@@ -50,12 +50,6 @@ const on = (key: string, n: string) => spaceFigures[key]!.points[n]!;
   assert.ok(near(len(sub(H, A)), 12 / 5), "AH dài 12/5 với đáy 3 và 4");
 }
 {
-  const k = "11/kc-the-tich";
-  const H = on(k, "H"), A = on(k, "A"), B = on(k, "B"), C = on(k, "C");
-  assert.ok(near(dot(H, sub(B, A)), 0) && near(dot(H, sub(C, A)), 0), "OH vuông góc mặt phẳng ABC (O là gốc)");
-  assert.ok(near(len(H), Math.sqrt(3)), "OH dài căn ba với ba cạnh bằng 3");
-}
-{
   const k = "11/thales-kg";
   const S = on(k, "S"), A = on(k, "A"), B = on(k, "B"), M = on(k, "M"), N = on(k, "N");
   assert.ok(near(len(sub(M, S)) / len(sub(A, S)), 1 / 3) && near(len(sub(N, S)) / len(sub(B, S)), 1 / 3), "SM = SA/3");
@@ -89,11 +83,6 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   assert.ok(near(len(sub(M, N)), len(sub(A, B)) / 2), "MN bằng nửa AB");
 }
 {
-  const k = "11/goc-kc";
-  const S = on(k, "S"), O = on(k, "O"), M = on(k, "M");
-  assert.ok(near(dot(sub(S, O), sub(M, O)), 0) && near(len(sub(S, O)), 2) && near(len(sub(M, O)), 2), "SO = OM = 2 và SO vuông OM");
-}
-{
   const k = "11/the-tich-goc";
   const S = on(k, "S"), A = on(k, "A"), C = on(k, "C");
   assert.ok(near(len(sub(S, A)) / len(sub(C, A)), Math.sqrt(3)), "tan 60° = SA / AC");
@@ -115,14 +104,6 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
 {
   const k = "12/mat-phang";
   for (const n of ["A", "B", "C"]) assert.ok(near(sum(on(k, n)), 1), `${n} thuộc x + y + z = 1`);
-}
-{
-  const k = "12/vtt-d-mp";
-  const I = on(k, "I"), D1 = on(k, "D1"), D2 = on(k, "D2");
-  assert.ok(near(sum(I), 3), "I thuộc mặt phẳng x + y + z = 3");
-  assert.ok(sum(D1) < 3 && sum(D2) > 3, "hai đầu đường thẳng nằm hai phía của mặt phẳng");
-  assert.ok(near(len(cross(sub(I, D1), sub(D2, D1))), 0), "I thuộc đường thẳng d");
-  for (const n of ["R1", "R2", "R3", "R4"]) assert.ok(near(sum(on(k, n)), 3), `${n} thuộc mặt phẳng`);
 }
 {
   const k = "12/mat-cau-tx";
@@ -325,6 +306,13 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   assert.ok(near(len(sub(A, N)), 3) && near(len(sub(A, F)), 7), "NA = 3 và FA = 7");
 }
 
+{
+  const k = "11/ty-so-the-tich";
+  const S = on(k, "S"), A = on(k, "A"), B = on(k, "B"), C = on(k, "C"), M = on(k, "M"), N = on(k, "N"), P = on(k, "P");
+  assert.ok(near(len(sub(M, S)) / len(sub(A, S)), 1 / 2) && near(len(sub(N, S)) / len(sub(B, S)), 2 / 3) && near(len(sub(P, S)) / len(sub(C, S)), 3 / 4), "tỉ số SM/SA, SN/SB, SP/SC");
+  const vol = (a: number[], b: number[], c: number[]) => Math.abs(dot(cross(a as [number, number, number], b as [number, number, number]), c as [number, number, number])) / 6;
+  assert.ok(near(vol(sub(M, S), sub(N, S), sub(P, S)) / vol(sub(A, S), sub(B, S), sub(C, S)), 1 / 4), "tỉ số thể tích bằng 1/4");
+}
 // Hình của chương đại cương lớp 11.
 {
   const k = "11/giao-tuyen";

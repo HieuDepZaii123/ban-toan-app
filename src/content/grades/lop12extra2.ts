@@ -207,30 +207,6 @@ export const lop12TichPhanNC: GradeChapter = chuong("tp-nang-cao", "Tích phân 
 ]);
 
 export const lop12OxyzNC: GradeChapter = chuong("oxyz-nang-cao", "Hình học Oxyz nâng cao", [
-  bai("vtt-d-mp", "Vị trí tương đối của đường thẳng và mặt phẳng",
-    R`Thay tọa độ tham số của đường thẳng $d$ vào phương trình mặt phẳng $(P)$ được phương trình $\alpha t+\beta=0$. Nếu $\alpha\ne0$ thì $d$ cắt $(P)$ tại một điểm. Nếu $\alpha=0$ và $\beta\ne0$ thì $d$ song song với $(P)$. Nếu $\alpha=0$ và $\beta=0$ thì $d$ nằm trong $(P)$.`,
-    [
-      vd(R`Xét vị trí của $d:\ x=1+t;\ y=2-t;\ z=t$ và $(P):\ x+y+z-3=0$.`,
-        [
-          buoc(R`Thay vào $(P)$: $(1+t)+(2-t)+t-3=t$.`, R`Cộng các số hạng chứa $t$ và các hằng số riêng.`),
-          buoc(R`Phương trình $t=0$ có hệ số $\alpha=1\ne0$ nên $d$ cắt $(P)$ tại $t=0$, tức điểm $(1;\ 2;\ 0)$.`, R`Hệ số của $t$ khác $0$ thì phương trình có đúng một nghiệm.`),
-        ],
-        R`Đường thẳng $d$ cắt $(P)$ tại điểm $(1;\ 2;\ 0)$.`,
-        [{ expr: "(1+0)+(2-0)+0-3", expect: "0" }, { expr: "expand((1+x)+(2-x)+x-3)", expect: "x" }]),
-      vd(R`Xét vị trí của $d:\ x=t;\ y=1+t;\ z=2t$ và $(P):\ x-y+2=0$.`,
-        [
-          buoc(R`Thay vào $(P)$: $t-(1+t)+2=1$, tức $0\cdot t+1=0$.`, R`Hệ số của $t$ là $\alpha=0$ và hằng số là $\beta=1$.`),
-          buoc(R`Phương trình $1=0$ vô nghiệm nên $d$ song song với $(P)$.`, R`Không có giá trị $t$ nào cho điểm chung.`),
-        ],
-        R`Đường thẳng $d$ song song với mặt phẳng $(P)$.`,
-        [{ expr: "expand(x-(1+x)+2)", expect: "1" }]),
-    ],
-    [
-      luyen(R`Xét vị trí của $d:\ x=t;\ y=t;\ z=1$ và $(P):\ x-y=0$.`, R`Đường thẳng nằm trong mặt phẳng.`, [{ expr: "expand(x-x)", expect: "0" }], R`Thay vào được $t-t=0$, đúng với mọi $t$, nên $d$ nằm trong $(P)$.`),
-      luyen(R`Đường thẳng $d:\ x=2t;\ y=1;\ z=t$ cắt mặt phẳng $(P):\ x+z-3=0$ tại giá trị $t$ nào?`, R`Tại $t=1$.`, [{ expr: "solve(2*x+x-3, x)[0]", expect: "1" }], R`Thay vào: $2t+t-3=0$ nên $t=1$.`),
-      luyen(R`Tìm $m$ để $d:\ x=t;\ y=1;\ z=t$ song song với $(P):\ x-z+m=0$ và không nằm trong $(P)$.`, R`Mọi $m\ne0$.`, [{ expr: "expand(x-x+m)", expect: "m" }], R`Thay vào được $t-t+m=m$, nên phải có $m\ne0$ để phương trình $m=0$ vô nghiệm.`),
-    ],
-    { topicId: "analytic" }),
   bai("kc-hai-dt", "Khoảng cách giữa hai đường thẳng chéo nhau",
     R`Hai đường thẳng chéo nhau $\Delta_1$ qua $A$ có vectơ chỉ phương $\vec{u_1}$ và $\Delta_2$ qua $B$ có vectơ chỉ phương $\vec{u_2}$. Khoảng cách giữa chúng là $d=\frac{\left|\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}\right|}{\left|\left[\vec{u_1},\vec{u_2}\right]\right|}$.`,
     [

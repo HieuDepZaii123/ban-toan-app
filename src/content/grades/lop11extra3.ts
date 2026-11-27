@@ -251,30 +251,6 @@ export const lop11KhoangCachKg: GradeChapter = chuong("khoang-cach-11", "Khoản
       luyen(R`Tứ diện $OABC$ có $OA$, $OB$, $OC$ đôi một vuông góc, $OB=9$ và $OC=12$. Tính khoảng cách giữa $OA$ và $BC$.`, R`Khoảng cách bằng $\frac{36}{5}$.`, [{ expr: "Rational(9*12,15)", expect: "Rational(36,5)" }], R`Vì $OA\perp(OBC)$ nên khoảng cách bằng $d(O;\ BC)=\frac{9\cdot12}{15}=\frac{36}{5}$ với $BC=15$.`),
     ],
     { topicId: "triangle" }),
-  bai("kc-the-tich", "Khoảng cách từ điểm đến mặt phẳng bằng thể tích",
-    R`Khi khó dựng đường cao, dùng thể tích: nếu tứ diện có thể tích $V$ và đáy có diện tích $S$ thì chiều cao hạ từ đỉnh còn lại là $h=\frac{3V}{S}$. Khoảng cách từ một điểm đến mặt phẳng bằng chiều cao của tứ diện nhận mặt phẳng đó làm đáy.`,
-    [
-      vd(R`Tứ diện $OABC$ có $OA=OB=OC=3$ đôi một vuông góc. Tính khoảng cách từ $O$ đến $(ABC)$.`,
-        [
-          buoc(R`Thể tích $V=\frac{1}{6}\cdot27=\frac92$ và $ABC$ đều cạnh $3\sqrt2$ có diện tích $\frac{9\sqrt3}{2}$.`, R`Tính thể tích bằng đáy $OAB$ và đường cao $OC$, rồi diện tích tam giác đều.`),
-          buoc(R`Do đó $h=\frac{3\cdot\frac92}{\frac{9\sqrt3}{2}}=\sqrt3$.`, R`Thay vào $h=\frac{3V}{S}$.`),
-        ],
-        R`Khoảng cách bằng $\sqrt3$.`,
-        [{ expr: "3*Rational(9,2)/(9*sqrt(3)/2)", expect: "sqrt(3)" }]),
-      vd(R`Hình chóp $S.ABC$ có $SA\perp(ABC)$, $SA=2$ và $ABC$ vuông cân tại $A$ với $AB=AC=2$. Tính khoảng cách từ $A$ đến $(SBC)$.`,
-        [
-          buoc(R`Thể tích $V=\frac13\cdot\frac{2\cdot2}{2}\cdot2=\frac43$ và $SBC$ đều cạnh $2\sqrt2$ có diện tích $2\sqrt3$.`, R`Ba cạnh $SB$, $SC$, $BC$ đều bằng $2\sqrt2$.`),
-          buoc(R`Do đó $d=\frac{3\cdot\frac43}{2\sqrt3}=\frac{2\sqrt3}{3}$.`, R`Thay vào $h=\frac{3V}{S}$.`),
-        ],
-        R`Khoảng cách bằng $\frac{2\sqrt3}{3}$.`,
-        [{ expr: "3*Rational(4,3)/(2*sqrt(3))", expect: "2*sqrt(3)/3" }]),
-    ],
-    [
-      luyen(R`Tứ diện có thể tích $6$ và một mặt có diện tích $9$. Tính chiều cao hạ từ đỉnh còn lại xuống mặt đó.`, R`Chiều cao bằng $2$.`, [{ expr: "3*6/9", expect: "2" }], R`Ta có $h=\frac{3V}{S}=\frac{18}{9}=2$.`),
-      luyen(R`Hình chóp $S.ABCD$ có đáy là hình vuông cạnh $3$, $SA\perp(ABCD)$ và $SA=4$. Tính khoảng cách từ $A$ đến $(SBC)$.`, R`Khoảng cách bằng $\frac{12}{5}$.`, [{ expr: "3*6/Rational(15,2)", expect: "Rational(12,5)" }], R`Tứ diện $SABC$ có $V=6$ và $SBC$ vuông tại $B$ có diện tích $\frac{5\cdot3}{2}=\frac{15}{2}$, nên $d=\frac{18}{\frac{15}{2}}=\frac{12}{5}$.`),
-      luyen(R`Tứ diện $OABC$ có $OA=OB=OC=6$ đôi một vuông góc. Tính khoảng cách từ $O$ đến $(ABC)$.`, R`Khoảng cách bằng $2\sqrt3$.`, [{ expr: "6/sqrt(3)", expect: "2*sqrt(3)" }], R`Với ba cạnh bằng $a$ thì khoảng cách là $\frac{a}{\sqrt3}$, tức $\frac{6}{\sqrt3}=2\sqrt3$.`),
-    ],
-    { topicId: "triangle" }),
 ]);
 
 export const lop11TyLeKg: GradeChapter = chuong("ty-le-kg-11", "Định lí Ta-lét và thiết diện song song", [

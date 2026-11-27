@@ -57,31 +57,6 @@ export const vuongGocMoi: GradeLesson = bai("vuong-goc", "Quan hệ vuông góc"
   ],
   { topicId: "triangle" });
 
-export const gocKcMoi: GradeLesson = bai("goc-kc", "Góc nhị diện và khoảng cách",
-  R`Góc phẳng của góc nhị diện là góc tạo bởi hai đường thẳng cùng vuông góc với giao tuyến tại một điểm trên giao tuyến, mỗi đường nằm trong một mặt. Khoảng cách giữa hai mặt đáy song song của một lăng trụ bằng chiều cao của lăng trụ; với lăng trụ xiên có cạnh bên $\ell$ tạo với đáy góc $\alpha$ thì chiều cao là $\ell\sin\alpha$.`,
-  [
-    vd(R`Hình chóp đều có đáy là hình vuông cạnh $4$, chân đường cao $O$ là tâm đáy và $SO=2$. Gọi $M$ là trung điểm của một cạnh đáy, nên $OM=2$. Tính tang của góc phẳng của nhị diện giữa mặt bên và mặt đáy, biết góc phẳng đó là góc $\widehat{SMO}$.`,
-      [
-        buoc(R`Vì $SO$ vuông góc với đáy và $OM$ vuông góc với cạnh đáy tại $M$, góc $\widehat{SMO}$ là một góc phẳng của nhị diện.`, R`Cạnh đáy vuông góc với $SO$ và $OM$ cắt nhau nên vuông góc với $(SOM)$, do đó vuông góc với cả $SM$; vậy $OM$ và $SM$ cùng vuông góc với giao tuyến tại $M$, mỗi đường nằm trong một mặt.`),
-        buoc(R`Tam giác $SOM$ vuông tại $O$, nên $\tan\widehat{SMO}=\frac{SO}{OM}=\frac{2}{2}=1$. Góc bằng $45^\circ$.`, R`Cạnh đối của góc tại $M$ là $SO$, cạnh kề là $OM$. Tang bằng $1$ cho góc $45^\circ$.`),
-      ],
-      R`Tang của góc phẳng bằng $1$, nên góc nhị diện bằng $45^\circ$.`,
-      [{ expr: "atan(2/2)", expect: "pi/4" }]),
-    vd(R`Lăng trụ xiên $ABC.A'B'C'$ có cạnh bên $AA'=10$ tạo với mặt đáy góc $30^\circ$. Tính khoảng cách giữa hai mặt đáy.`,
-      [
-        buoc(R`Hạ $A'H$ vuông góc với $(ABC)$, thì $A'H$ chính là khoảng cách giữa hai mặt đáy.`, R`Hai đáy song song nên mọi điểm của đáy trên cách đáy dưới một khoảng như nhau.`),
-        buoc(R`Góc giữa $AA'$ và đáy là góc $\widehat{A'AH}=30^\circ$, nên $A'H=AA'\sin30^\circ=5$.`, R`Trong tam giác vuông $A'HA$, cạnh đối chia cạnh huyền bằng sin.`),
-      ],
-      R`Khoảng cách giữa hai mặt đáy bằng $5$.`,
-      [{ expr: "10*sin(pi/6)", expect: "5" }]),
-  ],
-  [
-    luyen(R`Cùng hình chóp ở ví dụ đầu, nếu $SO=6$ và $OM=3$, tang của góc phẳng bằng bao nhiêu?`, R`Tang bằng $2$.`, [{ expr: "6/3", expect: "2" }], R`Tang của góc phẳng bằng chiều cao chia cho khoảng cách từ tâm đáy đến cạnh đáy.`),
-    luyen(R`Lăng trụ xiên có cạnh bên $8$ tạo với đáy góc $60^\circ$. Tính khoảng cách giữa hai mặt đáy.`, R`Khoảng cách bằng $4\sqrt3$.`, [{ expr: "8*sin(pi/3)", expect: "4*sqrt(3)" }], R`Chiều cao bằng $8\sin60^\circ=8\cdot\frac{\sqrt3}{2}=4\sqrt3$.`),
-    luyen(R`Nếu $SO=OM=5$, góc phẳng $\widehat{SMO}$ bằng bao nhiêu độ?`, R`Góc bằng $45$ độ.`, [{ expr: "atan(5/5)*180/pi", expect: "45" }], R`Tang bằng $1$ khi hai cạnh góc vuông của tam giác $SOM$ bằng nhau, tức góc $45^\circ$.`),
-  ],
-  { topicId: "triangle" });
-
 export const theTichMoi: GradeLesson = bai("the-tich-11", "Thể tích lăng trụ và hình chóp",
   R`Bài này xét lăng trụ và hình chóp có đáy là đa giác. Thể tích lăng trụ bằng diện tích đáy nhân chiều cao. Thể tích hình chóp bằng một phần ba tích đó. Chiều cao vuông góc với mặt đáy, và với lăng trụ xiên bằng cạnh bên nhân sin góc giữa cạnh bên và đáy. Khối có đáy là hình tròn không phải hình chóp.`,
   [

@@ -307,26 +307,6 @@ export const g10En: Record<string, LessonEn> = {
       [R`What is the radius of $(x+2)^2+(y-1)^2=4$?`, R`The radius is $2$.`, R`The centre is $(-2,1)$. The radius is the non-negative root of the right-hand side.`],
     ],
   },
-  "ba-conic": {
-    s: R`The ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ with $a>b>0$ is longer along the horizontal axis. The hyperbola $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$ has a minus sign between its two terms. The parabola $y^2=2px$ with $p>0$ has focus $F\left(\frac{p}{2},0\right)$.`,
-    w: R`Each curve is defined by distances: an ellipse has a constant sum of distances to two foci, a hyperbola a constant difference, and a parabola equal distances to the focus and to the directrix. Writing those conditions in coordinates gives the three standard equations.`,
-    p: R`Taking $a^2$ and $b^2$ as the semi-axis lengths. The ellipse $\frac{x^2}{9}+\frac{y^2}{4}=1$ has semi-major axis $3$ and semi-minor axis $2$.`,
-    ex: [
-      [R`What are the semi-axes of the ellipse $\frac{x^2}{9}+\frac{y^2}{4}=1$?`, [
-        [R`The denominator under $x^2$ is $a^2=9$, so $a=3$.`, R`A semi-axis is the non-negative root of the denominator, not the denominator itself.`],
-        [R`The denominator under $y^2$ is $b^2=4$, so $b=2$.`, R`Because $a>b>0$, the major axis lies on the horizontal axis and the minor axis on the vertical axis.`],
-      ], R`The semi-axes are $a=3$ and $b=2$, with $a>b>0$.`],
-      [R`Find the foci of the ellipse $\frac{x^2}{25}+\frac{y^2}{9}=1$.`, [
-        [R`We have $a=5$, $b=3$, and $c^2=a^2-b^2=16$, so $c=4$.`, R`For an ellipse, the distance from the centre to a focus satisfies $c^2=a^2-b^2$.`],
-        [R`The foci lie on the major axis, here the horizontal axis: $F_1(-4,0)$ and $F_2(4,0)$.`, R`The major axis is the one with the larger denominator in the standard equation.`],
-      ], R`The foci are $F_1(-4,0)$ and $F_2(4,0)$.`],
-    ],
-    dr: [
-      [R`For the hyperbola $\frac{x^2}{9}-\frac{y^2}{4}=1$, what is $a$?`, R`The number $a$ is $3$.`, R`The denominator under $x^2$ is $a^2$. The non-negative root of $9$ is $3$.`],
-      [R`Write the parabola $y^2=8x$ as $y^2=2px$. Where is its focus?`, R`Since $2p=8$ we get $p=4$, and the focus is $F(2,0)$.`, R`From $2p=8$ we get $p=4$. The focus lies at $p$ divided by $2$, which is $2$.`],
-      [R`Is the point $(3,0)$ on the ellipse $\frac{x^2}{9}+\frac{y^2}{4}=1$?`, R`Yes, because substituting it gives $1$.`, R`A point is on the ellipse when the left-hand side of the standard equation equals $1$.`],
-    ],
-  },
   "quy-tac": {
     s: R`The product rule applies when a task is made of successive steps. The sum rule applies when the ways of doing it exclude each other. Adding the counts of successive steps undercounts.`,
     w: R`Each way of doing the first step can be followed by every way of doing the second step, so the counts multiply. When the options cannot happen together, each way belongs to exactly one option, so the counts add.`,

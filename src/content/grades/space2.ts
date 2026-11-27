@@ -45,14 +45,6 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     hide: ["P1", "P2", "P3", "P4"],
     alt: { vi: "Đường AH vuông góc với mặt phẳng tại H; HB nằm trong mặt phẳng; đường BD trong mặt phẳng vuông góc với HB nên cũng vuông góc với AB.", en: "The line AH is perpendicular to the plane at H; HB lies in the plane; the line BD in the plane is perpendicular to HB and hence also to AB." },
   },
-  "11/goc-kc": {
-    points: { ...pyrDeu.points, O: [2, 2, 0], M: [2, 0, 0] },
-    edges: [...pyrDeu.edges.map((e) => (e.a === "S" && e.b === "D" ? { ...e, s: "hidden" as const } : e)), { a: "S", b: "O", s: "hl2" }, { a: "O", b: "M", s: "hl2" }, { a: "S", b: "M", s: "hl" }],
-    right: [{ at: "O", p: "S", q: "M" }],
-    angles: [{ at: "M", p: "O", q: "S", label: "φ" }],
-    dots: ["O", "M"],
-    alt: { vi: "Hình chóp đều S.ABCD có chân đường cao O là tâm đáy; M là trung điểm cạnh AB; góc SMO là góc phẳng của nhị diện giữa mặt bên và mặt đáy.", en: "A regular pyramid S.ABCD whose foot of altitude O is the centre of the base; M is the midpoint of AB; the angle SMO is the plane angle of the dihedral angle between a lateral face and the base." },
-  },
   "11/the-tich-11": {
     points: prism,
     edges: [
@@ -165,24 +157,6 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     axes: [4, 4, 4],
     dots: ["M", "T"],
     alt: { vi: "Đường thẳng qua điểm M song song với trục Ox, điểm T ứng với tham số bằng hai, cùng mặt cầu tâm O bán kính ba.", en: "The line through the point M parallel to the Ox axis, the point T for parameter two, together with the sphere with centre O and radius three." },
-  },
-  "12/goc-kc-12": {
-    points: { O: [0, 0, 0], P: [0, 0, 5], U: [2, 0, 0], W: [2, 2, 0], ...{ Q1: [-3, -3, 0], Q2: [3, -3, 0], Q3: [3, 3, 0], Q4: [-3, 3, 0] } },
-    edges: [{ a: "P", b: "O", s: "hl" }, { a: "O", b: "U", s: "arrow" }, { a: "O", b: "W", s: "arrow" }, ...quadEdges(["Q1", "Q2", "Q3", "Q4"]).map((e) => ({ ...e, s: "hidden" as const }))],
-    planes: [{ pts: ["Q1", "Q2", "Q3", "Q4"], tone: "a" }],
-    right: [{ at: "O", p: "P", q: "U" }],
-    angles: [{ at: "O", p: "U", q: "W", label: "45°" }],
-    hide: ["Q1", "Q2", "Q3", "Q4"],
-    alt: { vi: "Điểm P nằm trên trục Oz cách mặt phẳng Oxy một khoảng năm (đoạn PO), và hai vectơ trong mặt phẳng này tạo với nhau góc bốn mươi lăm độ.", en: "The point P on the Oz axis is at distance five from the Oxy plane (the segment PO), and two vectors in this plane make a forty-five degree angle." },
-  },
-  "12/vtt-d-mp": {
-    points: { I: [1, 2, 0], D1: [0, 3, -1], D2: [2, 1, 1], ...{ R1: [3, 1, -1], R2: [0, 4, -1], R3: [-1, 3, 1], R4: [2, 0, 1] } },
-    edges: [{ a: "D1", b: "D2", s: "arrowhl", label: "d" }, ...quadEdges(["R1", "R2", "R3", "R4"]).map((e) => ({ ...e, s: "hidden" as const }))],
-    planes: [{ pts: ["R1", "R2", "R3", "R4"], tone: "a" }],
-    dots: ["I"],
-    hide: ["R1", "R2", "R3", "R4", "D1", "D2"],
-    view: { dx: 0.3, dz: 0.25 },
-    alt: { vi: "Đường thẳng d cắt mặt phẳng tại đúng một điểm I; hai đầu của d nằm ở hai phía của mặt phẳng.", en: "The line d meets the plane at exactly one point I; the two ends of d lie on opposite sides of the plane." },
   },
   "12/kc-hai-dt": {
     points: { O: [0, 0, 0], B: [0, 0, 3], E1: [-1, 0, 0], E2: [3, 0, 0], F1: [0, -1, 3], F2: [0, 3, 3] },
@@ -420,6 +394,16 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     dots: ["I", "A", "N", "F"],
     view: { dx: 0.3, dz: 0.25 },
     alt: { vi: "Mặt cầu tâm I và điểm A ở ngoài; đường thẳng IA cắt mặt cầu tại điểm gần A nhất là N và điểm xa A nhất là F, nên MA nhỏ nhất bằng IA trừ bán kính và lớn nhất bằng IA cộng bán kính.", en: "A sphere with centre I and a point A outside it; the line IA meets the sphere at the point N nearest to A and the point F farthest from A, so MA is least equal to IA minus the radius and greatest equal to IA plus the radius." },
+  },
+  "11/ty-so-the-tich": {
+    ...(() => {
+      const f = pyr([0, 0, 3], { A: [0, 0, 0], B: [4, 0, 0], C: [0.5, 2.4, 0] }, ["CA"]);
+      const S = f.points.S!;
+      return { points: { ...f.points, M: lerp(S, f.points.A!, 0.5), N: lerp(S, f.points.B!, 2 / 3), P: lerp(S, f.points.C!, 0.75) }, edges: f.edges };
+    })(),
+    planes: [{ pts: ["M", "N", "P"], tone: "a" }],
+    dots: ["M", "N", "P"],
+    alt: { vi: "Hình chóp tam giác S.ABC với ba điểm M, N, P nằm trên ba cạnh bên SA, SB, SC; mặt phẳng MNP được tô màu và tách ra khối chóp nhỏ S.MNP có thể tích bằng tích ba tỉ số cạnh nhân thể tích khối chóp lớn.", en: "A triangular pyramid S.ABC with three points M, N, P on the lateral edges SA, SB, SC; the plane MNP is shaded and cuts off the small pyramid S.MNP whose volume is the product of the three edge ratios times the volume of the large pyramid." },
   },
 };
 export { cross };

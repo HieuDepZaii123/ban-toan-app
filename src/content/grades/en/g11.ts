@@ -366,26 +366,6 @@ export const g11En: Record<string, LessonEn> = {
       [R`A line $d$ in the base plane is perpendicular to the projection $HB$. By the theorem of three perpendiculars, is $d$ perpendicular to $AB$?`, R`Yes. Being perpendicular to the projection is necessary and sufficient.`, R`The perpendicularity of $d$ and $AB$ is exactly what the theorem of three perpendiculars states; no lengths are needed.`],
     ],
   },
-  "goc-kc": {
-    s: R`The plane angle of a dihedral angle is formed by two lines perpendicular to the common edge at one point of it, one line in each face. The distance between the two parallel bases of a prism equals the prism's height.`,
-    w: R`Two lines perpendicular to the common edge at one point measure exactly how far the faces open, like measuring the opening of a book with two edges of paper perpendicular to the spine. Distance is always measured along a perpendicular segment because that is the shortest one.`,
-    p: R`Taking the angle between any two lines lying in the two faces. Both lines must be perpendicular to the common edge at the same point.`,
-    ex: [
-      [R`A regular pyramid has a square base of side $4$, the foot of the height $O$ is the centre of the base, and $SO=2$. Let $M$ be the midpoint of a base edge, so $OM=2$. Find the tangent of the plane angle of the dihedral angle between a lateral face and the base, given that this plane angle is $\widehat{SMO}$.`, [
-        [R`Since $SO$ is perpendicular to the base and $OM$ is perpendicular to the base edge at $M$, the angle $\widehat{SMO}$ is a plane angle of the dihedral angle.`, R`The lines $OM$ and $SM$ are both perpendicular to the common edge at $M$, one in each face.`],
-        [R`Triangle $SOM$ has a right angle at $O$, so $\tan\widehat{SMO}=\frac{SO}{OM}=\frac{2}{2}=1$. The angle is $45^\circ$.`, R`The side opposite the angle at $M$ is $SO$, and the adjacent side is $OM$. A tangent of $1$ gives $45^\circ$.`],
-      ], R`The tangent of the plane angle is $1$, so the dihedral angle is $45^\circ$.`],
-      [R`The cube $ABCD.A'B'C'D'$ has edge $a$. Find the distance from $A$ to the plane $(A'B'C'D')$ and the angle between $AC'$ and the base $(ABCD)$.`, [
-        [R`The segment $AA'$ is perpendicular to the top plane, so the distance is $AA'=a$.`, R`The distance from a point to a plane is the length of the perpendicular dropped from that point.`],
-        [R`The projection of $AC'$ onto the base is $AC=a\sqrt2$, and $CC'=a$, so $\tan\varphi=\frac{a}{a\sqrt2}=\frac{\sqrt2}{2}$.`, R`The angle between a line and a plane is the angle between the line and its projection onto the plane.`],
-      ], R`The distance is $a$, and the angle $\varphi$ satisfies $\tan\varphi=\frac{\sqrt2}{2}$, about $35.3^\circ$.`],
-    ],
-    dr: [
-      [R`For the same pyramid, if $SO=6$ and $OM=3$, what is the tangent of the plane angle?`, R`The tangent is $2$.`, R`The tangent of the plane angle is the height divided by the distance from the base centre to the base edge.`],
-      [R`A prism has two parallel bases and height $9$. What is the distance between the two bases?`, R`The distance is $9$.`, R`The distance between the two parallel base planes is the height dropped perpendicularly onto the other base.`],
-      [R`If $SO=OM=5$, how many degrees is the plane angle $\widehat{SMO}$?`, R`The angle is $45^\circ$.`, R`The tangent is $1$ when the two legs of the right triangle are equal.`],
-    ],
-  },
   "the-tich-11": {
     s: R`This lesson deals with prisms and pyramids whose bases are polygons. The volume of a prism is the base area times the height. The volume of a pyramid is one third of that product. The height is perpendicular to the base. A solid with a circular base is not a pyramid.`,
     w: R`A prism is a stack of equal base slices, so its volume is the base area times the height. A triangular prism can be cut into three pyramids of equal volume, so a pyramid is one third of the prism with the same base and height.`,

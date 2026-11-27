@@ -119,14 +119,6 @@ export const spaceFigures: Record<string, SpaceFigure> = {
     dots: ["H"],
     alt: { vi: "Hình hộp chữ nhật với hai đường chéo nhau AA' và BD. Khoảng cách giữa chúng bằng AH, đường cao hạ từ A xuống BD trong mặt đáy.", en: "A rectangular box with the skew lines AA' and BD. The distance between them is AH, the altitude from A to BD in the base." },
   },
-  "11/kc-the-tich": {
-    points: { O: [0, 0, 0], A: [3, 0, 0], B: [0, 3, 0], C: [0, 0, 3], H: [1, 1, 1] },
-    edges: [{ a: "O", b: "A" }, { a: "O", b: "B", s: "hidden" }, { a: "O", b: "C" }, { a: "A", b: "B" }, { a: "B", b: "C" }, { a: "A", b: "C" }, { a: "O", b: "H", s: "hl" }],
-    planes: [{ pts: ["A", "B", "C"], tone: "a" }],
-    dots: ["H"],
-    view: { dx: 0.75, dz: 0.5 },
-    alt: { vi: "Tứ diện OABC có OA, OB, OC đôi một vuông góc. OH là khoảng cách từ O đến mặt phẳng (ABC) tô màu.", en: "The tetrahedron OABC with OA, OB, OC pairwise perpendicular. OH is the distance from O to the shaded plane (ABC)." },
-  },
   "11/thales-kg": {
     points: { S: [1.5, 0, 3], A: [0, 0, 0], B: [3, 0, 0], M: lerp([1.5, 0, 3], [0, 0, 0], 1 / 3), N: lerp([1.5, 0, 3], [3, 0, 0], 1 / 3) },
     edges: [{ a: "S", b: "A" }, { a: "S", b: "B" }, { a: "A", b: "B", s: "hl2" }, { a: "M", b: "N", s: "hl" }],

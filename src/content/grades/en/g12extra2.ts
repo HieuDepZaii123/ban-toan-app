@@ -168,26 +168,6 @@ export const g12Extra2En: Record<string, LessonEn> = {
       [R`Compute $\displaystyle\int_0^1\frac{x}{x^2+1}\,dx$.`, R`The value is $\frac{1}{2}\ln2$.`, R`Write $\frac{x}{x^2+1}=\frac{1}{2}\cdot\frac{2x}{x^2+1}$, so the value is $\frac{1}{2}\ln2$.`],
     ],
   },
-  "vtt-d-mp": {
-    s: R`Substitute the parametric coordinates of the line $d$ into the equation of the plane $(P)$ to get an equation $\alpha t+\beta=0$. If $\alpha\ne0$ then $d$ meets $(P)$ at one point. If $\alpha=0$ and $\beta\ne0$ then $d$ is parallel to $(P)$. If $\alpha=0$ and $\beta=0$ then $d$ lies in $(P)$.`,
-    w: R`A common point of the line and the plane corresponds to a value $t$ satisfying the equation after substitution. A linear equation in $t$ has one solution, no solution, or every $t$ as a solution.`,
-    p: R`Concluding parallel when the coefficient of $t$ is $0$ without looking at the remaining constant. If the constant is also $0$ then the line lies in the plane.`,
-    ex: [
-      [R`Find the relative position of $d:\ x=1+t;\ y=2-t;\ z=t$ and $(P):\ x+y+z-3=0$.`, [
-        [R`Substitute into $(P)$: $(1+t)+(2-t)+t-3=t$.`, R`Add the terms containing $t$ and the constants separately.`],
-        [R`The equation $t=0$ has coefficient $\alpha=1\ne0$, so $d$ meets $(P)$ at $t=0$, the point $(1;\ 2;\ 0)$.`, R`When the coefficient of $t$ is not $0$ the equation has exactly one solution.`],
-      ], R`The line $d$ meets $(P)$ at the point $(1;\ 2;\ 0)$.`],
-      [R`Find the relative position of $d:\ x=t;\ y=1+t;\ z=2t$ and $(P):\ x-y+2=0$.`, [
-        [R`Substitute into $(P)$: $t-(1+t)+2=1$, that is $0\cdot t+1=0$.`, R`The coefficient of $t$ is $\alpha=0$ and the constant is $\beta=1$.`],
-        [R`The equation $1=0$ has no solution, so $d$ is parallel to $(P)$.`, R`No value of $t$ gives a common point.`],
-      ], R`The line $d$ is parallel to the plane $(P)$.`],
-    ],
-    dr: [
-      [R`Find the relative position of $d:\ x=t;\ y=t;\ z=1$ and $(P):\ x-y=0$.`, R`The line lies in the plane.`, R`Substituting gives $t-t=0$, true for every $t$, so $d$ lies in $(P)$.`],
-      [R`For which $t$ does $d:\ x=2t;\ y=1;\ z=t$ meet the plane $(P):\ x+z-3=0$?`, R`At $t=1$.`, R`Substituting: $2t+t-3=0$, so $t=1$.`],
-      [R`Find $m$ so that $d:\ x=t;\ y=1;\ z=t$ is parallel to $(P):\ x-z+m=0$ and does not lie in $(P)$.`, R`Any $m\ne0$.`, R`Substituting gives $t-t+m=m$, so we need $m\ne0$ for the equation $m=0$ to have no solution.`],
-    ],
-  },
   "kc-hai-dt": {
     s: R`Two skew lines: $\Delta_1$ through $A$ with direction vector $\vec{u_1}$, and $\Delta_2$ through $B$ with direction vector $\vec{u_2}$. The distance between them is $d=\frac{\left|\left[\vec{u_1},\vec{u_2}\right]\cdot\overrightarrow{AB}\right|}{\left|\left[\vec{u_1},\vec{u_2}\right]\right|}$.`,
     w: R`The volume of a parallelepiped built on three vectors is the scalar triple product, and the base area is the length of the cross product. The height, which is the distance between the two lines, is the quotient of those two quantities.`,

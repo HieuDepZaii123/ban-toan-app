@@ -37,10 +37,6 @@ export const thptExtra2Notes: NoteBook = {
     R`Đạo hàm của $\ln|u|$ là $\frac{u'}{u}$, nên tích phân có tử là đạo hàm của mẫu thì quay về hàm $\ln$. Nếu tử chỉ bằng một hằng số nhân đạo hàm của mẫu thì đưa hằng số ra ngoài.`,
     R`Viết nguyên hàm của $\frac{1}{x+1}$ là $\frac{1}{(x+1)^2}$ hoặc quên hệ số khi tử không đúng bằng đạo hàm của mẫu, ví dụ $\frac{x}{x^2+1}$ cần nhân thêm $\frac{1}{2}$.`,
   ),
-  "12/vtt-d-mp": note(
-    R`Điểm chung của đường thẳng và mặt phẳng ứng với giá trị $t$ thỏa phương trình sau khi thay vào. Phương trình bậc nhất theo $t$ có một nghiệm, vô nghiệm hoặc nghiệm với mọi $t$.`,
-    R`Kết luận song song khi hệ số của $t$ bằng $0$ mà không xét hằng số còn lại. Nếu hằng số cũng bằng $0$ thì đường thẳng nằm trong mặt phẳng.`,
-  ),
   "12/kc-hai-dt": note(
     R`Thể tích khối hộp dựng trên ba vectơ bằng tích hỗn tạp, còn diện tích đáy bằng độ dài tích có hướng. Chiều cao, tức khoảng cách giữa hai đường thẳng, là thương của hai đại lượng đó.`,
     R`Quên lấy giá trị tuyệt đối của tích hỗn tạp, hoặc dùng công thức này cho hai đường thẳng cắt nhau hay song song. Khi đó tích hỗn tạp bằng $0$ hoặc tích có hướng bằng $0$.`,
@@ -204,5 +200,13 @@ export const thptExtra2Notes: NoteBook = {
   "12/cuc-tri-mat-cau": note(
     R`Bất đẳng thức tam giác cho tam giác $IMA$ chặn $MA$ giữa hiệu và tổng của $IA$ và $R$, và cận đạt khi ba điểm thẳng hàng.`,
     R`Dùng $IA-R$ cho điểm trong mặt cầu mà không lấy giá trị tuyệt đối, hoặc áp dụng khoảng từ $h-R$ đến $h+R$ khi mặt phẳng thật ra cắt mặt cầu.`,
+  ),
+  "12/vdc-dung-hinh-oxyz": note(
+    R`Mỗi điều kiện hình học thành một phương trình theo cùng một ẩn, nên bài nhiều điều kiện quy về giải một phương trình theo một tham số; chỉ cần dùng đúng tham số của đúng đối tượng.`,
+    R`Dùng cùng một chữ cái cho tham số của hai đường thẳng, hoặc không kiểm tra điểm tìm được có nằm trên cả hai đối tượng yêu cầu.`,
+  ),
+  "12/vdc-cuc-tri-binh-phuong": note(
+    R`Điểm tâm tỉ cự $K$ làm mất các số hạng bậc nhất, nên tổng bình phương có trọng số tách thành phần phụ thuộc $M$ chỉ qua $MK^2$ và một hằng số; tìm cực tiểu tổng chính là tìm cực tiểu khoảng cách từ $M$ đến $K$.`,
+    R`Dùng trung điểm khi các trọng số không bằng nhau, hoặc quên cộng hằng số sau khi tìm khoảng cách nhỏ nhất.`,
   ),
 };

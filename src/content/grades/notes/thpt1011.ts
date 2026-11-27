@@ -141,10 +141,6 @@ export const thpt1011Notes: NoteBook = {
     R`Hai đường chéo nhau có đúng một đoạn vuông góc chung, và nó bằng khoảng cách giữa đường này và mặt phẳng chứa đường kia song song với nó. Khi một đường vuông góc mặt phẳng chứa đường kia, chiếu đường đó thành một điểm.`,
     R`Lấy khoảng cách giữa hai điểm bất kì của hai đường thay cho độ dài đoạn vuông góc chung, hoặc quên chiếu về cùng một mặt phẳng.`,
   ),
-  "11/kc-the-tich": note(
-    R`Thể tích tứ diện tính theo hai cách: đáy này với chiều cao đã biết, hoặc đáy kia với chiều cao cần tìm. Cho hai kết quả bằng nhau thì chiều cao cần tìm là $\frac{3V}{S}$.`,
-    R`Quên nhân $3$ trong $\frac{3V}{S}$, hoặc dùng diện tích sai mặt, tức không phải mặt đang cần tính khoảng cách tới.`,
-  ),
   "11/thales-kg": note(
     R`Các mặt phẳng song song cắt hai đường thẳng tạo ra các tam giác đồng dạng, nên các cặp đoạn tương ứng cùng tỉ lệ. Chọn đúng cặp đoạn tương ứng, đo từ cùng một phía.`,
     R`Viết sai thứ tự đoạn thẳng trong tỉ lệ thức, chẳng hạn $\frac{SM}{MA}$ thay cho $\frac{SM}{SA}$ khi tính $MN$.`,
@@ -204,5 +200,9 @@ export const thpt1011Notes: NoteBook = {
   "10/hai-duong-tron": note(
     R`Hai đường tròn chạm nhau khi khoảng cách hai tâm bằng tổng hoặc hiệu hai bán kính, nên vị trí tương đối được quyết định bởi việc so một số với hai mốc.`,
     R`Dùng tổng hai bán kính cho trường hợp tiếp xúc trong, hoặc quên rằng hai đường tròn cùng bán kính khác nhau không thể tiếp xúc trong.`,
+  ),
+  "11/ty-so-the-tich": note(
+    R`Hai khối chóp chung đỉnh và chung góc ở đỉnh có diện tích đáy và chiều cao đều đổi theo tỉ số các cạnh từ đỉnh, nên tỉ số thể tích là tích ba tỉ số cạnh; mọi chóp đáy tứ giác chia được thành các chóp tam giác.`,
+    R`Lấy tỉ số cạnh tính từ đáy thay vì từ đỉnh $S$, hoặc dùng công thức tích ba tỉ số khi hai khối không chung đỉnh.`,
   ),
 };
