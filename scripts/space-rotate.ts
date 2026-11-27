@@ -40,7 +40,7 @@ try {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
-  for (const path of ["/kien-thuc/11/quy-tac-vecto-kg", "/kien-thuc/12/mat-cau-tx", "/kien-thuc/12/vecto-kg"]) {
+  for (const path of ["/kien-thuc/12/quy-tac-vecto-kg", "/kien-thuc/12/mat-cau-tx", "/kien-thuc/12/vecto-kg"]) {
     await page.goto(`${BASE}${path}`, { waitUntil: "networkidle" });
     const svg = page.locator("svg.space-figure").first();
     if (!(await svg.count())) { fail(path, "không có hình"); continue; }

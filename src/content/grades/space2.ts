@@ -375,5 +375,23 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     view: { dx: 0.3, dz: 0.25 },
     alt: { vi: "Mặt phẳng nằm ngang với hai điểm A và B cùng một phía; đường thẳng AB cắt mặt phẳng tại M ngoài đoạn AB, và tại M hiệu hai khoảng cách MA và MB đạt giá trị lớn nhất bằng AB.", en: "A horizontal plane with two points A and B on the same side; the line AB meets the plane at M outside the segment AB, and at M the difference of the distances MA and MB reaches its maximum, equal to AB." },
   },
+  "12/chung-minh-vecto-kg": {
+    points: box(3, 2, 2),
+    edges: [...boxEdges, { a: "A", b: "C'", s: "hl" }, { a: "A", b: "D'", s: "hl2" }],
+    planes: [{ pts: ["A", "B", "C'", "D'"], tone: "a" }],
+    alt: { vi: "Hình hộp ABCD.A'B'C'D' với mặt phẳng đi qua bốn điểm A, B, C', D' được tô màu; hai đường chéo AC' và AD' nằm trong mặt phẳng này nên bốn điểm đồng phẳng.", en: "A parallelepiped ABCD.A'B'C'D' with the plane through the four points A, B, C', D' shaded; the diagonals AC' and AD' lie in this plane so the four points are coplanar." },
+  },
+  "12/tinh-goc-do-dai-vecto": {
+    points: { ...box(2, 2, 2), O: [1, 1, 1] },
+    edges: [...boxEdges, { a: "A", b: "C'", s: "hl" }, { a: "B", b: "D'", s: "hl2" }],
+    dots: ["O"],
+    alt: { vi: "Hình lập phương ABCD.A'B'C'D' với hai đường chéo AC' và BD' cắt nhau tại tâm O; góc giữa hai đường chéo có cô-sin bằng một phần ba.", en: "A cube ABCD.A'B'C'D' with the two diagonals AC' and BD' meeting at the centre O; the angle between the diagonals has cosine one third." },
+  },
+  "12/toa-do-hoa-hinh": {
+    ...(() => { const f = pyr([0, 0, 2], { A: [0, 0, 0], B: [2, 0, 0], C: [2, 2, 0], D: [0, 2, 0] }, ["CD", "DA"]); return { points: f.points, edges: [...f.edges, { a: "B", b: "D", s: "hidden" as const }] }; })(),
+    planes: [{ pts: ["S", "B", "D"], tone: "a" }],
+    right: [{ at: "A", p: "B", q: "D" }, { at: "A", p: "B", q: "S" }, { at: "A", p: "D", q: "S" }],
+    alt: { vi: "Hình chóp S.ABCD có đáy là hình vuông cạnh hai và SA vuông góc với đáy; ba cạnh AB, AD, AS đôi một vuông góc nên được đặt dọc ba trục tọa độ, và mặt phẳng SBD được tô màu.", en: "A pyramid S.ABCD whose base is a square of side two and with SA perpendicular to the base; the three edges AB, AD, AS are pairwise perpendicular so they are placed along the three coordinate axes, and the plane SBD is shaded." },
+  },
 };
 export { cross };

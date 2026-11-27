@@ -75,7 +75,7 @@ const on = (key: string, n: string) => spaceFigures[key]!.points[n]!;
   assert.ok(near(Math.abs(dot(u, v)) / (len(u) * len(v)), 0.5), "góc AC và A'D bằng 60 độ");
 }
 {
-  const k = "11/tich-vo-huong-hinh";
+  const k = "12/tich-vo-huong-hinh";
   const A = on(k, "A"), B = on(k, "B"), C = on(k, "C");
   assert.ok(near(dot(sub(B, A), sub(C, A)) / (len(sub(B, A)) * len(sub(C, A))), Math.SQRT1_2), "góc BAC bằng 45 độ");
 }
@@ -261,6 +261,26 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   const A = on(k, "A"), B = on(k, "B"), M = on(k, "M");
   assert.ok(near(M[2], 0) && near(len(cross(sub(B, A), sub(M, A))), 0), "M thuộc đường AB và mặt phẳng z = 0");
   assert.ok(near(Math.abs(len(sub(M, A)) - len(sub(M, B))), len(sub(B, A))), "|MA - MB| bằng AB");
+}
+{
+  const k = "12/chung-minh-vecto-kg";
+  const A = on(k, "A"), B = on(k, "B"), C2 = on(k, "C'"), D2 = on(k, "D'");
+  const ac = sub(C2, A), ab = sub(B, A), ad = sub(D2, A);
+  assert.ok(near(len(sub(ad, sub(ac, ab))), 0), "AD' = AC' - AB nên bốn điểm A, B, C', D' đồng phẳng");
+}
+{
+  const k = "12/tinh-goc-do-dai-vecto";
+  const A = on(k, "A"), B = on(k, "B"), C2 = on(k, "C'"), D2 = on(k, "D'"), O = on(k, "O");
+  const u = sub(C2, A), v = sub(D2, B);
+  assert.ok(near(Math.abs(dot(u, v)) / (len(u) * len(v)), 1 / 3), "cô-sin góc giữa hai đường chéo bằng 1/3");
+  assert.ok(near(O[0] * 2, A[0] + C2[0]) && near(O[2] * 2, A[2] + C2[2]) && near(O[1] * 2, B[1] + D2[1]), "O là trung điểm của cả hai đường chéo");
+}
+{
+  const k = "12/toa-do-hoa-hinh";
+  const A = on(k, "A"), B = on(k, "B"), D = on(k, "D"), S = on(k, "S"), C = on(k, "C");
+  assert.ok(near(dot(sub(B, A), sub(D, A)), 0) && near(dot(sub(B, A), sub(S, A)), 0) && near(dot(sub(D, A), sub(S, A)), 0), "AB, AD, AS đôi một vuông góc");
+  assert.ok(near(len(sub(S, A)), 2) && near(len(sub(B, A)), 2), "SA = AB = 2");
+  assert.ok(near(dot(sub(C, S), sub(D, B)), 0), "SC vuông góc BD");
 }
 // Hình của chương đại cương lớp 11.
 {

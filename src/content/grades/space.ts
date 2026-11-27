@@ -54,23 +54,23 @@ sabcd.edges = sabcd.edges.map((e) => ((e.a === "S" && e.b === "D") || (e.a === "
 export const sabc = pyr([0, 0, 3], { A: [0, 0, 0], B: [4, 0, 0], C: [0.5, 2.4, 0] }, ["CA"]);
 
 export const spaceFigures: Record<string, SpaceFigure> = {
-  "11/quy-tac-vecto-kg": {
+  "12/quy-tac-vecto-kg": {
     points: box(3, 2, 2),
     edges: withStyle(boxEdges, { AB: { s: "arrow", label: "AB" }, AD: { s: "arrow", label: "AD" }, "AA'": { s: "arrow", label: "AA'" } }).concat([{ a: "A", b: "C'", s: "arrowhl", label: "AC'" }]),
     alt: { vi: "Hình hộp ABCD.A'B'C'D' với ba vectơ AB, AD, AA' xuất phát từ A và đường chéo AC' là tổng của chúng.", en: "A box ABCD.A'B'C'D' with the three vectors AB, AD, AA' from A and the diagonal AC' as their sum." },
   },
-  "11/phan-tich-vecto": {
+  "12/phan-tich-vecto": {
     points: box(3, 2, 2),
     edges: withStyle(boxEdges, { AB: { s: "arrow", label: "a" }, AD: { s: "arrow", label: "b" }, "AA'": { s: "arrow", label: "c" } }).concat([{ a: "B", b: "D'", s: "arrowhl", label: "BD'" }]),
     alt: { vi: "Hình hộp với ba cạnh a, b, c xuất phát từ A và vectơ BD' đi từ B đến D' (cần biểu diễn theo a, b, c).", en: "A box with the three edges a, b, c from A and the vector BD' from B to D' to be expressed in terms of a, b, c." },
   },
-  "11/tich-vo-huong-hinh": {
+  "12/tich-vo-huong-hinh": {
     points: box(2, 2, 2),
     edges: withStyle(boxEdges, { AB: { s: "arrow", label: "AB" } }).concat([{ a: "A", b: "C", s: "arrowhl", label: "AC" }]),
     angles: [{ at: "A", p: "B", q: "C", label: "45°" }],
     alt: { vi: "Hình lập phương với hai vectơ AB và AC xuất phát từ A, góc giữa chúng bằng 45 độ.", en: "A cube with the two vectors AB and AC from A, the angle between them being 45 degrees." },
   },
-  "11/dong-phang-3-vecto": {
+  "12/dong-phang-3-vecto": {
     points: box(3, 2, 2),
     edges: withStyle(boxEdges, { AB: { s: "arrow" }, AD: { s: "arrow" }, "AA'": { s: "arrowhl" } }),
     planes: [{ pts: ["A", "B", "C", "D"], tone: "a" }],

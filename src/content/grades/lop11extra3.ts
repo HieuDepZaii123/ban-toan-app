@@ -1,10 +1,10 @@
-/** Lớp 11, phần chi tiết thứ ba: vectơ, góc, khoảng cách và quan hệ trong không gian. */
+/** Lớp 11 và 12, phần chi tiết thứ ba: vectơ (chuyển sang lớp 12 theo chương trình 2018), góc, khoảng cách và quan hệ trong không gian. */
 import type { GradeChapter } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
 
 const R = String.raw;
 
-export const lop11VectoKg: GradeChapter = chuong("vecto-kg-11", "Vectơ trong không gian", [
+export const lop12VectoKg: GradeChapter = chuong("vecto-kg-12", "Vectơ trong không gian", [
   bai("quy-tac-vecto-kg", "Quy tắc cộng vectơ trong không gian",
     R`Quy tắc ba điểm: $\overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}$. Quy tắc hình bình hành: nếu $ABCD$ là hình bình hành thì $\overrightarrow{AB}+\overrightarrow{AD}=\overrightarrow{AC}$. Quy tắc hình hộp: với hình hộp $ABCD.A'B'C'D'$ thì $\overrightarrow{AB}+\overrightarrow{AD}+\overrightarrow{AA'}=\overrightarrow{AC'}$. Điểm $G$ là trọng tâm tam giác $ABC$ khi $\overrightarrow{GA}+\overrightarrow{GB}+\overrightarrow{GC}=\vec0$.`,
     [

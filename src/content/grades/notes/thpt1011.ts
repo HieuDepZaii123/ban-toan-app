@@ -101,19 +101,19 @@ export const thpt1011Notes: NoteBook = {
     R`Đường chéo đáy và chiều cao là hai cạnh góc vuông của một tam giác vuông có đường chéo hình hộp là cạnh huyền. Áp dụng Pi-ta-go hai lần cho công thức $\sqrt{a^2+b^2+c^2}$.`,
     R`Dùng công thức đường chéo hình lập phương $a\sqrt3$ cho hình hộp chữ nhật không đều, hoặc tính diện tích toàn phần thiếu hệ số $2$.`,
   ),
-  "11/quy-tac-vecto-kg": note(
+  "12/quy-tac-vecto-kg": note(
     R`Mỗi quy tắc cộng chỉ là cách đi từ điểm đầu đến điểm cuối qua các điểm trung gian, và kết quả không phụ thuộc đường đi. Hình hộp có ba cạnh xuất phát từ một đỉnh, nên tổng ba vectơ đó là đường chéo qua đỉnh ấy.`,
     R`Cộng hai vectơ mà điểm cuối vectơ đầu không trùng điểm đầu vectơ sau, hoặc dùng quy tắc hình hộp cho ba vectơ không cùng xuất phát từ một đỉnh.`,
   ),
-  "11/phan-tich-vecto": note(
+  "12/phan-tich-vecto": note(
     R`Ba cạnh của hình hộp là ba vectơ không đồng phẳng nên làm cơ sở, và mọi vectơ đi từ đỉnh này đến đỉnh khác là một đường đi dọc cạnh. Đổi chiều một cạnh đổi dấu hệ số tương ứng.`,
     R`Quên đổi dấu khi đi ngược chiều cạnh, như viết $\overrightarrow{BA}=\vec a$, hoặc bỏ sót hệ số $\frac12$ khi đi tới trung điểm.`,
   ),
-  "11/tich-vo-huong-hinh": note(
+  "12/tich-vo-huong-hinh": note(
     R`Tích vô hướng đo mức hai vectơ cùng hướng, bằng tích hai độ dài nhân $\cos\varphi$. Bình phương độ dài của tổng khai triển như bình phương một tổng, và số hạng giữa chính là tích vô hướng.`,
     R`Lấy góc của hai đoạn thẳng thay cho góc của hai vectơ. Khi hai vectơ không cùng điểm đầu phải tịnh tiến về cùng một điểm trước.`,
   ),
-  "11/dong-phang-3-vecto": note(
+  "12/dong-phang-3-vecto": note(
     R`Nếu $\vec c=m\vec a+n\vec b$ thì $\vec c$ nằm trong mặt phẳng của $\vec a$ và $\vec b$, nên ba vectơ cùng nằm trong một mặt phẳng. Ngược lại ba cạnh của hình hộp không đồng phẳng.`,
     R`Cho rằng ba vectơ đồng phẳng chỉ vì có một cặp cùng phương. Điều kiện đúng là một vectơ viết được qua hai vectơ không cùng phương còn lại.`,
   ),

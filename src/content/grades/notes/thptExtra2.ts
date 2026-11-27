@@ -177,4 +177,16 @@ export const thptExtra2Notes: NoteBook = {
     R`Hiệu hai cạnh của một tam giác không vượt quá cạnh thứ ba, nên $\left|MA-MB\right|\le AB$; dấu bằng chỉ xảy ra khi ba điểm thẳng hàng. Khoảng cách nhỏ nhất đến một đường thẳng là đoạn vuông góc.`,
     R`Dùng giao điểm của $AB$ với mặt phẳng cho cực tiểu của tổng nhưng lại lấy làm cực đại của hiệu, hoặc quên đối xứng khi hai điểm khác phía.`,
   ),
+  "12/chung-minh-vecto-kg": note(
+    R`Khi mọi vectơ cùng được viết qua ba vectơ cạnh không đồng phẳng, biểu diễn đó là duy nhất, nên hai vectơ bằng nhau khi các hệ số tương ứng bằng nhau; nhờ đó thẳng hàng, song song, đồng phẳng đều quy về so sánh hệ số.`,
+    R`Quên loại trường hợp hai đường trùng nhau khi chứng minh song song, hoặc xét ba vectơ không chung gốc mà vẫn kết luận đồng phẳng.`,
+  ),
+  "12/tinh-goc-do-dai-vecto": note(
+    R`Tích vô hướng tuyến tính theo từng vectơ, nên khi khai triển qua ba vectơ cạnh, chỉ còn các tích vô hướng đã biết giữa các cạnh; độ dài là căn của bình phương vô hướng.`,
+    R`Bỏ trị tuyệt đối khi tính góc giữa hai đường thẳng, hoặc lấy góc giữa hai vectơ không chung gốc làm góc của tam giác.`,
+  ),
+  "12/toa-do-hoa-hinh": note(
+    R`Tọa độ biến mỗi điều kiện hình học thành một phương trình, nên không cần dựng hình phụ; điều sáng tạo duy nhất là chọn gốc tại đỉnh có ba cạnh đôi một vuông góc.`,
+    R`Chọn trục không vuông góc, hoặc đặt tọa độ đỉnh không khớp với các độ dài của đề.`,
+  ),
 };
