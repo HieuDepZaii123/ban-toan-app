@@ -161,4 +161,12 @@ export const thptExtra2Notes: NoteBook = {
     R`Đường nằm trong mặt phẳng phải vuông góc với pháp tuyến, và vuông góc thêm một đường nữa thì chỉ phương là tích có hướng của hai vectơ đó. Hình chiếu là giao của mặt phẳng ban đầu với mặt phẳng chứa đường và vuông góc với nó.`,
     R`Đảo thứ tự trong tích có hướng khi cần chiều của vectơ, hoặc quên kiểm tra điểm đi qua có thật nằm trong mặt phẳng hay không.`,
   ),
+  "12/mp-cuc-tri-oxyz": note(
+    R`Phản xạ qua mặt phẳng giữ nguyên khoảng cách đến mọi điểm của mặt phẳng, nên một điểm được thay bằng điểm đối xứng để biến hai điểm cùng phía thành hai điểm khác phía, rồi dùng bất đẳng thức tam giác.`,
+    R`Lấy giao điểm của $AB$ với mặt phẳng khi hai điểm cùng phía, hoặc quên kiểm tra dấu để biết hai điểm cùng phía hay khác phía.`,
+  ),
+  "12/tong-hop-oxyz": note(
+    R`Mỗi đại lượng trong bài có ít nhất hai cách tính độc lập, nên khi chúng cho cùng kết quả ta có thể tin cả hai; khi khác nhau, một bước tính sai và cần dò lại.`,
+    R`Quên chia cho $6$ khi tính thể tích tứ diện, hoặc quên chia đôi khi tính diện tích tam giác từ độ dài tích có hướng.`,
+  ),
 };

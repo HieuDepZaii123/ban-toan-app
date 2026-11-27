@@ -211,6 +211,44 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   assert.ok(near(len(cross(sub(on(k, "B2"), on(k, "B1")), [1, 2, 0])), 0) && near(len(cross(sub(M, on(k, "B1")), [1, 2, 0])), 0), "d qua M chỉ phương (1; 2; 0)");
 }
 
+// Hình ba đường conic lớp 10.
+{
+  const k = "10/elip-tieu-diem";
+  const M = on(k, "M"), F1 = on(k, "F1"), F2 = on(k, "F2");
+  assert.ok(near(M[0] ** 2 / 25 + M[2] ** 2 / 9, 1), "M thuộc elip");
+  assert.ok(near(len(sub(M, F1)) + len(sub(M, F2)), 10), "MF1 + MF2 = 2a = 10");
+  assert.ok(near(F2[0] ** 2, 16), "tiêu điểm cách tâm c = 4");
+  for (const n of Object.keys(spaceFigures[k]!.points).filter((x) => /^E\d+$/.test(x))) assert.ok(near(on(k, n)[0] ** 2 / 25 + on(k, n)[2] ** 2 / 9, 1), `${n} thuộc elip`);
+}
+{
+  const k = "10/hypebol-tieu-diem";
+  for (const n of Object.keys(spaceFigures[k]!.points).filter((x) => /^[LR]\d+$/.test(x))) assert.ok(near(on(k, n)[0] ** 2 / 9 - on(k, n)[2] ** 2 / 16, 1), `${n} thuộc hypebol`);
+  assert.ok(near(on(k, "F2")[0] ** 2, 25), "tiêu điểm cách tâm c = 5");
+  assert.ok(near(on(k, "T2")[2] * 3, on(k, "T2")[0] * 4), "tiệm cận y = 4x/3");
+}
+{
+  const k = "10/parabol-chuan";
+  for (const n of Object.keys(spaceFigures[k]!.points).filter((x) => /^P\d+$/.test(x))) assert.ok(near(on(k, n)[2] ** 2, 12 * on(k, n)[0]), `${n} thuộc parabol`);
+  const M = on(k, "M"), F = on(k, "F"), H = on(k, "H");
+  assert.ok(near(M[2] ** 2, 12 * M[0]), "M thuộc parabol");
+  assert.ok(near(len(sub(M, F)), len(sub(M, H))), "MF bằng khoảng cách đến đường chuẩn");
+  assert.ok(near(H[0], -3) && near(F[0], 3), "đường chuẩn x = -3, tiêu điểm (3; 0)");
+}
+
+{
+  const k = "12/mp-cuc-tri-oxyz";
+  const A = on(k, "A"), B = on(k, "B"), A2 = on(k, "A2"), M = on(k, "M");
+  assert.ok(near(A2[0], A[0]) && near(A2[1], A[1]) && near(A2[2], -A[2]), "A2 đối xứng A qua mặt phẳng z = 0");
+  assert.ok(near(M[2], 0) && near(len(cross(sub(M, A2), sub(B, A2))), 0), "M thuộc A2B và mặt phẳng z = 0");
+  assert.ok(near(len(sub(B, A2)), Math.sqrt(24)), "A2B bằng 2 căn 6");
+}
+{
+  const k = "12/tong-hop-oxyz";
+  const H = on(k, "H");
+  assert.ok(near(6 * H[0] + 3 * H[1] + 2 * H[2] - 6, 0), "H thuộc mặt phẳng ABC");
+  assert.ok(near(len(cross(H, [6, 3, 2])), 0), "OH cùng phương pháp tuyến");
+  assert.ok(near(len(H), 6 / 7), "OH bằng 6/7");
+}
 // Hình của chương đại cương lớp 11.
 {
   const k = "11/giao-tuyen";

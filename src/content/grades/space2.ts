@@ -339,5 +339,22 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     view: { dx: 0.3, dz: 0.25 },
     alt: { vi: "Đường thẳng d cắt mặt phẳng (P) tại M; đường thẳng Δ nằm trong (P), đi qua M và vuông góc với d.", en: "The line d meets the plane (P) at M; the line Δ lies in (P), passes through M and is perpendicular to d." },
   },
+  "12/mp-cuc-tri-oxyz": {
+    points: { A: [1, 2, 3], B: [3, 0, 1], A2: [1, 2, -3], M: [2.5, 0.5, 0], ...quad([-1, -1, 0], [6, 0, 0], [0, 5, 0]) },
+    edges: [...quadEdges(["P1", "P2", "P3", "P4"]), { a: "A", b: "M", s: "hl" }, { a: "M", b: "B", s: "hl" }, { a: "A2", b: "M", s: "hidden" }, { a: "A", b: "A2", s: "hidden" }],
+    planes: [{ pts: ["P1", "P2", "P3", "P4"], tone: "a" }],
+    dots: ["M"],
+    hide: ["P1", "P2", "P3", "P4"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Mặt phẳng nằm ngang với hai điểm A và B ở cùng một phía; điểm A2 là điểm đối xứng của A qua mặt phẳng, và M là giao điểm của đoạn A2B với mặt phẳng, cho tổng MA và MB nhỏ nhất.", en: "A horizontal plane with two points A and B on the same side; the point A2 is the reflection of A in the plane, and M is where the segment A2B meets the plane, giving the smallest sum of MA and MB." },
+  },
+  "12/tong-hop-oxyz": {
+    points: { O: [0, 0, 0], A: [1, 0, 0], B: [0, 2, 0], C: [0, 0, 3], H: [36 / 49, 18 / 49, 12 / 49] },
+    edges: [{ a: "A", b: "B" }, { a: "B", b: "C" }, { a: "C", b: "A" }, { a: "O", b: "A", s: "hidden" }, { a: "O", b: "B", s: "hidden" }, { a: "O", b: "C", s: "hidden" }, { a: "O", b: "H", s: "hl" }],
+    planes: [{ pts: ["A", "B", "C"], tone: "a" }],
+    dots: ["H"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Tứ diện OABC có ba cạnh OA, OB, OC đôi một vuông góc; H là hình chiếu của gốc O lên mặt phẳng ABC và đoạn OH là khoảng cách từ O đến mặt phẳng.", en: "The tetrahedron OABC with three mutually perpendicular edges OA, OB, OC; H is the projection of the origin O onto the plane ABC and the segment OH is the distance from O to the plane." },
+  },
 };
 export { cross };
