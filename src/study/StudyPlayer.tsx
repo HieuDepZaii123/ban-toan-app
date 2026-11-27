@@ -114,10 +114,12 @@ export function StudyPlayer() {
     play();
   }
 
+  // While nothing plays and the list is closed, only a small ♪ button shows, so it never covers the lesson.
+  const mini = !playing && !open && !broken;
   const repeatLabel = repeat === "one" ? t(lang, "Lặp một bài", "Repeat one") : repeat === "all" ? t(lang, "Lặp cả danh sách", "Repeat all") : t(lang, "Không lặp", "No repeat");
 
   return (
-    <section className={`study-player${open ? " is-open" : ""}`} id="nhac-hoc" aria-label={t(lang, "Nhạc học", "Study music")}>
+    <section className={`study-player${open ? " is-open" : ""}${mini ? " is-mini" : ""}`} id="nhac-hoc" aria-label={t(lang, "Nhạc học", "Study music")}>
       <div className="study-screen" hidden={!open}>
         <video
           key={track?.id ?? "none"}
@@ -197,18 +199,20 @@ export function StudyPlayer() {
         </div>
       ) : null}
       <div className="study-bar">
-        <button type="button" className="study-icon" aria-label={t(lang, "Bài trước", "Previous track")} onClick={() => advance.current(-1, false)}>‹</button>
+        {mini ? null : <button type="button" className="study-icon" aria-label={t(lang, "Bài trước", "Previous track")} onClick={() => advance.current(-1, false)}>‹</button>}
         <button
           type="button"
           id="nhac-phat"
           className="study-play"
           aria-pressed={playing}
-          aria-label={playing ? t(lang, "Tạm dừng nhạc", "Pause music") : t(lang, "Phát nhạc", "Play music")}
+          aria-label={playing ? t(lang, "Tạm dừng nhạc", "Pause music") : mini ? t(lang, "Phát nhạc học", "Play study music") : t(lang, "Phát nhạc", "Play music")}
+          title={mini ? t(lang, "Nhạc học", "Study music") : undefined}
           disabled={!track}
           onClick={toggle}
         >
-          <span aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
+          <span aria-hidden="true">{playing ? "❚❚" : mini ? "♪" : "▶"}</span>
         </button>
+        {mini ? null : <>
         <button type="button" className="study-icon" aria-label={t(lang, "Bài sau", "Next track")} onClick={() => advance.current(1, false)}>›</button>
         <span className={`study-now${broken ? " is-broken" : ""}`} role={broken ? "status" : undefined}>
           {broken ? t(lang, FALLBACK_MESSAGE, FALLBACK_MESSAGE_EN) : track ? t(lang, track.title, track.titleEn) : t(lang, "Danh sách trống", "Playlist empty")}
@@ -216,6 +220,7 @@ export function StudyPlayer() {
         <button type="button" className="study-icon" aria-expanded={open} aria-controls={panelId} aria-label={open ? t(lang, "Thu gọn nhạc", "Close music") : t(lang, "Mở danh sách nhạc", "Open music list")} onClick={() => setOpen(!open)}>
           {open ? "▾" : "▴"}
         </button>
+        </>}
       </div>
     </section>
   );

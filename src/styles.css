@@ -1079,7 +1079,7 @@ html[data-lamp="on"] body::before {
   left: 12px;
   bottom: calc(12px + env(safe-area-inset-bottom));
   z-index: 28;
-  width: min(440px, calc(100vw - 156px));
+  width: min(380px, calc(100vw - 156px));
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 8px;
@@ -1123,6 +1123,9 @@ html[data-lamp="on"] body::before {
 .study-play[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
 .study-play:disabled { opacity: 0.6; }
 .study-play span { display: inline-block; min-width: 1.2em; text-align: center; }
+.study-player.is-mini { width: auto; }
+.study-player.is-mini .study-bar { padding: 3px; }
+.study-player.is-mini .study-play { min-width: 44px; min-height: 44px; padding: 0; font-size: 1.15rem; }
 .study-now { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 6px; font-size: 0.86rem; color: var(--ink-soft); }
 .study-now.is-broken { color: var(--clay); }
 .study-panel {
@@ -1192,7 +1195,15 @@ html[data-lamp="on"] body::before {
 .pillar-body { margin: 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
 .pillar-links { margin: 4px 0 0; align-self: end; display: flex; flex-wrap: wrap; gap: 6px 14px; font-weight: 600; }
 .pillar-links a { color: var(--accent); }
-@media (max-width: 860px) { .pillars { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 860px) {
+  /* Phones: icon beside the text, so the three cards take half the height. */
+  .pillars { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 14px; }
+  .pillar { grid-template-columns: 52px minmax(0, 1fr); grid-template-rows: none; column-gap: 12px; row-gap: 4px; padding: 12px 14px; align-items: start; }
+  .pillar > .pillar-mark { grid-row: 1 / span 3; width: 52px; height: 36px; margin-top: 2px; }
+  .pillar > h2, .pillar > .pillar-body, .pillar > .pillar-links { grid-column: 2; }
+  .pillar h2 { margin: 0; font-size: 1.05rem; }
+  .pillar-body { font-size: 0.9rem; line-height: 1.5; }
+}
 /* "Cách Bàn Toán hoạt động": one card per feature. */
 .why > h2 { font-size: clamp(1.4rem, 2.6vw, 1.85rem); text-transform: none; letter-spacing: 0; color: var(--ink); margin-bottom: 0; text-wrap: balance; }
 .why-story { background: var(--sheet); border: 1px solid var(--line); border-left: 5px solid var(--logo-accent); border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; display: grid; gap: 8px; }
@@ -1205,7 +1216,7 @@ html[data-lamp="on"] body::before {
 .why-card ul { font-size: 0.93rem; line-height: 1.5; gap: 8px; }
 .why-card li strong { color: var(--ink); }
 .why-card .why-aim { color: var(--accent); font-weight: 600; font-size: 0.93rem; line-height: 1.45; }
-.why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 14px; }
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 14px; }
 .why-card { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .why-card h3 { margin: 0; font-size: 1.02rem; }
 .why-card p { margin: 0; color: var(--ink-soft); font-size: 0.93rem; line-height: 1.55; }
@@ -1431,6 +1442,10 @@ html[data-lamp="on"] body::before {
   padding: 0 12px;
 }
 .sub-nav::-webkit-scrollbar { display: none; }
+/* A fade at the right edge shows the row scrolls when it doesn't fit. */
+@media (max-width: 900px) {
+  .sub-nav { mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); padding-right: 32px; }
+}
 .sub-nav a {
   flex: none;
   min-height: 40px;
@@ -1523,19 +1538,49 @@ html[data-lamp="on"] body::before {
 
 /* Trang chủ: nhãn nhỏ, tiêu đề, một hàng bắt đầu (tờ đang mở | tìm + tiến độ), rồi các chuyên đề; góc bàn ở cuối. */
 .hero-welcome h1 { margin-top: 4px; text-wrap: balance; }
+/* Học tiếp + tìm tờ: the first thing under the headline. */
 .home-start {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: 12px 24px;
+  gap: 12px 20px;
   align-items: center;
-  margin: 24px 0 8px;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  margin: 18px 0 4px;
 }
 .home-start.is-searching { grid-template-columns: minmax(0, 1fr); }
-.home-start .continue { margin: 0; padding: 0; border: 0; }
+.home-start .continue {
+  position: relative;
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--logo-accent);
+  border-radius: 14px;
+  background: var(--sheet);
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  align-items: center;
+  box-shadow: 0 2px 10px rgb(28 22 16 / 6%);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.home-start .continue > span, .home-start .continue > strong, .home-start .continue > em { grid-column: 1; }
 .home-start .continue strong { font-size: 1.1rem; }
+.home-start .continue em { font-size: 0.9rem; overflow-wrap: anywhere; }
+.continue-go {
+  grid-column: 2; grid-row: 1 / span 3;
+  padding: 10px 14px; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent);
+  font-size: 0.92rem; white-space: nowrap;
+}
+.home-start .continue:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgb(28 22 16 / 10%); }
+.home-search input { min-height: 48px; }
+.topic-anchor { scroll-margin-top: 120px; }
+@media (max-width: 860px) {
+  .home-start { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 420px) {
+  .home-start .continue { grid-template-columns: minmax(0, 1fr); row-gap: 2px; }
+  .continue-go { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .home-start .continue { transition: none; } .home-start .continue:hover { transform: none; } }
 .home-find { display: grid; gap: 6px; min-width: 0; }
 .home-find .progress-line { margin: 0; font-size: 0.85rem; }
 .desk-corner { margin-top: 36px; border-top: 1px solid var(--line); }

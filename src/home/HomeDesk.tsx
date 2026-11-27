@@ -49,24 +49,29 @@ export function HomeDesk() {
       <a className="skip" href="#content">{t(lang, "Vào nội dung", "Skip to content")}</a>
       <SiteHeader />
       <main id="content">
-        <Welcome />
-        <section id="chuyen-de" className={`home-start${folded ? " is-searching" : ""}`} aria-label={t(lang, "Bắt đầu", "Start")}>
-          {folded ? null : <Continue />}
-          <div className="home-find">
-            <form className="search home-search" role="search" onSubmit={(event) => event.preventDefault()}>
-              <input
-                id="search"
-                ref={searchRef}
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={t(lang, "Tìm tờ, ví dụ đạo hàm", "Find a sheet, for example derivative")}
-                aria-label={t(lang, "Tìm chuyên đề", "Search topics")}
-                autoComplete="off"
-              />
-            </form>
-            <ProgressLine />
-          </div>
-        </section>
+        <Welcome
+          searching={folded !== ""}
+          start={
+            <section className={`home-start${folded ? " is-searching" : ""}`} aria-label={t(lang, "Bắt đầu", "Start")}>
+              {folded ? null : <Continue />}
+              <div className="home-find">
+                <form className="search home-search" role="search" onSubmit={(event) => event.preventDefault()}>
+                  <input
+                    id="search"
+                    ref={searchRef}
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder={t(lang, "Tìm tờ, ví dụ đạo hàm", "Find a sheet, for example derivative")}
+                    aria-label={t(lang, "Tìm chuyên đề", "Search topics")}
+                    autoComplete="off"
+                  />
+                </form>
+                <ProgressLine />
+              </div>
+            </section>
+          }
+        />
+        <div id="chuyen-de" className="topic-anchor" />
         {visible.length === 0 ? (
           <p className="empty">{t(lang, `Không thấy tờ nào với “${query.trim()}”.`, `No sheet matches “${query.trim()}”.`)}</p>
         ) : (
@@ -199,6 +204,7 @@ function Continue() {
       <span>{lastId ? t(lang, "Tờ đang mở", "Open sheet") : t(lang, "Bắt đầu", "Start")}</span>
       <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
       <em>{line}</em>
+      <b className="continue-go" aria-hidden="true">{lastId ? t(lang, "Học tiếp", "Continue") : t(lang, "Bắt đầu học", "Start")} →</b>
     </A>
   );
 }
