@@ -171,7 +171,7 @@ export const lop12TichCoHuong: GradeChapter = chuong("tich-co-huong", "Tích có
         [{ expr: "-(2*0+1*0+2*1)", expect: "-2" }]),
     ],
     [
-      luyen(R`Mặt phẳng đi qua $A(1;\ 0;\ 0)$, $B(0;\ 2;\ 0)$, $C(0;\ 0;\ 3)$ có dạng $6x+3y+2z+d=0$. Tìm $d$.`, R`Giá trị cần tìm là $d=-6$.`, [{ expr: "-(6*1)", expect: "-6" }], R`Điểm $A$ thuộc mặt phẳng nên $6\cdot1+d=0$, tức $d=-6$.`),
+      luyen(R`Mặt phẳng đi qua $A(1;\ 0;\ 0)$, $B(0;\ 2;\ 0)$, $C(0;\ 0;\ 3)$ có phương trình với hệ số của $x$ bằng $6$ và hằng số $d$. Tìm $d$.`, R`Giá trị cần tìm là $d=-6$.`, [{ expr: "-(6*1)", expect: "-6" }], R`Điểm $A$ thuộc mặt phẳng nên $6\cdot1+d=0$, tức $d=-6$.`),
       luyen(R`Tính khoảng cách từ gốc $O$ đến mặt phẳng $6x+3y+2z-6=0$.`, R`Khoảng cách bằng $\frac{6}{7}$.`, [{ expr: "Rational(6,1)/sqrt(6**2+3**2+2**2)", expect: "Rational(6,7)" }], R`Ta có $\frac{|-6|}{\sqrt{36+9+4}}=\frac{6}{7}$.`),
       luyen(R`Ba điểm $A(0;\ 0;\ 0)$, $B(1;\ 2;\ 3)$, $C(2;\ 4;\ m)$ thẳng hàng. Tìm $m$.`, R`Giá trị cần tìm là $m=6$.`, [{ expr: "solve(1*x-3*2, x)[0]", expect: "6" }], R`Cần $\left[\overrightarrow{AB},\overrightarrow{AC}\right]=\vec0$; tọa độ thứ hai là $3\cdot2-1\cdot m=0$ nên $m=6$.`),
     ],

@@ -249,6 +249,19 @@ const sum = (p: P3) => p[0] + p[1] + p[2];
   assert.ok(near(len(cross(H, [6, 3, 2])), 0), "OH cùng phương pháp tuyến");
   assert.ok(near(len(H), 6 / 7), "OH bằng 6/7");
 }
+{
+  const k = "12/kc-diem-oxyz";
+  const M = on(k, "M"), H = on(k, "H");
+  for (const n of ["H", "P1", "P2", "P3", "P4"]) assert.ok(near(2 * on(k, n)[0] - on(k, n)[1] + 2 * on(k, n)[2] - 4, 0), `${n} thuộc mặt phẳng 2x - y + 2z - 4 = 0`);
+  assert.ok(near(len(cross(sub(M, H), [2, -1, 2])), 0), "MH vuông góc mặt phẳng");
+  assert.ok(near(len(sub(M, H)), 2 / 3), "MH bằng 2/3");
+}
+{
+  const k = "12/cuc-tri-hieu-oxyz";
+  const A = on(k, "A"), B = on(k, "B"), M = on(k, "M");
+  assert.ok(near(M[2], 0) && near(len(cross(sub(B, A), sub(M, A))), 0), "M thuộc đường AB và mặt phẳng z = 0");
+  assert.ok(near(Math.abs(len(sub(M, A)) - len(sub(M, B))), len(sub(B, A))), "|MA - MB| bằng AB");
+}
 // Hình của chương đại cương lớp 11.
 {
   const k = "11/giao-tuyen";

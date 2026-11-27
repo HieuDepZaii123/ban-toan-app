@@ -14,10 +14,11 @@ export const g12Extra8En: Record<string, LessonEn> = {
         [R`The minimum is $A'B=\sqrt{4+4+16}=2\sqrt6$.`, R`For any $M$ on $(P)$ we have $MA'=MA$, and $MA'+MB\ge A'B$ by the triangle inequality.`],
         [R`The line $A'B$ is $(1+2t;\ 2-2t;\ -3+4t)$; $z=0$ gives $t=\frac34$ so $M=\left(\frac52;\ \frac12;\ 0\right)$.`, R`Equality holds when $M$ lies on the segment $A'B$, that is at its intersection with the plane.`],
       ], R`The minimum is $2\sqrt6$, attained at $M\left(\frac52;\ \frac12;\ 0\right)$.`],
-      [R`Let $d:\ x=1+t;\ y=2;\ z=3-t$ and $(P):\ z=0$. Find $M\in d$ at distance $2$ from $(P)$.`, [
-        [R`The distance from $M$ to $(P)$ is $\left|3-t\right|$, so we need $\left|3-t\right|=2$.`, R`For the plane $z=0$ the distance is the absolute value of the height.`],
-        [R`Hence $t=1$ or $t=5$, giving $M(2;\ 2;\ 2)$ or $M(6;\ 2;\ -2)$.`, R`The absolute value equation gives two solutions, and both work because $d$ meets $(P)$.`],
-      ], R`There are two points $M(2;\ 2;\ 2)$ and $M(6;\ 2;\ -2)$.`],
+      [R`Let $(P):\ x+y+z-3=0$, $A(2;\ 1;\ 1)$ and $B(1;\ 2;\ 3)$. Find the minimum of $MA+MB$ for $M\in(P)$.`, [
+        [R`The left side equals $1$ at $A$ and $3$ at $B$, with the same sign, so the points lie on the same side of $(P)$.`, R`Two points are on the same side when these two values have the same sign.`],
+        [R`The reflection of $A$ is $A'=A-\frac{2\cdot1}{3}(1;\ 1;\ 1)=\left(\frac43;\ \frac13;\ \frac13\right)$.`, R`Reflecting in a plane means going two more signed distances along the normal.`],
+        [R`Then $A'B=\sqrt{\frac19+\frac{25}{9}+\frac{64}{9}}=\sqrt{10}$.`, R`Subtract the coordinates of $A'$ from those of $B$ and compute the length.`],
+      ], R`The minimum of $MA+MB$ is $\sqrt{10}$.`],
     ],
     dr: [
       [R`Let $(P):\ z=0$, $A(0;\ 0;\ 1)$ and $B(0;\ 3;\ 3)$. Find the minimum of $MA+MB$ for $M\in(P)$.`, R`The minimum equals $5$.`, R`The points are on the same side, $A'(0;\ 0;\ -1)$ and $A'B=\sqrt{0+9+16}=5$.`],

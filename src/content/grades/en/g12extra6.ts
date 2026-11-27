@@ -59,7 +59,7 @@ export const g12Extra6En: Record<string, LessonEn> = {
       ], R`The perpendicular bisector plane is $x+y-z-3=0$.`],
     ],
     dr: [
-      [R`A plane meets the axes at $A(2;\ 0;\ 0)$, $B(0;\ 3;\ 0)$, $C(0;\ 0;\ 6)$. Find the distance from the origin $O$ to the plane, given that its equation is $3x+2y+z-6=0$.`, R`The distance is $\frac{3\sqrt{14}}{7}$.`, R`We have $\frac{|-6|}{\sqrt{9+4+1}}=\frac{6}{\sqrt{14}}=\frac{3\sqrt{14}}{7}$.`],
+      [R`A plane meets the axes at $A(2;\ 0;\ 0)$, $B(0;\ 3;\ 0)$, $C(0;\ 0;\ 6)$. Find the distance from the origin $O$ to the plane.`, R`The distance is $\frac{3\sqrt{14}}{7}$.`, R`We have $\frac{|-6|}{\sqrt{9+4+1}}=\frac{6}{\sqrt{14}}=\frac{3\sqrt{14}}{7}$.`],
       [R`The plane through $M(1;\ 1;\ 1)$ with normal $(2;\ -1;\ 3)$ has the form $2x-y+3z+d=0$. Find $d$.`, R`The required value is $d=-4$.`, R`Substituting $M$ gives $2-1+3+d=0$, so $d=-4$.`],
       [R`The perpendicular bisector plane of $AB$ with $A(0;\ 0;\ 0)$ and $B(4;\ 0;\ 0)$ has the form $x+d=0$. Find $d$.`, R`The required value is $d=-2$.`, R`The plane passes through the midpoint $(2;\ 0;\ 0)$, so $2+d=0$ and $d=-2$.`],
       [R`Let $(P):\ x+2y-z-2=0$ be a plane. Decide whether each statement is true or false.`, R`Statements a and b are true, statements c and d are false.`, R`Substituting $M$ gives $1+4-3-2=0$, the normal is read from the coefficients, the dot product of the normal with $(0;\ 0;\ 1)$ equals $-1$, which is different from $0$, and the distance from $O$ is $\frac{2}{\sqrt6}$.`, [], [R`The plane passes through $M(1;\ 2;\ 3)$.`, R`A normal vector of the plane is $(1;\ 2;\ -1)$.`, R`The plane is parallel to the axis $Oz$.`, R`The distance from the origin $O$ to the plane equals $2$.`]],

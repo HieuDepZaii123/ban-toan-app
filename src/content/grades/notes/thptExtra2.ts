@@ -169,4 +169,12 @@ export const thptExtra2Notes: NoteBook = {
     R`Mỗi đại lượng trong bài có ít nhất hai cách tính độc lập, nên khi chúng cho cùng kết quả ta có thể tin cả hai; khi khác nhau, một bước tính sai và cần dò lại.`,
     R`Quên chia cho $6$ khi tính thể tích tứ diện, hoặc quên chia đôi khi tính diện tích tam giác từ độ dài tích có hướng.`,
   ),
+  "12/kc-diem-oxyz": note(
+    R`Khoảng cách từ một điểm đến mặt phẳng là độ dài đoạn vuông góc, nên chia giá trị vế trái cho độ dài pháp tuyến; với đường thẳng, tích có hướng cho diện tích hình bình hành nên chia cho đáy để được chiều cao.`,
+    R`Quên trị tuyệt đối ở tử số, hoặc dùng công thức hai mặt song song khi hai pháp tuyến chưa cùng hệ số, tức chưa đưa về cùng một dạng.`,
+  ),
+  "12/cuc-tri-hieu-oxyz": note(
+    R`Hiệu hai cạnh của một tam giác không vượt quá cạnh thứ ba, nên $\left|MA-MB\right|\le AB$; dấu bằng chỉ xảy ra khi ba điểm thẳng hàng. Khoảng cách nhỏ nhất đến một đường thẳng là đoạn vuông góc.`,
+    R`Dùng giao điểm của $AB$ với mặt phẳng cho cực tiểu của tổng nhưng lại lấy làm cực đại của hiệu, hoặc quên đối xứng khi hai điểm khác phía.`,
+  ),
 };

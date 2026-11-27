@@ -1,10 +1,12 @@
 /** Lớp 12, chi tiết thứ tám: bài tổng hợp và vận dụng cao trong Oxyz. */
 import type { GradeChapter } from "./types.ts";
 import { bai, buoc, chuong, luyen, vd } from "./types.ts";
+import { cucTriHieuOxyz, kcDiemOxyz } from "./lop12extra9.ts";
 
 const R = String.raw;
 
-export const lop12OxyzTongHop: GradeChapter = chuong("oxyz-tong-hop", "Oxyz tổng hợp: cực trị và bài toán nhiều bước", [
+export const lop12OxyzTongHop: GradeChapter = chuong("oxyz-tong-hop", "Oxyz tổng hợp: khoảng cách, cực trị và bài toán nhiều bước", [
+  kcDiemOxyz,
   bai("mp-cuc-tri-oxyz", "Cực trị với mặt phẳng: dùng điểm đối xứng",
     R`Cho mặt phẳng $(P)$ và hai điểm $A$, $B$. Nếu $A$, $B$ nằm cùng phía $(P)$ thì $MA+MB$ với $M\in(P)$ nhỏ nhất khi $M$ là giao điểm của $A'B$ với $(P)$, trong đó $A'$ đối xứng với $A$ qua $(P)$, và giá trị nhỏ nhất là $A'B$. Nếu $A$, $B$ nằm khác phía thì $M$ là giao điểm của $AB$ với $(P)$ và giá trị nhỏ nhất là $AB$. Hai điểm cùng phía khi hai giá trị thay vào vế trái phương trình mặt phẳng cùng dấu.`,
     [
@@ -16,13 +18,14 @@ export const lop12OxyzTongHop: GradeChapter = chuong("oxyz-tong-hop", "Oxyz tổ
         ],
         R`Giá trị nhỏ nhất là $2\sqrt6$, đạt tại $M\left(\frac52;\ \frac12;\ 0\right)$.`,
         [{ expr: "sqrt(4+4+16)", expect: "2*sqrt(6)" }, { expr: "Rational(3,4)*4-3", expect: "0" }]),
-      vd(R`Cho $d:\ x=1+t;\ y=2;\ z=3-t$ và $(P):\ z=0$. Tìm $M\in d$ cách $(P)$ một khoảng bằng $2$.`,
-        [
-          buoc(R`Khoảng cách từ $M$ đến $(P)$ là $\left|3-t\right|$, nên cần $\left|3-t\right|=2$.`, R`Với mặt phẳng $z=0$, khoảng cách bằng giá trị tuyệt đối của cao độ.`),
-          buoc(R`Do đó $t=1$ hoặc $t=5$, cho $M(2;\ 2;\ 2)$ hoặc $M(6;\ 2;\ -2)$.`, R`Phương trình trị tuyệt đối cho hai nghiệm, và cả hai đều thỏa vì $d$ cắt $(P)$.`),
-        ],
-        R`Có hai điểm $M(2;\ 2;\ 2)$ và $M(6;\ 2;\ -2)$.`,
-        [{ expr: "3-1", expect: "2" }, { expr: "3-5", expect: "-2" }]),
+      vd(R`Cho $(P):\ x+y+z-3=0$, $A(2;\ 1;\ 1)$ và $B(1;\ 2;\ 3)$. Tìm giá trị nhỏ nhất của $MA+MB$ với $M\in(P)$.`,
+      [
+        buoc(R`Vế trái tại $A$ bằng $1$ và tại $B$ bằng $3$, cùng dấu nên hai điểm cùng phía $(P)$.`, R`Hai điểm cùng phía khi hai giá trị này có cùng dấu.`),
+        buoc(R`Điểm đối xứng của $A$ là $A'=A-\frac{2\cdot1}{3}(1;\ 1;\ 1)=\left(\frac43;\ \frac13;\ \frac13\right)$.`, R`Đối xứng qua mặt phẳng nghĩa là đi thêm hai lần khoảng cách có dấu dọc theo pháp tuyến.`),
+        buoc(R`Khi đó $A'B=\sqrt{\frac19+\frac{25}{9}+\frac{64}{9}}=\sqrt{10}$.`, R`Lấy hiệu tọa độ của $B$ và $A'$ rồi tính độ dài.`),
+      ],
+      R`Giá trị nhỏ nhất của $MA+MB$ là $\sqrt{10}$.`,
+      [{ expr: "2-Rational(2,3)", expect: "4/3" }, { expr: "sqrt(Rational(1,9)+Rational(25,9)+Rational(64,9))", expect: "sqrt(10)" }]),
     ],
     [
       luyen(R`Cho $(P):\ z=0$, $A(0;\ 0;\ 1)$ và $B(0;\ 3;\ 3)$. Tính giá trị nhỏ nhất của $MA+MB$ với $M\in(P)$.`, R`Giá trị nhỏ nhất bằng $5$.`, [{ expr: "sqrt(0+9+16)", expect: "5" }], R`Hai điểm cùng phía, $A'(0;\ 0;\ -1)$ và $A'B=\sqrt{0+9+16}=5$.`),
@@ -31,6 +34,7 @@ export const lop12OxyzTongHop: GradeChapter = chuong("oxyz-tong-hop", "Oxyz tổ
       { ...luyen(R`Cho $(P):\ z=0$, $A(1;\ 2;\ 3)$ và $B(3;\ 0;\ 1)$, với $M\in(P)$. Xét tính đúng sai của từng ý.`, R`Ý a đúng, ý b đúng, ý c sai, ý d đúng.`, [{ expr: "sqrt(4+4+16)", expect: "2*sqrt(6)" }], R`Hai điểm cùng phía nên giá trị nhỏ nhất là $A'B=\sqrt{4+4+16}=2\sqrt6$ chứ không phải $AB=2\sqrt3$.`), ask: { kind: "truefalse", statements: [R`Hai điểm $A$ và $B$ nằm cùng phía so với $(P)$.`, R`Điểm đối xứng của $A$ qua $(P)$ là $A'(1;\ 2;\ -3)$.`, R`Giá trị nhỏ nhất của $MA+MB$ bằng $AB$.`, R`Giá trị nhỏ nhất của $MA+MB$ bằng $2\sqrt6$.`], truth: [true, true, false, true] } },
     ],
     { topicId: "analytic" }),
+  cucTriHieuOxyz,
   bai("tong-hop-oxyz", "Bài tổng hợp: mặt phẳng chắn trục, thể tích và hình chiếu",
     R`Một bài Oxyz nhiều bước thường kết hợp: viết mặt phẳng từ ba điểm bằng tích có hướng, tính thể tích tứ diện $\frac{1}{6}\left|\left[\overrightarrow{OA},\overrightarrow{OB}\right]\cdot\overrightarrow{OC}\right|$, diện tích tam giác $\frac12\left|\left[\overrightarrow{AB},\overrightarrow{AC}\right]\right|$ và khoảng cách $h=\frac{3V}{S}$, rồi lập đường vuông góc để tìm hình chiếu. Hai cách tính cùng một đại lượng nên là phép kiểm tra lẫn nhau.`,
     [

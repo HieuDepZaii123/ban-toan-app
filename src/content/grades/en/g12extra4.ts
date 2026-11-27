@@ -139,7 +139,7 @@ export const g12Extra4En: Record<string, LessonEn> = {
       ], R`The required plane is $2x+y+2z-2=0$.`],
     ],
     dr: [
-      [R`The plane through $A(1;\ 0;\ 0)$, $B(0;\ 2;\ 0)$, $C(0;\ 0;\ 3)$ has the form $6x+3y+2z+d=0$. Find $d$.`, R`The required value is $d=-6$.`, R`The point $A$ lies on the plane, so $6\cdot1+d=0$, that is $d=-6$.`],
+      [R`The plane through $A(1;\ 0;\ 0)$, $B(0;\ 2;\ 0)$, $C(0;\ 0;\ 3)$ has an equation in which the coefficient of $x$ is $6$ and the constant term is $d$. Find $d$.`, R`The required value is $d=-6$.`, R`The point $A$ lies on the plane, so $6\cdot1+d=0$, that is $d=-6$.`],
       [R`Find the distance from the origin $O$ to the plane $6x+3y+2z-6=0$.`, R`The distance is $\frac{6}{7}$.`, R`We have $\frac{|-6|}{\sqrt{36+9+4}}=\frac{6}{7}$.`],
       [R`The three points $A(0;\ 0;\ 0)$, $B(1;\ 2;\ 3)$, $C(2;\ 4;\ m)$ are collinear. Find $m$.`, R`The required value is $m=6$.`, R`We need $\left[\overrightarrow{AB},\overrightarrow{AC}\right]=\vec0$; the second coordinate is $3\cdot2-1\cdot m=0$, so $m=6$.`],
     ],

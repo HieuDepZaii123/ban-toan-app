@@ -356,5 +356,24 @@ export const spaceFigures2: Record<string, SpaceFigure> = {
     view: { dx: 0.3, dz: 0.25 },
     alt: { vi: "Tứ diện OABC có ba cạnh OA, OB, OC đôi một vuông góc; H là hình chiếu của gốc O lên mặt phẳng ABC và đoạn OH là khoảng cách từ O đến mặt phẳng.", en: "The tetrahedron OABC with three mutually perpendicular edges OA, OB, OC; H is the projection of the origin O onto the plane ABC and the segment OH is the distance from O to the plane." },
   },
+  "12/kc-diem-oxyz": {
+    points: { M: [1, 2, 3], H: [5 / 9, 20 / 9, 23 / 9], ...quad([-13 / 9, 2 / 9, 32 / 9], [2, 4, 0], [2, 0, -2]) },
+    edges: [...quadEdges(["P1", "P2", "P3", "P4"]), { a: "M", b: "H", s: "hl" }],
+    planes: [{ pts: ["P1", "P2", "P3", "P4"], tone: "a" }],
+    right: [{ at: "H", p: "M", q: "P2" }],
+    dots: ["H"],
+    hide: ["P1", "P2", "P3", "P4"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Điểm M ngoài mặt phẳng (P) và chân H của đường vuông góc hạ từ M xuống (P); độ dài đoạn MH là khoảng cách từ M đến mặt phẳng.", en: "A point M off the plane (P) and the foot H of the perpendicular from M to (P); the length of the segment MH is the distance from M to the plane." },
+  },
+  "12/cuc-tri-hieu-oxyz": {
+    points: { A: [1, 2, 3], B: [3, 0, 1], M: [4, -1, 0], ...quad([-1, -3, 0], [7, 0, 0], [0, 5, 0]) },
+    edges: [...quadEdges(["P1", "P2", "P3", "P4"]), { a: "A", b: "B", s: "hl" }, { a: "B", b: "M", s: "hl" }],
+    planes: [{ pts: ["P1", "P2", "P3", "P4"], tone: "a" }],
+    dots: ["M"],
+    hide: ["P1", "P2", "P3", "P4"],
+    view: { dx: 0.3, dz: 0.25 },
+    alt: { vi: "Mặt phẳng nằm ngang với hai điểm A và B cùng một phía; đường thẳng AB cắt mặt phẳng tại M ngoài đoạn AB, và tại M hiệu hai khoảng cách MA và MB đạt giá trị lớn nhất bằng AB.", en: "A horizontal plane with two points A and B on the same side; the line AB meets the plane at M outside the segment AB, and at M the difference of the distances MA and MB reaches its maximum, equal to AB." },
+  },
 };
 export { cross };
