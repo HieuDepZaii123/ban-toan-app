@@ -45,8 +45,8 @@ export const cards = [
     "status": "ready",
     "title": "Hàm số bậc hai",
     "titleEn": "Quadratic functions",
-    "blurb": "Đỉnh và Δ. Chuồng 40 m đạt 200 m².",
-    "blurbEn": "Vertex and discriminant. A 40 m fence reaches 200 m².",
+    "blurb": "Đỉnh, Δ và các bài toán nâng cao. Chuồng 40 m đạt 200 m².",
+    "blurbEn": "Vertex, discriminant and advanced problems. A 40 m fence reaches 200 m².",
     "questions": 13
   },
   {
