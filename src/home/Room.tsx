@@ -2,6 +2,7 @@ import { Component, lazy, Suspense, useEffect, useRef, useState, type ReactNode 
 import { t } from "../lib/text.ts";
 import { useLang } from "../ui/useLang.ts";
 import { isSceneMode, sceneFromHour, SCENES, ZONES, type SceneId, type SceneMode } from "./day.ts";
+import { recordStudyDay } from "../lib/store.ts";
 
 const ROOM_KEY = "ban-toan-room";
 
@@ -50,6 +51,7 @@ export function Room() {
       <Lamp on={lamp} onToggle={() => setLamp((value) => !value)} />
       <Window mode={mode} onMode={setMode} img={img} onImg={setImg} />
       <Clocks />
+      <StudyTimer />
     </section>
   );
 }
@@ -335,4 +337,53 @@ class ArtBoundary extends Component<{ children: ReactNode }, { bad: boolean }> {
   render(): ReactNode {
     return this.state.bad ? null : this.props.children;
   }
+}
+
+function StudyTimer() {
+  const lang = useLang();
+  const [running, setRunning] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [sessionSaved, setSessionSaved] = useState(false);
+
+  useEffect(() => {
+    let id: number;
+    if (running) {
+      id = window.setInterval(() => {
+        setSeconds((value) => {
+          const next = value + 1;
+          if (next % 300 === 0 && !sessionSaved) {
+            // Every 5 minutes of study, record the day
+            recordStudyDay();
+            setSessionSaved(true);
+          }
+          return next;
+        });
+      }, 1000);
+    }
+    return () => { if (id) window.clearInterval(id); };
+  }, [running, sessionSaved]);
+
+  useEffect(() => {
+    if (!running && seconds > 0 && !sessionSaved) {
+      recordStudyDay();
+      setSessionSaved(true);
+    }
+  }, [running, seconds, sessionSaved]);
+
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+
+  return (
+    <details className="study-timer" open={running}>
+      <summary onClick={() => setRunning((value) => !value)}>
+        <span className="timer-icon">{running ? "⏸" : "▶"}</span>
+        <span className="timer-label">{t(lang, "Đồng hồ học tập", "Study timer")}</span>
+        <span className="timer-time">{pad(minutes)}:{pad(secs)}</span>
+      </summary>
+      <button type="button" className="timer-reset" onClick={() => { setSeconds(0); setSessionSaved(false); }}>
+        {t(lang, "Đặt lại", "Reset")}
+      </button>
+      <p className="lecture-note">{t(lang, "Mỗi 5 phút ghi lại một ngày học.", "A study day is recorded every 5 minutes.")}</p>
+    </details>
+  );
 }

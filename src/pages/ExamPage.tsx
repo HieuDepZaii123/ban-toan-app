@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { isRecord } from "../lib/isRecord.ts";
 import { decimalComma } from "../lib/format.ts";
 import { A } from "../lib/route.tsx";
@@ -32,6 +32,8 @@ type Sitting = { seed: number; startedAt: number; answers: Answers };
 type Finished = Sitting & { finishedAt: number };
 type HistoryRow = { at: number; total: number; mcq: number; tf: number; short: number };
 type Saved = { active: Sitting | null; last: Finished | null; history: HistoryRow[] };
+/** One question of the paper in reading order, so the arrow keys can walk the whole paper. */
+type Slot = { kind: "mcq"; id: string } | { kind: "tf"; qi: number } | { kind: "short"; id: string };
 
 
 function readAnswers(value: unknown): Answers {
@@ -202,6 +204,87 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
   const done = Object.keys(answers.mcq).length + paper.tf.reduce((n, _, qi) => n + [0, 1, 2, 3].filter((si) => `${qi}:${si}` in answers.tf).length, 0) + paper.short.filter((id) => (answers.short[id] ?? "").trim() !== "").length;
   const total = paper.mcq.length + paper.tf.length * 4 + paper.short.length;
 
+  const slots = useMemo<Slot[]>(
+    () => [
+      ...paper.mcq.map((id) => ({ kind: "mcq" as const, id })),
+      ...paper.tf.map((_, qi) => ({ kind: "tf" as const, qi })),
+      ...paper.short.map((id) => ({ kind: "short" as const, id })),
+    ],
+    [paper],
+  );
+  const [cursor, setCursor] = useState(0);
+  const cards = useRef(new Map<number, HTMLElement>());
+  const walked = useRef(false);
+
+  useEffect(() => {
+    if (!walked.current) return;
+    cards.current.get(cursor)?.scrollIntoView?.({ block: "center", behavior: "smooth" });
+  }, [cursor]);
+
+  useEffect(() => {
+    const walk = (step: number) => {
+      walked.current = true;
+      setCursor((at) => Math.min(slots.length - 1, Math.max(0, at + step)));
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      const target = event.target instanceof HTMLElement ? event.target : null;
+      const tag = target?.tagName ?? "";
+      const typing = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target?.isContentEditable === true;
+      if (event.key === "Enter") {
+        // Enter walks to the next question; on a button or a link it keeps its usual meaning.
+        if (typing) {
+          event.preventDefault();
+          (target as HTMLInputElement).blur();
+        } else if (tag === "BUTTON" || tag === "A") {
+          return;
+        } else {
+          event.preventDefault();
+        }
+        walk(1);
+        return;
+      }
+      if (typing) return;
+      if (event.key === "ArrowDown" || event.key === "ArrowRight" || event.key === "PageDown") {
+        event.preventDefault();
+        walk(1);
+        return;
+      }
+      if (event.key === "ArrowUp" || event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        walk(-1);
+        return;
+      }
+      const slot = slots[cursor];
+      if (!slot) return;
+      const key = event.key.toLowerCase();
+      if (slot.kind === "mcq") {
+        const at = "1234".includes(key) ? Number(key) - 1 : "abcd".indexOf(key);
+        const question = thptById.get(slot.id);
+        if (at < 0 || !question || at >= question.choices.length) return;
+        event.preventDefault();
+        onChange({ ...answers, mcq: { ...answers.mcq, [slot.id]: at } });
+        return;
+      }
+      if (slot.kind === "tf" && (key === "t" || key === "f")) {
+        // T/F fill the statements of the current question in order, one press each.
+        const si = [0, 1, 2, 3].find((at) => !(`${slot.qi}:${at}` in answers.tf));
+        if (si === undefined) return;
+        event.preventDefault();
+        onChange({ ...answers, tf: { ...answers.tf, [`${slot.qi}:${si}`]: key === "t" } });
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [answers, cursor, onChange, slots]);
+
+  function cardRef(index: number) {
+    return (node: HTMLElement | null) => {
+      if (node) cards.current.set(index, node);
+      else cards.current.delete(index);
+    };
+  }
+
   function submit() {
     if (done < total && !window.confirm(t(lang, `Còn ${total - done} ý chưa làm. Nộp bài?`, `${total - done} items are unanswered. Submit anyway?`))) return;
     onFinish(sitting);
@@ -214,6 +297,13 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
         <span>{t(lang, `Đã làm ${done}/${total}`, `Answered ${done}/${total}`)}</span>
         <button type="button" className="pay-btn" onClick={submit}>{t(lang, "Nộp bài", "Submit")}</button>
       </div>
+      <p className="exam-keys">
+        {t(
+          lang,
+          "Phím tắt: A–D hoặc 1–4 chọn đáp án · T/F cho Đúng/Sai · ↑ ↓ chuyển câu · Enter sang câu tiếp.",
+          "Keys: A–D or 1–4 to answer · T/F for true/false · ↑ ↓ move between questions · Enter for the next question.",
+        )}
+      </p>
 
       <section className="exam-part" aria-labelledby="part1">
         <h2 id="part1">{t(lang, "Phần I. Trắc nghiệm nhiều lựa chọn", "Part I. Multiple choice")}</h2>
@@ -221,7 +311,7 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
           const question = thptById.get(id);
           if (!question) return null;
           return (
-            <article key={id} className="exam-q">
+            <article key={id} ref={cardRef(index)} className={`exam-q${cursor === index ? " is-current" : ""}`} aria-current={cursor === index ? "true" : undefined} onFocusCapture={() => setCursor(index)}>
               <h3><span className="exam-no">{t(lang, `Câu ${index + 1}.`, `Q${index + 1}.`)}</span> <MathText text={question.prompt} /></h3>
               <div className="choices" role="group" aria-label={t(lang, `Câu ${index + 1}`, `Question ${index + 1}`)}>
                 {question.choices.map((choice, at) => (
@@ -238,25 +328,28 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
 
       <section className="exam-part" aria-labelledby="part2">
         <h2 id="part2">{t(lang, "Phần II. Đúng/Sai", "Part II. True/false")}</h2>
-        {paper.tf.map((question, qi) => (
-          <article key={question.id} className="exam-q">
-            <h3><span className="exam-no">{t(lang, `Câu ${qi + 1}.`, `Q${qi + 1}.`)}</span> <MathText text={lang === "en" ? question.contextEn : question.contextVi} /></h3>
-            <ol className="exam-tf" type="a">
-              {question.statements.map((statement, si) => {
-                const key = `${qi}:${si}`;
-                return (
-                  <li key={si}>
-                    <span className="exam-tf-text"><MathText text={lang === "en" ? statement.en : statement.vi} /></span>
-                    <span className="exam-tf-pick" role="group" aria-label={t(lang, `Ý ${"abcd"[si]}`, `Statement ${"abcd"[si]}`)}>
-                      <button type="button" className="text-btn" aria-pressed={answers.tf[key] === true} onClick={() => onChange({ ...answers, tf: { ...answers.tf, [key]: true } })}>{t(lang, "Đúng", "True")}</button>
-                      <button type="button" className="text-btn" aria-pressed={answers.tf[key] === false} onClick={() => onChange({ ...answers, tf: { ...answers.tf, [key]: false } })}>{t(lang, "Sai", "False")}</button>
-                    </span>
-                  </li>
-                );
-              })}
-            </ol>
-          </article>
-        ))}
+        {paper.tf.map((question, qi) => {
+          const at = paper.mcq.length + qi;
+          return (
+            <article key={question.id} ref={cardRef(at)} className={`exam-q${cursor === at ? " is-current" : ""}`} aria-current={cursor === at ? "true" : undefined} onFocusCapture={() => setCursor(at)}>
+              <h3><span className="exam-no">{t(lang, `Câu ${qi + 1}.`, `Q${qi + 1}.`)}</span> <MathText text={lang === "en" ? question.contextEn : question.contextVi} /></h3>
+              <ol className="exam-tf" type="a">
+                {question.statements.map((statement, si) => {
+                  const key = `${qi}:${si}`;
+                  return (
+                    <li key={si}>
+                      <span className="exam-tf-text"><MathText text={lang === "en" ? statement.en : statement.vi} /></span>
+                      <span className="exam-tf-pick" role="group" aria-label={t(lang, `Ý ${"abcd"[si]}`, `Statement ${"abcd"[si]}`)}>
+                        <button type="button" className="text-btn" aria-pressed={answers.tf[key] === true} onClick={() => onChange({ ...answers, tf: { ...answers.tf, [key]: true } })}>{t(lang, "Đúng", "True")}</button>
+                        <button type="button" className="text-btn" aria-pressed={answers.tf[key] === false} onClick={() => onChange({ ...answers, tf: { ...answers.tf, [key]: false } })}>{t(lang, "Sai", "False")}</button>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
+            </article>
+          );
+        })}
       </section>
 
       <section className="exam-part" aria-labelledby="part3">
@@ -264,8 +357,9 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
         {paper.short.map((id, index) => {
           const question = thptById.get(id);
           if (!question) return null;
+          const at = paper.mcq.length + paper.tf.length + index;
           return (
-            <article key={id} className="exam-q">
+            <article key={id} ref={cardRef(at)} className={`exam-q${cursor === at ? " is-current" : ""}`} aria-current={cursor === at ? "true" : undefined} onFocusCapture={() => setCursor(at)}>
               <h3><span className="exam-no">{t(lang, `Câu ${index + 1}.`, `Q${index + 1}.`)}</span> <MathText text={question.prompt} /></h3>
               <label className="exam-short">
                 <span>{t(lang, "Đáp số", "Answer")}</span>

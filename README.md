@@ -21,7 +21,7 @@ Menu chia năm nhóm, đúng như `src/ui/navLinks.ts`.
 - **Đề luyện** (`/luyen`): đề trộn nhiều tờ.
 - **Lớp 1–9** (`/luyen-lop/<lớp>`): luyện theo lớp, nhớ vị trí câu và lọc riêng câu sai.
 - **THPT 10–12** (`/luyen-thpt`): luyện theo lớp và chủ đề, có thi có giờ.
-- **Thi thử 2025** (`/thi-thu`): đề theo cấu trúc THPT 2025 (trắc nghiệm, Đúng/Sai, trả lời ngắn), chấm điểm từng phần và chỉ ra chủ đề mất điểm.
+- **Thi thử 2025** (`/thi-thu`): đề theo cấu trúc THPT 2025 (trắc nghiệm, Đúng/Sai, trả lời ngắn), chấm điểm từng phần và chỉ ra chủ đề mất điểm. Làm bài có phím tắt: A–D hoặc 1–4 chọn đáp án, T/F cho Đúng/Sai, ↑ ↓ chuyển câu, Enter sang câu tiếp.
 - **Ôn lỗi sai** (`/on-loi-sai`): câu sai được hẹn ôn lại sau 1, 3, 7 và 14 ngày.
 - **Chấm bài** (`/cham-bai`): dán lời giải, app tìm bước tính sai đầu tiên.
 - **Sổ lỗi** (`/so-loi`) và **Đánh giá** (`/danh-gia`).

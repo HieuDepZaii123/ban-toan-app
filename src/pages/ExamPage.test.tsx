@@ -77,4 +77,72 @@ describe("ExamPage", () => {
     expect(screen.getByRole("heading", { name: "Last score: 0/10" })).toBeInTheDocument();
     expect(screen.getByText(/· 90 min$/)).toBeInTheDocument();
   });
+
+  test("answers the current question from the keyboard and walks the paper with the arrows", async () => {
+    const user = userEvent.setup();
+    renderAt("/thi-thu", <ExamPage />);
+    await user.click(startFree());
+
+    expect(screen.getByText(/^Keys: A–D or 1–4/)).toBeInTheDocument();
+
+    const first = screen.getByRole("group", { name: "Question 1" });
+    await user.keyboard("b");
+    expect(within(first).getAllByRole("button")[1]).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("Answered 1/34")).toBeInTheDocument();
+
+    await user.keyboard("{ArrowDown}");
+    await user.keyboard("3");
+    const second = screen.getByRole("group", { name: "Question 2" });
+    expect(within(second).getAllByRole("button")[2]).toHaveAttribute("aria-pressed", "true");
+    expect(within(first).getAllByRole("button")[0]).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByText("Answered 2/34")).toBeInTheDocument();
+
+    await user.keyboard("{ArrowUp}");
+    await user.keyboard("d");
+    expect(within(first).getAllByRole("button")[3]).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("Answered 2/34")).toBeInTheDocument();
+
+    await user.keyboard("{Enter}");
+    expect(screen.getByRole("group", { name: "Question 2" }).closest("article")).toHaveAttribute("aria-current", "true");
+    expect(screen.getByRole("group", { name: "Question 1" }).closest("article")).not.toHaveAttribute("aria-current");
+  });
+
+  test("fills a true/false question with T and F, statement by statement", async () => {
+    const user = userEvent.setup();
+    renderAt("/thi-thu", <ExamPage />);
+    await user.click(startFree());
+
+    for (let step = 0; step < 12; step += 1) await user.keyboard("{ArrowDown}");
+    const tf = screen.getAllByRole("group", { name: "Statement a" })[0]!;
+
+    await user.keyboard("t");
+    expect(within(tf).getByRole("button", { name: "True" })).toHaveAttribute("aria-pressed", "true");
+    await user.keyboard("f");
+    const next = screen.getAllByRole("group", { name: "Statement b" })[0]!;
+    expect(within(next).getByRole("button", { name: "False" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("Answered 2/34")).toBeInTheDocument();
+
+    // The last two statements of the same question come next; then nothing more.
+    await user.keyboard("tf");
+    expect(screen.getByText("Answered 4/34")).toBeInTheDocument();
+    await user.keyboard("t");
+    expect(screen.getByText("Answered 4/34")).toBeInTheDocument();
+  });
+
+  test("keeps shortcuts off the short answers and moves on with Enter", async () => {
+    const user = userEvent.setup();
+    renderAt("/thi-thu", <ExamPage />);
+    await user.click(startFree());
+
+    const answer = screen.getByRole("textbox", { name: "Answer to question 1" });
+    await user.type(answer, "2,5");
+
+    expect(screen.getByText("Answered 1/34")).toBeInTheDocument();
+    const first = screen.getByRole("group", { name: "Question 1" });
+    expect(within(first).getAllByRole("button").every((button) => button.getAttribute("aria-pressed") === "false")).toBe(true);
+
+    await user.keyboard("{Enter}");
+    expect(answer).not.toHaveFocus();
+    expect(screen.getByRole("textbox", { name: "Answer to question 2" }).closest("article")).toHaveAttribute("aria-current", "true");
+  });
 });

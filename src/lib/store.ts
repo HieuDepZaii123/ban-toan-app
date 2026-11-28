@@ -42,6 +42,8 @@ type Stamps = {
   attempts: Record<string, number>;
   scores: Record<string, number>;
   studies: Record<string, number>;
+  streaks: number;
+  bookmarks: Record<string, number>;
 };
 
 export type Data = {
@@ -60,6 +62,12 @@ export type Data = {
   scores: Record<string, DssMark>;
   /** Hypothesis, recorded rows, and conclusion for one investigation. */
   studies: Record<string, StudyLog>;
+  /** Consecutive days studied (based on local date). */
+  streaks: number;
+  /** The last date a correct answer was recorded, YYYY-MM-DD. */
+  lastStudied: string | null;
+  /** Bookmarked topic IDs for quick access. */
+  bookmarks: Record<string, true>;
   /** Per-key edit times. A missing stamp means 0, so an older snapshot still loads. */
   at: Stamps;
 };
@@ -72,7 +80,7 @@ function preferredTheme(): ThemeName {
 }
 
 function emptyAt(): Stamps {
-  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {}, attempts: {}, scores: {}, studies: {} };
+  return { theme: 0, lang: 0, lastId: 0, notes: {}, right: {}, wrong: {}, think: {}, params: {}, attempts: {}, scores: {}, studies: {}, streaks: 0, bookmarks: {} };
 }
 
 function blank(): Data {
@@ -89,6 +97,9 @@ function blank(): Data {
     attempts: {},
     scores: {},
     studies: {},
+    streaks: 0,
+    lastStudied: null,
+    bookmarks: {},
     at: emptyAt(),
   };
 }
@@ -272,6 +283,9 @@ export function load(raw: string | null): Data {
       attempts: attemptMap(parsed.attempts),
       scores: scoreMap(parsed.scores),
       studies: studyMap(parsed.studies),
+      streaks: typeof parsed.streaks === "number" && Number.isFinite(parsed.streaks) ? parsed.streaks : 0,
+      lastStudied: typeof parsed.lastStudied === "string" ? parsed.lastStudied : null,
+      bookmarks: stampMap(parsed.bookmarks),
       at: loadAt(parsed.at),
     };
   } catch {
@@ -355,6 +369,7 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
   const theme = pickValue(base.theme, local.theme, disk.theme, base.at.theme, local.at.theme, disk.at.theme);
   const lang = pickValue(base.lang, local.lang, disk.lang, base.at.lang, local.at.lang, disk.at.lang);
   const lastId = pickValue(base.lastId, local.lastId, disk.lastId, base.at.lastId, local.at.lastId, disk.at.lastId);
+  const lastStudied = pickValue(base.lastStudied, local.lastStudied, disk.lastStudied, base.at.lastStudied, local.at.lastStudied, disk.at.lastStudied);
   const notes = mergeMap(base.notes, local.notes, disk.notes, base.at.notes, local.at.notes, disk.at.notes);
   const right = mergeMap(base.right, local.right, disk.right, base.at.right, local.at.right, disk.at.right);
   const wrong = mergeMap(base.wrong, local.wrong, disk.wrong, base.at.wrong, local.at.wrong, disk.at.wrong);
@@ -363,11 +378,14 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
   const attempts = mergeMap(base.attempts, local.attempts, disk.attempts, base.at.attempts, local.at.attempts, disk.at.attempts);
   const scores = mergeMap(base.scores, local.scores, disk.scores, base.at.scores, local.at.scores, disk.at.scores);
   const studies = mergeMap(base.studies, local.studies, disk.studies, base.at.studies, local.at.studies, disk.at.studies);
+  const streaks = pickValue(base.streaks, local.streaks, disk.streaks, base.at.streaks, local.at.streaks, disk.at.streaks);
+  const bookmarks = mergeMap(base.bookmarks, local.bookmarks, disk.bookmarks, base.at.bookmarks, local.at.bookmarks, disk.at.bookmarks);
   return {
     v: 1,
     theme: theme.value ?? base.theme,
     lang: lang.value ?? base.lang,
     lastId: lastId.value === undefined ? base.lastId : lastId.value,
+    lastStudied: lastStudied.value === undefined ? base.lastStudied : lastStudied.value,
     notes: notes.value,
     right: right.value,
     wrong: wrong.value,
@@ -376,10 +394,13 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
     attempts: attempts.value,
     scores: scores.value,
     studies: studies.value,
+    streaks: streaks.value ?? base.streaks,
+    bookmarks: bookmarks.value,
     at: {
       theme: theme.at,
       lang: lang.at,
       lastId: lastId.at,
+      lastStudied: lastStudied.at,
       notes: notes.at,
       right: right.at,
       wrong: wrong.at,
@@ -388,6 +409,8 @@ function mergeData(base: Data, local: Data, disk: Data): Data {
       attempts: attempts.at,
       scores: scores.at,
       studies: studies.at,
+      streaks: streaks.at,
+      bookmarks: bookmarks.at,
     },
   };
 }
@@ -396,6 +419,8 @@ function valuesEqual(a: Data, b: Data): boolean {
   return a.theme === b.theme
     && a.lang === b.lang
     && a.lastId === b.lastId
+    && a.lastStudied === b.lastStudied
+    && a.streaks === b.streaks
     && stable(a.notes) === stable(b.notes)
     && stable(a.right) === stable(b.right)
     && stable(a.wrong) === stable(b.wrong)
@@ -403,7 +428,8 @@ function valuesEqual(a: Data, b: Data): boolean {
     && stable(a.params) === stable(b.params)
     && stable(a.attempts) === stable(b.attempts)
     && stable(a.scores) === stable(b.scores)
-    && stable(a.studies) === stable(b.studies);
+    && stable(a.studies) === stable(b.studies)
+    && stable(a.bookmarks) === stable(b.bookmarks);
 }
 
 /**
@@ -437,6 +463,7 @@ function stampChanges(prev: Data, next: Data, now: number): Data {
       theme: next.theme === prev.theme ? prev.at.theme : now,
       lang: next.lang === prev.lang ? prev.at.lang : now,
       lastId: next.lastId === prev.lastId ? prev.at.lastId : now,
+      lastStudied: next.lastStudied === prev.lastStudied ? prev.at.lastStudied : now,
       notes: touchMap(prev.notes, next.notes, prev.at.notes, now),
       right: touchMap(prev.right, next.right, prev.at.right, now),
       wrong: touchMap(prev.wrong, next.wrong, prev.at.wrong, now),
@@ -445,6 +472,8 @@ function stampChanges(prev: Data, next: Data, now: number): Data {
       attempts: touchMap(prev.attempts, next.attempts, prev.at.attempts, now),
       scores: touchMap(prev.scores, next.scores, prev.at.scores, now),
       studies: touchMap(prev.studies, next.studies, prev.at.studies, now),
+      streaks: next.streaks === prev.streaks ? prev.at.streaks : now,
+      bookmarks: touchMap(prev.bookmarks, next.bookmarks, prev.at.bookmarks, now),
     },
   };
 }
@@ -635,6 +664,7 @@ export function recordAnswer(topicId: string, questionId: string, choice: number
     const wrong = { ...data.wrong };
     delete wrong[key];
     commit({ ...data, attempts, right: { ...data.right, [key]: true }, wrong });
+    recordStudyDay();
     return;
   }
   const right = { ...data.right };
@@ -664,11 +694,13 @@ export function recordDss(
   if (score === 4) {
     right[key] = true;
     delete wrong[key];
+    commit({ ...data, right, wrong, scores: { ...data.scores, [key]: { picks, score } } });
+    recordStudyDay();
   } else {
     delete right[key];
     wrong[key] = score;
+    commit({ ...data, right, wrong, scores: { ...data.scores, [key]: { picks, score } } });
   }
-  commit({ ...data, right, wrong, scores: { ...data.scores, [key]: { picks, score } } });
 }
 
 export function studyKey(topicId: string, studyId: string): string {
@@ -734,4 +766,42 @@ export function countRight(right: Record<string, true>, topicId?: string): numbe
     if (!prefix || key.startsWith(prefix)) count += 1;
   }
   return count;
+}
+
+/** Return today's date in YYYY-MM-DD local format. */
+function todayKey(): string {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+}
+
+/** Record that a correct answer was given today, updating the streak if needed. */
+export function recordStudyDay(): void {
+  const today = todayKey();
+  if (data.lastStudied === today) return;
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yKey = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
+  const next = data.lastStudied === yKey ? data.streaks + 1 : 1;
+  commit({ ...data, streaks: next, lastStudied: today });
+}
+
+/** Bookmark or unbookmark a topic. */
+export function toggleBookmark(topicId: string): void {
+  const next = { ...data.bookmarks };
+  if (next[topicId]) {
+    delete next[topicId];
+  } else {
+    next[topicId] = true;
+  }
+  commit({ ...data, bookmarks: next });
+}
+
+/** Check whether a topic is bookmarked. */
+export function isBookmarked(topicId: string): boolean {
+  return Boolean(data.bookmarks[topicId]);
+}
+
+/** Return all bookmarked topic IDs. */
+export function listBookmarks(): string[] {
+  return Object.keys(data.bookmarks);
 }

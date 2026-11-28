@@ -3,6 +3,7 @@ import { cards, QUESTION_TOTAL, streamName, streams } from "../content/cards.ts"
 import { A } from "../lib/route.tsx";
 import { sciences } from "../science/catalog.ts";
 import { countRight, useSlice } from "../lib/store.ts";
+import { toggleBookmark, isBookmarked } from "../lib/store.ts";
 import { fold, t } from "../lib/text.ts";
 import { SiteHeader } from "../ui/SiteHeader.tsx";
 import { SiteFooter } from "../ui/SiteFooter.tsx";
@@ -148,11 +149,12 @@ function DeskCorner() {
 function ProgressLine() {
   const lang = useLang();
   const done = Math.min(useSlice((data) => countRight(data.right)), QUESTION_TOTAL);
+  const streaks = useSlice((data) => data.streaks);
   return (
     <p className="progress-line">
-      {done === 0
+      {done === 0 && streaks === 0
         ? t(lang, "Chưa ghi câu nào trên máy này.", "No answers saved on this device yet.")
-        : t(lang, `Đúng ${done}/${QUESTION_TOTAL} câu, lưu trên máy này.`, `${done}/${QUESTION_TOTAL} correct, saved on this device.`)}
+        : t(lang, `${done}/${QUESTION_TOTAL} câu đúng, ${streaks} ngày liên tiếp.`, `${done}/${QUESTION_TOTAL} correct, ${streaks}-day streak.`)}
     </p>
   );
 }
@@ -214,11 +216,13 @@ function TopicRow({ id }: { id: string }) {
   const topic = cards.find((item) => item.id === id);
   const done = useSlice((data) => countRight(data.right, id));
   const last = useSlice((data) => data.lastId === id);
+  const bookmarked = useSlice((data) => isBookmarked(id));
   if (!topic) return null;
   const ready = topic.status === "ready";
   return (
-    <A className={`topic${last ? " is-last" : ""}${ready ? "" : " is-stub"}`} href={`/t/${topic.id}`} data-topic={topic.id}>
+    <A className={`topic${last ? " is-last" : ""}${ready ? "" : " is-stub"}${bookmarked ? " is-bookmarked" : ""}`} href={`/t/${topic.id}`} data-topic={topic.id}>
       <span className="num">{topic.n}</span>
+      {bookmarked ? <span className="topic-bookmark" aria-label={t(lang, "Đã lưu", "Bookmarked")}}>★</span> : null}
       <Motion id={topic.id} variant="card" />
       <span className="topic-copy">
         <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>
@@ -229,6 +233,9 @@ function TopicRow({ id }: { id: string }) {
         </small>
       </span>
       <span className="topic-meta">{ready ? `${Math.min(done, topic.questions)}/${topic.questions}` : t(lang, "Đang soạn", "In draft")}</span>
+      <button type="button" className="topic-bookmark-btn" aria-pressed={bookmarked} onClick={(event) => { event.preventDefault(); toggleBookmark(id); }}>
+        {bookmarked ? t(lang, "Bỏ lưu", "Unbookmark") : t(lang, "Lưu", "Bookmark")}
+      </button>
     </A>
   );
 }
