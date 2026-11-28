@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, type ComponentType } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState, type ComponentType } from "react";
 import type { CardId } from "../content/cards.ts";
 import { streamName, topicById } from "../content/catalog.ts";
 import { loadTopic } from "../content/loadTopic.ts";
@@ -8,6 +8,7 @@ import { A } from "../lib/route.tsx";
 import { useRoute } from "../lib/useRoute.ts";
 import { setLast, toggleThink, useSlice, EMPTY_THINK } from "../lib/store.ts";
 import { t } from "../lib/text.ts";
+import { fold } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { SiteHeader } from "../ui/SiteHeader.tsx";
 import { SiteFooter } from "../ui/SiteFooter.tsx";
@@ -70,6 +71,7 @@ export function TopicDesk({ id }: { id: string }) {
   const tab = tabParam === "lam" || tabParam === "so" || tabParam === "nc" ? tabParam : "hoc";
   const [pack, setPack] = useState<Loaded | null>(null);
   const [focus, setFocus] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (topic) setLast(topic.id);
@@ -115,6 +117,15 @@ export function TopicDesk({ id }: { id: string }) {
   const lesson = ready?.lesson ?? null;
   const questions = ready?.questions ?? [];
   const vary = ready?.vary ?? [];
+  const foldedQuery = fold(searchQuery.trim());
+  const matches = useMemo(
+    () =>
+      questions.filter((q) => {
+        const hay = fold(`${q.prompt} ${q.promptEn} ${q.hint} ${q.hintEn}`);
+        return foldedQuery === "" || hay.includes(foldedQuery);
+      }),
+    [questions, foldedQuery]
+  );
   const Lab = isCardId(topic.id) ? labs[topic.id] : null;
 
   return (
@@ -196,7 +207,36 @@ export function TopicDesk({ id }: { id: string }) {
           ) : ready.failed ? (
             <p className="empty">{t(lang, "Không mở được nội dung tờ này.", "This sheet's contents did not open.")}</p>
           ) : questions.length > 0 ? (
-            <Practice key={topic.id} topicId={topic.id} questions={questions} vary={vary} />
+            <>
+              <div className="topic-search">
+                <label className="lecture-note">
+                  {t(lang, "Tìm câu trong tờ", "Search questions in this sheet")}
+                  <input
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                    placeholder={t(lang, "Từ khóa trong câu hỏi hoặc gợi ý", "Keyword in the question or hint")}
+                    aria-label={t(lang, "Tìm câu hỏi", "Search questions")}
+                  />
+                </label>
+                {searchQuery.trim() !== "" ? (
+                  <ul className="search-results">
+                    {matches.map((q) => (
+                      <li key={q.id}>
+                        <A href={`/t/${topic.id}?tab=lam&q=${q.id}`}>
+                          <MathText text={lang === "en" ? q.promptEn : q.prompt} />
+                        </A>
+                      </li>
+                    ))}
+                    {matches.length === 0 ? (
+                      <p className="empty">{t(lang, "Không tìm thấy câu nào.", "No matching questions.")}</p>
+                    ) : null}
+                  </ul>
+                ) : null}
+              </div>
+              {searchQuery.trim() === "" ? (
+                <Practice key={topic.id} topicId={topic.id} questions={questions} vary={vary} />
+              ) : null}
+            </>
           ) : (
             <div className="stub-stage" role="note">
               <b>{t(lang, "Đề đang soạn", "Questions still being written")}</b>
