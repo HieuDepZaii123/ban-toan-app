@@ -76,6 +76,7 @@ const PILLARS: {
       { href: "#chuyen-de", vi: "Chuyên đề", en: "Topics" },
       { href: "/kien-thuc", vi: "Lớp 1–12", en: "Grades 1–12" },
       { href: "/thi-thu", vi: "Thi thử 2025", en: "2025 mock exam" },
+      { href: "/bao-cao-ca-nhan", vi: "Báo cáo", en: "Report" },
     ],
   },
   {

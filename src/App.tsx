@@ -37,6 +37,7 @@ const ParentPage = lazy(() => import("./parent/ParentPage.tsx").then((mod) => ({
 const ReportPage = lazy(() => import("./parent/ReportPage.tsx").then((mod) => ({ default: mod.ReportPage })));
 const GradePracticePage = lazy(() => import("./pages/GradePracticePage.tsx").then((mod) => ({ default: mod.GradePracticePage })));
 const CalcPage = lazy(() => import("./pages/CalcPage.tsx").then((mod) => ({ default: mod.CalcPage })));
+const ProgressReportPage = lazy(() => import("./pages/ProgressReportPage.tsx").then((mod) => ({ default: mod.ProgressReportPage })));
 
 const CHUNK_RELOAD = "ban-toan-chunk-reload";
 
@@ -99,6 +100,7 @@ function Shell() {
   if (path === "/nghien-cuu") return <ResearchIdeasPage />;
   if (path === "/soan-tai-lieu") return <DocPage />;
   if (path === "/may-tinh") return <CalcPage />;
+  if (path === "/bao-cao-ca-nhan") return <ProgressReportPage />;
   if (path === "/phuong-phap" || path.startsWith("/phuong-phap/")) return <MethodsPage path={path} />;
   if (path === "/luyen-lop" || path.startsWith("/luyen-lop/")) return <GradePracticePage path={path} />;
   if (path === "/luyen-thpt") return <ThptPracticePage />;

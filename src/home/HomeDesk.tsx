@@ -222,7 +222,7 @@ function TopicRow({ id }: { id: string }) {
   return (
     <A className={`topic${last ? " is-last" : ""}${ready ? "" : " is-stub"}${bookmarked ? " is-bookmarked" : ""}`} href={`/t/${topic.id}`} data-topic={topic.id}>
       <span className="num">{topic.n}</span>
-      {bookmarked ? <span className="topic-bookmark" aria-label={t(lang, "Đã lưu", "Bookmarked")}}>★</span> : null}
+      {bookmarked ? (<span className="topic-bookmark" aria-label={t(lang, "Đã lưu", "Bookmarked")}>★</span>) : null}
       <Motion id={topic.id} variant="card" />
       <span className="topic-copy">
         <strong>{lang === "en" ? topic.titleEn : topic.title}</strong>

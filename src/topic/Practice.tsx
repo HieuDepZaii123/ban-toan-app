@@ -4,6 +4,7 @@ import type { Vary } from "../content/vary/types.ts";
 import { mulberry32 } from "../lib/prng.ts";
 import { useRoute } from "../lib/useRoute.ts";
 import { answeredNow, countRight, ensureAttempt, getData, questionKey, recordAnswer, resetAttempt, useSlice } from "../lib/store.ts";
+import { soundCorrect, soundWrong } from "../lib/sound.ts";
 import { t } from "../lib/text.ts";
 import { MathText } from "../ui/MathText.tsx";
 import { useLang } from "../ui/useLang.ts";
@@ -43,11 +44,14 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
       const target = event.target;
       if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) return;
       if (event.key < "1" || event.key > "4") return;
-      if (answeredNow(getData(), questionKey(topicId, question.id))) return;
+      const keyId = questionKey(topicId, question.id);
+      if (answeredNow(getData(), keyId)) return;
       const display = Number(event.key) - 1;
       if (display < 0 || display > 3) return;
       event.preventDefault();
-      recordAnswer(topicId, question.id, display, display === shown.answer);
+      const correct = display === shown.answer;
+      recordAnswer(topicId, question.id, display, correct);
+      correct ? soundCorrect() : soundWrong();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -97,7 +101,14 @@ export function Practice({ topicId, questions, vary }: { topicId: string; questi
               data-choice={displayIndex}
               aria-pressed={answered && displayIndex === picked}
               disabled={answered}
-              onClick={() => recordAnswer(topicId, question.id, displayIndex, displayIndex === shown.answer)}
+              onClick={() => {
+                const keyId = questionKey(topicId, question.id);
+                const correct = displayIndex === shown.answer;
+                if (!answeredNow(getData(), keyId)) {
+                  recordAnswer(topicId, question.id, displayIndex, correct);
+                  correct ? soundCorrect() : soundWrong();
+                }
+              }}
             >
               <span className="key">{displayIndex + 1}</span>
               <span className="choice-body"><MathText text={choice} /></span>

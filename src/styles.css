@@ -1710,3 +1710,16 @@ html[data-lamp="on"] body::before {
 
 /* Progress line with streak */
 .home-find .progress-line { margin: 0; font-size: 0.85rem; }
+
+/* Progress report page */
+.report-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin: 0 0 16px; }
+.report-stats div { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; text-align: center; }
+.report-stats dt { color: var(--ink-soft); font-size: 0.86rem; margin: 0 0 4px; }
+.report-stats dd { margin: 0; font-size: 1.4rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.report-topic { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--sheet); margin: 6px 0; }
+.report-topic strong { color: var(--ink); }
+.report-progress { display: flex; align-items: center; gap: 8px; }
+.report-meter { flex: 1; height: 8px; border-radius: 999px; overflow: hidden; background: color-mix(in srgb, var(--line) 70%, transparent); }
+.report-meter span { display: block; height: 100%; background: var(--accent); }
+.report-meter .is-right { background: var(--ok); }
+.report-count { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
