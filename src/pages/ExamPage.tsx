@@ -119,7 +119,7 @@ export function ExamPage() {
   }
 
   if (saved.active) {
-    return <SittingView sitting={saved.active} onChange={(answers) => saved.active && update({ ...saved, active: { ...saved.active, answers } })} onFinish={finish} />;
+    return <SittingView sitting={saved.active} onChange={(answers) => saved.active && update({ ...saved, active: { ...saved.active, answers } })} onFinish={finish} onStart={start} />;
   }
 
   return (
@@ -187,7 +187,7 @@ export function ExamPage() {
   );
 }
 
-function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChange: (answers: Answers) => void; onFinish: (sitting: Sitting) => void }) {
+function SittingView({ sitting, onChange, onFinish, onStart }: { sitting: Sitting; onChange: (answers: Answers) => void; onFinish: (sitting: Sitting) => void; onStart: () => void }) {
   const lang = useLang();
   const paper = useMemo(() => buildPaper(sitting.seed), [sitting.seed]);
   const [now, setNow] = useState(() => Date.now());
@@ -255,6 +255,16 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
         walk(-1);
         return;
       }
+      if (event.key === "r" || event.key === "R") {
+        event.preventDefault();
+        onStart();
+        return;
+      }
+      if (event.key === "s" || event.key === "S") {
+        event.preventDefault();
+        onFinish(sitting);
+        return;
+      }
       const slot = slots[cursor];
       if (!slot) return;
       const key = event.key.toLowerCase();
@@ -276,7 +286,7 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [answers, cursor, onChange, slots]);
+  }, [answers, cursor, onChange, onStart, slots, sitting]);
 
   function cardRef(index: number) {
     return (node: HTMLElement | null) => {
@@ -300,8 +310,8 @@ function SittingView({ sitting, onChange, onFinish }: { sitting: Sitting; onChan
       <p className="exam-keys">
         {t(
           lang,
-          "Phím tắt: A–D hoặc 1–4 chọn đáp án · T/F cho Đúng/Sai · ↑ ↓ chuyển câu · Enter sang câu tiếp.",
-          "Keys: A–D or 1–4 to answer · T/F for true/false · ↑ ↓ move between questions · Enter for the next question.",
+          "Phím tắt: A–D hoặc 1–4 chọn đáp án · T/F cho Đúng/Sai · ↑ ↓ chuyển câu · Enter sang câu tiếp · R đề mới · S nộp bài.",
+          "Keys: A–D or 1–4 to answer · T/F for true/false · ↑ ↓ move between questions · Enter for the next question · R new paper · S submit.",
         )}
       </p>
 
