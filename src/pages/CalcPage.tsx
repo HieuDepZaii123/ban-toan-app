@@ -134,8 +134,8 @@ export function CalcPage() {
       title={t(lang, "Máy tính khoa học", "Scientific calculator")}
       lead={t(
         lang,
-        "Cộng trừ nhân chia, ngoặc, mũ, căn, trị tuyệt đối, ln, log, sin, cos, tan. Mũ tính từ phải sang trái: 2^3^2 = 512. Dấu trừ đứng trước mũ tính sau: -2^2 = −4, còn (-2)^2 = 4. Hàm cần ngoặc, như sin(30). Không nhân ngầm: viết 2*pi, không viết 2pi.",
-        "Add, subtract, multiply, divide, parentheses, powers, roots, absolute value, ln, log, sin, cos, and tan. Powers group to the right: 2^3^2 = 512. A leading minus applies after the power: -2^2 = −4, while (-2)^2 = 4. Functions need parentheses, as in sin(30). There is no implied multiplication: write 2*pi, not 2pi.",
+        "Cộng trừ nhân chia, ngoặc, mũ, căn, trị tuyệt đối, ln, log, sin, cos, tan. Cách gõ ở cuối trang.",
+        "Add, subtract, multiply, divide, parentheses, powers, roots, absolute value, ln, log, sin, cos, and tan. Typing rules are at the end of the page.",
       )}
     >
       <section className="calc" id="may-tinh" aria-label={t(lang, "Máy tính khoa học", "Scientific calculator")}>
@@ -195,6 +195,16 @@ export function CalcPage() {
           )}
         </div>
       </section>
+      {/* The rules used to fill the lead and pushed the keypad below the fold on phones. */}
+      <details className="calc-help">
+        <summary>{t(lang, "Cách gõ", "How to type")}</summary>
+        <ul>
+          <li>{t(lang, "Mũ tính từ phải sang trái: 2^3^2 = 512.", "Powers group to the right: 2^3^2 = 512.")}</li>
+          <li>{t(lang, "Dấu trừ đứng trước mũ tính sau: -2^2 = −4, còn (-2)^2 = 4.", "A leading minus applies after the power: -2^2 = −4, while (-2)^2 = 4.")}</li>
+          <li>{t(lang, "Hàm cần ngoặc, như sin(30).", "Functions need parentheses, as in sin(30).")}</li>
+          <li>{t(lang, "Không nhân ngầm: viết 2*pi, không viết 2pi.", "There is no implied multiplication: write 2*pi, not 2pi.")}</li>
+        </ul>
+      </details>
     </PageFrame>
   );
 }

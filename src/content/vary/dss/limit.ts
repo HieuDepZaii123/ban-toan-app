@@ -5,8 +5,8 @@ const R = String.raw;
 
 const value: DssItem = {
   id: "lim-d-value",
-  context: (p) => R`Biết $\lim_{x\to ${p.a}} f(x)=${p.L}$. Chưa biết $f(${p.a})$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $\lim_{x\to ${p.a}} f(x)=${p.L}$. The value $f(${p.a})$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Biết $\lim_{x\to ${p.a}} f(x)=${p.L}$. Chưa biết $f(${p.a})$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $\lim_{x\to ${p.a}} f(x)=${p.L}$. The value $f(${p.a})$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Giới hạn không đọc giá trị tại đúng điểm đó. Liên tục chỉ khi $f(a)$ bằng giới hạn.`,
   hintEn: R`A limit does not read the value at the point. Continuity needs $f(a)$ equal to the limit.`,
   rows: [
@@ -84,8 +84,8 @@ const value: DssItem = {
 
 const jump: DssItem = {
   id: "lim-d-jump",
-  context: (p) => R`Biết $\lim_{x\to ${p.a}^-} f(x)=${p.left}$ và $\lim_{x\to ${p.a}^+} f(x)=${p.right}$. Hai số này khác nhau. Chưa biết $f(${p.a})$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $\lim_{x\to ${p.a}^-} f(x)=${p.left}$ and $\lim_{x\to ${p.a}^+} f(x)=${p.right}$. These numbers differ. $f(${p.a})$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Biết $\lim_{x\to ${p.a}^-} f(x)=${p.left}$ và $\lim_{x\to ${p.a}^+} f(x)=${p.right}$. Hai số này khác nhau. Chưa biết $f(${p.a})$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $\lim_{x\to ${p.a}^-} f(x)=${p.left}$ and $\lim_{x\to ${p.a}^+} f(x)=${p.right}$. These numbers differ. $f(${p.a})$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Hai giới hạn một phía khác nhau thì giới hạn hai phía không tồn tại, nên $f$ không liên tục tại đó.`,
   hintEn: R`Distinct one-sided limits mean the two-sided limit does not exist, so $f$ is not continuous there.`,
   rows: [
@@ -163,8 +163,8 @@ const jump: DssItem = {
 
 const cool: DssItem = {
   id: "lim-d-cool",
-  context: (p) => R`Nhiệt độ $T(t)=${p.c}+Ae^{-kt}$ với $k>0$ và $A\neq 0$. Chưa biết $A$ và $k$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Temperature $T(t)=${p.c}+Ae^{-kt}$ with $k>0$ and $A\neq 0$. $A$ and $k$ are unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Nhiệt độ $T(t)=${p.c}+Ae^{-kt}$ với $k>0$ và $A\neq 0$. Chưa biết $A$ và $k$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Temperature $T(t)=${p.c}+Ae^{-kt}$ with $k>0$ and $A\neq 0$. $A$ and $k$ are unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$e^{-kt}\to 0$ khi $t\to +\infty$ và $k>0$. Dấu của $A$ quyết định đang nguội hay đang nóng lên.`,
   hintEn: R`$e^{-kt}\to 0$ as $t\to +\infty$ when $k>0$. The sign of $A$ decides cooling versus warming.`,
   rows: [{ c: 25 }, { c: 20 }, { c: 30 }, { c: 15 }],

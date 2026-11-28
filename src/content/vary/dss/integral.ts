@@ -5,8 +5,8 @@ const R = String.raw;
 
 const sign: DssItem = {
   id: "int-d-sign",
-  context: (p) => R`Biết $\int_0^{${p.hi}} f(x)\,dx=${p.val}$. Chưa biết $f$ có đổi dấu hay không. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $\int_0^{${p.hi}} f(x)\,dx=${p.val}$. It is unknown whether $f$ changes sign. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Biết $\int_0^{${p.hi}} f(x)\,dx=${p.val}$. Chưa biết $f$ có đổi dấu hay không. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $\int_0^{${p.hi}} f(x)\,dx=${p.val}$. It is unknown whether $f$ changes sign. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Tích phân đã cho là diện tích có dấu. Diện tích hình học chỉ bằng trị tuyệt đối của nó khi $f$ không đổi dấu.`,
   hintEn: R`The given integral is a signed area. The geometric area equals its absolute value only when $f$ does not change sign.`,
   rows: [
@@ -90,8 +90,8 @@ function piece(p: { hi?: number; val?: number }): number {
 
 const gap: DssItem = {
   id: "int-d-gap",
-  context: (p) => R`Hai đường $y=${p.a}x$ và $y=x^2$ cắt nhau tại $0$ và $${p.a}$. Hoành độ $s$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`The curves $y=${p.a}x$ and $y=x^2$ meet at $0$ and $${p.a}$. An abscissa $s$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Hai đường $y=${p.a}x$ và $y=x^2$ cắt nhau tại $0$ và $${p.a}$. Hoành độ $s$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`The curves $y=${p.a}x$ and $y=x^2$ meet at $0$ and $${p.a}$. An abscissa $s$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Trên $(0,a)$, $ax\ge x^2$. Diện tích là $\int_0^a (ax-x^2)\,dx=\dfrac{a^3}{6}$.`,
   hintEn: R`On $(0,a)$, $ax\ge x^2$. The area is $\int_0^a (ax-x^2)\,dx=\dfrac{a^3}{6}$.`,
   rows: [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 6 }],
@@ -164,8 +164,8 @@ const gap: DssItem = {
 
 const cone: DssItem = {
   id: "int-d-cone",
-  context: (p) => R`Khối nón có bán kính đáy $r=${p.r}$ và $V=\dfrac{1}{3}\pi r^2 h$ với $h>0$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`A cone has base radius $r=${p.r}$ and $V=\dfrac{1}{3}\pi r^2 h$ with $h>0$ unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Khối nón có bán kính đáy $r=${p.r}$ và $V=\dfrac{1}{3}\pi r^2 h$ với $h>0$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`A cone has base radius $r=${p.r}$ and $V=\dfrac{1}{3}\pi r^2 h$ with $h>0$ unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Thể tích tỉ lệ với $h$. Quên $\dfrac{1}{3}$ hoặc quên bình phương bán kính là hai nhầm khác nhau.`,
   hintEn: R`The volume is proportional to $h$. Dropping $\dfrac{1}{3}$ and dropping the square on the radius are different mistakes.`,
   rows: [{ r: 2 }, { r: 3 }, { r: 4 }, { r: 6 }],

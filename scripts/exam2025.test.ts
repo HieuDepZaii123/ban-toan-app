@@ -21,7 +21,7 @@ for (let seed = 1; seed <= 300; seed += 1) {
   assert.equal(new Set(paper.tf.map((q) => q.topic)).size, 4, `seed ${seed} true/false topics repeat`);
   for (const id of paper.short) assert.notEqual(shortValue(thptById.get(id)!), null, `${id} is not a short-answer number`);
   for (const q of paper.tf) {
-    assert.ok(!/Chưa đủ|not enough/i.test(q.contextVi + q.contextEn), `${q.id} keeps the in-app instruction`);
+    assert.ok(!/Chưa đủ|not enough|Không liên quan|unrelated/i.test(q.contextVi + q.contextEn), `${q.id} keeps the in-app instruction`);
     for (const s of q.statements) assert.ok(s.vi && s.en && s.whyVi && s.whyEn, `${q.id} statement incomplete`);
   }
   assert.deepEqual(buildPaper(seed), paper, "same seed, same paper");

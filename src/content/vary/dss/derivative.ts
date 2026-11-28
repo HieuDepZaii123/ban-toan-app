@@ -9,8 +9,8 @@ function flatWorld(params: Params, t: number): World {
 
 const flat: DssItem = {
   id: "deriv-d-flat",
-  context: (p) => R`Chỉ biết $f'(${p.x0})=0$. Chưa biết thêm về $f$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`All that is known is $f'(${p.x0})=0$. Nothing else is known about $f$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Chỉ biết $f'(${p.x0})=0$. Chưa biết thêm về $f$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`All that is known is $f'(${p.x0})=0$. Nothing else is known about $f$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$f'(x_0)=0$ chỉ nói tiếp tuyến nằm ngang. $y=(x-x_0)^2$ có cực trị, $y=(x-x_0)^3$ thì không.`,
   hintEn: R`$f'(x_0)=0$ only says the tangent is horizontal. $y=(x-x_0)^2$ has an extremum and $y=(x-x_0)^3$ does not.`,
   rows: [{ x0: 0 }, { x0: 1 }, { x0: -1 }, { x0: 2 }],
@@ -83,8 +83,8 @@ const flat: DssItem = {
 
 const cubic: DssItem = {
   id: "deriv-d-cubic",
-  context: (p) => R`Cho $y=x^3-3mx$ với $m=${p.m}>0$. Hoành độ $t$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $y=x^3-3mx$ with $m=${p.m}>0$. The abscissa $t$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $y=x^3-3mx$ với $m=${p.m}>0$. Hoành độ $t$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $y=x^3-3mx$ with $m=${p.m}>0$. The abscissa $t$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$y'=3(x^2-m)$. Cực đại nằm ở hoành độ âm, cực tiểu ở hoành độ dương.`,
   hintEn: R`$y'=3(x^2-m)$. The local maximum has a negative abscissa and the local minimum a positive one.`,
   rows: [
@@ -162,8 +162,8 @@ const cubic: DssItem = {
 
 const ball: DssItem = {
   id: "deriv-d-ball",
-  context: (p) => R`Độ cao $h(t)=vt-5t^2$ với $v=${p.v}$ và $t\ge 0$. Thời điểm $s\ge 0$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Height $h(t)=vt-5t^2$ with $v=${p.v}$, for $t\ge 0$. A time $s\ge 0$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Độ cao $h(t)=vt-5t^2$ với $v=${p.v}$ và $t\ge 0$. Thời điểm $s\ge 0$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Height $h(t)=vt-5t^2$ with $v=${p.v}$, for $t\ge 0$. A time $s\ge 0$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$h'(t)=v-10t$. Cao nhất khi $h'=0$, chạm đất lần nữa khi $h=0$ và $t>0$.`,
   hintEn: R`$h'(t)=v-10t$. The top is where $h'=0$, and the later landing is where $h=0$ with $t>0$.`,
   rows: [{ v: 10 }, { v: 20 }, { v: 30 }, { v: 40 }],

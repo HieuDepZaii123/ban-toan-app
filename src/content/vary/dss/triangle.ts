@@ -5,8 +5,8 @@ const R = String.raw;
 
 const tri: DssItem = {
   id: "shp-d-tri",
-  context: (p) => R`Một tam giác có đáy $a=${p.a}$ và chiều cao tương ứng $h=${p.h}$. Chưa biết chân đường cao cách đỉnh một đoạn $d\ge 0$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`A triangle has base $a=${p.a}$ and corresponding height $h=${p.h}$. The foot of the altitude sits an unknown distance $d\ge 0$ from one endpoint. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Một tam giác có đáy $a=${p.a}$ và chiều cao tương ứng $h=${p.h}$. Chưa biết chân đường cao cách đỉnh một đoạn $d\ge 0$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`A triangle has base $a=${p.a}$ and corresponding height $h=${p.h}$. The foot of the altitude sits an unknown distance $d\ge 0$ from one endpoint. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Diện tích là $\dfrac{ah}{2}$, không cần biết $d$. Tam giác vuông khi chân đường cao trùng một đầu mút.`,
   hintEn: R`The area is $\dfrac{ah}{2}$ and does not need $d$. The triangle is right-angled when the foot is an endpoint.`,
   rows: [
@@ -84,8 +84,8 @@ const tri: DssItem = {
 
 const sim: DssItem = {
   id: "shp-d-sim",
-  context: (p) => R`Hai hình đồng dạng, tỉ số độ dài $k=${p.k}$, diện tích hình nhỏ bằng $${p.area}$. Chưa biết đó là loại hình nào. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Two similar figures have length ratio $k=${p.k}$ and the smaller area is $${p.area}$. The type of figure is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Hai hình đồng dạng, tỉ số độ dài $k=${p.k}$, diện tích hình nhỏ bằng $${p.area}$. Chưa biết đó là loại hình nào. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Two similar figures have length ratio $k=${p.k}$ and the smaller area is $${p.area}$. The type of figure is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Độ dài nhân $k$ thì diện tích nhân $k^2$ và thể tích nhân $k^3$. Loại hình không bị tỉ số buộc.`,
   hintEn: R`Lengths scale by $k$, areas by $k^2$, and volumes by $k^3$. The ratio does not force the type of figure.`,
   rows: [
@@ -163,8 +163,8 @@ const sim: DssItem = {
 
 const tet: DssItem = {
   id: "shp-d-tet",
-  context: (p) => R`Tứ diện đều cạnh $a=${p.a}$. Một độ dài $m>0$ chưa được xác định bởi cạnh. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`A regular tetrahedron has edge $a=${p.a}$. A length $m>0$ is not fixed by the edge. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Tứ diện đều cạnh $a=${p.a}$. Một độ dài $m>0$ chưa được xác định bởi cạnh. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`A regular tetrahedron has edge $a=${p.a}$. A length $m>0$ is not fixed by the edge. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$V=\dfrac{1}{3}\cdot\dfrac{a^2\sqrt{3}}{4}\cdot\dfrac{a\sqrt{6}}{3}=\dfrac{a^3\sqrt{2}}{12}$. Một độ dài $m$ tự do thì chưa so được với $a$.`,
   hintEn: R`$V=\dfrac{1}{3}\cdot\dfrac{a^2\sqrt{3}}{4}\cdot\dfrac{a\sqrt{6}}{3}=\dfrac{a^3\sqrt{2}}{12}$. A free length $m$ is not yet compared with $a$.`,
   rows: [{ a: 2 }, { a: 4 }, { a: 6 }, { a: 12 }],

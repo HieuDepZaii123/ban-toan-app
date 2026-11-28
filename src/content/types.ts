@@ -21,11 +21,12 @@ export type TopicMeta = {
   questions: number;
 };
 
-export type Verdict = "dung" | "sai" | "thieu";
+/** Đúng, Sai, Chưa đủ, or Không liên quan (the statement uses none of the problem's data). */
+export type Verdict = "dung" | "sai" | "thieu" | "khong";
 
 export type Question = {
   id: string;
-  /** concept: pick the true statement. dss: Đúng / Sai / Chưa đủ on four statements. */
+  /** concept: pick the true statement. dss: Đúng / Sai / Chưa đủ / Không liên quan on four statements. */
   kind?: "concept" | "dss";
   prompt: string;
   promptEn: string;

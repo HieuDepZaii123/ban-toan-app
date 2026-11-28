@@ -17,8 +17,8 @@ function offAxis(params: Params): World {
 
 const givenAD: DssItem = {
   id: "quad-d-ad",
-  context: (p) => R`Cho $y=ax^2+bx+c$ với $a=${p.a}>0$ và $\Delta=${p.delta}>0$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`For $y=ax^2+bx+c$ with $a=${p.a}>0$ and $\Delta=${p.delta}>0$, mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $y=ax^2+bx+c$ với $a=${p.a}>0$ và $\Delta=${p.delta}>0$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`For $y=ax^2+bx+c$ with $a=${p.a}>0$ and $\Delta=${p.delta}>0$, mark each statement true, false, not enough, or unrelated.`,
   hint: R`Đã biết $a$ và $\Delta$. Chưa biết dấu của $b$, cũng chưa biết $c$.`,
   hintEn: R`$a$ and $\Delta$ are known. The sign of $b$, and $c$, are not.`,
   rows: [
@@ -99,8 +99,8 @@ const givenAD: DssItem = {
 
 const givenHK: DssItem = {
   id: "quad-d-hk",
-  context: (p) => R`Cho $y=a(x-h)^2+k$ với $a=${p.a}>0$, $k=${p.k}<0$, và $h$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`For $y=a(x-h)^2+k$ with $a=${p.a}>0$, $k=${p.k}<0$, and $h$ unknown, mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $y=a(x-h)^2+k$ với $a=${p.a}>0$, $k=${p.k}<0$, và $h$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`For $y=a(x-h)^2+k$ with $a=${p.a}>0$, $k=${p.k}<0$, and $h$ unknown, mark each statement true, false, not enough, or unrelated.`,
   hint: R`Biết chiều bề lõm và tung độ đỉnh. Hoành độ đỉnh vẫn tự do.`,
   hintEn: R`The opening and the vertex height are known. The vertex $x$ is still free.`,
   rows: [
@@ -192,8 +192,8 @@ function negativeIntercept(params: Params): World {
 
 const givenRoots: DssItem = {
   id: "quad-d-roots",
-  context: (p) => R`Parabol cắt $Ox$ tại $x=${p.r}$ và $x=${p.s}$, hệ số $a\neq 0$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`A parabola cuts $Ox$ at $x=${p.r}$ and $x=${p.s}$, and $a\neq 0$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Parabol cắt $Ox$ tại $x=${p.r}$ và $x=${p.s}$, hệ số $a\neq 0$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`A parabola cuts $Ox$ at $x=${p.r}$ and $x=${p.s}$, and $a\neq 0$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Hai nghiệm xác định tổng, tích và trục đối xứng. Dấu của $a$ thì chưa.`,
   hintEn: R`The two roots fix the sum, the product, and the axis. The sign of $a$ is still open.`,
   rows: [

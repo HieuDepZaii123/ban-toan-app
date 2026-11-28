@@ -5,8 +5,8 @@ const R = String.raw;
 
 const cubic: DssItem = {
   id: "surv-d-cubic",
-  context: (p) => R`Cho $y=x^3-3mx$ với $m=${p.m}>0$. Hoành độ $t$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $y=x^3-3mx$ with $m=${p.m}>0$. The abscissa $t$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $y=x^3-3mx$ với $m=${p.m}>0$. Hoành độ $t$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $y=x^3-3mx$ with $m=${p.m}>0$. The abscissa $t$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$y=x(x^2-3m)$. Đồ thị cắt Ox tại ba điểm, và $y$ là hàm lẻ.`,
   hintEn: R`$y=x(x^2-3m)$. The graph meets the $x$-axis at three points, and $y$ is odd.`,
   rows: [
@@ -84,8 +84,8 @@ const cubic: DssItem = {
 
 const slant: DssItem = {
   id: "surv-d-slant",
-  context: (p) => R`Cho $y=\dfrac{x^2+k}{x-${p.a}}$ với $a=${p.a}\neq 0$ và $k$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $y=\dfrac{x^2+k}{x-${p.a}}$ with $a=${p.a}\neq 0$ and $k$ unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $y=\dfrac{x^2+k}{x-${p.a}}$ với $a=${p.a}\neq 0$ và $k$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $y=\dfrac{x^2+k}{x-${p.a}}$ with $a=${p.a}\neq 0$ and $k$ unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Chia đa thức: $y=x+a+\dfrac{k+a^2}{x-a}$. Phần dư bằng $0$ chỉ khi $k=-a^2$.`,
   hintEn: R`Divide: $y=x+a+\dfrac{k+a^2}{x-a}$. The remainder is $0$ only when $k=-a^2$.`,
   rows: [{ a: 1 }, { a: 2 }, { a: -1 }, { a: -2 }],
@@ -163,8 +163,8 @@ function sqShow(a: number | undefined): number {
 
 const rise: DssItem = {
   id: "surv-d-rise",
-  context: (p) => R`Cho $y=x^3+c$ với $c$ chưa biết, và $y'(${p.at})=3\cdot ${p.at}^2$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $y=x^3+c$ with $c$ unknown, and $y'(${p.at})=3\cdot ${p.at}^2$. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $y=x^3+c$ với $c$ chưa biết, và $y'(${p.at})=3\cdot ${p.at}^2$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $y=x^3+c$ with $c$ unknown, and $y'(${p.at})=3\cdot ${p.at}^2$. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$y'=3x^2\ge 0$ và bằng $0$ chỉ tại một điểm, nên không có cực trị. Hằng số $c$ vẫn tự do.`,
   hintEn: R`$y'=3x^2\ge 0$ and it is $0$ at only one point, so there is no extremum. The constant $c$ is still free.`,
   rows: [{ at: 1 }, { at: 2 }, { at: 3 }, { at: 4 }],

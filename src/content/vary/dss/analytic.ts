@@ -5,8 +5,8 @@ const R = String.raw;
 
 const line: DssItem = {
   id: "ana-d-line",
-  context: (p) => R`Đường thẳng $x+${p.b}y+c=0$ với $b=${p.b}\neq 0$ và $c$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`The line $x+${p.b}y+c=0$ has $b=${p.b}\neq 0$ and $c$ unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Đường thẳng $x+${p.b}y+c=0$ với $b=${p.b}\neq 0$ và $c$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`The line $x+${p.b}y+c=0$ has $b=${p.b}\neq 0$ and $c$ unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Hệ số của $x$ là $1$ nên đường không thẳng đứng. Hệ số góc là $-\dfrac{1}{b}$. Đi qua gốc chỉ khi $c=0$.`,
   hintEn: R`The coefficient of $x$ is $1$, so the line is not vertical. The slope is $-\dfrac{1}{b}$. It passes through the origin only when $c=0$.`,
   rows: [{ b: 1 }, { b: 2 }, { b: 3 }, { b: -1 }],
@@ -82,8 +82,8 @@ const line: DssItem = {
 
 const circle: DssItem = {
   id: "ana-d-circle",
-  context: (p) => R`Đường tròn $x^2+y^2=${p.r2}$. Điểm $M$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`The circle $x^2+y^2=${p.r2}$. A point $M$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Đường tròn $x^2+y^2=${p.r2}$. Điểm $M$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`The circle $x^2+y^2=${p.r2}$. A point $M$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Tâm là gốc, bình phương bán kính là số đã cho. $M$ có thể nằm trong, nằm trên hoặc nằm ngoài.`,
   hintEn: R`The center is the origin and the squared radius is the given number. $M$ may lie inside, on, or outside the circle.`,
   rows: [
@@ -161,8 +161,8 @@ const circle: DssItem = {
 
 const dist: DssItem = {
   id: "ana-d-dist",
-  context: (p) => R`Đường $x+y+c=0$ và điểm $A(${p.x0},0)$. $c$ chưa biết. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`The line $x+y+c=0$ and the point $A(${p.x0},0)$. $c$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Đường $x+y+c=0$ và điểm $A(${p.x0},0)$. $c$ chưa biết. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`The line $x+y+c=0$ and the point $A(${p.x0},0)$. $c$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Khoảng cách từ $(x_0,y_0)$ tới $x+y+c=0$ là $\dfrac{|x_0+y_0+c|}{\sqrt{2}}$. Mẫu không phải $\sqrt{5}$.`,
   hintEn: R`The distance from $(x_0,y_0)$ to $x+y+c=0$ is $\dfrac{|x_0+y_0+c|}{\sqrt{2}}$. The denominator is not $\sqrt{5}$.`,
   rows: [{ x0: 1 }, { x0: 2 }, { x0: -1 }, { x0: -2 }],

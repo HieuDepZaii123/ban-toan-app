@@ -129,8 +129,9 @@ function pickByGrade(pool: readonly ThptQuestion[], grades: readonly number[], r
   return out;
 }
 
-const INSTRUCTION_VI = /[,.]?\s*mỗi mệnh đề (?:là )?Đúng, Sai,? hay Chưa đủ\??\s*$/i;
-const INSTRUCTION_EN = /[,.]?\s*mark each statement true, false,? or not enough\.?\s*$/i;
+// The in-app instruction lists Đúng / Sai / Chưa đủ / Không liên quan; the exam is Đúng / Sai only, so it drops the sentence.
+const INSTRUCTION_VI = /[,.]?\s*mỗi mệnh đề (?:là )?Đúng, Sai,? (?:Chưa đủ,? )?hay (?:Chưa đủ|Không liên quan)\??\s*$/i;
+const INSTRUCTION_EN = /[,.]?\s*mark each statement true, false,? (?:not enough,? )?or (?:not enough|unrelated)\.?\s*$/i;
 
 const UNKNOWN = /chưa biết|chưa được xác định|chưa xác định|unknown|not fixed|not determined|is not given/i;
 

@@ -17,8 +17,8 @@ function cosOf(params: Params, sign: number): World {
 
 const sine: DssItem = {
   id: "trig-d-sin",
-  context: (p) => R`Cho $\sin\alpha=${sinShow(p.s)}$ và $0^\circ<\alpha<180^\circ$. Chưa biết $\cos\alpha$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $\sin\alpha=${sinShow(p.s)}$ and $0^\circ<\alpha<180^\circ$. $\cos\alpha$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $\sin\alpha=${sinShow(p.s)}$ và $0^\circ<\alpha<180^\circ$. Chưa biết $\cos\alpha$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $\sin\alpha=${sinShow(p.s)}$ and $0^\circ<\alpha<180^\circ$. $\cos\alpha$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Trong $(0^\circ,180^\circ)$, một giá trị $\sin$ dương ứng với hai góc bù nhau. $\cos$ của hai góc đó trái dấu.`,
   hintEn: R`On $(0^\circ,180^\circ)$ one positive sine belongs to two supplementary angles. Their cosines have opposite signs.`,
   rows: [{ s: 0.5 }, { s: Math.SQRT2 / 2 }, { s: Math.sqrt(3) / 2 }, { s: 0.5 }],
@@ -91,8 +91,8 @@ const sine: DssItem = {
 
 const axis: DssItem = {
   id: "trig-d-axis",
-  context: (p) => R`Cho $\cos\alpha=0$. Mốc đang xét là $${p.mark}$. Chưa biết $\sin\alpha$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $\cos\alpha=0$. The marker in view is $${p.mark}$. $\sin\alpha$ is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $\cos\alpha=0$. Mốc đang xét là $${p.mark}$. Chưa biết $\sin\alpha$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $\cos\alpha=0$. The marker in view is $${p.mark}$. $\sin\alpha$ is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`$\cos\alpha=0$ thì $\tan\alpha$ không xác định và $\sin\alpha=\pm 1$.`,
   hintEn: R`$\cos\alpha=0$ makes $\tan\alpha$ undefined and forces $\sin\alpha=\pm 1$.`,
   rows: [{ mark: 1 }, { mark: 2 }, { mark: 3 }, { mark: 4 }],
@@ -165,8 +165,8 @@ const axis: DssItem = {
 
 const quad: DssItem = {
   id: "trig-d-q2",
-  context: (p) => R`Cho $90^\circ<\alpha<180^\circ$ và $\sin\alpha>${p.cut}$. Chưa biết đúng giá trị của $\sin\alpha$. Mỗi mệnh đề là Đúng, Sai, hay Chưa đủ?`,
-  contextEn: (p) => R`Given $90^\circ<\alpha<180^\circ$ and $\sin\alpha>${p.cut}$. The exact sine is unknown. Mark each statement true, false, or not enough.`,
+  context: (p) => R`Cho $90^\circ<\alpha<180^\circ$ và $\sin\alpha>${p.cut}$. Chưa biết đúng giá trị của $\sin\alpha$. Mỗi mệnh đề là Đúng, Sai, Chưa đủ, hay Không liên quan?`,
+  contextEn: (p) => R`Given $90^\circ<\alpha<180^\circ$ and $\sin\alpha>${p.cut}$. The exact sine is unknown. Mark each statement true, false, not enough, or unrelated.`,
   hint: R`Góc phần tư II có $\sin$ dương và $\cos$ âm. Các giá trị $\dfrac{1}{2}$, $\dfrac{\sqrt{2}}{2}$, $\dfrac{\sqrt{3}}{2}$ đều còn mở.`,
   hintEn: R`Quadrant II has positive sine and negative cosine. The values $\dfrac{1}{2}$, $\dfrac{\sqrt{2}}{2}$, and $\dfrac{\sqrt{3}}{2}$ all remain open.`,
   rows: [{ cut: 0 }, { cut: 0.2 }, { cut: 0.4 }, { cut: 0.45 }],
